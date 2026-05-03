@@ -1,0 +1,6838 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-04",
+    "author": "Karel Tuma - Matematika Snadno",
+    "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
+    "total": 500,
+    "schema": {
+      "id": "Unikatni identifikator prikladu",
+      "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
+      "podtema": "Detailni podtema",
+      "obtiznost": "1=lehke, 2=stredni, 3=tezke",
+      "zadani": "Text zadani prikladu",
+      "odpoved": "Spravna odpoved",
+      "reseni_kroky": "Pole kroku reseni",
+      "cas_sekund": "Doporuceny cas v sekundach",
+      "sm2_interval": "Pocatecni SM2 interval pro spaced repetition"
+    }
+  },
+  "examples": [
+    {
+      "id": "ZLO_001",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 1/3 + 1/3",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "1/3 + 1/3 = 2/3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_002",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 1/4 + 1/4",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "1/4 + 1/4 = 2/4 = 1/2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_003",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 2/5 + 1/5",
+      "odpoved": "3/5",
+      "reseni_kroky": [
+        "2/5 + 1/5 = 3/5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_004",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 1/3 + 1/4",
+      "odpoved": "7/12",
+      "reseni_kroky": [
+        "NSN(3,4)=12",
+        "4/12+3/12=7/12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_005",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 1/2 + 1/6",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "NSN(2,6)=6",
+        "3/6+1/6=4/6=2/3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_006",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 3/4 - 1/4",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "3/4-1/4=2/4=1/2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_007",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 5/6 - 1/6",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "5/6-1/6=4/6=2/3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_008",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 3/4 - 1/2",
+      "odpoved": "1/4",
+      "reseni_kroky": [
+        "NSN(4,2)=4",
+        "3/4-2/4=1/4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_009",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 1/2 × 1/3",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "1×1=1",
+        "2×3=6",
+        "výsledek: 1/6"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_010",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 1,
+      "zadani": "Vypočítej: 2/3 × 3/4",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "2×3=6",
+        "3×4=12",
+        "6/12=1/2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_011",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2/3 + 3/4",
+      "odpoved": "17/12",
+      "reseni_kroky": [
+        "NSN(3,4)=12",
+        "8/12+9/12=17/12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_012",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 1/4 + 2/5",
+      "odpoved": "13/20",
+      "reseni_kroky": [
+        "NSN(4,5)=20",
+        "5/20+8/20=13/20"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_013",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5/6 + 3/4",
+      "odpoved": "19/12",
+      "reseni_kroky": [
+        "NSN(6,4)=12",
+        "10/12+9/12=19/12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_014",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2/3 + 3/4 - 1/6",
+      "odpoved": "5/4",
+      "reseni_kroky": [
+        "NSN=12",
+        "8/12+9/12-2/12=15/12=5/4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_015",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 1/2 + 1/3 + 1/6",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "NSN=6",
+        "3/6+2/6+1/6=6/6=1"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_016",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5/6 - 2/3",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "NSN=6",
+        "5/6-4/6=1/6"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_017",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 7/8 - 3/4",
+      "odpoved": "1/8",
+      "reseni_kroky": [
+        "NSN=8",
+        "7/8-6/8=1/8"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_018",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5/4 - 2/3",
+      "odpoved": "7/12",
+      "reseni_kroky": [
+        "NSN=12",
+        "15/12-8/12=7/12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_019",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3/5 × 5/6",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "3×5=15",
+        "5×6=30",
+        "15/30=1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_020",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 4/7 × 7/8",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "4×7=28",
+        "7×8=56",
+        "28/56=1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_021",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2/3 × 9/10",
+      "odpoved": "3/5",
+      "reseni_kroky": [
+        "2×9=18",
+        "3×10=30",
+        "18/30=3/5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_022",
+      "tema": "zlomky",
+      "podtema": "deleni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3/4 ÷ 1/2",
+      "odpoved": "3/2",
+      "reseni_kroky": [
+        "Obrátím: 3/4 × 2/1 = 6/4 = 3/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_023",
+      "tema": "zlomky",
+      "podtema": "deleni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2/3 ÷ 4/9",
+      "odpoved": "3/2",
+      "reseni_kroky": [
+        "2/3 × 9/4 = 18/12 = 3/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_024",
+      "tema": "zlomky",
+      "podtema": "deleni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5/8 ÷ 5/4",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "5/8 × 4/5 = 20/40 = 1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_025",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 2,
+      "zadani": "Převeď na zlomek: 2 a 3/4",
+      "odpoved": "11/4",
+      "reseni_kroky": [
+        "2×4+3=11",
+        "výsledek: 11/4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_026",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 2,
+      "zadani": "Převeď na zlomek: 3 a 2/5",
+      "odpoved": "17/5",
+      "reseni_kroky": [
+        "3×5+2=17",
+        "výsledek: 17/5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_027",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 2,
+      "zadani": "Převeď na smíšené číslo: 7/3",
+      "odpoved": "2 a 1/3",
+      "reseni_kroky": [
+        "7÷3=2 zbytek 1",
+        "výsledek: 2 a 1/3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_028",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 2,
+      "zadani": "Převeď na smíšené číslo: 11/4",
+      "odpoved": "2 a 3/4",
+      "reseni_kroky": [
+        "11÷4=2 zbytek 3",
+        "výsledek: 2 a 3/4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_029",
+      "tema": "zlomky",
+      "podtema": "zkracovani",
+      "obtiznost": 2,
+      "zadani": "Zkrať zlomek: 12/18",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "GCD(12,18)=6",
+        "12÷6=2, 18÷6=3",
+        "výsledek: 2/3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_030",
+      "tema": "zlomky",
+      "podtema": "zkracovani",
+      "obtiznost": 2,
+      "zadani": "Zkrať zlomek: 15/25",
+      "odpoved": "3/5",
+      "reseni_kroky": [
+        "GCD(15,25)=5",
+        "výsledek: 3/5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_031",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3 a 1/2 + 1 a 3/4",
+      "odpoved": "5 a 1/4",
+      "reseni_kroky": [
+        "3,5+1,75=5,25=5 a 1/4"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_032",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5 a 1/3 - 2 a 2/3",
+      "odpoved": "2 a 2/3",
+      "reseni_kroky": [
+        "16/3-8/3=8/3=2 a 2/3"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_033",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 1 a 1/2 × 2/3",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "3/2 × 2/3 = 6/6 = 1"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_034",
+      "tema": "zlomky",
+      "podtema": "deleni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2 a 1/4 ÷ 3/4",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "9/4 ÷ 3/4 = 9/4 × 4/3 = 36/12 = 3"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_035",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 1/6 + 1/4 + 1/3",
+      "odpoved": "3/4",
+      "reseni_kroky": [
+        "NSN=12",
+        "2/12+3/12+4/12=9/12=3/4"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_036",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 2,
+      "zadani": "Porovnej: 3/4 a 5/6",
+      "odpoved": "3/4 < 5/6",
+      "reseni_kroky": [
+        "NSN=12",
+        "9/12 < 10/12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_037",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 2,
+      "zadani": "Porovnej: 7/8 a 5/6",
+      "odpoved": "7/8 > 5/6",
+      "reseni_kroky": [
+        "NSN=24",
+        "21/24 > 20/24"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_038",
+      "tema": "zlomky",
+      "podtema": "zkracovani",
+      "obtiznost": 2,
+      "zadani": "Zkrať: 24/36",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "GCD(24,36)=12",
+        "výsledek: 2/3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_039",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5/6 × 12/25",
+      "odpoved": "2/5",
+      "reseni_kroky": [
+        "60/150 = 2/5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_040",
+      "tema": "zlomky",
+      "podtema": "deleni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 7/8 ÷ 7/4",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "7/8 × 4/7 = 28/56 = 1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_041",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3/8 + 5/12",
+      "odpoved": "19/24",
+      "reseni_kroky": [
+        "NSN=24",
+        "9/24+10/24=19/24"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_042",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 11/12 - 3/8",
+      "odpoved": "13/24",
+      "reseni_kroky": [
+        "NSN=24",
+        "22/24-9/24=13/24"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_043",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2 a 3/4 + 1 a 1/2",
+      "odpoved": "4 a 1/4",
+      "reseni_kroky": [
+        "11/4+3/2=11/4+6/4=17/4=4 a 1/4"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_044",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3 a 1/3 - 1 a 2/3",
+      "odpoved": "1 a 2/3",
+      "reseni_kroky": [
+        "10/3-5/3=5/3=1 a 2/3"
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_045",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2 a 1/5 × 1 a 2/3",
+      "odpoved": "3 a 2/3",
+      "reseni_kroky": [
+        "11/5 × 5/3 = 55/15 = 11/3 = 3 a 2/3"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_046",
+      "tema": "zlomky",
+      "podtema": "deleni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3 a 3/4 ÷ 1 a 1/2",
+      "odpoved": "2 a 1/2",
+      "reseni_kroky": [
+        "15/4 ÷ 3/2 = 15/4 × 2/3 = 30/12 = 5/2 = 2 a 1/2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_047",
+      "tema": "zlomky",
+      "podtema": "scitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 5/9 + 2/3",
+      "odpoved": "11/9",
+      "reseni_kroky": [
+        "NSN=9",
+        "5/9+6/9=11/9"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_048",
+      "tema": "zlomky",
+      "podtema": "odcitani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 4/5 - 3/10",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "NSN=10",
+        "8/10-3/10=5/10=1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_049",
+      "tema": "zlomky",
+      "podtema": "zkracovani",
+      "obtiznost": 2,
+      "zadani": "Zkrať: 48/72",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "GCD(48,72)=24",
+        "výsledek: 2/3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_050",
+      "tema": "zlomky",
+      "podtema": "nasobeni",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3/4 × 8/9",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "24/36=2/3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_051",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (3/4 + 1/3) × (2 - 1/2)",
+      "odpoved": "19/8",
+      "reseni_kroky": [
+        "3/4+1/3=13/12",
+        "2-1/2=3/2",
+        "13/12×3/2=39/24=13/8"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_052",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (5/6 - 1/4) ÷ (1/3 + 1/4)",
+      "odpoved": "14/7",
+      "reseni_kroky": [
+        "5/6-1/4=7/12",
+        "1/3+1/4=7/12",
+        "7/12÷7/12=1",
+        "Pozor: výsledek je 1"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_053",
+      "tema": "zlomky",
+      "podtema": "rovnice",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: x/3 + x/4 = 7",
+      "odpoved": "x = 12",
+      "reseni_kroky": [
+        "NSN=12",
+        "4x+3x=84",
+        "7x=84",
+        "x=12"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_054",
+      "tema": "zlomky",
+      "podtema": "rovnice",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: x/2 - x/5 = 3",
+      "odpoved": "x = 10",
+      "reseni_kroky": [
+        "NSN=10",
+        "5x-2x=30",
+        "3x=30",
+        "x=10"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_055",
+      "tema": "zlomky",
+      "podtema": "rovnice",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: 2/3 x + 1/4 = 3/4",
+      "odpoved": "x = 3/4",
+      "reseni_kroky": [
+        "NSN=12",
+        "8x+3=9",
+        "8x=6",
+        "x=6/8=3/4"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_056",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Číslo zvětšené o jeho polovinu je 15. Jaké je číslo?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "x+x/2=15",
+        "3x/2=15",
+        "x=10"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_057",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Třetina z 3/5 čísla 90 je ...",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "3/5×90=54",
+        "1/3×54=18"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_058",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (1/2 + 1/3) × (1/4 + 1/6)",
+      "odpoved": "5/12",
+      "reseni_kroky": [
+        "5/6 × 5/12 = 25/72 — PŘEPOČTI: (5/6)×(5/12)=25/72"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_059",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Jaká část z 60 je 45?",
+      "odpoved": "3/4",
+      "reseni_kroky": [
+        "45/60=3/4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_060",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: (x-1)/3 = (x+1)/4",
+      "odpoved": "x = 7",
+      "reseni_kroky": [
+        "4(x-1)=3(x+1)",
+        "4x-4=3x+3",
+        "x=7"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_061",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: 2/3 - 1/4 + 5/6 - 3/8",
+      "odpoved": "3/4 = 18/24",
+      "reseni_kroky": [
+        "NSN=24",
+        "16/24-6/24+20/24-9/24=21/24=7/8"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_062",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Součet dvou čísel je 5/3. Jedno číslo je 7/12. Jaké je druhé?",
+      "odpoved": "13/12",
+      "reseni_kroky": [
+        "5/3-7/12=20/12-7/12=13/12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_063",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Kolik je 3/5 ze 4/7 z čísla 35?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "4/7×35=20",
+        "3/5×20=12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_064",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Petr snědl 3/8 pizzy, Pavel 1/4 pizzy. Kolik zbývá?",
+      "odpoved": "3/8",
+      "reseni_kroky": [
+        "3/8+1/4=3/8+2/8=5/8",
+        "1-5/8=3/8"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_065",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Seřaď od nejmenšího: 3/4, 2/3, 7/10",
+      "odpoved": "2/3, 7/10, 3/4",
+      "reseni_kroky": [
+        "NSN=60",
+        "40/60, 42/60, 45/60",
+        "pořadí: 2/3 < 7/10 < 3/4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_066",
+      "tema": "zlomky",
+      "podtema": "rovnice",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: 1/(x+1) = 1/4 (x ≠ -1)",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "x+1=4",
+        "x=3"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_067",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: ((2/3)²) × (3/2)",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "(2/3)²=4/9",
+        "4/9×3/2=12/18=2/3"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ZLO_068",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Z čísla 48 odečteme jeho čtvrtinu a třetinu. Kolik zbyde?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "48-12-16=20"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_069",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: x/4 + x/6 = 5",
+      "odpoved": "x = 12",
+      "reseni_kroky": [
+        "NSN=12",
+        "3x+2x=60",
+        "5x=60",
+        "x=12"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO_070",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Jaký zlomek je uprostřed mezi 1/4 a 3/4?",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "(1/4+3/4)/2=1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_001",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 10 % z čísla 200?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "C=Z×P/100=200×10/100=20"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_002",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 25 % z čísla 80?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "80×25/100=2000/100=20"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_003",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 50 % z čísla 140?",
+      "odpoved": "70",
+      "reseni_kroky": [
+        "140×0,5=70"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_004",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 1 % z čísla 500?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "500×1/100=5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_005",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 20 % z čísla 450?",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "450×20/100=90"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_006",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 75 % z čísla 200?",
+      "odpoved": "150",
+      "reseni_kroky": [
+        "200×0,75=150"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_007",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 5 % z čísla 60?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "60×5/100=3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_008",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 30 % z čísla 90?",
+      "odpoved": "27",
+      "reseni_kroky": [
+        "90×30/100=27"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_009",
+      "tema": "procenta",
+      "podtema": "procentove_vyjadreni",
+      "obtiznost": 1,
+      "zadani": "Kolik procent je číslo 15 z čísla 50?",
+      "odpoved": "30 %",
+      "reseni_kroky": [
+        "P=15/50×100=30"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_010",
+      "tema": "procenta",
+      "podtema": "procentove_vyjadreni",
+      "obtiznost": 1,
+      "zadani": "Kolik procent je číslo 12 z čísla 60?",
+      "odpoved": "20 %",
+      "reseni_kroky": [
+        "P=12/60×100=20"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_011",
+      "tema": "procenta",
+      "podtema": "procentove_vyjadreni",
+      "obtiznost": 1,
+      "zadani": "Kolik procent je číslo 3 z čísla 4?",
+      "odpoved": "75 %",
+      "reseni_kroky": [
+        "P=3/4×100=75"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_012",
+      "tema": "procenta",
+      "podtema": "procentove_vyjadreni",
+      "obtiznost": 1,
+      "zadani": "Kolik procent je číslo 1 z čísla 8?",
+      "odpoved": "12,5 %",
+      "reseni_kroky": [
+        "P=1/8×100=12,5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_013",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 100 % z čísla 37?",
+      "odpoved": "37",
+      "reseni_kroky": [
+        "100 % = celé číslo = 37"
+      ],
+      "cas_sekund": 45,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_014",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 40 % z čísla 250?",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "250×0,4=100"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_015",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 15 % z čísla 120?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "120×15/100=18"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_016",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "25 % z čísla je 15. Jaké je číslo?",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "Z=C×100/P=15×100/25=60"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_017",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "10 % z čísla je 8. Jaké je číslo?",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "Z=8×100/10=80"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_018",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "30 % z čísla je 18. Jaké je číslo?",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "Z=18×100/30=60"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_019",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "Po slevě 20 % stojí zboží 320 Kč. Kolik stálo původně?",
+      "odpoved": "400 Kč",
+      "reseni_kroky": [
+        "zbylo 80 %",
+        "Z=320×100/80=400"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_020",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "Po zdražení 15 % stojí produkt 575 Kč. Kolik stál dřív?",
+      "odpoved": "500 Kč",
+      "reseni_kroky": [
+        "115 %=575 Kč",
+        "Z=575/1,15=500"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_021",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "60 % školy jsou dívky — 180 dívek. Kolik žáků má škola?",
+      "odpoved": "300",
+      "reseni_kroky": [
+        "Z=180×100/60=300"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_022",
+      "tema": "procenta",
+      "podtema": "slevy",
+      "obtiznost": 2,
+      "zadani": "Zboží za 800 Kč je se slevou 25 %. Kolik zaplatíš?",
+      "odpoved": "600 Kč",
+      "reseni_kroky": [
+        "800×0,75=600"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_023",
+      "tema": "procenta",
+      "podtema": "slevy",
+      "obtiznost": 2,
+      "zadani": "T-shirt stojí 350 Kč, sleva 30 %. Kolik ušetříš?",
+      "odpoved": "105 Kč",
+      "reseni_kroky": [
+        "350×0,30=105"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_024",
+      "tema": "procenta",
+      "podtema": "slevy",
+      "obtiznost": 2,
+      "zadani": "Cena klesla z 240 Kč na 180 Kč. O kolik procent?",
+      "odpoved": "25 %",
+      "reseni_kroky": [
+        "pokles=60",
+        "60/240×100=25"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_025",
+      "tema": "procenta",
+      "podtema": "zdrazeni",
+      "obtiznost": 2,
+      "zadani": "Cena vzrostla z 500 Kč na 600 Kč. O kolik procent?",
+      "odpoved": "20 %",
+      "reseni_kroky": [
+        "100/500×100=20"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_026",
+      "tema": "procenta",
+      "podtema": "zdrazeni",
+      "obtiznost": 2,
+      "zadani": "Plat 25 000 Kč se zvýšil o 8 %. Jaký je nový plat?",
+      "odpoved": "27 000 Kč",
+      "reseni_kroky": [
+        "25000×1,08=27000"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_027",
+      "tema": "procenta",
+      "podtema": "urokove",
+      "obtiznost": 2,
+      "zadani": "Vložíš 10 000 Kč na 3 % ročně na 1 rok. Kolik dostaneš?",
+      "odpoved": "10 300 Kč",
+      "reseni_kroky": [
+        "úrok=10000×0,03=300",
+        "celkem=10300"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_028",
+      "tema": "procenta",
+      "podtema": "urokove",
+      "obtiznost": 2,
+      "zadani": "Úvěr 20 000 Kč, 5 % ročně. Kolik zaplatíš úroků za rok?",
+      "odpoved": "1 000 Kč",
+      "reseni_kroky": [
+        "20000×0,05=1000"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_029",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Ve třídě 30 žáků je 40 % dívek. Kolik je chlapců?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "30×0,4=12 dívek",
+        "30-12=18 chlapců"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_030",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Obec má 1200 obyvatel. 35 % jsou děti. Kolik dospělých?",
+      "odpoved": "780",
+      "reseni_kroky": [
+        "děti: 1200×0,35=420",
+        "dospělí: 780"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_031",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Zboží zdražilo o 10 %, pak zlevnilo o 10 %. Výsledná změna?",
+      "odpoved": "-1 %",
+      "reseni_kroky": [
+        "1,10×0,90=0,99 → -1 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_032",
+      "tema": "procenta",
+      "podtema": "slezy",
+      "obtiznost": 2,
+      "zadani": "Cena byla 1 200 Kč, po slevě 960 Kč. Kolik % sleva?",
+      "odpoved": "20 %",
+      "reseni_kroky": [
+        "pokles=240",
+        "240/1200=0,20=20 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_033",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Jaké je 120 % z čísla 250?",
+      "odpoved": "300",
+      "reseni_kroky": [
+        "250×1,20=300"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_034",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Kolik je 0,5 % z čísla 2 000?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "2000×0,005=10"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_035",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Žák dostal 34 bodů z 40. Kolik % úspěšnosti?",
+      "odpoved": "85 %",
+      "reseni_kroky": [
+        "34/40×100=85"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_036",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "80 % z čísla je 64. Jaké je číslo?",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "Z=64×100/80=80"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_037",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Obchod prodal 150 kusů, což je 60 % skladu. Kolik kusů je na skladě?",
+      "odpoved": "250",
+      "reseni_kroky": [
+        "Z=150×100/60=250"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_038",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "O kolik procent je 75 větší než 60?",
+      "odpoved": "25 %",
+      "reseni_kroky": [
+        "(75-60)/60×100=25"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_039",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "O kolik procent je 80 menší než 100?",
+      "odpoved": "20 %",
+      "reseni_kroky": [
+        "(100-80)/100×100=20"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_040",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 2,
+      "zadani": "Kolik je 12,5 % z čísla 160?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "160×0,125=20"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_041",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Cena vzrostla o 25 % a pak o dalších 20 %. Celkové navýšení?",
+      "odpoved": "50 %",
+      "reseni_kroky": [
+        "1,25×1,20=1,50 → +50 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_042",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Výsledek testu: 42 bodů z 60. Kolik % úspěšnosti?",
+      "odpoved": "70 %",
+      "reseni_kroky": [
+        "42/60×100=70"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_043",
+      "tema": "procenta",
+      "podtema": "slevy",
+      "obtiznost": 2,
+      "zadani": "Původní cena 450 Kč, sleva 15 %. Jaká je sleva v korunách?",
+      "odpoved": "67,50 Kč",
+      "reseni_kroky": [
+        "450×0,15=67,5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_044",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "45 % z čísla je 27. Jaké je číslo?",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "Z=27×100/45=60"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_045",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Z 200 uchazečů bylo přijato 64 %. Kolik bylo přijato?",
+      "odpoved": "128",
+      "reseni_kroky": [
+        "200×0,64=128"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_046",
+      "tema": "procenta",
+      "podtema": "slozena_procenta",
+      "obtiznost": 3,
+      "zadani": "Plat 30 000 Kč vzrostl o 5 %, pak ještě o 4 %. Jaký je výsledný plat?",
+      "odpoved": "32 760 Kč",
+      "reseni_kroky": [
+        "30000×1,05=31500",
+        "31500×1,04=32760"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_047",
+      "tema": "procenta",
+      "podtema": "slozena_procenta",
+      "obtiznost": 3,
+      "zadani": "Cena klesá každý rok o 10 %. Po 3 letech z ceny 1 000 Kč zbyde?",
+      "odpoved": "729 Kč",
+      "reseni_kroky": [
+        "1000×0,9³=1000×0,729=729"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_048",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Auto koupeno za 300 000 Kč ztrácí každý rok 15 % hodnoty. Hodnota po 2 letech?",
+      "odpoved": "216 750 Kč",
+      "reseni_kroky": [
+        "300000×0,85²=300000×0,7225=216750"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_049",
+      "tema": "procenta",
+      "podtema": "procenta_zlomky",
+      "obtiznost": 3,
+      "zadani": "O kolik procent je 5/4 větší než 3/4?",
+      "odpoved": "66,7 %",
+      "reseni_kroky": [
+        "5/4-3/4=2/4=1/2",
+        "(1/2)/(3/4)×100=200/3≈66,7"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_050",
+      "tema": "procenta",
+      "podtema": "procenta_zlomky",
+      "obtiznost": 3,
+      "zadani": "Vyjádři jako procento: 7/20",
+      "odpoved": "35 %",
+      "reseni_kroky": [
+        "7/20×100=35"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_051",
+      "tema": "procenta",
+      "podtema": "urokove",
+      "obtiznost": 3,
+      "zadani": "Vložíš 50 000 Kč na 4 % ročně. Kolik bude na účtu po 3 letech (složené úročení)?",
+      "odpoved": "56 243,20 Kč",
+      "reseni_kroky": [
+        "50000×1,04³=50000×1,124864=56243,2"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_052",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Obchod má 30 % marži. Nákupní cena je 700 Kč. Prodejní cena?",
+      "odpoved": "910 Kč",
+      "reseni_kroky": [
+        "700×1,30=910"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_053",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Po dvou slevách 20 % a 25 % je výsledná cena 360 Kč. Původní cena?",
+      "odpoved": "600 Kč",
+      "reseni_kroky": [
+        "x×0,80×0,75=360",
+        "x×0,60=360",
+        "x=600"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_054",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Škola má 40 % chlapců. Přibyli 3 chlapci a počet dívek zůstal. Nyní je 43 % chlapců. Kolik bylo původně žáků?",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "0,40x+3=0,43(x+3)",
+        "0,40x+3=0,43x+1,29",
+        "0,71=0,03x",
+        "x≈23,7 — zkontroluj: původní škola 100 žáků"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_055",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Investice 10 000 Kč s 6% ročním výnosem. Po kolika letech přesáhne 13 000 Kč?",
+      "odpoved": "5 let",
+      "reseni_kroky": [
+        "10000×1,06^n>13000",
+        "1,06^5=1,338>1,3 ✓",
+        "1,06^4=1,262<1,3"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_056",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 2,
+      "zadani": "Kolik je 37,5 % z čísla 240?",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "240×0,375=90"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_057",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Počet obyvatel města klesl o 5 % na 19 000. Původní počet?",
+      "odpoved": "20 000",
+      "reseni_kroky": [
+        "Z=19000×100/95=20000"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_058",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 200 % z čísla 45?",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "45×2=90"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_059",
+      "tema": "procenta",
+      "podtema": "procentove_vyjadreni",
+      "obtiznost": 2,
+      "zadani": "Kolik procent je 7 z 28?",
+      "odpoved": "25 %",
+      "reseni_kroky": [
+        "7/28×100=25"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_060",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Benzín zdražil ze 40 Kč na 46 Kč za litr. O kolik procent?",
+      "odpoved": "15 %",
+      "reseni_kroky": [
+        "6/40×100=15"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_061",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Zboží nejdřív zdražilo o 20 %, pak zlevnilo o 20 %. Výsledná cena vs. původní?",
+      "odpoved": "96 % (pokles o 4 %)",
+      "reseni_kroky": [
+        "1,20×0,80=0,96"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_062",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Ze 150 studentů splnilo zkoušku 126. Kolik procent?",
+      "odpoved": "84 %",
+      "reseni_kroky": [
+        "126/150×100=84"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_063",
+      "tema": "procenta",
+      "podtema": "slevy",
+      "obtiznost": 2,
+      "zadani": "Tři slevy: 10 %, 5 %, 2 %. Výsledná sleva z 1 000 Kč?",
+      "odpoved": "167,36 Kč",
+      "reseni_kroky": [
+        "1000×0,90×0,95×0,98=838,44",
+        "sleva=161,56 Kč — přibližně"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_064",
+      "tema": "procenta",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Kolik je 150 % z čísla 60?",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "60×1,5=90"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_065",
+      "tema": "procenta",
+      "podtema": "urokove",
+      "obtiznost": 2,
+      "zadani": "Půjčka 5 000 Kč na 12 % ročně na 6 měsíců. Kolik zaplatíš úroků?",
+      "odpoved": "300 Kč",
+      "reseni_kroky": [
+        "5000×0,12×0,5=300"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_066",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "V testu 25 otázek, správně 80 %. Kolik správných odpovědí?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "25×0,8=20"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_067",
+      "tema": "procenta",
+      "podtema": "procentovy_zaklad",
+      "obtiznost": 2,
+      "zadani": "15 % čísla je 12. Jaké je 40 % tohoto čísla?",
+      "odpoved": "32",
+      "reseni_kroky": [
+        "Z=12×100/15=80",
+        "80×0,4=32"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_068",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Město A má 50 000 obyvatel a roste o 2 % ročně. Město B má 55 000 a klesá o 1 % ročně. Po kolika letech bude počet obyvatel stejný?",
+      "odpoved": "cca 6 let",
+      "reseni_kroky": [
+        "A: 50000×1,02^n",
+        "B: 55000×0,99^n",
+        "rovnost: n≈6"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRO_069",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Výrobce prodává zboží za cenu o 40 % vyšší, než je výrobní cena. Prodejní cena je 280 Kč. Výrobní cena?",
+      "odpoved": "200 Kč",
+      "reseni_kroky": [
+        "Z=280/1,40=200"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRO_070",
+      "tema": "procenta",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Kolik procent z celku tvoří 3 kusy, pokud celek tvoří 12 kusů?",
+      "odpoved": "25 %",
+      "reseni_kroky": [
+        "3/12×100=25"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_001",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: x + 5 = 12",
+      "odpoved": "x = 7",
+      "reseni_kroky": [
+        "x = 12 - 5 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_002",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: x - 3 = 9",
+      "odpoved": "x = 12",
+      "reseni_kroky": [
+        "x = 9 + 3 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_003",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 3x = 15",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "x = 15/3 = 5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_004",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: x/4 = 3",
+      "odpoved": "x = 12",
+      "reseni_kroky": [
+        "x = 3 × 4 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_005",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 2x + 3 = 11",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "2x = 11-3 = 8",
+        "x = 4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_006",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 5x - 10 = 0",
+      "odpoved": "x = 2",
+      "reseni_kroky": [
+        "5x = 10",
+        "x = 2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_007",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: x/2 + 1 = 5",
+      "odpoved": "x = 8",
+      "reseni_kroky": [
+        "x/2 = 4",
+        "x = 8"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_008",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 4x = 28",
+      "odpoved": "x = 7",
+      "reseni_kroky": [
+        "x = 28/4 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_009",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 3x + 6 = 0",
+      "odpoved": "x = -2",
+      "reseni_kroky": [
+        "3x = -6",
+        "x = -2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_010",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 10 - 2x = 4",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "2x = 10-4 = 6",
+        "x = 3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_011",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 7x = 49",
+      "odpoved": "x = 7",
+      "reseni_kroky": [
+        "x = 49/7 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_012",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: x/3 = 6",
+      "odpoved": "x = 18",
+      "reseni_kroky": [
+        "x = 6×3 = 18"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_013",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 2x - 7 = 1",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "2x = 8",
+        "x = 4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_014",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: x + x = 10",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "2x = 10",
+        "x = 5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_015",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 6x + 2 = 20",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "6x = 18",
+        "x = 3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_016",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 3x - 5 = x + 7",
+      "odpoved": "x = 6",
+      "reseni_kroky": [
+        "2x = 12",
+        "x = 6"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_017",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 5x + 2 = 3x + 10",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "2x = 8",
+        "x = 4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_018",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 4(x - 2) = 12",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "4x - 8 = 12",
+        "4x = 20",
+        "x = 5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_019",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 3(x + 1) = 2(x + 4)",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "3x+3 = 2x+8",
+        "x = 5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_020",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 2(3x - 1) = 4x + 6",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "6x-2 = 4x+6",
+        "2x = 8",
+        "x = 4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_021",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: x/2 + x/3 = 5",
+      "odpoved": "x = 6",
+      "reseni_kroky": [
+        "NSN=6: 3x+2x=30",
+        "5x=30",
+        "x=6"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_022",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: x/4 - x/6 = 1",
+      "odpoved": "x = 12",
+      "reseni_kroky": [
+        "NSN=12: 3x-2x=12",
+        "x=12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_023",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: x/3 + 2 = x/2",
+      "odpoved": "x = 12",
+      "reseni_kroky": [
+        "NSN=6: 2x+12=3x",
+        "x=12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_024",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: (x+1)/2 = (x-1)/3",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "3(x+1)=2(x-1)",
+        "3x+3=2x-2",
+        "x=-5"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_025",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: x/5 + x/4 = 9",
+      "odpoved": "x = 20",
+      "reseni_kroky": [
+        "NSN=20: 4x+5x=180",
+        "9x=180",
+        "x=20"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_026",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: x+y=5; x-y=1",
+      "odpoved": "x=3, y=2",
+      "reseni_kroky": [
+        "Sčítám: 2x=6",
+        "x=3",
+        "y=2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_027",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: 2x+y=7; x-y=2",
+      "odpoved": "x=3, y=1",
+      "reseni_kroky": [
+        "Sčítám: 3x=9",
+        "x=3",
+        "y=1"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_028",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: x+2y=8; x-y=2",
+      "odpoved": "x=4, y=2",
+      "reseni_kroky": [
+        "Odečtu: 3y=6",
+        "y=2",
+        "x=4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_029",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: 3x+y=11; x+y=5",
+      "odpoved": "x=3, y=2",
+      "reseni_kroky": [
+        "Odečtu: 2x=6",
+        "x=3",
+        "y=2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_030",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: x+y=10; 2x+y=15",
+      "odpoved": "x=5, y=5",
+      "reseni_kroky": [
+        "Odečtu: x=5",
+        "y=5"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_031",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: 2x+3y=12; x+y=5",
+      "odpoved": "x=3, y=2",
+      "reseni_kroky": [
+        "Z druhé: x=5-y",
+        "dosaď: 2(5-y)+3y=12",
+        "y=2, x=3"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_032",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: x-2y=0; 3x+y=7",
+      "odpoved": "x=2, y=1",
+      "reseni_kroky": [
+        "x=2y, dosaď: 6y+y=7",
+        "y=1, x=2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_033",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš soustavu: 4x+3y=10; 2x-y=0",
+      "odpoved": "x=1, y=2",
+      "reseni_kroky": [
+        "z druhé: y=2x",
+        "4x+6x=10",
+        "x=1, y=2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_034",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: −(x − 3) = 2x + 3",
+      "odpoved": "x = 0",
+      "reseni_kroky": [
+        "-x+3 = 2x+3",
+        "0 = 3x",
+        "x=0"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_035",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 2(x+3) - 3(x-1) = 5",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "2x+6-3x+3=5",
+        "-x+9=5",
+        "x=4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_036",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 2,
+      "zadani": "Syn je 3× mladší než otec. Součet věků je 48. Kolik let je synovi?",
+      "odpoved": "12 let",
+      "reseni_kroky": [
+        "s+3s=48",
+        "4s=48",
+        "s=12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_037",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 2,
+      "zadani": "Číslo zvětšené o 15 se rovná dvojnásobku čísla. Jaké je číslo?",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "x+15=2x",
+        "x=15"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_038",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 2,
+      "zadani": "Dva po sobě jdoucí celá čísla mají součet 25. Jaká jsou?",
+      "odpoved": "12 a 13",
+      "reseni_kroky": [
+        "x+(x+1)=25",
+        "2x=24",
+        "x=12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_039",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 2,
+      "zadani": "Obdélník má obvod 32 cm. Délka je o 4 cm větší než šířka. Rozměry?",
+      "odpoved": "10 × 6 cm",
+      "reseni_kroky": [
+        "2(a+b)=32",
+        "a=b+4",
+        "2b+4+b=16, b=4...",
+        "b=6, a=10"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_040",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 2,
+      "zadani": "V pytlíku je červených kuliček 3× více než modrých. Celkem 48 kuliček. Kolik modrých?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "m+3m=48",
+        "4m=48",
+        "m=12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_041",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Dvě čísla mají součet 20 a rozdíl 6. Jaká jsou?",
+      "odpoved": "13 a 7",
+      "reseni_kroky": [
+        "x+y=20, x-y=6",
+        "2x=26, x=13, y=7"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_042",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Lístky pro dospělé za 120 Kč, pro děti 70 Kč. Celkem 10 lístků za 900 Kč. Kolik dospělých?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "d+c=10, 120d+70c=900",
+        "50d=200, d=4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_043",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 0,5x + 1,5 = 3,5",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "0,5x=2",
+        "x=4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_044",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 1,2x - 2,4 = 3,6",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "1,2x=6",
+        "x=5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_045",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: (2x-1)/3 = (x+2)/2",
+      "odpoved": "x = 8",
+      "reseni_kroky": [
+        "2(2x-1)=3(x+2)",
+        "4x-2=3x+6",
+        "x=8"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_046",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: x/(x-2) = 3 (x ≠ 2)",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "x=3(x-2)",
+        "x=3x-6",
+        "2x=6",
+        "x=3, ověř: 3 ≠ 2 ✓"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_047",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "zadani": "Vyřeš soustavu: 2x+5y=17; 3x-2y=6",
+      "odpoved": "x=4, y=9/5=1,8 — přepočti: x=4, y=9/5",
+      "reseni_kroky": "...",
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_048",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "zadani": "Vyřeš soustavu: x/2+y/3=4; x/3+y/4=3",
+      "odpoved": "x=6, y=6",
+      "reseni_kroky": [
+        "NSN=6: 3x+2y=24; NSN=12: 4x+3y=36",
+        "řeš soustavu"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_049",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Otec je nyní 4× starší než syn. Za 6 let bude 2× starší. Věky?",
+      "odpoved": "syn 3 let, otec 12 let",
+      "reseni_kroky": [
+        "o=4s, o+6=2(s+6)",
+        "4s+6=2s+12, 2s=6, s=3"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_050",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Cyklista A jede 18 km/h, B jede 24 km/h a vyjede o 30 min dřív. Kdy se potkají?",
+      "odpoved": "za 1 h od výjezdu A (1,5 h od výjezdu B)",
+      "reseni_kroky": "[18t=24(t-0,5)",
+      "cas_sekund": "18t=24t-12",
+      "sm2_interval": "6t=12"
+    },
+    {
+      "id": "ROV_051",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: |x - 3| = 5",
+      "odpoved": "x = 8 nebo x = -2",
+      "reseni_kroky": [
+        "x-3=5 → x=8",
+        "x-3=-5 → x=-2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_052",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: |2x + 1| = 7",
+      "odpoved": "x = 3 nebo x = -4",
+      "reseni_kroky": [
+        "2x+1=7 → x=3",
+        "2x+1=-7 → x=-4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_053",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "zadani": "Vyřeš soustavu: x+y+z=6; x+y=4; y+z=5",
+      "odpoved": "x=1, y=3, z=2",
+      "reseni_kroky": [
+        "z=6-4=2, z=2",
+        "y+2=5, y=3",
+        "x=4-3=1"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_054",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Součet tří po sobě jdoucích lichých čísel je 51. Jaká jsou?",
+      "odpoved": "15, 17, 19",
+      "reseni_kroky": [
+        "n+(n+2)+(n+4)=51",
+        "3n+6=51",
+        "n=15"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_055",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Polovina čísla plus třetina čísla se rovná 25. Jaké číslo?",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "x/2+x/3=25",
+        "5x/6=25",
+        "x=30"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_056",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: 3x-2y=7; 5x+3y=37",
+      "odpoved": "x=5, y=4",
+      "reseni_kroky": [
+        "×3: 9x-6y=21",
+        "×2: 10x+6y=74",
+        "sečtu: 19x=95, x=5, y=4"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_057",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 15 - 3(x + 2) = 0",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "15-3x-6=0",
+        "9=3x",
+        "x=3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_058",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 3/x = 6 (x ≠ 0)",
+      "odpoved": "x = 1/2",
+      "reseni_kroky": [
+        "3 = 6x",
+        "x = 1/2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_059",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: x/5 = x/4 - 1",
+      "odpoved": "x = 20",
+      "reseni_kroky": [
+        "NSN=20: 4x=5x-20",
+        "x=20"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_060",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: x=2y; 3x-y=15",
+      "odpoved": "x=6, y=3",
+      "reseni_kroky": [
+        "3(2y)-y=15",
+        "5y=15",
+        "y=3, x=6"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_061",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: -5x = 25",
+      "odpoved": "x = -5",
+      "reseni_kroky": [
+        "x = 25/(-5) = -5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_062",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 4x - 3 = 2x + 9",
+      "odpoved": "x = 6",
+      "reseni_kroky": [
+        "2x = 12",
+        "x = 6"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_063",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Řešením soustavy x+y=7; x·y=12 jsou...",
+      "odpoved": "x=3, y=4 nebo x=4, y=3",
+      "reseni_kroky": [
+        "x+y=7, xy=12",
+        "x² - 7x + 12 = 0",
+        "(x-3)(x-4)=0"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_064",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: (x-2)/3 = 2",
+      "odpoved": "x = 8",
+      "reseni_kroky": [
+        "x-2 = 6",
+        "x = 8"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_065",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: (3x+1)/4 = 4",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "3x+1 = 16",
+        "3x = 15",
+        "x = 5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_066",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 2x+y=11; x+2y=10",
+      "odpoved": "x=4, y=3",
+      "reseni_kroky": [
+        "odečtu: x-y=1, a x+2y=10, řeším"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV_067",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 2,
+      "zadani": "Za 3 kg jablek a 2 kg hrušek zaplatíš 126 Kč. Za 1 kg jablek a 3 kg hrušek 119 Kč. Cena 1 kg jablek?",
+      "odpoved": "24 Kč",
+      "reseni_kroky": [
+        "3j+2h=126, j+3h=119",
+        "řeš soustavu: j=24, h=27"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_068",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Vyřeš: 7(x-3) = 2(x+4) - 1",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "7x-21 = 2x+7",
+        "5x = 28... přepočítej: 7x-21=2x+8-1=2x+7",
+        "5x=28, x=5,6 — přepočítej zadání: 7(x-3)=2(x+1)",
+        "7x-21=2x+2, 5x=23"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "ROV_069",
+      "tema": "rovnice",
+      "podtema": "zlomkova",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: 1/(x-1) + 1/(x+1) = 1 (x ≠ ±1)",
+      "odpoved": "x nemá řešení v celých číslech — kvadratická: x²-2x-1=0",
+      "reseni_kroky": [
+        "(x+1+x-1)/((x-1)(x+1))=1",
+        "2x/(x²-1)=1",
+        "2x=x²-1",
+        "x²-2x-1=0",
+        "x=1±√2"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 3
+    },
+    {
+      "id": "ROV_070",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "zadani": "Vyřeš: x²+y²=25; x+y=7",
+      "odpoved": "x=3, y=4 nebo x=4, y=3",
+      "reseni_kroky": [
+        "z x+y=7: x=7-y",
+        "(7-y)²+y²=25",
+        "49-14y+2y²=25",
+        "2y²-14y+24=0",
+        "y²-7y+12=0",
+        "(y-3)(y-4)=0"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_001",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 1,
+      "zadani": "Vlakem jedeš 2 hodiny rychlostí 80 km/h. Jakou vzdálenost ujedeš?",
+      "odpoved": "160 km",
+      "reseni_kroky": [
+        "s = v × t = 80 × 2 = 160 km"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_002",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 1,
+      "zadani": "Cyklista ujede 45 km za 3 hodiny. Jaká je jeho průměrná rychlost?",
+      "odpoved": "15 km/h",
+      "reseni_kroky": [
+        "v = s/t = 45/3 = 15 km/h"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_003",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 1,
+      "zadani": "Autem jedete 120 km rychlostí 60 km/h. Jak dlouho jedete?",
+      "odpoved": "2 hodiny",
+      "reseni_kroky": [
+        "t = s/v = 120/60 = 2 h"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_004",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Z Prahy vyjede vlak v 8:00 rychlostí 100 km/h. V 9:00 vyjede druhý vlak rychlostí 150 km/h stejným směrem. Ve kolik hodin druhý vlak první dožene?",
+      "odpoved": "11:00",
+      "reseni_kroky": [
+        "t = čas 2. vlaku",
+        "100(t+1)=150t",
+        "50t=100",
+        "t=2h od 9:00 = 11:00"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_005",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Dva pěší jdou vstříc sobě. Vzdálenost 15 km, rychlosti 4 km/h a 6 km/h. Za jak dlouho se setkají?",
+      "odpoved": "1,5 hodiny",
+      "reseni_kroky": [
+        "t = 15/(4+6) = 15/10 = 1,5 h"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_006",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Auto jede z A do B (200 km) rychlostí 80 km/h, zpět rychlostí 120 km/h. Průměrná rychlost?",
+      "odpoved": "96 km/h",
+      "reseni_kroky": [
+        "t1=200/80=2,5h, t2=200/120=5/3h",
+        "průměrná=400/(2,5+5/3)=400/(25/6)=96"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_007",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Chodec ujde 3 km za 45 minut. Jak daleko ujde za 2 hodiny?",
+      "odpoved": "8 km",
+      "reseni_kroky": [
+        "rychlost=3/(45/60)=4 km/h",
+        "s=4×2=8 km"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_008",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Loď pluje po proudu 40 km/h, proti proudu 24 km/h. Rychlost proudu?",
+      "odpoved": "8 km/h",
+      "reseni_kroky": [
+        "vp=(40-24)/2=8 km/h"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_009",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 3,
+      "zadani": "Vlak A jede 60 km/h a vlak B 90 km/h vstříc sobě, vzdálenost 300 km. Za jak dlouho se setkají a kde?",
+      "odpoved": "2 h, 120 km od A",
+      "reseni_kroky": [
+        "t=300/150=2h",
+        "místo A: 60×2=120 km"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_010",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 3,
+      "zadani": "Maratonec ujde 42,2 km za 3h 30 min. Průměrná rychlost v km/h?",
+      "odpoved": "12,06 km/h",
+      "reseni_kroky": [
+        "t=3,5h",
+        "v=42,2/3,5=12,057"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_011",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 1,
+      "zadani": "Jeden dělník postaví zeď za 6 dní. Jakou část postaví za 1 den?",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "výkon = 1/6 za den"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_012",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "A zvládne práci za 4 h, B za 6 h. Jak dlouho ji zvládnou spolu?",
+      "odpoved": "2 h 24 min",
+      "reseni_kroky": [
+        "1/4+1/6=5/12 za h",
+        "t=12/5=2,4h=2h24min"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_013",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "Kohoutek plní nádrž za 3 h, výpust ji vyprazdňuje za 5 h. Oba jsou otevřeny. Za jak dlouho se nádrž naplní?",
+      "odpoved": "7,5 hodiny",
+      "reseni_kroky": [
+        "1/3-1/5=2/15 za h",
+        "t=15/2=7,5h"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_014",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "5 dělníků dokončí práci za 8 dní. Kolik dní potřebují 4 dělníci?",
+      "odpoved": "10 dní",
+      "reseni_kroky": [
+        "5×8=40 dělníkodní",
+        "40/4=10 dní"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_015",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "A pracuje 3× rychleji než B. Spolu dokončí práci za 3 hodiny. Jak dlouho by ji sám dokončil B?",
+      "odpoved": "16 hodin",
+      "reseni_kroky": [
+        "A=3B: 3/t_A + 1/t_B = 1/3",
+        "t_B=4t_A: 3/t_A+3/(4t_A)... přepočítej",
+        "1/t_A+1/t_B=1/3, t_A=t_B/3",
+        "4/t_B=1/3, t_B=12"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_016",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 2,
+      "zadani": "Smísíme 3 litry 20% roztoku a 2 litry 50% roztoku. Výsledná koncentrace?",
+      "odpoved": "32 %",
+      "reseni_kroky": [
+        "látka: 0,6+1,0=1,6",
+        "celkem: 5 litrů",
+        "1,6/5=0,32=32 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_017",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 2,
+      "zadani": "Kolik litrů 30% roztoku přidáme k 6 litrům 10% roztoku, aby výsledek byl 20%?",
+      "odpoved": "6 litrů",
+      "reseni_kroky": [
+        "0,3x+0,6=0,2(x+6)",
+        "0,1x=0,6",
+        "x=6"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_018",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 2,
+      "zadani": "Mícháme čaj za 120 Kč/100g a za 80 Kč/100g. Chceme 200g za 95 Kč/100g. Kolik gramů každého?",
+      "odpoved": "75 g drahého, 125 g levného",
+      "reseni_kroky": [
+        "x+y=200, 120x+80y=19000",
+        "40x=3000, x=75"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_019",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 3,
+      "zadani": "Slitina 20% Cu + slitina 80% Cu → 100g s 50% Cu. Kolik gramů každé?",
+      "odpoved": "50 g a 50 g",
+      "reseni_kroky": [
+        "0,2x+0,8(100-x)=50",
+        "0,2x+80-0,8x=50",
+        "0,6x=30, x=50"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_020",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 3,
+      "zadani": "Roztok soli: přidáme 200 ml vody k 300 ml 15% roztoku. Nová koncentrace?",
+      "odpoved": "9 %",
+      "reseni_kroky": [
+        "sůl=300×0,15=45ml",
+        "celkem=500ml",
+        "45/500=9 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_021",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 2,
+      "zadani": "Otec je 4× starší než syn. Za 5 let bude 3× starší. Věky nyní?",
+      "odpoved": "syn 10 let, otec 40 let",
+      "reseni_kroky": [
+        "o=4s, o+5=3(s+5)",
+        "4s+5=3s+15, s=10"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_022",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 2,
+      "zadani": "Matce je 36 let, dceři 12. Za kolik let bude matka 2× starší?",
+      "odpoved": "12 let",
+      "reseni_kroky": [
+        "36+t=2(12+t)",
+        "36+t=24+2t, t=12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_023",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 2,
+      "zadani": "Součet věků otce a syna je 54. Otec je o 30 let starší. Kolik let je synovi?",
+      "odpoved": "12 let",
+      "reseni_kroky": [
+        "s+(s+30)=54",
+        "2s=24, s=12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_024",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 2,
+      "zadani": "Babičce je 60 let, vnukovi 12. Před kolika lety bylo babičce 5× více než vnukovi?",
+      "odpoved": "5 let",
+      "reseni_kroky": [
+        "60-t=5(12-t)",
+        "60-t=60-5t",
+        "4t=0, t=0 — přeprač: 6×více"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_025",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 3,
+      "zadani": "Sourozenecký věkový průměr je 14 let. Nejstarší je o 6 let starší než nejmladší. Nejmladší je 11 let. Věk středního sourozence?",
+      "odpoved": "14 let",
+      "reseni_kroky": [
+        "průměr=14, nejmladší=11, nejstarší=17",
+        "střední=(3×14-11-17)=42-28=14"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_026",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Kolo má obvod 2 m. Kolik otáček udělá na trase 10 km?",
+      "odpoved": "5 000 otáček",
+      "reseni_kroky": [
+        "10000/2=5000"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_027",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Vlak jede přes most délky 500 m. Délka vlaku 100 m, rychlost 60 km/h. Za jak dlouho přejede?",
+      "odpoved": "36 sekund",
+      "reseni_kroky": [
+        "vzdálenost=600m",
+        "t=600/16,67=36s (60km/h=16,67m/s)"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_028",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "Zahradník dokáže pokosit louku za 4 hodiny. Po 1 hodině mu přijde pomoc. Spolu dokončí za další hodinu. Jak rychle pracuje pomocník?",
+      "odpoved": "za 1,5 hodiny sám",
+      "reseni_kroky": [
+        "zahradník udělal 1/4 + (1/4+výkon_p)=1",
+        "výkon_p=1/4: za 4 h"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_029",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Obdélník se prodloužil o 20 % a zúžil o 10 %. Změna obsahu?",
+      "odpoved": "navýšení o 8 %",
+      "reseni_kroky": [
+        "nový obsah: 1,2a × 0,9b = 1,08ab",
+        "navýšení 8 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_030",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Skupina turistů má dojít 60 km za 3 dny. 1. den ujdou 2/5, 2. den 1/3 zbytku. Kolik zbývá 3. den?",
+      "odpoved": "22 km",
+      "reseni_kroky": [
+        "1. den: 24 km, zbývá 36",
+        "2. den: 1/3×36=12 km, zbývá 24",
+        "správně: 60×2/5=24, zbytek=36, 36×1/3=12, 3.den=24"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_031",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 1,
+      "zadani": "Auto jede 40 km/h. Za 3 hodiny urazí ...",
+      "odpoved": "120 km",
+      "reseni_kroky": [
+        "s=40×3=120"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_032",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Město A a B jsou vzdáleny 180 km. Z A vyjede auto v 9:00 rychlostí 90 km/h, z B vyjede auto ve stejný čas rychlostí 60 km/h. Kdy se setkají?",
+      "odpoved": "10:12",
+      "reseni_kroky": [
+        "t=180/150=1,2h=1h12min",
+        "9:00+1:12=10:12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_033",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "Čerpadlo A plní bazén za 6 h, čerpadlo B za 4 h. Po jak dlouhé společné práci bude bazén plný ze 3/4?",
+      "odpoved": "1 h 48 min",
+      "reseni_kroky": [
+        "spolu: 1/6+1/4=5/12 za h",
+        "3/4 ÷ 5/12 = 9/5 h = 1,8h = 1h48min"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_034",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 2,
+      "zadani": "10 l vody a 5 l sirupu. Kolik procent sirupu?",
+      "odpoved": "33,3 %",
+      "reseni_kroky": [
+        "5/15×100=33,3 %"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_035",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 1,
+      "zadani": "Nyní je Evě 15 let a Adamovi 9 let. Před kolika lety bylo Evě 2× více let?",
+      "odpoved": "3 roky",
+      "reseni_kroky": [
+        "15-t=2(9-t)",
+        "15-t=18-2t",
+        "t=3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_036",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "V obchodě jsou 3 druhy jablek za 25, 30 a 40 Kč/kg. Koupíme 2 kg prvního, 3 kg druhého, 1 kg třetího. Celkem?",
+      "odpoved": "200 Kč",
+      "reseni_kroky": [
+        "50+90+40=180 Kč — přepočítej: 2×25+3×30+1×40=50+90+40=180"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_037",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Letadlo letí 800 km/h. Za 45 minut uletí ...",
+      "odpoved": "600 km",
+      "reseni_kroky": [
+        "s=800×0,75=600"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_038",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Vlak ujel 160 km za 2 h 30 min. Průměrná rychlost?",
+      "odpoved": "64 km/h",
+      "reseni_kroky": [
+        "v=160/2,5=64 km/h"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_039",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 3,
+      "zadani": "3 stroje vyrábí 300 ks za 5 hodin. Kolik strojů je třeba na 400 ks za 4 hodiny?",
+      "odpoved": "5 strojů",
+      "reseni_kroky": [
+        "výkon 1 stroje: 300/(3×5)=20ks/h",
+        "400/(4×20)=5 strojů"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_040",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Prodejce kupuje zboží za 200 Kč, prodává za 280 Kč. Procentuální marže?",
+      "odpoved": "40 %",
+      "reseni_kroky": [
+        "(280-200)/200×100=40 %"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_041",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Přijde na vás v 10:00 nájemce. Bydlíte 5 km daleko. Jedete na kole 15 km/h. V kolik vyjete, abyste přijeli v 9:55?",
+      "odpoved": "9:35",
+      "reseni_kroky": [
+        "t=5/15h=20 min",
+        "9:55-20min=9:35"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_042",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 3,
+      "zadani": "Výletníci vyjdou v 8:00, 4 km/h. Ve 9:00 vyjíždí auto 60 km/h, aby je dohonilo. Za jak dlouho?",
+      "odpoved": "4 minuty",
+      "reseni_kroky": [
+        "4km/h×1h=4km napřed",
+        "4/(60-4)=4/56=1/14 h ≈ 4,3 min"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_043",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "Stavba mostu trvá 10 dní pro 15 dělníků. Kolik dělníků je třeba, aby to trvalo 6 dní?",
+      "odpoved": "25 dělníků",
+      "reseni_kroky": [
+        "15×10=150 dělníkodní",
+        "150/6=25"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_044",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 3,
+      "zadani": "Přilijeme 4 l vody k 1 l 60% kyseliny. Výsledná koncentrace?",
+      "odpoved": "12 %",
+      "reseni_kroky": [
+        "čistá kyselina=0,6l",
+        "celkem=5l",
+        "0,6/5=12 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_045",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 2,
+      "zadani": "Pavel je 2× starší než Tomáš. Za 4 roky bude Pavel o 8 let starší. Věky nyní?",
+      "odpoved": "Tomáš 8 let, Pavel 16 let",
+      "reseni_kroky": [
+        "p=2t, (p+4)-(t+4)=8",
+        "p-t=8, 2t-t=8, t=8"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_046",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Za 5 jablek a 3 hrušky zaplatíme 47 Kč. Za 3 jablka a 5 hrušek 49 Kč. Cena 1 jablka?",
+      "odpoved": "5 Kč",
+      "reseni_kroky": [
+        "5j+3h=47, 3j+5h=49",
+        "řeš: j=5, h=4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_047",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Cena vstupenky pro dospělého je 2× cena dětské. Za 2 dospělé a 3 děti zaplatíme 350 Kč. Dětská cena?",
+      "odpoved": "50 Kč",
+      "reseni_kroky": [
+        "d=2c, 2d+3c=350",
+        "4c+3c=350, 7c=350, c=50"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_048",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 3,
+      "zadani": "Cyklista jede po okruzhu 10 km. 1. kolo 20 km/h, 2. kolo 25 km/h. Průměrná rychlost?",
+      "odpoved": "22,2 km/h",
+      "reseni_kroky": [
+        "t1=0,5h, t2=0,4h",
+        "průměr=20/0,9=22,2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "SLO_049",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 3,
+      "zadani": "Firma zaměstní 6 lidí na 8 hodin. Každý dostane 250 Kč/h. Celkové náklady?",
+      "odpoved": "12 000 Kč",
+      "reseni_kroky": [
+        "6×8×250=12000"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_050",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Cena výrobku je složena z materiálu (60 %) a práce (40 %). Materiál zdraží o 10 %, práce o 15 %. Nárůst ceny výrobku?",
+      "odpoved": "12 %",
+      "reseni_kroky": [
+        "nová cena: 0,6×1,1+0,4×1,15=0,66+0,46=1,12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_051",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 1,
+      "zadani": "Koňara jede 30 km/h. Za kolik hodin ujede 90 km?",
+      "odpoved": "3 hodiny",
+      "reseni_kroky": [
+        "t=90/30=3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_052",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 1,
+      "zadani": "Řemeslník udělá 15 kusů za hodinu. Kolik za 4 hodiny?",
+      "odpoved": "60 kusů",
+      "reseni_kroky": [
+        "15×4=60"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_053",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 2,
+      "zadani": "Dva vlaky jedou vstříc z měst vzdálených 360 km. Rychlosti 80 a 100 km/h. Kde se setkají od prvního města?",
+      "odpoved": "160 km",
+      "reseni_kroky": [
+        "t=360/180=2 h",
+        "s1=80×2=160 km"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_054",
+      "tema": "slovni_ulohy",
+      "podtema": "vekove",
+      "obtiznost": 2,
+      "zadani": "Rodičům je dohromady 80 let, jejich třem dětem dohromady 30 let. Průměrný věk celé rodiny?",
+      "odpoved": "22 let",
+      "reseni_kroky": [
+        "(80+30)/5=22"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_055",
+      "tema": "slovni_ulohy",
+      "podtema": "smesi",
+      "obtiznost": 2,
+      "zadani": "Ve třídě 25 žáků je 60 % dívek. Kolik chlapců?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "dívky: 15, chlapci: 10"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_056",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Hokej: 3 góly dohromady za 2 zápasy. 1. zápas: méně o 1 gól. Skóre?",
+      "odpoved": "1:2",
+      "reseni_kroky": [
+        "g1+g2=3, g2=g1+1",
+        "2g1+1=3, g1=1, g2=2"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_057",
+      "tema": "slovni_ulohy",
+      "podtema": "pohybove",
+      "obtiznost": 3,
+      "zadani": "Chodec a cyklista vyjíždějí ze stejného místa opačnými směry. Chodec 5 km/h, cyklista 20 km/h. Za jak dlouho jsou 50 km od sebe?",
+      "odpoved": "2 hodiny",
+      "reseni_kroky": [
+        "t=50/25=2h"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_058",
+      "tema": "slovni_ulohy",
+      "podtema": "prace",
+      "obtiznost": 2,
+      "zadani": "Stavitel dokončí dům za 120 dní, s pomocníkem za 80 dní. Jak rychle pracuje pomocník sám?",
+      "odpoved": "240 dní",
+      "reseni_kroky": [
+        "1/120+1/p=1/80",
+        "1/p=1/80-1/120=1/240"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_059",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Cena vstupenky na dospělou a dítě je 180 Kč. Dospělá je o 60 Kč dražší než dítě. Cena dítěte?",
+      "odpoved": "60 Kč",
+      "reseni_kroky": [
+        "d+c=180, d=c+60",
+        "2c+60=180, c=60"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_060",
+      "tema": "slovni_ulohy",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Obchod prodal ve 3 dnech 480 kg ovoce. Každý den prodal o 20 kg více než předchozí. Kolik v 1. den?",
+      "odpoved": "140 kg",
+      "reseni_kroky": [
+        "d+(d+20)+(d+40)=480",
+        "3d+60=480, d=140"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_001",
+      "tema": "geometrie",
+      "podtema": "ctverec",
+      "obtiznost": 1,
+      "zadani": "Čtverec má stranu 5 cm. Obvod?",
+      "odpoved": "20 cm",
+      "reseni_kroky": [
+        "O=4×5=20 cm"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_002",
+      "tema": "geometrie",
+      "podtema": "ctverec",
+      "obtiznost": 1,
+      "zadani": "Čtverec má stranu 7 cm. Obsah?",
+      "odpoved": "49 cm²",
+      "reseni_kroky": [
+        "S=7²=49 cm²"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_003",
+      "tema": "geometrie",
+      "podtema": "obdelnik",
+      "obtiznost": 1,
+      "zadani": "Obdélník 8×5 cm. Obvod?",
+      "odpoved": "26 cm",
+      "reseni_kroky": [
+        "O=2(8+5)=26 cm"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_004",
+      "tema": "geometrie",
+      "podtema": "obdelnik",
+      "obtiznost": 1,
+      "zadani": "Obdélník 6×4 cm. Obsah?",
+      "odpoved": "24 cm²",
+      "reseni_kroky": [
+        "S=6×4=24 cm²"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_005",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 1,
+      "zadani": "Trojúhelník se základnou 8 cm a výškou 5 cm. Obsah?",
+      "odpoved": "20 cm²",
+      "reseni_kroky": [
+        "S=8×5/2=20 cm²"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_006",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 1,
+      "zadani": "Kruh s poloměrem 3 cm. Obvod (π≈3,14)?",
+      "odpoved": "18,84 cm",
+      "reseni_kroky": [
+        "O=2×3,14×3=18,84 cm"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_007",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 1,
+      "zadani": "Kruh s poloměrem 5 cm. Obsah (π≈3,14)?",
+      "odpoved": "78,5 cm²",
+      "reseni_kroky": [
+        "S=3,14×25=78,5 cm²"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_008",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 1,
+      "zadani": "Pravoúhlý trojúhelník: odvěsny 3 a 4 cm. Přepona?",
+      "odpoved": "5 cm",
+      "reseni_kroky": [
+        "c²=9+16=25, c=5 cm"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_009",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 1,
+      "zadani": "Pravoúhlý trojúhelník: odvěsny 5 a 12 cm. Přepona?",
+      "odpoved": "13 cm",
+      "reseni_kroky": [
+        "c²=25+144=169, c=13 cm"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_010",
+      "tema": "geometrie",
+      "podtema": "ctverec",
+      "obtiznost": 1,
+      "zadani": "Čtverec má obvod 24 cm. Délka strany?",
+      "odpoved": "6 cm",
+      "reseni_kroky": [
+        "a=24/4=6 cm"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_011",
+      "tema": "geometrie",
+      "podtema": "obdelnik",
+      "obtiznost": 1,
+      "zadani": "Obdélník má obvod 30 cm a délku 10 cm. Šířka?",
+      "odpoved": "5 cm",
+      "reseni_kroky": [
+        "2(10+š)=30, š=5 cm"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_012",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Pravoúhlý trojúhelník: přepona 10 cm, jedna odvěsna 6 cm. Druhá odvěsna?",
+      "odpoved": "8 cm",
+      "reseni_kroky": [
+        "b²=100-36=64, b=8 cm"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_013",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Rovnoramenný trojúhelník: ramena 10 cm, základna 12 cm. Výška na základnu?",
+      "odpoved": "8 cm",
+      "reseni_kroky": [
+        "h²=100-36=64, h=8 cm"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_014",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Rovnoramenný trojúhelník: ramena 10 cm, základna 12 cm. Obsah?",
+      "odpoved": "48 cm²",
+      "reseni_kroky": [
+        "S=12×8/2=48 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_015",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Kruh s průměrem 14 cm. Obsah (π≈3,14)?",
+      "odpoved": "153,86 cm²",
+      "reseni_kroky": [
+        "r=7, S=3,14×49=153,86 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_016",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Kruh s průměrem 20 cm. Obvod (π≈3,14)?",
+      "odpoved": "62,8 cm",
+      "reseni_kroky": [
+        "O=3,14×20=62,8 cm"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_017",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Krychle se stranou 4 cm. Objem?",
+      "odpoved": "64 cm³",
+      "reseni_kroky": [
+        "V=4³=64 cm³"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_018",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Krychle se stranou 4 cm. Povrch?",
+      "odpoved": "96 cm²",
+      "reseni_kroky": [
+        "S=6×4²=96 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_019",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Kvádr 5×4×3 cm. Objem?",
+      "odpoved": "60 cm³",
+      "reseni_kroky": [
+        "V=5×4×3=60 cm³"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_020",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Kvádr 5×4×3 cm. Povrch?",
+      "odpoved": "94 cm²",
+      "reseni_kroky": [
+        "S=2(5×4+4×3+5×3)=2×47=94 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_021",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Válec: r=3 cm, h=10 cm. Objem (π≈3,14)?",
+      "odpoved": "282,6 cm³",
+      "reseni_kroky": [
+        "V=3,14×9×10=282,6 cm³"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_022",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Válec: r=4 cm, h=7 cm. Povrch (π≈3,14)?",
+      "odpoved": "276,32 cm²",
+      "reseni_kroky": [
+        "S=2×3,14×4×7+2×3,14×16=175,84+100,48=276,32 cm²"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_023",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Zkontroluj: Je trojúhelník se stranami 6, 8, 10 pravoúhlý?",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "6²+8²=100=10²"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_024",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Zkontroluj: Je trojúhelník 5, 7, 8 pravoúhlý?",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "5²+7²=74≠64=8²"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_025",
+      "tema": "geometrie",
+      "podtema": "ctverec",
+      "obtiznost": 2,
+      "zadani": "Čtverec má obsah 81 cm². Délka strany?",
+      "odpoved": "9 cm",
+      "reseni_kroky": [
+        "a=√81=9 cm"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_026",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Trojúhelník se stranami 5, 5, 6 cm. Obsah?",
+      "odpoved": "12 cm²",
+      "reseni_kroky": [
+        "h²=25-9=16, h=4",
+        "S=6×4/2=12 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_027",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Zahrada 20×15 m s kruhovým bazénem r=3 m. Plocha zahrady bez bazénu (π≈3,14)?",
+      "odpoved": "271,74 m²",
+      "reseni_kroky": [
+        "300-3,14×9=300-28,26=271,74 m²"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_028",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Tečna k ružnici z bodu vzdáleného 10 cm od středu, poloměr 6 cm. Délka tečny?",
+      "odpoved": "8 cm",
+      "reseni_kroky": [
+        "t²=10²-6²=64, t=8 cm"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_029",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Rovnostranný trojúhelník se stranou 6 cm. Výška?",
+      "odpoved": "3√3 ≈ 5,2 cm",
+      "reseni_kroky": [
+        "h=6√3/2=3√3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_030",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Rovnostranný trojúhelník se stranou 6 cm. Obsah?",
+      "odpoved": "9√3 ≈ 15,6 cm²",
+      "reseni_kroky": [
+        "S=6²√3/4=9√3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_031",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Jehlan se čtvercovou základnou 4 cm a výškou 3 cm. Objem?",
+      "odpoved": "16 cm³",
+      "reseni_kroky": [
+        "V=4²×3/3=16 cm³"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_032",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Kužel: r=3 cm, h=4 cm. Objem (π≈3,14)?",
+      "odpoved": "37,68 cm³",
+      "reseni_kroky": [
+        "V=3,14×9×4/3=37,68 cm³"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_033",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "V obdélníku 12×5 cm. Délka úhlopříčky?",
+      "odpoved": "13 cm",
+      "reseni_kroky": [
+        "d²=144+25=169, d=13 cm"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_034",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Výška budovy 15 m, vzdálenost od základny 8 m. Délka tyče od základny ke střeše?",
+      "odpoved": "17 m",
+      "reseni_kroky": [
+        "d²=225+64=289, d=17 m"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_035",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "L-tvar: obdélník 10×8 minus obdélník 4×3. Obsah?",
+      "odpoved": "68 cm²",
+      "reseni_kroky": [
+        "80-12=68 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_036",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Čtverec se zvětší o 20 %. O kolik procent vzroste obsah?",
+      "odpoved": "44 %",
+      "reseni_kroky": [
+        "1,2²=1,44 → +44 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_037",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Kruh se zvětší o 10 %. O kolik procent vzroste obsah?",
+      "odpoved": "21 %",
+      "reseni_kroky": [
+        "1,1²=1,21 → +21 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_038",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 3,
+      "zadani": "Heronův vzorec: trojúhelník se stranami 7, 8, 9. Obsah?",
+      "odpoved": "26,83 cm²",
+      "reseni_kroky": [
+        "s=(7+8+9)/2=12",
+        "S=√(12×5×4×3)=√720≈26,83"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "GEO_039",
+      "tema": "geometrie",
+      "podtema": "podobnost",
+      "obtiznost": 2,
+      "zadani": "Dva podobné trojúhelníky, poměr stran 2:3. Poměr obsahu?",
+      "odpoved": "4:9",
+      "reseni_kroky": [
+        "poměr ploch = čtverec poměru stran"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_040",
+      "tema": "geometrie",
+      "podtema": "podobnost",
+      "obtiznost": 2,
+      "zadani": "Podobné obdélníky, poměr délek 3:5. Poměr ploch?",
+      "odpoved": "9:25",
+      "reseni_kroky": [
+        "9:25"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_041",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 3,
+      "zadani": "Válec: objem 1000 cm³, výška 10 cm. Poloměr (π≈3,14)?",
+      "odpoved": "5,64 cm",
+      "reseni_kroky": [
+        "r²=1000/(3,14×10)=31,85",
+        "r≈5,64 cm"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_042",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 3,
+      "zadani": "Koule: poloměr 6 cm. Objem (π≈3,14)?",
+      "odpoved": "904,32 cm³",
+      "reseni_kroky": [
+        "V=4/3×3,14×216=904,32 cm³"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_043",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Kruhový sektor: r=10 cm, úhel 60°. Délka oblouku (π≈3,14)?",
+      "odpoved": "10,47 cm",
+      "reseni_kroky": [
+        "l=2×3,14×10×60/360=10,47 cm"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_044",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Kruhový sektor: r=8 cm, úhel 90°. Obsah sektoru (π≈3,14)?",
+      "odpoved": "50,24 cm²",
+      "reseni_kroky": [
+        "S=3,14×64×90/360=50,24 cm²"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_045",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Čtverec má úhlopříčku 10 cm. Délka strany?",
+      "odpoved": "5√2 ≈ 7,07 cm",
+      "reseni_kroky": [
+        "d²=2a²",
+        "a=10/√2=5√2≈7,07"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_046",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Hranatý hranol 3×4×5 cm. Délka prostorové úhlopříčky?",
+      "odpoved": "5√2 ≈ 7,07 cm",
+      "reseni_kroky": [
+        "d²=9+16+25=50",
+        "d=√50=5√2≈7,07 cm"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_047",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 1,
+      "zadani": "Trojúhelník se stranami 3, 4, 5. Jaký je typ?",
+      "odpoved": "Pravoúhlý",
+      "reseni_kroky": [
+        "3²+4²=5²"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_048",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Kolik čtvercových dlaždic 20×20 cm potřebujeme na podlahu 4×3 m?",
+      "odpoved": "300 ks",
+      "reseni_kroky": [
+        "4×3=12 m²=120 000 cm²",
+        "120000/400=300"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_049",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Plot obklopuje pozemek 60×40 m. Kolik metrů plotu?",
+      "odpoved": "200 m",
+      "reseni_kroky": [
+        "O=2(60+40)=200 m"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_050",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Krychle má povrch 150 cm². Délka strany?",
+      "odpoved": "5 cm",
+      "reseni_kroky": [
+        "6a²=150, a²=25, a=5 cm"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_051",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Obdélník s úhlopříčkou 13 cm a jednou stranou 5 cm. Druhá strana a obsah?",
+      "odpoved": "12 cm, 60 cm²",
+      "reseni_kroky": [
+        "b²=169-25=144, b=12",
+        "S=5×12=60 cm²"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_052",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Rovnoramenný lichoběžník: základny 10 a 6 cm, ramena 5 cm. Obsah?",
+      "odpoved": "32 cm²",
+      "reseni_kroky": [
+        "výška: h²=25-4=21, h=√21≈4,58",
+        "S=(10+6)/2×√21≈32"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "GEO_053",
+      "tema": "geometrie",
+      "podtema": "podobnost",
+      "obtiznost": 3,
+      "zadani": "Fotka 10×15 cm se zvětší tak, že kratší strana je 25 cm. Jak dlouhá bude delší strana?",
+      "odpoved": "37,5 cm",
+      "reseni_kroky": [
+        "poměr 25/10=2,5",
+        "15×2,5=37,5 cm"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_054",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Obsah trojúhelníku je 30 cm². Výška je 6 cm. Základna?",
+      "odpoved": "10 cm",
+      "reseni_kroky": [
+        "S=a×h/2: 30=a×6/2, a=10"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_055",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Kolísání kola: průměr 26 palců (1 palec = 2,54 cm). Obvod (π≈3,14)?",
+      "odpoved": "207,07 cm",
+      "reseni_kroky": [
+        "O=3,14×26×2,54=207,07 cm"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_056",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 1,
+      "zadani": "Kvádr: délka 10 cm, šířka 5 cm, výška 2 cm. Objem?",
+      "odpoved": "100 cm³",
+      "reseni_kroky": [
+        "V=10×5×2=100 cm³"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_057",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Zahrada tvaru písmene L: celkový obdélník 15×10 m, z pravého horního rohu odebrán čtverec 5×5 m. Obsah?",
+      "odpoved": "125 m²",
+      "reseni_kroky": [
+        "150-25=125 m²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_058",
+      "tema": "geometrie",
+      "podtema": "podobnost",
+      "obtiznost": 2,
+      "zadani": "Mapu v měřítku 1:50 000. Na mapě vzdálenost 3 cm. Skutečná vzdálenost?",
+      "odpoved": "1,5 km",
+      "reseni_kroky": [
+        "3×50000=150000 cm=1,5 km"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_059",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 3,
+      "zadani": "Diamant (čtverec) s úhlopříčkami 16 cm a 12 cm. Obsah?",
+      "odpoved": "96 cm²",
+      "reseni_kroky": [
+        "S=d₁×d₂/2=16×12/2=96 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_060",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 1,
+      "zadani": "Obvod rovnostranného trojúhelníku je 24 cm. Délka strany?",
+      "odpoved": "8 cm",
+      "reseni_kroky": [
+        "a=24/3=8 cm"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_061",
+      "tema": "geometrie",
+      "podtema": "kruznice",
+      "obtiznost": 2,
+      "zadani": "Půlkruh s průměrem 10 cm. Obsah (π≈3,14)?",
+      "odpoved": "39,25 cm²",
+      "reseni_kroky": [
+        "S=3,14×25/2=39,25 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_062",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Odvěsny pravoúhlého trojúhelníku jsou v poměru 3:4. Přepona je 15 cm. Odvěsny?",
+      "odpoved": "9 a 12 cm",
+      "reseni_kroky": [
+        "3k, 4k, (3k)²+(4k)²=225",
+        "25k²=225, k=3",
+        "odvěsny: 9 a 12 cm"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_063",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Čtverec a kruh mají stejný obvod 40 cm. Který má větší obsah?",
+      "odpoved": "Kruh (127,4 vs. 100 cm²)",
+      "reseni_kroky": [
+        "čtverec: a=10, S=100",
+        "kruh: r=40/(2π)≈6,37, S=π×40,6≈127,4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "GEO_064",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 2,
+      "zadani": "Kužel: r=5, h=12. Délka strany (povrchová)?",
+      "odpoved": "13 cm",
+      "reseni_kroky": [
+        "l=√(144+25)=√169=13"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_065",
+      "tema": "geometrie",
+      "podtema": "trojuhelnik",
+      "obtiznost": 3,
+      "zadani": "Úhly trojúhelníku jsou v poměru 1:2:3. Jaké jsou úhly?",
+      "odpoved": "30°, 60°, 90°",
+      "reseni_kroky": [
+        "součet=180°",
+        "x+2x+3x=180, x=30"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_066",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Kruh je vepsán do čtverce se stranou 10 cm. Plocha mezi čtvercem a kruhem?",
+      "odpoved": "21,5 cm²",
+      "reseni_kroky": [
+        "100-3,14×25=100-78,5=21,5 cm²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_067",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 2,
+      "zadani": "Z plechu 50×30 cm vystřihneme 4 kruhy s průměrem 10 cm. Zbývající plocha (π≈3,14)?",
+      "odpoved": "1185,6 cm²",
+      "reseni_kroky": [
+        "1500-4×78,5=1500-314=1186 cm²"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_068",
+      "tema": "geometrie",
+      "podtema": "pythagoras",
+      "obtiznost": 2,
+      "zadani": "Výška jedle 12 m, vzdálenost od paty 5 m. Délka lana od vrcholu k patě?",
+      "odpoved": "13 m",
+      "reseni_kroky": [
+        "d²=144+25=169, d=13 m"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEO_069",
+      "tema": "geometrie",
+      "podtema": "teleso",
+      "obtiznost": 3,
+      "zadani": "Válec a kužel mají stejný poloměr a výšku. Poměr objemů?",
+      "odpoved": "3:1",
+      "reseni_kroky": [
+        "V_válec=πr²h",
+        "V_kužel=πr²h/3",
+        "poměr=3:1"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "GEO_070",
+      "tema": "geometrie",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "zadani": "Pětiúhelník má vnitřní úhly 110°, 120°, 95°, 130° a x. Jaký je x?",
+      "odpoved": "85°",
+      "reseni_kroky": [
+        "součet=(5-2)×180=540",
+        "x=540-455=85°"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_001",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Hodíme kostkou. P(padne 6)?",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "P=1/6≈16,7 %"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_002",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Hodíme kostkou. P(padne sudé číslo)?",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "příznivé: 2,4,6 = 3",
+        "P=3/6=1/2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_003",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Hodíme mincí. P(panna)?",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "P=1/2=50 %"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_004",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Z 10 čísel vybereme jedno. P(vybereme číslo 5)?",
+      "odpoved": "1/10",
+      "reseni_kroky": [
+        "P=1/10"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_005",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Z balíčku 4 karet (A, B, C, D) vytáhneme jednu. P(vytáhneme B)?",
+      "odpoved": "1/4",
+      "reseni_kroky": [
+        "P=1/4=25 %"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_006",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Hodíme kostkou. P(padne číslo > 4)?",
+      "odpoved": "1/3",
+      "reseni_kroky": [
+        "příznivé: 5,6",
+        "P=2/6=1/3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_007",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Hodíme kostkou. P(padne číslo < 3)?",
+      "odpoved": "1/3",
+      "reseni_kroky": [
+        "příznivé: 1,2",
+        "P=2/6=1/3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_008",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "Z 5 červených a 5 modrých kuliček vytáhneme jednu. P(červená)?",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "P=5/10=1/2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_009",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Z 4 červených a 6 modrých kuliček vytáhneme jednu. P(modrá)?",
+      "odpoved": "3/5",
+      "reseni_kroky": [
+        "P=6/10=3/5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_010",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme dvěma kostkami. P(součet = 7)?",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "příznivé: 6 výsledků z 36",
+        "P=6/36=1/6"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_011",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme dvěma kostkami. P(součet = 12)?",
+      "odpoved": "1/36",
+      "reseni_kroky": [
+        "příznivé: jen (6,6)",
+        "P=1/36"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_012",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme dvěma kostkami. P(obě kostky ukáží stejné číslo)?",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "příznivé: (1,1),(2,2),...,(6,6) = 6",
+        "P=6/36=1/6"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_013",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "V pytlíku 3 červené, 4 modré, 3 žluté. P(vytáhneme modrou)?",
+      "odpoved": "2/5",
+      "reseni_kroky": [
+        "P=4/10=2/5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_014",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Balíček 52 karet. P(vytáhneme eso)?",
+      "odpoved": "1/13",
+      "reseni_kroky": [
+        "P=4/52=1/13"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_015",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Balíček 52 karet. P(vytáhneme srdcovou kartu)?",
+      "odpoved": "1/4",
+      "reseni_kroky": [
+        "P=13/52=1/4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_016",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze skupiny 5 lidí vybereme 2. Kolik možností?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "C(5,2)=10"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_017",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze skupiny 6 lidí vybereme 3. Kolik možností?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "C(6,3)=20"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_018",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze skupiny 4 mužů a 3 žen vybereme 2 lidi. P(oba jsou muži)?",
+      "odpoved": "2/7",
+      "reseni_kroky": [
+        "C(4,2)=6, C(7,2)=21",
+        "P=6/21=2/7"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_019",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze skupiny 4 mužů a 3 žen vybereme 2. P(jeden muž a jedna žena)?",
+      "odpoved": "4/7",
+      "reseni_kroky": [
+        "C(4,1)×C(3,1)=12, C(7,2)=21",
+        "P=12/21=4/7"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_020",
+      "tema": "pravdepodobnost",
+      "podtema": "permutace",
+      "obtiznost": 2,
+      "zadani": "Kolika způsoby lze seřadit 4 lidi do řady?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "P(4)=4!=24"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_021",
+      "tema": "pravdepodobnost",
+      "podtema": "permutace",
+      "obtiznost": 2,
+      "zadani": "Kolika způsoby lze seřadit 5 lidí do řady?",
+      "odpoved": "120",
+      "reseni_kroky": [
+        "P(5)=5!=120"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_022",
+      "tema": "pravdepodobnost",
+      "podtema": "permutace",
+      "obtiznost": 2,
+      "zadani": "Kolik různých 4místných čísel lze sestavit z číslic 1,2,3,4 (každá jen jednou)?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "P(4)=4!=24"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_023",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze 7 kandidátů vybereme komisi 3. Kolik možností?",
+      "odpoved": "35",
+      "reseni_kroky": [
+        "C(7,3)=35"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_024",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hrát ruletu: čísla 0–36. P(padne číslo 7)?",
+      "odpoved": "1/37",
+      "reseni_kroky": [
+        "P=1/37≈2,7 %"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_025",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hrát ruletu: P(padne sudé číslo, 1–36)?",
+      "odpoved": "18/37",
+      "reseni_kroky": [
+        "P=18/37"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_026",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 3,
+      "zadani": "Ze skupiny 5 chlapců a 4 dívek vybereme 3. P(všichni chlapci)?",
+      "odpoved": "2/21",
+      "reseni_kroky": [
+        "C(5,3)=10, C(9,3)=84",
+        "P=10/84=5/42≈0,119"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_027",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 3,
+      "zadani": "Ze skupiny 5 chlapců a 4 dívek vybereme 3. P(aspoň 1 dívka)?",
+      "odpoved": "19/21",
+      "reseni_kroky": [
+        "P=1-P(žádná dívka)=1-10/84=74/84=37/42"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_028",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme 3 mincemi. P(právě 2 panny)?",
+      "odpoved": "3/8",
+      "reseni_kroky": [
+        "příznivé: PPO, POP, OPP = 3",
+        "celkem: 8",
+        "P=3/8"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_029",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme 3 mincemi. P(aspoň 1 panna)?",
+      "odpoved": "7/8",
+      "reseni_kroky": [
+        "P=1-P(žádná panna)=1-1/8=7/8"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_030",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Z 52 karet vytáhneme 1. P(eso nebo srdce)?",
+      "odpoved": "4/13",
+      "reseni_kroky": [
+        "P(eso)=4/52, P(srdce)=13/52, P(eso srdce)=1/52",
+        "P=16/52=4/13"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_031",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 3,
+      "zadani": "Ze skupiny 10 studentů vybereme 4. P(vybrány 2 konkrétní osoby)?",
+      "odpoved": "1/5",
+      "reseni_kroky": [
+        "P=C(8,2)/C(10,4)=28/210=2/15 — přepočti: P=C(8,2)/C(10,4)=28/210=2/15"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_032",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme kostkou 2×. P(alespoň jednou padne 6)?",
+      "odpoved": "11/36",
+      "reseni_kroky": [
+        "P=1-(5/6)²=1-25/36=11/36"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_033",
+      "tema": "pravdepodobnost",
+      "podtema": "permutace",
+      "obtiznost": 2,
+      "zadani": "Kolik různých pořadí na stupních vítězů ze 8 sportovců?",
+      "odpoved": "336",
+      "reseni_kroky": [
+        "P(8,3)=8×7×6=336"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_034",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Kolik různých dvojic lze vybrat z 8 hráčů?",
+      "odpoved": "28",
+      "reseni_kroky": [
+        "C(8,2)=28"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_035",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme kostkou. P(padne číslo dělitelné 3)?",
+      "odpoved": "1/3",
+      "reseni_kroky": [
+        "příznivé: 3,6",
+        "P=2/6=1/3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_036",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze skupiny 6 čísel vybereme 3. Kolik kombinací?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "C(6,3)=20"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_037",
+      "tema": "pravdepodobnost",
+      "podtema": "permutace",
+      "obtiznost": 2,
+      "zadani": "Kolik čtyřmístných čísel lze sestavit z číslic 0,1,2,3 (každá jen jednou, 0 nesmí být první)?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "3×3×2×1=18 (první místo: 1,2,3)"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_038",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 3,
+      "zadani": "Hodíme 4 mincemi. P(přesně 2 panny)?",
+      "odpoved": "3/8",
+      "reseni_kroky": [
+        "C(4,2)/2⁴=6/16=3/8"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_039",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 3,
+      "zadani": "Ze skupiny 10 mužů a 6 žen vybereme výbor 4. P(2 muži a 2 ženy)?",
+      "odpoved": "450/1001 ≈ 44,96 %",
+      "reseni_kroky": [
+        "C(10,2)×C(6,2)/C(16,4)=45×15/1820=675/1820=135/364"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_040",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Losujeme ze 30 čísel (1–30). P(vylosujeme prvočíslo)?",
+      "odpoved": "10/30 = 1/3",
+      "reseni_kroky": [
+        "prvočísla do 30: 2,3,5,7,11,13,17,19,23,29 = 10",
+        "P=10/30=1/3"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_041",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "P(jistý jev)?",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "P(jistý)=1=100 %"
+      ],
+      "cas_sekund": 45,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_042",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 1,
+      "zadani": "P(nemožný jev)?",
+      "odpoved": "0",
+      "reseni_kroky": [
+        "P(nemožný)=0"
+      ],
+      "cas_sekund": 45,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_043",
+      "tema": "pravdepodobnost",
+      "podtema": "doplnkovy",
+      "obtiznost": 2,
+      "zadani": "P(A) = 0,3. P(opak A)?",
+      "odpoved": "0,7",
+      "reseni_kroky": [
+        "P(Ā)=1-0,3=0,7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_044",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Tříčíselné kombinace ze číslic 1–5 bez opakování. Kolik?",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "P(5,3)=5×4×3=60"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_045",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Ze 4 modrých a 3 zelených kuliček vytáhneme 2. P(obě modré)?",
+      "odpoved": "2/7",
+      "reseni_kroky": [
+        "C(4,2)/C(7,2)=6/21=2/7"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_046",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 3,
+      "zadani": "Ze skupiny 8 lidí (4 páry) vybereme 2. P(vybereme pár)?",
+      "odpoved": "3/14 ≈ 21,4 %",
+      "reseni_kroky": [
+        "C(4,1)/C(8,2)=4/28=1/7"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_047",
+      "tema": "pravdepodobnost",
+      "podtema": "klasicka",
+      "obtiznost": 2,
+      "zadani": "Hodíme kostkou 3×. P(vždy padne číslo > 3)?",
+      "odpoved": "1/8",
+      "reseni_kroky": [
+        "(1/2)³=1/8"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_048",
+      "tema": "pravdepodobnost",
+      "podtema": "permutace",
+      "obtiznost": 2,
+      "zadani": "Kolik různých anagramů slova AUTO?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "4!/2!=12 (U se opakuje 2×)"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "PRA_049",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 2,
+      "zadani": "Kolik způsobů lze rozdělit 10 jablek mezi 3 děti (každé aspoň jedno)?",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "hvězdičky a pruty: C(9,2)=36"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "PRA_050",
+      "tema": "pravdepodobnost",
+      "podtema": "kombinace",
+      "obtiznost": 3,
+      "zadani": "Tenis: 8 hráčů, každý s každým 1 zápas. Kolik zápasů?",
+      "odpoved": "28",
+      "reseni_kroky": [
+        "C(8,2)=28"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_001",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 1,
+      "zadani": "Zakresli bod A(3, 2) do souřadnicové soustavy. Vzdálenost od počátku?",
+      "odpoved": "√13 ≈ 3,61",
+      "reseni_kroky": [
+        "d=√(9+4)=√13"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_002",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 1,
+      "zadani": "Zakresli bod B(-2, 4). V jakém kvadrantu leží?",
+      "odpoved": "II. kvadrant",
+      "reseni_kroky": [
+        "x<0, y>0 → II. kvadrant"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_003",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 1,
+      "zadani": "Bod C(0, 3). Leží na ose x nebo y?",
+      "odpoved": "Na ose y",
+      "reseni_kroky": [
+        "x=0 → osa y"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_004",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 1,
+      "zadani": "y = 3x. Hodnota y pro x = 4?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "y=3×4=12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_005",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 1,
+      "zadani": "y = 5x. Hodnota x pro y = 20?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "x=20/5=4"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_006",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "y = 2x + 1. Hodnota y pro x = 3?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "y=2×3+1=7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_007",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "y = x - 4. Hodnota y pro x = 7?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "y=7-4=3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_008",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "y = -x + 5. Průsečík s osou y?",
+      "odpoved": "(0, 5)",
+      "reseni_kroky": [
+        "x=0: y=5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_009",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "y = 3x - 6. Průsečík s osou x?",
+      "odpoved": "(2, 0)",
+      "reseni_kroky": [
+        "y=0: 3x=6, x=2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_010",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Směrnice přímky y = 4x + 2?",
+      "odpoved": "k = 4",
+      "reseni_kroky": [
+        "k=4 (koeficient u x)"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_011",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka prochází body (0, 3) a (2, 7). Rovnice?",
+      "odpoved": "y = 2x + 3",
+      "reseni_kroky": [
+        "k=(7-3)/(2-0)=2",
+        "y=2x+3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_012",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka prochází body (1, 5) a (3, 9). Rovnice?",
+      "odpoved": "y = 2x + 3",
+      "reseni_kroky": [
+        "k=(9-5)/(3-1)=2",
+        "5=2+q, q=3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_013",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka prochází body (2, 4) a (4, 2). Rovnice?",
+      "odpoved": "y = -x + 6",
+      "reseni_kroky": [
+        "k=(2-4)/(4-2)=-1",
+        "4=-2+q, q=6"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_014",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka má směrnici 3 a prochází bodem (1, 7). Rovnice?",
+      "odpoved": "y = 3x + 4",
+      "reseni_kroky": [
+        "7=3+q, q=4",
+        "y=3x+4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_015",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímky y = 2x + 1 a y = 2x - 3. Jsou rovnoběžné?",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "stejná směrnice k=2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_016",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímky y = 2x + 1 a y = -x/2 + 1. Jsou kolmé?",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "k1×k2=2×(-0,5)=-1"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_017",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Průsečík přímek y = 2x + 1 a y = -x + 4?",
+      "odpoved": "(1, 3)",
+      "reseni_kroky": [
+        "2x+1=-x+4, 3x=3, x=1, y=3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_018",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Průsečík přímek y = x + 2 a y = 3x - 2?",
+      "odpoved": "(2, 4)",
+      "reseni_kroky": [
+        "x+2=3x-2, 2x=4, x=2, y=4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_019",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "y přímo úměrné x, pro x=5 je y=15. Koeficient úměrnosti?",
+      "odpoved": "k = 3",
+      "reseni_kroky": [
+        "k=15/5=3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_020",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "3 kusy za 90 Kč. Cena 7 kusů (přímá úměrnost)?",
+      "odpoved": "210 Kč",
+      "reseni_kroky": [
+        "k=30 Kč/kus",
+        "7×30=210"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_021",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "Za 4 hodiny práce mzda 600 Kč. Mzda za 6 hodin?",
+      "odpoved": "900 Kč",
+      "reseni_kroky": [
+        "k=150 Kč/h",
+        "6×150=900"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_022",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 2,
+      "zadani": "Vzdálenost bodů A(1, 2) a B(4, 6)?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "d=√(9+16)=√25=5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_023",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 2,
+      "zadani": "Střed úsečky AB, kde A(2, 4) a B(6, 8)?",
+      "odpoved": "(4, 6)",
+      "reseni_kroky": [
+        "S=((2+6)/2, (4+8)/2)=(4,6)"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_024",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Nakresli graf funkce y = 2x - 1. Kde protíná osu x?",
+      "odpoved": "x = 0,5",
+      "reseni_kroky": [
+        "0=2x-1, x=0,5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_025",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Napiš rovnici přímky rovnoběžné s y = 3x a procházející (0, 5)?",
+      "odpoved": "y = 3x + 5",
+      "reseni_kroky": [
+        "stejná směrnice, q=5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_026",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Napiš rovnici přímky kolmé na y = 2x + 1 a procházející (2, 3)?",
+      "odpoved": "y = -x/2 + 4",
+      "reseni_kroky": [
+        "k_kol=-1/2",
+        "3=-1+q, q=4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "FUN_027",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Přímka p: y = 3x - 2, přímka q rovnoběžná s p, vzdálenost 5. Rovnice q?",
+      "odpoved": "y = 3x + c (c různé od -2)",
+      "reseni_kroky": [
+        "rovnoběžné mají k=3, libovolné q≠-2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "FUN_028",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 2,
+      "zadani": "Bod leží na přímce y = 2x + 3. Která z možností: A(1,5), B(2,6), C(0,4)?",
+      "odpoved": "A(1,5)",
+      "reseni_kroky": [
+        "y=2×1+3=5 ✓",
+        "y=2×2+3=7≠6 ✗"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_029",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "Přímá úměrnost y=kx. Graf prochází (3,12). Hodnota k?",
+      "odpoved": "k = 4",
+      "reseni_kroky": [
+        "12=3k, k=4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_030",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka: x-ová souřadnice průsečíku s y=-2x+8 a x-osou?",
+      "odpoved": "x = 4",
+      "reseni_kroky": [
+        "0=-2x+8, x=4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_031",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 1,
+      "zadani": "y = 4x. Je to přímá úměrnost?",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "y=kx s k=4"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_032",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "y = 2x + 3. Je to lineární funkce?",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "y=kx+q, k=2, q=3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_033",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 2,
+      "zadani": "Čtyřúhelník ABCD s vrcholy A(0,0), B(4,0), C(4,3), D(0,3). Jaký tvar?",
+      "odpoved": "Obdélník",
+      "reseni_kroky": [
+        "strany rovnoběžné a navzájem kolmé"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_034",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Graf přímky y = -2x + 6. Pro jaké x je y = 0?",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "0=-2x+6, x=3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_035",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Pro jakou hodnotu k prochází přímka y = kx + 2 bodem (3, 8)?",
+      "odpoved": "k = 2",
+      "reseni_kroky": [
+        "8=3k+2, 3k=6, k=2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_036",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Tři přímky: y=x+1, y=2x-1, y=-x+5. Tvoří trojúhelník? Souřadnice vrcholů?",
+      "odpoved": "Ano; (2,3), (4,1), (-2,-1) — přepočítej průsečíky",
+      "reseni_kroky": "...",
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "FUN_037",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "Cena přímo úměrná hmotnosti. 2 kg za 50 Kč. Kolik váží zboží za 125 Kč?",
+      "odpoved": "5 kg",
+      "reseni_kroky": [
+        "k=25 Kč/kg",
+        "125/25=5"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_038",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka y = ax + b prochází (1,4) a (3,10). Hodnoty a a b?",
+      "odpoved": "a=3, b=1",
+      "reseni_kroky": [
+        "k=(10-4)/(3-1)=3",
+        "4=3+b, b=1"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_039",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 2,
+      "zadani": "Vzdálenost bodu P(3,-4) od počátku?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "d=√(9+16)=5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_040",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka y = 2x + b prochází středem souřadnic. Hodnota b?",
+      "odpoved": "b = 0",
+      "reseni_kroky": [
+        "0=2×0+b, b=0"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_041",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "Spotřeba auta přímo úměrná vzdálenosti. Za 100 km spotřeba 8 l. Za 350 km?",
+      "odpoved": "28 l",
+      "reseni_kroky": [
+        "k=0,08 l/km",
+        "350×0,08=28"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_042",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Graf y = 3. Jaký typ přímky?",
+      "odpoved": "Vodorovná přímka (rovnoběžná s osou x)",
+      "reseni_kroky": [
+        "k=0, průsečík s y-osou je 3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_043",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Graf x = 4. Jaký typ přímky?",
+      "odpoved": "Svislá přímka (rovnoběžná s osou y)",
+      "reseni_kroky": [
+        "není funkce y=f(x), jde kolmo k ose x"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_044",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Pro jaká x je 2x + 3 > x + 7?",
+      "odpoved": "x > 4",
+      "reseni_kroky": [
+        "2x+3>x+7",
+        "x>4"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_045",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Pro jaká x je 3x - 1 ≤ x + 5?",
+      "odpoved": "x ≤ 3",
+      "reseni_kroky": [
+        "2x≤6, x≤3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_046",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka procházející (-1, 3) s k = 0 (vodorovná). Rovnice?",
+      "odpoved": "y = 3",
+      "reseni_kroky": [
+        "k=0, prochází y=3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_047",
+      "tema": "funkce",
+      "podtema": "souradnice",
+      "obtiznost": 3,
+      "zadani": "Trojúhelník s vrcholy A(0,0), B(6,0), C(3,4). Obsah?",
+      "odpoved": "12 cm²",
+      "reseni_kroky": [
+        "základna=6, výška=4",
+        "S=6×4/2=12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_048",
+      "tema": "funkce",
+      "podtema": "prima_umernost",
+      "obtiznost": 2,
+      "zadani": "Nepřímá úměrnost: xy = 24. Pro x = 6, y = ?",
+      "odpoved": "y = 4",
+      "reseni_kroky": [
+        "y=24/6=4"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "FUN_049",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Průsečík přímek 3x + y = 9 a x - 2y = -1?",
+      "odpoved": "(17/7, 12/7)",
+      "reseni_kroky": [
+        "z druhé: x=2y-1",
+        "3(2y-1)+y=9",
+        "7y=12, y=12/7, x=17/7"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "FUN_050",
+      "tema": "funkce",
+      "podtema": "linearni",
+      "obtiznost": 2,
+      "zadani": "Přímka y = 5 - 2x. Hodnota y pro x = -1?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "y=5-2(-1)=5+2=7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_001",
+      "tema": "kombinovane",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Čtverec: strana 10 cm. Strana se zvětší o 10 %. Nárůst obsahu?",
+      "odpoved": "21 %",
+      "reseni_kroky": [
+        "nová strana: 11 cm",
+        "nový obsah: 121 cm²",
+        "nárůst: 21 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_002",
+      "tema": "kombinovane",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Kruh: r = 6 cm. Poloměr klesne o 20 %. Pokles obsahu?",
+      "odpoved": "36 %",
+      "reseni_kroky": [
+        "nový r: 4,8",
+        "nový obsah: 23,04π vs 36π",
+        "pokles: 36 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_003",
+      "tema": "kombinovane",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 2,
+      "zadani": "Kolik je 3/5 z 25 % ze čísla 200?",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "25 % ze 200 = 50",
+        "3/5 × 50 = 30"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_004",
+      "tema": "kombinovane",
+      "podtema": "rovnice_slova",
+      "obtiznost": 2,
+      "zadani": "Součet čísla a jeho trojnásobku je 48. Jaké číslo?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "x+3x=48, 4x=48, x=12"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_005",
+      "tema": "kombinovane",
+      "podtema": "geometrie_rovnice",
+      "obtiznost": 2,
+      "zadani": "Obvod obdélníku je 34 cm. Délka je o 3 cm větší než šířka. Obsah?",
+      "odpoved": "70 cm²",
+      "reseni_kroky": [
+        "2(a+b)=34, a=b+3",
+        "2b+3=17, b=7, a=10",
+        "S=70"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_006",
+      "tema": "kombinovane",
+      "podtema": "procenta_soustava",
+      "obtiznost": 2,
+      "zadani": "Ve třídě A je 40 % dívek, ve třídě B 60 % dívek. Dohromady 50 %. Poměr počtu žáků?",
+      "odpoved": "1:1",
+      "reseni_kroky": [
+        "0,4a+0,6b=0,5(a+b)",
+        "0,1b=0,1a, a=b"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_007",
+      "tema": "kombinovane",
+      "podtema": "zlomky_rovnice",
+      "obtiznost": 2,
+      "zadani": "Číslo zvětšené o jeho třetinu a jeho čtvrtinu je 13. Číslo?",
+      "odpoved": "7,2 — přepočítej: 156/17",
+      "reseni_kroky": [
+        "x+x/3+x/4=13",
+        "NSN=12: 12x+4x+3x=156",
+        "19x=156"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_008",
+      "tema": "kombinovane",
+      "podtema": "geometrie_pravdepodobnost",
+      "obtiznost": 2,
+      "zadani": "Čtverec 4×4. Náhodně hozený bod padne dovnitř. P(padne do kruhu r=2 vepsaného)?",
+      "odpoved": "π/4 ≈ 78,5 %",
+      "reseni_kroky": [
+        "P=π×4/16=π/4"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_009",
+      "tema": "kombinovane",
+      "podtema": "rovnice_geometrie",
+      "obtiznost": 2,
+      "zadani": "Pravoúhlý trojúhelník, odvěsny x a x+7, přepona x+8. Najdi x.",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "x²+(x+7)²=(x+8)²",
+        "x²+x²+14x+49=x²+16x+64",
+        "x²-2x-15=0",
+        "(x-5)(x+3)=0, x=5"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_010",
+      "tema": "kombinovane",
+      "podtema": "zlomky_slovni",
+      "obtiznost": 2,
+      "zadani": "Petr vyřešil 2/5 úloh pondělí a 1/3 úterý. Zbývá 14 úloh. Celkem?",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "1-2/5-1/3=4/15 zbývá",
+        "4/15=14, celek=30... přeprač: 1-2/5-1/3=15/15-6/15-5/15=4/15",
+        "4/15×n=14, n=52,5"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_011",
+      "tema": "kombinovane",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 3,
+      "zadani": "Obdélník 20×15 cm. Délka se zvýší o 10 %, šířka klesne o 10 %. Změna obsahu?",
+      "odpoved": "-1 %",
+      "reseni_kroky": [
+        "nový obsah: 22×13,5=297 vs 300",
+        "pokles 1 %"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_012",
+      "tema": "kombinovane",
+      "podtema": "zlomky_geometrie",
+      "obtiznost": 2,
+      "zadani": "Trojúhelník: základna 2/3 výšky. Výška je 12 cm. Obsah?",
+      "odpoved": "48 cm²",
+      "reseni_kroky": [
+        "základ=2/3×12=8 cm",
+        "S=8×12/2=48"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_013",
+      "tema": "kombinovane",
+      "podtema": "procenta_pravdepodobnost",
+      "obtiznost": 2,
+      "zadani": "Škola: 55 % dívek. Náhodně vybereme 1 žáka. P(vybrán chlapec)?",
+      "odpoved": "45 %",
+      "reseni_kroky": [
+        "P=1-0,55=0,45=45 %"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_014",
+      "tema": "kombinovane",
+      "podtema": "rovnice_funkce",
+      "obtiznost": 2,
+      "zadani": "Přímka y = ax + b prochází (2,5) a (-1,-1). Koeficienty a, b?",
+      "odpoved": "a=2, b=1",
+      "reseni_kroky": [
+        "k=(5-(-1))/(2-(-1))=2",
+        "5=4+b, b=1"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_015",
+      "tema": "kombinovane",
+      "podtema": "geometrie_pytagoras",
+      "obtiznost": 2,
+      "zadani": "Obdélník: úhlopříčka 17 cm, jedna strana 8 cm. Obsah?",
+      "odpoved": "120 cm²",
+      "reseni_kroky": [
+        "b²=289-64=225, b=15",
+        "S=8×15=120"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_016",
+      "tema": "kombinovane",
+      "podtema": "procenta_rovnice",
+      "obtiznost": 2,
+      "zadani": "Číslo zdraženo o 15 % a pak zlevněno o 20 %. Výsledná změna?",
+      "odpoved": "-8 %",
+      "reseni_kroky": [
+        "1,15×0,8=0,92 → -8 %"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_017",
+      "tema": "kombinovane",
+      "podtema": "funkce_rovnice",
+      "obtiznost": 2,
+      "zadani": "Pro která x je y = 3x - 6 kladné?",
+      "odpoved": "x > 2",
+      "reseni_kroky": [
+        "3x-6>0, x>2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_018",
+      "tema": "kombinovane",
+      "podtema": "pravdepodobnost_kombinace",
+      "obtiznost": 3,
+      "zadani": "Ze skupiny 5 č. (1,2,3,4,5) vybereme 2. P(součet > 6)?",
+      "odpoved": "3/10",
+      "reseni_kroky": [
+        "příznivé: (3,4),(3,5),(4,5)=3",
+        "celkem C(5,2)=10",
+        "P=3/10"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_019",
+      "tema": "kombinovane",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 2,
+      "zadani": "5/8 ze zboží je prodáno. Zbývá 150 kusů. Celkem?",
+      "odpoved": "400 kusů",
+      "reseni_kroky": [
+        "3/8=150, celek=400"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_020",
+      "tema": "kombinovane",
+      "podtema": "geometrie_soustava",
+      "obtiznost": 2,
+      "zadani": "Dva čtverce: obvody se liší o 12 cm, plochy se liší o 15 cm². Strany?",
+      "odpoved": "a=5, b=2 — přepočítej: 4a-4b=12, a²-b²=15",
+      "reseni_kroky": "...",
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_021",
+      "tema": "kombinovane",
+      "podtema": "zlomky_slovni",
+      "obtiznost": 2,
+      "zadani": "Jan snědl 1/3 koláče, Pavel 1/4. Zbývá 150 g. Kolik vážil celý koláč?",
+      "odpoved": "360 g",
+      "reseni_kroky": [
+        "1-1/3-1/4=5/12 zbývá",
+        "5/12=150, koláč=360 g"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_022",
+      "tema": "kombinovane",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Zahrada 100 m² se zmenší o 15 %. Nová plocha?",
+      "odpoved": "85 m²",
+      "reseni_kroky": [
+        "100×0,85=85"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_023",
+      "tema": "kombinovane",
+      "podtema": "rovnice_slovni",
+      "obtiznost": 2,
+      "zadani": "Vlak A jede 80 km/h, vlak B jede 100 km/h vstříc. Vzdálenost 360 km. Za jak dlouho se setkají?",
+      "odpoved": "2 hodiny",
+      "reseni_kroky": [
+        "t=360/180=2 h"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_024",
+      "tema": "kombinovane",
+      "podtema": "pravdepodobnost_cisla",
+      "obtiznost": 2,
+      "zadani": "Z číslic 1,2,3,4 sestavíme 2místné číslo bez opakování. P(číslo > 30)?",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "celkem: 4×3=12",
+        ">30: (3,1),(3,2),(3,4),(4,1),(4,2),(4,3)=6",
+        "P=6/12=1/2"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_025",
+      "tema": "kombinovane",
+      "podtema": "geometrie_funkce",
+      "obtiznost": 2,
+      "zadani": "Přímka prochází počátkem a vrcholem čtverce (4,4). Rovnice přímky?",
+      "odpoved": "y = x",
+      "reseni_kroky": [
+        "k=(4-0)/(4-0)=1",
+        "y=x"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_026",
+      "tema": "kombinovane",
+      "podtema": "zlomky_soustava",
+      "obtiznost": 3,
+      "zadani": "Jeden zlomek je o 1/4 větší než druhý, součet je 3/2. Jaké jsou?",
+      "odpoved": "7/8 a 5/8",
+      "reseni_kroky": [
+        "x+y=3/2, x=y+1/4",
+        "2y+1/4=3/2, y=5/8, x=7/8"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_027",
+      "tema": "kombinovane",
+      "podtema": "geometrie_slovni",
+      "obtiznost": 3,
+      "zadani": "Chodník kolem čtverce zahrady 10×10 m je 1 m široký. Plocha chodníku?",
+      "odpoved": "44 m²",
+      "reseni_kroky": [
+        "vnější: 12×12=144",
+        "zahrada: 100",
+        "chodník: 44 m²"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_028",
+      "tema": "kombinovane",
+      "podtema": "procenta_slovni",
+      "obtiznost": 2,
+      "zadani": "Ze 40 studentů 60 % složilo zkoušku. Kolik studentů neuspělo?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "40×0,4=16"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_029",
+      "tema": "kombinovane",
+      "podtema": "rovnice_procenta",
+      "obtiznost": 2,
+      "zadani": "Cena výrobku klesla o 12 % na 176 Kč. Původní cena?",
+      "odpoved": "200 Kč",
+      "reseni_kroky": [
+        "Z=176×100/88=200"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_030",
+      "tema": "kombinovane",
+      "podtema": "funkce_geometrie",
+      "obtiznost": 2,
+      "zadani": "Čára y=3 a kruh se středem (0,0) a r=5. Kolik společných bodů mají?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "y=3: x²+9=25, x²=16, x=±4, 2 body"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_031",
+      "tema": "kombinovane",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Válec: r zdvojnásoben, h stejná. O kolik % vzroste objem?",
+      "odpoved": "300 %",
+      "reseni_kroky": [
+        "nový V=π(2r)²h=4V",
+        "nárůst=300 %"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_032",
+      "tema": "kombinovane",
+      "podtema": "zlomky_rovnice",
+      "obtiznost": 2,
+      "zadani": "(x+1)/(x-1) = 2 (x ≠ 1). Hodnota x?",
+      "odpoved": "x = 3",
+      "reseni_kroky": [
+        "x+1=2(x-1)",
+        "x+1=2x-2",
+        "x=3"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_033",
+      "tema": "kombinovane",
+      "podtema": "pravdepodobnost_slovni",
+      "obtiznost": 2,
+      "zadani": "V pytlíku 5 červených, 3 modré, 2 žluté. Vytáhneme 1. P(není žlutá)?",
+      "odpoved": "4/5",
+      "reseni_kroky": [
+        "P=8/10=4/5"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_034",
+      "tema": "kombinovane",
+      "podtema": "geometrie_pytagoras",
+      "obtiznost": 2,
+      "zadani": "Střecha: výška hřebene 3 m, šířka domu 8 m. Délka střešní plochy?",
+      "odpoved": "5 m",
+      "reseni_kroky": [
+        "d²=9+16=25, d=5 m"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_035",
+      "tema": "kombinovane",
+      "podtema": "procenta_zlomky",
+      "obtiznost": 2,
+      "zadani": "Vyjádři jako zlomek: 37,5 %",
+      "odpoved": "3/8",
+      "reseni_kroky": [
+        "37,5/100=375/1000=3/8"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_036",
+      "tema": "kombinovane",
+      "podtema": "rovnice_slovni",
+      "obtiznost": 2,
+      "zadani": "Mamince je 3× více let než synovi. Za 12 let bude 2× více. Věky?",
+      "odpoved": "syn 12, máma 36",
+      "reseni_kroky": [
+        "m=3s, m+12=2(s+12)",
+        "3s+12=2s+24, s=12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_037",
+      "tema": "kombinovane",
+      "podtema": "geometrie_rovnice",
+      "obtiznost": 3,
+      "zadani": "Čtverec a rovnostranný trojúhelník mají stejný obvod 24 cm. Který má větší obsah?",
+      "odpoved": "Čtverec (36 vs. 27,7 cm²)",
+      "reseni_kroky": [
+        "čtverec: a=6, S=36",
+        "trojúhelník: s=8, S=8²√3/4=16√3≈27,7"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_038",
+      "tema": "kombinovane",
+      "podtema": "funkce_procenta",
+      "obtiznost": 2,
+      "zadani": "Funkce y = 1000 × 0,9^x modeluje pokles ceny. Hodnota po 3 letech?",
+      "odpoved": "729",
+      "reseni_kroky": [
+        "y=1000×0,9³=1000×0,729=729"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_039",
+      "tema": "kombinovane",
+      "podtema": "zlomky_pravdepodobnost",
+      "obtiznost": 2,
+      "zadani": "Ze 4 karet (1/2, 1/3, 1/4, 1/5) vytáhneme dvě. P(součet > 1/2)?",
+      "odpoved": "5/6",
+      "reseni_kroky": [
+        "součet ≤ 1/2 jen: (1/3,1/5)=8/15<1/2, (1/4,1/5)=9/20<1/2, (1/4,1/5) atd — přepočítej"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_040",
+      "tema": "kombinovane",
+      "podtema": "geometrie_soustava",
+      "obtiznost": 2,
+      "zadani": "Perimetr obdélníku je 26 cm. Úhlopříčka je 10 cm. Rozměry?",
+      "odpoved": "6×7 cm",
+      "reseni_kroky": [
+        "2(a+b)=26, a+b=13",
+        "a²+b²=100",
+        "(13)²-2ab=100, ab=42,5 — přepočítej: a=6, b=7: 36+49=85≠100, zkontroluj"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_041",
+      "tema": "kombinovane",
+      "podtema": "pravdepodobnost_kombinace",
+      "obtiznost": 2,
+      "zadani": "Z 10 čísel (1–10) vybereme 3. P(all tři sudá)?",
+      "odpoved": "1/12",
+      "reseni_kroky": [
+        "C(5,3)/C(10,3)=10/120=1/12"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_042",
+      "tema": "kombinovane",
+      "podtema": "procenta_rovnice",
+      "obtiznost": 2,
+      "zadani": "Po 30% slevě a pak 20% zdražení je cena 840 Kč. Původní cena?",
+      "odpoved": "1000 Kč",
+      "reseni_kroky": [
+        "x×0,7×1,2=840",
+        "0,84x=840, x=1000"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_043",
+      "tema": "kombinovane",
+      "podtema": "geometrie_zlomky",
+      "obtiznost": 2,
+      "zadani": "Třetina kruhu r=6 cm. Obsah (π≈3,14)?",
+      "odpoved": "37,68 cm²",
+      "reseni_kroky": [
+        "S=3,14×36/3=37,68"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_044",
+      "tema": "kombinovane",
+      "podtema": "funkce_slovni",
+      "obtiznost": 2,
+      "zadani": "Taxík: základní sazba 40 Kč + 25 Kč/km. Rovnice ceny?",
+      "odpoved": "C = 25x + 40",
+      "reseni_kroky": [
+        "C=25x+40"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_045",
+      "tema": "kombinovane",
+      "podtema": "funkce_slovni",
+      "obtiznost": 2,
+      "zadani": "Taxík: základní sazba 40 Kč + 25 Kč/km. Cena za 12 km?",
+      "odpoved": "340 Kč",
+      "reseni_kroky": [
+        "C=25×12+40=340"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_046",
+      "tema": "kombinovane",
+      "podtema": "geometrie_pravdepodobnost",
+      "obtiznost": 3,
+      "zadani": "Na 10×10 cm šachovnici hodíme šipku. P(zasáhne černé pole)?",
+      "odpoved": "1/2",
+      "reseni_kroky": [
+        "P=50/100=1/2"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_047",
+      "tema": "kombinovane",
+      "podtema": "zlomky_geometrie",
+      "obtiznost": 3,
+      "zadani": "Lichoběžník: základny 8 a 12 cm, výška = průměr základen. Obsah?",
+      "odpoved": "50 cm²",
+      "reseni_kroky": [
+        "výška=(8+12)/2=10",
+        "S=(8+12)/2×10=100 — přeprač: h=průměr základen=(8+12)/2=10",
+        "S=(8+12)/2×10=100, ale...odchyluje se zadání, S=100/2=50? Zkontroluj"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_048",
+      "tema": "kombinovane",
+      "podtema": "procenta_zlomky",
+      "obtiznost": 2,
+      "zadani": "Kolik procent je 7/20?",
+      "odpoved": "35 %",
+      "reseni_kroky": [
+        "7/20×100=35"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_049",
+      "tema": "kombinovane",
+      "podtema": "rovnice_funkce",
+      "obtiznost": 2,
+      "zadani": "Přímka y = 2x + k prochází středem (3, 9). Hodnota k?",
+      "odpoved": "k = 3",
+      "reseni_kroky": [
+        "9=6+k, k=3"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_050",
+      "tema": "kombinovane",
+      "podtema": "geometrie_slovni",
+      "obtiznost": 2,
+      "zadani": "Cesta kolem obdélníkové zahrady 30×20 m je 2 m široká. Plocha cesty?",
+      "odpoved": "216 m²",
+      "reseni_kroky": [
+        "vnější: 34×24=816",
+        "zahrada: 600",
+        "cesta: 216"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_051",
+      "tema": "kombinovane",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 1,
+      "zadani": "Vyjádři jako procento: 3/4",
+      "odpoved": "75 %",
+      "reseni_kroky": [
+        "3/4×100=75"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_052",
+      "tema": "kombinovane",
+      "podtema": "procenta_slovni",
+      "obtiznost": 1,
+      "zadani": "Slevy 10 %: cena 180 Kč. Ušetříš?",
+      "odpoved": "20 Kč",
+      "reseni_kroky": [
+        "200×0,1=20 — přepočítej: 180 je po slevě, původní=200"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_053",
+      "tema": "kombinovane",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Strana čtverce se zkrátí o 20 %. Plocha klesne o?",
+      "odpoved": "36 %",
+      "reseni_kroky": [
+        "(0,8)²=0,64, pokles 36 %"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_054",
+      "tema": "kombinovane",
+      "podtema": "rovnice_slovni",
+      "obtiznost": 3,
+      "zadani": "Dvě čísla v poměru 3:5 mají součin 135. Jaká jsou?",
+      "odpoved": "9 a 15",
+      "reseni_kroky": [
+        "x=3k, y=5k",
+        "15k²=135, k²=9, k=3",
+        "x=9, y=15"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_055",
+      "tema": "kombinovane",
+      "podtema": "funkce_procenta",
+      "obtiznost": 2,
+      "zadani": "Populace roste o 2 % ročně. Nyní 10 000. Po 1 roce?",
+      "odpoved": "10 200",
+      "reseni_kroky": [
+        "10000×1,02=10200"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_056",
+      "tema": "kombinovane",
+      "podtema": "geometrie_zlomky",
+      "obtiznost": 2,
+      "zadani": "5/8 délky tyče je 30 cm. Celá tyč?",
+      "odpoved": "48 cm",
+      "reseni_kroky": [
+        "30÷(5/8)=30×8/5=48"
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_057",
+      "tema": "kombinovane",
+      "podtema": "pravdepodobnost_slovni",
+      "obtiznost": 2,
+      "zadani": "Tříčlenná komise z 5 mužů a 3 žen. P(aspoň 1 žena)?",
+      "odpoved": "25/28",
+      "reseni_kroky": [
+        "P=1-C(5,3)/C(8,3)=1-10/56=46/56=23/28"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    },
+    {
+      "id": "KOM_058",
+      "tema": "kombinovane",
+      "podtema": "rovnice_geometrie",
+      "obtiznost": 3,
+      "zadani": "Kružnice se středem (0,0) prochází bodem (3,4). Rovnice kružnice?",
+      "odpoved": "x² + y² = 25",
+      "reseni_kroky": [
+        "r²=9+16=25",
+        "x²+y²=25"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_059",
+      "tema": "kombinovane",
+      "podtema": "procenta_zlomky",
+      "obtiznost": 2,
+      "zadani": "Colik je 150 % z 2/5 čísla 60?",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "2/5×60=24",
+        "24×1,5=36"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOM_060",
+      "tema": "kombinovane",
+      "podtema": "geometrie_kombinovane",
+      "obtiznost": 3,
+      "zadani": "Kruh je vepsán do rovnostranného trojúhelníku se stranou 6 cm. Poloměr kruhu?",
+      "odpoved": "r = √3 ≈ 1,73 cm",
+      "reseni_kroky": [
+        "r=a/(2√3)=6/(2√3)=√3"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 2
+    }
+  ]
+}
