@@ -141,7 +141,21 @@ export default function TreningPage() {
   }
 
   if (done) {
-    return <SessionSummary correct={correct} total={sessionIds.length} onRestart={restart} />;
+    const xpEarned = correct * 10 + (sessionIds.length - correct) * 5;
+    const progress = loadProgress();
+    const practiceTopics = [...new Set(
+      sessionIds.map((id) => examples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
+    )];
+    return (
+      <SessionSummary
+        correct={correct}
+        total={sessionIds.length}
+        xpEarned={xpEarned}
+        streak={progress.streak}
+        topics={practiceTopics}
+        onRestart={restart}
+      />
+    );
   }
 
   const currentExample = examples.find((ex) => ex.id === sessionIds[currentIdx]);

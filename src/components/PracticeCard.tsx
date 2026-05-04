@@ -12,11 +12,18 @@ interface Props {
   onResult: (correct: boolean) => void;
 }
 
+const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
+  1: { label: "Lehká ⭐",       bg: "#f0fdf4", color: "#166534" },
+  2: { label: "Střední ⭐⭐",   bg: "#fffbeb", color: "#92400e" },
+  3: { label: "Těžká ⭐⭐⭐",   bg: "#fef2f2", color: "#991b1b" },
+};
+
 export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult }: Props) {
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
   const [flashColor, setFlashColor] = useState<"" | "green" | "red">("");
+  const [shaking, setShaking] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [xpLabel, setXpLabel] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +33,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setStatus("idle");
     setShowSolution(false);
     setFlashColor("");
+    setShaking(false);
     setShowConfetti(false);
     setXpLabel(null);
     inputRef.current?.focus();
@@ -46,7 +54,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setStatus("wrong");
       setFlashColor("red");
       setXpLabel("+5 XP");
+      setShaking(true);
       setTimeout(() => setFlashColor(""), 350);
+      setTimeout(() => setShaking(false), 500);
     }
     setTimeout(() => setXpLabel(null), 1200);
   }
@@ -55,6 +65,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     status === "correct" ? "border-green-500" :
     status === "wrong" ? "border-red-400" :
     "border-slate-200 focus-within:border-indigo-400";
+
+  const diff = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
+  const progressPct = (cardNumber / total) * 100;
 
   return (
     <>
@@ -87,7 +100,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         </div>
       )}
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col gap-5 relative">
+      <div className={`bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col gap-5 relative ${shaking ? "card-shake" : ""}`}>
         {/* XP animation */}
         {xpLabel && (
           <div
@@ -98,32 +111,31 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </div>
         )}
 
-        {/* Progress */}
-        <div className="flex items-center justify-between text-xs text-slate-400">
-          <span>{cardNumber} / {total}</span>
-          <span className="font-semibold" style={{ color: "#2E6DA4" }}>
-            {TEMA_LABELS[example.tema] ?? example.tema}
-          </span>
-          <span className="capitalize text-slate-300">{example.podtema.replace(/_/g, " ")}</span>
-        </div>
-        <div className="w-full bg-slate-100 rounded-full h-1">
-          <div
-            className="h-1 rounded-full transition-all duration-500"
-            style={{ width: `${(cardNumber / total) * 100}%`, background: "#2E6DA4" }}
-          />
+        {/* Progress bar + label */}
+        <div>
+          <div className="flex items-center justify-between text-xs mb-2">
+            <span className="font-semibold text-slate-500">{cardNumber} / {total}</span>
+            <span className="font-semibold" style={{ color: "#2E6DA4" }}>
+              {TEMA_LABELS[example.tema] ?? example.tema}
+            </span>
+            <span className="capitalize text-slate-300 text-xs">{example.podtema.replace(/_/g, " ")}</span>
+          </div>
+          <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+            <div
+              className="h-3 rounded-full transition-all duration-500"
+              style={{ width: `${progressPct}%`, background: "#0D1B3E" }}
+            />
+          </div>
         </div>
 
-        {/* Difficulty dots */}
-        <div className="flex gap-1">
-          {[1, 2, 3].map((d) => (
-            <div
-              key={d}
-              className="w-2 h-2 rounded-full"
-              style={{
-                background: d <= example.obtiznost ? "#2E6DA4" : "#e2e8f0",
-              }}
-            />
-          ))}
+        {/* Difficulty badge — top right of question area */}
+        <div className="flex items-center justify-end">
+          <span
+            className="text-xs font-semibold px-2.5 py-1 rounded-full"
+            style={{ background: diff.bg, color: diff.color }}
+          >
+            {diff.label}
+          </span>
         </div>
 
         {/* Question */}
