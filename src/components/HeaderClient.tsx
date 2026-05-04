@@ -2,13 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { loadProgress } from "@/lib/progress";
+import { supabase } from "@/lib/supabase";
 
 export default function HeaderClient() {
-  const [xp, setXp] = useState(0);
-  const [streak, setStreak] = useState(0);
-  const [xpBump, setXpBump] = useState(false);
+  const router = useRouter();
+  const [xp, setXp]               = useState(0);
+  const [streak, setStreak]       = useState(0);
+  const [xpBump, setXpBump]       = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
+  // Progress listeners
   useEffect(() => {
     const p = loadProgress();
     setXp(p.xp);
@@ -18,14 +23,13 @@ export default function HeaderClient() {
       if (e.key === "matemax-progress" && e.newValue) {
         try {
           const p2 = JSON.parse(e.newValue);
-          if (p2.xp > xp) setXpBump(true);
+          setXpBump(true);
           setXp(p2.xp);
           setStreak(p2.streak);
           setTimeout(() => setXpBump(false), 800);
         } catch { /* ignore */ }
       }
     }
-
     function onProgressUpdate() {
       const p2 = loadProgress();
       setXpBump(true);
@@ -40,7 +44,28 @@ export default function HeaderClient() {
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("matemax-progress-update", onProgressUpdate);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Auth state listener
+  useEffect(() => {
+    if (!supabase) return;
+
+    supabase.auth.getSession().then(({ data }) => {
+      setUserEmail(data.session?.user.email ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserEmail(session?.user.email ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  async function handleLogout() {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+    router.push("/");
+  }
 
   return (
     <header className="bg-white border-b border-slate-200 shadow-sm">
@@ -58,7 +83,7 @@ export default function HeaderClient() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           {/* Streak */}
           <div className="flex items-center gap-1 bg-orange-50 border border-orange-200 rounded-lg px-2.5 py-1">
             <span className="text-base leading-none">🔥</span>
@@ -78,6 +103,25 @@ export default function HeaderClient() {
             <span className="text-sm font-bold" style={{ color: "#2E6DA4" }}>{xp}</span>
             <span className="text-xs hidden sm:inline" style={{ color: "#2E6DA4" }}>XP</span>
           </div>
+
+          {/* Auth button */}
+          {userEmail ? (
+            <button
+              onClick={handleLogout}
+              title={`Přihlášen jako ${userEmail}`}
+              className="text-xs text-slate-400 hover:text-slate-600 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:block"
+            >
+              Odhlásit
+            </button>
+          ) : (
+            <Link
+              href="/prihlaseni"
+              className="text-xs font-semibold px-2.5 py-1 rounded-lg transition-colors hidden sm:block"
+              style={{ color: "#2E6DA4" }}
+            >
+              Přihlásit
+            </Link>
+          )}
         </div>
       </div>
     </header>
