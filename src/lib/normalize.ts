@@ -21,6 +21,11 @@ export function normalize(raw: string): string {
   const decMatch = value.match(/^(-?\d+)[.,](\d+)$/);
   if (decMatch) return value.replace(",", ".");
 
+  // Number + unit suffix ("3roky" → "3", "160km" → "160", "1,5hodiny" → "1.5", "15km/h" → "15")
+  // Only strips when followed by a letter — colons/slashes (times like "11:00") are kept as-is
+  const unitMatch = value.match(/^(-?\d+(?:[.,]\d+)?(?:\/\d+)?)[a-záčďéěíňóřšťúůýž%°]/);
+  if (unitMatch) return normalize(unitMatch[1]);
+
   return value;
 }
 

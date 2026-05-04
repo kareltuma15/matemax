@@ -5,6 +5,8 @@ import { examples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
+import { remoteLogSession } from "@/lib/storage";
+import { supabase } from "@/lib/supabase";
 import PracticeCard from "@/components/PracticeCard";
 import SessionSummary from "@/components/SessionSummary";
 
@@ -87,6 +89,22 @@ export default function TreningPage() {
     setDiagScores(loadDiagScores());
     setHydrated(true);
   }, []);
+
+  // Log completed session to Supabase when user is signed in
+  useEffect(() => {
+    if (!done || !supabase) return;
+    const xpEarned = correct * 10 + (sessionIds.length - correct) * 5;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) return;
+      remoteLogSession({
+        user_id: data.session.user.id,
+        date: new Date().toISOString().slice(0, 10),
+        xp_earned: xpEarned,
+        correct,
+        total: sessionIds.length,
+      });
+    });
+  }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleResult = useCallback(
     (wasCorrect: boolean) => {

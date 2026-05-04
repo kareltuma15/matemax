@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { loadProgress } from "@/lib/progress";
 import { supabase } from "@/lib/supabase";
 
 export default function HeaderClient() {
-  const router = useRouter();
   const [xp, setXp]               = useState(0);
   const [streak, setStreak]       = useState(0);
   const [xpBump, setXpBump]       = useState(false);
@@ -61,12 +59,6 @@ export default function HeaderClient() {
     return () => subscription.unsubscribe();
   }, []);
 
-  async function handleLogout() {
-    if (!supabase) return;
-    await supabase.auth.signOut();
-    router.push("/");
-  }
-
   return (
     <header className="bg-white border-b border-slate-200 shadow-sm">
       <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
@@ -104,15 +96,17 @@ export default function HeaderClient() {
             <span className="text-xs hidden sm:inline" style={{ color: "#2E6DA4" }}>XP</span>
           </div>
 
-          {/* Auth button */}
+          {/* Auth */}
           {userEmail ? (
-            <button
-              onClick={handleLogout}
-              title={`Přihlášen jako ${userEmail}`}
-              className="text-xs text-slate-400 hover:text-slate-600 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:block"
+            <Link
+              href="/profil"
+              title={userEmail}
+              className="text-xs font-semibold px-2.5 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:flex items-center gap-1"
+              style={{ color: "#2E6DA4" }}
             >
-              Odhlásit
-            </button>
+              <span>👤</span>
+              <span>Profil</span>
+            </Link>
           ) : (
             <Link
               href="/prihlaseni"

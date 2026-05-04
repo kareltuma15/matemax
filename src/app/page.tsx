@@ -52,7 +52,7 @@ const PRICING = [
       "✗ CERMAT cvičné testy",
     ],
     cta: "Začít zdarma",
-    ctaHref: "/diagnostika",
+    ctaHref: "/registrace",
     ctaStyle: "border-2 border-[#2E6DA4] text-[#2E6DA4] hover:bg-blue-50",
   },
   {
@@ -72,7 +72,7 @@ const PRICING = [
       "✓ Přístup na mobilu i počítači",
     ],
     cta: "Vyzkoušet Premium",
-    ctaHref: "/diagnostika",
+    ctaHref: "/registrace",
     ctaStyle: "bg-[#2E6DA4] text-white hover:bg-[#1e5a8a]",
   },
 ];
@@ -97,6 +97,18 @@ const FAQS = [
   {
     q: "Jak se liší MateMax od pracovního sešitu Matematika Snadno?",
     a: "Sešit je fyzická pomůcka — cheat sheety a příklady na papíře. MateMax je digitální trenér s adaptivním algoritmem, který sleduje pokrok a posílá rodičům týdenní report. Oba produkty se skvěle doplňují.",
+  },
+  {
+    q: "Je přihlášení povinné?",
+    a: "Ne, aplikace funguje i bez účtu — veškerý pokrok se uloží do prohlížeče. Registrace se vyplatí, pokud chceš trénovat na více zařízeních nebo nechceš přijít o statistiky při smazání dat prohlížeče.",
+  },
+  {
+    q: "Funguje MateMax offline?",
+    a: "Příklady a váš pokrok se ukládají lokálně, takže základní trénink funguje i bez připojení k internetu. Synchronizace s cloudem a týdenní report vyžadují internet.",
+  },
+  {
+    q: "Jak rychle vidím výsledky?",
+    a: "Po prvním tréninku algoritmus ihned ví, která témata procvičuješ nejhůř a příště je zařadí jako první. Viditelný pokrok v testech bývá znát po 2–3 týdnech pravidelného tréninku.",
   },
 ];
 
@@ -159,7 +171,7 @@ export default function LandingPage() {
     setDiagDone(localStorage.getItem("matemax-diag-done") === "1");
   }, []);
 
-  const primaryCta = diagDone ? "/trenink" : "/diagnostika";
+  const primaryCta = diagDone ? "/trenink" : "/registrace";
   const primaryLabel = diagDone ? "Pokračovat v tréninku →" : "🚀 Začít zdarma";
 
   return (
