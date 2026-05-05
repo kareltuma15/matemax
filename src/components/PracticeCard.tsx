@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
+import MathText from "./MathText";
 
 interface Props {
   example: DBExample;
@@ -19,13 +20,14 @@ const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: strin
 };
 
 export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult }: Props) {
-  const [input, setInput] = useState("");
-  const [status, setStatus] = useState<"idle" | "correct" | "wrong">("idle");
+  const [input, setInput]               = useState("");
+  const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
-  const [flashColor, setFlashColor] = useState<"" | "green" | "red">("");
-  const [shaking, setShaking] = useState(false);
+  const [flashColor, setFlashColor]     = useState<"" | "green" | "red">("");
+  const [shaking, setShaking]           = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [xpLabel, setXpLabel] = useState<string | null>(null);
+  const [xpLabel, setXpLabel]           = useState<string | null>(null);
+  const [cardKey, setCardKey]           = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -36,6 +38,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setShaking(false);
     setShowConfetti(false);
     setXpLabel(null);
+    setCardKey((k) => k + 1);
     inputRef.current?.focus();
   }, [example.id]);
 
@@ -53,7 +56,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     } else {
       setStatus("wrong");
       setFlashColor("red");
-      setXpLabel("+5 XP");
+      setXpLabel("+1 XP");
       setShaking(true);
       setTimeout(() => setFlashColor(""), 350);
       setTimeout(() => setShaking(false), 500);
@@ -63,25 +66,22 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
 
   const borderColor =
     status === "correct" ? "border-green-500" :
-    status === "wrong" ? "border-red-400" :
+    status === "wrong"   ? "border-red-400" :
     "border-slate-200 focus-within:border-indigo-400";
 
   const diff = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
   const progressPct = (cardNumber / total) * 100;
+  const topicLabel = TEMA_LABELS[example.tema] ?? example.tema;
 
   return (
     <>
-      {/* Flash overlay */}
       {flashColor && (
         <div
           className="fixed inset-0 pointer-events-none z-50 transition-opacity duration-300"
-          style={{
-            background: flashColor === "green" ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)",
-          }}
+          style={{ background: flashColor === "green" ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)" }}
         />
       )}
 
-      {/* Confetti dots */}
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
           {Array.from({ length: 18 }).map((_, i) => (
@@ -91,7 +91,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               style={{
                 left: `${5 + (i * 5.5) % 90}%`,
                 top: `${10 + (i * 7) % 50}%`,
-                background: ["#6366f1", "#f59e0b", "#10b981", "#ec4899", "#3b82f6"][i % 5],
+                background: ["#6366f1","#f59e0b","#10b981","#ec4899","#3b82f6"][i % 5],
                 animationDelay: `${i * 60}ms`,
                 animationDuration: `${600 + (i * 80) % 400}ms`,
               }}
@@ -100,25 +100,32 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         </div>
       )}
 
-      <div className={`bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col gap-5 relative ${shaking ? "card-shake" : ""}`}>
-        {/* XP animation */}
+      <div
+        key={cardKey}
+        className={`card-enter bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col gap-5 relative ${shaking ? "card-shake" : ""}`}
+      >
         {xpLabel && (
           <div
-            className="absolute top-4 right-4 font-bold text-sm px-2 py-1 rounded-lg animate-bounce z-10"
+            className="absolute top-4 right-4 font-bold text-sm px-2 py-1 rounded-lg xp-bump z-10"
             style={{ background: "#e0e7ff", color: "#2E6DA4" }}
           >
             {xpLabel}
           </div>
         )}
 
-        {/* Progress bar + label */}
+        {/* Progress bar */}
         <div>
-          <div className="flex items-center justify-between text-xs mb-2">
-            <span className="font-semibold text-slate-500">{cardNumber} / {total}</span>
-            <span className="font-semibold" style={{ color: "#2E6DA4" }}>
-              {TEMA_LABELS[example.tema] ?? example.tema}
+          <div className="flex items-center justify-between text-xs mb-2 gap-2">
+            <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
+            <span
+              className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0 whitespace-nowrap"
+              style={{ background: "#eff6ff", color: "#2E6DA4" }}
+            >
+              {topicLabel}
             </span>
-            <span className="capitalize text-slate-300 text-xs">{example.podtema.replace(/_/g, " ")}</span>
+            <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[80px]">
+              {example.podtema.replace(/_/g, " ")}
+            </span>
           </div>
           <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
             <div
@@ -128,10 +135,10 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </div>
         </div>
 
-        {/* Difficulty badge — top right of question area */}
+        {/* Difficulty badge */}
         <div className="flex items-center justify-end">
           <span
-            className="text-xs font-semibold px-2.5 py-1 rounded-full"
+            className="text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap"
             style={{ background: diff.bg, color: diff.color }}
           >
             {diff.label}
@@ -142,7 +149,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         <div className="text-center py-2">
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Vypočítej</p>
           <p className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
-            {example.zadani}
+            <MathText text={example.zadani} />
           </p>
         </div>
 
@@ -179,9 +186,13 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <span className="text-xl mt-0.5">✓</span>
             <div className="flex-1">
               <p className="font-bold text-green-700">Správně!</p>
-              <p className="text-sm text-green-600">Výsledek: <strong>{example.odpoved}</strong></p>
+              <p className="text-sm text-green-600">
+                Výsledek: <strong><MathText text={example.odpoved} /></strong>
+              </p>
               {consecutiveCorrect + 1 >= 3 && (
-                <p className="text-sm font-semibold text-amber-600 mt-1">🔥 {consecutiveCorrect + 1} správně v řadě!</p>
+                <p className="text-sm font-semibold text-amber-600 mt-1">
+                  🔥 {consecutiveCorrect + 1} správně v řadě!
+                </p>
               )}
             </div>
           </div>
@@ -193,10 +204,10 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <div className="flex-1">
               <p className="font-bold text-red-700">Skoro!</p>
               <p className="text-sm text-red-600">
-                Tvoje odpověď: <strong>{input}</strong>
+                Tvoje odpověď: <strong><MathText text={input} /></strong>
               </p>
               <p className="text-sm text-slate-600 mt-1">
-                Správně: <strong className="text-slate-800">{example.odpoved}</strong>
+                Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
               </p>
             </div>
           </div>
@@ -213,9 +224,17 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               {showSolution ? "▲ Skrýt postup" : "▼ Zobrazit postup řešení"}
             </button>
             {showSolution && (
-              <ol className="mt-3 space-y-1 pl-4 list-decimal marker:text-slate-400">
+              <ol className="mt-3 space-y-2 pl-1">
                 {example.reseni_kroky.map((krok, i) => (
-                  <li key={i} className="text-sm text-slate-700 font-mono">{krok}</li>
+                  <li key={i} className="flex gap-3 text-sm text-slate-700">
+                    <span
+                      className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
+                      style={{ background: "#2E6DA4" }}
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="leading-snug"><MathText text={krok} /></span>
+                  </li>
                 ))}
               </ol>
             )}

@@ -1,0 +1,1412 @@
+[
+  {
+    "id": "MOC_001",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 2²",
+    "odpoved": "4",
+    "reseni_kroky": [
+      "2² znamená 2 × 2",
+      "2 × 2 = 4"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_002",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 3²",
+    "odpoved": "9",
+    "reseni_kroky": [
+      "3² znamená 3 × 3",
+      "3 × 3 = 9"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_003",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 4²",
+    "odpoved": "16",
+    "reseni_kroky": [
+      "4² znamená 4 × 4",
+      "4 × 4 = 16"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_004",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 5²",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "5² znamená 5 × 5",
+      "5 × 5 = 25"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_005",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 6²",
+    "odpoved": "36",
+    "reseni_kroky": [
+      "6² znamená 6 × 6",
+      "6 × 6 = 36"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_006",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 7²",
+    "odpoved": "49",
+    "reseni_kroky": [
+      "7² znamená 7 × 7",
+      "7 × 7 = 49"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_007",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 8²",
+    "odpoved": "64",
+    "reseni_kroky": [
+      "8² znamená 8 × 8",
+      "8 × 8 = 64"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_008",
+    "tema": "mocniny",
+    "podtema": "zakladni_mocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: 9²",
+    "odpoved": "81",
+    "reseni_kroky": [
+      "9² znamená 9 × 9",
+      "9 × 9 = 81"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_009",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √4",
+    "odpoved": "2",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 4",
+      "2 × 2 = 4, takže √4 = 2"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_010",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √9",
+    "odpoved": "3",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 9",
+      "3 × 3 = 9, takže √9 = 3"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_011",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √16",
+    "odpoved": "4",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 16",
+      "4 × 4 = 16, takže √16 = 4"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_012",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √25",
+    "odpoved": "5",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 25",
+      "5 × 5 = 25, takže √25 = 5"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_013",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √36",
+    "odpoved": "6",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 36",
+      "6 × 6 = 36, takže √36 = 6"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_014",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √49",
+    "odpoved": "7",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 49",
+      "7 × 7 = 49, takže √49 = 7"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_015",
+    "tema": "mocniny",
+    "podtema": "zakladni_odmocniny",
+    "obtiznost": 1,
+    "zadani": "Vypočítej: √64",
+    "odpoved": "8",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 64",
+      "8 × 8 = 64, takže √64 = 8"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_016",
+    "tema": "mocniny",
+    "podtema": "kubicke_mocniny",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 2³",
+    "odpoved": "8",
+    "reseni_kroky": [
+      "2³ znamená 2 × 2 × 2",
+      "2 × 2 = 4, potom 4 × 2 = 8"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_017",
+    "tema": "mocniny",
+    "podtema": "kubicke_mocniny",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 3³",
+    "odpoved": "27",
+    "reseni_kroky": [
+      "3³ znamená 3 × 3 × 3",
+      "3 × 3 = 9, potom 9 × 3 = 27"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_018",
+    "tema": "mocniny",
+    "podtema": "kubicke_mocniny",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 4³",
+    "odpoved": "64",
+    "reseni_kroky": [
+      "4³ znamená 4 × 4 × 4",
+      "4 × 4 = 16, potom 16 × 4 = 64"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_019",
+    "tema": "mocniny",
+    "podtema": "soucet_mocnin",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 3² + 4²",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "3² = 9 a 4² = 16",
+      "9 + 16 = 25"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_020",
+    "tema": "mocniny",
+    "podtema": "odmocniny_vetsi",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: √81",
+    "odpoved": "9",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 81",
+      "9 × 9 = 81, takže √81 = 9"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_021",
+    "tema": "mocniny",
+    "podtema": "odmocniny_vetsi",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: √100",
+    "odpoved": "10",
+    "reseli_kroky": [
+      "Hledáme číslo, jehož čtverec je 100",
+      "10 × 10 = 100, takže √100 = 10"
+    ],
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 100",
+      "10 × 10 = 100, takže √100 = 10"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_022",
+    "tema": "mocniny",
+    "podtema": "odmocniny_vetsi",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: √121",
+    "odpoved": "11",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 121",
+      "11 × 11 = 121, takže √121 = 11"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_023",
+    "tema": "mocniny",
+    "podtema": "zaporne_zaklady",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: (-2)²",
+    "odpoved": "4",
+    "reseni_kroky": [
+      "(-2)² = (-2) × (-2)",
+      "Záporné krát záporné je kladné: (-2) × (-2) = 4"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_024",
+    "tema": "mocniny",
+    "podtema": "zaporne_zaklady",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: (-3)²",
+    "odpoved": "9",
+    "reseni_kroky": [
+      "(-3)² = (-3) × (-3)",
+      "Záporné krát záporné je kladné: (-3) × (-3) = 9"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_025",
+    "tema": "mocniny",
+    "podtema": "zlomkovy_zaklad",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: (1/2)²",
+    "odpoved": "1/4",
+    "reseni_kroky": [
+      "(1/2)² = 1/2 × 1/2",
+      "Čitatel: 1 × 1 = 1, jmenovatel: 2 × 2 = 4",
+      "Výsledek: 1/4"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_026",
+    "tema": "mocniny",
+    "podtema": "zlomkovy_zaklad",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: (2/3)²",
+    "odpoved": "4/9",
+    "reseni_kroky": [
+      "(2/3)² = 2/3 × 2/3",
+      "Čitatel: 2 × 2 = 4, jmenovatel: 3 × 3 = 9",
+      "Výsledek: 4/9"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_027",
+    "tema": "mocniny",
+    "podtema": "zakony_mocnin",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 2³ · 2²",
+    "odpoved": "32",
+    "reseni_kroky": [
+      "Při násobení mocnin se stejným základem se exponenty sčítají: 2³ · 2² = 2⁵",
+      "2⁵ = 2 × 2 × 2 × 2 × 2 = 32"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_028",
+    "tema": "mocniny",
+    "podtema": "zakony_mocnin",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 4⁴ ÷ 4²",
+    "odpoved": "16",
+    "reseni_kroky": [
+      "Při dělení mocnin se stejným základem se exponenty odečítají: 4⁴ ÷ 4² = 4²",
+      "4² = 4 × 4 = 16"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_029",
+    "tema": "mocniny",
+    "podtema": "zakony_mocnin",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: 3³ · 3¹",
+    "odpoved": "81",
+    "reseni_kroky": [
+      "3³ · 3¹ = 3⁴ (exponenty se sčítají)",
+      "3⁴ = 3 × 3 × 3 × 3 = 81"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_030",
+    "tema": "mocniny",
+    "podtema": "odmocniny_vetsi",
+    "obtiznost": 2,
+    "zadani": "Vypočítej: √144",
+    "odpoved": "12",
+    "reseni_kroky": [
+      "Hledáme číslo, jehož čtverec je 144",
+      "12 × 12 = 144, takže √144 = 12"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_031",
+    "tema": "mocniny",
+    "podtema": "pythagorova_veta",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: √(3² + 4²)",
+    "odpoved": "5",
+    "reseni_kroky": [
+      "Nejprve vypočítáme mocniny: 3² = 9 a 4² = 16",
+      "Sečteme: 9 + 16 = 25",
+      "√25 = 5"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_032",
+    "tema": "mocniny",
+    "podtema": "vyssi_mocniny",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: 2⁵",
+    "odpoved": "32",
+    "reseni_kroky": [
+      "2⁵ = 2 × 2 × 2 × 2 × 2",
+      "2 × 2 = 4, × 2 = 8, × 2 = 16, × 2 = 32"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_033",
+    "tema": "mocniny",
+    "podtema": "vyssi_mocniny",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: 3⁴",
+    "odpoved": "81",
+    "reseni_kroky": [
+      "3⁴ = 3 × 3 × 3 × 3",
+      "3 × 3 = 9, × 3 = 27, × 3 = 81"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_034",
+    "tema": "mocniny",
+    "podtema": "slozene_vyrazy",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: 10² - 6²",
+    "odpoved": "64",
+    "reseni_kroky": [
+      "10² = 100 a 6² = 36",
+      "100 - 36 = 64"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_035",
+    "tema": "mocniny",
+    "podtema": "pythagorova_veta",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: √(7² + 24²)",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "7² = 49 a 24² = 576",
+      "49 + 576 = 625",
+      "√625 = 25"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_036",
+    "tema": "mocniny",
+    "podtema": "slozene_vyrazy",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: 2⁴ + 3³",
+    "odpoved": "43",
+    "reseni_kroky": [
+      "2⁴ = 16 a 3³ = 27",
+      "16 + 27 = 43"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_037",
+    "tema": "mocniny",
+    "podtema": "vyssi_mocniny",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: 2⁶",
+    "odpoved": "64",
+    "reseni_kroky": [
+      "2⁶ = 2³ × 2³ = 8 × 8",
+      "8 × 8 = 64"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_038",
+    "tema": "mocniny",
+    "podtema": "slozene_vyrazy",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: √(5² + 12²)",
+    "odpoved": "13",
+    "reseni_kroky": [
+      "5² = 25 a 12² = 144",
+      "25 + 144 = 169",
+      "√169 = 13"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_039",
+    "tema": "mocniny",
+    "podtema": "slozene_vyrazy",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: (2² + 3²) · 2",
+    "odpoved": "26",
+    "reseni_kroky": [
+      "2² = 4 a 3² = 9, součet = 13",
+      "13 · 2 = 26"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "MOC_040",
+    "tema": "mocniny",
+    "podtema": "vyssi_mocniny",
+    "obtiznost": 3,
+    "zadani": "Vypočítej: 4⁰ + 5²",
+    "odpoved": "26",
+    "reseni_kroky": [
+      "Každé číslo na nultou mocninu se rovná 1: 4⁰ = 1",
+      "5² = 25",
+      "1 + 25 = 26"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_001",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 2, 4, 6, 8, ?",
+    "odpoved": "10",
+    "reseni_kroky": [
+      "Každé číslo se zvyšuje o 2 (diferenece d = 2)",
+      "8 + 2 = 10"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_002",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 5, 10, 15, 20, ?",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "Každé číslo se zvyšuje o 5 (diference d = 5)",
+      "20 + 5 = 25"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_003",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 3, 5, 7, ?",
+    "odpoved": "9",
+    "reseni_kroky": [
+      "Jde o posloupnost lichých čísel, diference d = 2",
+      "7 + 2 = 9"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_004",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 2, 4, 8, ?",
+    "odpoved": "16",
+    "reseni_kroky": [
+      "Každé číslo se násobí 2 (kvocient q = 2)",
+      "8 × 2 = 16"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_005",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 3, 6, 12, 24, ?",
+    "odpoved": "48",
+    "reseni_kroky": [
+      "Každé číslo se násobí 2 (kvocient q = 2)",
+      "24 × 2 = 48"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_006",
+    "tema": "cisselne_rady",
+    "podtema": "ctverec_cisel",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 4, 9, 16, ?",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "Jde o čtverce přirozených čísel: 1², 2², 3², 4², ...",
+      "Další je 5² = 25"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_007",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 10, 20, 30, 40, ?",
+    "odpoved": "50",
+    "reseni_kroky": [
+      "Diference d = 10",
+      "40 + 10 = 50"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_008",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 2, 6, 18, 54, ?",
+    "odpoved": "162",
+    "reseni_kroky": [
+      "Každé číslo se násobí 3 (kvocient q = 3)",
+      "54 × 3 = 162"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_009",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 100, 90, 80, 70, ?",
+    "odpoved": "60",
+    "reseni_kroky": [
+      "Diference d = -10 (klesající posloupnost)",
+      "70 - 10 = 60"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_010",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 7, 14, 21, 28, ?",
+    "odpoved": "35",
+    "reseni_kroky": [
+      "Diference d = 7 (násobky čísla 7)",
+      "28 + 7 = 35"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_011",
+    "tema": "cisselne_rady",
+    "podtema": "ctverec_cisel",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 4, 9, 16, 25, ?",
+    "odpoved": "36",
+    "reseni_kroky": [
+      "Jsou to čtverce čísel 2, 3, 4, 5, ...",
+      "Další je 6² = 36"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_012",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 1,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 3, 9, 27, ?",
+    "odpoved": "81",
+    "reseni_kroky": [
+      "Každé číslo se násobí 3 (kvocient q = 3)",
+      "27 × 3 = 81"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_013",
+    "tema": "cisselne_rady",
+    "podtema": "fibonacciho_rada",
+    "obtiznost": 2,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 1, 2, 3, 5, 8, ?",
+    "odpoved": "13",
+    "reseni_kroky": [
+      "Každý člen je součtem dvou předcházejících (Fibonacciho posloupnost)",
+      "5 + 8 = 13"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_014",
+    "tema": "cisselne_rady",
+    "podtema": "fibonacciho_rada",
+    "obtiznost": 2,
+    "zadani": "Jaké je další číslo v posloupnosti: 2, 3, 5, 8, 13, ?",
+    "odpoved": "21",
+    "reseni_kroky": [
+      "Každý člen je součtem dvou předcházejících (Fibonacciho typ)",
+      "8 + 13 = 21"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_015",
+    "tema": "cisselne_rady",
+    "podtema": "trojuhelnikova_cisla",
+    "obtiznost": 2,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 3, 6, 10, ?",
+    "odpoved": "15",
+    "reseni_kroky": [
+      "Jsou to trojúhelníková čísla: přidáváme 2, 3, 4, 5, ...",
+      "10 + 5 = 15"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_016",
+    "tema": "cisselne_rady",
+    "podtema": "trojuhelnikova_cisla",
+    "obtiznost": 2,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 3, 6, 10, 15, ?",
+    "odpoved": "21",
+    "reseni_kroky": [
+      "Trojúhelníková čísla: diference se zvyšuje o 1 (2, 3, 4, 5, 6, ...)",
+      "15 + 6 = 21"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_017",
+    "tema": "cisselne_rady",
+    "podtema": "nty_clen",
+    "obtiznost": 2,
+    "zadani": "Aritmetická posloupnost: a₁ = 3, d = 4. Jaký je 5. člen?",
+    "odpoved": "19",
+    "reseni_kroky": [
+      "Vzorec: aₙ = a₁ + (n-1) · d",
+      "a₅ = 3 + (5-1) · 4 = 3 + 16 = 19"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_018",
+    "tema": "cisselne_rady",
+    "podtema": "nty_clen",
+    "obtiznost": 2,
+    "zadani": "Aritmetická posloupnost: a₁ = 2, d = 3. Jaký je 6. člen?",
+    "odpoved": "17",
+    "reseni_kroky": [
+      "Vzorec: aₙ = a₁ + (n-1) · d",
+      "a₆ = 2 + (6-1) · 3 = 2 + 15 = 17"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_019",
+    "tema": "cisselne_rady",
+    "podtema": "nty_clen",
+    "obtiznost": 2,
+    "zadani": "Aritmetická posloupnost: a₁ = 1, d = 5. Jaký je 4. člen?",
+    "odpoved": "16",
+    "reseni_kroky": [
+      "Vzorec: aₙ = a₁ + (n-1) · d",
+      "a₄ = 1 + (4-1) · 5 = 1 + 15 = 16"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_020",
+    "tema": "cisselne_rady",
+    "podtema": "soucet_prvnich_n",
+    "obtiznost": 2,
+    "zadani": "Jaký je součet prvních 5 přirozených čísel (1+2+3+4+5)?",
+    "odpoved": "15",
+    "reseni_kroky": [
+      "Vzorec: Sₙ = n(n+1)/2",
+      "S₅ = 5 · 6 / 2 = 30 / 2 = 15"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_021",
+    "tema": "cisselne_rady",
+    "podtema": "soucet_prvnich_n",
+    "obtiznost": 2,
+    "zadani": "Jaký je součet prvních 10 přirozených čísel?",
+    "odpoved": "55",
+    "reseni_kroky": [
+      "Vzorec: Sₙ = n(n+1)/2",
+      "S₁₀ = 10 · 11 / 2 = 110 / 2 = 55"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_022",
+    "tema": "cisselne_rady",
+    "podtema": "fibonacciho_rada",
+    "obtiznost": 2,
+    "zadani": "Jaké je 8. číslo Fibonacciho posloupnosti (začínající 1, 1, 2, 3, 5, 8, ...)?",
+    "odpoved": "21",
+    "reseni_kroky": [
+      "Fibonacciho posloupnost: 1, 1, 2, 3, 5, 8, 13, 21",
+      "8. člen je 21"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_023",
+    "tema": "cisselne_rady",
+    "podtema": "aritmeticka_posloupnost",
+    "obtiznost": 2,
+    "zadani": "Jaké je další číslo v posloupnosti: 3, 7, 11, 15, ?",
+    "odpoved": "19",
+    "reseni_kroky": [
+      "Diference d = 4",
+      "15 + 4 = 19"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_024",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 2,
+    "zadani": "Jaké je další číslo v posloupnosti: 1, 4, 16, 64, ?",
+    "odpoved": "256",
+    "reseni_kroky": [
+      "Každé číslo se násobí 4 (kvocient q = 4)",
+      "64 × 4 = 256"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_025",
+    "tema": "cisselne_rady",
+    "podtema": "nty_clen",
+    "obtiznost": 2,
+    "zadani": "Aritmetická posloupnost: a₁ = 10, d = -2. Jaký je 5. člen?",
+    "odpoved": "2",
+    "reseni_kroky": [
+      "Vzorec: aₙ = a₁ + (n-1) · d",
+      "a₅ = 10 + (5-1) · (-2) = 10 - 8 = 2"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_026",
+    "tema": "cisselne_rady",
+    "podtema": "soucet_prvnich_n",
+    "obtiznost": 3,
+    "zadani": "Jaký je součet prvních 100 přirozených čísel?",
+    "odpoved": "5050",
+    "reseni_kroky": [
+      "Gaussův vzorec: Sₙ = n(n+1)/2",
+      "S₁₀₀ = 100 · 101 / 2 = 10100 / 2 = 5050"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_027",
+    "tema": "cisselne_rady",
+    "podtema": "vzorec_nteho_clenu",
+    "obtiznost": 3,
+    "zadani": "Aritmetická posloupnost: a₁ = 5, d = 3. Jaký je 10. člen?",
+    "odpoved": "32",
+    "reseni_kroky": [
+      "Vzorec: aₙ = a₁ + (n-1) · d",
+      "a₁₀ = 5 + (10-1) · 3 = 5 + 27 = 32"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_028",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 3,
+    "zadani": "Geometrická posloupnost: a₁ = 2, q = 3. Jaký je 5. člen?",
+    "odpoved": "162",
+    "reseni_kroky": [
+      "Vzorec: aₙ = a₁ · qⁿ⁻¹",
+      "a₅ = 2 · 3⁴ = 2 · 81 = 162"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_029",
+    "tema": "cisselne_rady",
+    "podtema": "soucet_prvnich_n",
+    "obtiznost": 3,
+    "zadani": "Aritmetická posloupnost: a₁ = 1, d = 2. Jaký je součet prvních 5 členů?",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "Členy: 1, 3, 5, 7, 9",
+      "Vzorec: Sₙ = n(a₁+aₙ)/2 = 5·(1+9)/2 = 5·5 = 25"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_030",
+    "tema": "cisselne_rady",
+    "podtema": "vzorec_nteho_clenu",
+    "obtiznost": 3,
+    "zadani": "Posloupnost je dána vzorcem aₙ = 2n + 1. Jaký je 7. člen?",
+    "odpoved": "15",
+    "reseni_kroky": [
+      "Dosadíme n = 7 do vzorce aₙ = 2n + 1",
+      "a₇ = 2 · 7 + 1 = 14 + 1 = 15"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_031",
+    "tema": "cisselne_rady",
+    "podtema": "vzorec_nteho_clenu",
+    "obtiznost": 3,
+    "zadani": "Posloupnost je dána vzorcem aₙ = n² - 1. Jaký je 5. člen?",
+    "odpoved": "24",
+    "reseni_kroky": [
+      "Dosadíme n = 5 do vzorce aₙ = n² - 1",
+      "a₅ = 5² - 1 = 25 - 1 = 24"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_032",
+    "tema": "cisselne_rady",
+    "podtema": "soucet_prvnich_n",
+    "obtiznost": 3,
+    "zadani": "Jaký je součet prvních 20 přirozených čísel?",
+    "odpoved": "210",
+    "reseni_kroky": [
+      "Vzorec: Sₙ = n(n+1)/2",
+      "S₂₀ = 20 · 21 / 2 = 420 / 2 = 210"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_033",
+    "tema": "cisselne_rady",
+    "podtema": "geometricka_posloupnost",
+    "obtiznost": 3,
+    "zadani": "Jaký je součet první 4 členů geometrické řady: 1, 2, 4, 8?",
+    "odpoved": "15",
+    "reseni_kroky": [
+      "Součet: 1 + 2 + 4 + 8 = 15",
+      "Nebo vzorec: Sₙ = a₁(qⁿ-1)/(q-1) = 1·(2⁴-1)/(2-1) = 15"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_034",
+    "tema": "cisselne_rady",
+    "podtema": "vzorec_nteho_clenu",
+    "obtiznost": 3,
+    "zadani": "Posloupnost je dána vzorcem aₙ = 3n - 2. Jaký je 8. člen?",
+    "odpoved": "22",
+    "reseni_kroky": [
+      "Dosadíme n = 8: a₈ = 3 · 8 - 2",
+      "a₈ = 24 - 2 = 22"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "CIS_035",
+    "tema": "cisselne_rady",
+    "podtema": "soucet_prvnich_n",
+    "obtiznost": 3,
+    "zadani": "Aritmetická posloupnost: a₁ = 2, aₙ = 20, n = 10. Jaký je součet těchto 10 členů?",
+    "odpoved": "110",
+    "reseni_kroky": [
+      "Vzorec pro součet: Sₙ = n(a₁ + aₙ)/2",
+      "S₁₀ = 10 · (2 + 20) / 2 = 10 · 11 = 110"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_001",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď x = 3: 2x + 1 = ?",
+    "odpoved": "7",
+    "reseni_kroky": [
+      "Dosadíme x = 3: 2 · 3 + 1",
+      "6 + 1 = 7"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_002",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď a = 5: 3a - 2 = ?",
+    "odpoved": "13",
+    "reseni_kroky": [
+      "Dosadíme a = 5: 3 · 5 - 2",
+      "15 - 2 = 13"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_003",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď x = 4, y = 2: x + y = ?",
+    "odpoved": "6",
+    "reseni_kroky": [
+      "Dosadíme x = 4 a y = 2",
+      "4 + 2 = 6"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_004",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď x = 6: x/2 + 1 = ?",
+    "odpoved": "4",
+    "reseni_kroky": [
+      "Dosadíme x = 6: 6/2 + 1",
+      "3 + 1 = 4"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_005",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď n = 7: 4n - 3 = ?",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "Dosadíme n = 7: 4 · 7 - 3",
+      "28 - 3 = 25"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_006",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď a = 3, b = 4: 2a + b = ?",
+    "odpoved": "10",
+    "reseni_kroky": [
+      "Dosadíme a = 3 a b = 4: 2 · 3 + 4",
+      "6 + 4 = 10"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_007",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď x = 10: 5x - 10 = ?",
+    "odpoved": "40",
+    "reseni_kroky": [
+      "Dosadíme x = 10: 5 · 10 - 10",
+      "50 - 10 = 40"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_008",
+    "tema": "vyrazy",
+    "podtema": "linearni_vyraz",
+    "obtiznost": 1,
+    "zadani": "Dosaď x = 2, y = 5: 3x + y - 1 = ?",
+    "odpoved": "10",
+    "reseni_kroky": [
+      "Dosadíme x = 2 a y = 5: 3 · 2 + 5 - 1",
+      "6 + 5 - 1 = 10"
+    ],
+    "cas_sekund": 60,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_009",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 3: x² - 2x + 1 = ?",
+    "odpoved": "4",
+    "reseni_kroky": [
+      "Dosadíme x = 3: 3² - 2·3 + 1",
+      "9 - 6 + 1 = 4"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_010",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 4: (x + 3)² = ?",
+    "odpoved": "49",
+    "reseni_kroky": [
+      "Dosadíme x = 4: (4 + 3)²",
+      "7² = 49"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_011",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď a = 5, b = 3: (a + b)(a - b) = ?",
+    "odpoved": "16",
+    "reseni_kroky": [
+      "Dosadíme a = 5 a b = 3: (5+3)(5-3)",
+      "8 · 2 = 16"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_012",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 2: x² + 5x - 3 = ?",
+    "odpoved": "11",
+    "reseni_kroky": [
+      "Dosadíme x = 2: 2² + 5·2 - 3",
+      "4 + 10 - 3 = 11"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_013",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 3: (x - 1)² + x = ?",
+    "odpoved": "7",
+    "reseni_kroky": [
+      "Dosadíme x = 3: (3-1)² + 3",
+      "4 + 3 = 7"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_014",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď a = 4: a² - a = ?",
+    "odpoved": "12",
+    "reseni_kroky": [
+      "Dosadíme a = 4: 4² - 4",
+      "16 - 4 = 12"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_015",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 5: (x - 3)(x + 2) = ?",
+    "odpoved": "14",
+    "reseni_kroky": [
+      "Dosadíme x = 5: (5-3)(5+2) = 2 · 7",
+      "2 · 7 = 14"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_016",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 2: 3x² - x + 1 = ?",
+    "odpoved": "11",
+    "reseni_kroky": [
+      "Dosadíme x = 2: 3·2² - 2 + 1",
+      "3·4 - 2 + 1 = 12 - 2 + 1 = 11"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_017",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď a = 3, b = 2: a² + 2ab + b² = ?",
+    "odpoved": "25",
+    "reseni_kroky": [
+      "Výraz a² + 2ab + b² = (a+b)²",
+      "(3 + 2)² = 5² = 25"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_018",
+    "tema": "vyrazy",
+    "podtema": "kvadraticky_vyraz",
+    "obtiznost": 2,
+    "zadani": "Dosaď x = 6: x²/4 = ?",
+    "odpoved": "9",
+    "reseni_kroky": [
+      "Dosadíme x = 6: 6²/4",
+      "36/4 = 9"
+    ],
+    "cas_sekund": 90,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_019",
+    "tema": "vyrazy",
+    "podtema": "kubicky_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď x = 2: x³ - x² + x - 1 = ?",
+    "odpoved": "5",
+    "reseni_kroky": [
+      "Dosadíme x = 2: 2³ - 2² + 2 - 1",
+      "8 - 4 + 2 - 1 = 5"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_020",
+    "tema": "vyrazy",
+    "podtema": "kubicky_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď x = 3: x³ - 3x² + 3x - 1 = ?",
+    "odpoved": "8",
+    "reseni_kroky": [
+      "Výraz x³ - 3x² + 3x - 1 = (x - 1)³",
+      "(3 - 1)³ = 2³ = 8"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_021",
+    "tema": "vyrazy",
+    "podtema": "kubicky_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď a = 2, b = 1: a³ + 3a²b + 3ab² + b³ = ?",
+    "odpoved": "27",
+    "reseni_kroky": [
+      "Výraz je (a+b)³ = (2+1)³ = 3³",
+      "3³ = 27"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_022",
+    "tema": "vyrazy",
+    "podtema": "slozeny_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď x = 4: (x² - x) / (x - 3) = ?",
+    "odpoved": "12",
+    "reseni_kroky": [
+      "Dosadíme x = 4: (4² - 4) / (4 - 3)",
+      "(16 - 4) / 1 = 12"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_023",
+    "tema": "vyrazy",
+    "podtema": "kubicky_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď x = 2: 2x³ - 5x² + x + 2 = ?",
+    "odpoved": "0",
+    "reseni_kroky": [
+      "Dosadíme x = 2: 2·8 - 5·4 + 2 + 2",
+      "16 - 20 + 2 + 2 = 0"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_024",
+    "tema": "vyrazy",
+    "podtema": "slozeny_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď x = 3, y = 2: x³ - y³ = ?",
+    "odpoved": "19",
+    "reseni_kroky": [
+      "Dosadíme x = 3 a y = 2: 3³ - 2³",
+      "27 - 8 = 19"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  },
+  {
+    "id": "VYR_025",
+    "tema": "vyrazy",
+    "podtema": "slozeny_vyraz",
+    "obtiznost": 3,
+    "zadani": "Dosaď a = 2: (a² + a)² - a² = ?",
+    "odpoved": "32",
+    "reseni_kroky": [
+      "Nejprve: a² + a = 4 + 2 = 6, poté 6² = 36",
+      "a² = 4, tedy 36 - 4 = 32"
+    ],
+    "cas_sekund": 120,
+    "sm2_interval": 1
+  }
+]

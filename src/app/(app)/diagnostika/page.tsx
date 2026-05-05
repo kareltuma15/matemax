@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { examples } from "@/data/examples";
 import { createCard } from "@/lib/sm2";
 import { SM2Card } from "@/types";
@@ -179,11 +180,16 @@ function getStepQuestions(stepIdx: number): DiagQuestion[] {
 
 export default function DiagnostikaPage() {
   const router = useRouter();
+  const [alreadyDone, setAlreadyDone] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(QUESTIONS.length).fill(null));
   const [selected, setSelected] = useState<(number | null)[]>(Array(QUESTIONS_PER_STEP).fill(null));
   const [confirmed, setConfirmed] = useState(false);
   const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("matemax-diag-done") === "1") setAlreadyDone(true);
+  }, []);
 
   const stepQuestions = getStepQuestions(stepIdx);
   const allSelected = selected.every((s) => s !== null);
@@ -229,6 +235,43 @@ export default function DiagnostikaPage() {
       setSelected(Array(QUESTIONS_PER_STEP).fill(null));
       setConfirmed(false);
     }
+  }
+
+  if (alreadyDone && !finished) {
+    return (
+      <div className="flex flex-col gap-5">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 text-center flex flex-col gap-4">
+          <span className="text-4xl">✅</span>
+          <div>
+            <h2 className="text-lg font-bold" style={{ color: "#0D1B3E" }}>
+              Diagnostiku jsi již absolvoval
+            </h2>
+            <p className="text-sm text-slate-500 mt-1">
+              Výsledky jsou uloženy a trénink je přizpůsoben tvým mezerám.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 mt-2">
+            <Link
+              href="/trenink"
+              className="w-full py-3 text-white font-semibold rounded-xl text-base text-center"
+              style={{ background: "#0D1B3E" }}
+            >
+              Pokračovat v tréninku →
+            </Link>
+            <button
+              onClick={() => {
+                localStorage.removeItem("matemax-diag-done");
+                localStorage.removeItem("matemax-diag-results");
+                setAlreadyDone(false);
+              }}
+              className="w-full py-2.5 text-slate-600 font-medium rounded-xl border border-slate-200 text-sm hover:bg-slate-50 transition-colors"
+            >
+              🔄 Opakovat diagnostiku
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (finished) {

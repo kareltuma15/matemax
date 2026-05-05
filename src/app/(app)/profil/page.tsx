@@ -128,9 +128,9 @@ export default function ProfilPage() {
                   {correct}/{total} ({Math.round(score * 100)} %)
                 </span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2">
+              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div
-                  className="h-2 rounded-full transition-all duration-500"
+                  className="h-2 rounded-full bar-animate"
                   style={{
                     width: `${Math.round(score * 100)}%`,
                     background: score >= 0.67 ? "#22c55e" : score >= 0.4 ? "#f59e0b" : "#ef4444",

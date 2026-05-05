@@ -27,12 +27,15 @@ export interface UserProgress {
 }
 
 export const TEMA_LABELS: Record<string, string> = {
-  zlomky: "Zlomky",
-  procenta: "Procenta",
-  rovnice: "Rovnice",
-  geometrie: "Geometrie",
-  mocniny: "Mocniny a odmocniny",
-  slovni_ulohy: "Slovní úlohy",
+  zlomky:        "Zlomky",
+  procenta:      "Procenta",
+  rovnice:       "Rovnice",
+  geometrie:     "Geometrie",
+  mocniny:       "Mocniny",
+  slovni_ulohy:  "Slovní úlohy",
+  cisselne_rady: "Číselné řady",
+  vyrazy:        "Výrazy",
+  kombinovane:   "Kombinované",
 };
 
 export const TEMA_COLORS: Record<string, string> = {

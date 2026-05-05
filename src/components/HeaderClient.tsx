@@ -10,8 +10,8 @@ export default function HeaderClient() {
   const [streak, setStreak]       = useState(0);
   const [xpBump, setXpBump]       = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
 
-  // Progress listeners
   useEffect(() => {
     const p = loadProgress();
     setXp(p.xp);
@@ -28,6 +28,7 @@ export default function HeaderClient() {
         } catch { /* ignore */ }
       }
     }
+
     function onProgressUpdate() {
       const p2 = loadProgress();
       setXpBump(true);
@@ -44,12 +45,12 @@ export default function HeaderClient() {
     };
   }, []);
 
-  // Auth state listener
   useEffect(() => {
-    if (!supabase) return;
+    if (!supabase) { setAuthReady(true); return; }
 
     supabase.auth.getSession().then(({ data }) => {
       setUserEmail(data.session?.user.email ?? null);
+      setAuthReady(true);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -83,11 +84,11 @@ export default function HeaderClient() {
             <span className="text-xs text-orange-400 hidden sm:inline">dní</span>
           </div>
 
-          {/* XP */}
+          {/* XP — xp-bump class triggers bounce keyframe */}
           <div
-            className={`flex items-center gap-1 rounded-lg px-2.5 py-1 border transition-all duration-300 ${
+            className={`flex items-center gap-1 rounded-lg px-2.5 py-1 border transition-colors duration-200 ${
               xpBump
-                ? "bg-indigo-100 border-indigo-300 scale-110"
+                ? "bg-indigo-100 border-indigo-300 xp-bump"
                 : "bg-indigo-50 border-indigo-200"
             }`}
           >
@@ -96,25 +97,27 @@ export default function HeaderClient() {
             <span className="text-xs hidden sm:inline" style={{ color: "#2E6DA4" }}>XP</span>
           </div>
 
-          {/* Auth */}
-          {userEmail ? (
-            <Link
-              href="/profil"
-              title={userEmail}
-              className="text-xs font-semibold px-2.5 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:flex items-center gap-1"
-              style={{ color: "#2E6DA4" }}
-            >
-              <span>👤</span>
-              <span>Profil</span>
-            </Link>
-          ) : (
-            <Link
-              href="/prihlaseni"
-              className="text-xs font-semibold px-2.5 py-1 rounded-lg transition-colors hidden sm:block"
-              style={{ color: "#2E6DA4" }}
-            >
-              Přihlásit
-            </Link>
+          {/* Auth — only render once session is known to avoid flash */}
+          {authReady && (
+            userEmail ? (
+              <Link
+                href="/profil"
+                title={userEmail}
+                className="text-xs font-semibold px-2.5 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:flex items-center gap-1"
+                style={{ color: "#2E6DA4" }}
+              >
+                <span>👤</span>
+                <span>Profil</span>
+              </Link>
+            ) : (
+              <Link
+                href="/prihlaseni"
+                className="text-xs font-semibold px-2.5 py-1 rounded-lg transition-colors hidden sm:block"
+                style={{ color: "#2E6DA4" }}
+              >
+                Přihlásit
+              </Link>
+            )
           )}
         </div>
       </div>

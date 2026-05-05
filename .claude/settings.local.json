@@ -6,7 +6,21 @@
       "Bash(node -e ' *)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git config *)",
+      "Bash(vercel --version)",
+      "Bash(npm install *)",
+      "Bash(vercel whoami *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Karel\\\\matemax\" -Recurse -Directory -Depth 2)",
+      "Bash(Select-Object FullName)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(git push *)",
+      "Bash(vercel env *)",
+      "Bash(node -e \"const db = require\\('./src/data/databaze.json'\\); const slovni = db.filter\\(e => e.tema === 'slovni_ulohy'\\); console.log\\(JSON.stringify\\(slovni.slice\\(0,5\\), null, 2\\)\\)\")",
+      "Bash(node -e \"const raw = require\\('./src/data/databaze.json'\\); const db = raw.examples; const slovni = db.filter\\(e => e.tema === 'slovni_ulohy'\\); console.log\\(JSON.stringify\\(slovni.slice\\(0,8\\), null, 2\\)\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(node *)",
+      "Bash(npx next *)"
     ]
   }
 }

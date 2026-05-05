@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
 
@@ -12,20 +13,105 @@ interface Props {
   onRestart: () => void;
 }
 
+function useCountUp(target: number, duration = 900): number {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    let start: number | null = null;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      setVal(Math.round(progress * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [target, duration]);
+  return val;
+}
+
+function TopicProgressBar({ tema }: { tema: string }) {
+  const [score, setScore] = useState<{ correct: number; total: number } | null>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("matemax-diag-results");
+      if (raw) {
+        const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
+        if (results[tema]) setScore(results[tema]);
+      }
+    } catch { /* ignore */ }
+  }, [tema]);
+
+  // Also check SM2 cards stats
+  useEffect(() => {
+    if (score) return;
+    try {
+      const raw = localStorage.getItem("matemax-gamification");
+      if (raw) {
+        const g = JSON.parse(raw);
+        const ts = g.topicStats?.[tema];
+        if (ts && ts.total > 0) setScore(ts);
+      }
+    } catch { /* ignore */ }
+  }, [tema, score]);
+
+  if (!score || score.total === 0) return null;
+
+  const pct = Math.round((score.correct / score.total) * 100);
+  const barColor = pct >= 80 ? "#22c55e" : pct >= 50 ? "#f59e0b" : "#ef4444";
+  const textColor = pct >= 80 ? "#166534" : pct >= 50 ? "#92400e" : "#991b1b";
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs text-slate-600 w-28 shrink-0 truncate">
+        {TEMA_LABELS[tema] ?? tema}
+      </span>
+      <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+        <div
+          ref={barRef}
+          className="h-2 rounded-full bar-animate"
+          style={{ width: `${pct}%`, background: barColor }}
+        />
+      </div>
+      <span className="text-xs font-bold w-9 text-right shrink-0" style={{ color: textColor }}>
+        {pct} %
+      </span>
+    </div>
+  );
+}
+
 export default function SessionSummary({ correct, total, xpEarned, streak, topics, onRestart }: Props) {
   const pct = Math.round((correct / total) * 100);
+  const animPct = useCountUp(pct);
+  const animXp  = useCountUp(xpEarned);
 
   const tier = pct >= 80 ? "great" : pct >= 50 ? "good" : "low";
   const headerBg    = tier === "great" ? "#dcfce7" : tier === "good" ? "#dbeafe" : "#ffedd5";
   const headerColor = tier === "great" ? "#166534" : tier === "good" ? "#1e40af" : "#9a3412";
   const title       = tier === "great" ? "Výborně! 🏆" : tier === "good" ? "Dobrá práce! 💪" : "Nevzdávej to! 🔥";
 
+  // Collect all practiced topics for progress bars (union of session + known diag topics)
+  const [allTopics, setAllTopics] = useState<string[]>(topics);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("matemax-diag-results");
+      if (raw) {
+        const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
+        const diagTopics = Object.keys(results).filter((t) => results[t].total > 0);
+        const merged = [...new Set([...topics, ...diagTopics])];
+        setAllTopics(merged);
+      }
+    } catch { /* ignore */ }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       {/* Colored header */}
       <div className="px-8 py-7 text-center" style={{ background: headerBg }}>
-        <h2 className="text-2xl font-bold" style={{ color: headerColor }}>{title}</h2>
-        <p className="text-6xl font-black mt-3" style={{ color: headerColor }}>{pct} %</p>
+        <h2 className="text-2xl font-bold count-fade-in" style={{ color: headerColor }}>{title}</h2>
+        <p className="text-6xl font-black mt-3 count-fade-in" style={{ color: headerColor }}>
+          {animPct} %
+        </p>
         <p className="mt-2 text-sm font-medium" style={{ color: headerColor, opacity: 0.75 }}>
           {correct} z {total} správně
         </p>
@@ -36,7 +122,7 @@ export default function SessionSummary({ correct, total, xpEarned, streak, topic
         <div className="flex gap-3">
           <div className="flex-1 rounded-xl bg-indigo-50 border border-indigo-100 p-3 text-center">
             <p className="text-xs text-indigo-400 font-medium mb-0.5">Získal jsi</p>
-            <p className="text-xl font-black text-indigo-600">+{xpEarned} XP</p>
+            <p className="text-xl font-black text-indigo-600 count-fade-in">+{animXp} XP</p>
           </div>
           <div className="flex-1 rounded-xl bg-orange-50 border border-orange-100 p-3 text-center">
             <p className="text-xs text-orange-400 font-medium mb-0.5">Streak</p>
@@ -44,7 +130,7 @@ export default function SessionSummary({ correct, total, xpEarned, streak, topic
           </div>
         </div>
 
-        {/* Topics */}
+        {/* Topics practiced */}
         {topics.length > 0 && (
           <div>
             <p className="text-xs text-slate-400 font-medium mb-2">Procvičoval jsi</p>
@@ -52,13 +138,23 @@ export default function SessionSummary({ correct, total, xpEarned, streak, topic
               {topics.map((tema) => (
                 <span
                   key={tema}
-                  className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                  className="text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap"
                   style={{ background: "#e0e7ff", color: "#3730a3" }}
                 >
                   {TEMA_LABELS[tema] ?? tema}
                 </span>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Mini progress bars per topic */}
+        {allTopics.length > 0 && (
+          <div className="flex flex-col gap-2 pt-1">
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">📈 Tvůj pokrok</p>
+            {allTopics.map((tema) => (
+              <TopicProgressBar key={tema} tema={tema} />
+            ))}
           </div>
         )}
 
@@ -75,8 +171,15 @@ export default function SessionSummary({ correct, total, xpEarned, streak, topic
             Trénovat znovu →
           </button>
           <Link
+            href="/profil"
+            className="block w-full py-2.5 font-medium rounded-xl border border-indigo-200 text-sm text-center transition-colors hover:bg-indigo-50"
+            style={{ color: "#2E6DA4" }}
+          >
+            📊 Zobrazit profil →
+          </Link>
+          <Link
             href="/"
-            className="block w-full py-2.5 text-slate-600 font-medium rounded-xl border border-slate-200 text-sm hover:bg-slate-50 transition-colors text-center"
+            className="block w-full py-2.5 text-slate-500 font-medium rounded-xl border border-slate-200 text-sm hover:bg-slate-50 transition-colors text-center"
           >
             Zpět na úvod
           </Link>
