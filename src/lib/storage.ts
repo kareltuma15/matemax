@@ -65,3 +65,24 @@ export async function remoteSaveSM2Card(data: SM2Row): Promise<void> {
     .from("sm2_cards")
     .upsert(data, { onConflict: "user_id,example_id" });
 }
+
+export async function remoteSyncXP(userId: string, totalXp: number, levelKey: string): Promise<void> {
+  if (!supabase) return;
+  await supabase
+    .from("user_xp")
+    .upsert(
+      { user_id: userId, total_xp: totalXp, current_level: levelKey, updated_at: new Date().toISOString() },
+      { onConflict: "user_id" }
+    );
+}
+
+export async function remoteSyncBadges(userId: string, badgeIds: string[]): Promise<void> {
+  if (!supabase || badgeIds.length === 0) return;
+  const rows = badgeIds.map((badge_id) => ({
+    user_id: userId,
+    badge_id,
+    earned_at: new Date().toISOString(),
+    seen: false,
+  }));
+  await supabase.from("user_badges").upsert(rows, { onConflict: "user_id,badge_id" });
+}

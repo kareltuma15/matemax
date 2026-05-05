@@ -19,7 +19,7 @@ export function saveProgress(p: UserProgress) {
   localStorage.setItem(KEY, JSON.stringify(p));
 }
 
-export function recordActivity(p: UserProgress, wasCorrect: boolean): UserProgress {
+export function recordActivity(p: UserProgress, wasCorrect: boolean, xpDelta?: number): UserProgress {
   const t = today();
   let streak = p.streak;
 
@@ -34,11 +34,11 @@ export function recordActivity(p: UserProgress, wasCorrect: boolean): UserProgre
     streak = p.lastActiveDate === yStr ? streak + 1 : 1;
   }
 
-  const xpDelta = wasCorrect ? 10 : 5;
+  const delta = xpDelta ?? (wasCorrect ? 10 : 1);
   const consecutiveCorrect = wasCorrect ? p.consecutiveCorrect + 1 : 0;
 
   return {
-    xp: p.xp + xpDelta,
+    xp: p.xp + delta,
     streak,
     lastActiveDate: t,
     consecutiveCorrect,

@@ -1,0 +1,1217 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "app": "MateMax",
+    "description": "Kompletní gamifikační systém – odznaky, levely, XP, animace",
+    "stack": "Next.js + Supabase + Tailwind",
+    "lastUpdated": "2026-05-04"
+  },
+
+  "xp_config": {
+    "description": "XP získané za různé akce v aplikaci",
+    "actions": {
+      "example_correct_first_try": {
+        "xp": 10,
+        "label": "Správně na první pokus",
+        "multiplier_streak": true
+      },
+      "example_correct_second_try": {
+        "xp": 5,
+        "label": "Správně na druhý pokus",
+        "multiplier_streak": false
+      },
+      "example_incorrect": {
+        "xp": 1,
+        "label": "Nesprávně (ale zkusil jsi to!)",
+        "multiplier_streak": false
+      },
+      "daily_goal_reached": {
+        "xp": 15,
+        "label": "Denní cíl splněn",
+        "multiplier_streak": true
+      },
+      "streak_bonus_7": {
+        "xp": 50,
+        "label": "7denní streak bonus",
+        "multiplier_streak": false
+      },
+      "streak_bonus_30": {
+        "xp": 200,
+        "label": "30denní streak bonus",
+        "multiplier_streak": false
+      },
+      "diagnostic_test_completed": {
+        "xp": 30,
+        "label": "Diagnostický test dokončen",
+        "multiplier_streak": false
+      },
+      "topic_mastered": {
+        "xp": 100,
+        "label": "Téma zvládnuto (80%+ správně)",
+        "multiplier_streak": false
+      },
+      "perfect_session": {
+        "xp": 25,
+        "label": "Perfektní sezení (10+ příkladů bez chyby)",
+        "multiplier_streak": true
+      },
+      "comeback_after_break": {
+        "xp": 10,
+        "label": "Návrat po pauze (3+ dny)",
+        "multiplier_streak": false
+      }
+    },
+    "streak_multiplier": {
+      "description": "Multiplikátor XP za akce s multiplier_streak: true",
+      "tiers": [
+        { "min_days": 1,  "max_days": 2,  "multiplier": 1.0, "label": "Žádný bonus" },
+        { "min_days": 3,  "max_days": 6,  "multiplier": 1.1, "label": "+10% XP" },
+        { "min_days": 7,  "max_days": 13, "multiplier": 1.25, "label": "+25% XP" },
+        { "min_days": 14, "max_days": 29, "multiplier": 1.5,  "label": "+50% XP" },
+        { "min_days": 30, "max_days": 999,"multiplier": 2.0,  "label": "2× XP!" }
+      ]
+    }
+  },
+
+  "level_system": {
+    "description": "5 levelů – každý má název, prahové XP, barvu, ikonu a odblokované výhody",
+    "levels": [
+      {
+        "id": 1,
+        "key": "zacatecnik",
+        "label": "Začátečník",
+        "xp_min": 0,
+        "xp_max": 299,
+        "color": "#94a3b8",
+        "color_name": "slate-400",
+        "icon_emoji": "🌱",
+        "icon_svg_key": "seedling",
+        "badge_frame": "frame_gray",
+        "description": "Právě jsi začal svou matematickou cestu.",
+        "unlocked_perks": [
+          "Přístup k diagnostickému testu",
+          "3 témata zdarma",
+          "Denní XP streak"
+        ],
+        "progress_bar_color": "#94a3b8",
+        "rank_title": "Matematický nováček"
+      },
+      {
+        "id": 2,
+        "key": "zak",
+        "label": "Žák",
+        "xp_min": 300,
+        "xp_max": 999,
+        "color": "#60a5fa",
+        "color_name": "blue-400",
+        "icon_emoji": "📐",
+        "icon_svg_key": "ruler",
+        "badge_frame": "frame_blue",
+        "description": "Základy ti jdou. Pokračuj dál!",
+        "unlocked_perks": [
+          "Odemknutí 4. tématu (i bez Premium)",
+          "Přístup k týdenním statistikám",
+          "Vlastní avatar barva (modrá)"
+        ],
+        "progress_bar_color": "#60a5fa",
+        "rank_title": "Pilný žák"
+      },
+      {
+        "id": 3,
+        "key": "pokrocily",
+        "label": "Pokročilý",
+        "xp_min": 1000,
+        "xp_max": 2999,
+        "color": "#a78bfa",
+        "color_name": "violet-400",
+        "icon_emoji": "🔢",
+        "icon_svg_key": "numbers",
+        "badge_frame": "frame_purple",
+        "description": "Matematika ti jde opravdu dobře!",
+        "unlocked_perks": [
+          "Speciální fialový rámeček profilu",
+          "Přístup k pokročilým statistikám (heat map)",
+          "Možnost výzev s časovým limitem"
+        ],
+        "progress_bar_color": "#a78bfa",
+        "rank_title": "Matematický nadšenec"
+      },
+      {
+        "id": 4,
+        "key": "expert",
+        "label": "Expert",
+        "xp_min": 3000,
+        "xp_max": 7499,
+        "color": "#fb923c",
+        "color_name": "orange-400",
+        "icon_emoji": "🏆",
+        "icon_svg_key": "trophy",
+        "badge_frame": "frame_gold",
+        "description": "Jsi mezi nejlepšími!",
+        "unlocked_perks": [
+          "Zlatý rámeček s animací (shimmer)",
+          "Možnost exportu pokroku do PDF",
+          "Exkluzivní expert výzvy"
+        ],
+        "progress_bar_color": "#fb923c",
+        "rank_title": "Matematický expert"
+      },
+      {
+        "id": 5,
+        "key": "mistr",
+        "label": "Mistr",
+        "xp_min": 7500,
+        "xp_max": null,
+        "color": "#f59e0b",
+        "color_name": "amber-400",
+        "icon_emoji": "⭐",
+        "icon_svg_key": "star",
+        "badge_frame": "frame_diamond",
+        "description": "Matematický mistr. Legenda!",
+        "unlocked_perks": [
+          "Diamantový rámeček s particle efektem",
+          "Hall of Fame zápis",
+          "Speciální titul na profilu",
+          "Přístup k nejtěžším příkladům (★★★★★)"
+        ],
+        "progress_bar_color": "#f59e0b",
+        "rank_title": "Matematický mistr"
+      }
+    ]
+  },
+
+  "badge_categories": {
+    "prvni_kroky":    { "label": "První kroky",     "icon": "🐣", "color": "#86efac" },
+    "streak":         { "label": "Vytrvalost",       "icon": "🔥", "color": "#fb923c" },
+    "pocty":          { "label": "Počty příkladů",   "icon": "📊", "color": "#60a5fa" },
+    "temata":         { "label": "Témata",            "icon": "📚", "color": "#a78bfa" },
+    "presnost":       { "label": "Přesnost",          "icon": "🎯", "color": "#34d399" },
+    "cas":            { "label": "Rychlost",          "icon": "⚡", "color": "#fbbf24" },
+    "socialni":       { "label": "Sociální",          "icon": "👥", "color": "#f472b6" },
+    "specialni":      { "label": "Speciální",         "icon": "✨", "color": "#e2e8f0" }
+  },
+
+  "badges": [
+
+    {
+      "id": "badge_first_example",
+      "category": "prvni_kroky",
+      "label": "První krok",
+      "description": "Vyřeš svůj první příklad v MateMaxu",
+      "icon_emoji": "🐣",
+      "icon_color": "#86efac",
+      "rarity": "common",
+      "xp_reward": 20,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "total_solved": 1 }
+      },
+      "animation": {
+        "type": "pop",
+        "duration_ms": 600,
+        "sound": "chime_soft"
+      },
+      "ui": {
+        "toast_text": "Výborně! Vyřešil jsi první příklad! 🐣",
+        "modal_title": "Odznak odemknut!",
+        "modal_text": "Gratulujeme k prvnímu příkladu. Každá cesta začíná prvním krokem."
+      }
+    },
+
+    {
+      "id": "badge_first_diagnostic",
+      "category": "prvni_kroky",
+      "label": "Diagnostik",
+      "description": "Dokonči diagnostický test",
+      "icon_emoji": "🔬",
+      "icon_color": "#67e8f9",
+      "rarity": "common",
+      "xp_reward": 30,
+      "trigger": {
+        "event": "diagnostic_completed",
+        "condition": {}
+      },
+      "animation": {
+        "type": "slide_up",
+        "duration_ms": 700,
+        "sound": "chime_medium"
+      },
+      "ui": {
+        "toast_text": "Diagnostický test dokončen! Teď víme, na čem pracovat. 🔬",
+        "modal_title": "Odznak: Diagnostik",
+        "modal_text": "Znáš svá silná i slabá místa – to je základ úspěchu."
+      }
+    },
+
+    {
+      "id": "badge_registered",
+      "category": "prvni_kroky",
+      "label": "Člen komunity",
+      "description": "Vytvoř si účet v MateMaxu",
+      "icon_emoji": "🎓",
+      "icon_color": "#a78bfa",
+      "rarity": "common",
+      "xp_reward": 10,
+      "trigger": {
+        "event": "user_registered",
+        "condition": {}
+      },
+      "animation": {
+        "type": "confetti",
+        "duration_ms": 2000,
+        "sound": "fanfare_short"
+      },
+      "ui": {
+        "toast_text": "Vítej v MateMaxu! Tvoje matematická cesta začíná. 🎓",
+        "modal_title": "Vítej!",
+        "modal_text": "Zaregistroval ses a nyní patříš do komunity MateMax. Hodně štěstí!"
+      }
+    },
+
+    {
+      "id": "badge_streak_3",
+      "category": "streak",
+      "label": "Trojka v řadě",
+      "description": "Procvičuj 3 dny v řadě",
+      "icon_emoji": "🔥",
+      "icon_color": "#fb923c",
+      "rarity": "common",
+      "xp_reward": 25,
+      "trigger": {
+        "event": "streak_updated",
+        "condition": { "streak_days": 3 }
+      },
+      "animation": {
+        "type": "fire_burst",
+        "duration_ms": 800,
+        "sound": "whoosh"
+      },
+      "ui": {
+        "toast_text": "3 dny v řadě! Oheň začíná hořet! 🔥",
+        "modal_title": "Streak: 3 dny!",
+        "modal_text": "Tři dny procvičování v řadě – tvůj mozek to miluje."
+      }
+    },
+
+    {
+      "id": "badge_streak_7",
+      "category": "streak",
+      "label": "Týden odhodlání",
+      "description": "Procvičuj 7 dní v řadě",
+      "icon_emoji": "🔥🔥",
+      "icon_color": "#ef4444",
+      "rarity": "uncommon",
+      "xp_reward": 50,
+      "trigger": {
+        "event": "streak_updated",
+        "condition": { "streak_days": 7 }
+      },
+      "animation": {
+        "type": "fire_burst_large",
+        "duration_ms": 1200,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "Celý týden! Jsi neporazitelný! 🔥🔥",
+        "modal_title": "7 dní v řadě!",
+        "modal_text": "Jeden celý týden bez přerušení. To je opravdová vytrvalost!"
+      }
+    },
+
+    {
+      "id": "badge_streak_14",
+      "category": "streak",
+      "label": "Dvoutýdenní mašina",
+      "description": "Procvičuj 14 dní v řadě",
+      "icon_emoji": "💪",
+      "icon_color": "#dc2626",
+      "rarity": "rare",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "streak_updated",
+        "condition": { "streak_days": 14 }
+      },
+      "animation": {
+        "type": "pulse_glow",
+        "color": "#dc2626",
+        "duration_ms": 1500,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "14 dní! Jsi jako matematický stroj! 💪",
+        "modal_title": "14denní streak!",
+        "modal_text": "Dva týdny denního procvičování. Tvůj výkon se musí dramaticky zlepšovat!"
+      }
+    },
+
+    {
+      "id": "badge_streak_30",
+      "category": "streak",
+      "label": "Měsíc matematiky",
+      "description": "Procvičuj 30 dní v řadě",
+      "icon_emoji": "🌟",
+      "icon_color": "#fbbf24",
+      "rarity": "epic",
+      "xp_reward": 200,
+      "trigger": {
+        "event": "streak_updated",
+        "condition": { "streak_days": 30 }
+      },
+      "animation": {
+        "type": "stars_explosion",
+        "duration_ms": 3000,
+        "sound": "fanfare_epic"
+      },
+      "ui": {
+        "toast_text": "30 dní! Celý měsíc! Jsi legenda! 🌟",
+        "modal_title": "30denní streak – EPICKÁ výzva splněna!",
+        "modal_text": "Celý měsíc bez jediného vynechaného dne. Tohle je výjimečné."
+      }
+    },
+
+    {
+      "id": "badge_streak_100",
+      "category": "streak",
+      "label": "Stoletý maratonec",
+      "description": "Procvičuj 100 dní v řadě",
+      "icon_emoji": "🏅",
+      "icon_color": "#f59e0b",
+      "rarity": "legendary",
+      "xp_reward": 500,
+      "trigger": {
+        "event": "streak_updated",
+        "condition": { "streak_days": 100 }
+      },
+      "animation": {
+        "type": "full_screen_confetti",
+        "duration_ms": 5000,
+        "sound": "fanfare_legendary"
+      },
+      "ui": {
+        "toast_text": "100 DNÍ! Jsi absolutní legenda MateMaxu! 🏅",
+        "modal_title": "100 DNÍ V ŘADĚ!",
+        "modal_text": "Sto dní procvičování bez přerušení. Jsi součástí Hall of Fame!"
+      }
+    },
+
+    {
+      "id": "badge_10_examples",
+      "category": "pocty",
+      "label": "Desítka",
+      "description": "Vyřeš celkem 10 příkladů",
+      "icon_emoji": "🔟",
+      "icon_color": "#60a5fa",
+      "rarity": "common",
+      "xp_reward": 15,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "total_solved": 10 }
+      },
+      "animation": { "type": "pop", "duration_ms": 600, "sound": "chime_soft" },
+      "ui": {
+        "toast_text": "10 příkladů za sebou! Dobrý start! 🔟",
+        "modal_title": "10 příkladů vyřešeno",
+        "modal_text": "Prvních deset je za tebou. Tak jdeme na dalších deset!"
+      }
+    },
+
+    {
+      "id": "badge_50_examples",
+      "category": "pocty",
+      "label": "Padesátník",
+      "description": "Vyřeš celkem 50 příkladů",
+      "icon_emoji": "5️⃣0️⃣",
+      "icon_color": "#3b82f6",
+      "rarity": "common",
+      "xp_reward": 40,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "total_solved": 50 }
+      },
+      "animation": { "type": "slide_up", "duration_ms": 700, "sound": "chime_medium" },
+      "ui": {
+        "toast_text": "50 příkladů! Jsi na půl cesty k stovce! 💪",
+        "modal_title": "50 příkladů!",
+        "modal_text": "Padesátka je za tebou. Půl cesty ke stovce – nevzdávej to!"
+      }
+    },
+
+    {
+      "id": "badge_100_examples",
+      "category": "pocty",
+      "label": "Centurie",
+      "description": "Vyřeš celkem 100 příkladů",
+      "icon_emoji": "💯",
+      "icon_color": "#2563eb",
+      "rarity": "uncommon",
+      "xp_reward": 80,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "total_solved": 100 }
+      },
+      "animation": {
+        "type": "confetti",
+        "duration_ms": 2500,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "100 příkladů! Stovka je tvoje! 💯",
+        "modal_title": "100 příkladů vyřešeno!",
+        "modal_text": "Sto příkladů vyřešeno. Tvůj mozek pracuje na plný výkon."
+      }
+    },
+
+    {
+      "id": "badge_250_examples",
+      "category": "pocty",
+      "label": "Čtvrt tisíce",
+      "description": "Vyřeš celkem 250 příkladů",
+      "icon_emoji": "🎰",
+      "icon_color": "#1d4ed8",
+      "rarity": "rare",
+      "xp_reward": 150,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "total_solved": 250 }
+      },
+      "animation": {
+        "type": "pulse_glow",
+        "color": "#1d4ed8",
+        "duration_ms": 1500,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "250 příkladů! Čtvrt tisíce v kapse! 🎰",
+        "modal_title": "250 příkladů!",
+        "modal_text": "Čtvrt tisíce příkladů – jsi na dobré cestě k matematické výbornosti."
+      }
+    },
+
+    {
+      "id": "badge_500_examples",
+      "category": "pocty",
+      "label": "Pětistovka",
+      "description": "Vyřeš celkem 500 příkladů",
+      "icon_emoji": "🏆",
+      "icon_color": "#7c3aed",
+      "rarity": "epic",
+      "xp_reward": 300,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "total_solved": 500 }
+      },
+      "animation": {
+        "type": "stars_explosion",
+        "duration_ms": 3000,
+        "sound": "fanfare_epic"
+      },
+      "ui": {
+        "toast_text": "500 příkladů! Jsi matematická legenda! 🏆",
+        "modal_title": "500 PŘÍKLADŮ!",
+        "modal_text": "Pět set příkladů. Přišel jsi, viděl jsi, zvítězil jsi!"
+      }
+    },
+
+    {
+      "id": "badge_zlomky_master",
+      "category": "temata",
+      "label": "Mistr zlomků",
+      "description": "Dosáhni 80%+ správnosti v tématu Zlomky (min. 30 příkladů)",
+      "icon_emoji": "½",
+      "icon_color": "#8b5cf6",
+      "rarity": "uncommon",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "topic": "zlomky",
+          "accuracy_min": 0.8,
+          "examples_min": 30
+        }
+      },
+      "animation": {
+        "type": "confetti",
+        "duration_ms": 2000,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "Mistr zlomků! Čitatele a jmenovatele se tě bát nemusí. ½",
+        "modal_title": "Odznak: Mistr zlomků",
+        "modal_text": "80% nebo více správných odpovědí v tématu Zlomky. Výborná práce!"
+      }
+    },
+
+    {
+      "id": "badge_rovnice_master",
+      "category": "temata",
+      "label": "Rovnicový šampion",
+      "description": "Dosáhni 80%+ správnosti v tématu Rovnice (min. 30 příkladů)",
+      "icon_emoji": "⚖️",
+      "icon_color": "#0ea5e9",
+      "rarity": "uncommon",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "topic": "rovnice",
+          "accuracy_min": 0.8,
+          "examples_min": 30
+        }
+      },
+      "animation": { "type": "confetti", "duration_ms": 2000, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "Rovnicový šampion! x=? Žádný problém! ⚖️",
+        "modal_title": "Odznak: Rovnicový šampion",
+        "modal_text": "Rovnice ti jdou skvěle. Algebraické myšlení máš v malíku."
+      }
+    },
+
+    {
+      "id": "badge_geometrie_master",
+      "category": "temata",
+      "label": "Geometrický génius",
+      "description": "Dosáhni 80%+ správnosti v tématu Geometrie (min. 30 příkladů)",
+      "icon_emoji": "📐",
+      "icon_color": "#10b981",
+      "rarity": "uncommon",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "topic": "geometrie",
+          "accuracy_min": 0.8,
+          "examples_min": 30
+        }
+      },
+      "animation": { "type": "confetti", "duration_ms": 2000, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "Geometrický génius! Plochy a obvody nemají šanci! 📐",
+        "modal_title": "Odznak: Geometrický génius",
+        "modal_text": "Geometrie ti nejde – geometrie ti LETÍ. Gratulujeme!"
+      }
+    },
+
+    {
+      "id": "badge_mocniny_master",
+      "category": "temata",
+      "label": "Mocninový boss",
+      "description": "Dosáhni 80%+ správnosti v tématu Mocniny (min. 30 příkladů)",
+      "icon_emoji": "²",
+      "icon_color": "#f59e0b",
+      "rarity": "uncommon",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "topic": "mocniny",
+          "accuracy_min": 0.8,
+          "examples_min": 30
+        }
+      },
+      "animation": { "type": "confetti", "duration_ms": 2000, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "Mocninový boss! Exponenty ti nestačí! ²",
+        "modal_title": "Odznak: Mocninový boss",
+        "modal_text": "Mocniny a odmocniny máš pod kontrolou. Power!"
+      }
+    },
+
+    {
+      "id": "badge_slovni_ulohy_master",
+      "category": "temata",
+      "label": "Detektiv slovních úloh",
+      "description": "Dosáhni 80%+ správnosti v tématu Slovní úlohy (min. 30 příkladů)",
+      "icon_emoji": "🔍",
+      "icon_color": "#ef4444",
+      "rarity": "uncommon",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "topic": "slovni_ulohy",
+          "accuracy_min": 0.8,
+          "examples_min": 30
+        }
+      },
+      "animation": { "type": "confetti", "duration_ms": 2000, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "Detektiv! Slovní úlohy nemají šanci se skrýt! 🔍",
+        "modal_title": "Odznak: Detektiv slovních úloh",
+        "modal_text": "Slovní úlohy čteš jako thriller a řešíš jako detektiv."
+      }
+    },
+
+    {
+      "id": "badge_procenta_master",
+      "category": "temata",
+      "label": "Procentuální guru",
+      "description": "Dosáhni 80%+ správnosti v tématu Procenta (min. 30 příkladů)",
+      "icon_emoji": "%",
+      "icon_color": "#14b8a6",
+      "rarity": "uncommon",
+      "xp_reward": 100,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "topic": "procenta",
+          "accuracy_min": 0.8,
+          "examples_min": 30
+        }
+      },
+      "animation": { "type": "confetti", "duration_ms": 2000, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "Procentuální guru! 100% zvládl jsi procenta! %",
+        "modal_title": "Odznak: Procentuální guru",
+        "modal_text": "Procenta? Pro tebe žádný problém. Matematika reálného světa je tvoje!"
+      }
+    },
+
+    {
+      "id": "badge_all_topics_master",
+      "category": "temata",
+      "label": "Matematický all-rounder",
+      "description": "Dosáhni 80%+ správnosti ve všech 6 tématech",
+      "icon_emoji": "🌈",
+      "icon_color": "#7c3aed",
+      "rarity": "legendary",
+      "xp_reward": 500,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "all_topics_accuracy_min": 0.8,
+          "all_topics_examples_min": 30
+        }
+      },
+      "animation": {
+        "type": "full_screen_confetti",
+        "duration_ms": 5000,
+        "sound": "fanfare_legendary"
+      },
+      "ui": {
+        "toast_text": "ALL-ROUNDER! Všechna témata na 80%+! Legenda! 🌈",
+        "modal_title": "Matematický all-rounder!",
+        "modal_text": "Všechna témata zvládnuta na výbornou. Jsi komplexní matematik!"
+      }
+    },
+
+    {
+      "id": "badge_perfect_session_5",
+      "category": "presnost",
+      "label": "Soustředěný žák",
+      "description": "Dokonči sezení s 10+ příklady a 100% správností",
+      "icon_emoji": "🎯",
+      "icon_color": "#34d399",
+      "rarity": "uncommon",
+      "xp_reward": 60,
+      "trigger": {
+        "event": "session_completed",
+        "condition": {
+          "session_examples_min": 10,
+          "session_accuracy": 1.0
+        }
+      },
+      "animation": {
+        "type": "bullseye_hit",
+        "duration_ms": 1000,
+        "sound": "chime_perfect"
+      },
+      "ui": {
+        "toast_text": "Perfektní sezení! Ani jedna chyba! 🎯",
+        "modal_title": "Perfektní sezení!",
+        "modal_text": "10 a více příkladů bez jediné chyby. Koncentrace na maximum!"
+      }
+    },
+
+    {
+      "id": "badge_perfect_session_3x",
+      "category": "presnost",
+      "label": "Ostrý střelec",
+      "description": "Dokonči 3 perfektní sezení (10+ příkladů, 100% správnost)",
+      "icon_emoji": "🏹",
+      "icon_color": "#059669",
+      "rarity": "rare",
+      "xp_reward": 120,
+      "trigger": {
+        "event": "session_completed",
+        "condition": {
+          "perfect_sessions_total": 3
+        }
+      },
+      "animation": { "type": "pulse_glow", "color": "#059669", "duration_ms": 1500, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "3 perfektní sezení! Jsi ostrý střelec! 🏹",
+        "modal_title": "Ostrý střelec!",
+        "modal_text": "Tři sezení bez chyby. Tvoje přesnost je výjimečná."
+      }
+    },
+
+    {
+      "id": "badge_perfect_diagnostic",
+      "category": "presnost",
+      "label": "Diagnostický génius",
+      "description": "Dokonči diagnostický test s 90%+ správností",
+      "icon_emoji": "🧠",
+      "icon_color": "#a78bfa",
+      "rarity": "rare",
+      "xp_reward": 150,
+      "trigger": {
+        "event": "diagnostic_completed",
+        "condition": { "accuracy_min": 0.9 }
+      },
+      "animation": {
+        "type": "brain_glow",
+        "duration_ms": 2000,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "90%+ v diagnostice! Jsi diagnostický génius! 🧠",
+        "modal_title": "Diagnostický génius!",
+        "modal_text": "Diagnostický test s 90% a více. Tvoje znalosti jsou na skvělé úrovni!"
+      }
+    },
+
+    {
+      "id": "badge_no_mistakes_10",
+      "category": "presnost",
+      "label": "Bezchybný",
+      "description": "Vyřeš 10 příkladů za sebou správně (bez chyby)",
+      "icon_emoji": "✨",
+      "icon_color": "#fcd34d",
+      "rarity": "uncommon",
+      "xp_reward": 50,
+      "trigger": {
+        "event": "example_solved",
+        "condition": { "consecutive_correct": 10 }
+      },
+      "animation": {
+        "type": "sparkle_trail",
+        "duration_ms": 1200,
+        "sound": "chime_perfect"
+      },
+      "ui": {
+        "toast_text": "10 správně za sebou! Jsi bezchybný! ✨",
+        "modal_title": "Bezchybný!",
+        "modal_text": "Deset příkladů v řadě bez jediné chyby. Tvůj mozek pracuje perfektně."
+      }
+    },
+
+    {
+      "id": "badge_speed_demon",
+      "category": "cas",
+      "label": "Rychlostní démon",
+      "description": "Vyřeš příklad správně za méně než 15 sekund",
+      "icon_emoji": "⚡",
+      "icon_color": "#fbbf24",
+      "rarity": "uncommon",
+      "xp_reward": 30,
+      "trigger": {
+        "event": "example_solved",
+        "condition": {
+          "correct": true,
+          "time_seconds_max": 15
+        }
+      },
+      "animation": {
+        "type": "lightning_flash",
+        "duration_ms": 500,
+        "sound": "whoosh_fast"
+      },
+      "ui": {
+        "toast_text": "Blesk! Příklad za méně než 15 sekund! ⚡",
+        "modal_title": "Rychlostní démon!",
+        "modal_text": "Správně za méně než 15 sekund. Tvoje mozek je rychlostní stroj!"
+      }
+    },
+
+    {
+      "id": "badge_marathon_session",
+      "category": "cas",
+      "label": "Matematický maratonec",
+      "description": "Procvičuj v jednom sezení 30+ minut",
+      "icon_emoji": "🏃",
+      "icon_color": "#f97316",
+      "rarity": "uncommon",
+      "xp_reward": 45,
+      "trigger": {
+        "event": "session_ended",
+        "condition": { "session_duration_minutes_min": 30 }
+      },
+      "animation": { "type": "slide_up", "duration_ms": 700, "sound": "chime_medium" },
+      "ui": {
+        "toast_text": "30 minut bez přerušení! Jsi maratonec! 🏃",
+        "modal_title": "Matematický maratonec!",
+        "modal_text": "Třicet minut soustředěného procvičování – tvoje vytrvalost je obdivuhodná."
+      }
+    },
+
+    {
+      "id": "badge_early_bird",
+      "category": "cas",
+      "label": "Ranní ptáče",
+      "description": "Procvičuj mezi 6:00 a 8:00",
+      "icon_emoji": "🌅",
+      "icon_color": "#fde68a",
+      "rarity": "common",
+      "xp_reward": 20,
+      "trigger": {
+        "event": "session_started",
+        "condition": {
+          "time_hour_min": 6,
+          "time_hour_max": 8
+        }
+      },
+      "animation": { "type": "sunrise_fade", "duration_ms": 1000, "sound": "chime_soft" },
+      "ui": {
+        "toast_text": "Ranní ptáče! Matematika před snídaní – to je styl! 🌅",
+        "modal_title": "Ranní ptáče!",
+        "modal_text": "Ráno je mozek nejsvěžejší. Chytrý přístup!"
+      }
+    },
+
+    {
+      "id": "badge_night_owl",
+      "category": "cas",
+      "label": "Noční sova",
+      "description": "Procvičuj po 21:00",
+      "icon_emoji": "🦉",
+      "icon_color": "#6366f1",
+      "rarity": "common",
+      "xp_reward": 20,
+      "trigger": {
+        "event": "session_started",
+        "condition": { "time_hour_min": 21 }
+      },
+      "animation": { "type": "moon_rise", "duration_ms": 1000, "sound": "chime_soft" },
+      "ui": {
+        "toast_text": "Noční sova! Matematika pod hvězdami! 🦉",
+        "modal_title": "Noční sova!",
+        "modal_text": "Večerní procvičování ti jde. Sova matematiky!"
+      }
+    },
+
+    {
+      "id": "badge_weekend_warrior",
+      "category": "cas",
+      "label": "Víkendový bojovník",
+      "description": "Procvičuj v sobotu i neděli",
+      "icon_emoji": "🛡️",
+      "icon_color": "#b45309",
+      "rarity": "uncommon",
+      "xp_reward": 35,
+      "trigger": {
+        "event": "session_started",
+        "condition": { "weekend_both_days": true }
+      },
+      "animation": { "type": "slide_up", "duration_ms": 700, "sound": "chime_medium" },
+      "ui": {
+        "toast_text": "Víkendový bojovník! Sobota i neděle patří matematice! 🛡️",
+        "modal_title": "Víkendový bojovník!",
+        "modal_text": "Víkend nevynechal. Mathematika nemá volno – a ty taky ne!"
+      }
+    },
+
+    {
+      "id": "badge_comeback_kid",
+      "category": "specialni",
+      "label": "Comeback kid",
+      "description": "Vrať se a procvičuj po pauze delší než 7 dní",
+      "icon_emoji": "💫",
+      "icon_color": "#ec4899",
+      "rarity": "common",
+      "xp_reward": 15,
+      "trigger": {
+        "event": "session_started",
+        "condition": { "days_since_last_session_min": 7 }
+      },
+      "animation": { "type": "pop", "duration_ms": 600, "sound": "chime_soft" },
+      "ui": {
+        "toast_text": "Comeback! Vrátil ses. Matematika na tebe čekala! 💫",
+        "modal_title": "Comeback kid!",
+        "modal_text": "Po pauze jsi se vrátil. To trvání je to, co rozhoduje."
+      }
+    },
+
+    {
+      "id": "badge_premium_member",
+      "category": "specialni",
+      "label": "MateMax Pro",
+      "description": "Přejdi na Premium (99 Kč/měsíc)",
+      "icon_emoji": "💎",
+      "icon_color": "#38bdf8",
+      "rarity": "uncommon",
+      "xp_reward": 50,
+      "trigger": {
+        "event": "subscription_activated",
+        "condition": { "plan": "premium" }
+      },
+      "animation": {
+        "type": "diamond_sparkle",
+        "duration_ms": 2000,
+        "sound": "fanfare_medium"
+      },
+      "ui": {
+        "toast_text": "MateMax Pro aktivován! Všechna témata jsou tvoje! 💎",
+        "modal_title": "Vítej v Premium!",
+        "modal_text": "Přistup ke všem 6 tématům bez omezení. Investice do sebe sama!"
+      }
+    },
+
+    {
+      "id": "badge_cermat_ready",
+      "category": "specialni",
+      "label": "CERMAT ready",
+      "description": "Dosáhni průměrné správnosti 75%+ ve všech tématech",
+      "icon_emoji": "📝",
+      "icon_color": "#0891b2",
+      "rarity": "epic",
+      "xp_reward": 250,
+      "trigger": {
+        "event": "topic_accuracy_updated",
+        "condition": {
+          "all_topics_average_accuracy_min": 0.75,
+          "all_topics_examples_min": 20
+        }
+      },
+      "animation": {
+        "type": "stars_explosion",
+        "duration_ms": 3000,
+        "sound": "fanfare_epic"
+      },
+      "ui": {
+        "toast_text": "CERMAT READY! Přijímačky? Žádný strach! 📝",
+        "modal_title": "CERMAT ready!",
+        "modal_text": "Průměrně 75%+ ve všech tématech. Přijímačkám se smíšeně podíváš do očí!"
+      }
+    },
+
+    {
+      "id": "badge_daily_goal_7x",
+      "category": "specialni",
+      "label": "Cílevědomý",
+      "description": "Splň denní cíl 7krát",
+      "icon_emoji": "🎖️",
+      "icon_color": "#854d0e",
+      "rarity": "uncommon",
+      "xp_reward": 70,
+      "trigger": {
+        "event": "daily_goal_reached",
+        "condition": { "daily_goal_count": 7 }
+      },
+      "animation": { "type": "confetti", "duration_ms": 2000, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "7× denní cíl splněn! Jsi cílevědomý! 🎖️",
+        "modal_title": "Cílevědomý!",
+        "modal_text": "Sedmkrát jsi splnil denní cíl. Cíle existují, aby se plnily."
+      }
+    },
+
+    {
+      "id": "badge_level_up_zak",
+      "category": "specialni",
+      "label": "Postup na Žáka",
+      "description": "Dosáhni levelu Žák (300 XP)",
+      "icon_emoji": "⬆️",
+      "icon_color": "#60a5fa",
+      "rarity": "common",
+      "xp_reward": 0,
+      "trigger": {
+        "event": "level_changed",
+        "condition": { "new_level": "zak" }
+      },
+      "animation": {
+        "type": "level_up_burst",
+        "duration_ms": 2000,
+        "sound": "level_up"
+      },
+      "ui": {
+        "toast_text": "Postoupil jsi na úroveň Žák! 📐",
+        "modal_title": "Level up! Jsi teď Žák.",
+        "modal_text": "300 XP za sebou. Odemykáš nové výhody a barvy profilu!"
+      }
+    },
+
+    {
+      "id": "badge_level_up_pokrocily",
+      "category": "specialni",
+      "label": "Postup na Pokročilého",
+      "description": "Dosáhni levelu Pokročilý (1000 XP)",
+      "icon_emoji": "⬆️",
+      "icon_color": "#a78bfa",
+      "rarity": "uncommon",
+      "xp_reward": 0,
+      "trigger": {
+        "event": "level_changed",
+        "condition": { "new_level": "pokrocily" }
+      },
+      "animation": { "type": "level_up_burst", "duration_ms": 2000, "sound": "level_up" },
+      "ui": {
+        "toast_text": "Postoupil jsi na Pokročilého! 🔢",
+        "modal_title": "Level up! Jsi teď Pokročilý.",
+        "modal_text": "Tisíc XP – fialový rámeček a heat mapa jsou tvoje!"
+      }
+    },
+
+    {
+      "id": "badge_level_up_expert",
+      "category": "specialni",
+      "label": "Postup na Experta",
+      "description": "Dosáhni levelu Expert (3000 XP)",
+      "icon_emoji": "⬆️",
+      "icon_color": "#fb923c",
+      "rarity": "rare",
+      "xp_reward": 0,
+      "trigger": {
+        "event": "level_changed",
+        "condition": { "new_level": "expert" }
+      },
+      "animation": { "type": "level_up_burst", "duration_ms": 2500, "sound": "fanfare_medium" },
+      "ui": {
+        "toast_text": "Postoupil jsi na Experta! 🏆",
+        "modal_title": "Level up! Jsi teď Expert.",
+        "modal_text": "Zlatý rámeček s shimmer animací je tvůj. Jsi expert!"
+      }
+    },
+
+    {
+      "id": "badge_level_up_mistr",
+      "category": "specialni",
+      "label": "Postup na Mistra",
+      "description": "Dosáhni levelu Mistr (7500 XP)",
+      "icon_emoji": "⭐",
+      "icon_color": "#f59e0b",
+      "rarity": "legendary",
+      "xp_reward": 0,
+      "trigger": {
+        "event": "level_changed",
+        "condition": { "new_level": "mistr" }
+      },
+      "animation": {
+        "type": "full_screen_confetti",
+        "duration_ms": 5000,
+        "sound": "fanfare_legendary"
+      },
+      "ui": {
+        "toast_text": "MISTR! Diamantový rámeček a Hall of Fame jsou tvoje! ⭐",
+        "modal_title": "MISTR MATEMATIKY!",
+        "modal_text": "7500 XP. Diamantový rámeček. Hall of Fame. Jsi Mistr!"
+      }
+    }
+
+  ],
+
+  "badge_rarity_config": {
+    "common":    { "label": "Běžný",      "color": "#94a3b8", "border": "#64748b" },
+    "uncommon":  { "label": "Neobvyklý",  "color": "#34d399", "border": "#059669" },
+    "rare":      { "label": "Vzácný",     "color": "#60a5fa", "border": "#2563eb" },
+    "epic":      { "label": "Epický",     "color": "#a78bfa", "border": "#7c3aed" },
+    "legendary": { "label": "Legendární", "color": "#fbbf24", "border": "#d97706" }
+  },
+
+  "animation_types": {
+    "pop": {
+      "description": "Rychlé zvětšení a návrat na normální velikost",
+      "css_keyframe": "scale(0) → scale(1.3) → scale(1)",
+      "tailwind_classes": "animate-bounce"
+    },
+    "slide_up": {
+      "description": "Element se vynoří odspodu",
+      "css_keyframe": "translateY(40px) opacity(0) → translateY(0) opacity(1)"
+    },
+    "confetti": {
+      "description": "Konfeti z několika míst po obrazovce",
+      "library": "canvas-confetti",
+      "config": { "particleCount": 100, "spread": 70, "origin": { "y": 0.6 } }
+    },
+    "fire_burst": {
+      "description": "Animace plamene kolem ikony",
+      "implementation": "Lottie JSON nebo CSS particle efekt"
+    },
+    "pulse_glow": {
+      "description": "Opakující se záblesk barevné záře",
+      "css_keyframe": "boxShadow 0px → 0 0 20px <color> → 0px"
+    },
+    "stars_explosion": {
+      "description": "Hvězdičky vyletí z ikony do okolí",
+      "implementation": "canvas-confetti se star shape"
+    },
+    "full_screen_confetti": {
+      "description": "Konfeti přes celou obrazovku s více barvami",
+      "library": "canvas-confetti",
+      "config": { "particleCount": 300, "spread": 180, "startVelocity": 50 }
+    },
+    "level_up_burst": {
+      "description": "Záblesk světla + level číslo se zvětší",
+      "implementation": "CSS transition + canvas-confetti"
+    },
+    "lightning_flash": {
+      "description": "Rychlý bílý záblesk + blesk ikona",
+      "css_keyframe": "opacity(0) → opacity(1) → opacity(0), 200ms"
+    },
+    "diamond_sparkle": {
+      "description": "Třpyt kolem diamantové ikony",
+      "implementation": "Lottie nebo CSS pseudo-elements"
+    }
+  },
+
+  "supabase_schema": {
+    "tables": {
+      "user_xp": {
+        "columns": [
+          { "name": "id", "type": "uuid", "primary": true },
+          { "name": "user_id", "type": "uuid", "references": "auth.users.id" },
+          { "name": "total_xp", "type": "integer", "default": 0 },
+          { "name": "current_level", "type": "text", "default": "zacatecnik" },
+          { "name": "updated_at", "type": "timestamptz" }
+        ]
+      },
+      "xp_transactions": {
+        "columns": [
+          { "name": "id", "type": "uuid", "primary": true },
+          { "name": "user_id", "type": "uuid", "references": "auth.users.id" },
+          { "name": "xp_amount", "type": "integer" },
+          { "name": "action", "type": "text" },
+          { "name": "metadata", "type": "jsonb" },
+          { "name": "created_at", "type": "timestamptz" }
+        ]
+      },
+      "user_badges": {
+        "columns": [
+          { "name": "id", "type": "uuid", "primary": true },
+          { "name": "user_id", "type": "uuid", "references": "auth.users.id" },
+          { "name": "badge_id", "type": "text" },
+          { "name": "earned_at", "type": "timestamptz" },
+          { "name": "seen", "type": "boolean", "default": false }
+        ],
+        "unique_constraint": ["user_id", "badge_id"]
+      }
+    }
+  },
+
+  "summary": {
+    "total_badges": 35,
+    "categories": {
+      "prvni_kroky": 3,
+      "streak": 5,
+      "pocty": 5,
+      "temata": 8,
+      "presnost": 4,
+      "cas": 4,
+      "specialni": 6
+    },
+    "by_rarity": {
+      "common": 10,
+      "uncommon": 14,
+      "rare": 5,
+      "epic": 3,
+      "legendary": 3
+    },
+    "max_xp_from_badges": 2980,
+    "level_thresholds": {
+      "zacatecnik": 0,
+      "zak": 300,
+      "pokrocily": 1000,
+      "expert": 3000,
+      "mistr": 7500
+    }
+  }
+}

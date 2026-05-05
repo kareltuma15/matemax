@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { loadProgress } from "@/lib/progress";
+import { loadGamification } from "@/lib/gamification";
 import { TEMA_LABELS } from "@/types";
+import XPProgressBar from "@/components/XPProgressBar";
+import BadgeGrid from "@/components/BadgeGrid";
 
 interface TopicScore {
   tema: string;
@@ -20,28 +23,28 @@ export default function ProfilPage() {
   const [streak, setStreak]           = useState(0);
   const [totalPracticed, setTotal]    = useState(0);
   const [topicScores, setTopicScores] = useState<TopicScore[]>([]);
+  const [earnedBadges, setEarnedBadges] = useState<string[]>([]);
   const [loading, setLoading]         = useState(true);
 
   useEffect(() => {
-    // Auth session
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
         setEmail(data.session?.user.email ?? null);
       });
     }
 
-    // XP + streak
     const p = loadProgress();
     setXp(p.xp);
     setStreak(p.streak);
 
-    // Total practiced (SM2 cards count)
+    const g = loadGamification();
+    setEarnedBadges(g.earnedBadges);
+
     try {
       const raw = localStorage.getItem("matemax-cards");
       if (raw) setTotal((JSON.parse(raw) as unknown[]).length);
     } catch { /* ignore */ }
 
-    // Topic scores from diagnostics
     try {
       const raw = localStorage.getItem("matemax-diag-results");
       if (raw) {
@@ -88,26 +91,26 @@ export default function ProfilPage() {
         </div>
       </div>
 
-      {/* XP + Streak */}
+      {/* XP Level Progress */}
+      <XPProgressBar xp={xp} />
+
+      {/* Streak + Procvičeno */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
-          <p className="text-xs text-slate-400 font-medium mb-1">Celkové XP</p>
-          <p className="text-3xl font-black" style={{ color: "#2E6DA4" }}>⚡ {xp}</p>
-        </div>
         <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
           <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
           <p className="text-3xl font-black text-orange-500">🔥 {streak}</p>
           <p className="text-xs text-slate-400">dní v řadě</p>
         </div>
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
+          <p className="text-xs text-slate-400 font-medium mb-1">Procvičeno</p>
+          <p className="text-3xl font-black" style={{ color: "#0D1B3E" }}>{totalPracticed}</p>
+          <p className="text-xs text-slate-400">různých příkladů</p>
+        </div>
       </div>
 
-      {/* Total practiced */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center justify-between">
-        <div>
-          <p className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>Procvičeno celkem</p>
-          <p className="text-xs text-slate-400 mt-0.5">počet různých příkladů</p>
-        </div>
-        <p className="text-3xl font-black" style={{ color: "#0D1B3E" }}>{totalPracticed}</p>
+      {/* Badges */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-5">
+        <BadgeGrid earnedBadgeIds={earnedBadges} />
       </div>
 
       {/* Topic strengths */}
@@ -137,7 +140,7 @@ export default function ProfilPage() {
             </div>
           ))}
 
-          <div className="flex gap-2 pt-1">
+          <div className="flex gap-2 flex-wrap pt-1">
             {strongest && strongest !== weakest && (
               <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: "#dcfce7", color: "#166534" }}>
                 💪 Nejsilnější: {TEMA_LABELS[strongest.tema] ?? strongest.tema}
