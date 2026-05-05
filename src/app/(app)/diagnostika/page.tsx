@@ -6,6 +6,7 @@ import Link from "next/link";
 import { examples } from "@/data/examples";
 import { createCard } from "@/lib/sm2";
 import { SM2Card } from "@/types";
+import { isTopicLocked } from "@/lib/subscription";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -309,7 +310,10 @@ export default function DiagnostikaPage() {
           <span className="font-bold" style={{ color: "#2E6DA4" }}>
             Krok {stepIdx + 1} z {STEPS.length}
           </span>
-          <span className="font-semibold text-slate-600">{STEPS[stepIdx].label}</span>
+          <span className="font-semibold text-slate-600">
+            {STEPS[stepIdx].label}
+            {isTopicLocked(STEPS[stepIdx].tema) && " 🔒"}
+          </span>
         </div>
         {/* Step labels below bars */}
         <div className="hidden sm:flex gap-1.5">
@@ -320,6 +324,7 @@ export default function DiagnostikaPage() {
                 style={{ color: i === stepIdx ? "#2E6DA4" : "#94a3b8", fontWeight: i === stepIdx ? 600 : 400 }}
               >
                 {step.label}
+                {isTopicLocked(step.tema) && " 🔒"}
               </span>
             </div>
           ))}

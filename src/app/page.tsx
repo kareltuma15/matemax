@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+import { loadProgress } from "@/lib/progress";
+import XPProgressBar from "@/components/XPProgressBar";
+import type { Session } from "@supabase/supabase-js";
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
 
@@ -162,14 +166,229 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   );
 }
 
+// ─── PŘIHLÁŠENÝ DASHBOARD ────────────────────────────────────────────────────
+
+const DAILY_GOAL = 7;
+
+function LoggedInDashboard({
+  session,
+  xp,
+  streak,
+  diagDone,
+}: {
+  session: Session;
+  xp: number;
+  streak: number;
+  diagDone: boolean;
+}) {
+  const email = session.user.email ?? "";
+  const firstName = email.split("@")[0];
+  const [todayCount, setTodayCount] = useState(0);
+
+  useEffect(() => {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    try {
+      const raw = localStorage.getItem("matemax-today");
+      if (raw) {
+        const daily = JSON.parse(raw) as { date: string; count: number };
+        if (daily.date === todayStr) setTodayCount(daily.count);
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const goalMet = todayCount >= DAILY_GOAL;
+  const todayPct = Math.min(100, Math.round((todayCount / DAILY_GOAL) * 100));
+
+  let heroSubtext: string;
+  if (goalMet) {
+    heroSubtext = "✅ Dnešní cíl splněn! Výborná práce.";
+  } else if (streak > 1) {
+    heroSubtext = `🔥 ${streak} dní v řadě! Nepřeruš sérii.`;
+  } else if (todayCount > 0) {
+    heroSubtext = `Dnes ${todayCount} příkladů. Cíl: ${DAILY_GOAL}. Pokračuj!`;
+  } else {
+    heroSubtext = "Dnešní cíl: 7 příkladů. Zatím: 0/7";
+  }
+
+  return (
+    <div className="bg-white min-h-screen">
+      {/* Nav */}
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
+        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
+              M²
+            </div>
+            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/profil"
+              className="text-sm text-gray-500 hover:text-gray-800 transition-colors hidden sm:block"
+            >
+              Profil
+            </Link>
+            <Link
+              href="/trenink"
+              className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-colors"
+              style={{ background: "#2E6DA4" }}
+            >
+              Trénovat →
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Dashboard hero */}
+      <section
+        className="relative overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 50%, #0D1B3E 100%)" }}
+      >
+        <div className="max-w-2xl mx-auto px-6 py-10 md:py-14 relative z-10">
+          <p className="text-blue-300 text-sm font-semibold mb-2">Vítej zpět!</p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+            {firstName} 👋
+          </h1>
+          <p className="mt-2 text-blue-200 text-base">{heroSubtext}</p>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-5">
+        {/* XP bar */}
+        <XPProgressBar xp={xp} />
+
+        {/* Daily goal card */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <p className="text-xs text-slate-400 font-medium">Dnešní cíl</p>
+              <p className="text-lg font-black" style={{ color: goalMet ? "#16a34a" : "#0D1B3E" }}>
+                {todayCount} / {DAILY_GOAL} příkladů
+              </p>
+            </div>
+            <span className="text-2xl">{goalMet ? "✅" : todayCount > 0 ? "💪" : "🎯"}</span>
+          </div>
+          <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+            <div
+              className="h-2.5 rounded-full transition-all duration-700"
+              style={{
+                width: `${todayPct}%`,
+                background: goalMet ? "#22c55e" : "linear-gradient(90deg, #0D1B3E, #2E6DA4)",
+              }}
+            />
+          </div>
+          {!goalMet && (
+            <p className="text-xs text-slate-400 mt-2">
+              Ještě {DAILY_GOAL - todayCount} příkladů do splnění cíle
+            </p>
+          )}
+        </div>
+
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
+            <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
+            <p className="text-3xl font-black text-orange-500">🔥 {streak}</p>
+            <p className="text-xs text-slate-400">dní v řadě</p>
+          </div>
+          <div
+            className="rounded-2xl border p-5 text-center"
+            style={{ background: diagDone ? "#f0fdf4" : "#fff7ed", borderColor: diagDone ? "#bbf7d0" : "#fed7aa" }}
+          >
+            <p className="text-xs font-medium mb-1" style={{ color: diagDone ? "#166534" : "#92400e" }}>
+              Diagnostika
+            </p>
+            <p className="text-2xl mb-1">{diagDone ? "✅" : "🎯"}</p>
+            <p className="text-xs font-semibold" style={{ color: diagDone ? "#166534" : "#92400e" }}>
+              {diagDone ? "Hotovo" : "Ještě ne"}
+            </p>
+          </div>
+        </div>
+
+        {/* Main CTA */}
+        <Link
+          href="/trenink"
+          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg"
+          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+        >
+          💪 Pokračovat v tréninku →
+        </Link>
+
+        {/* Secondary CTAs */}
+        <div className="grid grid-cols-2 gap-3">
+          <Link
+            href="/profil"
+            className="block py-3 text-center rounded-xl border-2 border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition-colors"
+          >
+            👤 Zobrazit profil
+          </Link>
+          {!diagDone && (
+            <Link
+              href="/diagnostika"
+              className="block py-3 text-center rounded-xl font-semibold text-sm"
+              style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
+            >
+              🎯 Spustit diagnostiku
+            </Link>
+          )}
+          {diagDone && (
+            <Link
+              href="/diagnostika"
+              className="block py-3 text-center rounded-xl border-2 border-slate-200 text-slate-500 font-semibold text-sm hover:bg-slate-50 transition-colors"
+            >
+              🔄 Opakovat diagnostiku
+            </Link>
+          )}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <div className="border-t border-gray-100 text-center py-5 text-xs text-gray-400 pb-20">
+        MateMax © 2026 · by Karel Tůma · Matematika Snadno
+      </div>
+    </div>
+  );
+}
+
 // ─── HLAVNÍ KOMPONENTA ───────────────────────────────────────────────────────
 
 export default function LandingPage() {
-  const [diagDone, setDiagDone] = useState(false);
+  const [diagDone, setDiagDone]           = useState(false);
+  const [session, setSession]             = useState<Session | null>(null);
+  const [sessionChecked, setSessionChecked] = useState(false);
+  const [xp, setXp]                       = useState(0);
+  const [streak, setStreak]               = useState(0);
 
   useEffect(() => {
-    setDiagDone(localStorage.getItem("matemax-diag-done") === "1");
+    const diag = localStorage.getItem("matemax-diag-done") === "1";
+    setDiagDone(diag);
+
+    if (supabase) {
+      supabase.auth.getSession().then(({ data }) => {
+        setSession(data.session);
+        if (data.session) {
+          const p = loadProgress();
+          setXp(p.xp);
+          setStreak(p.streak);
+        }
+        setSessionChecked(true);
+      });
+    } else {
+      setSessionChecked(true);
+    }
   }, []);
+
+  if (sessionChecked && session) {
+    return (
+      <LoggedInDashboard
+        session={session}
+        xp={xp}
+        streak={streak}
+        diagDone={diagDone}
+      />
+    );
+  }
 
   const primaryCta = diagDone ? "/trenink" : "/registrace";
   const primaryLabel = diagDone ? "Pokračovat v tréninku →" : "🚀 Začít zdarma";

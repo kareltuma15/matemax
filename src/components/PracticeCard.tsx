@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import confetti from "canvas-confetti";
 import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "./MathText";
@@ -23,11 +24,11 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [input, setInput]               = useState("");
   const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
-  const [flashColor, setFlashColor]     = useState<"" | "green" | "red">("");
-  const [shaking, setShaking]           = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
-  const [xpLabel, setXpLabel]           = useState<string | null>(null);
-  const [cardKey, setCardKey]           = useState(0);
+  const [flashColor, setFlashColor] = useState<"" | "green" | "red">("");
+  const [shaking, setShaking]       = useState(false);
+  const [comboText, setComboText]   = useState<string | null>(null);
+  const [xpLabel, setXpLabel]       = useState<string | null>(null);
+  const [cardKey, setCardKey]       = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setShowSolution(false);
     setFlashColor("");
     setShaking(false);
-    setShowConfetti(false);
+    setComboText(null);
     setXpLabel(null);
     setCardKey((k) => k + 1);
     inputRef.current?.focus();
@@ -51,7 +52,14 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setStatus("correct");
       setFlashColor("green");
       setXpLabel("+10 XP");
-      if (consecutiveCorrect + 1 >= 3) setShowConfetti(true);
+      const newConsec = consecutiveCorrect + 1;
+      if (newConsec >= 5) {
+        confetti({ particleCount: 100, spread: 65, origin: { y: 0.5 } });
+        setComboText(`🔥 ${newConsec} v řadě!`);
+      } else if (newConsec >= 3) {
+        setComboText("+combo! 🔥");
+      }
+      setTimeout(() => setComboText(null), 1500);
       setTimeout(() => setFlashColor(""), 350);
     } else {
       setStatus("wrong");
@@ -82,21 +90,17 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         />
       )}
 
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
-          {Array.from({ length: 18 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2.5 h-2.5 rounded-full animate-bounce"
-              style={{
-                left: `${5 + (i * 5.5) % 90}%`,
-                top: `${10 + (i * 7) % 50}%`,
-                background: ["#6366f1","#f59e0b","#10b981","#ec4899","#3b82f6"][i % 5],
-                animationDelay: `${i * 60}ms`,
-                animationDuration: `${600 + (i * 80) % 400}ms`,
-              }}
-            />
-          ))}
+      {comboText && (
+        <div
+          className="fixed left-1/2 z-50 pointer-events-none xp-bump"
+          style={{ top: "30%", transform: "translateX(-50%)" }}
+        >
+          <span
+            className="text-2xl font-black px-5 py-2.5 rounded-2xl shadow-xl"
+            style={{ background: "#fff7ed", color: "#c2410c", border: "2px solid #fed7aa" }}
+          >
+            {comboText}
+          </span>
         </div>
       )}
 

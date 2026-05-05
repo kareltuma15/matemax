@@ -24,7 +24,7 @@ export default function BadgeToast({ badgeId, onDismiss }: BadgeToastProps) {
 
     if (badge.rarity === "legendary") {
       confetti({ particleCount: 160, spread: 70, origin: { y: 0.15 } });
-    } else if (badge.rarity === "epic" || badge.rarity === "rare") {
+    } else if (badge.rarity === "epic") {
       confetti({ particleCount: 80, spread: 55, origin: { y: 0.15 } });
     }
 

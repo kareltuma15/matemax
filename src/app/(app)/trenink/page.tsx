@@ -27,6 +27,9 @@ import SessionSummary from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
 import BadgeToast from "@/components/BadgeToast";
 import FirstSessionModal from "@/components/FirstSessionModal";
+import LevelUpModal from "@/components/LevelUpModal";
+import UpgradeCard from "@/components/UpgradeCard";
+import { isTopicLocked } from "@/lib/subscription";
 
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
@@ -106,6 +109,7 @@ export default function TreningPage() {
   const [gamState, setGamState]         = useState<GamificationState | null>(null);
   const [badgeQueue, setBadgeQueue]     = useState<string[]>([]);
   const [showFirstSession, setShowFirstSession] = useState(false);
+  const [levelUpData, setLevelUpData]   = useState<ReturnType<typeof getLevelFromXP> | null>(null);
   const sessionStartRef                 = useRef(new Date());
   const consecutiveCorrectRef           = useRef(0);
 
@@ -208,6 +212,15 @@ export default function TreningPage() {
       setXp(newP.xp);
       window.dispatchEvent(new Event("matemax-progress-update"));
 
+      // Daily count tracking
+      const todayStr = new Date().toISOString().slice(0, 10);
+      try {
+        const rawD = localStorage.getItem("matemax-today");
+        const daily = rawD ? JSON.parse(rawD) as { date: string; count: number } : { date: "", count: 0 };
+        const newCount = daily.date === todayStr ? daily.count + 1 : 1;
+        localStorage.setItem("matemax-today", JSON.stringify({ date: todayStr, count: newCount }));
+      } catch { /* ignore */ }
+
       // Gamification state update
       const newConsec = wasCorrect ? consecutiveCorrectRef.current + 1 : 0;
       consecutiveCorrectRef.current = newConsec;
@@ -244,6 +257,7 @@ export default function TreningPage() {
       const newLevel = getLevelFromXP(newP.xp);
       if (oldLevel.key !== newLevel.key) {
         newBadges.push(...checkBadgesOnLevelUp(newGam, newLevel.key));
+        setLevelUpData(newLevel);
       }
 
       const uniqueNew = [...new Set(newBadges.filter((id) => !newGam.earnedBadges.includes(id)))];
@@ -356,6 +370,7 @@ export default function TreningPage() {
     return (
       <>
         {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+        {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
         {showFirstSession && (
           <FirstSessionModal
             correct={correct}
@@ -379,9 +394,32 @@ export default function TreningPage() {
   if (!currentExample) return null;
   const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < 0.67;
 
+  function handleSkip() {
+    const isLast = currentIdx + 1 >= sessionIds.length;
+    if (isLast) setDone(true);
+    else setCurrentIdx((i) => i + 1);
+  }
+
+  if (isTopicLocked(currentExample.tema)) {
+    return (
+      <>
+        {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+        {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
+        <XPProgressBar xp={xp} className="mb-3" />
+        <UpgradeCard
+          tema={currentExample.tema}
+          cardNumber={currentIdx + 1}
+          total={sessionIds.length}
+          onSkip={handleSkip}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+      {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
 
       <XPProgressBar xp={xp} className="mb-3" />
 
