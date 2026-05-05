@@ -41,9 +41,18 @@ export default function RegistracePage() {
       return;
     }
 
-    // If session exists immediately (email confirmation disabled), redirect
+    // If session exists immediately (email confirmation disabled), create onboarding record + redirect
     if (data.session) {
-      router.push("/trenink");
+      // Vytvoříme onboarding záznam (best-effort — neblokuje přesměrování)
+      supabase
+        .from("user_onboarding")
+        .upsert(
+          { user_id: data.session.user.id, current_state: "registered" },
+          { onConflict: "user_id" }
+        )
+        .then(() => {}); // fire-and-forget
+
+      router.push("/vitej");
     } else {
       // Email confirmation required
       setDone(true);

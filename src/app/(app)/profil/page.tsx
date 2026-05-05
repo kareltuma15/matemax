@@ -24,6 +24,7 @@ export default function ProfilPage() {
   const [totalPracticed, setTotal]    = useState(0);
   const [topicScores, setTopicScores] = useState<TopicScore[]>([]);
   const [earnedBadges, setEarnedBadges] = useState<string[]>([]);
+  const [showDay2Banner, setShowDay2Banner] = useState(false);
   const [loading, setLoading]         = useState(true);
 
   useEffect(() => {
@@ -39,6 +40,17 @@ export default function ProfilPage() {
 
     const g = loadGamification();
     setEarnedBadges(g.earnedBadges);
+
+    // Den 2 banner: první session hotová, streak === 1, lastActiveDate byl včera
+    if (p.streak === 1 && p.lastActiveDate) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yStr = yesterday.toISOString().slice(0, 10);
+      const firstSessionDone = !!localStorage.getItem("matemax-first-session-done");
+      if (p.lastActiveDate === yStr && firstSessionDone) {
+        setShowDay2Banner(true);
+      }
+    }
 
     try {
       const raw = localStorage.getItem("matemax-cards");
@@ -90,6 +102,31 @@ export default function ProfilPage() {
           <p className="text-xs text-slate-400 mt-0.5">Tvůj MateMax účet</p>
         </div>
       </div>
+
+      {/* Den 2 banner */}
+      {showDay2Banner && (
+        <div
+          className="rounded-2xl p-4 flex items-start gap-3 relative"
+          style={{ background: "#fff7ed", border: "2px solid #fed7aa" }}
+        >
+          <span className="text-2xl shrink-0">🔥</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-black" style={{ color: "#c2410c" }}>
+              Dnes je den 2 — pokračuj!
+            </p>
+            <p className="text-xs text-orange-600 mt-0.5 leading-relaxed">
+              Včera jsi trénoval poprvé. Stačí 10 minut a streak začne hořet.
+            </p>
+          </div>
+          <button
+            onClick={() => setShowDay2Banner(false)}
+            className="text-orange-300 hover:text-orange-500 text-lg leading-none shrink-0"
+            aria-label="Zavřít"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       {/* XP Level Progress */}
       <XPProgressBar xp={xp} />

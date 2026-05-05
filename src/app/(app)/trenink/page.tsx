@@ -26,6 +26,7 @@ import PracticeCard from "@/components/PracticeCard";
 import SessionSummary from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
 import BadgeToast from "@/components/BadgeToast";
+import FirstSessionModal from "@/components/FirstSessionModal";
 
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
@@ -101,11 +102,12 @@ export default function TreningPage() {
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
 
   // Gamification
-  const [xp, setXp]                   = useState(0);
-  const [gamState, setGamState]       = useState<GamificationState | null>(null);
-  const [badgeQueue, setBadgeQueue]   = useState<string[]>([]);
-  const sessionStartRef               = useRef(new Date());
-  const consecutiveCorrectRef         = useRef(0);
+  const [xp, setXp]                     = useState(0);
+  const [gamState, setGamState]         = useState<GamificationState | null>(null);
+  const [badgeQueue, setBadgeQueue]     = useState<string[]>([]);
+  const [showFirstSession, setShowFirstSession] = useState(false);
+  const sessionStartRef                 = useRef(new Date());
+  const consecutiveCorrectRef           = useRef(0);
 
   useEffect(() => {
     const loaded = loadCards();
@@ -146,10 +148,18 @@ export default function TreningPage() {
     setHydrated(true);
   }, []);
 
-  // Supabase sync when session ends
+  // Supabase sync when session ends + first session detection
   useEffect(() => {
     if (!done || !supabase || !gamState) return;
     const xpEarned = correct * 10 + (sessionIds.length - correct) * 1;
+
+    // First session check (localStorage flag)
+    const isFirstSession = !localStorage.getItem("matemax-first-session-done");
+    if (isFirstSession) {
+      localStorage.setItem("matemax-first-session-done", "1");
+      setShowFirstSession(true);
+    }
+
     supabase.auth.getSession().then(({ data }) => {
       if (!data.session) return;
       const uid = data.session.user.id;
@@ -158,6 +168,21 @@ export default function TreningPage() {
       const level = getLevelFromXP(p.xp);
       remoteSyncXP(uid, p.xp, level.key);
       remoteSyncBadges(uid, gamState.earnedBadges);
+
+      // Onboarding: první session dokončena
+      if (isFirstSession && supabase) {
+        supabase
+          .from("user_onboarding")
+          .upsert(
+            {
+              user_id: uid,
+              current_state: "first_session_completed",
+              first_session_completed_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id" }
+          )
+          .then(() => {});
+      }
     });
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -331,6 +356,13 @@ export default function TreningPage() {
     return (
       <>
         {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+        {showFirstSession && (
+          <FirstSessionModal
+            correct={correct}
+            total={sessionIds.length}
+            onClose={() => setShowFirstSession(false)}
+          />
+        )}
         <SessionSummary
           correct={correct}
           total={sessionIds.length}
