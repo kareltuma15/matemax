@@ -52,6 +52,13 @@ export default function RegistracePage() {
         )
         .then(() => {}); // fire-and-forget
 
+      // Pošleme uvítací email (fire-and-forget)
+      fetch("/api/welcome-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }).catch(() => {}); // neblokuje přesměrování
+
       router.push("/vitej");
     } else {
       // Email confirmation required

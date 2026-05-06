@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { loadProgress } from "@/lib/progress";
 import XPProgressBar from "@/components/XPProgressBar";
+import { TEMA_LABELS } from "@/types";
 import type { Session } from "@supabase/supabase-js";
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
@@ -170,6 +171,11 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 const DAILY_GOAL = 7;
 
+interface WeakTopic {
+  tema: string;
+  score: number;
+}
+
 function LoggedInDashboard({
   session,
   xp,
@@ -184,6 +190,7 @@ function LoggedInDashboard({
   const email = session.user.email ?? "";
   const firstName = email.split("@")[0];
   const [todayCount, setTodayCount] = useState(0);
+  const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([]);
 
   useEffect(() => {
     const todayStr = new Date().toISOString().slice(0, 10);
@@ -192,6 +199,20 @@ function LoggedInDashboard({
       if (raw) {
         const daily = JSON.parse(raw) as { date: string; count: number };
         if (daily.date === todayStr) setTodayCount(daily.count);
+      }
+    } catch { /* ignore */ }
+
+    // Load 3 weakest topics from diagnostics
+    try {
+      const raw = localStorage.getItem("matemax-diag-results");
+      if (raw) {
+        const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
+        const scored: WeakTopic[] = Object.entries(results)
+          .filter(([, v]) => v.total > 0)
+          .map(([tema, v]) => ({ tema, score: v.correct / v.total }))
+          .sort((a, b) => a.score - b.score)
+          .slice(0, 3);
+        setWeakTopics(scored);
       }
     } catch { /* ignore */ }
   }, []);
@@ -259,31 +280,89 @@ function LoggedInDashboard({
         <XPProgressBar xp={xp} />
 
         {/* Daily goal card */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-5">
-          <div className="flex items-center justify-between mb-3">
+        {goalMet ? (
+          <div
+            className="rounded-2xl p-5 flex items-center justify-between gap-4"
+            style={{ background: "#f0fdf4", border: "2px solid #bbf7d0" }}
+          >
             <div>
-              <p className="text-xs text-slate-400 font-medium">Dnešní cíl</p>
-              <p className="text-lg font-black" style={{ color: goalMet ? "#16a34a" : "#0D1B3E" }}>
-                {todayCount} / {DAILY_GOAL} příkladů
+              <p className="text-xs font-bold uppercase tracking-wide" style={{ color: "#166534" }}>Dnešní cíl</p>
+              <p className="text-lg font-black mt-0.5" style={{ color: "#15803d" }}>
+                ✅ Dnešní cíl splněn! +15 XP bonus
+              </p>
+              <p className="text-xs mt-1" style={{ color: "#16a34a" }}>
+                {todayCount} příkladů dnes — skvělá práce!
               </p>
             </div>
-            <span className="text-2xl">{goalMet ? "✅" : todayCount > 0 ? "💪" : "🎯"}</span>
+            <Link
+              href="/trenink"
+              className="shrink-0 text-sm font-bold px-4 py-2 rounded-xl whitespace-nowrap"
+              style={{ background: "#22c55e", color: "#fff" }}
+            >
+              Procvičovat dál →
+            </Link>
           </div>
-          <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-            <div
-              className="h-2.5 rounded-full transition-all duration-700"
-              style={{
-                width: `${todayPct}%`,
-                background: goalMet ? "#22c55e" : "linear-gradient(90deg, #0D1B3E, #2E6DA4)",
-              }}
-            />
-          </div>
-          {!goalMet && (
+        ) : (
+          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <p className="text-xs text-slate-400 font-medium">Dnešní cíl</p>
+                <p className="text-lg font-black" style={{ color: "#0D1B3E" }}>
+                  {todayCount} / {DAILY_GOAL} příkladů
+                </p>
+              </div>
+              <span className="text-2xl">{todayCount > 0 ? "💪" : "🎯"}</span>
+            </div>
+            <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+              <div
+                className="h-2.5 rounded-full transition-all duration-700"
+                style={{
+                  width: `${todayPct}%`,
+                  background: "linear-gradient(90deg, #0D1B3E, #2E6DA4)",
+                }}
+              />
+            </div>
             <p className="text-xs text-slate-400 mt-2">
               Ještě {DAILY_GOAL - todayCount} příkladů do splnění cíle
             </p>
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* Kde máš mezery */}
+        {weakTopics.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+            <p className="text-sm font-bold mb-3" style={{ color: "#0D1B3E" }}>🎯 Kde máš mezery</p>
+            <div className="flex flex-col gap-2">
+              {weakTopics.map(({ tema, score }) => (
+                <Link
+                  key={tema}
+                  href={`/trenink?tema=${tema}`}
+                  className="flex items-center justify-between px-4 py-3 rounded-xl border transition-colors hover:bg-slate-50"
+                  style={{ borderColor: "#e2e8f0" }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">📉</span>
+                    <span className="text-sm font-semibold text-slate-700">
+                      {TEMA_LABELS[tema] ?? tema}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-xs font-bold px-2 py-0.5 rounded-full"
+                      style={{
+                        background: score < 0.4 ? "#fef2f2" : "#fff7ed",
+                        color: score < 0.4 ? "#991b1b" : "#92400e",
+                      }}
+                    >
+                      {Math.round(score * 100)} %
+                    </span>
+                    <span className="text-xs text-slate-400">procvičit →</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Stats grid */}
         <div className="grid grid-cols-2 gap-3">

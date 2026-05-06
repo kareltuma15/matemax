@@ -153,7 +153,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         <div className="text-center py-2">
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Vypočítej</p>
           <p className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
-            <MathText text={example.zadani} />
+            <MathText text={example.zadani} large />
           </p>
         </div>
 

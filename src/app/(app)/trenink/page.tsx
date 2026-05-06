@@ -5,7 +5,7 @@ import { examples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
-import { remoteLogSession, remoteSyncXP, remoteSyncBadges } from "@/lib/storage";
+import { remoteLogSession, remoteSyncXP, remoteSyncBadges, localSaveSession } from "@/lib/storage";
 import { supabase } from "@/lib/supabase";
 import {
   loadGamification,
@@ -35,6 +35,11 @@ const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
 const SESSION_SIZE = 7;
 
+function getTemaFilter(): string | null {
+  if (typeof window === "undefined") return null;
+  return new URLSearchParams(window.location.search).get("tema");
+}
+
 function loadCards(): SM2Card[] {
   if (typeof window === "undefined") return [];
   try {
@@ -61,17 +66,21 @@ function loadDiagScores(): Record<string, number> {
   } catch { return {}; }
 }
 
-function buildSession(cards: SM2Card[]): string[] {
+function buildSession(cards: SM2Card[], temaFilter?: string | null): string[] {
+  const pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
   const cardMap = new Map(cards.map((c) => [c.exampleId, c]));
   const diagScores = loadDiagScores();
 
-  const due = examples.filter((ex) => {
+  const due = pool.filter((ex) => {
     const card = cardMap.get(ex.id);
     return !card || isDue(card);
   });
 
   if (due.length === 0) {
-    return [...cards]
+    const fallback = temaFilter
+      ? cards.filter((c) => pool.some((ex) => ex.id === c.exampleId))
+      : [...cards];
+    return fallback
       .sort((a, b) => a.nextReview - b.nextReview)
       .slice(0, SESSION_SIZE)
       .map((c) => c.exampleId);
@@ -103,6 +112,7 @@ export default function TreningPage() {
   const [done, setDone]             = useState(false);
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
+  const [temaFilter, setTemaFilter] = useState<string | null>(null);
 
   // Gamification
   const [xp, setXp]                     = useState(0);
@@ -114,9 +124,11 @@ export default function TreningPage() {
   const consecutiveCorrectRef           = useRef(0);
 
   useEffect(() => {
+    const tema = getTemaFilter();
+    setTemaFilter(tema);
     const loaded = loadCards();
     setCards(loaded);
-    setSessionIds(buildSession(loaded));
+    setSessionIds(buildSession(loaded, tema));
     setDiagScores(loadDiagScores());
 
     const p = loadProgress();
@@ -154,8 +166,22 @@ export default function TreningPage() {
 
   // Supabase sync when session ends + first session detection
   useEffect(() => {
-    if (!done || !supabase || !gamState) return;
+    if (!done || !gamState) return;
     const xpEarned = correct * 10 + (sessionIds.length - correct) * 1;
+
+    // Save session to localStorage history
+    const practiceTopics = [...new Set(
+      sessionIds.map((id) => examples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
+    )];
+    localSaveSession({
+      date: new Date().toISOString().slice(0, 10),
+      temas: practiceTopics,
+      correct,
+      total: sessionIds.length,
+      xp: xpEarned,
+    });
+
+    if (!supabase) return;
 
     // First session check (localStorage flag)
     const isFirstSession = !localStorage.getItem("matemax-first-session-done");
@@ -336,7 +362,7 @@ export default function TreningPage() {
   );
 
   function restart() {
-    setSessionIds(buildSession(cards));
+    setSessionIds(buildSession(cards, temaFilter));
     setCurrentIdx(0);
     setCorrect(0);
     setDone(false);
@@ -357,7 +383,11 @@ export default function TreningPage() {
   if (sessionIds.length === 0) {
     return (
       <div className="bg-white rounded-2xl p-8 text-center border border-slate-200">
-        <p className="text-slate-500">Žádné příklady k procvičení. Zkus znovu zítra!</p>
+        <p className="text-slate-500">
+          {temaFilter
+            ? `Žádné příklady pro téma "${temaFilter}". Zkus znovu zítra!`
+            : "Žádné příklady k procvičení. Zkus znovu zítra!"}
+        </p>
       </div>
     );
   }
@@ -423,7 +453,16 @@ export default function TreningPage() {
 
       <XPProgressBar xp={xp} className="mb-3" />
 
-      {isWeakTopic && (
+      {temaFilter && (
+        <div
+          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
+          style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+        >
+          🎯 Cílený trénink: <strong className="ml-1">{temaFilter.replace(/_/g, " ")}</strong>
+        </div>
+      )}
+
+      {isWeakTopic && !temaFilter && (
         <div
           className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
           style={{ background: "#fff7ed", color: "#c2410c", border: "1px solid #fed7aa" }}

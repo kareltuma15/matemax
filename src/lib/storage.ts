@@ -2,6 +2,14 @@
 import { supabase } from "./supabase";
 import { SM2Card, UserProgress } from "@/types";
 
+export interface SessionHistoryEntry {
+  date: string;       // "YYYY-MM-DD"
+  temas: string[];    // topics practiced
+  correct: number;
+  total: number;
+  xp: number;
+}
+
 type SessionRow = {
   user_id: string;
   date: string;
@@ -74,6 +82,27 @@ export async function remoteSyncXP(userId: string, totalXp: number, levelKey: st
       { user_id: userId, total_xp: totalXp, current_level: levelKey, updated_at: new Date().toISOString() },
       { onConflict: "user_id" }
     );
+}
+
+// ── Session history (local) ───────────────────────────────────────────────────
+
+const SESSION_HISTORY_KEY = "matemax-session-history";
+
+export function localSaveSession(entry: SessionHistoryEntry): void {
+  if (typeof window === "undefined") return;
+  try {
+    const existing = localLoadSessions();
+    const updated = [entry, ...existing].slice(0, 50);
+    localStorage.setItem(SESSION_HISTORY_KEY, JSON.stringify(updated));
+  } catch { /* ignore */ }
+}
+
+export function localLoadSessions(): SessionHistoryEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(SESSION_HISTORY_KEY);
+    return raw ? (JSON.parse(raw) as SessionHistoryEntry[]) : [];
+  } catch { return []; }
 }
 
 export async function remoteSyncBadges(userId: string, badgeIds: string[]): Promise<void> {
