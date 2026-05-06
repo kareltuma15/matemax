@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import webpush from "web-push";
+import { supabase } from "@/lib/supabase";
 
-// Skeleton — requires `npm install web-push` and VAPID keys
-// Generate keys: npx web-push generate-vapid-keys
-// Set env vars:
-//   NEXT_PUBLIC_VAPID_PUBLIC_KEY=<public key>
-//   VAPID_PRIVATE_KEY=<private key>
+webpush.setVapidDetails(
+  "mailto:noreply@matemax.cz",
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+  process.env.VAPID_PRIVATE_KEY!
+);
+
 export async function POST(req: NextRequest) {
   const {
     title = "MateMax",
@@ -12,31 +15,41 @@ export async function POST(req: NextRequest) {
     url = "/trenink",
   } = (await req.json()) as { title?: string; body?: string; url?: string };
 
-  // TODO: uncomment when web-push is installed and VAPID keys are configured
-  /*
-  const webpush = require("web-push");
-  webpush.setVapidDetails(
-    "mailto:noreply@matemax.cz",
-    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-    process.env.VAPID_PRIVATE_KEY!
-  );
+  if (!supabase) {
+    return NextResponse.json({ error: "No DB" }, { status: 503 });
+  }
 
-  const { supabase } = await import("@/lib/supabase");
-  if (!supabase) return NextResponse.json({ error: "No DB" }, { status: 503 });
+  const { data: rows, error } = await supabase
+    .from("push_subscriptions")
+    .select("endpoint, subscription");
 
-  const { data: rows } = await supabase.from("push_subscriptions").select("subscription");
+  if (error) {
+    console.error("push_subscriptions select error:", error);
+    return NextResponse.json({ error: "DB error" }, { status: 500 });
+  }
+
+  const payload = JSON.stringify({ title, body, url });
+
   const results = await Promise.allSettled(
-    (rows ?? []).map((row: { subscription: string }) =>
-      webpush.sendNotification(
-        JSON.parse(row.subscription),
-        JSON.stringify({ title, body, url })
-      )
+    (rows ?? []).map((row: { endpoint: string; subscription: string }) =>
+      webpush.sendNotification(JSON.parse(row.subscription), payload)
     )
   );
-  const sent = results.filter((r) => r.status === "fulfilled").length;
-  return NextResponse.json({ ok: true, sent });
-  */
 
-  console.log("[send-push] skeleton called:", { title, body, url });
-  return NextResponse.json({ ok: true, sent: 0, note: "Push sending not yet implemented — configure VAPID keys first" });
+  const sent   = results.filter((r) => r.status === "fulfilled").length;
+  const failed = results.filter((r) => r.status === "rejected").length;
+
+  // Remove subscriptions that returned 410 Gone (unsubscribed)
+  const gone: string[] = [];
+  results.forEach((r, i) => {
+    if (r.status === "rejected") {
+      const err = r.reason as { statusCode?: number };
+      if (err?.statusCode === 410) gone.push((rows ?? [])[i].endpoint);
+    }
+  });
+  if (gone.length > 0) {
+    await supabase.from("push_subscriptions").delete().in("endpoint", gone);
+  }
+
+  return NextResponse.json({ ok: true, sent, failed });
 }
