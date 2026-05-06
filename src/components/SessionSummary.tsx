@@ -81,10 +81,99 @@ function TopicProgressBar({ tema }: { tema: string }) {
   );
 }
 
+async function buildShareBlob(pct: number, correct: number, total: number, streak: number): Promise<Blob> {
+  const W = 1080, H = 1080;
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d")!;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#0D1B3E");
+  bg.addColorStop(1, "#1e3a6e");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.beginPath();
+  ctx.arc(W - 60, 60, 260, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(255,255,255,0.04)";
+  ctx.fill();
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#fff";
+
+  ctx.font = `900 80px -apple-system, BlinkMacSystemFont, Arial, sans-serif`;
+  ctx.fillText("M²", W / 2, 190);
+
+  ctx.font = `400 34px -apple-system, BlinkMacSystemFont, Arial, sans-serif`;
+  ctx.fillStyle = "rgba(255,255,255,0.35)";
+  ctx.fillText("matemax.cz", W / 2, 235);
+
+  ctx.fillStyle = "rgba(255,255,255,0.08)";
+  ctx.fillRect(W / 2 - 220, 265, 440, 2);
+
+  ctx.font = `900 300px -apple-system, BlinkMacSystemFont, Arial, sans-serif`;
+  ctx.fillStyle = "#fff";
+  ctx.fillText(`${pct}%`, W / 2, 630);
+
+  ctx.font = `600 52px -apple-system, BlinkMacSystemFont, Arial, sans-serif`;
+  ctx.fillStyle = "rgba(255,255,255,0.6)";
+  ctx.fillText(`${correct} z ${total} spravne`, W / 2, 715);
+
+  if (streak > 0) {
+    ctx.font = `700 44px -apple-system, BlinkMacSystemFont, Arial, sans-serif`;
+    ctx.fillStyle = "#fbbf24";
+    ctx.fillText(`${streak} dni streak`, W / 2, 795);
+  }
+
+  ctx.font = `400 32px -apple-system, BlinkMacSystemFont, Arial, sans-serif`;
+  ctx.fillStyle = "rgba(255,255,255,0.22)";
+  ctx.fillText("Matematika pro prijimacky na SS", W / 2, 960);
+
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error("toBlob failed"));
+    }, "image/png");
+  });
+}
+
 export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, onRestart }: Props) {
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   const animPct = useCountUp(pct);
   const animXp  = useCountUp(xpEarned);
+  const [shareState, setShareState] = useState<"idle" | "loading" | "copied" | "error">("idle");
+
+  async function handleShare() {
+    setShareState("loading");
+    try {
+      const blob = await buildShareBlob(pct, correct, total, streak);
+      const file = new File([blob], "matemax-vysledek.png", { type: "image/png" });
+      if (typeof navigator.share === "function" && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          title: `${pct} % z matematiky! — MateMax`,
+          text: `Vyřešil/a jsem ${correct} z ${total} příkladů z matematiky. Zkus to taky na matemax.cz!`,
+          files: [file],
+        });
+        setShareState("idle");
+      } else if (navigator.clipboard?.write) {
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+        setShareState("copied");
+        setTimeout(() => setShareState("idle"), 2500);
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "matemax-vysledek.png";
+        a.click();
+        URL.revokeObjectURL(url);
+        setShareState("idle");
+      }
+    } catch {
+      setShareState("error");
+      setTimeout(() => setShareState("idle"), 2000);
+    }
+  }
 
   const tier = pct >= 80 ? "great" : pct >= 50 ? "good" : "low";
   const headerBg    = tier === "great" ? "#dcfce7" : tier === "good" ? "#dbeafe" : "#ffedd5";
@@ -170,6 +259,20 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
             style={{ background: "#0D1B3E" }}
           >
             Trénovat znovu →
+          </button>
+          <button
+            onClick={handleShare}
+            disabled={shareState === "loading"}
+            className="w-full py-2.5 font-semibold rounded-xl border text-sm transition-colors disabled:opacity-60"
+            style={{ borderColor: "#bfdbfe", color: "#2E6DA4", background: "#eff6ff" }}
+          >
+            {shareState === "loading"
+              ? "Generuji…"
+              : shareState === "copied"
+              ? "✓ Zkopírováno do schránky!"
+              : shareState === "error"
+              ? "⚠ Nepodařilo se sdílet"
+              : "📤 Sdílet výsledek"}
           </button>
           <Link
             href="/profil"

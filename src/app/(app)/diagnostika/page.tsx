@@ -58,6 +58,7 @@ const STEPS: { label: string; tema: string }[] = [
   { label: "Geometrie", tema: "geometrie" },
   { label: "Mocniny", tema: "mocniny" },
   { label: "Slovní úlohy", tema: "slovni_ulohy" },
+  { label: "Různé", tema: "ruzne" },
 ];
 
 const QUESTIONS: DiagQuestion[] = [
@@ -171,6 +172,28 @@ const QUESTIONS: DiagQuestion[] = [
     options: ["4/36", "5/36", "6/36", "8/36"],
     correct: 1,
   },
+  // Krok 6 — Různé (poměr, úhly, logika)
+  {
+    id: 16,
+    tema: "pomer_meritko",
+    text: "Rozdělte 120 Kč v poměru 3 : 5. Kolik je větší část?",
+    options: ["45 Kč", "60 Kč", "75 Kč", "80 Kč"],
+    correct: 2,
+  },
+  {
+    id: 17,
+    tema: "uhly",
+    text: "Jak velký je doplňkový úhel k úhlu 65°?",
+    options: ["25°", "35°", "115°", "125°"],
+    correct: 2,
+  },
+  {
+    id: 18,
+    tema: "logicke_ulohy",
+    text: "Jan je starší než Petr. Petr je starší než Eva. Kdo je nejmladší?",
+    options: ["Jan", "Petr", "Eva", "Nelze určit"],
+    correct: 2,
+  },
 ];
 
 const QUESTIONS_PER_STEP = 3;
@@ -219,7 +242,11 @@ export default function DiagnostikaPage() {
       selected.forEach((s, i) => { finalAnswers[base + i] = s; });
 
       const results: Record<string, { correct: number; total: number }> = {};
-      STEPS.forEach((step) => { results[step.tema] = { correct: 0, total: 3 }; });
+      // Initialize per-question tema (supports mixed-topic steps)
+      QUESTIONS.forEach((q) => {
+        if (!results[q.tema]) results[q.tema] = { correct: 0, total: 0 };
+        results[q.tema].total++;
+      });
       QUESTIONS.forEach((q, i) => {
         if (finalAnswers[i] === q.correct) results[q.tema].correct++;
       });
@@ -424,6 +451,19 @@ export default function DiagnostikaPage() {
   );
 }
 
+// Human-readable labels for all temas that may appear in results
+const RESULT_LABELS: Record<string, string> = {
+  zlomky:              "Zlomky & procenta",
+  procenta:            "Procenta",
+  rovnice:             "Rovnice",
+  geometrie:           "Geometrie",
+  mocniny:             "Mocniny",
+  slovni_ulohy:        "Slovní úlohy",
+  pomer_meritko:       "Poměr a měřítko",
+  uhly:                "Úhly",
+  logicke_ulohy:       "Logické úlohy",
+};
+
 function DiagResults({ onStart }: { onStart: () => void }) {
   let results: Record<string, { correct: number; total: number }> = {};
   try {
@@ -431,14 +471,19 @@ function DiagResults({ onStart }: { onStart: () => void }) {
     if (raw) results = JSON.parse(raw);
   } catch { /* ignore */ }
 
-  const rows = STEPS.map((s) => ({
-    ...s,
-    ...( results[s.tema] ?? { correct: 0, total: 3 }),
-  }));
+  // Build rows from actual result temas (not just STEPS)
+  const rows = Object.entries(results)
+    .filter(([, v]) => v.total > 0)
+    .map(([tema, v]) => ({
+      tema,
+      label: RESULT_LABELS[tema] ?? tema,
+      correct: v.correct,
+      total: v.total,
+    }));
 
-  const weakest = rows.reduce((a, b) =>
-    (a.correct / a.total) <= (b.correct / b.total) ? a : b
-  );
+  const weakest = rows.length > 0
+    ? rows.reduce((a, b) => (a.correct / a.total) <= (b.correct / b.total) ? a : b)
+    : null;
 
   return (
     <div className="flex flex-col gap-6">
@@ -469,11 +514,13 @@ function DiagResults({ onStart }: { onStart: () => void }) {
         })}
       </div>
 
-      <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-        <p className="text-sm font-semibold text-indigo-800">
-          💡 Doporučení: Začni procvičovat <strong>{weakest.label}</strong> — tam je největší prostor pro zlepšení.
-        </p>
-      </div>
+      {weakest && (
+        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+          <p className="text-sm font-semibold text-indigo-800">
+            💡 Doporučení: Začni procvičovat <strong>{weakest.label}</strong> — tam je největší prostor pro zlepšení.
+          </p>
+        </div>
+      )}
 
       <button
         onClick={onStart}

@@ -10,6 +10,10 @@ import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import { TEMA_LABELS } from "@/types";
 import BadgeGrid from "@/components/BadgeGrid";
 
+interface CermatEntry { date: string; score: number; total: number; pct: number; }
+
+type NotifState = "unsupported" | "granted" | "denied" | "default" | "loading";
+
 const ALL_TOPICS = Object.keys(TEMA_LABELS);
 
 interface TopicScore {
@@ -52,6 +56,8 @@ export default function ProfilPage() {
   const [sessions, setSessions]          = useState<SessionHistoryEntry[]>([]);
   const [showDay2Banner, setShowDay2Banner] = useState(false);
   const [loading, setLoading]            = useState(true);
+  const [cermatLast, setCermatLast]      = useState<CermatEntry | null>(null);
+  const [notifState, setNotifState]      = useState<NotifState>("default");
 
   useEffect(() => {
     if (supabase) {
@@ -93,8 +99,57 @@ export default function ProfilPage() {
       }
     } catch { /* ignore */ }
 
+    try {
+      const raw = localStorage.getItem("cermat-test-history");
+      if (raw) {
+        const history = JSON.parse(raw) as CermatEntry[];
+        if (history.length > 0) setCermatLast(history[0]);
+      }
+    } catch { /* ignore */ }
+
+    if (!("Notification" in window)) {
+      setNotifState("unsupported");
+    } else {
+      setNotifState(Notification.permission as NotifState);
+    }
+
     setLoading(false);
   }, []);
+
+  async function handleEnableNotifs() {
+    if (!("Notification" in window)) return;
+    setNotifState("loading");
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm !== "granted") {
+        setNotifState(perm === "denied" ? "denied" : "default");
+        return;
+      }
+      const reg = await navigator.serviceWorker.ready;
+      const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+      if (vapidKey) {
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: vapidKey,
+        });
+        const userId = (await supabase?.auth.getSession())?.data.session?.user.id;
+        await fetch("/api/push-subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ subscription: sub.toJSON(), userId }),
+        });
+      } else {
+        await reg.showNotification("MateMax", {
+          body: "Připomenutí jsou aktivní! Každý den ti připomeneme trénink.",
+          icon: "/icons/icon-192.png",
+        });
+      }
+      setNotifState("granted");
+    } catch (err) {
+      console.error("Push subscribe error:", err);
+      setNotifState("default");
+    }
+  }
 
   async function handleLogout() {
     if (supabase) await supabase.auth.signOut();
@@ -263,6 +318,48 @@ export default function ProfilPage() {
               )}
             </div>
           </div>
+
+          {/* CERMAT test card */}
+          {cermatLast ? (
+            <Link
+              href="/cermat-test"
+              className="block bg-white rounded-2xl border border-slate-200 p-4 hover:border-blue-200 transition-colors"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-1">
+                    🎯 Poslední CERMAT test
+                  </p>
+                  <p className="text-2xl font-black" style={{ color: "#0D1B3E" }}>{cermatLast.pct} %</p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {cermatLast.score}/{cermatLast.total} · {cermatLast.date}
+                  </p>
+                </div>
+                <div className="flex flex-col items-end gap-2">
+                  <span className="text-3xl">
+                    {cermatLast.pct >= 90 ? "🏆" : cermatLast.pct >= 70 ? "💪" : "📚"}
+                  </span>
+                  <span
+                    className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                    style={{ background: "#eff6ff", color: "#2E6DA4" }}
+                  >
+                    Zkusit znovu →
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="/cermat-test"
+              className="block rounded-2xl p-4 text-center hover:opacity-90 transition-opacity"
+              style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+            >
+              <p className="text-sm font-black text-white">🎯 Simulace CERMAT testu</p>
+              <p className="text-xs text-blue-200 mt-0.5">
+                Otestuj se za podmínek reálných přijímaček →
+              </p>
+            </Link>
+          )}
 
           {/* Další cíl card — enhanced */}
           {nextBadge && earnedBadges.length < allBadges.length && (
@@ -454,10 +551,32 @@ export default function ProfilPage() {
         </>
       )}
 
+      {/* Push notifications */}
+      {notifState !== "unsupported" && (
+        <button
+          onClick={notifState === "granted" || notifState === "denied" || notifState === "loading" ? undefined : handleEnableNotifs}
+          disabled={notifState === "granted" || notifState === "denied" || notifState === "loading"}
+          className="w-full py-3 rounded-xl border-2 font-semibold text-sm transition-colors"
+          style={{
+            borderColor: notifState === "granted" ? "#bbf7d0" : notifState === "denied" ? "#e2e8f0" : "#e2e8f0",
+            color: notifState === "granted" ? "#15803d" : notifState === "denied" ? "#94a3b8" : "#0D1B3E",
+            background: notifState === "granted" ? "#f0fdf4" : "white",
+          }}
+        >
+          {notifState === "granted"
+            ? "🔔 Připomenutí aktivní"
+            : notifState === "denied"
+            ? "🔕 Notifikace zakázány v prohlížeči"
+            : notifState === "loading"
+            ? "Aktivuji…"
+            : "🔔 Zapnout připomenutí"}
+        </button>
+      )}
+
       {/* Logout */}
       <button
         onClick={handleLogout}
-        className="w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-colors mt-1"
+        className="w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-colors"
       >
         Odhlásit se
       </button>

@@ -1,4 +1,4 @@
-const CACHE = "matemax-v1";
+const CACHE = "matemax-v2";
 const OFFLINE_PAGES = ["/", "/diagnostika", "/trenink"];
 
 self.addEventListener("install", (e) => {
@@ -18,7 +18,6 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
   const url = new URL(e.request.url);
-  // Ignoruj Next.js interní requesty a API
   if (url.pathname.startsWith("/_next/") || url.pathname.startsWith("/api/")) return;
 
   e.respondWith(
@@ -33,6 +32,41 @@ self.addEventListener("fetch", (e) => {
           return response;
         })
         .catch(() => caches.match("/") ?? new Response("Offline"));
+    })
+  );
+});
+
+// ── Push notifications ──────────────────────────────────────────────────────
+
+self.addEventListener("push", (e) => {
+  let data = { title: "MateMax", body: "Čas na dnešní trénink! 💪", url: "/trenink" };
+  try {
+    if (e.data) data = { ...data, ...e.data.json() };
+  } catch { /* ignore */ }
+
+  e.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      tag: "matemax-reminder",
+      data: { url: data.url },
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  const url = e.notification.data?.url ?? "/trenink";
+  e.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if (client.url.includes(self.location.origin) && "focus" in client) {
+          client.navigate(url);
+          return client.focus();
+        }
+      }
+      return self.clients.openWindow(url);
     })
   );
 });
