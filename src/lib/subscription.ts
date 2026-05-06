@@ -1,4 +1,10 @@
-export const FREE_TOPICS = new Set(["zlomky", "procenta", "rovnice"]);
+export const FREE_TOPICS = new Set([
+  "zlomky",
+  "procenta",
+  "rovnice",
+  "pomer_meritko",
+  "logicke_ulohy",
+]);
 
 export const PREMIUM_TOPICS = new Set([
   "geometrie",
@@ -7,6 +13,9 @@ export const PREMIUM_TOPICS = new Set([
   "cisselne_rady",
   "vyrazy",
   "kombinovane",
+  "geometrie_rovinna",
+  "geometrie_prostorova",
+  "uhly",
 ]);
 
 export function isPremium(): boolean {

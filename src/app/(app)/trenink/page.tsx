@@ -109,6 +109,7 @@ export default function TreningPage() {
   const [sessionIds, setSessionIds] = useState<string[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [correct, setCorrect]       = useState(0);
+  const [skipped, setSkipped]       = useState(0);
   const [done, setDone]             = useState(false);
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
@@ -167,7 +168,9 @@ export default function TreningPage() {
   // Supabase sync when session ends + first session detection
   useEffect(() => {
     if (!done || !gamState) return;
-    const xpEarned = correct * 10 + (sessionIds.length - correct) * 1;
+    // Skipped examples get no XP, only answered (wrong) examples get 1 XP
+    const answered = sessionIds.length - skipped;
+    const xpEarned = correct * 10 + (answered - correct) * 1;
 
     // Save session to localStorage history
     const practiceTopics = [...new Set(
@@ -177,7 +180,7 @@ export default function TreningPage() {
       date: new Date().toISOString().slice(0, 10),
       temas: practiceTopics,
       correct,
-      total: sessionIds.length,
+      total: answered,
       xp: xpEarned,
     });
 
@@ -194,7 +197,7 @@ export default function TreningPage() {
       if (!data.session) return;
       const uid = data.session.user.id;
       const p = loadProgress();
-      remoteLogSession({ user_id: uid, date: new Date().toISOString().slice(0, 10), xp_earned: xpEarned, correct, total: sessionIds.length });
+      remoteLogSession({ user_id: uid, date: new Date().toISOString().slice(0, 10), xp_earned: xpEarned, correct, total: answered });
       const level = getLevelFromXP(p.xp);
       remoteSyncXP(uid, p.xp, level.key);
       remoteSyncBadges(uid, gamState.earnedBadges);
@@ -365,6 +368,7 @@ export default function TreningPage() {
     setSessionIds(buildSession(cards, temaFilter));
     setCurrentIdx(0);
     setCorrect(0);
+    setSkipped(0);
     setDone(false);
     consecutiveCorrectRef.current = 0;
     sessionStartRef.current = new Date();
@@ -410,8 +414,9 @@ export default function TreningPage() {
         )}
         <SessionSummary
           correct={correct}
-          total={sessionIds.length}
-          xpEarned={correct * 10 + (sessionIds.length - correct) * 1}
+          total={sessionIds.length - skipped}
+          skipped={skipped}
+          xpEarned={correct * 10 + (sessionIds.length - skipped - correct) * 1}
           streak={progress.streak}
           topics={practiceTopics}
           onRestart={restart}
@@ -425,6 +430,7 @@ export default function TreningPage() {
   const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < 0.67;
 
   function handleSkip() {
+    setSkipped((n) => n + 1);
     const isLast = currentIdx + 1 >= sessionIds.length;
     if (isLast) setDone(true);
     else setCurrentIdx((i) => i + 1);

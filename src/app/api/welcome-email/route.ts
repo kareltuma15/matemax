@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await resend.emails.send({
-      from: "noreply@matematika-snadno.cz",
+      from: "MateMax <onboarding@resend.dev>",
       to: email,
       subject: "Vítej v MateMax! Tvůj trénink začíná 🚀",
       html,

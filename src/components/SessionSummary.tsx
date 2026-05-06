@@ -7,6 +7,7 @@ import { TEMA_LABELS } from "@/types";
 interface Props {
   correct: number;
   total: number;
+  skipped?: number;
   xpEarned: number;
   streak: number;
   topics: string[];
@@ -80,8 +81,8 @@ function TopicProgressBar({ tema }: { tema: string }) {
   );
 }
 
-export default function SessionSummary({ correct, total, xpEarned, streak, topics, onRestart }: Props) {
-  const pct = Math.round((correct / total) * 100);
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, onRestart }: Props) {
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   const animPct = useCountUp(pct);
   const animXp  = useCountUp(xpEarned);
 
@@ -113,7 +114,7 @@ export default function SessionSummary({ correct, total, xpEarned, streak, topic
           {animPct} %
         </p>
         <p className="mt-2 text-sm font-medium" style={{ color: headerColor, opacity: 0.75 }}>
-          {correct} z {total} správně
+          {correct} z {total} správně{skipped > 0 ? ` · ${skipped} přeskočeno` : ""}
         </p>
       </div>
 

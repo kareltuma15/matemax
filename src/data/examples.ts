@@ -1,9 +1,11 @@
 import rawData from "./databaze.json";
+import cermatData from "./cermat-200.json";
 import { DBExample } from "@/types";
 
 const db = rawData as { metadata: unknown; examples: DBExample[] };
+const cermat = cermatData as { metadata: unknown; examples: DBExample[] };
 
-export const examples: DBExample[] = db.examples;
+export const examples: DBExample[] = [...db.examples, ...cermat.examples];
 
 export function getExampleById(id: string): DBExample | undefined {
   return examples.find((e) => e.id === id);

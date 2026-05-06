@@ -27,15 +27,22 @@ export interface UserProgress {
 }
 
 export const TEMA_LABELS: Record<string, string> = {
-  zlomky:        "Zlomky",
-  procenta:      "Procenta",
-  rovnice:       "Rovnice",
-  geometrie:     "Geometrie",
-  mocniny:       "Mocniny",
-  slovni_ulohy:  "Slovní úlohy",
-  cisselne_rady: "Číselné řady",
-  vyrazy:        "Výrazy",
-  kombinovane:   "Kombinované",
+  // Původní témata
+  zlomky:              "Zlomky",
+  procenta:            "Procenta",
+  rovnice:             "Rovnice",
+  geometrie:           "Geometrie",
+  mocniny:             "Mocniny",
+  slovni_ulohy:        "Slovní úlohy",
+  cisselne_rady:       "Číselné řady",
+  vyrazy:              "Výrazy",
+  kombinovane:         "Kombinované",
+  // CERMAT nová témata
+  pomer_meritko:       "Poměr a měřítko",
+  geometrie_rovinna:   "Geometrie rovinná",
+  geometrie_prostorova:"Geometrie prostorová",
+  uhly:                "Úhly",
+  logicke_ulohy:       "Logické úlohy",
 };
 
 export const TEMA_COLORS: Record<string, string> = {
