@@ -22,6 +22,7 @@ import {
   getBadgeConfig,
   GamificationState,
 } from "@/lib/gamification";
+import Link from "next/link";
 import PracticeCard from "@/components/PracticeCard";
 import SessionSummary from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
@@ -29,7 +30,9 @@ import BadgeToast from "@/components/BadgeToast";
 import FirstSessionModal from "@/components/FirstSessionModal";
 import LevelUpModal from "@/components/LevelUpModal";
 import UpgradeCard from "@/components/UpgradeCard";
-import { isTopicLocked } from "@/lib/subscription";
+import GuestTopicMap from "@/components/GuestTopicMap";
+import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
+import { TEMA_LABELS } from "@/types";
 
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
@@ -66,8 +69,9 @@ function loadDiagScores(): Record<string, number> {
   } catch { return {}; }
 }
 
-function buildSession(cards: SM2Card[], temaFilter?: string | null): string[] {
-  const pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
+function buildSession(cards: SM2Card[], temaFilter?: string | null, guestOnly = false): string[] {
+  let pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
+  if (guestOnly) pool = pool.filter((ex) => GUEST_FREE_TOPICS.has(ex.tema));
   const cardMap = new Map(cards.map((c) => [c.exampleId, c]));
   const diagScores = loadDiagScores();
 
@@ -114,6 +118,7 @@ export default function TreningPage() {
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
   const [temaFilter, setTemaFilter] = useState<string | null>(null);
+  const [isGuest, setIsGuest]       = useState<boolean | null>(null);
 
   // Gamification
   const [xp, setXp]                     = useState(0);
@@ -129,7 +134,6 @@ export default function TreningPage() {
     setTemaFilter(tema);
     const loaded = loadCards();
     setCards(loaded);
-    setSessionIds(buildSession(loaded, tema));
     setDiagScores(loadDiagScores());
 
     const p = loadProgress();
@@ -162,7 +166,21 @@ export default function TreningPage() {
       enqueueBadges(startBadges, setBadgeQueue);
     }
 
-    setHydrated(true);
+    // Auth check gates session building (guest vs. logged-in pool)
+    const finish = (guest: boolean) => {
+      setIsGuest(guest);
+      // Guests must pick a topic first — don't build session until they do
+      if (!guest || tema) {
+        setSessionIds(buildSession(loaded, tema, guest));
+      }
+      setHydrated(true);
+    };
+
+    if (supabase) {
+      supabase.auth.getSession().then(({ data }) => finish(!data.session));
+    } else {
+      finish(true);
+    }
   }, []);
 
   // Supabase sync when session ends + first session detection
@@ -365,7 +383,7 @@ export default function TreningPage() {
   );
 
   function restart() {
-    setSessionIds(buildSession(cards, temaFilter));
+    setSessionIds(buildSession(cards, temaFilter, isGuest ?? false));
     setCurrentIdx(0);
     setCorrect(0);
     setSkipped(0);
@@ -382,6 +400,51 @@ export default function TreningPage() {
 
   if (!hydrated) {
     return <div className="flex items-center justify-center h-48 text-slate-400">Načítám…</div>;
+  }
+
+  // Guest: show topic map if no topic selected yet
+  if (isGuest && !temaFilter && !done) {
+    return (
+      <GuestTopicMap
+        onSelectTopic={(tema) => {
+          setTemaFilter(tema);
+          setSessionIds(buildSession(cards, tema, true));
+        }}
+      />
+    );
+  }
+
+  // Guest: locked topic via URL param
+  if (isGuest && temaFilter && !GUEST_FREE_TOPICS.has(temaFilter)) {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="bg-white rounded-2xl border border-slate-200 p-7 flex flex-col items-center gap-4 text-center">
+          <div
+            className="w-16 h-16 rounded-full flex items-center justify-center text-3xl"
+            style={{ background: "#f1f5f9" }}
+          >
+            🔒
+          </div>
+          <div>
+            <h2 className="text-xl font-black" style={{ color: "#0D1B3E" }}>Téma zamčeno</h2>
+            <p className="text-sm text-slate-500 mt-2 leading-relaxed">
+              <strong>{TEMA_LABELS[temaFilter] ?? temaFilter}</strong> je dostupné jen po registraci.
+              Registrace je zdarma a trvá 2 minuty.
+            </p>
+          </div>
+          <Link
+            href="/registrace"
+            className="w-full py-3.5 text-white font-black rounded-xl text-center text-base"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+          >
+            Registrovat se zdarma →
+          </Link>
+          <Link href="/trenink" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            ← Zpět na výběr témat
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   if (sessionIds.length === 0) {

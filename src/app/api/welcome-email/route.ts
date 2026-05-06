@@ -1,4 +1,3 @@
-import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -8,11 +7,53 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing email" }, { status: 400 });
   }
 
+  // ── Loops.so (preferred) ────────────────────────────────────────────────────
+  if (process.env.LOOPS_API_KEY) {
+    try {
+      // Add contact to Loops mailing list
+      await fetch("https://app.loops.so/api/v1/contacts/create", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          source: "MateMax registrace",
+          userGroup: "students",
+        }),
+      });
+
+      // Send transactional welcome email (Karel fills LOOPS_WELCOME_EMAIL_ID)
+      const transactionalId = process.env.LOOPS_WELCOME_EMAIL_ID ?? "";
+      if (transactionalId) {
+        const res = await fetch("https://app.loops.so/api/v1/transactional", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ transactionalId, email }),
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          console.error("Loops transactional email error:", err);
+        }
+      }
+
+      return NextResponse.json({ ok: true, provider: "loops" });
+    } catch (err) {
+      console.error("Loops welcome-email error:", err);
+      // Fall through to Resend if Loops fails
+    }
+  }
+
+  // ── Resend (fallback) ───────────────────────────────────────────────────────
   if (!process.env.RESEND_API_KEY) {
-    // Gracefully skip when key is not configured
     return NextResponse.json({ ok: true, skipped: true });
   }
 
+  const { Resend } = await import("resend");
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const html = `
@@ -28,8 +69,6 @@ export async function POST(req: NextRequest) {
     <tr>
       <td align="center">
         <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(13,27,62,0.08);">
-
-          <!-- Header -->
           <tr>
             <td style="background:linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%);padding:32px 40px;text-align:center;">
               <div style="display:inline-block;width:48px;height:48px;background:#fff;border-radius:12px;text-align:center;line-height:48px;font-weight:900;font-size:18px;color:#0D1B3E;">M²</div>
@@ -37,8 +76,6 @@ export async function POST(req: NextRequest) {
               <p style="color:#93c5fd;margin:0;font-size:15px;">Tvůj matematický trenér je připraven 🚀</p>
             </td>
           </tr>
-
-          <!-- Body -->
           <tr>
             <td style="padding:36px 40px;">
               <p style="color:#0D1B3E;font-size:16px;line-height:1.6;margin:0 0 20px;">
@@ -48,64 +85,35 @@ export async function POST(req: NextRequest) {
                 MateMax se přizpůsobí přesně tvým mezerám — začni diagnostikou, která
                 zabere jen 5 minut, a my sestavíme tréninkový plán přímo na míru.
               </p>
-
-              <!-- CTA button -->
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center" style="padding:0 0 32px;">
-                    <a
-                      href="https://matemax-ten.vercel.app/diagnostika"
-                      style="display:inline-block;background:#00B4D8;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 36px;border-radius:12px;"
-                    >
+                    <a href="https://matemax-ten.vercel.app/diagnostika"
+                      style="display:inline-block;background:#00B4D8;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 36px;border-radius:12px;">
                       Spustit diagnostiku →
                     </a>
                   </td>
                 </tr>
               </table>
-
-              <!-- Feature list -->
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#F8FAFF;border-radius:12px;padding:24px;">
-                <tr>
-                  <td style="padding:0 0 12px;">
-                    <span style="font-size:18px;">📅</span>
-                    <span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">Každý den 7 příkladů stačí</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:0 0 12px;">
-                    <span style="font-size:18px;">🧠</span>
-                    <span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">SM-2 algoritmus — inteligentní opakování</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:0;">
-                    <span style="font-size:18px;">📊</span>
-                    <span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">500+ příkladů ve stylu CERMAT</span>
-                  </td>
-                </tr>
+                <tr><td style="padding:0 0 12px;"><span style="font-size:18px;">📅</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">Každý den 7 příkladů stačí</span></td></tr>
+                <tr><td style="padding:0 0 12px;"><span style="font-size:18px;">🧠</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">SM-2 algoritmus — inteligentní opakování</span></td></tr>
+                <tr><td style="padding:0;"><span style="font-size:18px;">📊</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">700+ příkladů ve stylu CERMAT</span></td></tr>
               </table>
             </td>
           </tr>
-
-          <!-- Footer -->
           <tr>
             <td style="padding:24px 40px;border-top:1px solid #e5e7eb;text-align:center;">
-              <p style="color:#94a3b8;font-size:13px;margin:0 0 4px;">
-                Karel Tůma · Matematika Snadno
-              </p>
-              <p style="color:#cbd5e1;font-size:12px;margin:0;">
-                MateMax © 2026 · Odhlaš se z emailů kdykoliv.
-              </p>
+              <p style="color:#94a3b8;font-size:13px;margin:0 0 4px;">Karel Tůma · Matematika Snadno</p>
+              <p style="color:#cbd5e1;font-size:12px;margin:0;">MateMax © 2026 · Odhlaš se z emailů kdykoliv.</p>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>
   </table>
 </body>
-</html>
-  `.trim();
+</html>`.trim();
 
   try {
     await resend.emails.send({
@@ -114,9 +122,9 @@ export async function POST(req: NextRequest) {
       subject: "Vítej v MateMax! Tvůj trénink začíná 🚀",
       html,
     });
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, provider: "resend" });
   } catch (err) {
-    console.error("welcome-email error:", err);
+    console.error("welcome-email resend error:", err);
     return NextResponse.json({ error: "Failed to send" }, { status: 500 });
   }
 }
