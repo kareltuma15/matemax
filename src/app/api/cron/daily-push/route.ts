@@ -2,9 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import webpush from "web-push";
 import { supabase } from "@/lib/supabase";
 
-// Protect with CRON_SECRET header so only trusted callers can trigger.
-// Call manually: POST /api/cron/daily-push  { "x-cron-secret": "<CRON_SECRET>" }
-// Or wire up via Vercel Cron Jobs (vercel.json) or any external scheduler.
+// Vercel Cron Jobs automatically add:  Authorization: Bearer <CRON_SECRET>
+// Manual trigger:  POST /api/cron/daily-push  -H "Authorization: Bearer <CRON_SECRET>"
 
 if (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
@@ -15,8 +14,10 @@ if (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
 }
 
 export async function POST(req: NextRequest) {
-  const secret = req.headers.get("x-cron-secret");
-  if (!secret || secret !== process.env.CRON_SECRET) {
+  // Vercel sends: Authorization: Bearer <CRON_SECRET>
+  const auth = req.headers.get("authorization");
+  const expected = process.env.CRON_SECRET ? `Bearer ${process.env.CRON_SECRET}` : null;
+  if (!expected || auth !== expected) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

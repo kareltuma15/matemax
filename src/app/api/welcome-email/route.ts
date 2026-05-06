@@ -8,7 +8,8 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Loops.so (preferred) ────────────────────────────────────────────────────
-  if (process.env.LOOPS_API_KEY) {
+  // Requires both LOOPS_API_KEY and LOOPS_WELCOME_EMAIL_ID to be set.
+  if (process.env.LOOPS_API_KEY && process.env.LOOPS_WELCOME_EMAIL_ID) {
     try {
       // Add contact to Loops mailing list
       await fetch("https://app.loops.so/api/v1/contacts/create", {
@@ -24,27 +25,26 @@ export async function POST(req: NextRequest) {
         }),
       });
 
-      // Send transactional welcome email (Karel fills LOOPS_WELCOME_EMAIL_ID)
-      const transactionalId = process.env.LOOPS_WELCOME_EMAIL_ID ?? "";
-      if (transactionalId) {
-        const res = await fetch("https://app.loops.so/api/v1/transactional", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ transactionalId, email }),
-        });
-        if (!res.ok) {
-          const err = await res.text();
-          console.error("Loops transactional email error:", err);
-        }
+      // Send transactional welcome email
+      const res = await fetch("https://app.loops.so/api/v1/transactional", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          transactionalId: process.env.LOOPS_WELCOME_EMAIL_ID,
+          email,
+        }),
+      });
+      if (!res.ok) {
+        console.error("Loops transactional email error:", await res.text());
       }
 
       return NextResponse.json({ ok: true, provider: "loops" });
     } catch (err) {
       console.error("Loops welcome-email error:", err);
-      // Fall through to Resend if Loops fails
+      // Fall through to Resend on any Loops failure
     }
   }
 
