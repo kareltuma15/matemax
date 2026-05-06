@@ -8,6 +8,7 @@ import { supabase } from "@/lib/supabase";
 const ITEMS = [
   { href: "/",            icon: "🏠", label: "Domů" },
   { href: "/trenink",     icon: "💪", label: "Trénink" },
+  { href: "/vyzva",       icon: "🏆", label: "Výzva" },
   { href: "/cermat-test", icon: "🎯", label: "Test" },
   { href: "/profil",      icon: "👤", label: "Profil" },
 ];

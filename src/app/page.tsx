@@ -191,6 +191,8 @@ function LoggedInDashboard({
   const firstName = email.split("@")[0];
   const [todayCount, setTodayCount] = useState(0);
   const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([]);
+  const [challengeDoneToday, setChallengeDoneToday] = useState(false);
+  const [parentMessage, setParentMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const todayStr = new Date().toISOString().slice(0, 10);
@@ -215,7 +217,25 @@ function LoggedInDashboard({
         setWeakTopics(scored);
       }
     } catch { /* ignore */ }
-  }, []);
+
+    // Check if today's challenge is done
+    const challengeKey = "matemax-challenge-done-" + todayStr;
+    setChallengeDoneToday(localStorage.getItem(challengeKey) === "1");
+
+    // Load unread parent message from Supabase
+    if (supabase && session) {
+      supabase
+        .from("parent_messages")
+        .select("message, read_at")
+        .eq("child_user_id", session.user.id)
+        .is("read_at", null)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .then(({ data }) => {
+          if (data && data.length > 0) setParentMessage(data[0].message as string);
+        });
+    }
+  }, [session]);
 
   const goalMet = todayCount >= DAILY_GOAL;
   const todayPct = Math.min(100, Math.round((todayCount / DAILY_GOAL) * 100));
@@ -276,8 +296,42 @@ function LoggedInDashboard({
 
       {/* Content */}
       <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-5">
+        {/* Parent message banner */}
+        {parentMessage && (
+          <div
+            className="rounded-2xl px-5 py-4 flex items-start gap-3"
+            style={{ background: "#fffbeb", border: "2px solid #fde68a" }}
+          >
+            <span className="text-2xl mt-0.5">💌</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold uppercase tracking-wide text-amber-700 mb-1">Zpráva od rodiče</p>
+              <p className="text-sm text-amber-900 leading-relaxed">{parentMessage}</p>
+            </div>
+          </div>
+        )}
+
         {/* XP bar */}
         <XPProgressBar xp={xp} />
+
+        {/* Daily challenge card */}
+        <Link
+          href="/vyzva"
+          className="block rounded-2xl overflow-hidden shadow-sm transition-transform active:scale-98 hover:shadow-md"
+          style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
+        >
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Denní výzva</p>
+              <p className="text-lg font-extrabold text-white">
+                {challengeDoneToday ? "✅ Výzva splněna!" : "🏆 Dnešní výzva čeká"}
+              </p>
+              <p className="text-xs text-blue-200 mt-0.5">
+                {challengeDoneToday ? "Skvělá práce. Pokračuj v tréninku!" : "Extra XP a možný odznak"}
+              </p>
+            </div>
+            <span className="text-4xl">{challengeDoneToday ? "🏆" : "→"}</span>
+          </div>
+        </Link>
 
         {/* Daily goal card */}
         {goalMet ? (
