@@ -193,6 +193,7 @@ function LoggedInDashboard({
   const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([]);
   const [challengeDoneToday, setChallengeDoneToday] = useState(false);
   const [parentMessage, setParentMessage] = useState<string | null>(null);
+  const [parentMessageId, setParentMessageId] = useState<string | null>(null);
 
   useEffect(() => {
     const todayStr = new Date().toISOString().slice(0, 10);
@@ -226,16 +227,29 @@ function LoggedInDashboard({
     if (supabase && session) {
       supabase
         .from("parent_messages")
-        .select("message, read_at")
+        .select("id, message, read_at")
         .eq("child_user_id", session.user.id)
         .is("read_at", null)
         .order("created_at", { ascending: false })
         .limit(1)
         .then(({ data }) => {
-          if (data && data.length > 0) setParentMessage(data[0].message as string);
+          if (data && data.length > 0) {
+            setParentMessage(data[0].message as string);
+            setParentMessageId(data[0].id as string);
+          }
         });
     }
   }, [session]);
+
+  async function markMessageRead() {
+    if (!supabase || !parentMessageId) return;
+    await supabase
+      .from("parent_messages")
+      .update({ read_at: new Date().toISOString() })
+      .eq("id", parentMessageId);
+    setParentMessage(null);
+    setParentMessageId(null);
+  }
 
   const goalMet = todayCount >= DAILY_GOAL;
   const todayPct = Math.min(100, Math.round((todayCount / DAILY_GOAL) * 100));
@@ -306,6 +320,13 @@ function LoggedInDashboard({
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold uppercase tracking-wide text-amber-700 mb-1">Zpráva od rodiče</p>
               <p className="text-sm text-amber-900 leading-relaxed">{parentMessage}</p>
+              <button
+                type="button"
+                onClick={markMessageRead}
+                className="mt-2 text-xs font-semibold text-amber-700 underline"
+              >
+                Označit jako přečteno
+              </button>
             </div>
           </div>
         )}
