@@ -7,8 +7,20 @@ import { loadProgress } from "@/lib/progress";
 import XPProgressBar from "@/components/XPProgressBar";
 import { TEMA_LABELS } from "@/types";
 import type { Session } from "@supabase/supabase-js";
+import challengesJson from "@/data/daily-challenges.json";
 
-// ─── DATA ───────────────────────────────────────────────────────────────────
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+function getDayOfYear(): number {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now.getTime() - start.getTime()) / 86400000);
+}
+
+type DailyChallenge = { title: string; xp_reward: number; difficulty: string; topic: string };
+function getTodayChallenge(): DailyChallenge {
+  return challengesJson[(getDayOfYear() - 1) % challengesJson.length] as DailyChallenge;
+}
 
 const HOW_IT_WORKS = [
   {
@@ -57,7 +69,7 @@ const PRICING = [
       "✗ CERMAT cvičné testy",
     ],
     cta: "Začít zdarma",
-    ctaHref: "/registrace",
+    ctaHref: "/vitej",
     ctaStyle: "border-2 border-[#2E6DA4] text-[#2E6DA4] hover:bg-blue-50",
   },
   {
@@ -189,6 +201,8 @@ function LoggedInDashboard({
 }) {
   const email = session.user.email ?? "";
   const firstName = email.split("@")[0];
+  const todayChallenge = getTodayChallenge();
+
   const [todayCount, setTodayCount] = useState(0);
   const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([]);
   const [challengeDoneToday, setChallengeDoneToday] = useState(false);
@@ -205,7 +219,6 @@ function LoggedInDashboard({
       }
     } catch { /* ignore */ }
 
-    // Load 3 weakest topics from diagnostics
     try {
       const raw = localStorage.getItem("matemax-diag-results");
       if (raw) {
@@ -219,11 +232,9 @@ function LoggedInDashboard({
       }
     } catch { /* ignore */ }
 
-    // Check if today's challenge is done
     const challengeKey = "matemax-challenge-done-" + todayStr;
     setChallengeDoneToday(localStorage.getItem(challengeKey) === "1");
 
-    // Load unread parent message from Supabase
     if (supabase && session) {
       supabase
         .from("parent_messages")
@@ -294,7 +305,7 @@ function LoggedInDashboard({
         </div>
       </nav>
 
-      {/* Dashboard hero */}
+      {/* Hero */}
       <section
         className="relative overflow-hidden"
         style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 50%, #0D1B3E 100%)" }}
@@ -309,7 +320,8 @@ function LoggedInDashboard({
       </section>
 
       {/* Content */}
-      <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-5">
+      <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-4">
+
         {/* Parent message banner */}
         {parentMessage && (
           <div
@@ -318,7 +330,7 @@ function LoggedInDashboard({
           >
             <span className="text-2xl mt-0.5">💌</span>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold uppercase tracking-wide text-amber-700 mb-1">Zpráva od rodiče</p>
+              <p className="text-xs font-bold uppercase tracking-wide text-amber-700 mb-1">Vzkaz od rodiče</p>
               <p className="text-sm text-amber-900 leading-relaxed">{parentMessage}</p>
               <button
                 type="button"
@@ -334,27 +346,28 @@ function LoggedInDashboard({
         {/* XP bar */}
         <XPProgressBar xp={xp} />
 
-        {/* Daily challenge card */}
-        <Link
-          href="/vyzva"
-          className="block rounded-2xl overflow-hidden shadow-sm transition-transform active:scale-98 hover:shadow-md"
-          style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
-        >
-          <div className="px-5 py-4 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Denní výzva</p>
-              <p className="text-lg font-extrabold text-white">
-                {challengeDoneToday ? "✅ Výzva splněna!" : "🏆 Dnešní výzva čeká"}
-              </p>
-              <p className="text-xs text-blue-200 mt-0.5">
-                {challengeDoneToday ? "Skvělá práce. Pokračuj v tréninku!" : "Extra XP a možný odznak"}
-              </p>
-            </div>
-            <span className="text-4xl">{challengeDoneToday ? "🏆" : "→"}</span>
+        {/* Stats row */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+            <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
+            <p className="text-2xl font-black text-orange-500">🔥 {streak}</p>
+            <p className="text-xs text-slate-400">dní v řadě</p>
           </div>
-        </Link>
+          <div
+            className="rounded-2xl border p-4 text-center"
+            style={{ background: diagDone ? "#f0fdf4" : "#fff7ed", borderColor: diagDone ? "#bbf7d0" : "#fed7aa" }}
+          >
+            <p className="text-xs font-medium mb-1" style={{ color: diagDone ? "#166534" : "#92400e" }}>
+              Diagnostika
+            </p>
+            <p className="text-xl mb-0.5">{diagDone ? "✅" : "🎯"}</p>
+            <p className="text-xs font-semibold" style={{ color: diagDone ? "#166534" : "#92400e" }}>
+              {diagDone ? "Hotovo" : "Ještě ne"}
+            </p>
+          </div>
+        </div>
 
-        {/* Daily goal card */}
+        {/* Daily goal */}
         {goalMet ? (
           <div
             className="rounded-2xl p-5 flex items-center justify-between gap-4"
@@ -362,12 +375,10 @@ function LoggedInDashboard({
           >
             <div>
               <p className="text-xs font-bold uppercase tracking-wide" style={{ color: "#166534" }}>Dnešní cíl</p>
-              <p className="text-lg font-black mt-0.5" style={{ color: "#15803d" }}>
-                ✅ Dnešní cíl splněn! +15 XP bonus
+              <p className="text-base font-black mt-0.5" style={{ color: "#15803d" }}>
+                ✅ Splněno! +15 XP bonus
               </p>
-              <p className="text-xs mt-1" style={{ color: "#16a34a" }}>
-                {todayCount} příkladů dnes — skvělá práce!
-              </p>
+              <p className="text-xs mt-1" style={{ color: "#16a34a" }}>{todayCount} příkladů dnes</p>
             </div>
             <Link
               href="/trenink"
@@ -391,10 +402,7 @@ function LoggedInDashboard({
             <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
               <div
                 className="h-2.5 rounded-full transition-all duration-700"
-                style={{
-                  width: `${todayPct}%`,
-                  background: "linear-gradient(90deg, #0D1B3E, #2E6DA4)",
-                }}
+                style={{ width: `${todayPct}%`, background: "linear-gradient(90deg, #0D1B3E, #2E6DA4)" }}
               />
             </div>
             <p className="text-xs text-slate-400 mt-2">
@@ -403,7 +411,49 @@ function LoggedInDashboard({
           </div>
         )}
 
-        {/* Kde máš mezery */}
+        {/* Dnešní výzva */}
+        <Link
+          href="/vyzva"
+          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md"
+          style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
+        >
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Denní výzva</p>
+              <p className="text-base font-extrabold text-white leading-snug">
+                {challengeDoneToday ? "✅ Výzva splněna!" : `🏆 ${todayChallenge.title}`}
+              </p>
+              <p className="text-xs text-blue-200 mt-0.5">
+                {challengeDoneToday
+                  ? "Skvělá práce. Pokračuj v tréninku!"
+                  : `+${todayChallenge.xp_reward} XP za splnění`}
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1 shrink-0 ml-3">
+              <span className="text-3xl">{challengeDoneToday ? "🏆" : "→"}</span>
+              {!challengeDoneToday && (
+                <span className="text-xs font-bold text-amber-300">Spustit →</span>
+              )}
+            </div>
+          </div>
+        </Link>
+
+        {/* CERMAT test */}
+        <Link
+          href="/cermat-test"
+          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md"
+        >
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: "#2E6DA4" }}>CERMAT test</p>
+              <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>Otestuj se na čisto</p>
+              <p className="text-xs text-slate-400 mt-0.5">Simulace přijímaček · 20 příkladů</p>
+            </div>
+            <span className="text-3xl">🎯</span>
+          </div>
+        </Link>
+
+        {/* Slabá témata */}
         {weakTopics.length > 0 && (
           <div className="bg-white rounded-2xl border border-slate-200 p-5">
             <p className="text-sm font-bold mb-3" style={{ color: "#0D1B3E" }}>🎯 Kde máš mezery</p>
@@ -439,27 +489,6 @@ function LoggedInDashboard({
           </div>
         )}
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center">
-            <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
-            <p className="text-3xl font-black text-orange-500">🔥 {streak}</p>
-            <p className="text-xs text-slate-400">dní v řadě</p>
-          </div>
-          <div
-            className="rounded-2xl border p-5 text-center"
-            style={{ background: diagDone ? "#f0fdf4" : "#fff7ed", borderColor: diagDone ? "#bbf7d0" : "#fed7aa" }}
-          >
-            <p className="text-xs font-medium mb-1" style={{ color: diagDone ? "#166534" : "#92400e" }}>
-              Diagnostika
-            </p>
-            <p className="text-2xl mb-1">{diagDone ? "✅" : "🎯"}</p>
-            <p className="text-xs font-semibold" style={{ color: diagDone ? "#166534" : "#92400e" }}>
-              {diagDone ? "Hotovo" : "Ještě ne"}
-            </p>
-          </div>
-        </div>
-
         {/* Main CTA */}
         <Link
           href="/trenink"
@@ -477,7 +506,7 @@ function LoggedInDashboard({
           >
             👤 Zobrazit profil
           </Link>
-          {!diagDone && (
+          {!diagDone ? (
             <Link
               href="/diagnostika"
               className="block py-3 text-center rounded-xl font-semibold text-sm"
@@ -485,8 +514,7 @@ function LoggedInDashboard({
             >
               🎯 Spustit diagnostiku
             </Link>
-          )}
-          {diagDone && (
+          ) : (
             <Link
               href="/diagnostika"
               className="block py-3 text-center rounded-xl border-2 border-slate-200 text-slate-500 font-semibold text-sm hover:bg-slate-50 transition-colors"
@@ -497,22 +525,21 @@ function LoggedInDashboard({
         </div>
       </section>
 
-      {/* Footer */}
-      <div className="border-t border-gray-100 text-center py-5 text-xs text-gray-400 pb-20">
+      <div className="border-t border-gray-100 text-center py-5 text-xs text-gray-400 pb-24">
         MateMax © 2026 · by Karel Tůma · Matematika Snadno
       </div>
     </div>
   );
 }
 
-// ─── HLAVNÍ KOMPONENTA ───────────────────────────────────────────────────────
+// ─── LANDING PAGE (HOSTÉ) ─────────────────────────────────────────────────────
 
 export default function LandingPage() {
-  const [diagDone, setDiagDone]           = useState(false);
-  const [session, setSession]             = useState<Session | null>(null);
+  const [diagDone, setDiagDone] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
   const [sessionChecked, setSessionChecked] = useState(false);
-  const [xp, setXp]                       = useState(0);
-  const [streak, setStreak]               = useState(0);
+  const [xp, setXp] = useState(0);
+  const [streak, setStreak] = useState(0);
 
   useEffect(() => {
     const diag = localStorage.getItem("matemax-diag-done") === "1";
@@ -535,22 +562,14 @@ export default function LandingPage() {
 
   if (sessionChecked && session) {
     return (
-      <LoggedInDashboard
-        session={session}
-        xp={xp}
-        streak={streak}
-        diagDone={diagDone}
-      />
+      <LoggedInDashboard session={session} xp={xp} streak={streak} diagDone={diagDone} />
     );
   }
-
-  const primaryCta = diagDone ? "/trenink" : "/registrace";
-  const primaryLabel = diagDone ? "Pokračovat v tréninku →" : "🚀 Začít zdarma";
 
   return (
     <div className="bg-white">
 
-      {/* ── NAV ─────────────────────────────────────────────────────── */}
+      {/* ── NAV ──────────────────────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -567,7 +586,7 @@ export default function LandingPage() {
               Ceník
             </a>
             <Link
-              href={primaryCta}
+              href={diagDone ? "/trenink" : "/vitej"}
               className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-colors"
               style={{ background: "#2E6DA4" }}
             >
@@ -608,18 +627,18 @@ export default function LandingPage() {
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={primaryCta}
+              href="/vitej"
               className="inline-block text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors shadow-lg"
               style={{ background: "#00B4D8" }}
             >
-              {primaryLabel}
+              Začít zdarma →
             </Link>
-            <a
-              href="#jak-to-funguje"
+            <Link
+              href="/cermat-test"
               className="inline-block bg-white/10 hover:bg-white/20 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-white/20 transition-colors"
             >
-              Jak to funguje →
-            </a>
+              Vyzkoušet CERMAT test →
+            </Link>
           </div>
 
           <p className="mt-4 text-sm text-blue-300">
@@ -628,8 +647,32 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── ČÍSLA ───────────────────────────────────────────────────── */}
-      <section className="bg-gray-50 border-b border-gray-200">
+      {/* ── CO TĚ ČEKÁ ───────────────────────────────────────────────── */}
+      <section className="max-w-4xl mx-auto px-6 py-14">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>Co tě čeká</h2>
+          <p className="text-gray-500 mt-2 text-sm">Tři nástroje, které tě naučí připravit se bez stresu.</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            { icon: "🎯", title: "Diagnostický test", desc: "Zjisti kde máš mezery za 10 minut" },
+            { icon: "💪", title: "Denní výzvy", desc: "Každý den nová výzva, každý den o krok blíž" },
+            { icon: "📊", title: "Sledování pokroku", desc: "Vidíš přesně co umíš a co ne" },
+          ].map(({ icon, title, desc }) => (
+            <div
+              key={title}
+              className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col items-center text-center gap-3"
+            >
+              <span className="text-4xl">{icon}</span>
+              <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>{title}</p>
+              <p className="text-sm text-slate-500 leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── ČÍSLA ────────────────────────────────────────────────────── */}
+      <section className="bg-gray-50 border-y border-gray-200">
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { value: "500+", label: "příkladů v databázi" },
@@ -645,7 +688,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── JAK TO FUNGUJE ──────────────────────────────────────────── */}
+      {/* ── JAK TO FUNGUJE ───────────────────────────────────────────── */}
       <section id="jak-to-funguje" className="max-w-5xl mx-auto px-6 py-20">
         <div className="text-center mb-14">
           <Badge>Jak to funguje</Badge>
@@ -672,7 +715,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── APP MOCKUP ──────────────────────────────────────────────── */}
+      {/* ── APP MOCKUP ───────────────────────────────────────────────── */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-16">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -699,15 +742,14 @@ export default function LandingPage() {
                 ))}
               </ul>
               <Link
-                href={primaryCta}
+                href="/vitej"
                 className="inline-block mt-8 text-white font-bold px-6 py-3 rounded-xl transition-colors"
                 style={{ background: "#0D1B3E" }}
               >
-                {diagDone ? "Pokračovat v tréninku →" : "Vyzkoušet zdarma →"}
+                Vyzkoušet zdarma →
               </Link>
             </div>
 
-            {/* App mockup */}
             <div className="rounded-2xl p-6 shadow-2xl" style={{ background: "#0D1B3E" }}>
               <div className="rounded-xl p-4 mb-3" style={{ background: "#1e3a6e" }}>
                 <div className="flex items-center justify-between mb-3">
@@ -740,7 +782,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CENÍK ───────────────────────────────────────────────────── */}
+      {/* ── CENÍK ────────────────────────────────────────────────────── */}
       <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12">
           <Badge>Ceník</Badge>
@@ -792,7 +834,7 @@ export default function LandingPage() {
         </p>
       </section>
 
-      {/* ── FAQ ─────────────────────────────────────────────────────── */}
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
       <section className="bg-gray-50 py-20">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-12">
@@ -809,7 +851,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ───────────────────────────────────────────────── */}
+      {/* ── FINAL CTA ────────────────────────────────────────────────── */}
       <section className="py-20 text-center" style={{ background: "#0D1B3E" }}>
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-5xl mb-4">🚀</div>
@@ -825,17 +867,17 @@ export default function LandingPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={primaryCta}
+              href="/vitej"
               className="inline-block text-white font-bold text-lg px-10 py-4 rounded-xl transition-colors"
               style={{ background: "#00B4D8" }}
             >
-              {diagDone ? "Pokračovat v tréninku →" : "Začít zdarma →"}
+              Začít zdarma →
             </Link>
             <Link
-              href="/report-preview"
+              href="/cermat-test"
               className="inline-block bg-white/10 hover:bg-white/20 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-white/20 transition-colors"
             >
-              📧 Ukázka report emailu
+              🎯 CERMAT test →
             </Link>
           </div>
           <p className="mt-4 text-sm text-blue-400">
@@ -844,11 +886,32 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── MINI FOOTER ─────────────────────────────────────────────── */}
+      {/* ── RODIČ CTA ────────────────────────────────────────────────── */}
+      <section className="bg-slate-50 border-t border-slate-100 py-12">
+        <div className="max-w-sm mx-auto px-6 text-center flex flex-col gap-4 items-center">
+          <span className="text-4xl">👨‍👩‍👧</span>
+          <div>
+            <p className="text-lg font-extrabold" style={{ color: "#0D1B3E" }}>Jste rodič?</p>
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
+              Sledujte pokrok svého dítěte každý týden.
+            </p>
+          </div>
+          <Link
+            href="/rodice/prihlaseni"
+            className="px-6 py-3 rounded-xl font-bold text-sm"
+            style={{ background: "#0D1B3E", color: "#fff" }}
+          >
+            Rodičovský přehled →
+          </Link>
+        </div>
+      </section>
+
+      {/* ── FOOTER ───────────────────────────────────────────────────── */}
       <div className="bg-white border-t border-gray-100 text-center py-5 text-xs text-gray-400">
         MateMax © 2026 · by Karel Tůma · Matematika Snadno ·{" "}
         <Link href="/report-preview" className="hover:underline">Report preview</Link>
       </div>
+
     </div>
   );
 }
