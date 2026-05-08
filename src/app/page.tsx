@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { loadProgress } from "@/lib/progress";
 import XPProgressBar from "@/components/XPProgressBar";
+import BottomNav from "@/components/BottomNav";
 import { TEMA_LABELS } from "@/types";
 import type { Session } from "@supabase/supabase-js";
 import challengesJson from "@/data/daily-challenges.json";
@@ -61,11 +62,11 @@ const PRICING = [
     highlight: false,
     features: [
       "✓ Diagnostický test",
-      "✓ 3 témata (zlomky, procenta, rovnice)",
+      "✓ 3 témata (zlomky, rovnice, geometrie)",
       "✓ 10 příkladů denně",
       "✓ Základní statistiky",
       "✗ Týdenní report pro rodiče",
-      "✗ Plná databáze 2 000+ příkladů",
+      "✗ Plná databáze 700+ příkladů (všechna témata)",
       "✗ CERMAT cvičné testy",
     ],
     cta: "Začít zdarma",
@@ -109,7 +110,7 @@ const FAQS = [
   },
   {
     q: "Mohu MateMax použít i bez přijímaček?",
-    a: "Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze pokrývá celý 2. stupeň ZŠ — zlomky, rovnice, geometrie, procenta, mocniny i slovní úlohy.",
+    a: "Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze 700+ příkladů pokrývá celý 2. stupeň ZŠ — zlomky, rovnice, geometrie, procenta, mocniny i slovní úlohy.",
   },
   {
     q: "Jak se liší MateMax od pracovního sešitu Matematika Snadno?",
@@ -447,7 +448,7 @@ function LoggedInDashboard({
             <div>
               <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: "#2E6DA4" }}>CERMAT test</p>
               <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>Otestuj se na čisto</p>
-              <p className="text-xs text-slate-400 mt-0.5">Simulace přijímaček · 20 příkladů</p>
+              <p className="text-xs text-slate-400 mt-0.5">Simulace přijímaček · 15 příkladů · 25 min</p>
             </div>
             <span className="text-3xl">🎯</span>
           </div>
@@ -528,6 +529,7 @@ function LoggedInDashboard({
       <div className="border-t border-gray-100 text-center py-5 text-xs text-gray-400 pb-24">
         MateMax © 2026 · by Karel Tůma · Matematika Snadno
       </div>
+      <BottomNav />
     </div>
   );
 }
@@ -675,8 +677,8 @@ export default function LandingPage() {
       <section className="bg-gray-50 border-y border-gray-200">
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { value: "500+", label: "příkladů v databázi" },
-            { value: "6", label: "témat CERMAT" },
+            { value: "700+", label: "příkladů v databázi" },
+            { value: "9", label: "témat CERMAT" },
             { value: "10 min", label: "denně stačí" },
             { value: "1×/týden", label: "report pro rodiče" },
           ].map((s) => (
@@ -908,8 +910,7 @@ export default function LandingPage() {
 
       {/* ── FOOTER ───────────────────────────────────────────────────── */}
       <div className="bg-white border-t border-gray-100 text-center py-5 text-xs text-gray-400">
-        MateMax © 2026 · by Karel Tůma · Matematika Snadno ·{" "}
-        <Link href="/report-preview" className="hover:underline">Report preview</Link>
+        MateMax © 2026 · by Karel Tůma · Matematika Snadno
       </div>
 
     </div>

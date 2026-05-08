@@ -49,7 +49,7 @@ export default function RodicePage() {
           className="rounded-xl p-4 text-sm leading-relaxed"
           style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534" }}
         >
-          ✅ Potvrzovací email byl odeslán na váš email.
+          ✅ Potvrzovací email byl odeslán. Týdenní report dostanete každé pondělí.
         </div>
         <Link
           href="/"

@@ -483,7 +483,7 @@ export default function ProfilPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sessions.slice(0, 10).map((s, i) => {
+                  {sessions.slice(0, 20).map((s, i) => {
                     const pctVal = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
                     const color = pctVal >= 80 ? "#16a34a" : pctVal >= 50 ? "#d97706" : "#dc2626";
                     const temaLabel = s.temas.map((t) => TEMA_LABELS[t] ?? t).join(", ");

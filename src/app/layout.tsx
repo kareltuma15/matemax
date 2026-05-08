@@ -5,10 +5,10 @@ import PwaSetup from "@/components/PwaSetup";
 export const metadata: Metadata = {
   metadataBase: new URL("https://matemax-ten.vercel.app"),
   title: "MateMax — Příprava na přijímačky z matematiky",
-  description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 500 příkladů, chytrý algoritmus, 10 minut denně.",
+  description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
   openGraph: {
     title: "MateMax — Příprava na přijímačky z matematiky",
-    description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 500 příkladů, chytrý algoritmus, 10 minut denně.",
+    description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "MateMax" }],
     locale: "cs_CZ",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "MateMax — Příprava na přijímačky z matematiky",
-    description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 500 příkladů, chytrý algoritmus, 10 minut denně.",
+    description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
     images: ["/og-image.png"],
   },
   appleWebApp: {

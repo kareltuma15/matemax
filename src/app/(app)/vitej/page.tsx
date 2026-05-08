@@ -112,7 +112,7 @@ export default function VitejPage() {
         <div className="grid grid-cols-3 gap-2 w-full">
           {[
             ["⏱️", "8 minut", "diagnostika"],
-            ["📚", "6 témat", "CERMAT"],
+            ["📚", "9 témat", "CERMAT"],
             ["🎯", "Výsledek", "ihned"],
           ].map(([icon, title, sub]) => (
             <div

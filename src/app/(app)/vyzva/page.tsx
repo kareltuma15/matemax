@@ -291,16 +291,6 @@ export default function VyzvaPage() {
   if (phase === "intro") {
     return (
       <div className="min-h-screen pb-24" style={{ background: "#F8FAFF" }}>
-        <style>{`
-          @keyframes shake {
-            0%,100% { transform: translateX(0); }
-            20% { transform: translateX(-8px); }
-            40% { transform: translateX(8px); }
-            60% { transform: translateX(-5px); }
-            80% { transform: translateX(5px); }
-          }
-        `}</style>
-
         {/* Header */}
         <div
           className="px-5 pt-10 pb-8 text-center"
