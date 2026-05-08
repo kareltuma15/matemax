@@ -55,6 +55,7 @@ export default function ProfilPage() {
   const [earnedBadges, setEarnedBadges]  = useState<string[]>([]);
   const [sessions, setSessions]          = useState<SessionHistoryEntry[]>([]);
   const [showDay2Banner, setShowDay2Banner] = useState(false);
+  const [freezeCount, setFreezeCount]    = useState(0);
   const [loading, setLoading]            = useState(true);
   const [cermatLast, setCermatLast]      = useState<CermatEntry | null>(null);
   const [notifState, setNotifState]      = useState<NotifState>("default");
@@ -69,6 +70,7 @@ export default function ProfilPage() {
     const p = loadProgress();
     setXp(p.xp);
     setStreak(p.streak);
+    setFreezeCount(p.freezeCount ?? 0);
 
     const g = loadGamification();
     setEarnedBadges(g.earnedBadges);
@@ -98,6 +100,28 @@ export default function ProfilPage() {
         setTopicScores(scores);
       }
     } catch { /* ignore */ }
+
+    // Fetch diag results from Supabase for cross-device sync
+    if (supabase) {
+      supabase.auth.getSession().then(async ({ data }) => {
+        if (!data.session) return;
+        const { data: rows } = await supabase!
+          .from("diagnostic_results")
+          .select("tema, correct, total")
+          .eq("user_id", data.session.user.id);
+        if (rows && rows.length > 0) {
+          const results: Record<string, { correct: number; total: number }> = {};
+          for (const row of rows) results[row.tema] = { correct: row.correct, total: row.total };
+          localStorage.setItem("matemax-diag-results", JSON.stringify(results));
+          localStorage.setItem("matemax-diag-done", "1");
+          const scores: TopicScore[] = Object.entries(results)
+            .filter(([, v]) => v.total > 0)
+            .map(([tema, v]) => ({ tema, score: v.correct / v.total, correct: v.correct, total: v.total }))
+            .sort((a, b) => a.score - b.score);
+          setTopicScores(scores);
+        }
+      });
+    }
 
     try {
       const raw = localStorage.getItem("cermat-test-history");
@@ -287,6 +311,11 @@ export default function ProfilPage() {
               <p className="text-xs text-slate-400 font-medium mb-1">🔥 Streak</p>
               <p className="text-3xl font-black text-orange-500">{streak}</p>
               <p className="text-[10px] text-slate-400 mt-0.5">dní v řadě</p>
+              {freezeCount > 0 && (
+                <p className="text-[10px] font-semibold mt-1" style={{ color: "#0369a1" }}>
+                  🧊 ×{freezeCount} zmraz.
+                </p>
+              )}
             </div>
             <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
               <p className="text-xs text-slate-400 font-medium mb-1">⚡ Celkem XP</p>

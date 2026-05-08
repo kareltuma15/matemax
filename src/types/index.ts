@@ -24,6 +24,8 @@ export interface UserProgress {
   streak: number;
   lastActiveDate: string | null; // "YYYY-MM-DD"
   consecutiveCorrect: number;
+  freezeCount?: number;
+  lastFreezeEarnedAtStreak?: number;
 }
 
 export const TEMA_LABELS: Record<string, string> = {

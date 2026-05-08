@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { examples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
@@ -37,11 +38,6 @@ import { TEMA_LABELS } from "@/types";
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
 const SESSION_SIZE = 7;
-
-function getTemaFilter(): string | null {
-  if (typeof window === "undefined") return null;
-  return new URLSearchParams(window.location.search).get("tema");
-}
 
 function loadCards(): SM2Card[] {
   if (typeof window === "undefined") return [];
@@ -108,7 +104,10 @@ function enqueueBadges(
   }
 }
 
-export default function TreningPage() {
+function TreningPageInner() {
+  const searchParams = useSearchParams();
+  const urlTema = searchParams.get("tema");
+
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -117,8 +116,9 @@ export default function TreningPage() {
   const [done, setDone]             = useState(false);
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
-  const [temaFilter, setTemaFilter] = useState<string | null>(null);
+  const [temaFilter, setTemaFilter] = useState<string | null>(urlTema);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
+  const [freezeUsedToday, setFreezeUsedToday] = useState(false);
 
   // Gamification
   const [xp, setXp]                     = useState(0);
@@ -130,11 +130,13 @@ export default function TreningPage() {
   const consecutiveCorrectRef           = useRef(0);
 
   useEffect(() => {
-    const tema = getTemaFilter();
-    setTemaFilter(tema);
+    setTemaFilter(urlTema);
     const loaded = loadCards();
     setCards(loaded);
     setDiagScores(loadDiagScores());
+
+    const todayStr = new Date().toISOString().slice(0, 10);
+    setFreezeUsedToday(localStorage.getItem("matemax-freeze-used") === todayStr);
 
     const p = loadProgress();
     setXp(p.xp);
@@ -170,8 +172,8 @@ export default function TreningPage() {
     const finish = (guest: boolean) => {
       setIsGuest(guest);
       // Guests must pick a topic first — don't build session until they do
-      if (!guest || tema) {
-        setSessionIds(buildSession(loaded, tema, guest));
+      if (!guest || urlTema) {
+        setSessionIds(buildSession(loaded, urlTema, guest));
       }
       setHydrated(true);
     };
@@ -217,7 +219,7 @@ export default function TreningPage() {
       const p = loadProgress();
       remoteLogSession({ user_id: uid, date: new Date().toISOString().slice(0, 10), xp_earned: xpEarned, correct, total: answered });
       const level = getLevelFromXP(p.xp);
-      remoteSyncXP(uid, p.xp, level.key);
+      remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0);
       remoteSyncBadges(uid, gamState.earnedBadges);
 
       // Onboarding: první session dokončena
@@ -522,12 +524,21 @@ export default function TreningPage() {
 
       <XPProgressBar xp={xp} className="mb-3" />
 
+      {freezeUsedToday && (
+        <div
+          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
+          style={{ background: "#eff8ff", color: "#0369a1", border: "1px solid #bae6fd" }}
+        >
+          🧊 Streak zmrazen — použit freeze štít
+        </div>
+      )}
+
       {temaFilter && (
         <div
           className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
           style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
         >
-          🎯 Cílený trénink: <strong className="ml-1">{temaFilter.replace(/_/g, " ")}</strong>
+          🎯 Cílený trénink: <strong className="ml-1">{TEMA_LABELS[temaFilter] ?? temaFilter}</strong>
         </div>
       )}
 
@@ -548,5 +559,13 @@ export default function TreningPage() {
         onResult={handleResult}
       />
     </>
+  );
+}
+
+export default function TreningPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-48 text-slate-400">Načítám…</div>}>
+      <TreningPageInner />
+    </Suspense>
   );
 }

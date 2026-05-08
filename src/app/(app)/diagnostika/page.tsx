@@ -7,6 +7,8 @@ import { examples } from "@/data/examples";
 import { createCard } from "@/lib/sm2";
 import { SM2Card } from "@/types";
 import { isTopicLocked } from "@/lib/subscription";
+import { supabase } from "@/lib/supabase";
+import { remoteSyncDiagResults } from "@/lib/storage";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -253,6 +255,15 @@ export default function DiagnostikaPage() {
 
       localStorage.setItem("matemax-diag-results", JSON.stringify(results));
       localStorage.setItem("matemax-diag-done", "1");
+
+      // Sync to Supabase if logged in (fire-and-forget)
+      if (supabase) {
+        supabase.auth.getSession().then(({ data }) => {
+          if (data.session) {
+            remoteSyncDiagResults(data.session.user.id, results).catch(() => {});
+          }
+        });
+      }
 
       // Seed SM-2 karty: pro slabá témata (< 67 %) vytvoř karty s okamžitou prioritou
       seedCardsFromDiag(results);

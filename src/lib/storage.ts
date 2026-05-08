@@ -74,14 +74,30 @@ export async function remoteSaveSM2Card(data: SM2Row): Promise<void> {
     .upsert(data, { onConflict: "user_id,example_id" });
 }
 
-export async function remoteSyncXP(userId: string, totalXp: number, levelKey: string): Promise<void> {
+export async function remoteSyncXP(userId: string, totalXp: number, levelKey: string, freezeCount = 0): Promise<void> {
   if (!supabase) return;
   await supabase
     .from("user_xp")
     .upsert(
-      { user_id: userId, total_xp: totalXp, current_level: levelKey, updated_at: new Date().toISOString() },
+      { user_id: userId, total_xp: totalXp, current_level: levelKey, freeze_count: freezeCount, updated_at: new Date().toISOString() },
       { onConflict: "user_id" }
     );
+}
+
+export async function remoteSyncDiagResults(
+  userId: string,
+  results: Record<string, { correct: number; total: number }>
+): Promise<void> {
+  if (!supabase) return;
+  const rows = Object.entries(results).map(([tema, v]) => ({
+    user_id: userId,
+    tema,
+    correct: v.correct,
+    total: v.total,
+    updated_at: new Date().toISOString(),
+  }));
+  if (rows.length === 0) return;
+  await supabase.from("diagnostic_results").upsert(rows, { onConflict: "user_id,tema" });
 }
 
 // ── Session history (local) ───────────────────────────────────────────────────
