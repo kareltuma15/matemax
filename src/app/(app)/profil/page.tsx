@@ -602,6 +602,21 @@ export default function ProfilPage() {
         </button>
       )}
 
+      {/* Rodičovský portál */}
+      <Link
+        href="/rodice/dashboard"
+        className="flex items-center justify-between px-4 py-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-xl">👨‍👩‍👧</span>
+          <div>
+            <p className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>Rodičovský portál</p>
+            <p className="text-xs text-slate-400">Přehled pokroku pro rodiče</p>
+          </div>
+        </div>
+        <span className="text-slate-300 text-lg">→</span>
+      </Link>
+
       {/* Logout */}
       <button
         onClick={handleLogout}

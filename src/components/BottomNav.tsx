@@ -5,16 +5,24 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-const ITEMS = [
+const STUDENT_ITEMS = [
   { href: "/",        icon: "🏠", label: "Domů" },
   { href: "/trenink", icon: "💪", label: "Trénink" },
   { href: "/vyzva",   icon: "🏆", label: "Výzva" },
   { href: "/profil",  icon: "👤", label: "Profil" },
 ];
 
+const PARENT_ITEMS = [
+  { href: "/rodice/dashboard",  icon: "📊", label: "Přehled" },
+  { href: "/rodice/propojeni",  icon: "🔗", label: "Propojení" },
+  { href: "/rodice/nastaveni",  icon: "⚙️", label: "Nastavení" },
+  { href: "/",                  icon: "🏠", label: "Zpět" },
+];
+
 export default function BottomNav() {
   const pathname = usePathname();
   const [loggedIn, setLoggedIn] = useState(false);
+  const isParentSection = pathname.startsWith("/rodice");
 
   useEffect(() => {
     if (!supabase) return;
@@ -29,14 +37,23 @@ export default function BottomNav() {
 
   if (!loggedIn) return null;
 
+  const items = isParentSection ? PARENT_ITEMS : STUDENT_ITEMS;
+
   return (
     <nav
       className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
+      {isParentSection && (
+        <div className="w-full text-center text-[10px] font-semibold text-blue-600 bg-blue-50 py-1 border-b border-blue-100">
+          👨‍👩‍👧 Rodičovský portál
+        </div>
+      )}
       <div className="max-w-2xl mx-auto flex">
-        {ITEMS.map(({ href, icon, label }) => {
-          const active = pathname === href;
+        {items.map(({ href, icon, label }) => {
+          const active = isParentSection
+            ? pathname === href || (href !== "/" && pathname.startsWith(href))
+            : pathname === href;
           return (
             <Link
               key={href}
