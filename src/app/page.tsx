@@ -9,9 +9,10 @@ import BottomNav from "@/components/BottomNav";
 import { TEMA_LABELS } from "@/types";
 import type { Session } from "@supabase/supabase-js";
 import challengesJson from "@/data/daily-challenges.json";
-import { getReadiness } from "@/lib/readiness";
-import { localLoadCards } from "@/lib/storage";
+import { getReadiness, CERMAT_TOPICS } from "@/lib/readiness";
+import { localLoadCards, localLoadSessions } from "@/lib/storage";
 import { isDue } from "@/lib/sm2";
+import CountdownBanner from "@/components/CountdownBanner";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -214,13 +215,40 @@ function LoggedInDashboard({
   const [parentMessageId, setParentMessageId] = useState<string | null>(null);
   const [dueCount, setDueCount] = useState(0);
   const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
+  const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
+  const [hasWrongCards, setHasWrongCards] = useState(false);
 
   useEffect(() => {
     const cards = localLoadCards();
     setDueCount(cards.filter(isDue).length);
+    setHasWrongCards(cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2));
+
     const r = getReadiness();
     if (r.hasData) setReadinessScore({ score: r.score, label: r.label, color: r.color });
+
+    // Suggested topics: weakest that have been at least touched
+    const sessions = localLoadSessions();
+    const lastPracticed: Record<string, string> = {};
+    for (const s of sessions) {
+      for (const t of s.temas) {
+        if (!lastPracticed[t]) lastPracticed[t] = s.date;
+      }
+    }
     const todayStr = new Date().toISOString().slice(0, 10);
+    const suggested = r.topics
+      .filter((t) => t.score > 0 || t.practiced > 0)
+      .map((t) => {
+        const last = lastPracticed[t.tema];
+        const daysSince = last
+          ? Math.floor((new Date(todayStr).getTime() - new Date(last).getTime()) / 86400000)
+          : 99;
+        const urgency = (1 - t.score / 100) * 0.6 + Math.min(daysSince, 7) / 7 * 0.4;
+        return { ...t, urgency };
+      })
+      .sort((a, b) => b.urgency - a.urgency)
+      .slice(0, 3)
+      .map(({ tema, label }) => ({ tema, label }));
+    setSuggestedTopics(suggested);
     try {
       const raw = localStorage.getItem("matemax-today");
       if (raw) {
@@ -353,6 +381,9 @@ function LoggedInDashboard({
           </div>
         )}
 
+        {/* Countdown */}
+        <CountdownBanner variant="compact" />
+
         {/* XP bar */}
         <XPProgressBar xp={xp} />
 
@@ -380,6 +411,43 @@ function LoggedInDashboard({
               </Link>
             )}
           </div>
+        )}
+
+        {/* Suggested topics */}
+        {suggestedTopics.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-100 p-4">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3">
+              💡 Dnes doporučujeme
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {suggestedTopics.map(({ tema, label }) => (
+                <Link
+                  key={tema}
+                  href={`/trenink?tema=${tema}`}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+                  style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+                >
+                  {label} →
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Opakovat chyby CTA */}
+        {hasWrongCards && (
+          <Link
+            href="/trenink?rezim=chyby"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
+            style={{ background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626" }}
+          >
+            <span className="text-lg">🔄</span>
+            <div>
+              <p className="text-sm font-bold">Procvičit chyby</p>
+              <p className="text-xs" style={{ color: "#ef4444" }}>Příklady kde sis nebyl jistý</p>
+            </div>
+            <span className="ml-auto text-sm font-semibold">→</span>
+          </Link>
         )}
 
         {/* Stats row */}

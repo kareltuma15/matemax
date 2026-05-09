@@ -11,7 +11,9 @@ interface Props {
   xpEarned: number;
   streak: number;
   topics: string[];
+  rezim?: "chyby";
   onRestart: () => void;
+  onRestartChyby?: () => void;
 }
 
 function useCountUp(target: number, duration = 900): number {
@@ -138,7 +140,7 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
   });
 }
 
-export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, onRestart }: Props) {
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, onRestart, onRestartChyby }: Props) {
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   const animPct = useCountUp(pct);
   const animXp  = useCountUp(xpEarned);
@@ -252,6 +254,15 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
           Chybné příklady se ti vrátí brzy — SM-2 spaced repetition
         </p>
 
+        {rezim === "chyby" && (
+          <div
+            className="flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-lg"
+            style={{ background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" }}
+          >
+            🔄 Procvičoval jsi pouze chyby
+          </div>
+        )}
+
         <div className="flex flex-col gap-2 mt-1">
           <button
             onClick={onRestart}
@@ -260,6 +271,16 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
           >
             Trénovat znovu →
           </button>
+
+          {onRestartChyby && correct < total && (
+            <button
+              onClick={onRestartChyby}
+              className="w-full py-2.5 font-semibold rounded-xl border text-sm transition-colors"
+              style={{ borderColor: "#fecaca", color: "#dc2626", background: "#fef2f2" }}
+            >
+              🔄 Procvičit chyby z tréninku
+            </button>
+          )}
           <button
             onClick={handleShare}
             disabled={shareState === "loading"}

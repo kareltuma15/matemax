@@ -6,10 +6,13 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { loadProgress } from "@/lib/progress";
 import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeConfig } from "@/lib/gamification";
+import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import { TEMA_LABELS } from "@/types";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
+import ActivityHeatmap from "@/components/ActivityHeatmap";
+import CountdownBanner from "@/components/CountdownBanner";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -60,6 +63,8 @@ export default function ProfilPage() {
   const [loading, setLoading]            = useState(true);
   const [cermatLast, setCermatLast]      = useState<CermatEntry | null>(null);
   const [notifState, setNotifState]      = useState<NotifState>("default");
+  const [readinessScore, setReadinessScore] = useState(0);
+  const [certState, setCertState]        = useState<"idle" | "loading" | "done" | "error">("idle");
 
   useEffect(() => {
     if (supabase) {
@@ -138,6 +143,7 @@ export default function ProfilPage() {
       setNotifState(Notification.permission as NotifState);
     }
 
+    setReadinessScore(getReadiness().score);
     setLoading(false);
   }, []);
 
@@ -173,6 +179,105 @@ export default function ProfilPage() {
     } catch (err) {
       console.error("Push subscribe error:", err);
       setNotifState("default");
+    }
+  }
+
+  async function handleGenerateCertificate() {
+    setCertState("loading");
+    try {
+      const W = 1200, H = 800;
+      const canvas = document.createElement("canvas");
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext("2d")!;
+
+      const bg = ctx.createLinearGradient(0, 0, W, H);
+      bg.addColorStop(0, "#0D1B3E");
+      bg.addColorStop(1, "#1e3a6e");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      // Decorative circles
+      ctx.beginPath();
+      ctx.arc(W - 80, 80, 300, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.03)";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(80, H - 80, 200, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.03)";
+      ctx.fill();
+
+      // Gold border
+      ctx.strokeStyle = "#fbbf24";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(30, 30, W - 60, H - 60);
+      ctx.strokeStyle = "rgba(251,191,36,0.3)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(40, 40, W - 80, H - 80);
+
+      ctx.textAlign = "center";
+
+      // Logo
+      ctx.font = `900 72px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "#fff";
+      ctx.fillText("M²", W / 2, 140);
+
+      // Title
+      ctx.font = `700 28px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "#fbbf24";
+      ctx.fillText("CERTIFIKÁT PŘIPRAVENOSTI", W / 2, 210);
+
+      // Divider
+      ctx.fillStyle = "rgba(255,255,255,0.15)";
+      ctx.fillRect(W / 2 - 300, 235, 600, 1);
+
+      // Main text
+      ctx.font = `400 24px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "rgba(255,255,255,0.6)";
+      ctx.fillText("Tento certifikát potvrzuje, že", W / 2, 295);
+
+      const name = email ? email.split("@")[0] : "Student";
+      ctx.font = `900 56px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "#fff";
+      ctx.fillText(name, W / 2, 385);
+
+      ctx.font = `400 24px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "rgba(255,255,255,0.6)";
+      ctx.fillText("je připraven/a na přijímací zkoušky ze středoškolské matematiky", W / 2, 445);
+
+      // Score
+      ctx.font = `900 96px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "#fbbf24";
+      ctx.fillText(`${readinessScore} %`, W / 2, 570);
+
+      ctx.font = `600 20px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "rgba(255,255,255,0.45)";
+      ctx.fillText("připravenost · MateMax · matemax.cz", W / 2, 615);
+
+      const today = new Date().toLocaleDateString("cs-CZ", { day: "numeric", month: "long", year: "numeric" });
+      ctx.font = `400 18px -apple-system, BlinkMacSystemFont, Arial`;
+      ctx.fillStyle = "rgba(255,255,255,0.3)";
+      ctx.fillText(today, W / 2, 720);
+
+      const blob = await new Promise<Blob>((res, rej) =>
+        canvas.toBlob((b) => b ? res(b) : rej(new Error("toBlob failed")), "image/png")
+      );
+      const file = new File([blob], "matemax-certifikat.png", { type: "image/png" });
+      if (typeof navigator.share === "function" && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ title: "Certifikát MateMax", files: [file] });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "matemax-certifikat.png";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+      setCertState("done");
+      setTimeout(() => setCertState("idle"), 3000);
+    } catch {
+      setCertState("error");
+      setTimeout(() => setCertState("idle"), 2500);
     }
   }
 
@@ -306,6 +411,9 @@ export default function ProfilPage() {
       {/* ── TAB: PŘEHLED ── */}
       {activeTab === "prehled" && (
         <>
+          {/* Countdown to přijímačky */}
+          <CountdownBanner variant="full" />
+
           {/* 2×2 Stats grid */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
@@ -494,6 +602,37 @@ export default function ProfilPage() {
               Nejdřív projdi diagnostický test — uvidíš svá silná a slabá témata.
             </div>
           )}
+
+          {/* Activity heatmap */}
+          <ActivityHeatmap />
+
+          {/* Certificate — visible when readiness ≥ 80% */}
+          {readinessScore >= 80 && (
+            <div
+              className="rounded-2xl p-5 text-center"
+              style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "2px solid #fbbf24" }}
+            >
+              <p className="text-2xl mb-1">🏆</p>
+              <p className="text-base font-black text-white mb-0.5">Výborná příprava!</p>
+              <p className="text-xs text-blue-200 mb-4">
+                Dosáhl/a jsi {readinessScore} % připravenosti — vygeneruj si certifikát!
+              </p>
+              <button
+                onClick={handleGenerateCertificate}
+                disabled={certState === "loading"}
+                className="px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-60"
+                style={{ background: "#fbbf24", color: "#0D1B3E" }}
+              >
+                {certState === "loading"
+                  ? "Generuji…"
+                  : certState === "done"
+                  ? "✓ Certifikát stažen!"
+                  : certState === "error"
+                  ? "⚠ Nepodařilo se"
+                  : "🎓 Vygenerovat certifikát"}
+              </button>
+            </div>
+          )}
         </>
       )}
 
@@ -501,8 +640,19 @@ export default function ProfilPage() {
       {activeTab === "historie" && (
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           {sessions.length === 0 ? (
-            <div className="p-8 text-center text-slate-400 text-sm">
-              Žádná historie. Dokončené tréninky se zobrazí zde.
+            <div className="p-10 flex flex-col items-center gap-3 text-center">
+              <span className="text-5xl">📭</span>
+              <p className="text-base font-bold text-slate-700">Zatím žádný trénink</p>
+              <p className="text-sm text-slate-400 max-w-xs">
+                Po dokončení prvního tréninku se zde zobrazí tvoje výsledky a pokrok.
+              </p>
+              <Link
+                href="/trenink"
+                className="mt-1 px-5 py-2.5 rounded-xl font-bold text-sm text-white"
+                style={{ background: "#0D1B3E" }}
+              >
+                💪 Začít trénovat →
+              </Link>
             </div>
           ) : (
             <div className="overflow-x-auto">

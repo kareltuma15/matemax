@@ -65,9 +65,30 @@ function loadDiagScores(): Record<string, number> {
   } catch { return {}; }
 }
 
-function buildSession(cards: SM2Card[], temaFilter?: string | null, guestOnly = false): string[] {
+function buildSession(
+  cards: SM2Card[],
+  temaFilter?: string | null,
+  rezim?: "chyby" | null,
+  guestOnly = false
+): string[] {
   let pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
   if (guestOnly) pool = pool.filter((ex) => GUEST_FREE_TOPICS.has(ex.tema));
+
+  // "Opakovat chyby" mode: only examples with poor last quality
+  if (rezim === "chyby") {
+    const badIds = new Set(
+      cards
+        .filter((c) => c.repetitions > 0 && c.lastQuality <= 2)
+        .map((c) => c.exampleId)
+    );
+    const mistakePool = pool.filter((ex) => badIds.has(ex.id));
+    if (mistakePool.length === 0) return [];
+    return mistakePool
+      .sort(() => Math.random() - 0.5)
+      .slice(0, SESSION_SIZE)
+      .map((ex) => ex.id);
+  }
+
   const cardMap = new Map(cards.map((c) => [c.exampleId, c]));
   const diagScores = loadDiagScores();
 
@@ -106,7 +127,8 @@ function enqueueBadges(
 
 function TreningPageInner() {
   const searchParams = useSearchParams();
-  const urlTema = searchParams.get("tema");
+  const urlTema  = searchParams.get("tema");
+  const urlRezim = searchParams.get("rezim") as "chyby" | null;
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
@@ -117,6 +139,7 @@ function TreningPageInner() {
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
   const [temaFilter, setTemaFilter] = useState<string | null>(urlTema);
+  const [rezimFilter, setRezimFilter] = useState<"chyby" | null>(urlRezim);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
 
@@ -131,6 +154,7 @@ function TreningPageInner() {
 
   useEffect(() => {
     setTemaFilter(urlTema);
+    setRezimFilter(urlRezim);
     const loaded = loadCards();
     setCards(loaded);
     setDiagScores(loadDiagScores());
@@ -171,9 +195,8 @@ function TreningPageInner() {
     // Auth check gates session building (guest vs. logged-in pool)
     const finish = (guest: boolean) => {
       setIsGuest(guest);
-      // Guests must pick a topic first — don't build session until they do
       if (!guest || urlTema) {
-        setSessionIds(buildSession(loaded, urlTema, guest));
+        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest));
       }
       setHydrated(true);
     };
@@ -384,8 +407,9 @@ function TreningPageInner() {
     [cards, sessionIds, currentIdx, correct, gamState]
   );
 
-  function restart() {
-    setSessionIds(buildSession(cards, temaFilter, isGuest ?? false));
+  function restart(rezim?: "chyby" | null) {
+    setRezimFilter(rezim ?? null);
+    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false));
     setCurrentIdx(0);
     setCorrect(0);
     setSkipped(0);
@@ -410,7 +434,7 @@ function TreningPageInner() {
       <GuestTopicMap
         onSelectTopic={(tema) => {
           setTemaFilter(tema);
-          setSessionIds(buildSession(cards, tema, true));
+          setSessionIds(buildSession(cards, tema, null, true));
         }}
       />
     );
@@ -484,7 +508,13 @@ function TreningPageInner() {
           xpEarned={correct * 10 + (sessionIds.length - skipped - correct) * 1}
           streak={progress.streak}
           topics={practiceTopics}
-          onRestart={restart}
+          rezim={rezimFilter ?? undefined}
+          onRestart={() => restart()}
+          onRestartChyby={
+            cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2)
+              ? () => restart("chyby")
+              : undefined
+          }
         />
       </>
     );
@@ -530,6 +560,15 @@ function TreningPageInner() {
           style={{ background: "#eff8ff", color: "#0369a1", border: "1px solid #bae6fd" }}
         >
           🧊 Streak zmrazen — použit freeze štít
+        </div>
+      )}
+
+      {rezimFilter === "chyby" && (
+        <div
+          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
+          style={{ background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" }}
+        >
+          🔄 Režim opakování chyb
         </div>
       )}
 

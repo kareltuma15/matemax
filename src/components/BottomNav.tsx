@@ -49,7 +49,7 @@ export default function BottomNav() {
           👨‍👩‍👧 Rodičovský portál
         </div>
       )}
-      <div className="max-w-2xl mx-auto flex">
+      <div className="max-w-2xl mx-auto flex px-2 py-1">
         {items.map(({ href, icon, label }) => {
           const active = isParentSection
             ? pathname === href || (href !== "/" && pathname.startsWith(href))
@@ -58,22 +58,20 @@ export default function BottomNav() {
             <Link
               key={href}
               href={href}
-              className="flex-1 flex flex-col items-center justify-center py-2.5 gap-0.5 transition-colors"
-              style={{ color: active ? "#0D1B3E" : "#94a3b8" }}
+              className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all rounded-xl py-1.5"
+              style={
+                active
+                  ? { background: "#fff", boxShadow: "0 1px 6px rgba(0,0,0,0.1)", color: "#0D1B3E" }
+                  : { color: "#94a3b8" }
+              }
             >
               <span className="text-xl leading-none">{icon}</span>
               <span
-                className="text-[10px] font-semibold leading-none"
+                className="text-[10px] font-bold leading-none"
                 style={{ color: active ? "#0D1B3E" : "#94a3b8" }}
               >
                 {label}
               </span>
-              {active && (
-                <span
-                  className="w-1 h-1 rounded-full mt-0.5"
-                  style={{ background: "#0D1B3E" }}
-                />
-              )}
             </Link>
           );
         })}

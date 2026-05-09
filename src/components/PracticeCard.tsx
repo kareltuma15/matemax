@@ -106,7 +106,13 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
 
       <div
         key={cardKey}
-        className={`card-enter bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col gap-5 relative ${shaking ? "card-shake" : ""}`}
+        className={`card-enter bg-white rounded-2xl shadow-sm border p-6 flex flex-col gap-5 relative transition-colors duration-200 ${
+          shaking
+            ? "wrong-shake border-red-300"
+            : status === "correct"
+            ? "correct-pop border-green-400"
+            : "border-slate-200"
+        }`}
       >
         {xpLabel && (
           <div
