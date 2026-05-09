@@ -9,6 +9,7 @@ import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeCon
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import { TEMA_LABELS } from "@/types";
 import BadgeGrid from "@/components/BadgeGrid";
+import ReadinessCard from "@/components/ReadinessCard";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -347,6 +348,9 @@ export default function ProfilPage() {
               )}
             </div>
           </div>
+
+          {/* Readiness score */}
+          <ReadinessCard />
 
           {/* CERMAT test card */}
           {cermatLast ? (

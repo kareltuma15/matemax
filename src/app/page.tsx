@@ -9,6 +9,9 @@ import BottomNav from "@/components/BottomNav";
 import { TEMA_LABELS } from "@/types";
 import type { Session } from "@supabase/supabase-js";
 import challengesJson from "@/data/daily-challenges.json";
+import { getReadiness } from "@/lib/readiness";
+import { localLoadCards } from "@/lib/storage";
+import { isDue } from "@/lib/sm2";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -209,8 +212,14 @@ function LoggedInDashboard({
   const [challengeDoneToday, setChallengeDoneToday] = useState(false);
   const [parentMessage, setParentMessage] = useState<string | null>(null);
   const [parentMessageId, setParentMessageId] = useState<string | null>(null);
+  const [dueCount, setDueCount] = useState(0);
+  const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
 
   useEffect(() => {
+    const cards = localLoadCards();
+    setDueCount(cards.filter(isDue).length);
+    const r = getReadiness();
+    if (r.hasData) setReadinessScore({ score: r.score, label: r.label, color: r.color });
     const todayStr = new Date().toISOString().slice(0, 10);
     try {
       const raw = localStorage.getItem("matemax-today");
@@ -346,6 +355,32 @@ function LoggedInDashboard({
 
         {/* XP bar */}
         <XPProgressBar xp={xp} />
+
+        {/* Due cards + readiness pill row */}
+        {(dueCount > 0 || readinessScore) && (
+          <div className="flex gap-2">
+            {dueCount > 0 && (
+              <Link
+                href="/trenink"
+                className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+                style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+              >
+                <span>🃏</span>
+                <span>{dueCount} karet ke zkoušení</span>
+              </Link>
+            )}
+            {readinessScore && (
+              <Link
+                href="/profil"
+                className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors whitespace-nowrap"
+                style={{ background: "#f8faff", color: readinessScore.color, border: `1px solid ${readinessScore.color}30` }}
+              >
+                <span>📊</span>
+                <span>{readinessScore.score}%</span>
+              </Link>
+            )}
+          </div>
+        )}
 
         {/* Stats row */}
         <div className="grid grid-cols-2 gap-3">
