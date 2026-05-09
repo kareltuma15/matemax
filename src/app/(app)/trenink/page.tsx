@@ -25,15 +25,18 @@ import {
 } from "@/lib/gamification";
 import Link from "next/link";
 import PracticeCard from "@/components/PracticeCard";
-import SessionSummary from "@/components/SessionSummary";
+import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
 import BadgeToast from "@/components/BadgeToast";
 import FirstSessionModal from "@/components/FirstSessionModal";
 import LevelUpModal from "@/components/LevelUpModal";
 import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
+import StreakMilestoneModal from "@/components/StreakMilestoneModal";
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { TEMA_LABELS } from "@/types";
+
+const STREAK_MILESTONES: Record<number, number> = { 7: 50, 14: 100, 30: 200, 60: 350, 100: 500 };
 
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
@@ -68,11 +71,21 @@ function loadDiagScores(): Record<string, number> {
 function buildSession(
   cards: SM2Card[],
   temaFilter?: string | null,
-  rezim?: "chyby" | null,
+  rezim?: "chyby" | "sm2" | null,
   guestOnly = false
 ): string[] {
   let pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
   if (guestOnly) pool = pool.filter((ex) => GUEST_FREE_TOPICS.has(ex.tema));
+
+  // SM-2 review mode: only due cards, sorted most-overdue first
+  if (rezim === "sm2") {
+    const poolIds = new Set(pool.map((ex) => ex.id));
+    const dueCards = cards
+      .filter((c) => isDue(c) && poolIds.has(c.exampleId))
+      .sort((a, b) => a.nextReview - b.nextReview)
+      .slice(0, SESSION_SIZE);
+    return dueCards.map((c) => c.exampleId);
+  }
 
   // "Opakovat chyby" mode: only examples with poor last quality
   if (rezim === "chyby") {
@@ -128,7 +141,7 @@ function enqueueBadges(
 function TreningPageInner() {
   const searchParams = useSearchParams();
   const urlTema  = searchParams.get("tema");
-  const urlRezim = searchParams.get("rezim") as "chyby" | null;
+  const urlRezim = searchParams.get("rezim") as "chyby" | "sm2" | null;
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
@@ -139,7 +152,9 @@ function TreningPageInner() {
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
   const [temaFilter, setTemaFilter] = useState<string | null>(urlTema);
-  const [rezimFilter, setRezimFilter] = useState<"chyby" | null>(urlRezim);
+  const [rezimFilter, setRezimFilter] = useState<"chyby" | "sm2" | null>(urlRezim);
+  const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
+  const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
 
@@ -263,7 +278,7 @@ function TreningPageInner() {
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleResult = useCallback(
-    (wasCorrect: boolean) => {
+    (wasCorrect: boolean, userAnswer = "") => {
       if (!gamState) return;
 
       const exId = sessionIds[currentIdx];
@@ -275,6 +290,10 @@ function TreningPageInner() {
       setCards(newCards);
       saveCards(newCards);
 
+      if (!wasCorrect) {
+        setWrongAnswers((prev) => [...prev, { exampleId: exId, userAnswer }]);
+      }
+
       // XP
       const p = loadProgress();
       const xpAction = wasCorrect ? "example_correct_first_try" : "example_incorrect";
@@ -283,6 +302,22 @@ function TreningPageInner() {
       saveProgress(newP);
       setXp(newP.xp);
       window.dispatchEvent(new Event("matemax-progress-update"));
+
+      // Streak milestone check
+      if (newP.streak > p.streak && STREAK_MILESTONES[newP.streak] !== undefined) {
+        try {
+          const celebrated = JSON.parse(localStorage.getItem("matemax-streak-milestones") ?? "[]") as number[];
+          if (!celebrated.includes(newP.streak)) {
+            celebrated.push(newP.streak);
+            localStorage.setItem("matemax-streak-milestones", JSON.stringify(celebrated));
+            const bonusXp = STREAK_MILESTONES[newP.streak];
+            const withBonus = recordActivity(newP, false, bonusXp);
+            saveProgress(withBonus);
+            setXp(withBonus.xp);
+            setStreakMilestone({ streak: newP.streak, xpBonus: bonusXp });
+          }
+        } catch { /* ignore */ }
+      }
 
       // Daily count tracking
       const todayStr = new Date().toISOString().slice(0, 10);
@@ -404,16 +439,17 @@ function TreningPageInner() {
         setCurrentIdx((i) => i + 1);
       }
     },
-    [cards, sessionIds, currentIdx, correct, gamState]
+    [cards, sessionIds, currentIdx, correct, gamState, wrongAnswers]
   );
 
-  function restart(rezim?: "chyby" | null) {
+  function restart(rezim?: "chyby" | "sm2" | null) {
     setRezimFilter(rezim ?? null);
     setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false));
     setCurrentIdx(0);
     setCorrect(0);
     setSkipped(0);
     setDone(false);
+    setWrongAnswers([]);
     consecutiveCorrectRef.current = 0;
     sessionStartRef.current = new Date();
   }
@@ -474,6 +510,24 @@ function TreningPageInner() {
   }
 
   if (sessionIds.length === 0) {
+    if (rezimFilter === "sm2") {
+      return (
+        <div className="bg-white rounded-2xl p-10 text-center border border-slate-200 flex flex-col items-center gap-3">
+          <span className="text-5xl">✅</span>
+          <p className="text-base font-bold text-slate-700">Všechno zopakováno!</p>
+          <p className="text-sm text-slate-400 max-w-xs">
+            Na dnes nemáš žádné karty ke zkoušení. SM-2 pošle příklady zpět ve správný moment.
+          </p>
+          <button
+            onClick={() => restart()}
+            className="mt-1 px-5 py-2.5 rounded-xl font-bold text-sm text-white"
+            style={{ background: "#0D1B3E" }}
+          >
+            💪 Procvičovat nové příklady →
+          </button>
+        </div>
+      );
+    }
     return (
       <div className="bg-white rounded-2xl p-8 text-center border border-slate-200">
         <p className="text-slate-500">
@@ -494,6 +548,13 @@ function TreningPageInner() {
       <>
         {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
         {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
+        {streakMilestone && (
+          <StreakMilestoneModal
+            streak={streakMilestone.streak}
+            xpBonus={streakMilestone.xpBonus}
+            onClose={() => setStreakMilestone(null)}
+          />
+        )}
         {showFirstSession && (
           <FirstSessionModal
             correct={correct}
@@ -509,6 +570,7 @@ function TreningPageInner() {
           streak={progress.streak}
           topics={practiceTopics}
           rezim={rezimFilter ?? undefined}
+          wrongAnswers={wrongAnswers}
           onRestart={() => restart()}
           onRestartChyby={
             cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2)
@@ -551,6 +613,13 @@ function TreningPageInner() {
     <>
       {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
       {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
+      {streakMilestone && (
+        <StreakMilestoneModal
+          streak={streakMilestone.streak}
+          xpBonus={streakMilestone.xpBonus}
+          onClose={() => setStreakMilestone(null)}
+        />
+      )}
 
       <XPProgressBar xp={xp} className="mb-3" />
 
@@ -569,6 +638,15 @@ function TreningPageInner() {
           style={{ background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" }}
         >
           🔄 Režim opakování chyb
+        </div>
+      )}
+
+      {rezimFilter === "sm2" && (
+        <div
+          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
+          style={{ background: "#f0fdf4", color: "#16a34a", border: "1px solid #bbf7d0" }}
+        >
+          📅 SM-2 opakování — karty splatné dnes
         </div>
       )}
 

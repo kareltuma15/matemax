@@ -11,7 +11,7 @@ interface Props {
   cardNumber: number;
   total: number;
   consecutiveCorrect: number;
-  onResult: (correct: boolean) => void;
+  onResult: (correct: boolean, userAnswer: string) => void;
 }
 
 const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
@@ -42,6 +42,19 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setCardKey((k) => k + 1);
     inputRef.current?.focus();
   }, [example.id]);
+
+  // Keyboard shortcut: Enter or Space to advance after answering
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (status === "idle") return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onResult(status === "correct", input);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [status, input, onResult]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -254,11 +267,11 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         {/* Next button */}
         {status !== "idle" && (
           <button
-            onClick={() => onResult(status === "correct")}
+            onClick={() => onResult(status === "correct", input)}
             className="w-full py-3 text-white font-semibold rounded-xl transition-colors text-base mt-1"
             style={{ background: "#0D1B3E" }}
           >
-            Další příklad →
+            Další příklad → <span className="text-xs opacity-50 ml-1">[Enter]</span>
           </button>
         )}
       </div>

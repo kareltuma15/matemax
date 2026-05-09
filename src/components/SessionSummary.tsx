@@ -3,6 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
+import { examples } from "@/data/examples";
+import MathText from "./MathText";
+
+export interface WrongAnswer {
+  exampleId: string;
+  userAnswer: string;
+}
 
 interface Props {
   correct: number;
@@ -11,7 +18,8 @@ interface Props {
   xpEarned: number;
   streak: number;
   topics: string[];
-  rezim?: "chyby";
+  rezim?: "chyby" | "sm2";
+  wrongAnswers?: WrongAnswer[];
   onRestart: () => void;
   onRestartChyby?: () => void;
 }
@@ -83,6 +91,57 @@ function TopicProgressBar({ tema }: { tema: string }) {
   );
 }
 
+function WrongAnswersReview({ wrongAnswers }: { wrongAnswers: WrongAnswer[] }) {
+  const [open, setOpen] = useState(false);
+  const items = wrongAnswers
+    .map(({ exampleId, userAnswer }) => ({ ex: examples.find((e) => e.id === exampleId), userAnswer }))
+    .filter((x): x is { ex: NonNullable<typeof x.ex>; userAnswer: string } => !!x.ex);
+
+  if (items.length === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-red-100 overflow-hidden">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between px-4 py-3 text-left transition-colors hover:bg-red-50"
+        style={{ background: "#fef2f2" }}
+      >
+        <span className="text-sm font-bold text-red-700">
+          ✗ Co ti nešlo ({items.length} {items.length === 1 ? "příklad" : items.length < 5 ? "příklady" : "příkladů"})
+        </span>
+        <span className="text-red-400 text-xs">{open ? "▲ Skrýt" : "▼ Zobrazit"}</span>
+      </button>
+      {open && (
+        <div className="divide-y divide-red-50">
+          {items.map(({ ex, userAnswer }, i) => (
+            <div key={i} className="px-4 py-3 bg-white">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span
+                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                  style={{ background: "#eff6ff", color: "#2E6DA4" }}
+                >
+                  {TEMA_LABELS[ex.tema] ?? ex.tema}
+                </span>
+              </div>
+              <p className="text-sm font-medium text-slate-700 mb-2">
+                <MathText text={ex.zadani} />
+              </p>
+              <div className="flex flex-col gap-1 text-xs">
+                <span className="text-red-600">
+                  ✗ Tvoje: <strong><MathText text={userAnswer || "—"} /></strong>
+                </span>
+                <span className="text-green-700">
+                  ✓ Správně: <strong><MathText text={ex.odpoved} /></strong>
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 async function buildShareBlob(pct: number, correct: number, total: number, streak: number): Promise<Blob> {
   const W = 1080, H = 1080;
   const canvas = document.createElement("canvas");
@@ -140,7 +199,7 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
   });
 }
 
-export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, onRestart, onRestartChyby }: Props) {
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], onRestart, onRestartChyby }: Props) {
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   const animPct = useCountUp(pct);
   const animXp  = useCountUp(xpEarned);
@@ -253,6 +312,11 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
         <p className="text-xs text-slate-400 text-center">
           Chybné příklady se ti vrátí brzy — SM-2 spaced repetition
         </p>
+
+        {/* Wrong answers review */}
+        {wrongAnswers.length > 0 && (
+          <WrongAnswersReview wrongAnswers={wrongAnswers} />
+        )}
 
         {rezim === "chyby" && (
           <div

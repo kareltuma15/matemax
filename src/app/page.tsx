@@ -392,7 +392,7 @@ function LoggedInDashboard({
           <div className="flex gap-2">
             {dueCount > 0 && (
               <Link
-                href="/trenink"
+                href="/trenink?rezim=sm2"
                 className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors"
                 style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
               >
