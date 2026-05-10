@@ -230,7 +230,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="px-5 text-white font-semibold disabled:cursor-not-allowed transition-colors"
+                className="px-5 text-white font-semibold disabled:cursor-not-allowed transition-colors press-scale"
                 style={{ background: input.trim() ? "#2E6DA4" : "#cbd5e1" }}
               >
                 OK
@@ -304,7 +304,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         {status !== "idle" && (
           <button
             onClick={() => onResult(status === "correct", input)}
-            className="w-full py-3 text-white font-semibold rounded-xl transition-colors text-base mt-1"
+            className="w-full py-3 text-white font-semibold rounded-xl transition-colors text-base mt-1 press-scale"
             style={{ background: "#0D1B3E" }}
           >
             Další příklad → <span className="text-xs opacity-50 ml-1">[Enter]</span>

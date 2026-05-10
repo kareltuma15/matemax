@@ -453,13 +453,13 @@ function LoggedInDashboard({
 
         {/* Stats row */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center stagger-1 card-hover">
             <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
-            <p className="text-2xl font-black text-orange-500">🔥 {streak}</p>
+            <p className="text-2xl font-black text-orange-500"><span className="streak-bounce">🔥</span> {streak}</p>
             <p className="text-xs text-slate-400">dní v řadě</p>
           </div>
           <div
-            className="rounded-2xl border p-4 text-center"
+            className="rounded-2xl border p-4 text-center stagger-2 card-hover"
             style={{ background: diagDone ? "#f0fdf4" : "#fff7ed", borderColor: diagDone ? "#bbf7d0" : "#fed7aa" }}
           >
             <p className="text-xs font-medium mb-1" style={{ color: diagDone ? "#166534" : "#92400e" }}>
@@ -474,7 +474,7 @@ function LoggedInDashboard({
 
         {/* Daily goal – SVG ring */}
         <div
-          className="rounded-2xl p-5 flex items-center gap-5"
+          className="rounded-2xl p-5 flex items-center gap-5 stagger-3 card-hover"
           style={goalMet
             ? { background: "#f0fdf4", border: "2px solid #bbf7d0" }
             : { background: "#fff", border: "1px solid #e2e8f0" }
@@ -552,7 +552,7 @@ function LoggedInDashboard({
         {/* Dnešní výzva */}
         <Link
           href="/vyzva"
-          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md"
+          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md stagger-4"
           style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
         >
           <div className="px-5 py-4 flex items-center justify-between">
@@ -579,7 +579,7 @@ function LoggedInDashboard({
         {/* CERMAT test */}
         <Link
           href="/cermat-test"
-          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md"
+          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md stagger-5"
         >
           <div className="px-5 py-4 flex items-center justify-between">
             <div>

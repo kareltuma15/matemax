@@ -59,7 +59,7 @@ export default function BottomNav() {
               <Link
                 key={href}
                 href={href}
-                className="flex-1 flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 transition-all"
+                className="flex-1 flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 transition-all press-scale"
                 style={
                   active
                     ? { background: "rgba(255,255,255,0.15)", color: "#fff" }
@@ -77,7 +77,7 @@ export default function BottomNav() {
           <button
             type="button"
             onClick={handleParentSignOut}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 transition-all"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 transition-all press-scale"
             style={{ color: "#6ee7b7" }}
           >
             <span className="text-xl leading-none">🚪</span>
@@ -100,7 +100,7 @@ export default function BottomNav() {
             <Link
               key={href}
               href={href}
-              className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all rounded-xl py-1.5"
+              className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all rounded-xl py-1.5 press-scale"
               style={
                 active
                   ? { background: "#fff", boxShadow: "0 1px 6px rgba(0,0,0,0.1)", color: "#0D1B3E" }

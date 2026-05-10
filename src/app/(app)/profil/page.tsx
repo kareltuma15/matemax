@@ -444,7 +444,7 @@ export default function ProfilPage() {
 
       {/* ── TAB: PŘEHLED ── */}
       {activeTab === "prehled" && (
-        <>
+        <div className="tab-enter flex flex-col gap-4">
           {/* Countdown to přijímačky */}
           <CountdownBanner variant="full" />
 
@@ -620,12 +620,12 @@ export default function ProfilPage() {
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Aktivita</p>
             <ActivityHeatmap />
           </div>
-        </>
+        </div>
       )}
 
       {/* ── TAB: HISTORIE ── */}
       {activeTab === "historie" && (
-        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="tab-enter bg-white rounded-2xl border border-slate-200 overflow-hidden">
           {sessions.length === 0 ? (
             <div className="p-10 flex flex-col items-center gap-3 text-center">
               <span className="text-5xl">📭</span>
@@ -684,7 +684,7 @@ export default function ProfilPage() {
 
       {/* ── TAB: ODZNAKY ── */}
       {activeTab === "odznaky" && (
-        <>
+        <div className="tab-enter flex flex-col gap-4">
           {earnedBadges.length === allBadges.length && allBadges.length > 0 ? (
             <div
               className="rounded-2xl p-4 text-center"
@@ -718,7 +718,7 @@ export default function ProfilPage() {
           <div className="bg-white rounded-2xl border border-slate-200 p-5">
             <BadgeGrid earnedBadgeIds={earnedBadges} />
           </div>
-        </>
+        </div>
       )}
 
       {/* ── SPODNÍ AKCE (vždy viditelné, mimo tabu) ── */}
