@@ -53,10 +53,11 @@ export default function RegistracePage() {
         .then(() => {}); // fire-and-forget
 
       // Pošleme uvítací email (fire-and-forget)
+      const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
       fetch("/api/welcome-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, firstName }),
       }).catch(() => {}); // neblokuje přesměrování
 
       router.push("/vitej");

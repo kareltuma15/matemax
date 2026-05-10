@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { email } = (await req.json()) as { email?: string };
+  const { email, firstName = "" } = (await req.json()) as { email?: string; firstName?: string };
 
   if (!email) {
     return NextResponse.json({ error: "Missing email" }, { status: 400 });
@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           transactionalId: process.env.LOOPS_WELCOME_EMAIL_ID,
           email,
+          dataVariables: { first_name: firstName },
         }),
       });
       if (!res.ok) {
