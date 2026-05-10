@@ -461,7 +461,22 @@ function TreningPageInner() {
   }, []);
 
   if (!hydrated) {
-    return <div className="flex items-center justify-center h-48 text-slate-400">Načítám…</div>;
+    return (
+      <div className="flex flex-col gap-4 fade-in-up">
+        <div className="bg-white rounded-2xl border border-slate-100 p-6 flex flex-col gap-4">
+          <div className="flex justify-between">
+            <div className="skeleton rounded-full" style={{ width: 60, height: 20 }} />
+            <div className="skeleton rounded-full" style={{ width: 80, height: 20 }} />
+          </div>
+          <div className="skeleton rounded-full" style={{ width: "100%", height: 12 }} />
+          <div className="skeleton rounded-xl" style={{ width: "100%", height: 80 }} />
+        </div>
+        <div className="bg-white rounded-2xl border border-slate-100 p-5 flex flex-col gap-3">
+          <div className="skeleton rounded-full" style={{ width: 120, height: 14 }} />
+          <div className="skeleton rounded-xl" style={{ width: "100%", height: 56 }} />
+        </div>
+      </div>
+    );
   }
 
   // Guest: show topic map if no topic selected yet
@@ -681,7 +696,18 @@ function TreningPageInner() {
 
 export default function TreningPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center h-48 text-slate-400">Načítám…</div>}>
+    <Suspense fallback={
+      <div className="flex flex-col gap-4 fade-in-up">
+        <div className="bg-white rounded-2xl border border-slate-100 p-6 flex flex-col gap-4">
+          <div className="flex justify-between">
+            <div className="skeleton rounded-full" style={{ width: 60, height: 20 }} />
+            <div className="skeleton rounded-full" style={{ width: 80, height: 20 }} />
+          </div>
+          <div className="skeleton rounded-full" style={{ width: "100%", height: 12 }} />
+          <div className="skeleton rounded-xl" style={{ width: "100%", height: 80 }} />
+        </div>
+      </div>
+    }>
       <TreningPageInner />
     </Suspense>
   );

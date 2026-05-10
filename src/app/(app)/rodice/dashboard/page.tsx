@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { SkeletonLine } from "@/components/Skeleton";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -35,13 +36,98 @@ const LEVEL_LABELS: Record<string, string> = {
   pokrocily: "Pokročilý",
   expert: "Expert",
   mistr: "Mistr",
+  legenda: "Legenda",
 };
 
-function topicColor(accuracy: number): { bg: string; text: string; dot: string } {
-  if (accuracy >= 70) return { bg: "#f0fdf4", text: "#166534", dot: "#22c55e" };
-  if (accuracy >= 40) return { bg: "#fffbeb", text: "#92400e", dot: "#f59e0b" };
-  return { bg: "#fef2f2", text: "#991b1b", dot: "#ef4444" };
+function topicColor(accuracy: number): { bg: string; text: string; bar: string } {
+  if (accuracy >= 70) return { bg: "#f0fdf4", text: "#166534", bar: "#22c55e" };
+  if (accuracy >= 40) return { bg: "#fffbeb", text: "#92400e", bar: "#f59e0b" };
+  return { bg: "#fef2f2", text: "#991b1b", bar: "#ef4444" };
 }
+
+function getCoachingInsight(data: DashboardData): { icon: string; title: string; text: string; color: string } {
+  const { streak = 0, weekTotal = 0, accuracy, weakestTopic } = data;
+
+  if (streak === 0 && weekTotal === 0) {
+    return {
+      icon: "💬",
+      title: "Dítě dnes ještě necvičilo",
+      text: `Zkuste se dítěte zeptat, jestli si dnes chce dát alespoň 5 příkladů. Stačí 10 minut — pravidelnost je důležitější než objem.`,
+      color: "#fef9c3",
+    };
+  }
+  if (streak >= 14) {
+    return {
+      icon: "🏆",
+      title: `Úžasný streak — ${streak} dní v řadě!`,
+      text: "Dítě cvičí velmi pravidelně. Pochvalte ho — pozitivní zpětná vazba je silnější motivátor než tlak. Zvažte malou odměnu za dosažení 30 dní.",
+      color: "#fef3c7",
+    };
+  }
+  if (streak >= 7) {
+    return {
+      icon: "🔥",
+      title: `${streak} dní v řadě — skvělá pravidelnost`,
+      text: "Pravidelný trénink funguje. Dítě si buduje návyk. Připomeňte mu streak — děti jsou na čísla hrdé a nechci sérii přerušit.",
+      color: "#fef9c3",
+    };
+  }
+  if (accuracy !== null && accuracy !== undefined && accuracy < 40 && weekTotal > 0) {
+    return {
+      icon: "📚",
+      title: "Dítě se potýká s chybami",
+      text: `Úspěšnost ${accuracy} % znamená, že látka je těžká. Nesrovnávejte s ostatními — pochvalte za snahu. Zkuste si spolu projít ${weakestTopic?.label ?? "nejslabší téma"}, ale bez tlaku.`,
+      color: "#ffe4e6",
+    };
+  }
+  if (weekTotal >= 30) {
+    return {
+      icon: "💪",
+      title: "Výborný týdenní výkon",
+      text: `${weekTotal} příkladů za týden je skvělý výsledek. Dítě pracuje nad rámec denního cíle. Ujistěte se, že ho to baví a necvičí z donucení.`,
+      color: "#dcfce7",
+    };
+  }
+  if (weekTotal > 0 && weekTotal < 5) {
+    return {
+      icon: "⏰",
+      title: "Méně aktivní týden",
+      text: "Tento týden jen pár příkladů. Neznamená to selhání — možná bylo hodně jiných povinností. Zkuste večer říct: \"Chceš si dát rychlé kolo v MateMax?\"",
+      color: "#eff6ff",
+    };
+  }
+  return {
+    icon: "📊",
+    title: "Pokrok probíhá",
+    text: weakestTopic
+      ? `Téma ${weakestTopic.label} (${weakestTopic.accuracy} %) potřebuje více procvičení. Nebojte se dítěti říct, co vidíte — děti ocení, že rodič sleduje jejich pokrok.`
+      : "Dítě procvičuje rovnoměrně. Sledujte tabulku témat níže pro detailní přehled.",
+    color: "#eff6ff",
+  };
+}
+
+const COACHING_GUIDE = [
+  {
+    icon: "🗣️",
+    title: "Jak mluvit o chybách",
+    text: "Místo \"To je špatně\" zkuste \"Vidím, že tohle je těžké — co si myslíš, kde nastala chyba?\" Aktivní reflexe učí víc než oprava.",
+  },
+  {
+    icon: "⏱️",
+    title: "Kolik minut denně",
+    text: "Optimální je 10–15 minut denně, ne víkendový maraton. Algoritmus MateMax je navržen tak, aby 7 příkladů denně stačilo na znatelný pokrok za 3–4 týdny.",
+  },
+  {
+    icon: "🎯",
+    title: "Kdy zasáhnout",
+    text: "Pokud dítě má úspěšnost pod 40 % opakovaně, doporučujeme doučovatel nebo společné procvičení. Aplikace ukáže přesně, které téma drhne.",
+  },
+  {
+    icon: "📅",
+    title: "Blíží se přijímačky?",
+    text: "3–4 týdny před termínem zintenzivněte na 15+ příkladů denně a zařaďte CERMAT cvičné testy. Zjistíte, kde jsou největší mezery.",
+  },
+];
 
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
@@ -54,6 +140,7 @@ export default function RodiceDashboard() {
   const [sendingMsg, setSendingMsg] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
   const [msgError, setMsgError] = useState<string | null>(null);
+  const [guideOpen, setGuideOpen] = useState(true);
   const tokenRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -106,12 +193,32 @@ export default function RodiceDashboard() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-60 gap-3">
-        <div
-          className="w-8 h-8 rounded-full border-3 border-t-transparent animate-spin"
-          style={{ borderColor: "#2E6DA4", borderTopColor: "transparent", borderWidth: 3 }}
-        />
-        <p className="text-sm text-slate-400">Načítám data dítěte…</p>
+      <div className="flex flex-col gap-4 fade-in-up">
+        <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: "#064E3B" }}>
+          <div className="skeleton rounded-full" style={{ width: 48, height: 48, background: "rgba(255,255,255,0.15)" }} />
+          <div className="flex flex-col gap-2 flex-1">
+            <div style={{ width: "55%", height: "1rem", background: "rgba(255,255,255,0.2)", borderRadius: 6 }} />
+            <div style={{ width: "35%", height: "0.75rem", background: "rgba(255,255,255,0.12)", borderRadius: 6 }} />
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white rounded-2xl border border-slate-100 p-4 flex flex-col gap-2">
+              <SkeletonLine width="60%" height="0.75rem" />
+              <SkeletonLine width="40%" height="1.5rem" />
+            </div>
+          ))}
+        </div>
+        <div className="bg-white rounded-2xl border border-slate-100 p-5 flex flex-col gap-3">
+          <SkeletonLine width="40%" height="0.875rem" />
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="flex items-center gap-3">
+              <SkeletonLine width="30%" height="0.75rem" />
+              <div className="flex-1 skeleton rounded-full" style={{ height: 8 }} />
+              <SkeletonLine width="30px" height="0.75rem" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -122,13 +229,13 @@ export default function RodiceDashboard() {
     return (
       <div className="max-w-sm mx-auto flex flex-col gap-4 pt-8 text-center">
         <span className="text-5xl">⚠️</span>
-        <h2 className="text-xl font-extrabold" style={{ color: "#0D1B3E" }}>Nastala chyba</h2>
+        <h2 className="text-xl font-extrabold" style={{ color: "#064E3B" }}>Nastala chyba</h2>
         <p className="text-sm text-slate-500">{error}</p>
         <button
           type="button"
           onClick={() => window.location.reload()}
           className="w-full py-3 rounded-xl text-white font-bold"
-          style={{ background: "#2E6DA4" }}
+          style={{ background: "#047857" }}
         >
           Zkusit znovu
         </button>
@@ -141,9 +248,17 @@ export default function RodiceDashboard() {
   if (!data?.linked) {
     return (
       <div className="max-w-sm mx-auto flex flex-col gap-6 items-center text-center pt-8">
-        <span className="text-6xl">🔗</span>
+        <div
+          className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl"
+          style={{ background: "#d1fae5" }}
+        >
+          🔗
+        </div>
         <div>
-          <h2 className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>Žádné propojené dítě</h2>
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#047857" }}>
+            Rodičovský portál
+          </p>
+          <h2 className="text-2xl font-extrabold" style={{ color: "#064E3B" }}>Žádné propojené dítě</h2>
           <p className="mt-2 text-slate-500 text-sm leading-relaxed">
             Dosud nemáte propojený účet s žádným dítětem.
             Propojení trvá méně než minutu.
@@ -152,7 +267,7 @@ export default function RodiceDashboard() {
         <Link
           href="/rodice/propojeni"
           className="w-full py-4 rounded-2xl text-white font-extrabold text-base text-center shadow-md"
-          style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
+          style={{ background: "linear-gradient(135deg,#064E3B 0%,#047857 100%)" }}
         >
           Propojit s dítětem →
         </Link>
@@ -162,185 +277,233 @@ export default function RodiceDashboard() {
 
   // ─── Dashboard ──────────────────────────────────────────────────────────────
 
-  const { childName, weekTotal = 0, accuracy, streak = 0, totalXp = 0, currentLevel = "zacatecnik", topicTable = [], weakestTopic } = data;
+  const {
+    childName, childEmail,
+    weekTotal = 0, accuracy, streak = 0,
+    totalXp = 0, currentLevel = "zacatecnik",
+    topicTable = [], weakestTopic,
+  } = data;
+
+  const insight = getCoachingInsight(data);
+  const childInitial = childName ? childName[0].toUpperCase() : (childEmail ? childEmail[0].toUpperCase() : "?");
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: "#F8FAFF" }}>
+    <div className="flex flex-col gap-5 pb-10 fade-in-up">
 
-      {/* Hero */}
+      {/* ── PARENT PORTAL HEADER ─────────────────────────────────────── */}
       <div
-        className="px-5 pt-10 pb-8"
-        style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
+        className="rounded-2xl overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #064E3B 0%, #065f46 60%, #047857 100%)" }}
       >
-        <div className="max-w-md mx-auto">
-          <p className="text-blue-300 text-xs font-semibold uppercase tracking-wide mb-2">Přehled pokroku</p>
-          <h1 className="text-3xl font-extrabold text-white">{childName}</h1>
-          <div className="flex items-center gap-4 mt-3">
-            <span className="text-sm text-blue-200">🔥 Streak: <strong className="text-white">{streak} dní</strong></span>
-            <span className="text-sm text-blue-200">⭐ Level: <strong className="text-white">{LEVEL_LABELS[currentLevel] ?? currentLevel}</strong></span>
+        <div className="px-5 pt-5 pb-4">
+          {/* Portal label */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-xs font-black uppercase tracking-widest px-2.5 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.15)", color: "#a7f3d0" }}>
+              👨‍👩‍👧 Rodičovský portál
+            </span>
           </div>
-          <p className="text-blue-300 text-xs mt-2">{totalXp} XP celkem</p>
+
+          {/* Child info */}
+          <div className="flex items-center gap-4">
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-black flex-shrink-0"
+              style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "2px solid rgba(255,255,255,0.25)" }}
+            >
+              {childInitial}
+            </div>
+            <div>
+              <p className="text-white font-extrabold text-lg leading-tight">{childName ?? childEmail ?? "Dítě"}</p>
+              <p className="text-emerald-200 text-xs mt-0.5">{LEVEL_LABELS[currentLevel] ?? currentLevel} · {totalXp} XP celkem</p>
+              <div className="flex items-center gap-3 mt-1">
+                <span className="text-xs text-emerald-300">🔥 {streak} dní streak</span>
+                <span className="text-xs text-emerald-300">📚 {weekTotal} příkladů tento týden</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-5 mt-5 flex flex-col gap-5">
+      {/* ── COACHING INSIGHT ─────────────────────────────────────────── */}
+      <div
+        className="rounded-2xl p-4 flex items-start gap-3"
+        style={{ background: insight.color, border: "2px solid rgba(0,0,0,0.08)" }}
+      >
+        <span className="text-2xl flex-shrink-0">{insight.icon}</span>
+        <div>
+          <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-0.5">Tip pro vás</p>
+          <p className="text-sm font-bold text-slate-800">{insight.title}</p>
+          <p className="text-sm text-slate-600 mt-1 leading-relaxed">{insight.text}</p>
+        </div>
+      </div>
 
-        {/* 4 stat cards */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 text-center">
-            <p className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>{weekTotal}</p>
-            <p className="text-xs text-slate-400 mt-1 leading-tight">Příkladů<br />tento týden</p>
+      {/* ── STATS GRID ───────────────────────────────────────────────── */}
+      <div>
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Tento týden</p>
+        <div className="grid grid-cols-3 gap-3">
+          <div className="bg-white rounded-2xl border border-slate-100 p-4 text-center">
+            <p className="text-3xl font-extrabold" style={{ color: "#064E3B" }}>{weekTotal}</p>
+            <p className="text-xs text-slate-400 mt-1 leading-snug">příkladů</p>
           </div>
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 text-center">
+          <div className="bg-white rounded-2xl border border-slate-100 p-4 text-center">
             {accuracy !== null && accuracy !== undefined ? (
               <>
                 <p
                   className="text-3xl font-extrabold"
                   style={{ color: accuracy >= 70 ? "#16a34a" : accuracy >= 40 ? "#d97706" : "#dc2626" }}
                 >
-                  {accuracy} %
+                  {accuracy}%
                 </p>
-                <p className="text-xs text-slate-400 mt-1 leading-tight">Úspěšnost<br />tento týden</p>
+                <p className="text-xs text-slate-400 mt-1 leading-snug">úspěšnost</p>
               </>
             ) : (
               <>
                 <p className="text-2xl font-extrabold text-slate-300">—</p>
-                <p className="text-xs text-slate-400 mt-1 leading-tight">Úspěšnost<br />(žádné session)</p>
+                <p className="text-xs text-slate-400 mt-1">úspěšnost</p>
               </>
             )}
           </div>
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 text-center">
-            {weakestTopic ? (
-              <>
-                <p className="text-sm font-extrabold leading-snug" style={{ color: "#0D1B3E" }}>{weakestTopic.label}</p>
-                <p className="text-xs text-red-500 font-bold mt-1">{weakestTopic.accuracy} %</p>
-                <p className="text-xs text-slate-400 mt-0.5">Nejslabší téma</p>
-              </>
-            ) : (
-              <>
-                <p className="text-2xl font-extrabold text-slate-300">—</p>
-                <p className="text-xs text-slate-400 mt-1 leading-tight">Nejslabší<br />téma</p>
-              </>
-            )}
-          </div>
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 text-center">
-            <p className="text-3xl font-extrabold text-orange-500">🔥 {streak}</p>
-            <p className="text-xs text-slate-400 mt-1 leading-tight">Streak<br />(dní v řadě)</p>
+          <div className="bg-white rounded-2xl border border-slate-100 p-4 text-center">
+            <p className="text-3xl font-extrabold text-orange-500">{streak}</p>
+            <p className="text-xs text-slate-400 mt-1 leading-snug">dní v řadě</p>
           </div>
         </div>
+      </div>
 
-        {/* Topic table */}
+      {/* ── TOPIC BREAKDOWN ──────────────────────────────────────────── */}
+      <div>
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Přehled témat</p>
         {topicTable.length > 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-            <div className="px-5 py-3 border-b border-slate-100">
-              <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Výsledky podle témat</p>
-            </div>
+          <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
             <div className="divide-y divide-slate-50">
               {topicTable.map((row) => {
                 const c = topicColor(row.accuracy);
+                const barPct = Math.min(100, row.accuracy);
                 return (
-                  <div key={row.tema} className="px-5 py-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: c.dot }} />
-                      <span className="text-sm text-slate-700">{row.label}</span>
+                  <div key={row.tema} className="px-4 py-3">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-sm font-medium text-slate-700">{row.label}</span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="text-xs font-bold px-2 py-0.5 rounded-full"
+                          style={{ background: c.bg, color: c.text }}
+                        >
+                          {row.accuracy} %
+                        </span>
+                        <span className="text-xs text-slate-300">{row.total}×</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="text-xs font-bold px-2.5 py-1 rounded-full"
-                        style={{ background: c.bg, color: c.text }}
-                      >
-                        {row.accuracy} %
-                      </span>
-                      <span className="text-xs text-slate-300">{row.total}×</span>
+                    <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                      <div
+                        className="h-1.5 rounded-full transition-all duration-700"
+                        style={{ width: `${barPct}%`, background: c.bar }}
+                      />
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div className="px-5 py-2.5 flex gap-4 text-xs text-slate-400 border-t border-slate-50">
+            <div className="px-4 py-2.5 flex gap-4 text-xs text-slate-400 border-t border-slate-50">
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> ≥ 70 % zvládá</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> 40–70 %</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-400 inline-block" /> &lt; 40 % slabé</span>
             </div>
           </div>
         ) : (
-          <div
-            className="rounded-2xl px-5 py-4"
-            style={{ background: "#f8faff", border: "1px solid #e2e8f0" }}
-          >
-            <p className="text-sm font-bold mb-1" style={{ color: "#0D1B3E" }}>Výsledky podle témat</p>
-            <p className="text-sm text-slate-400">
-              Data se zobrazí po prvním tréninku dítěte v MateMax.
-            </p>
+          <div className="bg-white rounded-2xl border border-slate-100 p-5 text-center">
+            <p className="text-2xl mb-2">📊</p>
+            <p className="text-sm font-semibold text-slate-600">Zatím žádná data</p>
+            <p className="text-xs text-slate-400 mt-1">Data se zobrazí po prvním tréninku dítěte v MateMax.</p>
           </div>
         )}
+      </div>
 
-        {/* Recommendation */}
-        {weakestTopic && (
-          <div
-            className="rounded-2xl px-5 py-4 flex items-start gap-3"
-            style={{ background: "#eff6ff", border: "1px solid #bfdbfe" }}
+      {/* ── COACHING GUIDE ───────────────────────────────────────────── */}
+      <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setGuideOpen((v) => !v)}
+          className="w-full flex items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-lg">📖</span>
+            <p className="text-sm font-bold" style={{ color: "#064E3B" }}>Průvodce rodiče — jak vést dítě</p>
+          </div>
+          <span
+            className="text-slate-400 text-xl font-light transition-transform duration-200 select-none"
+            style={{ transform: guideOpen ? "rotate(45deg)" : "rotate(0deg)", display: "inline-block" }}
           >
-            <span className="text-xl mt-0.5">💡</span>
-            <div>
-              <p className="text-sm font-bold" style={{ color: "#1d4ed8" }}>Doporučení pro dítě</p>
-              <p className="text-sm text-blue-700 mt-1 leading-relaxed">
-                Doporučujeme zaměřit se na <strong>{weakestTopic.label}</strong> ({weakestTopic.accuracy}% úspěšnost).
-                Toto téma se nejčastěji objevuje v přijímacích testech.
-              </p>
-            </div>
+            +
+          </span>
+        </button>
+        {guideOpen && (
+          <div className="px-5 pb-5 flex flex-col gap-4 border-t border-slate-50">
+            {COACHING_GUIDE.map((tip) => (
+              <div key={tip.title} className="flex gap-3 pt-3">
+                <span className="text-xl flex-shrink-0">{tip.icon}</span>
+                <div>
+                  <p className="text-sm font-bold text-slate-700">{tip.title}</p>
+                  <p className="text-sm text-slate-500 mt-0.5 leading-relaxed">{tip.text}</p>
+                </div>
+              </div>
+            ))}
           </div>
         )}
+      </div>
 
-        {/* Message box */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
-          <p className="text-sm font-bold mb-1" style={{ color: "#0D1B3E" }}>Vzkaz pro dítě</p>
-          <p className="text-xs text-slate-400 mb-3 leading-relaxed">
-            Napište motivační zprávu — dítě ji uvidí na svém dashboardu.
-          </p>
-          <form onSubmit={sendMessage} className="flex flex-col gap-3">
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value.slice(0, 200))}
-              placeholder="Např: Makej dál, věřím ti! 💪"
-              rows={3}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:border-blue-400 transition-colors resize-none"
-            />
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-slate-400">{message.length}/200</span>
-              <button
-                type="submit"
-                disabled={sendingMsg || !message.trim()}
-                className="px-5 py-2.5 rounded-xl text-white font-bold text-sm disabled:opacity-50 transition-opacity"
-                style={{ background: "#2E6DA4" }}
-              >
-                {sendingMsg ? "Odesílám…" : "Odeslat vzkaz"}
-              </button>
-            </div>
-            {msgSent && (
-              <p className="text-sm font-semibold text-green-600">
-                ✅ Vzkaz byl odeslán!
-              </p>
-            )}
-            {msgError && (
-              <p className="text-sm text-red-600">{msgError}</p>
-            )}
-          </form>
+      {/* ── MESSAGE TO CHILD ─────────────────────────────────────────── */}
+      <div className="bg-white rounded-2xl border border-slate-100 p-5">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-lg">💌</span>
+          <p className="text-sm font-bold" style={{ color: "#064E3B" }}>Vzkaz pro dítě</p>
         </div>
+        <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+          Napište motivační zprávu — dítě ji uvidí na svém dashboardu jako bannner.
+        </p>
+        <form onSubmit={sendMessage} className="flex flex-col gap-3">
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value.slice(0, 200))}
+            placeholder="Např: Makej dál, věřím ti! 💪"
+            rows={3}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none transition-colors resize-none"
+            style={{ outlineColor: "#047857" }}
+            onFocus={(e) => e.target.style.borderColor = "#047857"}
+            onBlur={(e) => e.target.style.borderColor = "#e2e8f0"}
+          />
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-slate-400">{message.length}/200</span>
+            <button
+              type="submit"
+              disabled={sendingMsg || !message.trim()}
+              className="px-5 py-2.5 rounded-xl text-white font-bold text-sm disabled:opacity-50 transition-opacity"
+              style={{ background: "#047857" }}
+            >
+              {sendingMsg ? "Odesílám…" : "Odeslat vzkaz"}
+            </button>
+          </div>
+          {msgSent && <p className="text-sm font-semibold text-green-600">✅ Vzkaz byl odeslán!</p>}
+          {msgError && <p className="text-sm text-red-600">{msgError}</p>}
+        </form>
+      </div>
 
-        {/* Settings link */}
+      {/* ── BOTTOM LINKS ─────────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 gap-3">
         <Link
           href="/rodice/nastaveni"
-          className="flex items-center justify-between px-5 py-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:bg-slate-50 transition-colors"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors"
         >
-          <div className="flex items-center gap-3">
-            <span className="text-xl">⚙️</span>
-            <span className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>Nastavení reportů</span>
-          </div>
-          <span className="text-slate-300 text-lg">→</span>
+          <span className="text-lg">⚙️</span>
+          <span className="text-sm font-semibold text-slate-700">Nastavení reportů</span>
         </Link>
-
+        <Link
+          href="/rodice/propojeni"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors"
+        >
+          <span className="text-lg">🔗</span>
+          <span className="text-sm font-semibold text-slate-700">Propojení</span>
+        </Link>
       </div>
+
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import confetti from "canvas-confetti";
 import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
+import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
 
 interface Props {
@@ -29,6 +30,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [comboText, setComboText]   = useState<string | null>(null);
   const [xpLabel, setXpLabel]       = useState<string | null>(null);
   const [cardKey, setCardKey]       = useState(0);
+  const [showTip, setShowTip]       = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -39,6 +41,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setShaking(false);
     setComboText(null);
     setXpLabel(null);
+    setShowTip(false);
     setCardKey((k) => k + 1);
     inputRef.current?.focus();
   }, [example.id]);
@@ -93,6 +96,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const diff = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
   const progressPct = (cardNumber / total) * 100;
   const topicLabel = TEMA_LABELS[example.tema] ?? example.tema;
+  const tips = getTips(example.tema);
 
   return (
     <>
@@ -175,6 +179,38 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <MathText text={example.zadani} large />
           </p>
         </div>
+
+        {/* Tip */}
+        {status === "idle" && tips.length > 0 && (
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowTip(!showTip)}
+              className="flex items-center gap-1.5 text-sm font-medium transition-colors"
+              style={{ color: showTip ? "#0D1B3E" : "#2E6DA4" }}
+            >
+              <span className="text-base">💡</span>
+              {showTip ? "Skrýt nápovědu" : "Zobrazit nápovědu"}
+            </button>
+            {showTip && (
+              <div
+                className="mt-2 rounded-xl border p-4 flex flex-col gap-3 fade-in-up"
+                style={{ background: "#fffbeb", borderColor: "#fde68a" }}
+              >
+                {tips.map((tip, i) => (
+                  <div key={i}>
+                    <p className="text-xs font-bold uppercase tracking-wide mb-0.5" style={{ color: "#92400e" }}>
+                      {tip.label}
+                    </p>
+                    <p className="text-sm leading-snug" style={{ color: "#78350f" }}>
+                      {tip.content}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Input */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">

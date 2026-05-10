@@ -186,7 +186,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 // ─── PŘIHLÁŠENÝ DASHBOARD ────────────────────────────────────────────────────
 
-const DAILY_GOAL = 7;
+const DAILY_GOAL = 10;
+const RING_R = 40;
+const RING_C = 2 * Math.PI * RING_R; // ≈ 251.3
 
 interface WeakTopic {
   tema: string;
@@ -301,7 +303,6 @@ function LoggedInDashboard({
   }
 
   const goalMet = todayCount >= DAILY_GOAL;
-  const todayPct = Math.min(100, Math.round((todayCount / DAILY_GOAL) * 100));
 
   let heroSubtext: string;
   if (goalMet) {
@@ -311,7 +312,7 @@ function LoggedInDashboard({
   } else if (todayCount > 0) {
     heroSubtext = `Dnes ${todayCount} příkladů. Cíl: ${DAILY_GOAL}. Pokračuj!`;
   } else {
-    heroSubtext = "Dnešní cíl: 7 příkladů. Zatím: 0/7";
+    heroSubtext = `Dnešní cíl: ${DAILY_GOAL} příkladů. Zatím: 0/${DAILY_GOAL}`;
   }
 
   return (
@@ -471,49 +472,82 @@ function LoggedInDashboard({
           </div>
         </div>
 
-        {/* Daily goal */}
-        {goalMet ? (
-          <div
-            className="rounded-2xl p-5 flex items-center justify-between gap-4"
-            style={{ background: "#f0fdf4", border: "2px solid #bbf7d0" }}
-          >
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wide" style={{ color: "#166534" }}>Dnešní cíl</p>
-              <p className="text-base font-black mt-0.5" style={{ color: "#15803d" }}>
-                ✅ Splněno! +15 XP bonus
-              </p>
-              <p className="text-xs mt-1" style={{ color: "#16a34a" }}>{todayCount} příkladů dnes</p>
-            </div>
-            <Link
-              href="/trenink"
-              className="shrink-0 text-sm font-bold px-4 py-2 rounded-xl whitespace-nowrap"
-              style={{ background: "#22c55e", color: "#fff" }}
-            >
-              Procvičovat dál →
-            </Link>
-          </div>
-        ) : (
-          <div className="bg-white rounded-2xl border border-slate-200 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <p className="text-xs text-slate-400 font-medium">Dnešní cíl</p>
-                <p className="text-lg font-black" style={{ color: "#0D1B3E" }}>
-                  {todayCount} / {DAILY_GOAL} příkladů
-                </p>
-              </div>
-              <span className="text-2xl">{todayCount > 0 ? "💪" : "🎯"}</span>
-            </div>
-            <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-              <div
-                className="h-2.5 rounded-full transition-all duration-700"
-                style={{ width: `${todayPct}%`, background: "linear-gradient(90deg, #0D1B3E, #2E6DA4)" }}
+        {/* Daily goal – SVG ring */}
+        <div
+          className="rounded-2xl p-5 flex items-center gap-5"
+          style={goalMet
+            ? { background: "#f0fdf4", border: "2px solid #bbf7d0" }
+            : { background: "#fff", border: "1px solid #e2e8f0" }
+          }
+        >
+          {/* Ring */}
+          <div className="shrink-0">
+            <svg width="88" height="88" viewBox="0 0 96 96" fill="none">
+              <defs>
+                <linearGradient id="goal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor={goalMet ? "#22c55e" : "#0D1B3E"} />
+                  <stop offset="100%" stopColor={goalMet ? "#16a34a" : "#2E6DA4"} />
+                </linearGradient>
+              </defs>
+              {/* Track */}
+              <circle cx="48" cy="48" r={RING_R} stroke="#e2e8f0" strokeWidth="9" />
+              {/* Progress */}
+              <circle
+                cx="48" cy="48" r={RING_R}
+                stroke="url(#goal-grad)"
+                strokeWidth="9"
+                strokeLinecap="round"
+                strokeDasharray={RING_C}
+                strokeDashoffset={RING_C * (1 - Math.min(1, todayCount / DAILY_GOAL))}
+                transform="rotate(-90 48 48)"
+                style={{ transition: "stroke-dashoffset 0.7s ease" }}
               />
-            </div>
-            <p className="text-xs text-slate-400 mt-2">
-              Ještě {DAILY_GOAL - todayCount} příkladů do splnění cíle
-            </p>
+              {/* Center text */}
+              <text x="48" y="43" textAnchor="middle" fontSize="20" fontWeight="800" fill={goalMet ? "#15803d" : "#0D1B3E"}>
+                {todayCount}
+              </text>
+              <text x="48" y="58" textAnchor="middle" fontSize="11" fill="#94a3b8">
+                z {DAILY_GOAL}
+              </text>
+            </svg>
           </div>
-        )}
+
+          {/* Text */}
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold uppercase tracking-wide mb-0.5" style={{ color: goalMet ? "#166534" : "#64748b" }}>
+              Dnešní cíl
+            </p>
+            {goalMet ? (
+              <>
+                <p className="text-base font-black" style={{ color: "#15803d" }}>Splněno! +15 XP bonus 🎉</p>
+                <p className="text-xs mt-1" style={{ color: "#16a34a" }}>{todayCount} příkladů dnes</p>
+                <Link
+                  href="/trenink"
+                  className="inline-block mt-2 text-xs font-bold px-3 py-1.5 rounded-lg"
+                  style={{ background: "#22c55e", color: "#fff" }}
+                >
+                  Procvičovat dál →
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                  {todayCount === 0 ? "Zatím žádné příklady" : `${todayCount} příkladů hotovo`}
+                </p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Ještě {DAILY_GOAL - todayCount} do splnění cíle
+                </p>
+                <Link
+                  href="/trenink"
+                  className="inline-block mt-2 text-xs font-bold px-3 py-1.5 rounded-lg"
+                  style={{ background: "#0D1B3E", color: "#fff" }}
+                >
+                  Jít trénovat →
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
 
         {/* Dnešní výzva */}
         <Link

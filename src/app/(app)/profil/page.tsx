@@ -13,6 +13,7 @@ import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
 import CountdownBanner from "@/components/CountdownBanner";
+import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -65,6 +66,7 @@ export default function ProfilPage() {
   const [notifState, setNotifState]      = useState<NotifState>("default");
   const [readinessScore, setReadinessScore] = useState(0);
   const [certState, setCertState]        = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [topicsExpanded, setTopicsExpanded] = useState(false);
 
   useEffect(() => {
     if (supabase) {
@@ -287,7 +289,39 @@ export default function ProfilPage() {
   }
 
   if (loading) {
-    return <div className="h-48 flex items-center justify-center text-slate-400">Načítám…</div>;
+    return (
+      <div className="flex flex-col gap-4 fade-in-up">
+        {/* Hero skeleton */}
+        <div className="rounded-2xl p-6 flex flex-col items-center gap-3" style={{ background: "#0D1B3E" }}>
+          <SkeletonAvatar size={72} />
+          <SkeletonLine width="140px" height="1rem" />
+          <SkeletonLine width="80px" height="1.4rem" />
+        </div>
+        {/* Tabs skeleton */}
+        <div className="flex gap-2">
+          {[90, 80, 80].map((w, i) => (
+            <div key={i} className="skeleton rounded-full" style={{ width: w, height: 36 }} />
+          ))}
+        </div>
+        {/* Stats row */}
+        <div className="grid grid-cols-3 gap-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white rounded-2xl border border-slate-100 p-4 flex flex-col gap-2">
+              <SkeletonLine width="60%" height="0.75rem" />
+              <SkeletonLine width="40%" height="1.5rem" />
+            </div>
+          ))}
+        </div>
+        {/* Card skeletons */}
+        {[1, 2].map((i) => (
+          <div key={i} className="bg-white rounded-2xl border border-slate-100 p-5 flex flex-col gap-3">
+            <SkeletonLine width="45%" height="0.875rem" />
+            <SkeletonLine width="100%" height="3rem" />
+            <SkeletonLine width="70%" height="0.75rem" />
+          </div>
+        ))}
+      </div>
+    );
   }
 
   const level = getLevelFromXP(xp);
@@ -414,102 +448,103 @@ export default function ProfilPage() {
           {/* Countdown to přijímačky */}
           <CountdownBanner variant="full" />
 
-          {/* 2×2 Stats grid */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
-              <p className="text-xs text-slate-400 font-medium mb-1">🔥 Streak</p>
-              <p className="text-3xl font-black text-orange-500">{streak}</p>
-              <p className="text-[10px] text-slate-400 mt-0.5">dní v řadě</p>
-              {freezeCount > 0 && (
-                <p className="text-[10px] font-semibold mt-1" style={{ color: "#0369a1" }}>
-                  🧊 ×{freezeCount} zmraz.
-                </p>
-              )}
-            </div>
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
-              <p className="text-xs text-slate-400 font-medium mb-1">⚡ Celkem XP</p>
-              <p className="text-3xl font-black" style={{ color: "#2E6DA4" }}>{xp}</p>
-              <p className="text-[10px] text-slate-400 mt-0.5">bodů</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
-              <p className="text-xs text-slate-400 font-medium mb-1">📚 Příkladů</p>
-              <p className="text-3xl font-black" style={{ color: "#0D1B3E" }}>{totalSolved}</p>
-              <p className="text-[10px] text-slate-400 mt-0.5">celkem</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
-              <p className="text-xs text-slate-400 font-medium mb-1">🎯 Úspěšnost</p>
-              {overallAccuracy !== null ? (
-                <>
-                  <p
-                    className="text-3xl font-black"
-                    style={{ color: overallAccuracy >= 70 ? "#16a34a" : overallAccuracy >= 50 ? "#d97706" : "#dc2626" }}
-                  >
-                    {overallAccuracy}%
-                  </p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">průměr</p>
-                </>
-              ) : (
-                <>
-                  <p className="text-3xl font-black text-slate-300">—</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">po diagnostice</p>
-                </>
-              )}
+          {/* ── SEKCE: STATISTIKY ── */}
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Statistiky</p>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center">
+                <p className="text-2xl font-black text-orange-500">{streak}</p>
+                <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🔥 Streak<br />dní</p>
+                {freezeCount > 0 && (
+                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: "#0369a1" }}>🧊 ×{freezeCount}</p>
+                )}
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center">
+                <p className="text-2xl font-black" style={{ color: "#0D1B3E" }}>{totalSolved}</p>
+                <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">📚 Příkladů<br />celkem</p>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center">
+                {overallAccuracy !== null ? (
+                  <>
+                    <p className="text-2xl font-black"
+                      style={{ color: overallAccuracy >= 70 ? "#16a34a" : overallAccuracy >= 50 ? "#d97706" : "#dc2626" }}>
+                      {overallAccuracy}%
+                    </p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🎯 Úspěšnost<br />průměr</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-2xl font-black text-slate-300">—</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🎯 Úspěšnost<br />po diagnostice</p>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Readiness score */}
-          <ReadinessCard />
-
-          {/* CERMAT test card */}
-          {cermatLast ? (
-            <Link
-              href="/cermat-test"
-              className="block bg-white rounded-2xl border border-slate-200 p-4 hover:border-blue-200 transition-colors"
-            >
-              <div className="flex items-center justify-between">
+          {/* ── SEKCE: PŘIPRAVENOST ── */}
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost</p>
+            <ReadinessCard />
+            {cermatLast ? (
+              <Link
+                href="/cermat-test"
+                className="mt-2 flex items-center justify-between bg-white rounded-2xl border border-slate-200 p-4 hover:border-blue-200 transition-colors"
+              >
                 <div>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-1">
-                    🎯 Poslední CERMAT test
-                  </p>
-                  <p className="text-2xl font-black" style={{ color: "#0D1B3E" }}>{cermatLast.pct} %</p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {cermatLast.score}/{cermatLast.total} · {cermatLast.date}
-                  </p>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-0.5">Poslední CERMAT test</p>
+                  <p className="text-xl font-black" style={{ color: "#0D1B3E" }}>{cermatLast.pct} %</p>
+                  <p className="text-xs text-slate-500">{cermatLast.score}/{cermatLast.total} · {cermatLast.date}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2">
-                  <span className="text-3xl">
-                    {cermatLast.pct >= 90 ? "🏆" : cermatLast.pct >= 70 ? "💪" : "📚"}
-                  </span>
-                  <span
-                    className="text-xs font-semibold px-2.5 py-1 rounded-full"
-                    style={{ background: "#eff6ff", color: "#2E6DA4" }}
-                  >
+                  <span className="text-2xl">{cermatLast.pct >= 90 ? "🏆" : cermatLast.pct >= 70 ? "💪" : "📚"}</span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "#eff6ff", color: "#2E6DA4" }}>
                     Zkusit znovu →
                   </span>
                 </div>
+              </Link>
+            ) : (
+              <Link
+                href="/cermat-test"
+                className="mt-2 flex items-center justify-between rounded-2xl p-4 hover:opacity-90 transition-opacity"
+                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+              >
+                <div>
+                  <p className="text-xs font-black text-white">🎯 Simulace CERMAT testu</p>
+                  <p className="text-[10px] text-blue-200 mt-0.5">Otestuj se za podmínek reálných přijímaček</p>
+                </div>
+                <span className="text-white text-lg">→</span>
+              </Link>
+            )}
+            {readinessScore >= 80 && (
+              <div
+                className="mt-2 rounded-2xl p-4 flex items-center justify-between"
+                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "2px solid #fbbf24" }}
+              >
+                <div>
+                  <p className="text-xs font-black text-white">🏆 Výborná příprava! {readinessScore} %</p>
+                  <p className="text-[10px] text-blue-200 mt-0.5">Vygeneruj si certifikát připravenosti</p>
+                </div>
+                <button
+                  onClick={handleGenerateCertificate}
+                  disabled={certState === "loading"}
+                  className="px-3 py-2 rounded-xl font-bold text-xs transition-all disabled:opacity-60 shrink-0"
+                  style={{ background: "#fbbf24", color: "#0D1B3E" }}
+                >
+                  {certState === "loading" ? "…" : certState === "done" ? "✓ Stažen" : "🎓 Stáhnout"}
+                </button>
               </div>
-            </Link>
-          ) : (
-            <Link
-              href="/cermat-test"
-              className="block rounded-2xl p-4 text-center hover:opacity-90 transition-opacity"
-              style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-            >
-              <p className="text-sm font-black text-white">🎯 Simulace CERMAT testu</p>
-              <p className="text-xs text-blue-200 mt-0.5">
-                Otestuj se za podmínek reálných přijímaček →
-              </p>
-            </Link>
-          )}
+            )}
+          </div>
 
-          {/* Další cíl card — enhanced */}
+          {/* ── SEKCE: CÍLE & ODZNAKY ── */}
           {nextBadge && earnedBadges.length < allBadges.length && (
-            <div className="bg-white rounded-2xl border border-slate-200 p-4">
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-3">🎯 Další cíl</p>
-              <div className="flex items-start gap-3">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nejbližší cíl</p>
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3">
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 border-2"
-                  style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+                  style={{ background: "#f8fafc", border: "2px solid #e2e8f0" }}
                 >
                   {nextBadge.icon_emoji}
                 </div>
@@ -518,10 +553,10 @@ export default function ProfilPage() {
                     <p className="text-sm font-black text-slate-800 leading-tight">{nextBadge.label}</p>
                     <p className="text-xs font-black shrink-0" style={{ color: "#2E6DA4" }}>+{nextBadge.xp_reward} XP</p>
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">{nextBadge.description}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{nextBadge.description}</p>
                   {nextBadgeProgress && (
-                    <div className="mt-2">
-                      <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1">
+                    <>
+                      <div className="flex justify-between text-[10px] text-slate-400 mt-1.5 mb-0.5">
                         <span>Pokrok</span>
                         <span>{nextBadgeProgress.current} / {nextBadgeProgress.target}</span>
                       </div>
@@ -534,105 +569,57 @@ export default function ProfilPage() {
                           }}
                         />
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
               </div>
             </div>
           )}
 
-          {earnedBadges.length === allBadges.length && allBadges.length > 0 && (
-            <div
-              className="rounded-2xl p-4 text-center"
-              style={{ background: "#fefce8", border: "2px solid #fde047" }}
-            >
-              <p className="text-2xl mb-1">🏆</p>
-              <p className="text-sm font-black" style={{ color: "#713f12" }}>Všechny odznaky získány!</p>
-            </div>
-          )}
-
-          {/* Tvá silná a slabá místa — weakest first */}
-          {topicScores.length > 0 && (
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Tvá silná a slabá místa</h2>
-                <span className="text-xs text-slate-400">{topicScores.length} témat</span>
+          {/* ── SEKCE: TÉMATA ── */}
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Silná a slabá místa</p>
+            {topicScores.length > 0 ? (
+              <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                {(topicsExpanded ? topicScores : topicScores.slice(0, 5)).map(({ tema, score, correct, total }) => {
+                  const pctVal = Math.round(score * 100);
+                  const barColor = score >= 0.67 ? "#22c55e" : score >= 0.4 ? "#f59e0b" : "#ef4444";
+                  const textColor = score >= 0.67 ? "#166534" : score >= 0.4 ? "#92400e" : "#991b1b";
+                  return (
+                    <Link key={tema} href={`/trenink?tema=${tema}`}
+                      className="flex items-center gap-3 px-4 py-3 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
+                      <span className="text-sm text-slate-700 w-28 shrink-0 truncate">{TEMA_LABELS[tema] ?? tema}</span>
+                      <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: barColor }} />
+                      </div>
+                      <span className="text-xs font-bold shrink-0 w-10 text-right" style={{ color: textColor }}>
+                        {pctVal}%
+                      </span>
+                    </Link>
+                  );
+                })}
+                {topicScores.length > 5 && (
+                  <button
+                    onClick={() => setTopicsExpanded((v) => !v)}
+                    className="w-full py-2.5 text-xs font-semibold border-t border-slate-100 transition-colors hover:bg-slate-50"
+                    style={{ color: "#2E6DA4" }}
+                  >
+                    {topicsExpanded ? "▲ Skrýt" : `▼ Zobrazit všechna témata (${topicScores.length})`}
+                  </button>
+                )}
               </div>
+            ) : (
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center text-slate-400 text-sm">
+                Nejdřív projdi diagnostický test — uvidíš svá silná a slabá témata.
+              </div>
+            )}
+          </div>
 
-              {/* Weakest first (already sorted that way) */}
-              {topicScores.map(({ tema, score, correct, total }) => {
-                const pctVal = Math.round(score * 100);
-                const barColor = score >= 0.67 ? "#22c55e" : score >= 0.4 ? "#f59e0b" : "#ef4444";
-                const textColor = score >= 0.67 ? "#166534" : score >= 0.4 ? "#92400e" : "#991b1b";
-                return (
-                  <Link key={tema} href={`/trenink?tema=${tema}`} className="block group">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-slate-700 group-hover:text-blue-600 transition-colors">
-                        {TEMA_LABELS[tema] ?? tema}
-                      </span>
-                      <span className="text-xs font-bold" style={{ color: textColor }}>
-                        {correct}/{total} · {pctVal} %
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                      <div
-                        className="h-2 rounded-full bar-animate"
-                        style={{ width: `${pctVal}%`, background: barColor }}
-                      />
-                    </div>
-                  </Link>
-                );
-              })}
-
-              {/* Topics not yet tested */}
-              {ALL_TOPICS.filter((t) => !topicScores.find((s) => s.tema === t)).map((tema) => (
-                <div key={tema} className="opacity-35">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-slate-600">{TEMA_LABELS[tema] ?? tema}</span>
-                    <span className="text-xs text-slate-400">neprocvičeno</span>
-                  </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2" />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {topicScores.length === 0 && (
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center text-slate-400 text-sm">
-              Nejdřív projdi diagnostický test — uvidíš svá silná a slabá témata.
-            </div>
-          )}
-
-          {/* Activity heatmap */}
-          <ActivityHeatmap />
-
-          {/* Certificate — visible when readiness ≥ 80% */}
-          {readinessScore >= 80 && (
-            <div
-              className="rounded-2xl p-5 text-center"
-              style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "2px solid #fbbf24" }}
-            >
-              <p className="text-2xl mb-1">🏆</p>
-              <p className="text-base font-black text-white mb-0.5">Výborná příprava!</p>
-              <p className="text-xs text-blue-200 mb-4">
-                Dosáhl/a jsi {readinessScore} % připravenosti — vygeneruj si certifikát!
-              </p>
-              <button
-                onClick={handleGenerateCertificate}
-                disabled={certState === "loading"}
-                className="px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-60"
-                style={{ background: "#fbbf24", color: "#0D1B3E" }}
-              >
-                {certState === "loading"
-                  ? "Generuji…"
-                  : certState === "done"
-                  ? "✓ Certifikát stažen!"
-                  : certState === "error"
-                  ? "⚠ Nepodařilo se"
-                  : "🎓 Vygenerovat certifikát"}
-              </button>
-            </div>
-          )}
+          {/* ── SEKCE: AKTIVITA ── */}
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Aktivita</p>
+            <ActivityHeatmap />
+          </div>
         </>
       )}
 
@@ -734,50 +721,62 @@ export default function ProfilPage() {
         </>
       )}
 
-      {/* Push notifications */}
-      {notifState !== "unsupported" && (
-        <button
-          onClick={notifState === "granted" || notifState === "denied" || notifState === "loading" ? undefined : handleEnableNotifs}
-          disabled={notifState === "granted" || notifState === "denied" || notifState === "loading"}
-          className="w-full py-3 rounded-xl border-2 font-semibold text-sm transition-colors"
-          style={{
-            borderColor: notifState === "granted" ? "#bbf7d0" : notifState === "denied" ? "#e2e8f0" : "#e2e8f0",
-            color: notifState === "granted" ? "#15803d" : notifState === "denied" ? "#94a3b8" : "#0D1B3E",
-            background: notifState === "granted" ? "#f0fdf4" : "white",
-          }}
-        >
-          {notifState === "granted"
-            ? "🔔 Připomenutí aktivní"
-            : notifState === "denied"
-            ? "🔕 Notifikace zakázány v prohlížeči"
-            : notifState === "loading"
-            ? "Aktivuji…"
-            : "🔔 Zapnout připomenutí"}
-        </button>
-      )}
+      {/* ── SPODNÍ AKCE (vždy viditelné, mimo tabu) ── */}
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nastavení & účet</p>
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
 
-      {/* Rodičovský portál */}
-      <Link
-        href="/rodice/dashboard"
-        className="flex items-center justify-between px-4 py-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors"
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-xl">👨‍👩‍👧</span>
-          <div>
-            <p className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>Rodičovský portál</p>
-            <p className="text-xs text-slate-400">Přehled pokroku pro rodiče</p>
-          </div>
+          {/* Notifikace */}
+          {notifState !== "unsupported" && (
+            <button
+              type="button"
+              onClick={notifState === "granted" || notifState === "denied" || notifState === "loading" ? undefined : handleEnableNotifs}
+              disabled={notifState === "granted" || notifState === "denied" || notifState === "loading"}
+              className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors text-left"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">{notifState === "granted" ? "🔔" : "🔕"}</span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">
+                    {notifState === "granted" ? "Připomenutí aktivní" : "Zapnout připomenutí"}
+                  </p>
+                  <p className="text-xs text-slate-400">
+                    {notifState === "denied" ? "Zakázáno v nastavení prohlížeče" : "Denní připomínka tréninku"}
+                  </p>
+                </div>
+              </div>
+              {notifState === "granted" && <span className="text-xs font-bold text-green-600">Aktivní ✓</span>}
+              {notifState === "default" && <span className="text-slate-300 text-lg">→</span>}
+            </button>
+          )}
+
+          {/* Rodičovský portál */}
+          <Link
+            href="/rodice/dashboard"
+            className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">👨‍👩‍👧</span>
+              <div>
+                <p className="text-sm font-semibold text-slate-800">Rodičovský portál</p>
+                <p className="text-xs text-slate-400">Přehled pokroku pro rodiče</p>
+              </div>
+            </div>
+            <span className="text-slate-300 text-lg">→</span>
+          </Link>
+
+          {/* Logout */}
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-red-50 transition-colors text-left"
+          >
+            <span className="text-xl">🚪</span>
+            <p className="text-sm font-semibold text-red-600">Odhlásit se</p>
+          </button>
         </div>
-        <span className="text-slate-300 text-lg">→</span>
-      </Link>
+      </div>
 
-      {/* Logout */}
-      <button
-        onClick={handleLogout}
-        className="w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-colors"
-      >
-        Odhlásit se
-      </button>
     </div>
   );
 }
