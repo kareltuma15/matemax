@@ -64,7 +64,12 @@ function PrihlaseniForm() {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-slate-500">Heslo</label>
+          <div className="flex justify-between items-center">
+            <label className="text-xs font-medium text-slate-500">Heslo</label>
+            <Link href="/zapomenute-heslo" className="text-xs" style={{ color: "#2E6DA4" }}>
+              Zapomenuté heslo?
+            </Link>
+          </div>
           <input
             type="password"
             value={password}

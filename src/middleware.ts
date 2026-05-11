@@ -90,8 +90,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Run on all paths except static files and internal Next.js paths
+  // Run on all paths except static assets and the auth callback (which handles token exchange)
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|api/icon|sw\\.js|icons/).*)",
+    "/((?!_next/static|_next/image|favicon\\.ico|api/icon|sw\\.js|icons/|auth/callback).*)",
   ],
 };
