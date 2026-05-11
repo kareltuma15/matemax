@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MateMax — Příprava na přijímačky z matematiky",
     description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "MateMax" }],
     locale: "cs_CZ",
     type: "website",
     siteName: "MateMax",
@@ -18,7 +17,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MateMax — Příprava na přijímačky z matematiky",
     description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
-    images: ["/og-image.png"],
   },
   appleWebApp: {
     capable: true,

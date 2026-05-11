@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 export default function PrihlaseniPage() {
+  return (
+    <Suspense>
+      <PrihlaseniForm />
+    </Suspense>
+  );
+}
+
+function PrihlaseniForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]       = useState<string | null>(null);
@@ -30,7 +39,8 @@ export default function PrihlaseniPage() {
         : authError.message);
       return;
     }
-    router.push("/trenink");
+    const next = searchParams.get("next");
+    router.push(next && next.startsWith("/") ? next : "/trenink");
   }
 
   return (
