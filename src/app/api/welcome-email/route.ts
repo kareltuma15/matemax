@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center" style="padding:0 0 32px;">
-                    <a href="https://matemax-ten.vercel.app/diagnostika"
+                    <a href="https://matemax.matematika-snadno.cz/diagnostika"
                       style="display:inline-block;background:#00B4D8;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 36px;border-radius:12px;">
                       Spustit diagnostiku →
                     </a>

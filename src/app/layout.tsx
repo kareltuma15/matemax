@@ -3,7 +3,7 @@ import "./globals.css";
 import PwaSetup from "@/components/PwaSetup";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://matemax-ten.vercel.app"),
+  metadataBase: new URL("https://matemax.matematika-snadno.cz"),
   title: "MateMax — Příprava na přijímačky z matematiky",
   description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
   openGraph: {

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/report-preview", "/api/"],
     },
-    sitemap: "https://matemax-ten.vercel.app/sitemap.xml",
+    sitemap: "https://matemax.matematika-snadno.cz/sitemap.xml",
   };
 }

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE = "https://matemax-ten.vercel.app";
+const BASE = "https://matemax.matematika-snadno.cz";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

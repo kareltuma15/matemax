@@ -110,7 +110,7 @@ export default function OgImage() {
             color: "#475569",
           }}
         >
-          matemax-ten.vercel.app
+          matemax.matematika-snadno.cz
         </div>
       </div>
     ),
