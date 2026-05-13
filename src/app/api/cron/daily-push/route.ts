@@ -69,7 +69,12 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, sent, failed, removed: gone.length });
 }
 
-// Allow GET for quick health-check (unauthenticated, returns no data)
-export async function GET() {
-  return NextResponse.json({ endpoint: "daily-push cron", requiresSecret: true });
+// Vercel Cron Jobs send GET — same logic as POST
+export async function GET(req: NextRequest) {
+  const auth = req.headers.get("authorization");
+  const expected = process.env.CRON_SECRET ? `Bearer ${process.env.CRON_SECRET}` : null;
+  if (!expected || auth !== expected) {
+    return NextResponse.json({ endpoint: "daily-push cron", requiresSecret: true });
+  }
+  return POST(req);
 }

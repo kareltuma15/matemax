@@ -13,6 +13,7 @@ import { getReadiness, CERMAT_TOPICS } from "@/lib/readiness";
 import { localLoadCards, localLoadSessions } from "@/lib/storage";
 import { isDue } from "@/lib/sm2";
 import CountdownBanner from "@/components/CountdownBanner";
+import GuidanceModal from "@/components/GuidanceModal";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -219,6 +220,34 @@ function LoggedInDashboard({
   const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
   const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
   const [hasWrongCards, setHasWrongCards] = useState(false);
+  const [guidanceModal, setGuidanceModal] = useState<null | { type: "diagnostika" | "comeback"; daysSince?: number }>(null);
+
+  useEffect(() => {
+    // Guidance modal — zobraz max 1× za den
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const shownKey = `matemax-modal-shown-${todayStr}`;
+    if (!localStorage.getItem(shownKey)) {
+      if (!diagDone) {
+        setGuidanceModal({ type: "diagnostika" });
+        localStorage.setItem(shownKey, "1");
+      } else {
+        try {
+          const raw = localStorage.getItem("matemax-progress");
+          if (raw) {
+            const p = JSON.parse(raw) as { lastActiveDate?: string };
+            if (p.lastActiveDate) {
+              const last = new Date(p.lastActiveDate);
+              const daysSince = Math.floor((Date.now() - last.getTime()) / 86400000);
+              if (daysSince >= 3) {
+                setGuidanceModal({ type: "comeback", daysSince });
+                localStorage.setItem(shownKey, "1");
+              }
+            }
+          }
+        } catch { /* ignore */ }
+      }
+    }
+  }, [diagDone]);
 
   useEffect(() => {
     const cards = localLoadCards();
@@ -317,6 +346,15 @@ function LoggedInDashboard({
 
   return (
     <div className="bg-white min-h-screen">
+      {/* Guidance modal */}
+      {guidanceModal && (
+        <GuidanceModal
+          type={guidanceModal.type}
+          daysSince={guidanceModal.daysSince}
+          onClose={() => setGuidanceModal(null)}
+        />
+      )}
+
       {/* Nav */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
@@ -411,6 +449,34 @@ function LoggedInDashboard({
                 <span>{readinessScore.score}%</span>
               </Link>
             )}
+          </div>
+        )}
+
+        {/* Dnešní výzva — nejslabší téma z diagnostiky */}
+        {diagDone && weakTopics.length > 0 && (
+          <div
+            className="rounded-2xl overflow-hidden"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+          >
+            <div className="px-5 py-4">
+              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Dnešní výzva</p>
+              <p className="text-xl font-black text-white">
+                {TEMA_LABELS[weakTopics[0].tema] ?? weakTopics[0].tema}
+              </p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="bg-white/20 rounded-full px-2.5 py-0.5 text-xs font-bold text-white">
+                  Připravenost: {Math.round(weakTopics[0].score * 100)} %
+                </span>
+                <span className="text-xs text-blue-200">Nejslabší téma — procvič ho dnes</span>
+              </div>
+            </div>
+            <Link
+              href={`/trenink?tema=${weakTopics[0].tema}`}
+              className="block px-5 py-3 text-center font-black text-sm text-white"
+              style={{ background: "rgba(255,255,255,0.12)", borderTop: "1px solid rgba(255,255,255,0.15)" }}
+            >
+              Začít trénink →
+            </Link>
           </div>
         )}
 
@@ -654,10 +720,11 @@ function LoggedInDashboard({
             </Link>
           ) : (
             <Link
-              href="/diagnostika"
-              className="block py-3 text-center rounded-xl border-2 border-slate-200 text-slate-500 font-semibold text-sm hover:bg-slate-50 transition-colors"
+              href="/studijni-plan"
+              className="block py-3 text-center rounded-xl font-semibold text-sm"
+              style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
             >
-              🔄 Opakovat diagnostiku
+              📅 Studijní plán
             </Link>
           )}
         </div>

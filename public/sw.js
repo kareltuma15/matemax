@@ -47,8 +47,8 @@ self.addEventListener("push", (e) => {
   e.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: "/icons/icon-192.png",
-      badge: "/icons/icon-192.png",
+      icon: "/api/icon?size=192",
+      badge: "/api/icon?size=96",
       tag: "matemax-reminder",
       data: { url: data.url },
     })

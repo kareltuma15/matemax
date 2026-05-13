@@ -9,6 +9,7 @@ import { SM2Card } from "@/types";
 import { isTopicLocked } from "@/lib/subscription";
 import { supabase } from "@/lib/supabase";
 import { remoteSyncDiagResults } from "@/lib/storage";
+import confetti from "canvas-confetti";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -212,6 +213,7 @@ export default function DiagnostikaPage() {
   const [selected, setSelected] = useState<(number | null)[]>(Array(QUESTIONS_PER_STEP).fill(null));
   const [confirmed, setConfirmed] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [showPlanModal, setShowPlanModal] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("matemax-diag-done") === "1") setAlreadyDone(true);
@@ -269,6 +271,8 @@ export default function DiagnostikaPage() {
       seedCardsFromDiag(results);
 
       setFinished(true);
+      setShowPlanModal(true);
+      setTimeout(() => confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } }), 150);
     } else {
       setStepIdx((s) => s + 1);
       setSelected(Array(QUESTIONS_PER_STEP).fill(null));
@@ -314,7 +318,12 @@ export default function DiagnostikaPage() {
   }
 
   if (finished) {
-    return <DiagResults onStart={() => router.push("/trenink")} />;
+    return (
+      <>
+        {showPlanModal && <DiagPlanModal onStart={() => { setShowPlanModal(false); router.push("/trenink"); }} onClose={() => setShowPlanModal(false)} />}
+        <DiagResults onStart={() => router.push("/trenink")} />
+      </>
+    );
   }
 
   return (
@@ -458,6 +467,104 @@ export default function DiagnostikaPage() {
           {stepIdx + 1 >= STEPS.length ? "Zobrazit výsledky →" : "Další krok →"}
         </button>
       )}
+    </div>
+  );
+}
+
+// ── DiagPlanModal — aha-moment po dokončení diagnostiky ──────────────────────
+
+function DiagPlanModal({ onStart, onClose }: { onStart: () => void; onClose: () => void }) {
+  let results: Record<string, { correct: number; total: number }> = {};
+  try {
+    const raw = localStorage.getItem("matemax-diag-results");
+    if (raw) results = JSON.parse(raw);
+  } catch { /* ignore */ }
+
+  const rows = Object.entries(results)
+    .filter(([, v]) => v.total > 0)
+    .map(([tema, v]) => ({
+      label: RESULT_LABELS[tema] ?? tema,
+      pct: Math.round((v.correct / v.total) * 100),
+    }))
+    .sort((a, b) => a.pct - b.pct);
+
+  const totalCorrect = Object.values(results).reduce((s, v) => s + v.correct, 0);
+  const totalQ       = Object.values(results).reduce((s, v) => s + v.total, 0);
+  const overall      = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+
+  const weakCount = rows.filter((r) => r.pct < 67).length;
+  const focus = rows.slice(0, 2);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.6)" }}
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl fade-in-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div
+          className="px-6 py-7 text-center"
+          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+        >
+          <p className="text-5xl mb-3">🎯</p>
+          <h2 className="text-xl font-black text-white">Tvůj plán je připraven!</h2>
+          <p className="text-sm text-blue-200 mt-1">
+            Celková úspěšnost: <strong className="text-white">{overall} %</strong>
+            {weakCount > 0 && ` · ${weakCount} ${weakCount === 1 ? "téma" : weakCount <= 4 ? "témata" : "témat"} k procvičení`}
+          </p>
+        </div>
+
+        {/* Body */}
+        <div className="p-6 flex flex-col gap-4">
+          {focus.length > 0 && (
+            <div className="flex flex-col gap-2">
+              <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Začni těmito tématy</p>
+              {focus.map(({ label, pct }) => (
+                <div
+                  key={label}
+                  className="flex items-center justify-between rounded-xl px-4 py-3 border"
+                  style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}
+                >
+                  <span className="text-sm font-semibold text-slate-700">{label}</span>
+                  <span
+                    className="text-xs font-black px-2 py-0.5 rounded-full"
+                    style={{ background: pct < 50 ? "#fef2f2" : "#fff7ed", color: pct < 50 ? "#991b1b" : "#92400e" }}
+                  >
+                    {pct} %
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div
+            className="rounded-xl p-3 text-center"
+            style={{ background: "#f0fdf4", border: "1px solid #bbf7d0" }}
+          >
+            <p className="text-xs text-green-700 font-medium">
+              ✅ MateMax sestavil tréninkový plán přesně pro tebe. Algoritmus se zaměří na slabá místa jako první.
+            </p>
+          </div>
+
+          <button
+            onClick={onStart}
+            className="w-full py-3.5 text-white font-black rounded-xl text-base"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+          >
+            Spustit první trénink →
+          </button>
+          <button
+            onClick={onClose}
+            className="w-full py-2 text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors"
+          >
+            Zobrazit detailní výsledky
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

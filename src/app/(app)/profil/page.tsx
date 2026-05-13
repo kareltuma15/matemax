@@ -67,6 +67,10 @@ export default function ProfilPage() {
   const [readinessScore, setReadinessScore] = useState(0);
   const [certState, setCertState]        = useState<"idle" | "loading" | "done" | "error">("idle");
   const [topicsExpanded, setTopicsExpanded] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordMsg, setPasswordMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
   useEffect(() => {
     if (supabase) {
@@ -280,6 +284,24 @@ export default function ProfilPage() {
     } catch {
       setCertState("error");
       setTimeout(() => setCertState("idle"), 2500);
+    }
+  }
+
+  async function handleChangePassword(e: React.FormEvent) {
+    e.preventDefault();
+    if (!supabase || newPassword.length < 6) {
+      setPasswordMsg({ ok: false, text: "Heslo musí mít alespoň 6 znaků." });
+      return;
+    }
+    setPasswordLoading(true);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    setPasswordLoading(false);
+    if (error) {
+      setPasswordMsg({ ok: false, text: "Nepodařilo se změnit heslo. Zkus se znovu přihlásit." });
+    } else {
+      setPasswordMsg({ ok: true, text: "Heslo bylo úspěšně změněno." });
+      setNewPassword("");
+      setTimeout(() => { setShowPasswordForm(false); setPasswordMsg(null); }, 2000);
     }
   }
 
@@ -749,6 +771,49 @@ export default function ProfilPage() {
               {notifState === "default" && <span className="text-slate-300 text-lg">→</span>}
             </button>
           )}
+
+          {/* Změna hesla */}
+          <div>
+            <button
+              type="button"
+              onClick={() => { setShowPasswordForm((v) => !v); setPasswordMsg(null); }}
+              className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors text-left"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🔑</span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Změna hesla</p>
+                  <p className="text-xs text-slate-400">Aktualizuj přihlašovací heslo</p>
+                </div>
+              </div>
+              <span className="text-slate-300 text-lg">{showPasswordForm ? "▲" : "→"}</span>
+            </button>
+            {showPasswordForm && (
+              <form onSubmit={handleChangePassword} className="px-4 pb-4 flex flex-col gap-3 border-t border-slate-50">
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Nové heslo (min. 6 znaků)"
+                  required
+                  className="w-full mt-3 px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+                />
+                {passwordMsg && (
+                  <p className={`text-xs px-3 py-2 rounded-lg font-medium ${passwordMsg.ok ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-600 border border-red-200"}`}>
+                    {passwordMsg.text}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={passwordLoading}
+                  className="w-full py-2.5 text-white font-bold rounded-xl text-sm disabled:opacity-60 transition-opacity"
+                  style={{ background: "#0D1B3E" }}
+                >
+                  {passwordLoading ? "Ukládám…" : "Uložit nové heslo"}
+                </button>
+              </form>
+            )}
+          </div>
 
           {/* Rodičovský portál */}
           <Link
