@@ -6,7 +6,7 @@ import { examples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
-import { remoteLogSession, remoteSyncXP, remoteSyncBadges, localSaveSession } from "@/lib/storage";
+import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, localSaveSession } from "@/lib/storage";
 import { supabase } from "@/lib/supabase";
 import {
   loadGamification,
@@ -259,6 +259,20 @@ function TreningPageInner() {
       const level = getLevelFromXP(p.xp);
       remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0);
       remoteSyncBadges(uid, gamState.earnedBadges);
+
+      // Sync SM2 cards pro tuto session (rodičovský dashboard z nich čte téma breakdown)
+      const sessionSet = new Set(sessionIds);
+      for (const card of cards) {
+        if (sessionSet.has(card.exampleId)) {
+          remoteSaveSM2Card({
+            user_id: uid,
+            example_id: card.exampleId,
+            interval: card.interval,
+            ease: card.easeFactor,
+            next_review: card.nextReview,
+          });
+        }
+      }
 
       // Onboarding: první session dokončena
       if (isFirstSession && supabase) {

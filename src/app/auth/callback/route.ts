@@ -29,6 +29,22 @@ export async function GET(request: NextRequest) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Pokud jde o novou registraci přes Google OAuth, pošleme uvítací email
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const isNewUser = Date.now() - new Date(user.created_at).getTime() < 60_000;
+        if (isNewUser) {
+          const fullName = (user.user_metadata?.full_name as string | undefined)
+            ?? (user.user_metadata?.name as string | undefined)
+            ?? "";
+          const firstName = fullName.split(" ")[0] ?? "";
+          fetch(`${origin}/api/welcome-email`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: user.email, firstName }),
+          }).catch(() => {});
+        }
+      }
       return NextResponse.redirect(`${origin}${next}`);
     }
   }

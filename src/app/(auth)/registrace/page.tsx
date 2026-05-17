@@ -52,6 +52,16 @@ export default function RegistracePage() {
       return;
     }
 
+    // Uvítací email posíláme vždy po úspěšné registraci (fire-and-forget)
+    if (data.user) {
+      const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
+      fetch("/api/welcome-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, firstName }),
+      }).catch(() => {});
+    }
+
     // If session exists immediately (email confirmation disabled), create onboarding record + redirect
     if (data.session) {
       // Vytvoříme onboarding záznam (best-effort — neblokuje přesměrování)
@@ -63,17 +73,9 @@ export default function RegistracePage() {
         )
         .then(() => {}); // fire-and-forget
 
-      // Pošleme uvítací email (fire-and-forget)
-      const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
-      fetch("/api/welcome-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, firstName }),
-      }).catch(() => {}); // neblokuje přesměrování
-
       router.push("/vitej");
     } else {
-      // Email confirmation required
+      // Email confirmation required — email byl already odeslán výše
       setDone(true);
     }
   }
