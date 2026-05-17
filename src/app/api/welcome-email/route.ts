@@ -39,7 +39,9 @@ export async function POST(req: NextRequest) {
         }),
       });
       if (!res.ok) {
-        console.error("Loops transactional email error:", await res.text());
+        const errText = await res.text();
+        console.error("Loops transactional email error:", errText);
+        throw new Error(`Loops API error: ${errText}`);
       }
 
       return NextResponse.json({ ok: true, provider: "loops" });
