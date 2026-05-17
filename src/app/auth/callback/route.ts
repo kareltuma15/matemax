@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
             ?? (user.user_metadata?.name as string | undefined)
             ?? "";
           const firstName = fullName.split(" ")[0] ?? "";
-          fetch(`${origin}/api/welcome-email`, {
+          await fetch(`${origin}/api/welcome-email`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: user.email, firstName }),
