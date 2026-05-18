@@ -31,6 +31,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [xpLabel, setXpLabel]       = useState<string | null>(null);
   const [cardKey, setCardKey]       = useState(0);
   const [showTip, setShowTip]       = useState(false);
+  const [wrongAttempts, setWrongAttempts] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setComboText(null);
     setXpLabel(null);
     setShowTip(false);
+    setWrongAttempts(0);
     setCardKey((k) => k + 1);
     inputRef.current?.focus();
   }, [example.id]);
@@ -84,6 +86,10 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setShaking(true);
       setTimeout(() => setFlashColor(""), 350);
       setTimeout(() => setShaking(false), 500);
+      const newWrongCount = wrongAttempts + 1;
+      setWrongAttempts(newWrongCount);
+      // Auto-show tip after first wrong attempt
+      if (newWrongCount >= 1 && tips.length > 0) setShowTip(true);
     }
     setTimeout(() => setXpLabel(null), 1200);
   }
@@ -268,6 +274,11 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <p className="text-sm text-slate-600 mt-1">
                 Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
               </p>
+              {tips.length > 0 && (
+                <p className="text-xs font-semibold text-amber-700 mt-2">
+                  💡 Nápověda odemčena — viz níže
+                </p>
+              )}
             </div>
           </div>
         )}

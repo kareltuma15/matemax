@@ -34,11 +34,13 @@ import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
 import LoggedInTopicMap from "@/components/LoggedInTopicMap";
 import StreakMilestoneModal from "@/components/StreakMilestoneModal";
+import ProgressMilestoneModal from "@/components/ProgressMilestoneModal";
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS } from "@/types";
 
 const STREAK_MILESTONES: Record<number, number> = { 7: 50, 14: 100, 30: 200, 60: 350, 100: 500 };
+const PROGRESS_MILESTONES: Record<number, number> = { 10: 30, 25: 50, 50: 100, 100: 200, 250: 500, 500: 1000 };
 
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
@@ -157,6 +159,7 @@ function TreningPageInner() {
   const [rezimFilter, setRezimFilter] = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
+  const [progressMilestone, setProgressMilestone] = useState<{ count: number; xpBonus: number } | null>(null);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
 
@@ -372,6 +375,23 @@ function TreningPageInner() {
         topicStats: newTopicStats,
         lastSessionDate: new Date().toISOString().slice(0, 10),
       };
+
+      // Progress milestone check (10, 25, 50, 100, 250, 500 příkladů)
+      const newTotal = newGam.totalSolved;
+      if (PROGRESS_MILESTONES[newTotal] !== undefined) {
+        try {
+          const celebrated = JSON.parse(localStorage.getItem("matemax-progress-milestones") ?? "[]") as number[];
+          if (!celebrated.includes(newTotal)) {
+            celebrated.push(newTotal);
+            localStorage.setItem("matemax-progress-milestones", JSON.stringify(celebrated));
+            const bonusXp = PROGRESS_MILESTONES[newTotal];
+            const withBonus = recordActivity(newP, false, bonusXp);
+            saveProgress(withBonus);
+            setXp(withBonus.xp);
+            setProgressMilestone({ count: newTotal, xpBonus: bonusXp });
+          }
+        } catch { /* ignore */ }
+      }
 
       // Badge checks per answer
       const newBadges: string[] = [
@@ -604,6 +624,13 @@ function TreningPageInner() {
             streak={streakMilestone.streak}
             xpBonus={streakMilestone.xpBonus}
             onClose={() => setStreakMilestone(null)}
+          />
+        )}
+        {progressMilestone && (
+          <ProgressMilestoneModal
+            count={progressMilestone.count}
+            xpBonus={progressMilestone.xpBonus}
+            onClose={() => setProgressMilestone(null)}
           />
         )}
         {showFirstSession && (
