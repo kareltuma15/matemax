@@ -429,6 +429,27 @@ function LoggedInDashboard({
         {/* XP bar */}
         <XPProgressBar xp={xp} />
 
+        {/* Premium upsell banner — only for free users */}
+        {!isPremium && (
+          <Link
+            href="/cenik"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-opacity hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "1px solid #2E6DA4" }}
+          >
+            <span className="text-xl shrink-0">🔒</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-black text-white leading-tight">9 prémiových témat čeká</p>
+              <p className="text-xs text-blue-300 mt-0.5">Geometrie, Mocniny, Výrazy a další · od 99 Kč/měsíc</p>
+            </div>
+            <span
+              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg whitespace-nowrap"
+              style={{ background: "#2E6DA4", color: "#fff" }}
+            >
+              Odemknout →
+            </span>
+          </Link>
+        )}
+
         {/* Due cards + readiness pill row */}
         {(dueCount > 0 || readinessScore) && (
           <div className="flex gap-2">

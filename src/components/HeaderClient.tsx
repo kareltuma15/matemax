@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { loadProgress } from "@/lib/progress";
 import { supabase } from "@/lib/supabase";
+import { usePremium } from "@/lib/premium";
 
 export default function HeaderClient() {
   const pathname = usePathname();
@@ -14,6 +15,7 @@ export default function HeaderClient() {
   const [xpBump, setXpBump]       = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [authReady, setAuthReady] = useState(false);
+  const { isPremium, loading: premiumLoading } = usePremium();
 
   useEffect(() => {
     const p = loadProgress();
@@ -133,6 +135,26 @@ export default function HeaderClient() {
             <span className="text-sm font-bold" style={{ color: "#2E6DA4" }}>{xp}</span>
             <span className="text-xs hidden sm:inline" style={{ color: "#2E6DA4" }}>XP</span>
           </div>
+
+          {/* Premium badge / upsell — only when logged in and plan known */}
+          {authReady && userEmail && !premiumLoading && (
+            isPremium ? (
+              <span
+                className="text-[11px] font-black px-2.5 py-1 rounded-lg hidden sm:flex items-center gap-1"
+                style={{ background: "#fef9c3", color: "#a16207", border: "1px solid #fde68a" }}
+              >
+                ⭐ Premium
+              </span>
+            ) : (
+              <Link
+                href="/cenik"
+                className="text-[11px] font-black px-2.5 py-1 rounded-lg hidden sm:flex items-center gap-1 transition-colors hover:opacity-90"
+                style={{ background: "#0D1B3E", color: "#fff" }}
+              >
+                🔓 Upgradovat
+              </Link>
+            )
+          )}
 
           {/* Auth — only render once session is known to avoid flash */}
           {authReady && (

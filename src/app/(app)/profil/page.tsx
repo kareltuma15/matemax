@@ -470,6 +470,53 @@ export default function ProfilPage() {
       {/* ── TAB: PŘEHLED ── */}
       {activeTab === "prehled" && (
         <div className="tab-enter flex flex-col gap-4">
+
+          {/* ── SEKCE: TVŮJ PLÁN ── */}
+          {isPremium ? (
+            <div
+              className="rounded-2xl p-4 flex items-center gap-4"
+              style={{ background: "linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%)", border: "1.5px solid #fde68a" }}
+            >
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0"
+                style={{ background: "rgba(161,98,7,0.12)" }}
+              >
+                ⭐
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black" style={{ color: "#a16207" }}>Premium plán</p>
+                <p className="text-xs mt-0.5" style={{ color: "#92400e" }}>
+                  Všechna témata odemčena · Plný přístup
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div
+              className="rounded-2xl p-4 flex items-center gap-4"
+              style={{ background: "#f8faff", border: "1.5px solid #bfdbfe" }}
+            >
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0"
+                style={{ background: "#eff6ff" }}
+              >
+                🔓
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Zdarma plán</p>
+                <p className="text-xs mt-0.5 text-slate-500">
+                  5 z 14 témat · 9 prémiových témat uzamčeno
+                </p>
+              </div>
+              <Link
+                href="/cenik"
+                className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white transition-opacity hover:opacity-90"
+                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+              >
+                Upgradovat →
+              </Link>
+            </div>
+          )}
+
           {/* Countdown to přijímačky */}
           <CountdownBanner variant="full" />
 
