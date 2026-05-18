@@ -23,13 +23,9 @@ export const PREMIUM_TOPICS = new Set([
   "uhly",
 ]);
 
-export function isPremium(): boolean {
-  return false;
-}
-
-/** Lock check for logged-in free users (future paid gate — currently inactive) */
-export function isTopicLocked(tema: string): boolean {
-  return !isPremium() && PREMIUM_TOPICS.has(tema) && false; // gate disabled for now
+/** Lock check for logged-in free users */
+export function isTopicLocked(tema: string, isPremium: boolean): boolean {
+  return !isPremium && PREMIUM_TOPICS.has(tema);
 }
 
 /** Lock check for guests (not authenticated) */

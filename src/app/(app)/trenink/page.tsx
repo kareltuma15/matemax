@@ -34,6 +34,7 @@ import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
 import StreakMilestoneModal from "@/components/StreakMilestoneModal";
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
+import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS } from "@/types";
 
 const STREAK_MILESTONES: Record<number, number> = { 7: 50, 14: 100, 30: 200, 60: 350, 100: 500 };
@@ -157,6 +158,8 @@ function TreningPageInner() {
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
+
+  const { isPremium } = usePremium();
 
   // Gamification
   const [xp, setXp]                     = useState(0);
@@ -622,7 +625,7 @@ function TreningPageInner() {
     else setCurrentIdx((i) => i + 1);
   }
 
-  if (isTopicLocked(currentExample.tema)) {
+  if (isTopicLocked(currentExample.tema, isPremium)) {
     return (
       <>
         {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
