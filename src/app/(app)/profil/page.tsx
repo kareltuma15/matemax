@@ -13,6 +13,8 @@ import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
 import CountdownBanner from "@/components/CountdownBanner";
+import { usePremium } from "@/lib/premium";
+import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
@@ -71,6 +73,7 @@ export default function ProfilPage() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordMsg, setPasswordMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
+  const { isPremium } = usePremium();
 
   useEffect(() => {
     if (supabase) {
@@ -607,15 +610,18 @@ export default function ProfilPage() {
                   const pctVal = Math.round(score * 100);
                   const barColor = score >= 0.67 ? "#22c55e" : score >= 0.4 ? "#f59e0b" : "#ef4444";
                   const textColor = score >= 0.67 ? "#166534" : score >= 0.4 ? "#92400e" : "#991b1b";
+                  const locked = !isPremium && PREMIUM_TOPICS.has(tema);
                   return (
-                    <Link key={tema} href={`/trenink?tema=${tema}`}
+                    <Link key={tema} href={locked ? "/cenik" : `/trenink?tema=${tema}`}
                       className="flex items-center gap-3 px-4 py-3 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
-                      <span className="text-sm text-slate-700 w-28 shrink-0 truncate">{TEMA_LABELS[tema] ?? tema}</span>
+                      <span className="text-sm text-slate-700 w-28 shrink-0 truncate">
+                        {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
+                      </span>
                       <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-                        <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: barColor }} />
+                        <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: locked ? "#cbd5e1" : barColor }} />
                       </div>
-                      <span className="text-xs font-bold shrink-0 w-10 text-right" style={{ color: textColor }}>
-                        {pctVal}%
+                      <span className="text-xs font-bold shrink-0 w-10 text-right" style={{ color: locked ? "#94a3b8" : textColor }}>
+                        {locked ? "Premium" : `${pctVal}%`}
                       </span>
                     </Link>
                   );

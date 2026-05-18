@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 
 const FREE_FEATURES = [
@@ -26,7 +26,24 @@ const PREMIUM_FEATURES = [
 ];
 
 export default function CenikPage() {
-  const [showComingSoon, setShowComingSoon] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistState, setWaitlistState] = useState<"idle" | "loading" | "done" | "error">("idle");
+
+  async function handleWaitlist(e: React.FormEvent) {
+    e.preventDefault();
+    if (!waitlistEmail.includes("@")) return;
+    setWaitlistState("loading");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: waitlistEmail }),
+      });
+      setWaitlistState(res.ok ? "done" : "error");
+    } catch {
+      setWaitlistState("error");
+    }
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -132,21 +149,39 @@ export default function CenikPage() {
               ))}
             </ul>
 
-            {showComingSoon ? (
+            {waitlistState === "done" ? (
               <div
                 className="mt-8 w-full py-3.5 rounded-xl text-center font-black text-base"
                 style={{ background: "#f0fdf4", color: "#16a34a", border: "2px solid #bbf7d0" }}
               >
-                Brzy dostupné 🚀
+                ✅ Zapsáno! Dáme ti vědět jako prvním.
               </div>
             ) : (
-              <button
-                onClick={() => setShowComingSoon(true)}
-                className="mt-8 w-full py-3.5 text-white font-black rounded-xl text-base transition-colors"
-                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-              >
-                Vyzkoušet Premium →
-              </button>
+              <form onSubmit={handleWaitlist} className="mt-8 flex flex-col gap-2">
+                <p className="text-xs text-center font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                  🚀 Spuštění brzy — zapiš se na čekací listinu
+                </p>
+                <input
+                  type="email"
+                  required
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
+                  placeholder="tvůj@email.cz"
+                  className="w-full px-4 py-3 rounded-xl border-2 text-sm outline-none transition-colors"
+                  style={{ borderColor: waitlistState === "error" ? "#fca5a5" : "#2E6DA4" }}
+                />
+                <button
+                  type="submit"
+                  disabled={waitlistState === "loading"}
+                  className="w-full py-3.5 text-white font-black rounded-xl text-base transition-opacity disabled:opacity-60"
+                  style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+                >
+                  {waitlistState === "loading" ? "Ukládám…" : "Chci být první →"}
+                </button>
+                {waitlistState === "error" && (
+                  <p className="text-xs text-center text-red-500">Něco se pokazilo, zkus to znovu.</p>
+                )}
+              </form>
             )}
           </div>
         </div>

@@ -32,6 +32,7 @@ import FirstSessionModal from "@/components/FirstSessionModal";
 import LevelUpModal from "@/components/LevelUpModal";
 import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
+import LoggedInTopicMap from "@/components/LoggedInTopicMap";
 import StreakMilestoneModal from "@/components/StreakMilestoneModal";
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
@@ -213,7 +214,9 @@ function TreningPageInner() {
     // Auth check gates session building (guest vs. logged-in pool)
     const finish = (guest: boolean) => {
       setIsGuest(guest);
-      if (!guest || urlTema) {
+      // Guests: build only when tema specified (otherwise GuestTopicMap shows)
+      // Logged-in: build only when tema or rezim specified (otherwise LoggedInTopicMap shows)
+      if (guest ? !!urlTema : !!(urlTema || urlRezim)) {
         setSessionIds(buildSession(loaded, urlTema, urlRezim, guest));
       }
       setHydrated(true);
@@ -503,6 +506,22 @@ function TreningPageInner() {
         onSelectTopic={(tema) => {
           setTemaFilter(tema);
           setSessionIds(buildSession(cards, tema, null, true));
+        }}
+      />
+    );
+  }
+
+  // Logged-in: show topic map if no topic/rezim selected yet
+  if (!isGuest && !temaFilter && !rezimFilter && sessionIds.length === 0 && !done) {
+    return (
+      <LoggedInTopicMap
+        isPremium={isPremium}
+        onSelectTopic={(tema) => {
+          setTemaFilter(tema);
+          setSessionIds(buildSession(cards, tema, null, false));
+        }}
+        onStartMix={() => {
+          setSessionIds(buildSession(cards, null, null, false));
         }}
       />
     );

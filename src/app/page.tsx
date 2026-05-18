@@ -14,6 +14,8 @@ import { localLoadCards, localLoadSessions } from "@/lib/storage";
 import { isDue } from "@/lib/sm2";
 import CountdownBanner from "@/components/CountdownBanner";
 import GuidanceModal from "@/components/GuidanceModal";
+import { usePremium } from "@/lib/premium";
+import { PREMIUM_TOPICS } from "@/lib/subscription";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -221,6 +223,7 @@ function LoggedInDashboard({
   const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
   const [hasWrongCards, setHasWrongCards] = useState(false);
   const [guidanceModal, setGuidanceModal] = useState<null | { type: "diagnostika" | "comeback"; daysSince?: number }>(null);
+  const { isPremium } = usePremium();
 
   useEffect(() => {
     // Guidance modal — zobraz max 1× za den
@@ -487,16 +490,21 @@ function LoggedInDashboard({
               💡 Dnes doporučujeme
             </p>
             <div className="flex flex-wrap gap-2">
-              {suggestedTopics.map(({ tema, label }) => (
-                <Link
-                  key={tema}
-                  href={`/trenink?tema=${tema}`}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
-                  style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-                >
-                  {label} →
-                </Link>
-              ))}
+              {suggestedTopics.map(({ tema, label }) => {
+                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                return (
+                  <Link
+                    key={tema}
+                    href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                    className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+                    style={locked
+                      ? { background: "#f1f5f9", color: "#94a3b8", border: "1px solid #e2e8f0" }
+                      : { background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+                  >
+                    {locked ? "🔒 " : ""}{label} {locked ? "" : "→"}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
@@ -662,15 +670,17 @@ function LoggedInDashboard({
           <div className="bg-white rounded-2xl border border-slate-200 p-5">
             <p className="text-sm font-bold mb-3" style={{ color: "#0D1B3E" }}>🎯 Kde máš mezery</p>
             <div className="flex flex-col gap-2">
-              {weakTopics.map(({ tema, score }) => (
+              {weakTopics.map(({ tema, score }) => {
+                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                return (
                 <Link
                   key={tema}
-                  href={`/trenink?tema=${tema}`}
+                  href={locked ? "/cenik" : `/trenink?tema=${tema}`}
                   className="flex items-center justify-between px-4 py-3 rounded-xl border transition-colors hover:bg-slate-50"
                   style={{ borderColor: "#e2e8f0" }}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-base">📉</span>
+                    <span className="text-base">{locked ? "🔒" : "📉"}</span>
                     <span className="text-sm font-semibold text-slate-700">
                       {TEMA_LABELS[tema] ?? tema}
                     </span>
@@ -685,10 +695,11 @@ function LoggedInDashboard({
                     >
                       {Math.round(score * 100)} %
                     </span>
-                    <span className="text-xs text-slate-400">procvičit →</span>
+                    <span className="text-xs text-slate-400">{locked ? "Premium →" : "procvičit →"}</span>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
