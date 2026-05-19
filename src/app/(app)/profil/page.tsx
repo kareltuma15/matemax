@@ -8,7 +8,8 @@ import { loadProgress } from "@/lib/progress";
 import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeConfig } from "@/lib/gamification";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
-import { TEMA_LABELS } from "@/types";
+import { TEMA_LABELS, SM2Card } from "@/types";
+import { examples } from "@/data/examples";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
@@ -75,6 +76,7 @@ export default function ProfilPage() {
   const [perfectSessions, setPerfectSessions] = useState(0);
   const [dailyGoalsCompleted, setDailyGoalsCompleted] = useState(0);
   const [topicStats, setTopicStats]      = useState<Record<string, { correct: number; total: number }>>({});
+  const [sm2Cards, setSm2Cards]          = useState<SM2Card[]>([]);
   const [sessions, setSessions]          = useState<SessionHistoryEntry[]>([]);
   const [showDay2Banner, setShowDay2Banner] = useState(false);
   const [freezeCount, setFreezeCount]    = useState(0);
@@ -108,6 +110,11 @@ export default function ProfilPage() {
     setPerfectSessions(g.perfectSessions);
     setDailyGoalsCompleted(g.dailyGoalsCompleted);
     setTopicStats(g.topicStats ?? {});
+
+    try {
+      const raw = localStorage.getItem("matemax-cards");
+      if (raw) setSm2Cards(JSON.parse(raw) as SM2Card[]);
+    } catch { /* ignore */ }
 
     setSessions(localLoadSessions());
 
@@ -387,6 +394,16 @@ export default function ProfilPage() {
   const pct = levelTotal !== null ? Math.min(100, Math.round((levelXP / levelTotal) * 100)) : 100;
 
   const initials = email ? email[0].toUpperCase() : "?";
+
+  // SM-2 progress per topic
+  const sm2CardMap = new Map(sm2Cards.map((c) => [c.exampleId, c]));
+  const sm2TopicStats = Object.keys(TEMA_LABELS).reduce<Record<string, { practiced: number; mastered: number; total: number }>>((acc, tema) => {
+    const topicExamples = examples.filter((ex) => ex.tema === tema);
+    const practiced = topicExamples.filter((ex) => (sm2CardMap.get(ex.id)?.repetitions ?? 0) > 0).length;
+    const mastered  = topicExamples.filter((ex) => (sm2CardMap.get(ex.id)?.interval ?? 0) >= 7).length;
+    acc[tema] = { practiced, mastered, total: topicExamples.length };
+    return acc;
+  }, {});
 
   const totalCorrect = topicScores.reduce((s, t) => s + t.correct, 0);
   const totalAnswered = topicScores.reduce((s, t) => s + t.total, 0);
@@ -689,18 +706,38 @@ export default function ProfilPage() {
                   const barColor = score >= 0.67 ? "#22c55e" : score >= 0.4 ? "#f59e0b" : "#ef4444";
                   const textColor = score >= 0.67 ? "#166534" : score >= 0.4 ? "#92400e" : "#991b1b";
                   const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                  const sm2 = sm2TopicStats[tema];
                   return (
                     <Link key={tema} href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                      className="flex items-center gap-3 px-4 py-3 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
-                      <span className="text-sm text-slate-700 w-28 shrink-0 truncate">
-                        {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
-                      </span>
-                      <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-                        <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: locked ? "#cbd5e1" : barColor }} />
+                      className="flex flex-col gap-1 px-4 py-3 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-slate-700 w-28 shrink-0 truncate">
+                          {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
+                        </span>
+                        <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+                          <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: locked ? "#cbd5e1" : barColor }} />
+                        </div>
+                        <span className="text-xs font-bold shrink-0 w-10 text-right" style={{ color: locked ? "#94a3b8" : textColor }}>
+                          {locked ? "Premium" : `${pctVal}%`}
+                        </span>
                       </div>
-                      <span className="text-xs font-bold shrink-0 w-10 text-right" style={{ color: locked ? "#94a3b8" : textColor }}>
-                        {locked ? "Premium" : `${pctVal}%`}
-                      </span>
+                      {sm2 && sm2.practiced > 0 && !locked && (
+                        <div className="flex items-center gap-3 pl-0">
+                          <span className="w-28 shrink-0" />
+                          <div className="flex items-center gap-2 text-[11px]" style={{ color: "#64748b" }}>
+                            <span>🃏</span>
+                            <span>{sm2.practiced} procvičeno</span>
+                            {sm2.mastered > 0 && (
+                              <>
+                                <span className="text-slate-300">·</span>
+                                <span style={{ color: "#2E6DA4" }}>{sm2.mastered} zvládnuto</span>
+                              </>
+                            )}
+                            <span className="text-slate-300">·</span>
+                            <span>{sm2.total} celkem</span>
+                          </div>
+                        </div>
+                      )}
                     </Link>
                   );
                 })}
