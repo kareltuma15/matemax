@@ -1,12 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { PENDING_REF_KEY } from "@/lib/referral";
 
 export default function RegistracePage() {
+  return (
+    <Suspense>
+      <RegistraceForm />
+    </Suspense>
+  );
+}
+
+function RegistraceForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail]           = useState("");
