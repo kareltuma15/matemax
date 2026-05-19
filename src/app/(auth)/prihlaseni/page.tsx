@@ -42,17 +42,25 @@ function PrihlaseniForm() {
     setError(null);
     setLoading(true);
 
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+    try {
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
-    setLoading(false);
-    if (authError) {
-      setError(authError.message === "Invalid login credentials"
-        ? "Špatný email nebo heslo."
-        : authError.message);
-      return;
+      setLoading(false);
+      if (authError) {
+        setError(authError.message === "Invalid login credentials"
+          ? "Špatný email nebo heslo."
+          : authError.message);
+        return;
+      }
+      const next = searchParams.get("next");
+      const destination = next && next.startsWith("/") ? next : "/trenink";
+      // Full page reload needed so server components + proxy see the fresh session cookie
+      window.location.href = destination;
+    } catch (err) {
+      setLoading(false);
+      setError("Přihlášení se nezdařilo, zkus to znovu.");
+      console.error("[login]", err);
     }
-    const next = searchParams.get("next");
-    router.push(next && next.startsWith("/") ? next : "/trenink");
   }
 
   return (
