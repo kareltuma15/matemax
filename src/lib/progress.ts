@@ -3,7 +3,8 @@ import { UserProgress } from "@/types";
 const KEY = "matemax-progress";
 
 function today(): string {
-  return new Date().toISOString().slice(0, 10);
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
 export function loadProgress(): UserProgress {
@@ -32,7 +33,8 @@ export function recordActivity(p: UserProgress, wasCorrect: boolean, xpDelta?: n
   } else {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const yStr = yesterday.toISOString().slice(0, 10);
+    const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+
     if (p.lastActiveDate === yStr) {
       streak = streak + 1;
     } else if (freezeCount > 0) {

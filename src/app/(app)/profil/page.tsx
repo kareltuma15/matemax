@@ -34,20 +34,32 @@ type Tab = "prehled" | "historie" | "odznaky";
 
 function getBadgeProgress(
   badge: BadgeConfig,
-  stats: { totalSolved: number; streak: number }
+  stats: { totalSolved: number; streak: number; perfectSessions: number; dailyGoalsCompleted: number; topicStats: Record<string, { correct: number; total: number }> }
 ): { current: number; target: number } | null {
   const id = badge.id;
+
+  if (id === "badge_first_example") return { current: Math.min(stats.totalSolved, 1), target: 1 };
+
   const exampleMatch = id.match(/badge_(\d+)_examples/);
   if (exampleMatch) {
     return { current: Math.min(stats.totalSolved, Number(exampleMatch[1])), target: Number(exampleMatch[1]) };
   }
-  if (id === "badge_first_example") {
-    return { current: Math.min(stats.totalSolved, 1), target: 1 };
-  }
+
   const streakMatch = id.match(/badge_streak_(\d+)/);
   if (streakMatch) {
     return { current: Math.min(stats.streak, Number(streakMatch[1])), target: Number(streakMatch[1]) };
   }
+
+  if (id === "badge_perfect_session_3x") return { current: Math.min(stats.perfectSessions, 3), target: 3 };
+  if (id === "badge_daily_goal_7x") return { current: Math.min(stats.dailyGoalsCompleted, 7), target: 7 };
+
+  const topicMatch = id.match(/^badge_([a-z_]+)_master$/);
+  if (topicMatch) {
+    const tema = topicMatch[1];
+    const ts = stats.topicStats[tema] ?? { correct: 0, total: 0 };
+    return { current: Math.min(ts.total, 30), target: 30 };
+  }
+
   return null;
 }
 
@@ -60,6 +72,9 @@ export default function ProfilPage() {
   const [totalSolved, setTotalSolved]    = useState(0);
   const [topicScores, setTopicScores]    = useState<TopicScore[]>([]);
   const [earnedBadges, setEarnedBadges]  = useState<string[]>([]);
+  const [perfectSessions, setPerfectSessions] = useState(0);
+  const [dailyGoalsCompleted, setDailyGoalsCompleted] = useState(0);
+  const [topicStats, setTopicStats]      = useState<Record<string, { correct: number; total: number }>>({});
   const [sessions, setSessions]          = useState<SessionHistoryEntry[]>([]);
   const [showDay2Banner, setShowDay2Banner] = useState(false);
   const [freezeCount, setFreezeCount]    = useState(0);
@@ -90,6 +105,9 @@ export default function ProfilPage() {
     const g = loadGamification();
     setEarnedBadges(g.earnedBadges);
     setTotalSolved(g.totalSolved);
+    setPerfectSessions(g.perfectSessions);
+    setDailyGoalsCompleted(g.dailyGoalsCompleted);
+    setTopicStats(g.topicStats ?? {});
 
     setSessions(localLoadSessions());
 
@@ -97,7 +115,7 @@ export default function ProfilPage() {
     if (diagDone && p.streak === 1 && p.lastActiveDate) {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      const yStr = yesterday.toISOString().slice(0, 10);
+      const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
       const firstSessionDone = !!localStorage.getItem("matemax-first-session-done");
       if (p.lastActiveDate === yStr && firstSessionDone) {
         setShowDay2Banner(true);
@@ -310,6 +328,19 @@ export default function ProfilPage() {
 
   async function handleLogout() {
     if (supabase) await supabase.auth.signOut();
+    const keysToRemove = [
+      "matemax-progress", "matemax-cards", "matemax-gamification",
+      "matemax-diag-done", "matemax-diag-results", "matemax-today",
+      "matemax-streak-milestones", "matemax-freeze-used", "matemax-first-session-done",
+      "matemax-sessions", "matemax-session-draft", "matemax-progress-milestones",
+    ];
+    keysToRemove.forEach((k) => localStorage.removeItem(k));
+    const challengeKeys: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k?.startsWith("matemax-challenge-done-")) challengeKeys.push(k);
+    }
+    challengeKeys.forEach((k) => localStorage.removeItem(k));
     router.push("/");
   }
 
@@ -369,7 +400,7 @@ export default function ProfilPage() {
     .sort((a, b) => (RARITY_ORDER[a.rarity] ?? 0) - (RARITY_ORDER[b.rarity] ?? 0))[0] ?? null;
 
   const nextBadgeProgress = nextBadge
-    ? getBadgeProgress(nextBadge, { totalSolved, streak })
+    ? getBadgeProgress(nextBadge, { totalSolved, streak, perfectSessions, dailyGoalsCompleted, topicStats })
     : null;
 
   const TAB_LIST: { id: Tab; label: string }[] = [

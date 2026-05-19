@@ -45,6 +45,37 @@ const PROGRESS_MILESTONES: Record<number, number> = { 10: 30, 25: 50, 50: 100, 1
 const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
 const SESSION_SIZE = 7;
+const SESSION_DRAFT_KEY = "matemax-session-draft";
+
+function localDateStr(d = new Date()): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+type SessionDraft = {
+  sessionIds: string[];
+  currentIdx: number;
+  correct: number;
+  skipped: number;
+  wrongAnswers: WrongAnswer[];
+  temaFilter: string | null;
+  rezimFilter: "chyby" | "sm2" | null;
+};
+
+function saveSessionDraft(draft: SessionDraft) {
+  try { localStorage.setItem(SESSION_DRAFT_KEY, JSON.stringify(draft)); } catch { /* ignore */ }
+}
+
+function loadSessionDraft(): SessionDraft | null {
+  try {
+    const raw = localStorage.getItem(SESSION_DRAFT_KEY);
+    if (raw) return JSON.parse(raw) as SessionDraft;
+  } catch { /* ignore */ }
+  return null;
+}
+
+function clearSessionDraft() {
+  localStorage.removeItem(SESSION_DRAFT_KEY);
+}
 
 function loadCards(): SM2Card[] {
   if (typeof window === "undefined") return [];
@@ -181,7 +212,7 @@ function TreningPageInner() {
     setCards(loaded);
     setDiagScores(loadDiagScores());
 
-    const todayStr = new Date().toISOString().slice(0, 10);
+    const todayStr = localDateStr();
     setFreezeUsedToday(localStorage.getItem("matemax-freeze-used") === todayStr);
 
     const p = loadProgress();
@@ -199,7 +230,7 @@ function TreningPageInner() {
         weekendDaysSeen: [
           ...new Set([...g.weekendDaysSeen, sessionStartRef.current.getDay()]),
         ],
-        lastSessionDate: new Date().toISOString().slice(0, 10),
+        lastSessionDate: localDateStr(),
       };
       let extraXP = 0;
       for (const id of startBadges) extraXP += getBadgeConfig(id)?.xp_reward ?? 0;
@@ -217,9 +248,16 @@ function TreningPageInner() {
     // Auth check gates session building (guest vs. logged-in pool)
     const finish = (guest: boolean) => {
       setIsGuest(guest);
-      // Guests: build only when tema specified (otherwise GuestTopicMap shows)
-      // Logged-in: build only when tema or rezim specified (otherwise LoggedInTopicMap shows)
-      if (guest ? !!urlTema : !!(urlTema || urlRezim)) {
+
+      // Try to restore a previously saved session draft
+      const draft = loadSessionDraft();
+      if (draft && draft.temaFilter === urlTema && draft.rezimFilter === urlRezim && draft.sessionIds.length > 0) {
+        setSessionIds(draft.sessionIds);
+        setCurrentIdx(draft.currentIdx);
+        setCorrect(draft.correct);
+        setSkipped(draft.skipped);
+        setWrongAnswers(draft.wrongAnswers);
+      } else if (guest ? !!urlTema : !!(urlTema || urlRezim)) {
         setSessionIds(buildSession(loaded, urlTema, urlRezim, guest));
       }
       setHydrated(true);
@@ -251,6 +289,9 @@ function TreningPageInner() {
       xp: xpEarned,
     });
 
+    // Session complete — clear draft
+    clearSessionDraft();
+
     if (!supabase) return;
 
     // First session check (localStorage flag)
@@ -260,42 +301,45 @@ function TreningPageInner() {
       setShowFirstSession(true);
     }
 
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(async ({ data }) => {
       if (!data.session) return;
       const uid = data.session.user.id;
       const p = loadProgress();
-      remoteLogSession({ user_id: uid, date: new Date().toISOString().slice(0, 10), xp_earned: xpEarned, correct, total: answered });
-      const level = getLevelFromXP(p.xp);
-      remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0);
-      remoteSyncBadges(uid, gamState.earnedBadges);
+      try {
+        await remoteLogSession({ user_id: uid, date: localDateStr(), xp_earned: xpEarned, correct, total: answered });
+        const level = getLevelFromXP(p.xp);
+        await remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0);
+        await remoteSyncBadges(uid, gamState.earnedBadges);
 
-      // Sync SM2 cards pro tuto session (rodičovský dashboard z nich čte téma breakdown)
-      const sessionSet = new Set(sessionIds);
-      for (const card of cards) {
-        if (sessionSet.has(card.exampleId)) {
-          remoteSaveSM2Card({
-            user_id: uid,
-            example_id: card.exampleId,
-            interval: card.interval,
-            ease: card.easeFactor,
-            next_review: card.nextReview,
-          });
-        }
-      }
-
-      // Onboarding: první session dokončena
-      if (isFirstSession && supabase) {
-        supabase
-          .from("user_onboarding")
-          .upsert(
-            {
+        // Sync SM2 cards pro tuto session (rodičovský dashboard z nich čte téma breakdown)
+        const sessionSet = new Set(sessionIds);
+        for (const card of cards) {
+          if (sessionSet.has(card.exampleId)) {
+            remoteSaveSM2Card({
               user_id: uid,
-              current_state: "first_session_completed",
-              first_session_completed_at: new Date().toISOString(),
-            },
-            { onConflict: "user_id" }
-          )
-          .then(() => {});
+              example_id: card.exampleId,
+              interval: card.interval,
+              ease: card.easeFactor,
+              next_review: card.nextReview,
+            });
+          }
+        }
+
+        // Onboarding: první session dokončena
+        if (isFirstSession && supabase) {
+          await supabase
+            .from("user_onboarding")
+            .upsert(
+              {
+                user_id: uid,
+                current_state: "first_session_completed",
+                first_session_completed_at: new Date().toISOString(),
+              },
+              { onConflict: "user_id" }
+            );
+        }
+      } catch {
+        // Sync failure is non-critical — data is already saved locally
       }
     });
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -373,7 +417,7 @@ function TreningPageInner() {
         totalSolved: gamState.totalSolved + 1,
         consecutiveCorrect: newConsec,
         topicStats: newTopicStats,
-        lastSessionDate: new Date().toISOString().slice(0, 10),
+        lastSessionDate: localDateStr(),
       };
 
       // Progress milestone check (10, 25, 50, 100, 250, 500 příkladů)
@@ -429,6 +473,17 @@ function TreningPageInner() {
       if (wasCorrect) setCorrect((n) => n + 1);
 
       const isLastAnswer = currentIdx + 1 >= sessionIds.length;
+      if (!isLastAnswer) {
+        saveSessionDraft({
+          sessionIds,
+          currentIdx: currentIdx + 1,
+          correct: wasCorrect ? correct + 1 : correct,
+          skipped,
+          wrongAnswers: wasCorrect ? wrongAnswers : [...wrongAnswers, { exampleId: exId, userAnswer }],
+          temaFilter,
+          rezimFilter: rezimFilter ?? null,
+        });
+      }
       if (isLastAnswer) {
         // Session-end badge checks
         const sessionCorrect = wasCorrect ? correct + 1 : correct;
@@ -438,7 +493,7 @@ function TreningPageInner() {
         );
 
         const newPerfect = sessionCorrect === sessionTotal ? finalGam.perfectSessions + 1 : finalGam.perfectSessions;
-        const todayStr = new Date().toISOString().slice(0, 10);
+        const todayStr = localDateStr();
         const newDailyGoals =
           finalGam.lastDailyGoalDate !== todayStr
             ? finalGam.dailyGoalsCompleted + 1
@@ -483,6 +538,7 @@ function TreningPageInner() {
   );
 
   function restart(rezim?: "chyby" | "sm2" | null) {
+    clearSessionDraft();
     setRezimFilter(rezim ?? null);
     setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false));
     setCurrentIdx(0);
@@ -665,8 +721,19 @@ function TreningPageInner() {
   const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < 0.67;
 
   function handleSkip() {
-    setSkipped((n) => n + 1);
     const isLast = currentIdx + 1 >= sessionIds.length;
+    if (!isLast) {
+      saveSessionDraft({
+        sessionIds,
+        currentIdx: currentIdx + 1,
+        correct,
+        skipped: skipped + 1,
+        wrongAnswers,
+        temaFilter,
+        rezimFilter: rezimFilter ?? null,
+      });
+    }
+    setSkipped((n) => n + 1);
     if (isLast) setDone(true);
     else setCurrentIdx((i) => i + 1);
   }
