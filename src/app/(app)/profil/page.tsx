@@ -16,6 +16,7 @@ import ActivityHeatmap from "@/components/ActivityHeatmap";
 import CountdownBanner from "@/components/CountdownBanner";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
+import { getReferralLink } from "@/lib/referral";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
@@ -68,6 +69,7 @@ export default function ProfilPage() {
   const router = useRouter();
   const [activeTab, setActiveTab]        = useState<Tab>("prehled");
   const [email, setEmail]                = useState<string | null>(null);
+  const [userId, setUserId]              = useState<string | null>(null);
   const [xp, setXp]                      = useState(0);
   const [streak, setStreak]              = useState(0);
   const [totalSolved, setTotalSolved]    = useState(0);
@@ -90,12 +92,14 @@ export default function ProfilPage() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordMsg, setPasswordMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
-  const { isPremium } = usePremium();
+  const [referralCopied, setReferralCopied] = useState(false);
+  const { isPremium, trialDaysLeft } = usePremium();
 
   useEffect(() => {
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
         setEmail(data.session?.user.email ?? null);
+        setUserId(data.session?.user.id ?? null);
       });
     }
 
@@ -534,9 +538,20 @@ export default function ProfilPage() {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-black" style={{ color: "#a16207" }}>Premium plán</p>
                 <p className="text-xs mt-0.5" style={{ color: "#92400e" }}>
-                  Všechna témata odemčena · Plný přístup
+                  {trialDaysLeft !== null
+                    ? `🎁 Trial · zbývá ${trialDaysLeft} ${trialDaysLeft === 1 ? "den" : trialDaysLeft <= 4 ? "dny" : "dní"}`
+                    : "Všechna témata odemčena · Plný přístup"}
                 </p>
               </div>
+              {trialDaysLeft !== null && (
+                <Link
+                  href="/cenik"
+                  className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white"
+                  style={{ background: "#a16207" }}
+                >
+                  Aktivovat →
+                </Link>
+              )}
             </div>
           ) : (
             <div
@@ -692,6 +707,59 @@ export default function ProfilPage() {
                     </>
                   )}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── SEKCE: POZVI KAMARÁDA ── */}
+          {userId && (
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Referral program</p>
+              <div
+                className="rounded-2xl p-4 flex flex-col gap-3"
+                style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">🎁</span>
+                  <div>
+                    <p className="text-sm font-black" style={{ color: "#166534" }}>Pozvi kamaráda</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#15803d" }}>
+                      Oba dostanete <strong>7 dní Premium zdarma</strong> — bez karty, hned.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div
+                    className="flex-1 rounded-xl px-3 py-2 text-xs font-mono truncate"
+                    style={{ background: "#dcfce7", color: "#166534" }}
+                  >
+                    {getReferralLink(userId)}
+                  </div>
+                  <button
+                    onClick={async () => {
+                      await navigator.clipboard.writeText(getReferralLink(userId));
+                      setReferralCopied(true);
+                      setTimeout(() => setReferralCopied(false), 2000);
+                    }}
+                    className="shrink-0 px-3 py-2 rounded-xl text-xs font-bold text-white transition-colors"
+                    style={{ background: referralCopied ? "#15803d" : "#166534" }}
+                  >
+                    {referralCopied ? "✓ Zkopírováno!" : "Kopírovat"}
+                  </button>
+                </div>
+                {typeof navigator !== "undefined" && "share" in navigator && (
+                  <button
+                    onClick={() => navigator.share({
+                      title: "MateMax — přijímačky z matematiky",
+                      text: "Připravuješ se na přijímačky? MateMax je nejlepší appka na matematiku — pozvi se mnou a oba dostaneme 7 dní Premium!",
+                      url: getReferralLink(userId),
+                    }).catch(() => {})}
+                    className="w-full py-2 rounded-xl text-sm font-bold border-2 transition-colors"
+                    style={{ borderColor: "#86efac", color: "#166534", background: "transparent" }}
+                  >
+                    📤 Sdílet odkaz
+                  </button>
+                )}
               </div>
             </div>
           )}

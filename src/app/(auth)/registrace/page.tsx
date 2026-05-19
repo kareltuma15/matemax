@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { PENDING_REF_KEY } from "@/lib/referral";
 
 export default function RegistracePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail]           = useState("");
   const [password, setPassword]     = useState("");
   const [confirm, setConfirm]       = useState("");
@@ -15,12 +17,20 @@ export default function RegistracePage() {
   const [done, setDone]             = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  // Capture referral code from URL → store in localStorage for processing after registration
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) localStorage.setItem(PENDING_REF_KEY, ref.toUpperCase());
+  }, [searchParams]);
+
   async function handleGoogleSignup() {
     if (!supabase) return;
     setGoogleLoading(true);
+    const ref = searchParams.get("ref");
+    const next = ref ? `/vitej?ref=${encodeURIComponent(ref)}` : "/vitej";
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent("/vitej")}` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
     });
     setGoogleLoading(false);
   }
@@ -102,8 +112,19 @@ export default function RegistracePage() {
     );
   }
 
+  const refCode = searchParams.get("ref");
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-7 flex flex-col gap-5">
+      {refCode && (
+        <div
+          className="rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium"
+          style={{ background: "#f0fdf4", border: "1.5px solid #86efac", color: "#166534" }}
+        >
+          <span className="text-xl">🎁</span>
+          <span>Kamarád tě zve! Registruj se a oba dostanete <strong>7 dní Premium zdarma</strong>.</span>
+        </div>
+      )}
       <div>
         <h1 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>Vytvořit účet</h1>
         <p className="text-sm text-slate-400 mt-0.5">Zadarmo, žádná karta nepotřebná</p>

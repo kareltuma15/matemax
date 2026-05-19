@@ -4,29 +4,47 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { PENDING_REF_KEY } from "@/lib/referral";
 
 export default function VitejPage() {
   const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [referralGranted, setReferralGranted] = useState(false);
 
   useEffect(() => {
     if (!supabase) return;
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(async ({ data }) => {
       if (!data.session) {
         router.replace("/prihlaseni");
         return;
       }
+      const uid = data.session.user.id;
       setEmail(data.session.user.email ?? null);
 
       // Posuň stav onboardingu na welcome_shown
       supabase!
         .from("user_onboarding")
         .upsert(
-          { user_id: data.session.user.id, current_state: "welcome_shown" },
+          { user_id: uid, current_state: "welcome_shown" },
           { onConflict: "user_id" }
         )
         .then(() => {});
+
+      // Process pending referral
+      const pendingRef = localStorage.getItem(PENDING_REF_KEY);
+      if (pendingRef) {
+        localStorage.removeItem(PENDING_REF_KEY);
+        try {
+          const res = await fetch("/api/referral", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ referralCode: pendingRef, newUserId: uid }),
+          });
+          const json = await res.json();
+          if (json.ok) setReferralGranted(true);
+        } catch { /* ignore */ }
+      }
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -73,6 +91,19 @@ export default function VitejPage() {
       )}
 
       <div className="flex flex-col items-center gap-6 py-4">
+        {/* Referral reward banner */}
+        {referralGranted && (
+          <div
+            className="w-full rounded-2xl px-4 py-3 flex items-center gap-3"
+            style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}
+          >
+            <span className="text-2xl">🎁</span>
+            <div>
+              <p className="text-sm font-black" style={{ color: "#166534" }}>7 dní Premium aktivováno!</p>
+              <p className="text-xs mt-0.5" style={{ color: "#15803d" }}>Tvůj kamarád dostane taky — díky za pozvání!</p>
+            </div>
+          </div>
+        )}
         {/* Krok indikátor */}
         <div className="w-full">
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">

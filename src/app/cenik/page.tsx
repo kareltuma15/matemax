@@ -2,6 +2,9 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import { usePremium } from "@/lib/premium";
 
 const FREE_FEATURES = [
   "✓ Diagnostický test (všechna témata)",
@@ -26,8 +29,29 @@ const PREMIUM_FEATURES = [
 ];
 
 export default function CenikPage() {
+  const router = useRouter();
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistState, setWaitlistState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [trialState, setTrialState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const { isPremium, trialDaysLeft } = usePremium();
+
+  async function handleStartTrial() {
+    if (!supabase) { router.push("/registrace"); return; }
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) { router.push("/registrace?trial=1"); return; }
+    setTrialState("loading");
+    try {
+      const res = await fetch("/api/trial", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: data.session.user.id }),
+      });
+      setTrialState(res.ok ? "done" : "error");
+      if (res.ok) setTimeout(() => router.push("/trenink"), 1500);
+    } catch {
+      setTrialState("error");
+    }
+  }
 
   async function handleWaitlist(e: React.FormEvent) {
     e.preventDefault();
@@ -83,6 +107,38 @@ export default function CenikPage() {
           Žádná kreditní karta, žádné skryté poplatky.
         </p>
       </section>
+
+      {/* 7-day trial banner */}
+      {!isPremium && (
+        <section className="max-w-2xl mx-auto px-6 pb-8">
+          <div
+            className="rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+          >
+            <div className="text-4xl">🎁</div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="font-black text-white text-base">Vyzkoušej 7 dní Premium zdarma</p>
+              <p className="text-sm mt-0.5" style={{ color: "#93c5fd" }}>
+                Bez kreditní karty · Žádný závazek · Zrušení jedním klikem
+              </p>
+            </div>
+            {trialState === "done" ? (
+              <div className="shrink-0 px-5 py-2.5 rounded-xl font-black text-sm" style={{ background: "#dcfce7", color: "#166534" }}>
+                ✓ Trial aktivován!
+              </div>
+            ) : (
+              <button
+                onClick={handleStartTrial}
+                disabled={trialState === "loading"}
+                className="shrink-0 px-5 py-2.5 rounded-xl font-black text-sm transition-opacity disabled:opacity-60"
+                style={{ background: "#fff", color: "#0D1B3E" }}
+              >
+                {trialState === "loading" ? "Aktivuji…" : "Spustit trial →"}
+              </button>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Pricing cards */}
       <section className="max-w-3xl mx-auto px-6 pb-16">
