@@ -88,8 +88,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setTimeout(() => setShaking(false), 500);
       const newWrongCount = wrongAttempts + 1;
       setWrongAttempts(newWrongCount);
-      // Auto-show tip after first wrong attempt
       if (newWrongCount >= 1 && tips.length > 0) setShowTip(true);
+      // Auto-expand solution steps after wrong answer
+      if (example.reseni_kroky.length > 0) setShowSolution(true);
     }
     setTimeout(() => setXpLabel(null), 1200);
   }
@@ -274,39 +275,72 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <p className="text-sm text-slate-600 mt-1">
                 Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
               </p>
-              {tips.length > 0 && (
-                <p className="text-xs font-semibold text-amber-700 mt-2">
-                  💡 Nápověda odemčena — viz níže
-                </p>
-              )}
             </div>
           </div>
         )}
 
         {/* Solution steps */}
         {status !== "idle" && example.reseni_kroky.length > 0 && (
-          <div>
+          <div
+            className="rounded-xl border overflow-hidden"
+            style={{ borderColor: status === "wrong" ? "#bfdbfe" : "#e2e8f0" }}
+          >
             <button
               onClick={() => setShowSolution(!showSolution)}
-              className="text-sm font-medium transition-colors"
-              style={{ color: "#2E6DA4" }}
+              className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold transition-colors"
+              style={{
+                background: status === "wrong" ? "#eff6ff" : "#f8fafc",
+                color: "#0D1B3E",
+              }}
             >
-              {showSolution ? "▲ Skrýt postup" : "▼ Zobrazit postup řešení"}
+              <span className="flex items-center gap-2">
+                <span className="text-base">📐</span>
+                Jak se to řeší?
+                {status === "wrong" && !showSolution && (
+                  <span
+                    className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                    style={{ background: "#2E6DA4", color: "#fff" }}
+                  >
+                    NOVÉ
+                  </span>
+                )}
+              </span>
+              <span className="text-slate-400 text-xs">{showSolution ? "▲ skrýt" : "▼ zobrazit"}</span>
             </button>
+
             {showSolution && (
-              <ol className="mt-3 space-y-2 pl-1">
-                {example.reseni_kroky.map((krok, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-slate-700">
-                    <span
-                      className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
-                      style={{ background: "#2E6DA4" }}
-                    >
-                      {i + 1}
-                    </span>
-                    <span className="leading-snug"><MathText text={krok} /></span>
-                  </li>
-                ))}
-              </ol>
+              <div className="px-4 pb-4 pt-2 fade-in-up" style={{ background: "#fff" }}>
+                <ol className="flex flex-col gap-0">
+                  {example.reseni_kroky.map((krok, i) => (
+                    <li key={i} className="flex gap-3">
+                      <div className="flex flex-col items-center shrink-0">
+                        <span
+                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
+                          style={{ background: "#2E6DA4" }}
+                        >
+                          {i + 1}
+                        </span>
+                        {i < example.reseni_kroky.length - 1 && (
+                          <div className="w-0.5 flex-1 my-1" style={{ background: "#bfdbfe", minHeight: 12 }} />
+                        )}
+                      </div>
+                      <p
+                        className="text-sm leading-snug pb-3 pt-0.5"
+                        style={{ color: "#1e293b" }}
+                      >
+                        <MathText text={krok} />
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+                <div
+                  className="mt-1 pt-3 border-t text-xs font-semibold flex items-center gap-1.5"
+                  style={{ borderColor: "#e2e8f0", color: "#64748b" }}
+                >
+                  <span>✓</span>
+                  <span>Správná odpověď: <MathText text={example.odpoved} /></span>
+                </div>
+              </div>
             )}
           </div>
         )}
