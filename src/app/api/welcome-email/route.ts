@@ -7,52 +7,73 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing email" }, { status: 400 });
   }
 
-  // ── Loops.so (preferred) ────────────────────────────────────────────────────
-  // Requires both LOOPS_API_KEY and LOOPS_WELCOME_EMAIL_ID to be set.
-  if (process.env.LOOPS_API_KEY && process.env.LOOPS_WELCOME_EMAIL_ID) {
+  const loopsKey = process.env.LOOPS_API_KEY;
+  const loopsEmailId = process.env.LOOPS_WELCOME_EMAIL_ID;
+
+  // ── Loops.so ────────────────────────────────────────────────────────────────
+  if (loopsKey) {
+    // 1. Add contact (always, even without transactional email ID)
     try {
-      // Add contact to Loops mailing list
-      await fetch("https://app.loops.so/api/v1/contacts/create", {
+      const contactRes = await fetch("https://app.loops.so/api/v1/contacts/create", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
+          Authorization: `Bearer ${loopsKey}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
+          firstName: firstName || undefined,
           source: "MateMax registrace",
           userGroup: "students",
         }),
       });
-
-      // Send transactional welcome email
-      const res = await fetch("https://app.loops.so/api/v1/transactional", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          transactionalId: process.env.LOOPS_WELCOME_EMAIL_ID,
-          email,
-          dataVariables: { first_name: firstName },
-        }),
-      });
-      if (!res.ok) {
-        const errText = await res.text();
-        console.error("Loops transactional email error:", errText);
-        throw new Error(`Loops API error: ${errText}`);
+      if (!contactRes.ok) {
+        const text = await contactRes.text();
+        console.error("[welcome-email] Loops contact create error:", contactRes.status, text);
+      } else {
+        console.log("[welcome-email] Loops contact created:", email);
       }
-
-      return NextResponse.json({ ok: true, provider: "loops" });
     } catch (err) {
-      console.error("Loops welcome-email error:", err);
-      // Fall through to Resend on any Loops failure
+      console.error("[welcome-email] Loops contact create exception:", err);
     }
+
+    // 2. Send transactional welcome email (only if ID is configured)
+    if (loopsEmailId) {
+      try {
+        const res = await fetch("https://app.loops.so/api/v1/transactional", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${loopsKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            transactionalId: loopsEmailId,
+            email,
+            dataVariables: { first_name: firstName || email.split("@")[0] },
+          }),
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          console.error("[welcome-email] Loops transactional error:", res.status, errText);
+          // Fall through to Resend
+        } else {
+          console.log("[welcome-email] Loops transactional sent:", email);
+          return NextResponse.json({ ok: true, provider: "loops" });
+        }
+      } catch (err) {
+        console.error("[welcome-email] Loops transactional exception:", err);
+        // Fall through to Resend
+      }
+    } else {
+      console.warn("[welcome-email] LOOPS_WELCOME_EMAIL_ID not set — skipping transactional, falling back to Resend");
+    }
+  } else {
+    console.warn("[welcome-email] LOOPS_API_KEY not set — skipping Loops");
   }
 
   // ── Resend (fallback) ───────────────────────────────────────────────────────
   if (!process.env.RESEND_API_KEY) {
+    console.warn("[welcome-email] RESEND_API_KEY not set — no email sent to", email);
     return NextResponse.json({ ok: true, skipped: true });
   }
 
@@ -82,7 +103,7 @@ export async function POST(req: NextRequest) {
           <tr>
             <td style="padding:36px 40px;">
               <p style="color:#0D1B3E;font-size:16px;line-height:1.6;margin:0 0 20px;">
-                Ahoj! Právě jsi udělal první krok k lepším přijímačkám. 🎉
+                Ahoj${firstName ? ` ${firstName}` : ""}! Právě jsi udělal první krok k lepším přijímačkám. 🎉
               </p>
               <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 28px;">
                 MateMax se přizpůsobí přesně tvým mezerám — začni diagnostikou, která
@@ -92,7 +113,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td align="center" style="padding:0 0 32px;">
                     <a href="https://matemax.matematika-snadno.cz/diagnostika"
-                      style="display:inline-block;background:#00B4D8;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 36px;border-radius:12px;">
+                      style="display:inline-block;background:#2E6DA4;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 36px;border-radius:12px;">
                       Spustit diagnostiku →
                     </a>
                   </td>
@@ -108,7 +129,7 @@ export async function POST(req: NextRequest) {
           <tr>
             <td style="padding:24px 40px;border-top:1px solid #e5e7eb;text-align:center;">
               <p style="color:#94a3b8;font-size:13px;margin:0 0 4px;">Karel Tůma · Matematika Snadno</p>
-              <p style="color:#cbd5e1;font-size:12px;margin:0;">MateMax © 2026 · Odhlaš se z emailů kdykoliv.</p>
+              <p style="color:#cbd5e1;font-size:12px;margin:0;">MateMax © 2026 · Odhlásit se z emailů kdykoliv.</p>
             </td>
           </tr>
         </table>
@@ -125,9 +146,10 @@ export async function POST(req: NextRequest) {
       subject: "Vítej v MateMax! Tvůj trénink začíná 🚀",
       html,
     });
+    console.log("[welcome-email] Resend sent:", email);
     return NextResponse.json({ ok: true, provider: "resend" });
   } catch (err) {
-    console.error("welcome-email resend error:", err);
+    console.error("[welcome-email] Resend error:", err);
     return NextResponse.json({ error: "Failed to send" }, { status: 500 });
   }
 }
