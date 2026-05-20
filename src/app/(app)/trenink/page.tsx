@@ -7,6 +7,7 @@ import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
 import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, localSaveSession } from "@/lib/storage";
+import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
 import {
   loadGamification,
@@ -293,6 +294,16 @@ function TreningPageInner() {
     clearSessionDraft();
 
     if (!supabase) return;
+
+    // Analytics (fire-and-forget, non-blocking)
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
+        const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+        trackEvent(data.session.user.id, "session_completed", {
+          correct, total: answered, accuracy, topics: practiceTopics,
+        }).catch(() => {});
+      }
+    });
 
     // First session check (localStorage flag)
     const isFirstSession = !localStorage.getItem("matemax-first-session-done");

@@ -6,6 +6,8 @@ import { examples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "@/components/MathText";
 import { TEMA_LABELS } from "@/types";
+import { supabase } from "@/lib/supabase";
+import { trackEvent } from "@/lib/analytics";
 
 const TEST_SIZE = 15;
 const TEST_SECONDS = 25 * 60; // 25 minutes
@@ -72,6 +74,17 @@ export default function CermatTestPage() {
     };
     result.pct = Math.round((result.score / result.total) * 100);
     saveCermatResult(result);
+
+    // Analytics (fire-and-forget)
+    if (supabase) {
+      supabase.auth.getSession().then(({ data }) => {
+        const uid = data.session?.user.id ?? null;
+        trackEvent(uid, "cermat_test_dokoncen", {
+          score: result.score, total: result.total, pct: result.pct, timed_out: false,
+        }).catch(() => {});
+      });
+    }
+
     setPhase("results");
   }, [testExamples, userAnswers]);
 
@@ -139,9 +152,29 @@ export default function CermatTestPage() {
     const score = testExamples.filter((ex, i) => checkAnswer(userAnswers[i] ?? "", ex.odpoved)).length;
     const pct = Math.round((score / TEST_SIZE) * 100);
     const rating = getRating(pct);
+    const CERMAT_AVG_PCT = 55; // approx. Czech CERMAT admission test average
+
     const wrong = testExamples
       .map((ex, i) => ({ ex, userAnswer: userAnswers[i] ?? "", correct: checkAnswer(userAnswers[i] ?? "", ex.odpoved) }))
       .filter(x => !x.correct);
+
+    // Per-topic breakdown
+    const topicMap = new Map<string, { correct: number; total: number }>();
+    testExamples.forEach((ex, i) => {
+      const entry = topicMap.get(ex.tema) ?? { correct: 0, total: 0 };
+      entry.total += 1;
+      if (checkAnswer(userAnswers[i] ?? "", ex.odpoved)) entry.correct += 1;
+      topicMap.set(ex.tema, entry);
+    });
+    const topicBreakdown = Array.from(topicMap.entries())
+      .map(([tema, { correct, total }]) => ({
+        tema,
+        label: TEMA_LABELS[tema] ?? tema,
+        correct,
+        total,
+        pct: Math.round((correct / total) * 100),
+      }))
+      .sort((a, b) => a.pct - b.pct);
 
     return (
       <div className="flex flex-col gap-5">
@@ -159,7 +192,7 @@ export default function CermatTestPage() {
           {timedOut && <p className="text-yellow-300 text-xs mt-1">⏱ Čas vypršel</p>}
         </div>
 
-        {/* Stats row */}
+        {/* Stats row — user score vs CERMAT average */}
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-white rounded-xl border border-slate-200 p-3 text-center">
             <p className="text-xs text-slate-400 mb-1">Správně</p>
@@ -169,11 +202,111 @@ export default function CermatTestPage() {
             <p className="text-xs text-slate-400 mb-1">Chybně</p>
             <p className="text-2xl font-black" style={{ color: "#dc2626" }}>{TEST_SIZE - score}</p>
           </div>
-          <div className="bg-white rounded-xl border border-slate-200 p-3 text-center">
-            <p className="text-xs text-slate-400 mb-1">Bodů</p>
-            <p className="text-2xl font-black" style={{ color: "#2E6DA4" }}>{score}/15</p>
+          <div
+            className="rounded-xl border p-3 text-center"
+            style={{
+              background: pct >= CERMAT_AVG_PCT ? "#f0fdf4" : "#fef2f2",
+              borderColor: pct >= CERMAT_AVG_PCT ? "#bbf7d0" : "#fecaca",
+            }}
+          >
+            <p className="text-xs font-medium mb-1" style={{ color: pct >= CERMAT_AVG_PCT ? "#166534" : "#991b1b" }}>
+              vs. průměr
+            </p>
+            <p className="text-lg font-black" style={{ color: pct >= CERMAT_AVG_PCT ? "#16a34a" : "#dc2626" }}>
+              {pct >= CERMAT_AVG_PCT ? `+${pct - CERMAT_AVG_PCT}` : `${pct - CERMAT_AVG_PCT}`} %
+            </p>
           </div>
         </div>
+
+        {/* Comparison bar */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">
+            📊 Srovnání s průměrem CERMAT
+          </p>
+          <div className="space-y-2">
+            <div>
+              <div className="flex justify-between text-xs mb-1">
+                <span className="font-semibold text-slate-700">Tvůj výsledek</span>
+                <span className="font-black" style={{ color: pct >= 70 ? "#16a34a" : pct >= CERMAT_AVG_PCT ? "#2E6DA4" : "#dc2626" }}>
+                  {pct} %
+                </span>
+              </div>
+              <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all"
+                  style={{
+                    width: `${pct}%`,
+                    background: pct >= 70 ? "#22c55e" : pct >= CERMAT_AVG_PCT ? "#2E6DA4" : "#ef4444",
+                  }}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between text-xs mb-1">
+                <span className="text-slate-400">Průměrný uchazeč CERMAT</span>
+                <span className="text-slate-400">{CERMAT_AVG_PCT} %</span>
+              </div>
+              <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
+                <div className="h-full rounded-full bg-slate-300" style={{ width: `${CERMAT_AVG_PCT}%` }} />
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-slate-400 mt-3">
+            {pct >= 80 ? "🏆 Skvělý výsledek! Jsi výrazně nad průměrem přijímaček."
+              : pct >= CERMAT_AVG_PCT ? "✅ Nad průměrem. Pokračuj v tréninku a udržuj si náskok."
+              : "📚 Pod průměrem. Procvičuj slabá témata (viz níže) — rozdíl lze dohnat."}
+          </p>
+        </div>
+
+        {/* Per-topic breakdown */}
+        {topicBreakdown.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">
+              🎯 Výsledky podle témat
+            </p>
+            <div className="flex flex-col gap-3">
+              {topicBreakdown.map(({ tema, label, correct, total, pct: tPct }) => (
+                <div key={tema}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-semibold text-slate-700">{label}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-slate-400">{correct}/{total}</span>
+                      <span
+                        className="text-xs font-bold px-2 py-0.5 rounded-full"
+                        style={{
+                          background: tPct === 100 ? "#f0fdf4" : tPct >= 50 ? "#eff6ff" : "#fef2f2",
+                          color: tPct === 100 ? "#16a34a" : tPct >= 50 ? "#2563eb" : "#dc2626",
+                        }}
+                      >
+                        {tPct} %
+                      </span>
+                    </div>
+                  </div>
+                  <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: `${tPct}%`,
+                        background: tPct === 100 ? "#22c55e" : tPct >= 50 ? "#2E6DA4" : "#ef4444",
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            {topicBreakdown[0]?.pct < 50 && (
+              <div
+                className="mt-4 px-4 py-3 rounded-xl flex items-center gap-2"
+                style={{ background: "#fef9c3", border: "1px solid #fde68a" }}
+              >
+                <span className="text-base">💡</span>
+                <p className="text-xs font-medium text-amber-800">
+                  Nejslabší téma: <strong>{topicBreakdown[0].label}</strong>. Doporučujeme zaměřit trénink právě tam.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Wrong answers */}
         {wrong.length > 0 && (
@@ -212,6 +345,17 @@ export default function CermatTestPage() {
             <p className="text-2xl mb-1">🏆</p>
             <p className="font-black" style={{ color: "#15803d" }}>Perfektní výsledek!</p>
           </div>
+        )}
+
+        {/* CTA: practice weakest topic */}
+        {topicBreakdown[0]?.pct < 100 && (
+          <Link
+            href={`/trenink?tema=${topicBreakdown[0].tema}`}
+            className="block w-full py-3 text-center font-bold text-sm rounded-xl"
+            style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+          >
+            📚 Procvičit {topicBreakdown[0].label} →
+          </Link>
         )}
 
         <div className="flex flex-col gap-2">

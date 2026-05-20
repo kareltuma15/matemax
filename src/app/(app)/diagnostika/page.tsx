@@ -10,6 +10,7 @@ import { isTopicLocked } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { supabase } from "@/lib/supabase";
 import { remoteSyncDiagResults } from "@/lib/storage";
+import { trackEvent } from "@/lib/analytics";
 import confetti from "canvas-confetti";
 
 const CARDS_KEY = "matemax-cards";
@@ -264,7 +265,10 @@ export default function DiagnostikaPage() {
       if (supabase) {
         supabase.auth.getSession().then(({ data }) => {
           if (data.session) {
-            remoteSyncDiagResults(data.session.user.id, results).catch(() => {});
+            const uid = data.session.user.id;
+            remoteSyncDiagResults(uid, results).catch(() => {});
+            const weakCount = Object.values(results).filter(v => v.total > 0 && v.correct / v.total < 0.67).length;
+            trackEvent(uid, "diagnostika_dokoncena", { weak_topics: weakCount }).catch(() => {});
           }
         });
       }

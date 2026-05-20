@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { getSmartRedirect } from "@/lib/smart-redirect";
 
 export default function PrihlaseniPage() {
   return (
@@ -53,7 +54,8 @@ function PrihlaseniForm() {
         return;
       }
       const next = searchParams.get("next");
-      const destination = next && next.startsWith("/") ? next : "/trenink";
+      // Explicit ?next= param (e.g. from protected route) takes priority; otherwise smart redirect
+      const destination = next && next.startsWith("/") ? next : getSmartRedirect();
       // Full page reload needed so server components + proxy see the fresh session cookie
       window.location.href = destination;
     } catch (err) {

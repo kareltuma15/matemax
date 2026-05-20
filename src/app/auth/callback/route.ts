@@ -29,11 +29,11 @@ export async function GET(request: NextRequest) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      // Pokud jde o novou registraci přes Google OAuth, pošleme uvítací email
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const isNewUser = Date.now() - new Date(user.created_at).getTime() < 60_000;
         if (isNewUser) {
+          // Send welcome email for new Google OAuth registrations
           const fullName = (user.user_metadata?.full_name as string | undefined)
             ?? (user.user_metadata?.name as string | undefined)
             ?? "";
@@ -43,9 +43,13 @@ export async function GET(request: NextRequest) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: user.email, firstName }),
           }).catch(() => {});
+          // New user → onboarding
+          return NextResponse.redirect(`${origin}/vitej`);
         }
       }
-      return NextResponse.redirect(`${origin}${next}`);
+      // Returning user: honor explicit ?next= param; otherwise let client do smart redirect
+      const destination = next !== "/trenink" ? next : "/?login=1";
+      return NextResponse.redirect(`${origin}${destination}`);
     }
   }
 

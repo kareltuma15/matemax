@@ -16,6 +16,7 @@ import CountdownBanner from "@/components/CountdownBanner";
 import GuidanceModal from "@/components/GuidanceModal";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
+import { getSmartRedirect } from "@/lib/smart-redirect";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -793,6 +794,17 @@ export default function LandingPage() {
           const p = loadProgress();
           setXp(p.xp);
           setStreak(p.streak);
+
+          // Smart post-login redirect triggered by OAuth callback (?login=1)
+          const params = new URLSearchParams(window.location.search);
+          if (params.get("login") === "1") {
+            window.history.replaceState({}, "", "/");
+            const dest = getSmartRedirect("/");
+            if (dest !== "/" && dest !== "/?comeback=1") {
+              window.location.href = dest;
+              return;
+            }
+          }
         }
         setSessionChecked(true);
       });
@@ -822,13 +834,19 @@ export default function LandingPage() {
             </div>
             <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
           </div>
-          <div className="flex items-center gap-4">
-            <a href="#jak-to-funguje" className="text-sm text-gray-500 hover:text-gray-800 hidden sm:block transition-colors">
+          <div className="flex items-center gap-3">
+            <a href="#jak-to-funguje" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
               Jak to funguje
             </a>
-            <a href="#cena" className="text-sm text-gray-500 hover:text-gray-800 hidden sm:block transition-colors">
+            <a href="#cena" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
               Ceník
             </a>
+            <Link
+              href="/prihlaseni"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
+            >
+              Přihlásit se
+            </Link>
             <Link
               href={diagDone ? "/trenink" : "/vitej"}
               className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-colors"
