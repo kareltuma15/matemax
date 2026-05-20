@@ -17,6 +17,7 @@ import GuidanceModal from "@/components/GuidanceModal";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getSmartRedirect } from "@/lib/smart-redirect";
+import { getTodayTopic } from "@/lib/studijni-plan";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -223,35 +224,77 @@ function LoggedInDashboard({
   const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
   const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
   const [hasWrongCards, setHasWrongCards] = useState(false);
-  const [guidanceModal, setGuidanceModal] = useState<null | { type: "diagnostika" | "comeback"; daysSince?: number }>(null);
+  const [guidanceModal, setGuidanceModal] = useState<null | {
+    type: "diagnostika" | "comeback" | "daily";
+    daysSince?: number;
+    todayTopic?: { tema: string; label: string; score: number } | null;
+  }>(null);
   const { isPremium } = usePremium();
 
   useEffect(() => {
-    // Guidance modal — zobraz max 1× za den
-    const todayStr = new Date().toISOString().slice(0, 10);
-    const shownKey = `matemax-modal-shown-${todayStr}`;
-    if (!localStorage.getItem(shownKey)) {
-      if (!diagDone) {
-        setGuidanceModal({ type: "diagnostika" });
-        localStorage.setItem(shownKey, "1");
-      } else {
+    let cancelled = false;
+
+    // Sync diagDone ze Supabase před rozhodováním — opravuje bug po odhlášení/přihlášení
+    async function decideModal() {
+      let effectiveDiagDone = diagDone;
+
+      if (supabase && !diagDone) {
         try {
-          const raw = localStorage.getItem("matemax-progress");
-          if (raw) {
-            const p = JSON.parse(raw) as { lastActiveDate?: string };
-            if (p.lastActiveDate) {
-              const last = new Date(p.lastActiveDate);
-              const daysSince = Math.floor((Date.now() - last.getTime()) / 86400000);
-              if (daysSince >= 3) {
-                setGuidanceModal({ type: "comeback", daysSince });
-                localStorage.setItem(shownKey, "1");
-              }
-            }
+          const { data: rows } = await supabase
+            .from("diagnostic_results")
+            .select("tema, correct, total")
+            .eq("user_id", session.user.id);
+          if (rows && rows.length > 0) {
+            const results: Record<string, { correct: number; total: number }> = {};
+            for (const row of rows) results[row.tema] = { correct: row.correct, total: row.total };
+            localStorage.setItem("matemax-diag-results", JSON.stringify(results));
+            localStorage.setItem("matemax-diag-done", "1");
+            effectiveDiagDone = true;
           }
         } catch { /* ignore */ }
       }
+
+      if (cancelled) return;
+
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const shownKey = `matemax-modal-shown-${todayStr}`;
+      if (localStorage.getItem(shownKey)) return;
+
+      if (!effectiveDiagDone) {
+        setGuidanceModal({ type: "diagnostika" });
+        localStorage.setItem(shownKey, "1");
+        return;
+      }
+
+      // Diagnostika hotová — check comeback (3+ dny pauza) nebo daily (aktivní žák)
+      try {
+        const raw = localStorage.getItem("matemax-progress");
+        if (raw) {
+          const p = JSON.parse(raw) as { lastActiveDate?: string };
+          if (p.lastActiveDate) {
+            const last = new Date(p.lastActiveDate);
+            const daysSince = Math.floor((Date.now() - last.getTime()) / 86400000);
+            if (daysSince >= 3) {
+              setGuidanceModal({ type: "comeback", daysSince });
+              localStorage.setItem(shownKey, "1");
+              return;
+            }
+          }
+        }
+      } catch { /* ignore */ }
+
+      // Aktivní žák — zobraz daily uvítání s dnešním tématem
+      const topic = getTodayTopic();
+      const todayTopic = topic
+        ? { tema: topic.tema, label: topic.label, score: topic.score }
+        : null;
+      setGuidanceModal({ type: "daily", todayTopic });
+      localStorage.setItem(shownKey, "1");
     }
-  }, [diagDone]);
+
+    decideModal();
+    return () => { cancelled = true; };
+  }, [diagDone, session]);
 
   useEffect(() => {
     const cards = localLoadCards();
@@ -355,6 +398,9 @@ function LoggedInDashboard({
         <GuidanceModal
           type={guidanceModal.type}
           daysSince={guidanceModal.daysSince}
+          firstName={firstName}
+          streak={streak}
+          todayTopic={guidanceModal.todayTopic}
           onClose={() => setGuidanceModal(null)}
         />
       )}
