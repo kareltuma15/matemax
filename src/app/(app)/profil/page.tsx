@@ -619,8 +619,55 @@ export default function ProfilPage() {
 
           {/* ── SEKCE: PŘIPRAVENOST ── */}
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost</p>
+            <div className="flex items-baseline justify-between mb-2 px-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Připravenost na přijímačky</p>
+              <p className="text-[10px] text-slate-300">z tréninku + SM-2</p>
+            </div>
             <ReadinessCard />
+
+            {/* Odhadovaný výsledek přijímaček */}
+            {readinessScore > 0 && (() => {
+              const pts = Math.round(readinessScore / 100 * 15);
+              const clr = pts >= 12 ? "#16a34a" : pts >= 9 ? "#d97706" : "#dc2626";
+              const bg  = pts >= 12 ? "#f0fdf4" : pts >= 9 ? "#fffbeb" : "#fef2f2";
+              const bdr = pts >= 12 ? "#bbf7d0" : pts >= 9 ? "#fde68a" : "#fecaca";
+              const lbl = pts >= 12 ? "Výborný výsledek" : pts >= 9 ? "Dobrý výsledek" : "Je co zlepšit";
+              const desc = pts >= 13
+                ? "Na top gymnázia (GJK, SSPŠ) zpravidla stačí 12–15 bodů."
+                : pts >= 11
+                ? "Většina gymnázií přijímá od 10–12 bodů."
+                : pts >= 8
+                ? "Na odborné školy s maturitou zpravidla stačí 7–9 bodů."
+                : "Pravidelným tréninkem lze výsledek výrazně zlepšit.";
+              return (
+                <div className="mt-2 rounded-2xl p-4" style={{ background: bg, border: `1.5px solid ${bdr}` }}>
+                  <p className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: clr }}>
+                    🎯 Odhadovaný výsledek přijímaček
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="shrink-0 text-center">
+                      <p className="text-4xl font-black leading-none" style={{ color: clr }}>~{pts}</p>
+                      <p className="text-xs font-semibold mt-0.5" style={{ color: clr }}>/ 15 bodů</p>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-black leading-tight" style={{ color: clr }}>{lbl}</p>
+                      <p className="text-xs leading-snug mt-1" style={{ color: clr, opacity: 0.8 }}>{desc}</p>
+                      {/* Mini progress bar */}
+                      <div className="mt-2 bg-white/60 rounded-full h-2 overflow-hidden">
+                        <div
+                          className="h-2 rounded-full transition-all duration-700"
+                          style={{ width: `${(pts / 15) * 100}%`, background: clr }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[10px] mt-3 leading-snug" style={{ color: clr, opacity: 0.6 }}>
+                    * Odhad vychází z výsledků tréninku. Pro přesnější výsledek zkus cvičný test níže.
+                  </p>
+                </div>
+              );
+            })()}
+
             {cermatLast ? (
               <Link
                 href="/cermat-test"
@@ -766,7 +813,10 @@ export default function ProfilPage() {
 
           {/* ── SEKCE: TÉMATA ── */}
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Silná a slabá místa</p>
+            <div className="flex items-baseline justify-between mb-2 px-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Silná a slabá místa</p>
+              <p className="text-[10px] text-slate-300">z diagnostického testu</p>
+            </div>
             {topicScores.length > 0 ? (
               <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
                 {(topicsExpanded ? topicScores : topicScores.slice(0, 5)).map(({ tema, score, correct, total }) => {
