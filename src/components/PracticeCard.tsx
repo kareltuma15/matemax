@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import confetti from "canvas-confetti";
 import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
@@ -271,18 +272,33 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         )}
 
         {status === "wrong" && (
-          <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-start gap-3">
-            <span className="text-xl mt-0.5">✗</span>
-            <div className="flex-1">
-              <p className="font-bold text-red-700">Skoro!</p>
-              <p className="text-sm text-red-600">
-                Tvoje odpověď: <strong><MathText text={input} /></strong>
-              </p>
-              <p className="text-sm text-slate-600 mt-1">
-                Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
-              </p>
+          <>
+            <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-start gap-3">
+              <span className="text-xl mt-0.5">✗</span>
+              <div className="flex-1">
+                <p className="font-bold text-red-700">Skoro!</p>
+                <p className="text-sm text-red-600">
+                  Tvoje odpověď: <strong><MathText text={input} /></strong>
+                </p>
+                <p className="text-sm text-slate-600 mt-1">
+                  Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
+                </p>
+              </div>
             </div>
-          </div>
+
+            {/* Odkaz na podobné příklady stejného podtématu */}
+            <Link
+              href={`/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+              style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+            >
+              <span>🔄</span>
+              <span>Procvičit podobné příklady</span>
+              <span className="text-xs opacity-50 ml-auto">
+                {(TEMA_LABELS[example.tema] ?? example.tema)} · {example.podtema.replace(/_/g, " ")}
+              </span>
+            </Link>
+          </>
         )}
 
         {/* Solution steps */}

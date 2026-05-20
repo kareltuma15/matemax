@@ -60,6 +60,7 @@ type SessionDraft = {
   skipped: number;
   wrongAnswers: WrongAnswer[];
   temaFilter: string | null;
+  podtemaFilter: string | null;
   rezimFilter: "chyby" | "sm2" | null;
 };
 
@@ -109,9 +110,11 @@ function buildSession(
   cards: SM2Card[],
   temaFilter?: string | null,
   rezim?: "chyby" | "sm2" | null,
-  guestOnly = false
+  guestOnly = false,
+  podtemaFilter?: string | null
 ): string[] {
   let pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
+  if (podtemaFilter) pool = pool.filter((ex) => ex.podtema === podtemaFilter);
   if (guestOnly) pool = pool.filter((ex) => GUEST_FREE_TOPICS.has(ex.tema));
 
   // SM-2 review mode: only due cards, sorted most-overdue first
@@ -177,8 +180,9 @@ function enqueueBadges(
 
 function TreningPageInner() {
   const searchParams = useSearchParams();
-  const urlTema  = searchParams.get("tema");
-  const urlRezim = searchParams.get("rezim") as "chyby" | "sm2" | null;
+  const urlTema     = searchParams.get("tema");
+  const urlPodtema  = searchParams.get("podtema");
+  const urlRezim    = searchParams.get("rezim") as "chyby" | "sm2" | null;
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
@@ -188,8 +192,9 @@ function TreningPageInner() {
   const [done, setDone]             = useState(false);
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
-  const [temaFilter, setTemaFilter] = useState<string | null>(urlTema);
-  const [rezimFilter, setRezimFilter] = useState<"chyby" | "sm2" | null>(urlRezim);
+  const [temaFilter, setTemaFilter]     = useState<string | null>(urlTema);
+  const [podtemaFilter, setPodtemaFilter] = useState<string | null>(urlPodtema);
+  const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
   const [progressMilestone, setProgressMilestone] = useState<{ count: number; xpBonus: number } | null>(null);
@@ -254,14 +259,20 @@ function TreningPageInner() {
 
       // Try to restore a previously saved session draft
       const draft = loadSessionDraft();
-      if (draft && draft.temaFilter === urlTema && draft.rezimFilter === urlRezim && draft.sessionIds.length > 0) {
+      if (
+        draft &&
+        draft.temaFilter === urlTema &&
+        (draft.podtemaFilter ?? null) === urlPodtema &&
+        draft.rezimFilter === urlRezim &&
+        draft.sessionIds.length > 0
+      ) {
         setSessionIds(draft.sessionIds);
         setCurrentIdx(draft.currentIdx);
         setCorrect(draft.correct);
         setSkipped(draft.skipped);
         setWrongAnswers(draft.wrongAnswers);
-      } else if (guest ? !!urlTema : !!(urlTema || urlRezim)) {
-        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest));
+      } else if (guest ? !!urlTema : !!(urlTema || urlRezim || urlPodtema)) {
+        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest, urlPodtema));
       }
       setHydrated(true);
     };
@@ -504,6 +515,7 @@ function TreningPageInner() {
           skipped,
           wrongAnswers: wasCorrect ? wrongAnswers : [...wrongAnswers, { exampleId: exId, userAnswer }],
           temaFilter,
+          podtemaFilter: podtemaFilter ?? null,
           rezimFilter: rezimFilter ?? null,
         });
       }
@@ -769,6 +781,7 @@ function TreningPageInner() {
         skipped: skipped + 1,
         wrongAnswers,
         temaFilter,
+        podtemaFilter: podtemaFilter ?? null,
         rezimFilter: rezimFilter ?? null,
       });
     }
