@@ -337,3 +337,15 @@ body {
 .float {
   animation: float 3s ease-in-out infinite;
 }
+
+/* ── Animated hero gradient ────────────────────────────────── */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.hero-animated {
+  background: linear-gradient(135deg, #0D1B3E 0%, #162d5c 25%, #2E6DA4 55%, #1a3460 80%, #0D1B3E 100%);
+  background-size: 300% 300%;
+  animation: gradient-shift 12s ease infinite;
+}

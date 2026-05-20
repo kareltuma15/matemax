@@ -32,6 +32,28 @@ function getTodayChallenge(): DailyChallenge {
   return challengesJson[(getDayOfYear() - 1) % challengesJson.length] as DailyChallenge;
 }
 
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h >= 5 && h < 12) return "Dobré ráno";
+  if (h >= 12 && h < 18) return "Dobré odpoledne";
+  if (h >= 18 && h < 22) return "Dobrý večer";
+  return "Dobrou noc";
+}
+
+const MOTIVATIONAL_QUOTES = [
+  "Každý příklad, který vyřešíš, tě přibližuje k vysněné škole.",
+  "Pravidelnost poráží talent. Dnes je tvůj den!",
+  "Chyby jsou součást učení — důležité je nevzdat to.",
+  "Za 10 minut práce dnes ušetříš hodiny paniky před přijímačkami.",
+  "Matematika se naučit dá. Ty to zvládneš!",
+  "Každý den trochu — a za měsíc budeš jiný žák.",
+  "Přijímačky jsou za rohem. Dnes uděláš jeden krok navíc.",
+];
+
+function getDailyQuote(): string {
+  return MOTIVATIONAL_QUOTES[getDayOfYear() % MOTIVATIONAL_QUOTES.length];
+}
+
 const HOW_IT_WORKS = [
   {
     step: "01",
@@ -212,7 +234,9 @@ function LoggedInDashboard({
   diagDone: boolean;
 }) {
   const email = session.user.email ?? "";
-  const firstName = email.split("@")[0];
+  const meta = session.user.user_metadata as Record<string, string> | undefined;
+  const fullName = meta?.full_name ?? meta?.name ?? "";
+  const firstName = fullName.split(" ")[0] || email.split("@")[0];
   const todayChallenge = getTodayChallenge();
 
   const [todayCount, setTodayCount] = useState(0);
@@ -380,17 +404,6 @@ function LoggedInDashboard({
 
   const goalMet = todayCount >= DAILY_GOAL;
 
-  let heroSubtext: string;
-  if (goalMet) {
-    heroSubtext = "✅ Dnešní cíl splněn! Výborná práce.";
-  } else if (streak > 1) {
-    heroSubtext = `🔥 ${streak} dní v řadě! Nepřeruš sérii.`;
-  } else if (todayCount > 0) {
-    heroSubtext = `Dnes ${todayCount} příkladů. Cíl: ${DAILY_GOAL}. Pokračuj!`;
-  } else {
-    heroSubtext = `Dnešní cíl: ${DAILY_GOAL} příkladů. Zatím: 0/${DAILY_GOAL}`;
-  }
-
   return (
     <div className="bg-white min-h-screen">
       {/* Guidance modal */}
@@ -436,16 +449,34 @@ function LoggedInDashboard({
       </nav>
 
       {/* Hero */}
-      <section
-        className="relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 50%, #0D1B3E 100%)" }}
-      >
+      <section className="hero-animated relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-[0.06] translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: "#00B4D8" }} />
+        <div className="absolute bottom-0 left-0 w-52 h-52 rounded-full opacity-[0.05] -translate-x-1/2 translate-y-1/2 pointer-events-none" style={{ background: "#2E6DA4" }} />
+
         <div className="max-w-2xl mx-auto px-6 py-10 md:py-14 relative z-10">
-          <p className="text-blue-300 text-sm font-semibold mb-2">Vítej zpět!</p>
+          <p className="text-blue-300 text-sm font-semibold mb-1">{getGreeting()},</p>
           <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
             {firstName} 👋
           </h1>
-          <p className="mt-2 text-blue-200 text-base">{heroSubtext}</p>
+
+          {/* Stats pills */}
+          <div className="flex items-center gap-2 mt-3 flex-wrap">
+            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
+              🔥 {streak} {streak === 1 ? "den" : "dní"}
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
+              📝 {todayCount}/{DAILY_GOAL} dnes
+            </span>
+            {xp > 0 && (
+              <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300" style={{ background: "rgba(255,255,255,0.10)" }}>
+                ⚡ {xp} XP
+              </span>
+            )}
+          </div>
+
+          <p className="mt-3 text-blue-200 text-sm italic leading-snug opacity-90">
+            &ldquo;{getDailyQuote()}&rdquo;
+          </p>
         </div>
       </section>
 
