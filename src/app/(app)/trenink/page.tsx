@@ -193,7 +193,7 @@ function TreningPageInner() {
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
   const [temaFilter, setTemaFilter]     = useState<string | null>(urlTema);
-  const [podtemaFilter, setPodtemaFilter] = useState<string | null>(urlPodtema);
+  const [podtemaFilter] = useState<string | null>(urlPodtema);
   const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);

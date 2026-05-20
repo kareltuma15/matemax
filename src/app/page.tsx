@@ -510,6 +510,33 @@ function LoggedInDashboard({
         {/* XP bar */}
         <XPProgressBar xp={xp} />
 
+        {/* Day-0 welcome card — brand new user with no activity yet */}
+        {xp === 0 && streak === 0 && todayCount === 0 && (
+          <div
+            className="rounded-2xl p-5 flex items-start gap-4 fade-in-up"
+            style={{ background: "#f0f7ff", border: "1px solid #bfdbfe" }}
+          >
+            <span className="text-3xl shrink-0 mt-0.5">🚀</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>
+                Vítej v MateMax! Začni svůj první trénink
+              </p>
+              <p className="text-xs text-slate-500 mt-1 leading-snug">
+                {!diagDone
+                  ? "Spusť diagnostiku — zjistíme kde máš mezery a sestavíme ti plán na míru."
+                  : "Všechno je připraveno. Stačí kliknout na trénink a jdeme na to!"}
+              </p>
+              <Link
+                href={!diagDone ? "/vitej" : "/trenink"}
+                className="inline-block mt-2.5 text-xs font-bold px-3 py-1.5 rounded-lg text-white"
+                style={{ background: "#2E6DA4" }}
+              >
+                {!diagDone ? "Spustit diagnostiku →" : "Zahájit trénink →"}
+              </Link>
+            </div>
+          </div>
+        )}
+
         {/* Premium upsell banner — only for free users */}
         {!isPremium && (
           <Link
