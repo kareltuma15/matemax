@@ -834,22 +834,26 @@ export default function LandingPage() {
             </div>
             <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <a href="#jak-to-funguje" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
               Jak to funguje
+            </a>
+            <a href="#pro-rodice" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
+              Pro rodiče
             </a>
             <a href="#cena" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
               Ceník
             </a>
             <Link
               href="/prihlaseni"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
+              className="text-sm font-bold px-4 py-[6px] rounded-lg border-2 transition-colors hover:bg-blue-50"
+              style={{ borderColor: "#2E6DA4", color: "#2E6DA4" }}
             >
               Přihlásit se
             </Link>
             <Link
               href={diagDone ? "/trenink" : "/vitej"}
-              className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-colors"
+              className="text-sm font-bold text-white px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md"
               style={{ background: "#2E6DA4" }}
             >
               {diagDone ? "Trénovat →" : "Začít zdarma"}
@@ -1044,6 +1048,78 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── PRO RODIČE ───────────────────────────────────────────────── */}
+      <section id="pro-rodice" className="py-20" style={{ background: "linear-gradient(180deg, #f0f7ff 0%, #fff 100%)" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <Badge>Pro rodiče</Badge>
+            <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              Vidíte přesně, jak se dítě připravuje
+            </h2>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Bez zkoušení u večeře. Bez doučování. Každé pondělí ráno dostanete email s přehledem —
+              víte kolik dítě cvičí, kde je silné a kde má mezery.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5 mb-10">
+            {[
+              {
+                icon: "📊",
+                title: "Týdenní report emailem",
+                desc: "Každé pondělí 8:00. Streak, úspěšnost, slabá místa, doporučení na další týden — vše na jedné stránce.",
+                color: "#2E6DA4",
+              },
+              {
+                icon: "🎯",
+                title: "Přesná slabá místa",
+                desc: "Místo \"jde to\" víte konkrétně: zlomky 78 %, slovní úlohy 42 %. Pomáháte tam, kde to opravdu potřebuje.",
+                color: "#00B4D8",
+              },
+              {
+                icon: "🔥",
+                title: "Streak motivace",
+                desc: "Dítě nechce přerušit sérii. Vy vidíte, kolik dní v řadě cvičí — bez napomínání, bez tlaku.",
+                color: "#f97316",
+              },
+            ].map(({ icon, title, desc, color }) => (
+              <div
+                key={title}
+                className="bg-white rounded-2xl border border-blue-100 shadow-sm p-6 flex flex-col gap-3 hover:shadow-md transition-shadow"
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
+                  style={{ background: `${color}15` }}
+                >
+                  {icon}
+                </div>
+                <p className="text-lg font-extrabold" style={{ color: "#0D1B3E" }}>{title}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md border border-blue-100 p-8 flex flex-col md:flex-row items-center gap-6">
+            <div className="flex-1 text-center md:text-left">
+              <p className="text-xl font-extrabold mb-2" style={{ color: "#0D1B3E" }}>
+                Propojte se s účtem svého dítěte
+              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Stačí 1 minuta — dítě potvrdí propojení v aplikaci a vy začnete dostávat reporty.
+                Žádná složitá registrace, žádný účet navíc.
+              </p>
+            </div>
+            <Link
+              href="/rodice/prihlaseni"
+              className="inline-block text-white font-bold text-base px-8 py-4 rounded-xl transition-colors shadow-lg whitespace-nowrap"
+              style={{ background: "#0D1B3E" }}
+            >
+              Otevřít rodičovský přehled →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── CENÍK ────────────────────────────────────────────────────── */}
       <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12">
@@ -1145,26 +1221,6 @@ export default function LandingPage() {
           <p className="mt-4 text-sm text-blue-400">
             Bez kreditní karty · Zrušení kdykoliv · Sešit a aplikace se skvěle doplňují
           </p>
-        </div>
-      </section>
-
-      {/* ── RODIČ CTA ────────────────────────────────────────────────── */}
-      <section className="bg-slate-50 border-t border-slate-100 py-12">
-        <div className="max-w-sm mx-auto px-6 text-center flex flex-col gap-4 items-center">
-          <span className="text-4xl">👨‍👩‍👧</span>
-          <div>
-            <p className="text-lg font-extrabold" style={{ color: "#0D1B3E" }}>Jste rodič?</p>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              Sledujte pokrok svého dítěte každý týden.
-            </p>
-          </div>
-          <Link
-            href="/rodice/prihlaseni"
-            className="px-6 py-3 rounded-xl font-bold text-sm"
-            style={{ background: "#0D1B3E", color: "#fff" }}
-          >
-            Rodičovský přehled →
-          </Link>
         </div>
       </section>
 
