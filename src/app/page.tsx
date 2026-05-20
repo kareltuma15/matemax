@@ -547,11 +547,14 @@ function LoggedInDashboard({
             {readinessScore && (
               <Link
                 href="/profil"
-                className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors whitespace-nowrap"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors whitespace-nowrap"
                 style={{ background: "#f8faff", color: readinessScore.color, border: `1px solid ${readinessScore.color}30` }}
               >
                 <span>📊</span>
-                <span>{readinessScore.score}%</span>
+                <div className="flex flex-col leading-none">
+                  <span className="text-[9px] font-semibold opacity-60 uppercase tracking-wide">Připravenost</span>
+                  <span className="text-sm">{readinessScore.score} %</span>
+                </div>
               </Link>
             )}
           </div>
@@ -631,8 +634,9 @@ function LoggedInDashboard({
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center stagger-1 card-hover">
             <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
-            <p className="text-2xl font-black text-orange-500">
-              <span className={streak >= 3 ? "streak-bounce" : ""}>🔥</span> {streak}
+            <p className="text-2xl font-black">
+              <span className={streak > 0 ? "streak-bounce" : ""}>🔥</span>{" "}
+              <span className={streak >= 3 ? "streak-gold" : "text-orange-500"}>{streak}</span>
             </p>
             <p className="text-xs text-slate-400">dní v řadě</p>
           </div>
@@ -811,7 +815,7 @@ function LoggedInDashboard({
         {/* Main CTA */}
         <Link
           href="/trenink"
-          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg"
+          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale"
           style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
         >
           💪 Pokračovat v tréninku →

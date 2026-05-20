@@ -102,7 +102,8 @@ export default function ProfilPage() {
   const [displayName, setDisplayName]       = useState("");
   const [avatarEmoji, setAvatarEmoji]       = useState("");
   const [showPersonaForm, setShowPersonaForm] = useState(false);
-  const [nickInput, setNickInput]           = useState("");
+  const [firstNameInput, setFirstNameInput] = useState("");
+  const [lastNameInput, setLastNameInput]   = useState("");
   const [selectedEmoji, setSelectedEmoji]   = useState("");
   const [personaSaving, setPersonaSaving]   = useState(false);
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
@@ -114,10 +115,13 @@ export default function ProfilPage() {
         setEmail(data.session?.user.email ?? null);
         setUserId(data.session?.user.id ?? null);
         const meta = data.session?.user.user_metadata as Record<string, string> | undefined;
-        const name = meta?.full_name ?? meta?.name ?? "";
-        setDisplayName(name);
+        const fn = meta?.first_name ?? "";
+        const ln = meta?.last_name ?? "";
+        const fullName = meta?.full_name ?? meta?.name ?? `${fn} ${ln}`.trim();
+        setDisplayName(fullName);
         setAvatarEmoji(meta?.avatar_emoji ?? "");
-        setNickInput(name);
+        setFirstNameInput(fn || fullName.split(" ")[0]);
+        setLastNameInput(ln || fullName.split(" ").slice(1).join(" "));
         setSelectedEmoji(meta?.avatar_emoji ?? "");
       });
     }
@@ -360,9 +364,12 @@ export default function ProfilPage() {
     e.preventDefault();
     if (!supabase) return;
     setPersonaSaving(true);
+    const fullName = `${firstNameInput.trim()} ${lastNameInput.trim()}`.trim();
     const { error } = await supabase.auth.updateUser({
       data: {
-        full_name: nickInput.trim() || null,
+        first_name: firstNameInput.trim() || null,
+        last_name: lastNameInput.trim() || null,
+        full_name: fullName || null,
         avatar_emoji: selectedEmoji || null,
       },
     });
@@ -370,7 +377,7 @@ export default function ProfilPage() {
     if (error) {
       setPersonaMsg({ ok: false, text: "Nepodařilo se uložit. Zkus to znovu." });
     } else {
-      setDisplayName(nickInput.trim());
+      setDisplayName(fullName);
       setAvatarEmoji(selectedEmoji);
       setPersonaMsg({ ok: true, text: "Uloženo! ✓" });
       setTimeout(() => { setShowPersonaForm(false); setPersonaMsg(null); }, 1500);
@@ -675,17 +682,17 @@ export default function ProfilPage() {
 
             {/* Odhadovaný výsledek přijímaček */}
             {readinessScore > 0 && (() => {
-              const pts = Math.round(readinessScore / 100 * 15);
-              const clr = pts >= 12 ? "#16a34a" : pts >= 9 ? "#d97706" : "#dc2626";
-              const bg  = pts >= 12 ? "#f0fdf4" : pts >= 9 ? "#fffbeb" : "#fef2f2";
-              const bdr = pts >= 12 ? "#bbf7d0" : pts >= 9 ? "#fde68a" : "#fecaca";
-              const lbl = pts >= 12 ? "Výborný výsledek" : pts >= 9 ? "Dobrý výsledek" : "Je co zlepšit";
-              const desc = pts >= 13
-                ? "Na top gymnázia (GJK, SSPŠ) zpravidla stačí 12–15 bodů."
-                : pts >= 11
-                ? "Většina gymnázií přijímá od 10–12 bodů."
-                : pts >= 8
-                ? "Na odborné školy s maturitou zpravidla stačí 7–9 bodů."
+              const pts = Math.round(readinessScore / 100 * 50);
+              const clr = pts >= 38 ? "#16a34a" : pts >= 28 ? "#d97706" : "#dc2626";
+              const bg  = pts >= 38 ? "#f0fdf4" : pts >= 28 ? "#fffbeb" : "#fef2f2";
+              const bdr = pts >= 38 ? "#bbf7d0" : pts >= 28 ? "#fde68a" : "#fecaca";
+              const lbl = pts >= 38 ? "Výborný výsledek" : pts >= 28 ? "Dobrý výsledek" : "Je co zlepšit";
+              const desc = pts >= 43
+                ? "Na top gymnázia (GJK, SSPŠ) zpravidla stačí 40–50 bodů."
+                : pts >= 35
+                ? "Většina gymnázií přijímá od 30–40 bodů."
+                : pts >= 22
+                ? "Na odborné školy s maturitou zpravidla stačí 20–30 bodů."
                 : "Pravidelným tréninkem lze výsledek výrazně zlepšit.";
               return (
                 <div className="mt-2 rounded-2xl p-4" style={{ background: bg, border: `1.5px solid ${bdr}` }}>
@@ -695,7 +702,7 @@ export default function ProfilPage() {
                   <div className="flex items-center gap-4">
                     <div className="shrink-0 text-center">
                       <p className="text-4xl font-black leading-none" style={{ color: clr }}>~{pts}</p>
-                      <p className="text-xs font-semibold mt-0.5" style={{ color: clr }}>/ 15 bodů</p>
+                      <p className="text-xs font-semibold mt-0.5" style={{ color: clr }}>/ 50 bodů</p>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-black leading-tight" style={{ color: clr }}>{lbl}</p>
@@ -704,7 +711,7 @@ export default function ProfilPage() {
                       <div className="mt-2 bg-white/60 rounded-full h-2 overflow-hidden">
                         <div
                           className="h-2 rounded-full transition-all duration-700"
-                          style={{ width: `${(pts / 15) * 100}%`, background: clr }}
+                          style={{ width: `${(pts / 50) * 100}%`, background: clr }}
                         />
                       </div>
                     </div>
@@ -1045,7 +1052,7 @@ export default function ProfilPage() {
               <div className="flex items-center gap-3">
                 <span className="text-xl">{avatarEmoji || "🎨"}</span>
                 <div>
-                  <p className="text-sm font-semibold text-slate-800">Přezdívka a avatar</p>
+                  <p className="text-sm font-semibold text-slate-800">Jméno a avatar</p>
                   <p className="text-xs text-slate-400">{displayName || "Nastav si jméno a emoji"}</p>
                 </div>
               </div>
@@ -1074,15 +1081,31 @@ export default function ProfilPage() {
                   </div>
                 </div>
 
-                {/* Nickname input */}
-                <input
-                  type="text"
-                  value={nickInput}
-                  onChange={(e) => setNickInput(e.target.value)}
-                  placeholder="Přezdívka (max. 20 znaků)"
-                  maxLength={20}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
-                />
+                {/* Jméno + Příjmení */}
+                <div className="flex gap-2">
+                  <div className="flex-1 flex flex-col gap-1">
+                    <label className="text-xs font-medium text-slate-500">Jméno</label>
+                    <input
+                      type="text"
+                      value={firstNameInput}
+                      onChange={(e) => setFirstNameInput(e.target.value)}
+                      placeholder="Tomáš"
+                      maxLength={30}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+                    />
+                  </div>
+                  <div className="flex-1 flex flex-col gap-1">
+                    <label className="text-xs font-medium text-slate-500">Příjmení</label>
+                    <input
+                      type="text"
+                      value={lastNameInput}
+                      onChange={(e) => setLastNameInput(e.target.value)}
+                      placeholder="Novák"
+                      maxLength={30}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+                    />
+                  </div>
+                </div>
 
                 {personaMsg && (
                   <p className={`text-xs px-3 py-2 rounded-lg font-medium ${personaMsg.ok ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-600 border border-red-200"}`}>

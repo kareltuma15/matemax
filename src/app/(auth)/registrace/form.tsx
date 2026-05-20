@@ -9,6 +9,8 @@ import { PENDING_REF_KEY } from "@/lib/referral";
 export default function RegistraceForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [firstName, setFirstName]   = useState("");
+  const [lastName, setLastName]     = useState("");
   const [email, setEmail]           = useState("");
   const [password, setPassword]     = useState("");
   const [confirm, setConfirm]       = useState("");
@@ -51,7 +53,18 @@ export default function RegistraceForm() {
     setError(null);
     setLoading(true);
 
-    const { data, error: authError } = await supabase.auth.signUp({ email, password });
+    const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
+    const { data, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          first_name: firstName.trim(),
+          last_name: lastName.trim(),
+          full_name: fullName || undefined,
+        },
+      },
+    });
 
     setLoading(false);
     if (authError) {
@@ -126,6 +139,29 @@ export default function RegistraceForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex gap-2">
+          <div className="flex-1 flex flex-col gap-1">
+            <label className="text-xs font-medium text-slate-500">Jméno</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Tomáš"
+              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+            />
+          </div>
+          <div className="flex-1 flex flex-col gap-1">
+            <label className="text-xs font-medium text-slate-500">Příjmení</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Novák"
+              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+            />
+          </div>
+        </div>
+
         <div className="flex flex-col gap-1">
           <label className="text-xs font-medium text-slate-500">Email</label>
           <input
