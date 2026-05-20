@@ -359,7 +359,10 @@ function LoggedInDashboard({
       )}
 
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
+      <nav
+        className="sticky top-0 z-50 border-b border-gray-100 shadow-sm"
+        style={{ backgroundColor: "rgba(255,255,255,0.95)", WebkitBackdropFilter: "blur(8px)", backdropFilter: "blur(8px)" }}
+      >
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
@@ -808,7 +811,10 @@ export default function LandingPage() {
     <div className="bg-white">
 
       {/* ── NAV ──────────────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
+      <nav
+        className="sticky top-0 z-50 border-b border-gray-100 shadow-sm"
+        style={{ backgroundColor: "rgba(255,255,255,0.95)", WebkitBackdropFilter: "blur(8px)", backdropFilter: "blur(8px)" }}
+      >
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
