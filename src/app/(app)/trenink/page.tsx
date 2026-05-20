@@ -36,6 +36,7 @@ import GuestTopicMap from "@/components/GuestTopicMap";
 import LoggedInTopicMap from "@/components/LoggedInTopicMap";
 import StreakMilestoneModal from "@/components/StreakMilestoneModal";
 import ProgressMilestoneModal from "@/components/ProgressMilestoneModal";
+import FeedbackModal from "@/components/FeedbackModal";
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS } from "@/types";
@@ -203,6 +204,7 @@ function TreningPageInner() {
   const [badgeQueue, setBadgeQueue]     = useState<string[]>([]);
   const [showFirstSession, setShowFirstSession] = useState(false);
   const [levelUpData, setLevelUpData]   = useState<ReturnType<typeof getLevelFromXP> | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
   const sessionStartRef                 = useRef(new Date());
   const consecutiveCorrectRef           = useRef(0);
 
@@ -292,6 +294,16 @@ function TreningPageInner() {
 
     // Session complete — clear draft
     clearSessionDraft();
+
+    // Feedback after 5th session (once per account)
+    try {
+      if (!localStorage.getItem("matemax-feedback-given")) {
+        const prev = parseInt(localStorage.getItem("matemax-session-count") ?? "0", 10);
+        const next = prev + 1;
+        localStorage.setItem("matemax-session-count", String(next));
+        if (next >= 5) setShowFeedback(true);
+      }
+    } catch { /* ignore */ }
 
     if (!supabase) return;
 
@@ -705,6 +717,22 @@ function TreningPageInner() {
             correct={correct}
             total={sessionIds.length}
             onClose={() => setShowFirstSession(false)}
+          />
+        )}
+        {showFeedback && (
+          <FeedbackModal
+            onClose={() => { setShowFeedback(false); localStorage.setItem("matemax-feedback-given", "1"); }}
+            onSubmit={async (rating, liked, suggestion) => {
+              try {
+                const sessionCount = parseInt(localStorage.getItem("matemax-session-count") ?? "0", 10);
+                await fetch("/api/feedback", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ rating, liked, suggestion, sessionCount }),
+                });
+              } catch { /* non-critical */ }
+              localStorage.setItem("matemax-feedback-given", "1");
+            }}
           />
         )}
         <SessionSummary
