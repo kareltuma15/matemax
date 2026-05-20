@@ -23,6 +23,12 @@ interface CermatEntry { date: string; score: number; total: number; pct: number;
 
 type NotifState = "unsupported" | "granted" | "denied" | "default" | "loading";
 
+const AVATAR_EMOJIS = [
+  "🐼", "🦊", "🐶", "🐱", "🦁", "🐯",
+  "🐨", "🐻", "🦋", "🚀", "⚡", "🎯",
+  "🧠", "🏆", "🌟", "🦄", "🎮", "🎸",
+];
+
 const ALL_TOPICS = Object.keys(TEMA_LABELS);
 
 interface TopicScore {
@@ -93,6 +99,13 @@ export default function ProfilPage() {
   const [passwordMsg, setPasswordMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [referralCopied, setReferralCopied] = useState(false);
+  const [displayName, setDisplayName]       = useState("");
+  const [avatarEmoji, setAvatarEmoji]       = useState("");
+  const [showPersonaForm, setShowPersonaForm] = useState(false);
+  const [nickInput, setNickInput]           = useState("");
+  const [selectedEmoji, setSelectedEmoji]   = useState("");
+  const [personaSaving, setPersonaSaving]   = useState(false);
+  const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
 
   useEffect(() => {
@@ -100,6 +113,12 @@ export default function ProfilPage() {
       supabase.auth.getSession().then(({ data }) => {
         setEmail(data.session?.user.email ?? null);
         setUserId(data.session?.user.id ?? null);
+        const meta = data.session?.user.user_metadata as Record<string, string> | undefined;
+        const name = meta?.full_name ?? meta?.name ?? "";
+        setDisplayName(name);
+        setAvatarEmoji(meta?.avatar_emoji ?? "");
+        setNickInput(name);
+        setSelectedEmoji(meta?.avatar_emoji ?? "");
       });
     }
 
@@ -337,6 +356,27 @@ export default function ProfilPage() {
     }
   }
 
+  async function handleSavePersona(e: React.FormEvent) {
+    e.preventDefault();
+    if (!supabase) return;
+    setPersonaSaving(true);
+    const { error } = await supabase.auth.updateUser({
+      data: {
+        full_name: nickInput.trim() || null,
+        avatar_emoji: selectedEmoji || null,
+      },
+    });
+    setPersonaSaving(false);
+    if (error) {
+      setPersonaMsg({ ok: false, text: "Nepodařilo se uložit. Zkus to znovu." });
+    } else {
+      setDisplayName(nickInput.trim());
+      setAvatarEmoji(selectedEmoji);
+      setPersonaMsg({ ok: true, text: "Uloženo! ✓" });
+      setTimeout(() => { setShowPersonaForm(false); setPersonaMsg(null); }, 1500);
+    }
+  }
+
   async function handleLogout() {
     if (supabase) await supabase.auth.signOut();
     const keysToRemove = [
@@ -441,16 +481,24 @@ export default function ProfilPage() {
         <div className="px-6 pt-7 pb-6 flex flex-col items-center text-center">
           {/* Large avatar */}
           <div
-            className="w-18 h-18 rounded-full flex items-center justify-center text-white text-3xl font-black mb-3"
+            className="rounded-full flex items-center justify-center mb-3"
             style={{
               width: "72px", height: "72px",
               background: "rgba(255,255,255,0.12)",
               border: "3px solid rgba(255,255,255,0.25)",
             }}
           >
-            {initials}
+            {avatarEmoji
+              ? <span className="text-3xl leading-none">{avatarEmoji}</span>
+              : <span className="text-white text-3xl font-black">{initials}</span>
+            }
           </div>
-          <p className="text-white font-bold text-base leading-tight">{email ?? "Nepřihlášen"}</p>
+          <p className="text-white font-bold text-base leading-tight">
+            {displayName || email || "Nepřihlášen"}
+          </p>
+          {displayName && email && (
+            <p className="text-blue-300 text-xs mt-0.5">{email}</p>
+          )}
 
           {/* Level badge */}
           <div
@@ -986,6 +1034,72 @@ export default function ProfilPage() {
       <div>
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nastavení & účet</p>
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
+
+          {/* Přezdívka a avatar */}
+          <div>
+            <button
+              type="button"
+              onClick={() => { setShowPersonaForm((v) => !v); setPersonaMsg(null); }}
+              className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors text-left"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">{avatarEmoji || "🎨"}</span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Přezdívka a avatar</p>
+                  <p className="text-xs text-slate-400">{displayName || "Nastav si jméno a emoji"}</p>
+                </div>
+              </div>
+              <span className="text-slate-300 text-lg">{showPersonaForm ? "▲" : "→"}</span>
+            </button>
+
+            {showPersonaForm && (
+              <form onSubmit={handleSavePersona} className="px-4 pb-4 flex flex-col gap-3 border-t border-slate-50">
+                {/* Emoji grid */}
+                <div className="mt-3">
+                  <p className="text-xs font-semibold text-slate-500 mb-2">Vyber emoji avatar:</p>
+                  <div className="grid grid-cols-6 gap-2">
+                    {AVATAR_EMOJIS.map((emoji) => (
+                      <button
+                        key={emoji}
+                        type="button"
+                        onClick={() => setSelectedEmoji(selectedEmoji === emoji ? "" : emoji)}
+                        className="h-10 rounded-xl flex items-center justify-center text-xl transition-all press-scale"
+                        style={selectedEmoji === emoji
+                          ? { background: "#eff6ff", border: "2px solid #2E6DA4", transform: "scale(1.12)" }
+                          : { background: "#f8fafc", border: "2px solid transparent" }}
+                      >
+                        {emoji}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Nickname input */}
+                <input
+                  type="text"
+                  value={nickInput}
+                  onChange={(e) => setNickInput(e.target.value)}
+                  placeholder="Přezdívka (max. 20 znaků)"
+                  maxLength={20}
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+                />
+
+                {personaMsg && (
+                  <p className={`text-xs px-3 py-2 rounded-lg font-medium ${personaMsg.ok ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-600 border border-red-200"}`}>
+                    {personaMsg.text}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={personaSaving}
+                  className="w-full py-2.5 text-white font-bold rounded-xl text-sm disabled:opacity-60 transition-opacity"
+                  style={{ background: "#0D1B3E" }}
+                >
+                  {personaSaving ? "Ukládám…" : "Uložit"}
+                </button>
+              </form>
+            )}
+          </div>
 
           {/* Notifikace */}
           {notifState !== "unsupported" && (
