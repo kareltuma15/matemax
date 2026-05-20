@@ -600,7 +600,9 @@ function LoggedInDashboard({
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center stagger-1 card-hover">
             <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
-            <p className="text-2xl font-black text-orange-500"><span className="streak-bounce">🔥</span> {streak}</p>
+            <p className="text-2xl font-black text-orange-500">
+              <span className={streak >= 3 ? "streak-bounce" : ""}>🔥</span> {streak}
+            </p>
             <p className="text-xs text-slate-400">dní v řadě</p>
           </div>
           <div

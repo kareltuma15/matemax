@@ -140,8 +140,14 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       >
         {xpLabel && (
           <div
-            className="absolute top-4 right-4 font-bold text-sm px-2 py-1 rounded-lg xp-bump z-10"
-            style={{ background: "#e0e7ff", color: "#2E6DA4" }}
+            className="absolute left-1/2 font-black text-xl xp-float-up z-20 pointer-events-none whitespace-nowrap"
+            style={{
+              top: "20%",
+              color: status === "correct" ? "#f59e0b" : "#64748b",
+              textShadow: status === "correct"
+                ? "0 2px 8px rgba(245,158,11,0.45), 0 0 1px rgba(255,255,255,0.9)"
+                : "0 2px 6px rgba(0,0,0,0.15)",
+            }}
           >
             {xpLabel}
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import confetti from "canvas-confetti";
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
 import { examples } from "@/data/examples";
@@ -240,6 +241,28 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
   const headerBg    = tier === "great" ? "#dcfce7" : tier === "good" ? "#dbeafe" : "#ffedd5";
   const headerColor = tier === "great" ? "#166534" : tier === "good" ? "#1e40af" : "#9a3412";
   const title       = tier === "great" ? "Výborně! 🏆" : tier === "good" ? "Dobrá práce! 💪" : "Nevzdávej to! 🔥";
+
+  // Confetti při 100% (perfect session) — největší oslava, dvě dávky pro intenzitu
+  useEffect(() => {
+    if (pct < 100 || total < 3) return;
+    const t1 = setTimeout(() => {
+      confetti({ particleCount: 140, spread: 75, origin: { y: 0.35 }, startVelocity: 38 });
+    }, 250);
+    const t2 = setTimeout(() => {
+      confetti({ particleCount: 90, spread: 100, origin: { y: 0.5, x: 0.2 }, angle: 60 });
+      confetti({ particleCount: 90, spread: 100, origin: { y: 0.5, x: 0.8 }, angle: 120 });
+    }, 650);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [pct, total]);
+
+  // Lehčí confetti při ≥ 80% (great tier ale ne perfect)
+  useEffect(() => {
+    if (pct < 80 || pct >= 100 || total < 3) return;
+    const t = setTimeout(() => {
+      confetti({ particleCount: 70, spread: 60, origin: { y: 0.4 } });
+    }, 300);
+    return () => clearTimeout(t);
+  }, [pct, total]);
 
   // Collect all practiced topics for progress bars (union of session + known diag topics)
   const [allTopics, setAllTopics] = useState<string[]>(topics);
