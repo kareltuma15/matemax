@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 // SQL migration (run once in Supabase):
 // CREATE TABLE user_feedback (
@@ -18,8 +19,12 @@ import { NextRequest, NextResponse } from "next/server";
 //   WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
 
 export async function POST(req: NextRequest) {
+  if (!rateLimit(`feedback:${clientIp(req)}`, 5, 60_000)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const body = await req.json().catch(() => null);
-  if (!body || typeof body.rating !== "number") {
+  if (!body || typeof body.rating !== "number" || body.rating < 1 || body.rating > 5) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
@@ -29,6 +34,14 @@ export async function POST(req: NextRequest) {
     suggestion: string;
     sessionCount?: number;
   };
+
+  // Sanitize text inputs
+  const cleanSuggestion = typeof suggestion === "string"
+    ? suggestion.trim().slice(0, 1000)
+    : "";
+  const cleanLiked = Array.isArray(liked)
+    ? liked.filter((x) => typeof x === "string").map((x) => x.trim().slice(0, 100)).slice(0, 20)
+    : [];
 
   const cookieStore = await cookies();
   const supabase = createServerClient(
@@ -47,9 +60,9 @@ export async function POST(req: NextRequest) {
   const { error } = await supabase.from("user_feedback").insert({
     user_id: user?.id ?? null,
     rating,
-    liked,
-    suggestion: suggestion.trim() || null,
-    session_count: sessionCount ?? null,
+    liked: cleanLiked,
+    suggestion: cleanSuggestion || null,
+    session_count: typeof sessionCount === "number" ? sessionCount : null,
   });
 
   if (error) {
