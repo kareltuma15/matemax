@@ -38,8 +38,11 @@ export default function VitejPage() {
         try {
           const res = await fetch("/api/referral", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ referralCode: pendingRef, newUserId: uid }),
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${data.session.access_token}`,
+            },
+            body: JSON.stringify({ referralCode: pendingRef }),
           });
           const json = await res.json();
           if (json.ok) setReferralGranted(true);

@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { TRIAL_DAYS } from "@/lib/referral";
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
 function trialExpiresAt(): string {
   const d = new Date();
@@ -10,10 +14,20 @@ function trialExpiresAt(): string {
 }
 
 export async function POST(req: NextRequest) {
-  const body = (await req.json()) as { referralCode?: string; newUserId?: string };
-  const { referralCode, newUserId } = body;
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  if (!referralCode || !newUserId) {
+  const supabaseCaller = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    global: { headers: { Authorization: authHeader } },
+  });
+  const { data: { user }, error: userErr } = await supabaseCaller.auth.getUser();
+  if (userErr || !user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const body = (await req.json()) as { referralCode?: string };
+  const { referralCode } = body;
+  const newUserId = user.id;
+
+  if (!referralCode) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
   if (!supabase || !supabaseAdmin) {

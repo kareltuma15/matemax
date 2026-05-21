@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  if (!rateLimit(`push-subscribe:${clientIp(req)}`, 10, 60_000)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const body = (await req.json()) as { subscription?: unknown; userId?: string };
   if (!body.subscription) {
     return NextResponse.json({ error: "Missing subscription" }, { status: 400 });
