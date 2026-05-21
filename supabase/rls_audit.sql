@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS premium_waitlist (
 
 CREATE TABLE IF NOT EXISTS user_feedback (
   id            UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id       UUID REFERENCES auth.users(id),
+  user_id       UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   rating        INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
   liked         TEXT[] DEFAULT '{}',
   suggestion    TEXT,
@@ -24,32 +24,38 @@ CREATE TABLE IF NOT EXISTS user_feedback (
 
 CREATE TABLE IF NOT EXISTS analytics_events (
   id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id    UUID REFERENCES auth.users(id),
-  event      TEXT NOT NULL,
-  properties JSONB,
-  created_at TIMESTAMPTZ DEFAULT now()
+  user_id    UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  event_name TEXT NOT NULL,
+  properties JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
+CREATE INDEX IF NOT EXISTS analytics_events_user_idx ON analytics_events (user_id, event_name);
+CREATE INDEX IF NOT EXISTS analytics_events_time_idx ON analytics_events (created_at);
 
 CREATE TABLE IF NOT EXISTS parent_messages (
-  id             UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  child_user_id  UUID NOT NULL REFERENCES auth.users(id),
-  message        TEXT NOT NULL,
-  created_at     TIMESTAMPTZ DEFAULT now()
+  id            UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  child_user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  message       TEXT NOT NULL,
+  created_at    TIMESTAMPTZ DEFAULT now()
 );
 
+-- parent_settings uses parent_email (text), not user_id UUID
 CREATE TABLE IF NOT EXISTS parent_settings (
-  id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id    UUID NOT NULL UNIQUE REFERENCES auth.users(id),
-  settings   JSONB DEFAULT '{}',
-  created_at TIMESTAMPTZ DEFAULT now()
+  id               UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  parent_email     TEXT NOT NULL UNIQUE,
+  report_frequency TEXT DEFAULT 'weekly',
+  send_day         TEXT DEFAULT 'sunday',
+  inactive_alert   BOOLEAN DEFAULT true,
+  updated_at       TIMESTAMPTZ DEFAULT now()
 );
 
+-- parent_subscriptions: email-based old-style newsletter subscription
 CREATE TABLE IF NOT EXISTS parent_subscriptions (
-  id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id    UUID NOT NULL REFERENCES auth.users(id),
-  endpoint   TEXT NOT NULL,
-  keys       JSONB,
-  created_at TIMESTAMPTZ DEFAULT now()
+  id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  parent_email TEXT NOT NULL,
+  child_email  TEXT NOT NULL,
+  created_at   TIMESTAMPTZ DEFAULT now(),
+  UNIQUE (parent_email, child_email)
 );
 
 -- ── STEP 2: Enable RLS on all tables ────────────────────────────────────
@@ -85,76 +91,84 @@ END $$;
 
 -- ── STEP 4: Create RLS policies ──────────────────────────────────────────
 
--- sessions
+-- sessions: users read/write only their own rows
 CREATE POLICY "sessions_select_own" ON sessions FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "sessions_insert_own" ON sessions FOR INSERT WITH CHECK (auth.uid() = user_id);
 
--- sm2_cards
-CREATE POLICY "sm2_select_own"  ON sm2_cards FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "sm2_insert_own"  ON sm2_cards FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "sm2_update_own"  ON sm2_cards FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+-- sm2_cards: users read/write only their own cards
+CREATE POLICY "sm2_select_own" ON sm2_cards FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "sm2_insert_own" ON sm2_cards FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "sm2_update_own" ON sm2_cards FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- user_xp
-CREATE POLICY "xp_select_own"  ON user_xp FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "xp_insert_own"  ON user_xp FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "xp_update_own"  ON user_xp FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+-- user_xp: users read/write only their own XP
+CREATE POLICY "xp_select_own" ON user_xp FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "xp_insert_own" ON user_xp FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "xp_update_own" ON user_xp FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- user_badges
+-- user_badges: users read/write only their own badges
 CREATE POLICY "badges_select_own" ON user_badges FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "badges_insert_own" ON user_badges FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "badges_update_own" ON user_badges FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- diagnostic_results
-CREATE POLICY "diag_select_own"  ON diagnostic_results FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "diag_insert_own"  ON diagnostic_results FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "diag_update_own"  ON diagnostic_results FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+-- diagnostic_results: users read/write only their own results
+CREATE POLICY "diag_select_own" ON diagnostic_results FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "diag_insert_own" ON diagnostic_results FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "diag_update_own" ON diagnostic_results FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- user_onboarding (read-only for client; writes via service role)
+-- user_onboarding: users read their own row; writes are server-side only
 CREATE POLICY "onboarding_select_own" ON user_onboarding FOR SELECT USING (auth.uid() = user_id);
 
--- user_premium — CRITICAL: clients can only revoke (set is_premium=false), never grant
-CREATE POLICY "premium_select_own"    ON user_premium FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "premium_revoke_trial"  ON user_premium FOR UPDATE
+-- user_premium — CRITICAL: clients can SELECT and revoke trial (is_premium=false only)
+-- Granting premium (is_premium=true) must go through server/service role
+CREATE POLICY "premium_select_own"   ON user_premium FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "premium_revoke_trial" ON user_premium FOR UPDATE
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id AND is_premium = false);
 
--- user_feedback
+-- user_feedback: authenticated users can insert (user_id may be null for anon)
 CREATE POLICY "feedback_insert_own" ON user_feedback FOR INSERT
   WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
 
--- analytics_events
-CREATE POLICY "analytics_insert_own" ON analytics_events FOR INSERT WITH CHECK (auth.uid() = user_id);
+-- analytics_events: users can insert their own events; no client select
+CREATE POLICY "analytics_insert_own" ON analytics_events FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
 
--- push_subscriptions
+-- push_subscriptions: users manage their own subscriptions
 CREATE POLICY "push_select_own"  ON push_subscriptions FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "push_insert_own"  ON push_subscriptions FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "push_delete_own"  ON push_subscriptions FOR DELETE USING (auth.uid() = user_id);
 
--- parent_child_link (both parent and child can see their link; writes via service role)
+-- parent_child_link: parent (by email) and child (by UUID) can see their own link
+-- Writes go through service role only (parent-link API)
 CREATE POLICY "pclink_select" ON parent_child_link FOR SELECT
-  USING (auth.uid() = parent_user_id OR auth.uid() = child_user_id);
+  USING (
+    (auth.jwt() ->> 'email') = parent_email
+    OR auth.uid() = child_user_id
+  );
 
--- parent_messages (child reads; writes via service role only)
-CREATE POLICY "pmsg_select_child" ON parent_messages FOR SELECT USING (auth.uid() = child_user_id);
+-- parent_messages: child can read messages sent to them; inserts via service role only
+CREATE POLICY "pmsg_select_child" ON parent_messages FOR SELECT
+  USING (auth.uid() = child_user_id);
 
--- parent_settings
-CREATE POLICY "psettings_select_own" ON parent_settings FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "psettings_insert_own" ON parent_settings FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "psettings_update_own" ON parent_settings FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+-- parent_settings: all access via service role (admin client) — no client policy needed
+-- (parent_email-based table; JWT email check possible but all writes are server-side)
 
--- parent_subscriptions
-CREATE POLICY "psubs_select_own" ON parent_subscriptions FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "psubs_insert_own" ON parent_subscriptions FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "psubs_delete_own" ON parent_subscriptions FOR DELETE USING (auth.uid() = user_id);
+-- parent_subscriptions: email-based newsletter table; insert is public (no auth in route)
+CREATE POLICY "psubs_insert_public" ON parent_subscriptions FOR INSERT WITH CHECK (true);
 
--- referrals — server-only (service role bypasses RLS; no client access)
+-- referrals: server-only table — all via service role, no client access
 
--- premium_waitlist — public INSERT (no auth needed for waitlist signup)
+-- premium_waitlist: public INSERT (unauthenticated waitlist signup)
 CREATE POLICY "waitlist_insert_public" ON premium_waitlist FOR INSERT WITH CHECK (true);
 
--- ── STEP 5: Verify ───────────────────────────────────────────────────────
+-- ── STEP 5: Verify — show all active policies ────────────────────────────
 
-SELECT tablename, policyname, cmd
+SELECT
+  tablename,
+  policyname,
+  cmd,
+  qual AS using_expr,
+  with_check AS check_expr
 FROM pg_policies
 WHERE schemaname = 'public'
 ORDER BY tablename, cmd;
