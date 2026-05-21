@@ -9,7 +9,7 @@ import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeCon
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import { TEMA_LABELS, SM2Card } from "@/types";
-import { examples } from "@/data/examples";
+import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
@@ -449,7 +449,7 @@ export default function ProfilPage() {
   // SM-2 progress per topic
   const sm2CardMap = new Map(sm2Cards.map((c) => [c.exampleId, c]));
   const sm2TopicStats = Object.keys(TEMA_LABELS).reduce<Record<string, { practiced: number; mastered: number; total: number }>>((acc, tema) => {
-    const topicExamples = examples.filter((ex) => ex.tema === tema);
+    const topicExamples = examplesIndex.filter((ex) => ex.tema === tema);
     const practiced = topicExamples.filter((ex) => (sm2CardMap.get(ex.id)?.repetitions ?? 0) > 0).length;
     const mastered  = topicExamples.filter((ex) => (sm2CardMap.get(ex.id)?.interval ?? 0) >= 7).length;
     acc[tema] = { practiced, mastered, total: topicExamples.length };

@@ -1,14 +1,19 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 export default function AppError({
   error,
-  unstable_retry,
+  reset,
 }: {
   error: Error & { digest?: string };
-  unstable_retry: () => void;
+  reset: () => void;
 }) {
+  useEffect(() => {
+    console.error("[AppError]", error.message, error.digest);
+  }, [error]);
+
   return (
     <div
       className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
@@ -24,7 +29,8 @@ export default function AppError({
       </p>
       <div className="flex gap-3">
         <button
-          onClick={unstable_retry}
+          type="button"
+          onClick={reset}
           className="px-5 py-2.5 rounded-xl font-semibold text-sm text-white"
           style={{ background: "#1a3a6e" }}
         >
