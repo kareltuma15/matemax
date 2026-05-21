@@ -21,12 +21,15 @@ type DashboardData = {
   childName?: string;
   childEmail?: string;
   weekTotal?: number;
+  lastWeekTotal?: number;
   accuracy?: number | null;
   streak?: number;
+  lastSession?: string | null;
   totalXp?: number;
   currentLevel?: string;
   topicTable?: TopicRow[];
   weakestTopic?: TopicRow | null;
+  weeklyActivity?: { date: string; count: number }[];
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -38,6 +41,16 @@ const LEVEL_LABELS: Record<string, string> = {
   mistr: "Mistr",
   legenda: "Legenda",
 };
+
+const DAY_LABELS = ["Ne", "Po", "Út", "St", "Čt", "Pá", "So"];
+
+function daysAgo(dateStr: string | null | undefined): string {
+  if (!dateStr) return "nikdy";
+  const diff = Math.round((Date.now() - new Date(dateStr).getTime()) / 86_400_000);
+  if (diff === 0) return "dnes";
+  if (diff === 1) return "včera";
+  return `${diff} dní zpět`;
+}
 
 function topicColor(accuracy: number): { bg: string; text: string; bar: string } {
   if (accuracy >= 70) return { bg: "#f0fdf4", text: "#166534", bar: "#22c55e" };
@@ -279,10 +292,13 @@ export default function RodiceDashboard() {
 
   const {
     childName, childEmail,
-    weekTotal = 0, accuracy, streak = 0,
+    weekTotal = 0, lastWeekTotal = 0, accuracy, streak = 0,
+    lastSession, weeklyActivity = [],
     totalXp = 0, currentLevel = "zacatecnik",
     topicTable = [], weakestTopic,
   } = data;
+
+  const trendDiff = weekTotal - lastWeekTotal;
 
   const insight = getCoachingInsight(data);
   const childInitial = childName ? childName[0].toUpperCase() : (childEmail ? childEmail[0].toUpperCase() : "?");
@@ -316,11 +332,42 @@ export default function RodiceDashboard() {
               <p className="text-emerald-200 text-xs mt-0.5">{LEVEL_LABELS[currentLevel] ?? currentLevel} · {totalXp} XP celkem</p>
               <div className="flex items-center gap-3 mt-1">
                 <span className="text-xs text-emerald-300">🔥 {streak} dní streak</span>
-                <span className="text-xs text-emerald-300">📚 {weekTotal} příkladů tento týden</span>
+                <span className="text-xs text-emerald-300">📚 {weekTotal} příkladů</span>
               </div>
+              {lastSession && (
+                <p className="text-xs mt-1" style={{ color: "rgba(167,243,208,0.7)" }}>
+                  Naposledy: {daysAgo(lastSession)}
+                </p>
+              )}
             </div>
           </div>
         </div>
+
+        {/* 7-day activity strip */}
+        {weeklyActivity.length > 0 && (
+          <div className="px-5 pb-4 flex items-end gap-1.5">
+            {weeklyActivity.map(({ date, count }) => {
+              const dayIdx = new Date(date).getDay();
+              const active = count > 0;
+              return (
+                <div key={date} className="flex-1 flex flex-col items-center gap-1">
+                  <div
+                    className="w-full rounded-md transition-all"
+                    style={{
+                      height: active ? Math.min(28, 8 + count * 3) : 8,
+                      background: active ? "#34d399" : "rgba(255,255,255,0.15)",
+                      minHeight: 8,
+                    }}
+                    title={`${date}: ${count} příkladů`}
+                  />
+                  <span className="text-xs" style={{ color: active ? "#a7f3d0" : "rgba(255,255,255,0.35)", fontSize: 9 }}>
+                    {DAY_LABELS[dayIdx]}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* ── COACHING INSIGHT ─────────────────────────────────────────── */}
@@ -343,6 +390,14 @@ export default function RodiceDashboard() {
           <div className="bg-white rounded-2xl border border-slate-100 p-4 text-center">
             <p className="text-3xl font-extrabold" style={{ color: "#064E3B" }}>{weekTotal}</p>
             <p className="text-xs text-slate-400 mt-1 leading-snug">příkladů</p>
+            {lastWeekTotal > 0 && (
+              <p
+                className="text-xs font-bold mt-1"
+                style={{ color: trendDiff >= 0 ? "#16a34a" : "#dc2626" }}
+              >
+                {trendDiff >= 0 ? `↑ +${trendDiff}` : `↓ ${trendDiff}`}
+              </p>
+            )}
           </div>
           <div className="bg-white rounded-2xl border border-slate-100 p-4 text-center">
             {accuracy !== null && accuracy !== undefined ? (

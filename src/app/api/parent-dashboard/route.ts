@@ -62,19 +62,39 @@ export async function GET(req: NextRequest) {
   const childEmail = authUser?.user?.email ?? "";
   const childName = childEmail.split("@")[0];
 
-  // Sessions last 7 days
+  // Sessions last 14 days (7 this week + 7 last week for trend)
+  const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const { data: sessions } = await supabaseAdmin
     .from("sessions")
     .select("date, correct, total, xp_earned")
     .eq("user_id", childId)
-    .gte("date", weekAgo);
+    .gte("date", twoWeeksAgo);
 
-  const weekTotal = (sessions ?? []).reduce((acc, s) => acc + (s.total as number), 0);
-  const weekCorrect = (sessions ?? []).reduce((acc, s) => acc + (s.correct as number), 0);
+  const allRecentSessions = sessions ?? [];
+  const thisWeekSessions = allRecentSessions.filter((s) => (s.date as string) >= weekAgo);
+  const lastWeekSessions = allRecentSessions.filter((s) => (s.date as string) < weekAgo);
+
+  const weekTotal = thisWeekSessions.reduce((acc, s) => acc + (s.total as number), 0);
+  const weekCorrect = thisWeekSessions.reduce((acc, s) => acc + (s.correct as number), 0);
   const accuracy = weekTotal > 0 ? Math.round((weekCorrect / weekTotal) * 100) : null;
+  const lastWeekTotal = lastWeekSessions.reduce((acc, s) => acc + (s.total as number), 0);
 
-  // Streak (consecutive days ending today)
+  // Daily activity for the last 7 days (for the activity strip)
+  const dailyMap: Record<string, number> = {};
+  for (const s of thisWeekSessions) {
+    const d = s.date as string;
+    dailyMap[d] = (dailyMap[d] ?? 0) + (s.total as number);
+  }
+  const weeklyActivity: { date: string; count: number }[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const ds = d.toISOString().slice(0, 10);
+    weeklyActivity.push({ date: ds, count: dailyMap[ds] ?? 0 });
+  }
+
+  // Streak (consecutive days ending today) + lastSession
   const { data: allSessions } = await supabaseAdmin
     .from("sessions")
     .select("date")
@@ -82,6 +102,7 @@ export async function GET(req: NextRequest) {
     .order("date", { ascending: false });
 
   let streak = 0;
+  const lastSession = (allSessions as { date: string }[] | null)?.[0]?.date ?? null;
   if (allSessions && allSessions.length > 0) {
     const dates = new Set((allSessions as { date: string }[]).map((s) => s.date));
     const today = new Date();
@@ -141,11 +162,14 @@ export async function GET(req: NextRequest) {
     childName,
     childEmail,
     weekTotal,
+    lastWeekTotal,
     accuracy,
     streak,
+    lastSession,
     totalXp,
     currentLevel,
     topicTable,
     weakestTopic,
+    weeklyActivity,
   });
 }
