@@ -11,7 +11,6 @@ import { usePremium } from "@/lib/premium";
 import { supabase } from "@/lib/supabase";
 import { remoteSyncDiagResults } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
-import confetti from "canvas-confetti";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -261,14 +260,21 @@ export default function DiagnostikaPage() {
       localStorage.setItem("matemax-diag-results", JSON.stringify(results));
       localStorage.setItem("matemax-diag-done", "1");
 
-      // Sync to Supabase if logged in (fire-and-forget)
+      // Sync to Supabase + Loops if logged in (fire-and-forget)
       if (supabase) {
         supabase.auth.getSession().then(({ data }) => {
           if (data.session) {
             const uid = data.session.user.id;
+            const token = data.session.access_token;
             remoteSyncDiagResults(uid, results).catch(() => {});
             const weakCount = Object.values(results).filter(v => v.total > 0 && v.correct / v.total < 0.67).length;
             trackEvent(uid, "diagnostika_dokoncena", { weak_topics: weakCount }).catch(() => {});
+            // Notify Loops so D+1/D+3/D+7 automations can branch on diagDone
+            fetch("/api/loops-event", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ event: "diag_completed" }),
+            }).catch(() => {});
           }
         });
       }
@@ -278,7 +284,7 @@ export default function DiagnostikaPage() {
 
       setFinished(true);
       setShowPlanModal(true);
-      setTimeout(() => confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } }), 150);
+      setTimeout(() => import("canvas-confetti").then(({ default: c }) => c({ particleCount: 100, spread: 70, origin: { y: 0.5 } })), 150);
     } else {
       setStepIdx((s) => s + 1);
       setSelected(Array(QUESTIONS_PER_STEP).fill(null));

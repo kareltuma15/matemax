@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import confetti from "canvas-confetti";
 import { examples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "@/components/MathText";
@@ -187,9 +186,11 @@ export default function VyzvaPage() {
           }
         } catch { /* ignore */ }
         // Big confetti burst
-        setTimeout(() => confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 } }), 100);
-        setTimeout(() => confetti({ particleCount: 60, spread: 60, angle: 60, origin: { y: 0.55 } }), 400);
-        setTimeout(() => confetti({ particleCount: 60, spread: 60, angle: 120, origin: { y: 0.55 } }), 650);
+        import("canvas-confetti").then(({ default: c }) => {
+          setTimeout(() => c({ particleCount: 120, spread: 80, origin: { y: 0.55 } }), 100);
+          setTimeout(() => c({ particleCount: 60, spread: 60, angle: 60, origin: { y: 0.55 } }), 400);
+          setTimeout(() => c({ particleCount: 60, spread: 60, angle: 120, origin: { y: 0.55 } }), 650);
+        });
         setPhase("success");
       } else {
         setPhase("failure");
@@ -244,7 +245,7 @@ export default function VyzvaPage() {
       correctRef.current += 1;
       setFeedback("correct");
       feedbackRef.current = "correct";
-      confetti({ particleCount: 25, spread: 45, origin: { y: 0.75 }, startVelocity: 18, gravity: 1.2 });
+      import("canvas-confetti").then(({ default: c }) => c({ particleCount: 25, spread: 45, origin: { y: 0.75 }, startVelocity: 18, gravity: 1.2 }));
     } else {
       setFeedback("wrong");
       feedbackRef.current = "wrong";

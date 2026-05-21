@@ -25,18 +25,21 @@ import {
   GamificationState,
 } from "@/lib/gamification";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import PracticeCard from "@/components/PracticeCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
-import BadgeToast from "@/components/BadgeToast";
-import FirstSessionModal from "@/components/FirstSessionModal";
-import LevelUpModal from "@/components/LevelUpModal";
 import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
 import LoggedInTopicMap from "@/components/LoggedInTopicMap";
-import StreakMilestoneModal from "@/components/StreakMilestoneModal";
-import ProgressMilestoneModal from "@/components/ProgressMilestoneModal";
-import FeedbackModal from "@/components/FeedbackModal";
+
+// Rare modals — lazy loaded to keep initial bundle small
+const BadgeToast = dynamic(() => import("@/components/BadgeToast"), { ssr: false });
+const FirstSessionModal = dynamic(() => import("@/components/FirstSessionModal"), { ssr: false });
+const LevelUpModal = dynamic(() => import("@/components/LevelUpModal"), { ssr: false });
+const StreakMilestoneModal = dynamic(() => import("@/components/StreakMilestoneModal"), { ssr: false });
+const ProgressMilestoneModal = dynamic(() => import("@/components/ProgressMilestoneModal"), { ssr: false });
+const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr: false });
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS } from "@/types";
@@ -318,12 +321,26 @@ function TreningPageInner() {
 
     if (!supabase) return;
 
-    // Analytics (fire-and-forget, non-blocking)
+    // Analytics + Loops (fire-and-forget, non-blocking)
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) {
         const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
         trackEvent(data.session.user.id, "session_completed", {
           correct, total: answered, accuracy, topics: practiceTopics,
+        }).catch(() => {});
+
+        // Count total sessions from localStorage for Loops personalization
+        let sessionCount = 1;
+        try {
+          const stored = localStorage.getItem("matemax-session-history");
+          if (stored) sessionCount = (JSON.parse(stored) as unknown[]).length;
+        } catch { /* ignore */ }
+        const token = data.session.access_token;
+        const loopsEvent = isFirstSession ? "first_session_completed" : "session_completed";
+        fetch("/api/loops-event", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ event: loopsEvent, props: { sessionCount } }),
         }).catch(() => {});
       }
     });

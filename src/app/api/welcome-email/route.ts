@@ -30,6 +30,12 @@ export async function POST(req: NextRequest) {
           firstName: firstName || undefined,
           source: "MateMax registrace",
           userGroup: "students",
+          // Initial properties for D+1/D+3/D+7 automation targeting
+          registeredAt: new Date().toISOString().slice(0, 10),
+          diagDone: false,
+          firstSessionDone: false,
+          sessionCount: 0,
+          appName: "MateMax",
         }),
       });
       if (!contactRes.ok) {

@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import confetti from "canvas-confetti";
 import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
@@ -73,7 +72,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setXpLabel("+10 XP");
       const newConsec = consecutiveCorrect + 1;
       if (newConsec >= 5) {
-        confetti({ particleCount: 100, spread: 65, origin: { y: 0.5 } });
+        import("canvas-confetti").then(({ default: c }) => c({ particleCount: 100, spread: 65, origin: { y: 0.5 } }));
         setComboText(`🔥 ${newConsec} v řadě!`);
       } else if (newConsec >= 3) {
         setComboText("+combo! 🔥");
