@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function GlobalError({
   error,
   unstable_retry,
@@ -7,6 +9,22 @@ export default function GlobalError({
   error: Error & { digest?: string };
   unstable_retry: () => void;
 }) {
+  useEffect(() => {
+    console.error("[GlobalError]", error.message, error.digest);
+    fetch("/api/error-report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "react_error_boundary",
+        message: error.message ?? "Global render error",
+        stack: error.stack?.slice(0, 800),
+        digest: error.digest,
+        url: typeof window !== "undefined" ? window.location.href : undefined,
+      }),
+      keepalive: true,
+    }).catch(() => {});
+  }, [error]);
+
   return (
     <html lang="cs">
       <body

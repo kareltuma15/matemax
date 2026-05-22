@@ -12,6 +12,18 @@ export default function AppError({
 }) {
   useEffect(() => {
     console.error("[AppError]", error.message, error.digest);
+    fetch("/api/error-report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "react_error_boundary",
+        message: error.message ?? "Unknown render error",
+        stack: error.stack?.slice(0, 800),
+        digest: error.digest,
+        url: window.location.href,
+      }),
+      keepalive: true,
+    }).catch(() => {});
   }, [error]);
 
   return (
