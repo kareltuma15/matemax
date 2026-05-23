@@ -1,0 +1,726 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+import XPProgressBar from "@/components/XPProgressBar";
+import BottomNav from "@/components/BottomNav";
+import { TEMA_LABELS } from "@/types";
+import type { Session } from "@supabase/supabase-js";
+import challengesJson from "@/data/daily-challenges.json";
+import { getReadiness } from "@/lib/readiness";
+import { localLoadCards, localLoadSessions } from "@/lib/storage";
+import { isDue } from "@/lib/sm2";
+import CountdownBanner from "@/components/CountdownBanner";
+import GuidanceModal from "@/components/GuidanceModal";
+import { usePremium } from "@/lib/premium";
+import { PREMIUM_TOPICS } from "@/lib/subscription";
+import { getTodayTopic } from "@/lib/studijni-plan";
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+function getDayOfYear(): number {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now.getTime() - start.getTime()) / 86400000);
+}
+
+type DailyChallenge = { title: string; xp_reward: number; difficulty: string; topic: string };
+function getTodayChallenge(): DailyChallenge {
+  return challengesJson[(getDayOfYear() - 1) % challengesJson.length] as DailyChallenge;
+}
+
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h >= 5 && h < 12) return "Dobré ráno";
+  if (h >= 12 && h < 18) return "Dobré odpoledne";
+  if (h >= 18 && h < 22) return "Dobrý večer";
+  return "Dobrou noc";
+}
+
+const MOTIVATIONAL_QUOTES = [
+  "Každý příklad, který vyřešíš, tě přibližuje k vysněné škole.",
+  "Pravidelnost poráží talent. Dnes je tvůj den!",
+  "Chyby jsou součást učení — důležité je nevzdat to.",
+  "Za 10 minut práce dnes ušetříš hodiny paniky před přijímačkami.",
+  "Matematika se naučit dá. Ty to zvládneš!",
+  "Každý den trochu — a za měsíc budeš jiný žák.",
+  "Přijímačky jsou za rohem. Dnes uděláš jeden krok navíc.",
+];
+
+function getDailyQuote(): string {
+  return MOTIVATIONAL_QUOTES[getDayOfYear() % MOTIVATIONAL_QUOTES.length];
+}
+
+const DAILY_GOAL = 10;
+const RING_R = 40;
+const RING_C = 2 * Math.PI * RING_R;
+
+interface WeakTopic {
+  tema: string;
+  score: number;
+}
+
+// ─── COMPONENT ───────────────────────────────────────────────────────────────
+
+export default function LoggedInDashboard({
+  session,
+  xp,
+  streak,
+  diagDone,
+}: {
+  session: Session;
+  xp: number;
+  streak: number;
+  diagDone: boolean;
+}) {
+  const email = session.user.email ?? "";
+  const meta = session.user.user_metadata as Record<string, string> | undefined;
+  const fullName = meta?.full_name ?? meta?.name ?? "";
+  const firstName = fullName.split(" ")[0] || email.split("@")[0];
+  const todayChallenge = getTodayChallenge();
+
+  const [todayCount, setTodayCount] = useState(0);
+  const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([]);
+  const [challengeDoneToday, setChallengeDoneToday] = useState(false);
+  const [parentMessage, setParentMessage] = useState<string | null>(null);
+  const [parentMessageId, setParentMessageId] = useState<string | null>(null);
+  const [dueCount, setDueCount] = useState(0);
+  const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
+  const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
+  const [hasWrongCards, setHasWrongCards] = useState(false);
+  const [guidanceModal, setGuidanceModal] = useState<null | {
+    type: "diagnostika" | "comeback" | "daily";
+    daysSince?: number;
+    todayTopic?: { tema: string; label: string; score: number } | null;
+  }>(null);
+  const { isPremium } = usePremium();
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // Sync diagDone ze Supabase před rozhodováním — opravuje bug po odhlášení/přihlášení
+    async function decideModal() {
+      let effectiveDiagDone = diagDone;
+
+      if (supabase && !diagDone) {
+        try {
+          const { data: rows } = await supabase
+            .from("diagnostic_results")
+            .select("tema, correct, total")
+            .eq("user_id", session.user.id);
+          if (rows && rows.length > 0) {
+            const results: Record<string, { correct: number; total: number }> = {};
+            for (const row of rows) results[row.tema] = { correct: row.correct, total: row.total };
+            localStorage.setItem("matemax-diag-results", JSON.stringify(results));
+            localStorage.setItem("matemax-diag-done", "1");
+            effectiveDiagDone = true;
+          }
+        } catch { /* ignore */ }
+      }
+
+      if (cancelled) return;
+
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const shownKey = `matemax-modal-shown-${todayStr}`;
+      if (localStorage.getItem(shownKey)) return;
+
+      if (!effectiveDiagDone) {
+        setGuidanceModal({ type: "diagnostika" });
+        localStorage.setItem(shownKey, "1");
+        return;
+      }
+
+      // Diagnostika hotová — check comeback (3+ dny pauza) nebo daily (aktivní žák)
+      try {
+        const raw = localStorage.getItem("matemax-progress");
+        if (raw) {
+          const p = JSON.parse(raw) as { lastActiveDate?: string };
+          if (p.lastActiveDate) {
+            const last = new Date(p.lastActiveDate);
+            const daysSince = Math.floor((Date.now() - last.getTime()) / 86400000);
+            if (daysSince >= 3) {
+              setGuidanceModal({ type: "comeback", daysSince });
+              localStorage.setItem(shownKey, "1");
+              return;
+            }
+          }
+        }
+      } catch { /* ignore */ }
+
+      // Aktivní žák — zobraz daily uvítání s dnešním tématem
+      const topic = getTodayTopic();
+      const todayTopic = topic
+        ? { tema: topic.tema, label: topic.label, score: topic.score }
+        : null;
+      setGuidanceModal({ type: "daily", todayTopic });
+      localStorage.setItem(shownKey, "1");
+    }
+
+    decideModal();
+    return () => { cancelled = true; };
+  }, [diagDone, session]);
+
+  useEffect(() => {
+    const cards = localLoadCards();
+    setDueCount(cards.filter(isDue).length);
+    setHasWrongCards(cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2));
+
+    const r = getReadiness();
+    if (r.hasData) setReadinessScore({ score: r.score, label: r.label, color: r.color });
+
+    // Suggested topics: weakest that have been at least touched
+    const sessions = localLoadSessions();
+    const lastPracticed: Record<string, string> = {};
+    for (const s of sessions) {
+      for (const t of s.temas) {
+        if (!lastPracticed[t]) lastPracticed[t] = s.date;
+      }
+    }
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const suggested = r.topics
+      .filter((t) => t.score > 0 || t.practiced > 0)
+      .map((t) => {
+        const last = lastPracticed[t.tema];
+        const daysSince = last
+          ? Math.floor((new Date(todayStr).getTime() - new Date(last).getTime()) / 86400000)
+          : 99;
+        const urgency = (1 - t.score / 100) * 0.6 + Math.min(daysSince, 7) / 7 * 0.4;
+        return { ...t, urgency };
+      })
+      .sort((a, b) => b.urgency - a.urgency)
+      .slice(0, 3)
+      .map(({ tema, label }) => ({ tema, label }));
+    setSuggestedTopics(suggested);
+    try {
+      const raw = localStorage.getItem("matemax-today");
+      if (raw) {
+        const daily = JSON.parse(raw) as { date: string; count: number };
+        if (daily.date === todayStr) setTodayCount(daily.count);
+      }
+    } catch { /* ignore */ }
+
+    try {
+      const raw = localStorage.getItem("matemax-diag-results");
+      if (raw) {
+        const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
+        const scored: WeakTopic[] = Object.entries(results)
+          .filter(([, v]) => v.total > 0)
+          .map(([tema, v]) => ({ tema, score: v.correct / v.total }))
+          .sort((a, b) => a.score - b.score)
+          .slice(0, 3);
+        setWeakTopics(scored);
+      }
+    } catch { /* ignore */ }
+
+    const challengeKey = "matemax-challenge-done-" + todayStr;
+    setChallengeDoneToday(localStorage.getItem(challengeKey) === "1");
+
+    if (supabase && session) {
+      supabase
+        .from("parent_messages")
+        .select("id, message, read_at")
+        .eq("child_user_id", session.user.id)
+        .is("read_at", null)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .then(({ data }) => {
+          if (data && data.length > 0) {
+            setParentMessage(data[0].message as string);
+            setParentMessageId(data[0].id as string);
+          }
+        });
+    }
+  }, [session]);
+
+  async function markMessageRead() {
+    if (!supabase || !parentMessageId) return;
+    await supabase
+      .from("parent_messages")
+      .update({ read_at: new Date().toISOString() })
+      .eq("id", parentMessageId);
+    setParentMessage(null);
+    setParentMessageId(null);
+  }
+
+  const goalMet = todayCount >= DAILY_GOAL;
+
+  return (
+    <div className="bg-white min-h-screen">
+      {/* Guidance modal */}
+      {guidanceModal && (
+        <GuidanceModal
+          type={guidanceModal.type}
+          daysSince={guidanceModal.daysSince}
+          firstName={firstName}
+          streak={streak}
+          todayTopic={guidanceModal.todayTopic}
+          onClose={() => setGuidanceModal(null)}
+        />
+      )}
+
+      {/* Nav */}
+      <nav
+        className="sticky top-0 z-50 border-b border-gray-100 shadow-sm"
+        style={{ backgroundColor: "rgba(255,255,255,0.95)", WebkitBackdropFilter: "blur(8px)", backdropFilter: "blur(8px)" }}
+      >
+        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
+              M²
+            </div>
+            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/profil"
+              className="text-sm text-gray-500 hover:text-gray-800 transition-colors hidden sm:block"
+            >
+              Profil
+            </Link>
+            <Link
+              href="/trenink"
+              className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-colors"
+              style={{ background: "#2E6DA4" }}
+            >
+              Trénovat →
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="hero-animated relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-[0.06] translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: "#00B4D8" }} />
+        <div className="absolute bottom-0 left-0 w-52 h-52 rounded-full opacity-[0.05] -translate-x-1/2 translate-y-1/2 pointer-events-none" style={{ background: "#2E6DA4" }} />
+
+        <div className="max-w-2xl mx-auto px-6 py-10 md:py-14 relative z-10">
+          <p className="text-blue-300 text-sm font-semibold mb-1">{getGreeting()},</p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+            {firstName} 👋
+          </h1>
+
+          {/* Stats pills */}
+          <div className="flex items-center gap-2 mt-3 flex-wrap">
+            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
+              🔥 {streak} {streak === 1 ? "den" : "dní"}
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
+              📝 {todayCount}/{DAILY_GOAL} dnes
+            </span>
+            {xp > 0 && (
+              <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300" style={{ background: "rgba(255,255,255,0.10)" }}>
+                ⚡ {xp} XP
+              </span>
+            )}
+          </div>
+
+          <p className="mt-3 text-blue-200 text-sm italic leading-snug opacity-90">
+            &ldquo;{getDailyQuote()}&rdquo;
+          </p>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-4">
+
+        {/* Parent message banner */}
+        {parentMessage && (
+          <div
+            className="rounded-2xl px-5 py-4 flex items-start gap-3"
+            style={{ background: "#fffbeb", border: "2px solid #fde68a" }}
+          >
+            <span className="text-2xl mt-0.5">💌</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold uppercase tracking-wide text-amber-700 mb-1">Vzkaz od rodiče</p>
+              <p className="text-sm text-amber-900 leading-relaxed">{parentMessage}</p>
+              <button
+                type="button"
+                onClick={markMessageRead}
+                className="mt-2 text-xs font-semibold text-amber-700 underline"
+              >
+                Označit jako přečteno
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Countdown */}
+        <CountdownBanner variant="compact" />
+
+        {/* XP bar */}
+        <XPProgressBar xp={xp} />
+
+        {/* Day-0 welcome card — brand new user with no activity yet */}
+        {xp === 0 && streak === 0 && todayCount === 0 && (
+          <div
+            className="rounded-2xl p-5 flex items-start gap-4 fade-in-up"
+            style={{ background: "#f0f7ff", border: "1px solid #bfdbfe" }}
+          >
+            <span className="text-3xl shrink-0 mt-0.5">🚀</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>
+                Vítej v MateMax! Začni svůj první trénink
+              </p>
+              <p className="text-xs text-slate-500 mt-1 leading-snug">
+                {!diagDone
+                  ? "Spusť diagnostiku — zjistíme kde máš mezery a sestavíme ti plán na míru."
+                  : "Všechno je připraveno. Stačí kliknout na trénink a jdeme na to!"}
+              </p>
+              <Link
+                href={!diagDone ? "/vitej" : "/trenink"}
+                className="inline-block mt-2.5 text-xs font-bold px-3 py-1.5 rounded-lg text-white"
+                style={{ background: "#2E6DA4" }}
+              >
+                {!diagDone ? "Spustit diagnostiku →" : "Zahájit trénink →"}
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Premium upsell banner — only for free users */}
+        {!isPremium && (
+          <Link
+            href="/cenik"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-opacity hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "1px solid #2E6DA4" }}
+          >
+            <span className="text-xl shrink-0">🔒</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-black text-white leading-tight">9 prémiových témat čeká</p>
+              <p className="text-xs text-blue-300 mt-0.5">Geometrie, Mocniny, Výrazy a další · od 99 Kč/měsíc</p>
+            </div>
+            <span
+              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg whitespace-nowrap"
+              style={{ background: "#2E6DA4", color: "#fff" }}
+            >
+              Odemknout →
+            </span>
+          </Link>
+        )}
+
+        {/* Due cards + readiness pill row */}
+        {(dueCount > 0 || readinessScore) && (
+          <div className="flex gap-2">
+            {dueCount > 0 && (
+              <Link
+                href="/trenink?rezim=sm2"
+                className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+                style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+              >
+                <span>🃏</span>
+                <span>{dueCount} karet ke zkoušení</span>
+              </Link>
+            )}
+            {readinessScore && (
+              <Link
+                href="/profil"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors whitespace-nowrap"
+                style={{ background: "#f8faff", color: readinessScore.color, border: `1px solid ${readinessScore.color}30` }}
+              >
+                <span>📊</span>
+                <div className="flex flex-col leading-none">
+                  <span className="text-[9px] font-semibold opacity-60 uppercase tracking-wide">Připravenost</span>
+                  <span className="text-sm">{readinessScore.score} %</span>
+                </div>
+              </Link>
+            )}
+          </div>
+        )}
+
+        {/* Dnešní výzva — nejslabší téma z diagnostiky */}
+        {diagDone && weakTopics.length > 0 && (
+          <div
+            className="rounded-2xl overflow-hidden"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+          >
+            <div className="px-5 py-4">
+              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Dnešní výzva</p>
+              <p className="text-xl font-black text-white">
+                {TEMA_LABELS[weakTopics[0].tema] ?? weakTopics[0].tema}
+              </p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="bg-white/20 rounded-full px-2.5 py-0.5 text-xs font-bold text-white">
+                  Připravenost: {Math.round(weakTopics[0].score * 100)} %
+                </span>
+                <span className="text-xs text-blue-200">Nejslabší téma — procvič ho dnes</span>
+              </div>
+            </div>
+            <Link
+              href={`/trenink?tema=${weakTopics[0].tema}`}
+              className="block px-5 py-3 text-center font-black text-sm text-white"
+              style={{ background: "rgba(255,255,255,0.12)", borderTop: "1px solid rgba(255,255,255,0.15)" }}
+            >
+              Začít trénink →
+            </Link>
+          </div>
+        )}
+
+        {/* Suggested topics */}
+        {suggestedTopics.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-100 p-4">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3">
+              💡 Dnes doporučujeme
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {suggestedTopics.map(({ tema, label }) => {
+                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                return (
+                  <Link
+                    key={tema}
+                    href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                    className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+                    style={locked
+                      ? { background: "#f1f5f9", color: "#94a3b8", border: "1px solid #e2e8f0" }
+                      : { background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+                  >
+                    {locked ? "🔒 " : ""}{label} {locked ? "" : "→"}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Opakovat chyby CTA */}
+        {hasWrongCards && (
+          <Link
+            href="/trenink?rezim=chyby"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
+            style={{ background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626" }}
+          >
+            <span className="text-lg">🔄</span>
+            <div>
+              <p className="text-sm font-bold">Procvičit chyby</p>
+              <p className="text-xs" style={{ color: "#ef4444" }}>Příklady kde sis nebyl jistý</p>
+            </div>
+            <span className="ml-auto text-sm font-semibold">→</span>
+          </Link>
+        )}
+
+        {/* Stats row */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center stagger-1 card-hover">
+            <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
+            <p className="text-2xl font-black">
+              <span className={streak > 0 ? "streak-bounce" : ""}>🔥</span>{" "}
+              <span className={streak >= 3 ? "streak-gold" : "text-orange-500"}>{streak}</span>
+            </p>
+            <p className="text-xs text-slate-400">dní v řadě</p>
+          </div>
+          <div
+            className="rounded-2xl border p-4 text-center stagger-2 card-hover"
+            style={{ background: diagDone ? "#f0fdf4" : "#fff7ed", borderColor: diagDone ? "#bbf7d0" : "#fed7aa" }}
+          >
+            <p className="text-xs font-medium mb-1" style={{ color: diagDone ? "#166534" : "#92400e" }}>
+              Diagnostika
+            </p>
+            <p className="text-xl mb-0.5">{diagDone ? "✅" : "🎯"}</p>
+            <p className="text-xs font-semibold" style={{ color: diagDone ? "#166534" : "#92400e" }}>
+              {diagDone ? "Hotovo" : "Ještě ne"}
+            </p>
+          </div>
+        </div>
+
+        {/* Daily goal – SVG ring */}
+        <div
+          className="rounded-2xl p-5 flex items-center gap-5 stagger-3 card-hover"
+          style={goalMet
+            ? { background: "#f0fdf4", border: "2px solid #bbf7d0" }
+            : { background: "#fff", border: "1px solid #e2e8f0" }
+          }
+        >
+          {/* Ring */}
+          <div className="shrink-0">
+            <svg width="88" height="88" viewBox="0 0 96 96" fill="none">
+              <defs>
+                <linearGradient id="goal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor={goalMet ? "#22c55e" : "#0D1B3E"} />
+                  <stop offset="100%" stopColor={goalMet ? "#16a34a" : "#2E6DA4"} />
+                </linearGradient>
+              </defs>
+              {/* Track */}
+              <circle cx="48" cy="48" r={RING_R} stroke="#e2e8f0" strokeWidth="9" />
+              {/* Progress */}
+              <circle
+                cx="48" cy="48" r={RING_R}
+                stroke="url(#goal-grad)"
+                strokeWidth="9"
+                strokeLinecap="round"
+                strokeDasharray={RING_C}
+                strokeDashoffset={RING_C * (1 - Math.min(1, todayCount / DAILY_GOAL))}
+                transform="rotate(-90 48 48)"
+                style={{ transition: "stroke-dashoffset 0.7s ease" }}
+              />
+              {/* Center text */}
+              <text x="48" y="43" textAnchor="middle" fontSize="20" fontWeight="800" fill={goalMet ? "#15803d" : "#0D1B3E"}>
+                {todayCount}
+              </text>
+              <text x="48" y="58" textAnchor="middle" fontSize="11" fill="#94a3b8">
+                z {DAILY_GOAL}
+              </text>
+            </svg>
+          </div>
+
+          {/* Text */}
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold uppercase tracking-wide mb-0.5" style={{ color: goalMet ? "#166534" : "#64748b" }}>
+              Dnešní cíl
+            </p>
+            {goalMet ? (
+              <>
+                <p className="text-base font-black" style={{ color: "#15803d" }}>Splněno! +15 XP bonus 🎉</p>
+                <p className="text-xs mt-1" style={{ color: "#16a34a" }}>{todayCount} příkladů dnes</p>
+                <Link
+                  href="/trenink"
+                  className="inline-block mt-2 text-xs font-bold px-3 py-1.5 rounded-lg"
+                  style={{ background: "#22c55e", color: "#fff" }}
+                >
+                  Procvičovat dál →
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                  {todayCount === 0 ? "Zatím žádné příklady" : `${todayCount} příkladů hotovo`}
+                </p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Ještě {DAILY_GOAL - todayCount} do splnění cíle
+                </p>
+                <Link
+                  href="/trenink"
+                  className="inline-block mt-2 text-xs font-bold px-3 py-1.5 rounded-lg"
+                  style={{ background: "#0D1B3E", color: "#fff" }}
+                >
+                  Jít trénovat →
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Dnešní výzva */}
+        <Link
+          href="/vyzva"
+          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md stagger-4"
+          style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
+        >
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Denní výzva</p>
+              <p className="text-base font-extrabold text-white leading-snug">
+                {challengeDoneToday ? "✅ Výzva splněna!" : `🏆 ${todayChallenge.title}`}
+              </p>
+              <p className="text-xs text-blue-200 mt-0.5">
+                {challengeDoneToday
+                  ? "Skvělá práce. Pokračuj v tréninku!"
+                  : `+${todayChallenge.xp_reward} XP za splnění`}
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1 shrink-0 ml-3">
+              <span className="text-3xl">{challengeDoneToday ? "🏆" : "→"}</span>
+              {!challengeDoneToday && (
+                <span className="text-xs font-bold text-amber-300">Spustit →</span>
+              )}
+            </div>
+          </div>
+        </Link>
+
+        {/* CERMAT test */}
+        <Link
+          href="/cermat-test"
+          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md stagger-5"
+        >
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: "#2E6DA4" }}>CERMAT test</p>
+              <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>Otestuj se na čisto</p>
+              <p className="text-xs text-slate-400 mt-0.5">Simulace přijímaček · 15 příkladů · 25 min</p>
+            </div>
+            <span className="text-3xl">🎯</span>
+          </div>
+        </Link>
+
+        {/* Slabá témata */}
+        {weakTopics.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+            <p className="text-sm font-bold mb-3" style={{ color: "#0D1B3E" }}>🎯 Kde máš mezery</p>
+            <div className="flex flex-col gap-2">
+              {weakTopics.map(({ tema, score }) => {
+                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                return (
+                <Link
+                  key={tema}
+                  href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                  className="flex items-center justify-between px-4 py-3 rounded-xl border transition-colors hover:bg-slate-50"
+                  style={{ borderColor: "#e2e8f0" }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">{locked ? "🔒" : "📉"}</span>
+                    <span className="text-sm font-semibold text-slate-700">
+                      {TEMA_LABELS[tema] ?? tema}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-xs font-bold px-2 py-0.5 rounded-full"
+                      style={{
+                        background: score < 0.4 ? "#fef2f2" : "#fff7ed",
+                        color: score < 0.4 ? "#991b1b" : "#92400e",
+                      }}
+                    >
+                      {Math.round(score * 100)} %
+                    </span>
+                    <span className="text-xs text-slate-400">{locked ? "Premium →" : "procvičit →"}</span>
+                  </div>
+                </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Main CTA */}
+        <Link
+          href="/trenink"
+          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale"
+          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+        >
+          💪 Pokračovat v tréninku →
+        </Link>
+
+        {/* Secondary CTAs */}
+        <div className="grid grid-cols-2 gap-3">
+          <Link
+            href="/profil"
+            className="block py-3 text-center rounded-xl border-2 border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition-colors"
+          >
+            👤 Zobrazit profil
+          </Link>
+          {!diagDone ? (
+            <Link
+              href="/diagnostika"
+              className="block py-3 text-center rounded-xl font-semibold text-sm"
+              style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
+            >
+              🎯 Spustit diagnostiku
+            </Link>
+          ) : (
+            <Link
+              href="/studijni-plan"
+              className="block py-3 text-center rounded-xl font-semibold text-sm"
+              style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
+            >
+              📅 Studijní plán
+            </Link>
+          )}
+        </div>
+      </section>
+
+      <div className="border-t border-gray-100 text-center py-5 text-xs text-gray-400 pb-24">
+        MateMax © 2026 · by Karel Tůma · Matematika Snadno
+      </div>
+      <BottomNav />
+    </div>
+  );
+}
