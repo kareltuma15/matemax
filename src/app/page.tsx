@@ -13,6 +13,8 @@ const LoggedInDashboard = dynamic(() => import("@/components/LoggedInDashboard")
   loading: () => null,
 });
 
+const DemoCard = dynamic(() => import("@/components/DemoCard"), { ssr: false });
+
 // â”€â”€â”€ DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const HOW_IT_WORKS = [
@@ -311,6 +313,15 @@ export default function LandingPage() {
           <p className="mt-4 text-sm text-blue-300">
             Zdarma navĹľdy pro 3 tĂ©mata Â· Premium od 99 KÄŤ/mÄ›sĂ­c Â· Bez kreditnĂ­ karty
           </p>
+        </div>
+      </section>
+
+      <section className="py-12" style={{ background: "#f8fafc" }}>
+        <div className="max-w-sm mx-auto px-6">
+          <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">
+            Zkus si priklad hned &#8212; bez registrace
+          </p>
+          <DemoCard />
         </div>
       </section>
 
