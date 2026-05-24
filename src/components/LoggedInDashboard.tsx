@@ -303,7 +303,8 @@ export default function LoggedInDashboard({
           {/* Stats pills */}
           <div className="flex items-center gap-2 mt-3 flex-wrap">
             <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
-              🔥 {streak} {streak === 1 ? "den" : "dní"}
+              <span className={streak >= 3 ? "streak-bounce" : ""}>🔥</span>
+              {streak} {streak === 1 ? "den" : "dní"}
             </span>
             <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
               📝 {todayCount}/{DAILY_GOAL} dnes
@@ -497,6 +498,22 @@ export default function LoggedInDashboard({
             <span className="ml-auto text-sm font-semibold">→</span>
           </Link>
         )}
+
+        {/* Rychlý mód */}
+        <Link
+          href="/rychly-mod"
+          className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors press-scale"
+          style={{ background: "#0D1B3E", border: "1px solid #1e3a6e" }}
+        >
+          <span className="text-xl">⚡</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-black text-white">Rychlý mód</p>
+            <p className="text-xs text-blue-300">10 příkladů · 60 sekund · osobní rekord</p>
+          </div>
+          <span className="text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap" style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}>
+            Hrát →
+          </span>
+        </Link>
 
         {/* Stats row */}
         <div className="grid grid-cols-2 gap-3">

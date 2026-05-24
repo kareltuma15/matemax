@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { LevelData } from "@/lib/gamification";
+import { playLevelUp } from "@/lib/sound";
 
 interface Props {
   level: LevelData;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function LevelUpModal({ level, onClose }: Props) {
   useEffect(() => {
+    playLevelUp();
     confetti({ particleCount: 150, spread: 80, origin: { y: 0.4 } });
     confetti({ particleCount: 80, spread: 100, origin: { y: 0.6 }, angle: 60 });
     confetti({ particleCount: 80, spread: 100, origin: { y: 0.6 }, angle: 120 });

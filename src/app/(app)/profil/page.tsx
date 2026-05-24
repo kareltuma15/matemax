@@ -17,6 +17,7 @@ import CountdownBanner from "@/components/CountdownBanner";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
+import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
@@ -108,8 +109,10 @@ export default function ProfilPage() {
   const [personaSaving, setPersonaSaving]   = useState(false);
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
+  const [soundOn, setSoundOn]             = useState(true);
 
   useEffect(() => {
+    setSoundOn(isSoundEnabled());
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
         setEmail(data.session?.user.email ?? null);
@@ -1123,6 +1126,34 @@ export default function ProfilPage() {
               </form>
             )}
           </div>
+
+          {/* Zvukový feedback */}
+          <button
+            type="button"
+            onClick={() => {
+              const next = !soundOn;
+              setSoundOn(next);
+              setSoundEnabled(next);
+            }}
+            className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{soundOn ? "🔊" : "🔇"}</span>
+              <div>
+                <p className="text-sm font-semibold text-slate-800">Zvukový feedback</p>
+                <p className="text-xs text-slate-400">Ding při správné odpovědi</p>
+              </div>
+            </div>
+            <div
+              className="relative w-10 h-6 rounded-full transition-colors"
+              style={{ background: soundOn ? "#2E6DA4" : "#cbd5e1" }}
+            >
+              <div
+                className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"
+                style={{ transform: soundOn ? "translateX(20px)" : "translateX(2px)" }}
+              />
+            </div>
+          </button>
 
           {/* Notifikace */}
           {notifState !== "unsupported" && (

@@ -113,6 +113,24 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix 
         </Link>
       )}
 
+      {/* Rychlý mód CTA */}
+      <Link
+        href="/rychly-mod"
+        className="w-full rounded-xl border-2 border-dashed px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors"
+        style={{ borderColor: "#0D1B3E" }}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-xl">⚡</span>
+          <div>
+            <p className="text-sm font-bold text-slate-800">Rychlý mód</p>
+            <p className="text-xs text-slate-400">10 příkladů · 60 sekund</p>
+          </div>
+        </div>
+        <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: "#0D1B3E", color: "#fff" }}>
+          Hrát →
+        </span>
+      </Link>
+
       {/* Mix CTA */}
       <button
         onClick={onStartMix}

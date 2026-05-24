@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import { getLevelFromXP, xpToNextLevel } from "@/lib/gamification";
 
 interface XPProgressBarProps {
@@ -12,7 +13,14 @@ export default function XPProgressBar({ xp, className = "" }: XPProgressBarProps
 
   const levelXP = xp - level.xp_min;
   const levelTotal = level.xp_max !== null ? level.xp_max + 1 - level.xp_min : null;
-  const pct = levelTotal !== null ? Math.min(100, Math.round((levelXP / levelTotal) * 100)) : 100;
+  const targetPct = levelTotal !== null ? Math.min(100, Math.round((levelXP / levelTotal) * 100)) : 100;
+
+  const [displayPct, setDisplayPct] = useState(0);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setDisplayPct(targetPct));
+    return () => cancelAnimationFrame(id);
+  }, [targetPct]);
 
   return (
     <div className={`bg-white rounded-2xl border border-slate-200 p-4 ${className}`}>
@@ -38,7 +46,7 @@ export default function XPProgressBar({ xp, className = "" }: XPProgressBarProps
       <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
         <div
           className="h-2.5 rounded-full transition-all duration-700"
-          style={{ width: `${pct}%`, background: level.progress_bar_color }}
+          style={{ width: `${displayPct}%`, background: level.progress_bar_color }}
         />
       </div>
     </div>

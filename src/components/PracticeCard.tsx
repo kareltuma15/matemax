@@ -6,6 +6,7 @@ import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
+import { playCorrect, playWrong } from "@/lib/sound";
 
 interface Props {
   example: DBExample;
@@ -70,6 +71,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setStatus("correct");
       setFlashColor("green");
       setXpLabel("+10 XP");
+      playCorrect();
       const newConsec = consecutiveCorrect + 1;
       if (newConsec >= 5) {
         import("canvas-confetti").then(({ default: c }) => c({ particleCount: 100, spread: 65, origin: { y: 0.5 } }));
@@ -84,6 +86,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setFlashColor("red");
       setXpLabel("+1 XP");
       setShaking(true);
+      playWrong();
       setTimeout(() => setFlashColor(""), 350);
       setTimeout(() => setShaking(false), 500);
       const newWrongCount = wrongAttempts + 1;
