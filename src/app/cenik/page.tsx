@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { usePremium } from "@/lib/premium";
 
@@ -30,42 +30,59 @@ const PREMIUM_FEATURES = [
 
 export default function CenikPage() {
   const router = useRouter();
-  const [waitlistEmail, setWaitlistEmail] = useState("");
-  const [waitlistState, setWaitlistState] = useState<"idle" | "loading" | "done" | "error">("idle");
-  const [trialState, setTrialState] = useState<"idle" | "loading" | "done" | "error">("idle");
-  const { isPremium, trialDaysLeft } = usePremium();
+  const params = useSearchParams();
+  const [checkoutState, setCheckoutState] = useState<"idle" | "loading" | "error">("idle");
+  const [portalState, setPortalState] = useState<"idle" | "loading" | "error">("idle");
+  const { isPremium, loading: premiumLoading } = usePremium();
 
-  async function handleStartTrial() {
-    if (!supabase) { router.push("/registrace"); return; }
+  const success = params.get("success") === "1";
+  const canceled = params.get("canceled") === "1";
+
+  // Clear query params after showing the banner
+  useEffect(() => {
+    if (success || canceled) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("success");
+      url.searchParams.delete("canceled");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [success, canceled]);
+
+  async function handleCheckout() {
+    if (!supabase) { router.push("/registrace?next=/cenik"); return; }
     const { data } = await supabase.auth.getSession();
-    if (!data.session) { router.push("/registrace?trial=1"); return; }
-    setTrialState("loading");
+    if (!data.session) { router.push("/prihlaseni?next=/cenik"); return; }
+
+    setCheckoutState("loading");
     try {
-      const res = await fetch("/api/trial", {
+      const res = await fetch("/api/stripe/create-checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: data.session.user.id }),
+        headers: { Authorization: `Bearer ${data.session.access_token}` },
       });
-      setTrialState(res.ok ? "done" : "error");
-      if (res.ok) setTimeout(() => router.push("/trenink"), 1500);
+      if (!res.ok) throw new Error("checkout failed");
+      const { url } = await res.json();
+      window.location.href = url;
     } catch {
-      setTrialState("error");
+      setCheckoutState("error");
     }
   }
 
-  async function handleWaitlist(e: React.FormEvent) {
-    e.preventDefault();
-    if (!waitlistEmail.includes("@")) return;
-    setWaitlistState("loading");
+  async function handlePortal() {
+    if (!supabase) return;
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) return;
+
+    setPortalState("loading");
     try {
-      const res = await fetch("/api/waitlist", {
+      const res = await fetch("/api/stripe/portal", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: waitlistEmail }),
+        headers: { Authorization: `Bearer ${data.session.access_token}` },
       });
-      setWaitlistState(res.ok ? "done" : "error");
+      if (!res.ok) throw new Error("portal failed");
+      const { url } = await res.json();
+      window.location.href = url;
     } catch {
-      setWaitlistState("error");
+      setPortalState("error");
     }
   }
 
@@ -93,6 +110,29 @@ export default function CenikPage() {
         </div>
       </nav>
 
+      {/* Success / canceled banners */}
+      {success && (
+        <div className="max-w-2xl mx-auto px-6 pt-6">
+          <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: "#f0fdf4", border: "2px solid #bbf7d0" }}>
+            <span className="text-2xl">🎉</span>
+            <div>
+              <p className="font-black text-sm" style={{ color: "#166534" }}>Premium aktivován! Vítej v týmu.</p>
+              <p className="text-xs mt-0.5" style={{ color: "#15803d" }}>Máš nyní přístup ke všem 9 tématům CERMAT.</p>
+            </div>
+            <Link href="/trenink" className="ml-auto text-sm font-bold px-4 py-2 rounded-xl text-white shrink-0" style={{ background: "#166534" }}>
+              Trénovat →
+            </Link>
+          </div>
+        </div>
+      )}
+      {canceled && (
+        <div className="max-w-2xl mx-auto px-6 pt-6">
+          <div className="rounded-2xl p-4" style={{ background: "#fff7ed", border: "2px solid #fed7aa" }}>
+            <p className="font-bold text-sm" style={{ color: "#9a3412" }}>Platba byla zrušena — kdykoliv to můžeš zkusit znovu.</p>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <section className="max-w-2xl mx-auto px-6 pt-14 pb-8 text-center">
         <span className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
@@ -104,41 +144,9 @@ export default function CenikPage() {
           Upgraduj kdykoliv.
         </h1>
         <p className="mt-3 text-gray-500 text-base">
-          Žádná kreditní karta, žádné skryté poplatky.
+          Žádná kreditní karta pro free plán · Premium za 99 Kč / měsíc.
         </p>
       </section>
-
-      {/* 7-day trial banner */}
-      {!isPremium && (
-        <section className="max-w-2xl mx-auto px-6 pb-8">
-          <div
-            className="rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"
-            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-          >
-            <div className="text-4xl">🎁</div>
-            <div className="flex-1 text-center sm:text-left">
-              <p className="font-black text-white text-base">Vyzkoušej 7 dní Premium zdarma</p>
-              <p className="text-sm mt-0.5" style={{ color: "#93c5fd" }}>
-                Bez kreditní karty · Žádný závazek · Zrušení jedním klikem
-              </p>
-            </div>
-            {trialState === "done" ? (
-              <div className="shrink-0 px-5 py-2.5 rounded-xl font-black text-sm" style={{ background: "#dcfce7", color: "#166534" }}>
-                ✓ Trial aktivován!
-              </div>
-            ) : (
-              <button
-                onClick={handleStartTrial}
-                disabled={trialState === "loading"}
-                className="shrink-0 px-5 py-2.5 rounded-xl font-black text-sm transition-opacity disabled:opacity-60"
-                style={{ background: "#fff", color: "#0D1B3E" }}
-              >
-                {trialState === "loading" ? "Aktivuji…" : "Spustit trial →"}
-              </button>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Pricing cards */}
       <section className="max-w-3xl mx-auto px-6 pb-16">
@@ -205,54 +213,63 @@ export default function CenikPage() {
               ))}
             </ul>
 
-            {waitlistState === "done" ? (
-              <div
-                className="mt-8 w-full py-3.5 rounded-xl text-center font-black text-base"
-                style={{ background: "#f0fdf4", color: "#16a34a", border: "2px solid #bbf7d0" }}
-              >
-                ✅ Zapsáno! Dáme ti vědět jako prvním.
-              </div>
-            ) : (
-              <form onSubmit={handleWaitlist} className="mt-8 flex flex-col gap-2">
-                <p className="text-xs text-center font-semibold text-slate-400 uppercase tracking-wide mb-1">
-                  🚀 Spuštění brzy — zapiš se na čekací listinu
-                </p>
-                <input
-                  type="email"
-                  required
-                  value={waitlistEmail}
-                  onChange={(e) => setWaitlistEmail(e.target.value)}
-                  placeholder="tvůj@email.cz"
-                  className="w-full px-4 py-3 rounded-xl border-2 text-sm outline-none transition-colors"
-                  style={{ borderColor: waitlistState === "error" ? "#fca5a5" : "#2E6DA4" }}
-                />
-                <button
-                  type="submit"
-                  disabled={waitlistState === "loading"}
-                  className="w-full py-3.5 text-white font-black rounded-xl text-base transition-opacity disabled:opacity-60"
-                  style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-                >
-                  {waitlistState === "loading" ? "Ukládám…" : "Chci být první →"}
-                </button>
-                {waitlistState === "error" && (
-                  <p className="text-xs text-center text-red-500">Něco se pokazilo, zkus to znovu.</p>
-                )}
-              </form>
-            )}
+            <div className="mt-8">
+              {!premiumLoading && isPremium ? (
+                // Already premium — show manage subscription
+                <div className="flex flex-col gap-3">
+                  <div
+                    className="w-full py-3 rounded-xl text-center font-black text-sm"
+                    style={{ background: "#f0fdf4", color: "#166534", border: "2px solid #bbf7d0" }}
+                  >
+                    ✓ Premium aktivní
+                  </div>
+                  <button
+                    onClick={handlePortal}
+                    disabled={portalState === "loading"}
+                    className="w-full py-2.5 rounded-xl text-sm font-semibold border-2 transition-opacity disabled:opacity-60"
+                    style={{ borderColor: "#e2e8f0", color: "#64748b" }}
+                  >
+                    {portalState === "loading" ? "Přesměrovávám…" : "Spravovat předplatné →"}
+                  </button>
+                  {portalState === "error" && (
+                    <p className="text-xs text-center text-red-500">Nepodařilo se otevřít portál, zkus znovu.</p>
+                  )}
+                </div>
+              ) : (
+                // Not premium — show checkout button
+                <div className="flex flex-col gap-2">
+                  <button
+                    onClick={handleCheckout}
+                    disabled={checkoutState === "loading" || premiumLoading}
+                    className="w-full py-3.5 text-white font-black rounded-xl text-base transition-opacity disabled:opacity-60 glow-pulse"
+                    style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+                  >
+                    {checkoutState === "loading" ? "Přesměrovávám na platbu…" : "Koupit Premium — 99 Kč / měsíc"}
+                  </button>
+                  {checkoutState === "error" && (
+                    <p className="text-xs text-center text-red-500">Něco se pokazilo, zkus to znovu.</p>
+                  )}
+                  <p className="text-xs text-center text-slate-400 mt-1">
+                    Bezpečná platba kartou přes Stripe · Zrušení kdykoliv
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Note */}
         <p className="text-center text-sm text-slate-400 mt-6">
-          Platba kartou nebo převodem · Zrušení kdykoliv · Faktura na firmu k dispozici
+          Platba kartou · Zrušení kdykoliv · Faktura na firmu k dispozici
         </p>
 
         {/* FAQ mini */}
         <div className="mt-10 flex flex-col gap-4">
           {[
-            ["Mohu zrušit kdykoliv?", "Ano. Předplatné lze zrušit kdykoliv z účtu, bez poplatků."],
+            ["Mohu zrušit kdykoliv?", "Ano. Předplatné lze zrušit kdykoliv přímo z aplikace nebo ze Stripe portálu, bez poplatků."],
             ["Co se stane s mým pokrokem po zrušení?", "Veškerý lokální pokrok (XP, odznaky, karty) zůstane uložen. Přístup k premium tématům se omezí na free plán."],
             ["Je premium pro rodiče nebo žáky?", "Pro obojí — žák trénuje v aplikaci, rodiče dostávají týdenní email s přehledem."],
+            ["Jak probíhá platba?", "Platba probíhá bezpečně přes Stripe — světový lídr v online platbách. Podporujeme všechny běžné karty (Visa, Mastercard)."],
           ].map(([q, a]) => (
             <div key={q} className="bg-slate-50 rounded-xl p-5">
               <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>{q}</p>
