@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -28,7 +28,7 @@ const PREMIUM_FEATURES = [
   "✓ Přístup na mobilu i PC",
 ];
 
-export default function CenikPage() {
+function CenikContent() {
   const router = useRouter();
   const params = useSearchParams();
   const [checkoutState, setCheckoutState] = useState<"idle" | "loading" | "error">("idle");
@@ -285,5 +285,13 @@ export default function CenikPage() {
         <Link href="/" className="hover:underline">Zpět na úvod</Link>
       </div>
     </div>
+  );
+}
+
+export default function CenikPage() {
+  return (
+    <Suspense fallback={null}>
+      <CenikContent />
+    </Suspense>
   );
 }
