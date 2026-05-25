@@ -54,7 +54,7 @@ export async function POST(req: Request) {
       customer: customerId,
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${appUrl}/cenik?success=1`,
+      success_url: `${appUrl}/premium-aktivovan`,
       cancel_url: `${appUrl}/cenik?canceled=1`,
       locale: "cs",
       allow_promotion_codes: true,
