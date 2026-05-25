@@ -61,6 +61,47 @@ interface WeakTopic {
   score: number;
 }
 
+interface WeeklyStats {
+  totalExamples: number;
+  totalCorrect: number;
+  totalXP: number;
+  topicsCount: number;
+  days: { date: string; count: number; label: string }[];
+}
+
+const DAY_LABELS_CS = ["Ne", "Po", "Út", "St", "Čt", "Pá", "So"];
+
+function computeWeeklyStats(): WeeklyStats | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const sessions = localLoadSessions();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const days: { date: string; count: number; label: string }[] = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today.getTime() - i * 86400000);
+      days.push({ date: d.toISOString().slice(0, 10), count: 0, label: DAY_LABELS_CS[d.getDay()] });
+    }
+
+    let totalCorrect = 0, totalExamples = 0, totalXP = 0;
+    const topicsSet = new Set<string>();
+
+    for (const s of sessions) {
+      const dayEntry = days.find((x) => x.date === s.date);
+      if (!dayEntry) continue;
+      dayEntry.count += s.total;
+      totalCorrect += s.correct;
+      totalExamples += s.total;
+      totalXP += s.xp;
+      for (const t of s.temas) topicsSet.add(t);
+    }
+
+    if (totalExamples === 0) return null;
+    return { totalExamples, totalCorrect, totalXP, topicsCount: topicsSet.size, days };
+  } catch { return null; }
+}
+
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 
 export default function LoggedInDashboard({
@@ -89,6 +130,7 @@ export default function LoggedInDashboard({
   const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
   const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
   const [hasWrongCards, setHasWrongCards] = useState(false);
+  const [weeklyStats, setWeeklyStats] = useState<WeeklyStats | null>(null);
   const [guidanceModal, setGuidanceModal] = useState<null | {
     type: "diagnostika" | "comeback" | "daily";
     daysSince?: number;
@@ -165,6 +207,7 @@ export default function LoggedInDashboard({
     const cards = localLoadCards();
     setDueCount(cards.filter(isDue).length);
     setHasWrongCards(cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2));
+    setWeeklyStats(computeWeeklyStats());
 
     const r = getReadiness();
     if (r.hasData) setReadinessScore({ score: r.score, label: r.label, color: r.color });
@@ -351,6 +394,83 @@ export default function LoggedInDashboard({
 
         {/* XP bar */}
         <XPProgressBar xp={xp} />
+
+        {/* Tento týden */}
+        {weeklyStats && (() => {
+          const acc = weeklyStats.totalExamples > 0
+            ? Math.round((weeklyStats.totalCorrect / weeklyStats.totalExamples) * 100)
+            : 0;
+          const maxCount = Math.max(...weeklyStats.days.map((d) => d.count), 1);
+          const todayStr = new Date().toISOString().slice(0, 10);
+          return (
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 stagger-1">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Tento týden</p>
+                <span
+                  className="text-xs font-bold px-2.5 py-0.5 rounded-full"
+                  style={{ background: "#eff6ff", color: "#2E6DA4" }}
+                >
+                  +{weeklyStats.totalXP} XP
+                </span>
+              </div>
+
+              {/* Mini bar chart */}
+              <div className="flex items-end gap-1 mb-3" style={{ height: 44 }}>
+                {weeklyStats.days.map(({ date, count, label }) => {
+                  const barH = count > 0 ? Math.max(6, Math.round((count / maxCount) * 36)) : 4;
+                  const isToday = date === todayStr;
+                  return (
+                    <div key={date} className="flex-1 flex flex-col items-center gap-1">
+                      <div className="w-full flex items-end" style={{ height: 36 }}>
+                        <div
+                          className="w-full rounded-sm"
+                          style={{
+                            height: barH,
+                            background: isToday ? "#0D1B3E" : count > 0 ? "#2E6DA4" : "#e2e8f0",
+                            transition: "height 0.5s ease",
+                          }}
+                        />
+                      </div>
+                      <span
+                        className="text-[9px] font-medium"
+                        style={{ color: isToday ? "#0D1B3E" : "#94a3b8" }}
+                      >
+                        {label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Stats row */}
+              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100">
+                <div className="text-center">
+                  <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                    {weeklyStats.totalExamples}
+                  </p>
+                  <p className="text-[10px] text-slate-400">příkladů</p>
+                </div>
+                <div className="text-center" style={{ borderLeft: "1px solid #f1f5f9", borderRight: "1px solid #f1f5f9" }}>
+                  <p
+                    className="text-base font-black"
+                    style={{ color: acc >= 70 ? "#15803d" : "#f59e0b" }}
+                  >
+                    {acc}&nbsp;%
+                  </p>
+                  <p className="text-[10px] text-slate-400">správně</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                    {weeklyStats.topicsCount}
+                  </p>
+                  <p className="text-[10px] text-slate-400">
+                    {weeklyStats.topicsCount === 1 ? "téma" : weeklyStats.topicsCount < 5 ? "témata" : "témat"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Day-0 welcome card — brand new user with no activity yet */}
         {xp === 0 && streak === 0 && todayCount === 0 && (

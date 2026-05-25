@@ -6,7 +6,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    viewTransition: true,
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);

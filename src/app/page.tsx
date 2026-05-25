@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -15,33 +15,33 @@ const LoggedInDashboard = dynamic(() => import("@/components/LoggedInDashboard")
 
 const DemoCard = dynamic(() => import("@/components/DemoCard"), { ssr: false });
 
-// â”€â”€â”€ DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── DATA ────────────────────────────────────────────────────────────────────
 
 const HOW_IT_WORKS = [
   {
     step: "01",
-    icon: "đźŽŻ",
+    icon: "🎯",
     title: "Diagnostika",
-    subtitle: "ZjistĂ­me, kde stojĂ­Ĺˇ",
-    desc: "MateMax zaÄŤne krĂˇtkĂ˝m adaptivnĂ­m testem (5 minut). Automaticky poznĂˇ, kterĂˇ tĂ©mata ovlĂˇdĂˇĹˇ a kde mĂˇĹˇ mezery â€” a sestavĂ­ trĂ©ninkovĂ˝ plĂˇn pĹ™Ă­mo na mĂ­ru.",
+    subtitle: "Zjistíme, kde stojíš",
+    desc: "MateMax začne krátkým adaptivním testem (5 minut). Automaticky pozná, která témata ovládáš a kde máš mezery — a sestaví tréninkový plán přímo na míru.",
     color: "bg-blue-50 border-blue-200",
     accent: "text-blue-600",
   },
   {
     step: "02",
-    icon: "đźŹ‹ď¸Ź",
-    title: "DennĂ­ trĂ©nink",
-    subtitle: "10 minut kaĹľdĂ˝ den staÄŤĂ­",
-    desc: "KaĹľdĂ˝ den dostaneĹˇ sadu pĹ™Ă­kladĹŻ seĹ™azenĂ˝ch od lehÄŤĂ­ch k tÄ›ĹľĹˇĂ­m. Algoritmus sleduje tvĂ© chyby a automaticky tÄ› vrĂˇtĂ­ k tĂ©matĹŻm, kde se zasekĂˇvĂˇĹˇ â€” dokud je neovlĂˇdneĹˇ.",
+    icon: "🏋️",
+    title: "Denní trénink",
+    subtitle: "10 minut každý den stačí",
+    desc: "Každý den dostaneš sadu příkladů seřazených od lehčích k těžším. Algoritmus sleduje tvé chyby a automaticky tě vrátí k tématům, kde se zasekáváš — dokud je neovládneš.",
     color: "bg-orange-50 border-orange-200",
     accent: "text-orange-600",
   },
   {
     step: "03",
-    icon: "đź“Š",
-    title: "TĂ˝dennĂ­ report",
-    subtitle: "RodiÄŤe vÄ›dĂ­, jak to jde",
-    desc: "KaĹľdĂ© pondÄ›lĂ­ rĂˇno dostanou rodiÄŤe email s pĹ™ehledem: kolik pĹ™Ă­kladĹŻ dĂ­tÄ› zvlĂˇdlo, jakĂ˝ mĂˇ streak, kde mĂˇ mezery a co procviÄŤovat pĹ™Ă­ĹˇtĂ­ tĂ˝den. Bez zkouĹˇenĂ­ u veÄŤeĹ™e.",
+    icon: "📊",
+    title: "Týdenní report",
+    subtitle: "Rodiče vědí, jak to jde",
+    desc: "Každé pondělí ráno dostanou rodiče email s přehledem: kolik příkladů dítě zvládlo, jaký má streak, kde má mezery a co procvičovat příští týden. Bez zkoušení u večeře.",
     color: "bg-green-50 border-green-200",
     accent: "text-green-600",
   },
@@ -50,40 +50,40 @@ const HOW_IT_WORKS = [
 const PRICING = [
   {
     name: "Zdarma",
-    price: "0 KÄŤ",
+    price: "0 Kč",
     period: "",
-    desc: "Pro vyzkouĹˇenĂ­, bez zĂˇvazku",
+    desc: "Pro vyzkoušení, bez závazku",
     highlight: false,
     features: [
-      "âś“ DiagnostickĂ˝ test",
-      "âś“ 3 tĂ©mata (zlomky, rovnice, geometrie)",
-      "âś“ 10 pĹ™Ă­kladĹŻ dennÄ›",
-      "âś“ ZĂˇkladnĂ­ statistiky",
-      "âś— TĂ˝dennĂ­ report pro rodiÄŤe",
-      "âś— PlnĂˇ databĂˇze 700+ pĹ™Ă­kladĹŻ (vĹˇechna tĂ©mata)",
-      "âś— CERMAT cviÄŤnĂ© testy",
+      "✓ Diagnostický test",
+      "✓ 3 témata (zlomky, rovnice, geometrie)",
+      "✓ 10 příkladů denně",
+      "✓ Základní statistiky",
+      "✗ Týdenní report pro rodiče",
+      "✗ Plná databáze 700+ příkladů (všechna témata)",
+      "✗ CERMAT cvičné testy",
     ],
-    cta: "ZaÄŤĂ­t zdarma",
+    cta: "Začít zdarma",
     ctaHref: "/vitej",
     ctaStyle: "border-2 border-[#2E6DA4] text-[#2E6DA4] hover:bg-blue-50",
   },
   {
     name: "Premium",
-    price: "99 KÄŤ",
-    period: "/ mÄ›sĂ­c",
-    desc: "PlnĂˇ pĹ™Ă­prava na pĹ™ijĂ­maÄŤky",
+    price: "99 Kč",
+    period: "/ měsíc",
+    desc: "Plná příprava na přijímačky",
     highlight: true,
-    badge: "NejoblĂ­benÄ›jĹˇĂ­",
+    badge: "Nejoblíbenější",
     features: [
-      "âś“ VĹˇechna tĂ©mata CERMAT (9 oblastĂ­)",
-      "âś“ NeomezenĂ˝ poÄŤet pĹ™Ă­kladĹŻ",
-      "âś“ AdaptivnĂ­ algoritmus",
-      "âś“ TĂ˝dennĂ­ report pro rodiÄŤe",
-      "âś“ 2 kompletnĂ­ CERMAT cviÄŤnĂ© testy",
-      "âś“ Streak systĂ©m + motivaÄŤnĂ­ odmÄ›ny",
-      "âś“ PĹ™Ă­stup na mobilu i poÄŤĂ­taÄŤi",
+      "✓ Všechna témata CERMAT (9 oblastí)",
+      "✓ Neomezený počet příkladů",
+      "✓ Adaptivní algoritmus",
+      "✓ Týdenní report pro rodiče",
+      "✓ 2 kompletní CERMAT cvičné testy",
+      "✓ Streak systém + motivační odměny",
+      "✓ Přístup na mobilu i počítači",
     ],
-    cta: "VyzkouĹˇet Premium",
+    cta: "Vyzkoušet Premium",
     ctaHref: "/registrace",
     ctaStyle: "bg-[#2E6DA4] text-white hover:bg-[#1e5a8a]",
   },
@@ -91,40 +91,40 @@ const PRICING = [
 
 const FAQS = [
   {
-    q: "Pro jakĂ˝ vÄ›k je MateMax urÄŤen?",
-    a: "Pro ĹľĂˇky 8. a 9. tĹ™Ă­dy, ideĂˇlnÄ› rok pĹ™ed pĹ™ijĂ­maÄŤkami. Obsah pĹ™esnÄ› odpovĂ­dĂˇ formĂˇtu CERMAT, kterĂ˝ pouĹľĂ­vĂˇ vÄ›tĹˇina gymnĂˇziĂ­ a stĹ™ednĂ­ch Ĺˇkol.",
+    q: "Pro jaký věk je MateMax určen?",
+    a: "Pro žáky 8. a 9. třídy, ideálně rok před přijímačkami. Obsah přesně odpovídá formátu CERMAT, který používá většina gymnázií a středních škol.",
   },
   {
-    q: "Jak dlouho dennÄ› se mĂˇ dĂ­tÄ› uÄŤit?",
-    a: "StaÄŤĂ­ 10 minut. Algoritmus sĂˇm vybere 7 pĹ™Ă­kladĹŻ â€” seĹ™azenĂ˝ch podle toho, kde ĹľĂˇk nejvĂ­c potĹ™ebuje procviÄŤit. Pravidelnost je dĹŻleĹľitÄ›jĹˇĂ­ neĹľ dĂ©lka.",
+    q: "Jak dlouho denně se má dítě učit?",
+    a: "Stačí 10 minut. Algoritmus sám vybere 7 příkladů — seřazených podle toho, kde žák nejvíc potřebuje procvičit. Pravidelnost je důležitější než délka.",
   },
   {
-    q: "Co kdyĹľ dĂ­tÄ› udÄ›lĂˇ chybu? Jak algoritmus reaguje?",
-    a: "PĹ™Ă­klad se vrĂˇtĂ­ za 1â€“2 dny znovu. PĹ™esnÄ› tak funguje SM-2 (spaced repetition) â€” opakovĂˇnĂ­ ve chvĂ­li, kdy hrozĂ­ zapomenutĂ­. ÄŚĂ­m vĂ­c chyb, tĂ­m dĹ™Ă­v se pĹ™Ă­klad vrĂˇtĂ­.",
+    q: "Co když dítě udělá chybu? Jak algoritmus reaguje?",
+    a: "Příklad se vrátí za 1–2 dny znovu. Přesně tak funguje SM-2 (spaced repetition) — opakování ve chvíli, kdy hrozí zapomenutí. Čím víc chyb, tím dřív se příklad vrátí.",
   },
   {
-    q: "Mohu MateMax pouĹľĂ­t i bez pĹ™ijĂ­maÄŤek?",
-    a: "Ano, pro kohokoliv kdo chce procviÄŤovat matematiku. DatabĂˇze 700+ pĹ™Ă­kladĹŻ pokrĂ˝vĂˇ celĂ˝ 2. stupeĹ ZĹ  â€” zlomky, rovnice, geometrie, procenta, mocniny i slovnĂ­ Ăşlohy.",
+    q: "Mohu MateMax použít i bez přijímaček?",
+    a: "Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze 700+ příkladů pokrývá celý 2. stupeň ZŠ — zlomky, rovnice, geometrie, procenta, mocniny i slovní úlohy.",
   },
   {
-    q: "Jak se liĹˇĂ­ MateMax od pracovnĂ­ho seĹˇitu Matematika Snadno?",
-    a: "SeĹˇit je fyzickĂˇ pomĹŻcka â€” cheat sheety a pĹ™Ă­klady na papĂ­Ĺ™e. MateMax je digitĂˇlnĂ­ trenĂ©r s adaptivnĂ­m algoritmem, kterĂ˝ sleduje pokrok a posĂ­lĂˇ rodiÄŤĹŻm tĂ˝dennĂ­ report. Oba produkty se skvÄ›le doplĹujĂ­.",
+    q: "Jak se liší MateMax od pracovního sešitu Matematika Snadno?",
+    a: "Sešit je fyzická pomůcka — cheat sheety a příklady na papíře. MateMax je digitální trenér s adaptivním algoritmem, který sleduje pokrok a posílá rodičům týdenní report. Oba produkty se skvěle doplňují.",
   },
   {
-    q: "Je pĹ™ihlĂˇĹˇenĂ­ povinnĂ©?",
-    a: "Ne, aplikace funguje i bez ĂşÄŤtu â€” veĹˇkerĂ˝ pokrok se uloĹľĂ­ do prohlĂ­ĹľeÄŤe. Registrace se vyplatĂ­, pokud chceĹˇ trĂ©novat na vĂ­ce zaĹ™Ă­zenĂ­ch nebo nechceĹˇ pĹ™ijĂ­t o statistiky pĹ™i smazĂˇnĂ­ dat prohlĂ­ĹľeÄŤe.",
+    q: "Je přihlášení povinné?",
+    a: "Ne, aplikace funguje i bez účtu — veškerý pokrok se uloží do prohlížeče. Registrace se vyplatí, pokud chceš trénovat na více zařízeních nebo nechceš přijít o statistiky při smazání dat prohlížeče.",
   },
   {
     q: "Funguje MateMax offline?",
-    a: "PĹ™Ă­klady a vĂˇĹˇ pokrok se uklĂˇdajĂ­ lokĂˇlnÄ›, takĹľe zĂˇkladnĂ­ trĂ©nink funguje i bez pĹ™ipojenĂ­ k internetu. Synchronizace s cloudem a tĂ˝dennĂ­ report vyĹľadujĂ­ internet.",
+    a: "Příklady a váš pokrok se ukládají lokálně, takže základní trénink funguje i bez připojení k internetu. Synchronizace s cloudem a týdenní report vyžadují internet.",
   },
   {
-    q: "Jak rychle vidĂ­m vĂ˝sledky?",
-    a: "Po prvnĂ­m trĂ©ninku algoritmus ihned vĂ­, kterĂˇ tĂ©mata procviÄŤujeĹˇ nejhĹŻĹ™ a pĹ™Ă­ĹˇtÄ› je zaĹ™adĂ­ jako prvnĂ­. ViditelnĂ˝ pokrok v testech bĂ˝vĂˇ znĂˇt po 2â€“3 tĂ˝dnech pravidelnĂ©ho trĂ©ninku.",
+    q: "Jak rychle vidím výsledky?",
+    a: "Po prvním tréninku algoritmus ihned ví, která témata procvičuješ nejhůř a příště je zařadí jako první. Viditelný pokrok v testech bývá znát po 2–3 týdnech pravidelného tréninku.",
   },
 ];
 
-// â”€â”€â”€ KOMPONENTY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── KOMPONENTY ──────────────────────────────────────────────────────────────
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -177,7 +177,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 // (LoggedInDashboard moved to src/components/LoggedInDashboard.tsx)
 
 
-// â”€â”€â”€ LANDING PAGE (HOSTĂ‰) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── LANDING PAGE (HOSTÉ) ─────────────────────────────────────────────────────
 
 export default function LandingPage() {
   const [diagDone, setDiagDone] = useState(false);
@@ -225,7 +225,7 @@ export default function LandingPage() {
   return (
     <div className="bg-white">
 
-      {/* â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── NAV ──────────────────────────────────────────────────────── */}
       <nav
         className="sticky top-0 z-50 border-b border-gray-100 shadow-sm"
         style={{ backgroundColor: "rgba(255,255,255,0.95)", WebkitBackdropFilter: "blur(8px)", backdropFilter: "blur(8px)" }}
@@ -233,7 +233,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
-              MÂ˛
+              M²
             </div>
             <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
           </div>
@@ -242,54 +242,54 @@ export default function LandingPage() {
               Jak to funguje
             </a>
             <a href="#pro-rodice" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
-              Pro rodiÄŤe
+              Pro rodiče
             </a>
             <a href="#cena" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
-              CenĂ­k
+              Ceník
             </a>
             <Link
               href="/prihlaseni"
               className="text-sm font-bold px-4 py-[6px] rounded-lg border-2 transition-colors hover:bg-blue-50"
               style={{ borderColor: "#2E6DA4", color: "#2E6DA4" }}
             >
-              PĹ™ihlĂˇsit se
+              Přihlásit se
             </Link>
             <Link
               href={diagDone ? "/trenink" : "/vitej"}
               className="text-sm font-bold text-white px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md"
               style={{ background: "#2E6DA4" }}
             >
-              {diagDone ? "TrĂ©novat â†’" : "ZaÄŤĂ­t zdarma"}
+              {diagDone ? "Trénovat →" : "Začít zdarma"}
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 50%, #0D1B3E 100%)" }}>
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5 translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: "#2E6DA4" }} />
         <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-5 -translate-x-1/2 translate-y-1/2 pointer-events-none" style={{ background: "#00B4D8" }} />
 
         <div className="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center relative z-10">
-          <Badge>NovĂ˝ produkt od Matematika Snadno</Badge>
+          <Badge>Nový produkt od Matematika Snadno</Badge>
 
           <h1 className="mt-6 text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight">
-            Matematika, kterĂˇ{" "}
-            <span style={{ color: "#00B4D8" }}>bavĂ­.</span>
+            Matematika, která{" "}
+            <span style={{ color: "#00B4D8" }}>baví.</span>
             <br />
-            KaĹľdĂ˝ den trochu.
+            Každý den trochu.
           </h1>
 
           <p className="mt-6 text-lg md:text-xl text-blue-200 max-w-2xl mx-auto leading-relaxed">
-            MateMax je adaptivnĂ­ matematickĂ˝ trenĂ©r pro ĹľĂˇky 8. a 9. tĹ™Ă­dy.
-            10 minut dennÄ›, chytrĂ˝ algoritmus a tĂ˝dennĂ­ report pro rodiÄŤe â€”
-            pĹ™Ă­prava na pĹ™ijĂ­maÄŤky bez stresu a bez douÄŤovĂˇnĂ­.
+            MateMax je adaptivní matematický trenér pro žáky 8. a 9. třídy.
+            10 minut denně, chytrý algoritmus a týdenní report pro rodiče —
+            příprava na přijímačky bez stresu a bez doučování.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {["Pro ĹľĂˇky 8. a 9. tĹ™Ă­dy", "PĹ™Ă­klady ve stylu CERMAT", "Funguje na mobilu i PC", "RodiÄŤe majĂ­ pĹ™ehled"].map((tag) => (
+            {["Pro žáky 8. a 9. třídy", "Příklady ve stylu CERMAT", "Funguje na mobilu i PC", "Rodiče mají přehled"].map((tag) => (
               <span key={tag} className="text-sm bg-white/10 text-blue-100 px-4 py-2 rounded-full border border-white/20">
-                âś“ {tag}
+                ✓ {tag}
               </span>
             ))}
           </div>
@@ -300,18 +300,18 @@ export default function LandingPage() {
               className="inline-block text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors shadow-lg"
               style={{ background: "#00B4D8" }}
             >
-              ZaÄŤĂ­t zdarma â†’
+              Začít zdarma →
             </Link>
             <Link
               href="/cermat-test"
               className="inline-block bg-white/10 hover:bg-white/20 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-white/20 transition-colors"
             >
-              VyzkouĹˇet CERMAT test â†’
+              Vyzkoušet CERMAT test →
             </Link>
           </div>
 
           <p className="mt-4 text-sm text-blue-300">
-            Zdarma navĹľdy pro 3 tĂ©mata Â· Premium od 99 KÄŤ/mÄ›sĂ­c Â· Bez kreditnĂ­ karty
+            Zdarma navždy pro 3 témata · Premium od 99 Kč/měsíc · Bez kreditní karty
           </p>
         </div>
       </section>
@@ -325,17 +325,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ CO TÄš ÄŚEKĂ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── CO TĚ ČEKÁ ───────────────────────────────────────────────── */}
       <section className="max-w-4xl mx-auto px-6 py-14">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>Co tÄ› ÄŤekĂˇ</h2>
-          <p className="text-gray-500 mt-2 text-sm">TĹ™i nĂˇstroje, kterĂ© tÄ› nauÄŤĂ­ pĹ™ipravit se bez stresu.</p>
+          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>Co tě čeká</h2>
+          <p className="text-gray-500 mt-2 text-sm">Tři nástroje, které tě naučí připravit se bez stresu.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
           {[
-            { icon: "đźŽŻ", title: "DiagnostickĂ˝ test", desc: "Zjisti kde mĂˇĹˇ mezery za 10 minut" },
-            { icon: "đź’Ş", title: "DennĂ­ vĂ˝zvy", desc: "KaĹľdĂ˝ den novĂˇ vĂ˝zva, kaĹľdĂ˝ den o krok blĂ­Ĺľ" },
-            { icon: "đź“Š", title: "SledovĂˇnĂ­ pokroku", desc: "VidĂ­Ĺˇ pĹ™esnÄ› co umĂ­Ĺˇ a co ne" },
+            { icon: "🎯", title: "Diagnostický test", desc: "Zjisti kde máš mezery za 10 minut" },
+            { icon: "💪", title: "Denní výzvy", desc: "Každý den nová výzva, každý den o krok blíž" },
+            { icon: "📊", title: "Sledování pokroku", desc: "Vidíš přesně co umíš a co ne" },
           ].map(({ icon, title, desc }) => (
             <div
               key={title}
@@ -349,14 +349,14 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ ÄŚĂŤSLA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── ČÍSLA ────────────────────────────────────────────────────── */}
       <section className="bg-gray-50 border-y border-gray-200">
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { value: "700+", label: "pĹ™Ă­kladĹŻ v databĂˇzi" },
-            { value: "9", label: "tĂ©mat CERMAT" },
-            { value: "10 min", label: "dennÄ› staÄŤĂ­" },
-            { value: "1Ă—/tĂ˝den", label: "report pro rodiÄŤe" },
+            { value: "700+", label: "příkladů v databázi" },
+            { value: "9", label: "témat CERMAT" },
+            { value: "10 min", label: "denně stačí" },
+            { value: "1×/týden", label: "report pro rodiče" },
           ].map((s) => (
             <div key={s.label}>
               <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>{s.value}</div>
@@ -366,15 +366,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ JAK TO FUNGUJE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── JAK TO FUNGUJE ───────────────────────────────────────────── */}
       <section id="jak-to-funguje" className="max-w-5xl mx-auto px-6 py-20">
         <div className="text-center mb-14">
           <Badge>Jak to funguje</Badge>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
-            TĹ™i kroky k lepĹˇĂ­m vĂ˝sledkĹŻm
+            Tři kroky k lepším výsledkům
           </h2>
           <p className="mt-3 text-gray-500 max-w-xl mx-auto">
-            MateMax se pĹ™izpĹŻsobĂ­ kaĹľdĂ©mu ĹľĂˇkovi individuĂˇlnÄ›. Ĺ˝ĂˇdnĂ© zbyteÄŤnĂ© opakovĂˇnĂ­ toho, co uĹľ umĂ­.
+            MateMax se přizpůsobí každému žákovi individuálně. Žádné zbytečné opakování toho, co už umí.
           </p>
         </div>
 
@@ -393,28 +393,28 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ APP MOCKUP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── APP MOCKUP ───────────────────────────────────────────────── */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-16">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge>UkĂˇzka aplikace</Badge>
+              <Badge>Ukázka aplikace</Badge>
               <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>
-                PĹ™ehlednĂ© a jednoduchĂ© rozhranĂ­
+                Přehledné a jednoduché rozhraní
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                DĂ­tÄ› vidĂ­ svĹŻj dennĂ­ cĂ­l, aktuĂˇlnĂ­ streak a seznam pĹ™Ă­kladĹŻ k vyĹ™eĹˇenĂ­.
-                Ĺ˝ĂˇdnĂ© zbyteÄŤnĂ© tlaÄŤĂ­tka, ĹľĂˇdnĂ˝ chaos â€” jen ÄŤistĂ© procviÄŤovĂˇnĂ­.
+                Dítě vidí svůj denní cíl, aktuální streak a seznam příkladů k vyřešení.
+                Žádné zbytečné tlačítka, žádný chaos — jen čisté procvičování.
               </p>
               <ul className="mt-6 space-y-3 text-sm text-gray-700">
                 {[
-                  "PĹ™Ă­klady seĹ™azeny od lehÄŤĂ­ch k tÄ›ĹľĹˇĂ­m",
-                  "OkamĹľitĂˇ zpÄ›tnĂˇ vazba po kaĹľdĂ© odpovÄ›di",
-                  "VysvÄ›tlenĂ­ sprĂˇvnĂ©ho postupu po chybÄ›",
-                  "VizuĂˇlnĂ­ pokrok a streak motivace",
+                  "Příklady seřazeny od lehčích k těžším",
+                  "Okamžitá zpětná vazba po každé odpovědi",
+                  "Vysvětlení správného postupu po chybě",
+                  "Vizuální pokrok a streak motivace",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="font-bold mt-0.5" style={{ color: "#00B4D8" }}>âś“</span>
+                    <span className="font-bold mt-0.5" style={{ color: "#00B4D8" }}>✓</span>
                     {item}
                   </li>
                 ))}
@@ -424,19 +424,19 @@ export default function LandingPage() {
                 className="inline-block mt-8 text-white font-bold px-6 py-3 rounded-xl transition-colors"
                 style={{ background: "#0D1B3E" }}
               >
-                VyzkouĹˇet zdarma â†’
+                Vyzkoušet zdarma →
               </Link>
             </div>
 
             <div className="rounded-2xl p-6 shadow-2xl" style={{ background: "#0D1B3E" }}>
               <div className="rounded-xl p-4 mb-3" style={{ background: "#1e3a6e" }}>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-white font-bold text-sm">đź§® MateMax</span>
-                  <span className="text-yellow-400 text-sm font-bold">đź”Ą 7 dnĂ­</span>
+                  <span className="text-white font-bold text-sm">🧮 MateMax</span>
+                  <span className="text-yellow-400 text-sm font-bold">🔥 7 dní</span>
                 </div>
                 <div className="rounded-lg p-3 text-center" style={{ background: "#0D1B3E" }}>
-                  <div className="text-xs text-blue-300 mb-1">DneĹˇnĂ­ Ăşloha â€” Zlomky</div>
-                  <div className="text-white text-lg font-bold">VypoÄŤĂ­tej: Âłâ„â‚„ + â…™ = ?</div>
+                  <div className="text-xs text-blue-300 mb-1">Dnešní úloha — Zlomky</div>
+                  <div className="text-white text-lg font-bold">Vypočítej: ³⁄₄ + ⅙ = ?</div>
                 </div>
               </div>
               {["11/12", "5/6", "7/12", "1/2"].map((ans, i) => (
@@ -452,46 +452,46 @@ export default function LandingPage() {
                 </div>
               ))}
               <div className="mt-4 rounded-lg p-3" style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)" }}>
-                <div className="text-green-400 text-xs font-semibold">âś“ SprĂˇvnÄ›! +10 XP</div>
-                <div className="text-xs mt-1" style={{ color: "#93c5fd" }}>Âłâ„â‚„ = âąâ„â‚â‚‚, â…™ = Â˛â„â‚â‚‚ â†’ âąâ„â‚â‚‚ + Â˛â„â‚â‚‚ = ÂąÂąâ„â‚â‚‚</div>
+                <div className="text-green-400 text-xs font-semibold">✓ Správně! +10 XP</div>
+                <div className="text-xs mt-1" style={{ color: "#93c5fd" }}>³⁄₄ = ⁹⁄₁₂, ⅙ = ²⁄₁₂ → ⁹⁄₁₂ + ²⁄₁₂ = ¹¹⁄₁₂</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* â”€â”€ PRO RODIÄŚE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── PRO RODIČE ───────────────────────────────────────────────── */}
       <section id="pro-rodice" className="py-20" style={{ background: "linear-gradient(180deg, #f0f7ff 0%, #fff 100%)" }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
-            <Badge>Pro rodiÄŤe</Badge>
+            <Badge>Pro rodiče</Badge>
             <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
-              VidĂ­te pĹ™esnÄ›, jak se dĂ­tÄ› pĹ™ipravuje
+              Vidíte přesně, jak se dítě připravuje
             </h2>
             <p className="mt-3 text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Bez zkouĹˇenĂ­ u veÄŤeĹ™e. Bez douÄŤovĂˇnĂ­. KaĹľdĂ© pondÄ›lĂ­ rĂˇno dostanete email s pĹ™ehledem â€”
-              vĂ­te kolik dĂ­tÄ› cviÄŤĂ­, kde je silnĂ© a kde mĂˇ mezery.
+              Bez zkoušení u večeře. Bez doučování. Každé pondělí ráno dostanete email s přehledem —
+              víte kolik dítě cvičí, kde je silné a kde má mezery.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-5 mb-10">
             {[
               {
-                icon: "đź“Š",
-                title: "TĂ˝dennĂ­ report emailem",
-                desc: "KaĹľdĂ© pondÄ›lĂ­ 8:00. Streak, ĂşspÄ›Ĺˇnost, slabĂˇ mĂ­sta, doporuÄŤenĂ­ na dalĹˇĂ­ tĂ˝den â€” vĹˇe na jednĂ© strĂˇnce.",
+                icon: "📊",
+                title: "Týdenní report emailem",
+                desc: "Každé pondělí 8:00. Streak, úspěšnost, slabá místa, doporučení na další týden — vše na jedné stránce.",
                 color: "#2E6DA4",
               },
               {
-                icon: "đźŽŻ",
-                title: "PĹ™esnĂˇ slabĂˇ mĂ­sta",
-                desc: "MĂ­sto \"jde to\" vĂ­te konkrĂ©tnÄ›: zlomky 78 %, slovnĂ­ Ăşlohy 42 %. PomĂˇhĂˇte tam, kde to opravdu potĹ™ebuje.",
+                icon: "🎯",
+                title: "Přesná slabá místa",
+                desc: "Místo \"jde to\" víte konkrétně: zlomky 78 %, slovní úlohy 42 %. Pomáháte tam, kde to opravdu potřebuje.",
                 color: "#00B4D8",
               },
               {
-                icon: "đź”Ą",
+                icon: "🔥",
                 title: "Streak motivace",
-                desc: "DĂ­tÄ› nechce pĹ™eruĹˇit sĂ©rii. Vy vidĂ­te, kolik dnĂ­ v Ĺ™adÄ› cviÄŤĂ­ â€” bez napomĂ­nĂˇnĂ­, bez tlaku.",
+                desc: "Dítě nechce přerušit sérii. Vy vidíte, kolik dní v řadě cvičí — bez napomínání, bez tlaku.",
                 color: "#f97316",
               },
             ].map(({ icon, title, desc, color }) => (
@@ -514,11 +514,11 @@ export default function LandingPage() {
           <div className="bg-white rounded-2xl shadow-md border border-blue-100 p-8 flex flex-col md:flex-row items-center gap-6">
             <div className="flex-1 text-center md:text-left">
               <p className="text-xl font-extrabold mb-2" style={{ color: "#0D1B3E" }}>
-                Propojte se s ĂşÄŤtem svĂ©ho dĂ­tÄ›te
+                Propojte se s účtem svého dítěte
               </p>
               <p className="text-sm text-gray-600 leading-relaxed">
-                StaÄŤĂ­ 1 minuta â€” dĂ­tÄ› potvrdĂ­ propojenĂ­ v aplikaci a vy zaÄŤnete dostĂˇvat reporty.
-                Ĺ˝ĂˇdnĂˇ sloĹľitĂˇ registrace, ĹľĂˇdnĂ˝ ĂşÄŤet navĂ­c.
+                Stačí 1 minuta — dítě potvrdí propojení v aplikaci a vy začnete dostávat reporty.
+                Žádná složitá registrace, žádný účet navíc.
               </p>
             </div>
             <Link
@@ -526,20 +526,20 @@ export default function LandingPage() {
               className="inline-block text-white font-bold text-base px-8 py-4 rounded-xl transition-colors shadow-lg whitespace-nowrap"
               style={{ background: "#0D1B3E" }}
             >
-              OtevĹ™Ă­t rodiÄŤovskĂ˝ pĹ™ehled â†’
+              Otevřít rodičovský přehled →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* â”€â”€ CENĂŤK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── CENÍK ────────────────────────────────────────────────────── */}
       <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12">
-          <Badge>CenĂ­k</Badge>
+          <Badge>Ceník</Badge>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
-            ZaÄŤni zdarma, upgraduj kdykoliv
+            Začni zdarma, upgraduj kdykoliv
           </h2>
-          <p className="mt-3 text-gray-500">Premium lze kdykoli zruĹˇit. Ĺ˝ĂˇdnĂ© skrytĂ© poplatky.</p>
+          <p className="mt-3 text-gray-500">Premium lze kdykoli zrušit. Žádné skryté poplatky.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -564,7 +564,7 @@ export default function LandingPage() {
               <p className="text-sm text-gray-500 mt-1">{plan.desc}</p>
               <ul className="mt-6 space-y-2">
                 {plan.features.map((f) => (
-                  <li key={f} className={`text-sm ${f.startsWith("âś—") ? "text-gray-400" : "text-gray-700"}`}>
+                  <li key={f} className={`text-sm ${f.startsWith("✗") ? "text-gray-400" : "text-gray-700"}`}>
                     {f}
                   </li>
                 ))}
@@ -580,17 +580,17 @@ export default function LandingPage() {
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-6">
-          đź’ł Platba kartou nebo bankovnĂ­m pĹ™evodem Â· Faktura na firmu k dispozici
+          💳 Platba kartou nebo bankovním převodem · Faktura na firmu k dispozici
         </p>
       </section>
 
-      {/* â”€â”€ FAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
       <section className="bg-gray-50 py-20">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-12">
             <Badge>FAQ</Badge>
             <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
-              NejÄŤastÄ›jĹˇĂ­ otĂˇzky
+              Nejčastější otázky
             </h2>
           </div>
           <div className="space-y-3">
@@ -601,19 +601,19 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ FINAL CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── FINAL CTA ────────────────────────────────────────────────── */}
       <section className="py-20 text-center" style={{ background: "#0D1B3E" }}>
         <div className="max-w-2xl mx-auto px-6">
-          <div className="text-5xl mb-4">đźš€</div>
+          <div className="text-5xl mb-4">🚀</div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-            PĹ™ijĂ­maÄŤky jsou za rohem.
+            Přijímačky jsou za rohem.
             <br />
-            <span style={{ color: "#00B4D8" }}>ZaÄŤni dnes.</span>
+            <span style={{ color: "#00B4D8" }}>Začni dnes.</span>
           </h2>
           <p className="mt-4 text-blue-200 text-lg">
-            10 minut dennÄ›. AdaptivnĂ­ algoritmus. RodiÄŤe s pĹ™ehledem.{" "}
+            10 minut denně. Adaptivní algoritmus. Rodiče s přehledem.{" "}
             <br className="hidden sm:block" />
-            PĹ™Ă­prava, kterĂˇ skuteÄŤnÄ› funguje.
+            Příprava, která skutečně funguje.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -621,24 +621,24 @@ export default function LandingPage() {
               className="inline-block text-white font-bold text-lg px-10 py-4 rounded-xl transition-colors"
               style={{ background: "#00B4D8" }}
             >
-              ZaÄŤĂ­t zdarma â†’
+              Začít zdarma →
             </Link>
             <Link
               href="/cermat-test"
               className="inline-block bg-white/10 hover:bg-white/20 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-white/20 transition-colors"
             >
-              đźŽŻ CERMAT test â†’
+              🎯 CERMAT test →
             </Link>
           </div>
           <p className="mt-4 text-sm text-blue-400">
-            Bez kreditnĂ­ karty Â· ZruĹˇenĂ­ kdykoliv Â· SeĹˇit a aplikace se skvÄ›le doplĹujĂ­
+            Bez kreditní karty · Zrušení kdykoliv · Sešit a aplikace se skvěle doplňují
           </p>
         </div>
       </section>
 
-      {/* â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── FOOTER ───────────────────────────────────────────────────── */}
       <div className="bg-white border-t border-gray-100 text-center py-5 text-xs text-gray-400">
-        MateMax Â© 2026 Â· by Karel TĹŻma Â· Matematika Snadno
+        MateMax © 2026 · by Karel Tůma · Matematika Snadno
       </div>
 
     </div>
