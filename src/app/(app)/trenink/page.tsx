@@ -27,6 +27,7 @@ import {
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import PracticeCard from "@/components/PracticeCard";
+import BossBattleCard from "@/components/BossBattleCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
 import UpgradeCard from "@/components/UpgradeCard";
@@ -42,7 +43,15 @@ const ProgressMilestoneModal = dynamic(() => import("@/components/ProgressMilest
 const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr: false });
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
-import { TEMA_LABELS } from "@/types";
+import { TEMA_LABELS, DBExample } from "@/types";
+
+function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
+  const hard = examples.filter(
+    (ex) => ex.tema === tema && ex.obtiznost === 3 && !usedIds.has(ex.id)
+  );
+  if (hard.length === 0) return null;
+  return hard[Math.floor(Math.random() * hard.length)];
+}
 
 const STREAK_MILESTONES: Record<number, number> = { 7: 50, 14: 100, 30: 200, 60: 350, 100: 500 };
 const PROGRESS_MILESTONES: Record<number, number> = { 10: 30, 25: 50, 50: 100, 100: 200, 250: 500, 500: 1000 };
@@ -199,6 +208,8 @@ function TreningPageInner() {
   const [podtemaFilter] = useState<string | null>(urlPodtema);
   const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
+  const [bossBattle, setBossBattle]     = useState<{ example: DBExample } | null>(null);
+  const [bossShown, setBossShown]       = useState(false);
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
   const [progressMilestone, setProgressMilestone] = useState<{ count: number; xpBonus: number } | null>(null);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
@@ -716,6 +727,45 @@ function TreningPageInner() {
         </p>
       </div>
     );
+  }
+
+  // Boss Battle — spustí se při první session s temaFilter (jednou za session)
+  if (done && temaFilter && !bossShown) {
+    if (!bossBattle) {
+      const usedIds = new Set(sessionIds);
+      const boss = pickBossExample(temaFilter, usedIds);
+      if (boss) {
+        setBossBattle({ example: boss });
+        return null; // re-render with bossBattle set
+      }
+      setBossShown(true); // no hard examples, skip boss
+    } else {
+      return (
+        <div className="max-w-lg mx-auto">
+          <BossBattleCard
+            example={bossBattle.example}
+            tema={temaFilter}
+            temaLabel={TEMA_LABELS[temaFilter] ?? temaFilter}
+            onComplete={(won) => {
+              setBossShown(true);
+              setBossBattle(null);
+              if (won) {
+                // +50 XP bonus za boss
+                const p = loadProgress();
+                const newP = recordActivity(p, false, 50);
+                saveProgress(newP);
+                setXp(newP.xp);
+                // Track boss defeats
+                try {
+                  const prev = parseInt(localStorage.getItem("matemax-bosses-defeated") ?? "0", 10);
+                  localStorage.setItem("matemax-bosses-defeated", String(prev + 1));
+                } catch { /* ignore */ }
+              }
+            }}
+          />
+        </div>
+      );
+    }
   }
 
   if (done) {
