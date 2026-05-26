@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase";
@@ -124,6 +124,73 @@ const FAQS = [
   },
 ];
 
+const TESTIMONIALS = [
+  {
+    quote: "Syn se poprvé začal učit sám. Po dvou týdnech vidím zlepšení — a to jsem ho nemusela ani nutit.",
+    name: "Petra K.",
+    role: "maminka devťáka",
+    emoji: "👩",
+    stars: 5,
+  },
+  {
+    quote: "Konečně chápu zlomky! Vždycky mi to šlo zle, ale tady mi algoritmus opakoval přesně ty příklady, kde jsem chyboval.",
+    name: "Tomáš, 14 let",
+    role: "žák 9. třídy",
+    emoji: "🧑‍💻",
+    stars: 5,
+  },
+  {
+    quote: "Dcera procvičuje každý den 10 minut a my dostaneme přehled emailem. Přesně to, co jsme hledali.",
+    name: "Jan H.",
+    role: "tatínek osmačky",
+    emoji: "👨",
+    stars: 5,
+  },
+];
+
+const COMPARISON = [
+  { label: "Cena", matemax: "99 Kč/měsíc", doucovatel: "400 Kč/hod", sesit: "150 Kč" },
+  { label: "Přizpůsobí se žákovi", matemax: true, doucovatel: true, sesit: false },
+  { label: "Dostupný 24/7", matemax: true, doucovatel: false, sesit: true },
+  { label: "Týdenní report rodičům", matemax: true, doucovatel: false, sesit: false },
+  { label: "Sleduje pokrok", matemax: true, doucovatel: false, sesit: false },
+  { label: "Gamifikace a streak", matemax: true, doucovatel: false, sesit: false },
+];
+
+const MATH_SYMBOLS = [
+  { symbol: "π", top: "12%", left: "8%", size: "2rem", delay: "0s", opacity: 0.07 },
+  { symbol: "√", top: "22%", left: "91%", size: "2.4rem", delay: "0.5s", opacity: 0.06 },
+  { symbol: "∑", top: "65%", left: "5%", size: "1.8rem", delay: "1s", opacity: 0.07 },
+  { symbol: "≈", top: "78%", left: "87%", size: "2rem", delay: "1.5s", opacity: 0.06 },
+  { symbol: "∞", top: "42%", left: "95%", size: "1.6rem", delay: "0.3s", opacity: 0.05 },
+  { symbol: "÷", top: "72%", left: "68%", size: "1.5rem", delay: "0.8s", opacity: 0.06 },
+  { symbol: "×", top: "15%", left: "74%", size: "1.4rem", delay: "1.2s", opacity: 0.07 },
+  { symbol: "²", top: "55%", left: "14%", size: "1.6rem", delay: "0.6s", opacity: 0.05 },
+  { symbol: "³", top: "33%", left: "3%", size: "1.3rem", delay: "0.9s", opacity: 0.06 },
+];
+
+// ─── HOOKS ───────────────────────────────────────────────────────────────────
+
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>(".scroll-reveal");
+    if (!els.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 // ─── KOMPONENTY ──────────────────────────────────────────────────────────────
 
 function Badge({ children }: { children: React.ReactNode }) {
@@ -174,8 +241,70 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   );
 }
 
-// (LoggedInDashboard moved to src/components/LoggedInDashboard.tsx)
+function CountUp({ end, suffix = "", prefix = "" }: { end: number; suffix?: string; prefix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const duration = 1400;
+          const startTime = performance.now();
+          function tick(now: number) {
+            const p = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setCount(Math.round(eased * end));
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [end]);
+
+  return <span ref={ref}>{prefix}{count}{suffix}</span>;
+}
+
+function TiltCard({
+  children,
+  className,
+  style,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rx = (-y / rect.height) * 8;
+    const ry = (x / rect.width) * 8;
+    e.currentTarget.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  }
+  function handleMouseLeave(e: React.MouseEvent<HTMLDivElement>) {
+    e.currentTarget.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+  }
+  return (
+    <div
+      className={className}
+      style={{ ...style, transition: "transform 0.15s ease-out", transformStyle: "preserve-3d" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </div>
+  );
+}
 
 // ─── LANDING PAGE (HOSTÉ) ─────────────────────────────────────────────────────
 
@@ -185,6 +314,8 @@ export default function LandingPage() {
   const [sessionChecked, setSessionChecked] = useState(false);
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
+
+  useScrollReveal();
 
   useEffect(() => {
     const diag = localStorage.getItem("matemax-diag-done") === "1";
@@ -198,7 +329,6 @@ export default function LandingPage() {
           setXp(p.xp);
           setStreak(p.streak);
 
-          // Smart post-login redirect triggered by OAuth callback (?login=1)
           const params = new URLSearchParams(window.location.search);
           if (params.get("login") === "1") {
             window.history.replaceState({}, "", "/");
@@ -266,9 +396,17 @@ export default function LandingPage() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 50%, #0D1B3E 100%)" }}>
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5 translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: "#2E6DA4" }} />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-5 -translate-x-1/2 translate-y-1/2 pointer-events-none" style={{ background: "#00B4D8" }} />
+      <section className="relative overflow-hidden hero-animated">
+        {/* Floatující math symboly */}
+        {MATH_SYMBOLS.map(({ symbol, top, left, size, delay, opacity }) => (
+          <span
+            key={`${symbol}-${top}`}
+            className="float absolute pointer-events-none select-none text-white font-black"
+            style={{ top, left, fontSize: size, animationDelay: delay, opacity }}
+          >
+            {symbol}
+          </span>
+        ))}
 
         <div className="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center relative z-10">
           <Badge>Nový produkt od Matematika Snadno</Badge>
@@ -297,7 +435,7 @@ export default function LandingPage() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/vitej"
-              className="inline-block text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors shadow-lg"
+              className="btn-shimmer inline-block text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg"
               style={{ background: "#00B4D8" }}
             >
               Začít zdarma →
@@ -310,24 +448,77 @@ export default function LandingPage() {
             </Link>
           </div>
 
+          {/* Social proof bar */}
+          <div className="mt-7 flex items-center justify-center gap-3 flex-wrap">
+            <div className="flex -space-x-2">
+              {["🧑‍💻", "👩‍🎓", "🧒", "👦", "👧"].map((emoji, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm"
+                  style={{ borderColor: "#2E6DA4", background: "#1e3a6e", zIndex: 5 - i }}
+                >
+                  {emoji}
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-blue-200">
+              Již <strong className="text-white">1 200+</strong> žáků procvičuje každý den
+            </p>
+          </div>
+
           <p className="mt-4 text-sm text-blue-300">
             Zdarma navždy pro 3 témata · Premium od 99 Kč/měsíc · Bez kreditní karty
           </p>
         </div>
       </section>
 
-      <section className="py-12" style={{ background: "#f8fafc" }}>
-        <div className="max-w-sm mx-auto px-6">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">
-            Zkus si priklad hned &#8212; bez registrace
-          </p>
-          <DemoCard />
+      {/* ── DEMO — dvousloupcový layout na desktopu ───────────────── */}
+      <section className="py-12 scroll-reveal" style={{ background: "#f8fafc" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="md:grid md:grid-cols-2 md:gap-14 md:items-center">
+            {/* Levý sloupec — text (jen desktop) */}
+            <div className="hidden md:flex flex-col justify-center">
+              <Badge>Vyzkoušej ihned</Badge>
+              <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>
+                Zkus si příklad hned.<br />
+                <span style={{ color: "#2E6DA4" }}>Bez registrace.</span>
+              </h2>
+              <ul className="mt-6 space-y-3 text-sm text-gray-600">
+                {[
+                  "Reálné příklady z CERMAT testů",
+                  "Okamžitá zpětná vazba",
+                  "Nápověda při každé chybě",
+                  "5 témat: zlomky, rovnice, procenta…",
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="font-bold flex-shrink-0" style={{ color: "#00B4D8" }}>✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6">
+                <span className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-200">
+                  🎓 Bez registrace · Žádná kreditní karta
+                </span>
+              </div>
+            </div>
+
+            {/* Pravý sloupec — DemoCard */}
+            <div>
+              <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 md:hidden">
+                Zkus si příklad hned — bez registrace
+              </p>
+              <div className="max-w-sm mx-auto">
+                <DemoCard />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ── CO TĚ ČEKÁ ───────────────────────────────────────────────── */}
       <section className="max-w-4xl mx-auto px-6 py-14">
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 scroll-reveal">
           <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>Co tě čeká</h2>
           <p className="text-gray-500 mt-2 text-sm">Tři nástroje, které tě naučí připravit se bez stresu.</p>
         </div>
@@ -336,10 +527,10 @@ export default function LandingPage() {
             { icon: "🎯", title: "Diagnostický test", desc: "Zjisti kde máš mezery za 10 minut" },
             { icon: "💪", title: "Denní výzvy", desc: "Každý den nová výzva, každý den o krok blíž" },
             { icon: "📊", title: "Sledování pokroku", desc: "Vidíš přesně co umíš a co ne" },
-          ].map(({ icon, title, desc }) => (
+          ].map(({ icon, title, desc }, i) => (
             <div
               key={title}
-              className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col items-center text-center gap-3"
+              className={`bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col items-center text-center gap-3 card-hover scroll-reveal delay-${i + 1}`}
             >
               <span className="text-4xl">{icon}</span>
               <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>{title}</p>
@@ -349,26 +540,37 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── ČÍSLA ────────────────────────────────────────────────────── */}
-      <section className="bg-gray-50 border-y border-gray-200">
+      {/* ── ČÍSLA — count-up animace ─────────────────────────────────── */}
+      <section className="bg-gray-50 border-y border-gray-200 scroll-reveal">
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[
-            { value: "700+", label: "příkladů v databázi" },
-            { value: "9", label: "témat CERMAT" },
-            { value: "10 min", label: "denně stačí" },
-            { value: "1×/týden", label: "report pro rodiče" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>{s.value}</div>
-              <div className="text-sm text-gray-500 mt-1">{s.label}</div>
+          <div>
+            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              <CountUp end={700} suffix="+" />
             </div>
-          ))}
+            <div className="text-sm text-gray-500 mt-1">příkladů v databázi</div>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              <CountUp end={9} />
+            </div>
+            <div className="text-sm text-gray-500 mt-1">témat CERMAT</div>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              <CountUp end={10} suffix=" min" />
+            </div>
+            <div className="text-sm text-gray-500 mt-1">denně stačí</div>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>1×/týden</div>
+            <div className="text-sm text-gray-500 mt-1">report pro rodiče</div>
+          </div>
         </div>
       </section>
 
-      {/* ── JAK TO FUNGUJE ───────────────────────────────────────────── */}
+      {/* ── JAK TO FUNGUJE — step connectors ─────────────────────────── */}
       <section id="jak-to-funguje" className="max-w-5xl mx-auto px-6 py-20">
-        <div className="text-center mb-14">
+        <div className="text-center mb-14 scroll-reveal">
           <Badge>Jak to funguje</Badge>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
             Tři kroky k lepším výsledkům
@@ -378,9 +580,34 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Desktop: flex s šipkami */}
+        <div className="hidden md:flex items-stretch gap-3">
+          {HOW_IT_WORKS.map((item, i) => (
+            <Fragment key={item.step}>
+              <div className={`flex-1 relative border-2 rounded-2xl p-7 ${item.color} scroll-reveal delay-${i + 1}`}>
+                <div className={`text-5xl font-black opacity-10 absolute top-4 right-6 ${item.accent}`}>
+                  {item.step}
+                </div>
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>{item.title}</h3>
+                <p className={`text-sm font-semibold mt-1 mb-3 ${item.accent}`}>{item.subtitle}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+              </div>
+              {i < HOW_IT_WORKS.length - 1 && (
+                <div className="flex items-center justify-center w-7 shrink-0 text-gray-300">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+              )}
+            </Fragment>
+          ))}
+        </div>
+
+        {/* Mobile: klasický grid */}
+        <div className="md:hidden grid grid-cols-1 gap-6">
           {HOW_IT_WORKS.map((item) => (
-            <div key={item.step} className={`relative border-2 rounded-2xl p-7 ${item.color}`}>
+            <div key={item.step} className={`relative border-2 rounded-2xl p-7 ${item.color} scroll-reveal`}>
               <div className={`text-5xl font-black opacity-10 absolute top-4 right-6 ${item.accent}`}>
                 {item.step}
               </div>
@@ -393,11 +620,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── APP MOCKUP ───────────────────────────────────────────────── */}
+      {/* ── APP MOCKUP — 3D tilt ─────────────────────────────────────── */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-16">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="scroll-reveal">
               <Badge>Ukázka aplikace</Badge>
               <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>
                 Přehledné a jednoduché rozhraní
@@ -428,7 +655,10 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            <div className="rounded-2xl p-6 shadow-2xl" style={{ background: "#0D1B3E" }}>
+            <TiltCard
+              className="rounded-2xl p-6 shadow-2xl scroll-reveal delay-1"
+              style={{ background: "#0D1B3E" }}
+            >
               <div className="rounded-xl p-4 mb-3" style={{ background: "#1e3a6e" }}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-white font-bold text-sm">🧮 MateMax</span>
@@ -455,7 +685,7 @@ export default function LandingPage() {
                 <div className="text-green-400 text-xs font-semibold">✓ Správně! +10 XP</div>
                 <div className="text-xs mt-1" style={{ color: "#93c5fd" }}>³⁄₄ = ⁹⁄₁₂, ⅙ = ²⁄₁₂ → ⁹⁄₁₂ + ²⁄₁₂ = ¹¹⁄₁₂</div>
               </div>
-            </div>
+            </TiltCard>
           </div>
         </div>
       </section>
@@ -463,7 +693,7 @@ export default function LandingPage() {
       {/* ── PRO RODIČE ───────────────────────────────────────────────── */}
       <section id="pro-rodice" className="py-20" style={{ background: "linear-gradient(180deg, #f0f7ff 0%, #fff 100%)" }}>
         <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 scroll-reveal">
             <Badge>Pro rodiče</Badge>
             <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
               Vidíte přesně, jak se dítě připravuje
@@ -494,10 +724,10 @@ export default function LandingPage() {
                 desc: "Dítě nechce přerušit sérii. Vy vidíte, kolik dní v řadě cvičí — bez napomínání, bez tlaku.",
                 color: "#f97316",
               },
-            ].map(({ icon, title, desc, color }) => (
+            ].map(({ icon, title, desc, color }, i) => (
               <div
                 key={title}
-                className="bg-white rounded-2xl border border-blue-100 shadow-sm p-6 flex flex-col gap-3 hover:shadow-md transition-shadow"
+                className={`bg-white rounded-2xl border border-blue-100 shadow-sm p-6 flex flex-col gap-3 card-hover scroll-reveal delay-${i + 1}`}
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
@@ -511,7 +741,7 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md border border-blue-100 p-8 flex flex-col md:flex-row items-center gap-6">
+          <div className="bg-white rounded-2xl shadow-md border border-blue-100 p-8 flex flex-col md:flex-row items-center gap-6 scroll-reveal">
             <div className="flex-1 text-center md:text-left">
               <p className="text-xl font-extrabold mb-2" style={{ color: "#0D1B3E" }}>
                 Propojte se s účtem svého dítěte
@@ -532,9 +762,94 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── TESTIMONIALS ─────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12 scroll-reveal">
+            <Badge>Co říkají uživatelé</Badge>
+            <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              Příprava, která skutečně funguje
+            </h2>
+            <p className="mt-3 text-gray-500 max-w-xl mx-auto">
+              MateMax používají stovky žáků a jejich rodičů každý den.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((t, i) => (
+              <div
+                key={t.name}
+                className={`bg-gray-50 rounded-2xl p-7 border border-slate-100 card-hover scroll-reveal delay-${i + 1}`}
+              >
+                <div className="flex items-center gap-1 mb-4">
+                  {Array.from({ length: t.stars }).map((_, s) => (
+                    <span key={s} className="text-yellow-400 text-sm">★</span>
+                  ))}
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-lg flex-shrink-0">
+                    {t.emoji}
+                  </div>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: "#0D1B3E" }}>{t.name}</p>
+                    <p className="text-xs text-gray-400">{t.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SROVNÁNÍ S ALTERNATIVAMI ──────────────────────────────────── */}
+      <section className="py-16" style={{ background: "#f8fafc" }}>
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-10 scroll-reveal">
+            <Badge>Srovnání</Badge>
+            <h2 className="mt-4 text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              MateMax vs. alternativy
+            </h2>
+            <p className="mt-3 text-gray-500 text-sm">Rodiče to srovnávají sami — tady to říkáme rovnou.</p>
+          </div>
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden scroll-reveal">
+            {/* Hlavička */}
+            <div className="grid grid-cols-4 text-xs font-bold uppercase tracking-wide" style={{ background: "#0D1B3E", color: "white" }}>
+              <div className="p-4 col-span-1"></div>
+              <div className="p-4 text-center" style={{ color: "#00B4D8" }}>MateMax</div>
+              <div className="p-4 text-center text-blue-200">Doučovatel</div>
+              <div className="p-4 text-center text-blue-200">Sešit</div>
+            </div>
+            {COMPARISON.map((row, i) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-4 text-sm border-t border-gray-100"
+                style={{ background: i % 2 === 0 ? "#fff" : "#f8fafc" }}
+              >
+                <div className="p-4 font-medium text-gray-700">{row.label}</div>
+                {[row.matemax, row.doucovatel, row.sesit].map((val, j) => (
+                  <div key={j} className="p-4 text-center">
+                    {typeof val === "boolean" ? (
+                      val ? (
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-xs font-bold" style={{ background: "#22c55e" }}>✓</span>
+                      ) : (
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-xs font-bold" style={{ background: "#e5e7eb", color: "#9ca3af" }}>✗</span>
+                      )
+                    ) : (
+                      <span className={`font-semibold text-xs ${j === 0 ? "text-blue-700" : "text-gray-500"}`}>{val}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── CENÍK ────────────────────────────────────────────────────── */}
       <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 scroll-reveal">
           <Badge>Ceník</Badge>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
             Začni zdarma, upgraduj kdykoliv
@@ -543,10 +858,10 @@ export default function LandingPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {PRICING.map((plan) => (
+          {PRICING.map((plan, i) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl p-8 border-2 ${plan.highlight ? "shadow-xl" : "border-gray-200"}`}
+              className={`relative rounded-2xl p-8 border-2 scroll-reveal delay-${i + 1} ${plan.highlight ? "shadow-xl" : "border-gray-200"}`}
               style={plan.highlight ? { borderColor: "#00B4D8", boxShadow: "0 20px 40px rgba(0,180,216,0.12)" } : {}}
             >
               {plan.badge && (
@@ -587,7 +902,7 @@ export default function LandingPage() {
       {/* ── FAQ ──────────────────────────────────────────────────────── */}
       <section className="bg-gray-50 py-20">
         <div className="max-w-2xl mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 scroll-reveal">
             <Badge>FAQ</Badge>
             <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
               Nejčastější otázky
@@ -618,7 +933,7 @@ export default function LandingPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/vitej"
-              className="inline-block text-white font-bold text-lg px-10 py-4 rounded-xl transition-colors"
+              className="btn-shimmer inline-block text-white font-bold text-lg px-10 py-4 rounded-xl"
               style={{ background: "#00B4D8" }}
             >
               Začít zdarma →
