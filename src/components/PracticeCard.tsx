@@ -26,13 +26,20 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [input, setInput]               = useState("");
   const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
-  const [flashColor, setFlashColor] = useState<"" | "green" | "red">("");
-  const [shaking, setShaking]       = useState(false);
-  const [comboText, setComboText]   = useState<string | null>(null);
-  const [xpLabel, setXpLabel]       = useState<string | null>(null);
-  const [cardKey, setCardKey]       = useState(0);
-  const [showTip, setShowTip]       = useState(false);
+  const [flashColor, setFlashColor]     = useState<"" | "green" | "red">("");
+  const [shaking, setShaking]           = useState(false);
+  const [comboText, setComboText]       = useState<string | null>(null);
+  const [xpLabel, setXpLabel]           = useState<string | null>(null);
+  const [cardKey, setCardKey]           = useState(0);
+  const [showTip, setShowTip]           = useState(false);
   const [wrongAttempts, setWrongAttempts] = useState(0);
+  const [lastWrongInput, setLastWrongInput] = useState("");
+
+  // AI hint state
+  const [aiHint, setAiHint]             = useState<string | null>(null);
+  const [aiHintLoading, setAiHintLoading] = useState(false);
+  const [aiHintError, setAiHintError]   = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -45,22 +52,31 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setXpLabel(null);
     setShowTip(false);
     setWrongAttempts(0);
+    setLastWrongInput("");
+    setAiHint(null);
+    setAiHintLoading(false);
+    setAiHintError(false);
     setCardKey((k) => k + 1);
     inputRef.current?.focus();
   }, [example.id]);
 
-  // Keyboard shortcut: Enter or Space to advance after answering
+  // Keyboard shortcut: Enter or Space to advance after final wrong or correct
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (status === "idle") return;
-      if (e.key === "Enter" || e.key === " ") {
+      if (status === "correct" && (e.key === "Enter" || e.key === " ")) {
         e.preventDefault();
-        onResult(status === "correct", input);
+        onResult(true, input);
+      }
+      // After 2nd wrong attempt, Enter/Space skips
+      if (status === "wrong" && wrongAttempts >= 2 && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        onResult(false, lastWrongInput);
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [status, input, onResult]);
+  }, [status, input, onResult, wrongAttempts, lastWrongInput]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -82,6 +98,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setTimeout(() => setComboText(null), 1500);
       setTimeout(() => setFlashColor(""), 350);
     } else {
+      const newWrongCount = wrongAttempts + 1;
+      setWrongAttempts(newWrongCount);
+      setLastWrongInput(input);
       setStatus("wrong");
       setFlashColor("red");
       setXpLabel("+1 XP");
@@ -89,13 +108,49 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       playWrong();
       setTimeout(() => setFlashColor(""), 350);
       setTimeout(() => setShaking(false), 500);
-      const newWrongCount = wrongAttempts + 1;
-      setWrongAttempts(newWrongCount);
+      // Show static tip after 1st wrong (if available)
       if (newWrongCount >= 1 && tips.length > 0) setShowTip(true);
-      // Auto-expand solution steps after wrong answer
-      if (example.reseni_kroky.length > 0) setShowSolution(true);
+      // Auto-expand solution after 2nd wrong attempt
+      if (newWrongCount >= 2 && example.reseni_kroky.length > 0) setShowSolution(true);
     }
     setTimeout(() => setXpLabel(null), 1200);
+  }
+
+  function handleRetry() {
+    setInput("");
+    setStatus("idle");
+    setFlashColor("");
+    setShaking(false);
+    setTimeout(() => inputRef.current?.focus(), 50);
+  }
+
+  async function fetchAiHint() {
+    if (aiHintLoading || aiHint) return;
+    setAiHintLoading(true);
+    setAiHintError(false);
+    try {
+      const res = await fetch("/api/hint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          zadani: example.zadani,
+          odpoved: example.odpoved,
+          tema: example.tema,
+          podtema: example.podtema,
+          chybna_odpoved: lastWrongInput,
+        }),
+      });
+      const data = await res.json();
+      if (data.hint) {
+        setAiHint(data.hint);
+      } else {
+        setAiHintError(true);
+      }
+    } catch {
+      setAiHintError(true);
+    } finally {
+      setAiHintLoading(false);
+    }
   }
 
   const borderColor =
@@ -107,6 +162,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const progressPct = (cardNumber / total) * 100;
   const topicLabel = TEMA_LABELS[example.tema] ?? example.tema;
   const tips = getTips(example.tema);
+  const canRetry = status === "wrong" && wrongAttempts < 2;
 
   return (
     <>
@@ -196,7 +252,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </p>
         </div>
 
-        {/* Tip */}
+        {/* Static tip (idle only) */}
         {status === "idle" && tips.length > 0 && (
           <div>
             <button
@@ -255,7 +311,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </div>
         </form>
 
-        {/* Result */}
+        {/* Correct result */}
         {status === "correct" && (
           <div className="rounded-xl bg-green-50 border border-green-200 p-4 flex items-start gap-3">
             <span className="text-xl mt-0.5">✓</span>
@@ -273,37 +329,107 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </div>
         )}
 
+        {/* Wrong result */}
         {status === "wrong" && (
           <>
             <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-start gap-3">
               <span className="text-xl mt-0.5">✗</span>
               <div className="flex-1">
-                <p className="font-bold text-red-700">Skoro!</p>
+                <p className="font-bold text-red-700">
+                  {canRetry ? "Není správně — zkus to ještě jednou!" : "Skoro!"}
+                </p>
                 <p className="text-sm text-red-600">
-                  Tvoje odpověď: <strong><MathText text={input} /></strong>
+                  Tvoje odpověď: <strong><MathText text={lastWrongInput} /></strong>
                 </p>
-                <p className="text-sm text-slate-600 mt-1">
-                  Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
-                </p>
+                {!canRetry && (
+                  <p className="text-sm text-slate-600 mt-1">
+                    Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
+                  </p>
+                )}
               </div>
             </div>
 
-            {/* Odkaz na podobné příklady stejného podtématu */}
-            <Link
-              href={`/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-              style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-            >
-              <span>🔄</span>
-              <span>Procvičit podobné příklady</span>
-              <span className="text-xs opacity-50 ml-auto">
-                {(TEMA_LABELS[example.tema] ?? example.tema)} · {example.podtema.replace(/_/g, " ")}
-              </span>
-            </Link>
+            {/* Retry + AI hint — po 1. špatné odpovědi */}
+            {canRetry && (
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={handleRetry}
+                  className="w-full py-3 font-bold rounded-xl transition-colors press-scale text-sm"
+                  style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+                >
+                  🔄 Zkusit znovu
+                </button>
+
+                {/* AI hint tlačítko */}
+                {!aiHint && !aiHintLoading && (
+                  <button
+                    type="button"
+                    onClick={fetchAiHint}
+                    className="w-full py-2.5 font-semibold rounded-xl transition-colors text-sm"
+                    style={{ background: "#f5f3ff", color: "#7c3aed", border: "1px solid #ddd6fe" }}
+                  >
+                    🤖 Chceš chytrý hint od AI?
+                  </button>
+                )}
+                {aiHintLoading && (
+                  <div
+                    className="w-full py-2.5 text-center text-sm rounded-xl"
+                    style={{ background: "#f5f3ff", color: "#7c3aed", border: "1px solid #ddd6fe" }}
+                  >
+                    <span className="animate-pulse">🤖 Načítám hint…</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* AI hint výsledek */}
+            {aiHint && (
+              <div
+                className="rounded-xl p-4 fade-in-up"
+                style={{ background: "#faf5ff", border: "1.5px solid #c4b5fd" }}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base">🤖</span>
+                  <span className="text-xs font-bold uppercase tracking-wide" style={{ color: "#7c3aed" }}>
+                    AI hint · Claude Haiku
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: "#4c1d95" }}>{aiHint}</p>
+                {canRetry && (
+                  <button
+                    type="button"
+                    onClick={handleRetry}
+                    className="mt-3 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors"
+                    style={{ background: "#ede9fe", color: "#6d28d9" }}
+                  >
+                    Zkusit s hintem →
+                  </button>
+                )}
+              </div>
+            )}
+            {aiHintError && (
+              <p className="text-xs text-slate-400 text-center">Hint se nepodařilo načíst. Zkus to za chvíli.</p>
+            )}
+
+            {/* Odkaz na podobné příklady — po finálním wrong */}
+            {!canRetry && (
+              <Link
+                href={`/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+                style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+              >
+                <span>🔄</span>
+                <span>Procvičit podobné příklady</span>
+                <span className="text-xs opacity-50 ml-auto">
+                  {(TEMA_LABELS[example.tema] ?? example.tema)} · {example.podtema.replace(/_/g, " ")}
+                </span>
+              </Link>
+            )}
           </>
         )}
 
-        {/* Solution steps */}
+        {/* Solution steps — po 2. špatné odpovědi nebo ručně */}
         {status !== "idle" && example.reseni_kroky.length > 0 && (
           <div
             className="rounded-xl border overflow-hidden"
@@ -320,7 +446,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <span className="flex items-center gap-2">
                 <span className="text-base">📐</span>
                 Jak se to řeší?
-                {status === "wrong" && !showSolution && (
+                {status === "wrong" && !canRetry && !showSolution && (
                   <span
                     className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
                     style={{ background: "#2E6DA4", color: "#fff" }}
@@ -370,9 +496,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         )}
 
         {/* Next button */}
-        {status !== "idle" && (
+        {status !== "idle" && !canRetry && (
           <button
-            onClick={() => onResult(status === "correct", input)}
+            onClick={() => onResult(status === "correct", status === "correct" ? input : lastWrongInput)}
             className="w-full py-3 text-white font-semibold rounded-xl transition-colors text-base mt-1 press-scale"
             style={{ background: "#0D1B3E" }}
           >
