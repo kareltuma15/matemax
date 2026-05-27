@@ -281,95 +281,39 @@ export default function ProfilPage() {
     }
   }
 
-  async function handleGenerateCertificate() {
+  async function handleDownloadCertificate() {
     setCertState("loading");
     try {
-      const W = 1200, H = 800;
-      const canvas = document.createElement("canvas");
-      canvas.width = W;
-      canvas.height = H;
-      const ctx = canvas.getContext("2d")!;
-
-      const bg = ctx.createLinearGradient(0, 0, W, H);
-      bg.addColorStop(0, "#0D1B3E");
-      bg.addColorStop(1, "#1e3a6e");
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, W, H);
-
-      // Decorative circles
-      ctx.beginPath();
-      ctx.arc(W - 80, 80, 300, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255,255,255,0.03)";
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(80, H - 80, 200, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255,255,255,0.03)";
-      ctx.fill();
-
-      // Gold border
-      ctx.strokeStyle = "#fbbf24";
-      ctx.lineWidth = 6;
-      ctx.strokeRect(30, 30, W - 60, H - 60);
-      ctx.strokeStyle = "rgba(251,191,36,0.3)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(40, 40, W - 80, H - 80);
-
-      ctx.textAlign = "center";
-
-      // Logo
-      ctx.font = `900 72px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "#fff";
-      ctx.fillText("M²", W / 2, 140);
-
-      // Title
-      ctx.font = `700 28px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "#fbbf24";
-      ctx.fillText("CERTIFIKÁT PŘIPRAVENOSTI", W / 2, 210);
-
-      // Divider
-      ctx.fillStyle = "rgba(255,255,255,0.15)";
-      ctx.fillRect(W / 2 - 300, 235, 600, 1);
-
-      // Main text
-      ctx.font = `400 24px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "rgba(255,255,255,0.6)";
-      ctx.fillText("Tento certifikát potvrzuje, že", W / 2, 295);
-
-      const name = email ? email.split("@")[0] : "Student";
-      ctx.font = `900 56px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "#fff";
-      ctx.fillText(name, W / 2, 385);
-
-      ctx.font = `400 24px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "rgba(255,255,255,0.6)";
-      ctx.fillText("je připraven/a na přijímací zkoušky ze středoškolské matematiky", W / 2, 445);
-
-      // Score
-      ctx.font = `900 96px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "#fbbf24";
-      ctx.fillText(`${readinessScore} %`, W / 2, 570);
-
-      ctx.font = `600 20px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "rgba(255,255,255,0.45)";
-      ctx.fillText("připravenost · MateMax · matemax.cz", W / 2, 615);
-
       const today = new Date().toLocaleDateString("cs-CZ", { day: "numeric", month: "long", year: "numeric" });
-      ctx.font = `400 18px -apple-system, BlinkMacSystemFont, Arial`;
-      ctx.fillStyle = "rgba(255,255,255,0.3)";
-      ctx.fillText(today, W / 2, 720);
+      const certName = displayName || (email ? email.split("@")[0] : "Student");
+      const params = new URLSearchParams({
+        name: certName,
+        readiness: String(readinessScore),
+        xp: String(xp),
+        streak: String(streak),
+        date: today,
+      });
+      const apiUrl = `/api/certificate?${params}`;
 
-      const blob = await new Promise<Blob>((res, rej) =>
-        canvas.toBlob((b) => b ? res(b) : rej(new Error("toBlob failed")), "image/png")
-      );
+      const resp = await fetch(apiUrl);
+      if (!resp.ok) throw new Error("fetch failed");
+      const blob = await resp.blob();
       const file = new File([blob], "matemax-certifikat.png", { type: "image/png" });
+
       if (typeof navigator.share === "function" && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ title: "Certifikát MateMax", files: [file] });
+        await navigator.share({
+          title: "Certifikát připravenosti MateMax",
+          text: `Dosáhl/a jsem ${readinessScore} % připravenosti na přijímačky! 🎓`,
+          files: [file],
+        });
       } else {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
         a.download = "matemax-certifikat.png";
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(url);
       }
       setCertState("done");
@@ -806,23 +750,52 @@ export default function ProfilPage() {
                 <span className="text-white text-lg">→</span>
               </Link>
             )}
-            {readinessScore >= 80 && (
+            {readinessScore >= 60 && (
               <div
-                className="mt-2 rounded-2xl p-4 flex items-center justify-between"
-                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "2px solid #fbbf24" }}
+                className="mt-2 rounded-2xl overflow-hidden"
+                style={{ border: "2px solid #fbbf24" }}
               >
-                <div>
-                  <p className="text-xs font-black text-white">🏆 Výborná příprava! {readinessScore} %</p>
-                  <p className="text-[10px] text-blue-200 mt-0.5">Vygeneruj si certifikát připravenosti</p>
-                </div>
-                <button
-                  onClick={handleGenerateCertificate}
-                  disabled={certState === "loading"}
-                  className="px-3 py-2 rounded-xl font-bold text-xs transition-all disabled:opacity-60 shrink-0"
-                  style={{ background: "#fbbf24", color: "#0D1B3E" }}
+                {/* Header row */}
+                <div
+                  className="px-4 py-3 flex items-center justify-between gap-3"
+                  style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)" }}
                 >
-                  {certState === "loading" ? "…" : certState === "done" ? "✓ Stažen" : "🎓 Stáhnout"}
-                </button>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-black text-white">
+                      {readinessScore >= 80 ? `🏆 Výborná příprava! ${readinessScore} %` : `📈 Tvůj pokrok: ${readinessScore} %`}
+                    </p>
+                    <p className="text-[10px] text-blue-200 mt-0.5">
+                      {isPremium ? "Vygeneruj a sdílej certifikát připravenosti" : "🔒 Certifikát připravenosti — Premium funkce"}
+                    </p>
+                  </div>
+                  {isPremium ? (
+                    <button
+                      onClick={handleDownloadCertificate}
+                      disabled={certState === "loading"}
+                      className="px-3 py-2 rounded-xl font-bold text-xs transition-all disabled:opacity-60 shrink-0"
+                      style={{ background: "#fbbf24", color: "#0D1B3E" }}
+                    >
+                      {certState === "loading" ? "…" : certState === "done" ? "✓ Stažen" : certState === "error" ? "Chyba" : "🎓 Stáhnout"}
+                    </button>
+                  ) : (
+                    <Link
+                      href="/cenik"
+                      className="px-3 py-2 rounded-xl font-bold text-xs shrink-0 transition-opacity hover:opacity-80"
+                      style={{ background: "#fbbf24", color: "#0D1B3E" }}
+                    >
+                      Upgradovat →
+                    </Link>
+                  )}
+                </div>
+                {/* Certificate preview (only for Premium) */}
+                {isPremium && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={`/api/certificate?name=${encodeURIComponent(displayName || (email ? email.split("@")[0] : "Student"))}&readiness=${readinessScore}&xp=${xp}&streak=${streak}`}
+                    alt="Náhled certifikátu"
+                    style={{ width: "100%", display: "block", aspectRatio: "3/2", objectFit: "cover" }}
+                  />
+                )}
               </div>
             )}
           </div>
