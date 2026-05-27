@@ -16,6 +16,7 @@ import GuidanceModal from "@/components/GuidanceModal";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getTodayTopic } from "@/lib/studijni-plan";
+import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -815,6 +816,17 @@ export default function LoggedInDashboard({
             </div>
           </div>
         </Link>
+
+        {/* Týdenní žebříček */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 scroll-reveal stagger-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-bold" style={{ color: "#0D1B3E" }}>🏆 Týdenní žebříček</span>
+            <Link href="/vyzva" className="text-xs font-semibold" style={{ color: "#2E6DA4" }}>
+              Splnit výzvu →
+            </Link>
+          </div>
+          <WeeklyLeaderboard compact />
+        </div>
 
         {/* CERMAT test */}
         <Link

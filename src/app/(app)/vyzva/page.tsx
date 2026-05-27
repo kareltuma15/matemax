@@ -11,6 +11,7 @@ import { TEMA_LABELS } from "@/types";
 import { remoteLogSession, remoteSyncXP, localLoadProgress, localSaveProgress } from "@/lib/storage";
 import { getLevelFromXP } from "@/lib/gamification";
 import { supabase } from "@/lib/supabase";
+import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -129,6 +130,7 @@ export default function VyzvaPage() {
   const [timeTaken, setTimeTaken] = useState(0);
   const [successQuote] = useState(() => SUCCESS_QUOTES[Math.floor(Math.random() * SUCCESS_QUOTES.length)]);
   const [failureQuote] = useState(() => FAILURE_QUOTES[Math.floor(Math.random() * FAILURE_QUOTES.length)]);
+  const [lbRefresh, setLbRefresh] = useState(0);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startTimeRef = useRef(0);
@@ -185,6 +187,13 @@ export default function VyzvaPage() {
             });
           }
         } catch { /* ignore */ }
+        // Submit score to weekly leaderboard
+        fetch("/api/weekly-challenge/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ score: correct, total, time_seconds: elapsed, xp_earned: challenge.xp_reward }),
+        }).then(() => setLbRefresh((n) => n + 1)).catch(() => {});
+
         // Big confetti burst
         import("canvas-confetti").then(({ default: c }) => {
           setTimeout(() => c({ particleCount: 120, spread: 80, origin: { y: 0.55 } }), 100);
@@ -413,6 +422,11 @@ export default function VyzvaPage() {
           >
             Přeskočit na zítřek
           </Link>
+
+          {/* Weekly leaderboard */}
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
+            <WeeklyLeaderboard refreshTrigger={lbRefresh} />
+          </div>
         </div>
       </div>
     );
@@ -604,6 +618,11 @@ export default function VyzvaPage() {
           <Link href="/trenink" className="text-sm text-slate-400 hover:text-slate-600">
             Pokračovat v tréninku →
           </Link>
+
+          {/* Weekly leaderboard after success */}
+          <div className="w-full bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
+            <WeeklyLeaderboard refreshTrigger={lbRefresh} />
+          </div>
         </div>
       </div>
     );
