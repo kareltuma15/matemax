@@ -19,6 +19,7 @@ import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
+import ShareButton from "@/components/ShareButton";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -659,6 +660,13 @@ export default function ProfilPage() {
               </div>
             </div>
           </div>
+
+          {/* Share streak button */}
+          {streak >= 3 && (
+            <div className="flex justify-center scroll-reveal">
+              <ShareButton streak={streak} xp={xp} name={displayName} compact />
+            </div>
+          )}
 
           {/* ── SEKCE: TVŮJ PLÁN ── */}
           {isPremium ? (

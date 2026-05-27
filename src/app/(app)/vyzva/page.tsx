@@ -12,6 +12,7 @@ import { remoteLogSession, remoteSyncXP, localLoadProgress, localSaveProgress } 
 import { getLevelFromXP } from "@/lib/gamification";
 import { supabase } from "@/lib/supabase";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
+import ShareButton from "@/components/ShareButton";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -607,6 +608,14 @@ export default function VyzvaPage() {
               </div>
             )}
           </div>
+
+          {/* Share */}
+          <ShareButton
+            score={`${correctCount}/${examplesList.length}`}
+            xp={challenge.xp_reward}
+            mode="session"
+            label="Sdílet výsledek"
+          />
 
           <Link
             href="/"
