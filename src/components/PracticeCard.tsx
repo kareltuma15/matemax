@@ -14,6 +14,7 @@ interface Props {
   total: number;
   consecutiveCorrect: number;
   onResult: (correct: boolean, userAnswer: string) => void;
+  onSkip?: () => void;
 }
 
 const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
@@ -22,7 +23,7 @@ const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: strin
   3: { label: "Těžká ⭐⭐⭐",   bg: "#fef2f2", color: "#991b1b" },
 };
 
-export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult }: Props) {
+export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult, onSkip }: Props) {
   const [input, setInput]               = useState("");
   const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
@@ -352,14 +353,24 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             {/* Retry + AI hint — po 1. špatné odpovědi */}
             {canRetry && (
               <div className="flex flex-col gap-2">
-                <button
-                  type="button"
-                  onClick={handleRetry}
-                  className="w-full py-3 font-bold rounded-xl transition-colors press-scale text-sm"
-                  style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-                >
-                  🔄 Zkusit znovu
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={handleRetry}
+                    className="flex-1 py-3 font-bold rounded-xl transition-colors press-scale text-sm"
+                    style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+                  >
+                    🔄 Zkusit znovu
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onSkip ? onSkip() : onResult(false, lastWrongInput)}
+                    className="py-3 px-4 font-semibold rounded-xl transition-colors text-sm"
+                    style={{ background: "#f8fafc", color: "#94a3b8", border: "1px solid #e2e8f0" }}
+                  >
+                    Přeskočit →
+                  </button>
+                </div>
 
                 {/* AI hint tlačítko */}
                 {!aiHint && !aiHintLoading && (

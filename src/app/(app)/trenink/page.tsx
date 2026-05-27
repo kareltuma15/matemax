@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { examples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
@@ -192,6 +192,7 @@ function enqueueBadges(
 
 function TreningPageInner() {
   const searchParams = useSearchParams();
+  const router       = useRouter();
   const urlTema     = searchParams.get("tema");
   const urlPodtema  = searchParams.get("podtema");
   const urlRezim    = searchParams.get("rezim") as "chyby" | "sm2" | null;
@@ -885,6 +886,20 @@ function TreningPageInner() {
         />
       )}
 
+      {/* Persistent exit button */}
+      <div className="flex items-center justify-between mb-1">
+        <button
+          type="button"
+          onClick={() => router.push("/")}
+          className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors py-1"
+        >
+          ← Ukončit trénink
+        </button>
+        <span className="text-xs text-slate-300 font-medium">
+          {currentIdx + 1} / {sessionIds.length}
+        </span>
+      </div>
+
       <XPProgressBar xp={xp} className="mb-3" />
 
       {freezeUsedToday && (
@@ -938,6 +953,7 @@ function TreningPageInner() {
         total={sessionIds.length}
         consecutiveCorrect={consecutiveCorrectRef.current}
         onResult={handleResult}
+        onSkip={handleSkip}
       />
     </>
   );
