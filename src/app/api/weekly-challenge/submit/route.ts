@@ -45,17 +45,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Fetch nickname and avatar from user_progress
+  // Prefer auth metadata (set via supabase.auth.updateUser in profil page)
+  const meta = user.user_metadata as Record<string, string> | undefined;
+  const metaName = (
+    meta?.full_name?.trim() ||
+    meta?.name?.trim() ||
+    `${meta?.first_name ?? ""} ${meta?.last_name ?? ""}`.trim()
+  ).slice(0, 30);
+  const metaEmoji = meta?.avatar_emoji ?? "";
+
+  // Fallback: user_progress table (may have older nickname data)
   const { data: profile } = await supabase
     .from("user_progress")
     .select("nickname, avatar_emoji, display_name")
     .eq("user_id", user.id)
-    .single();
+    .maybeSingle();
 
   const nickname =
+    metaName ||
     (profile?.nickname?.trim() || profile?.display_name?.trim() || "").slice(0, 30) ||
     `Žák ${user.id.slice(-4).toUpperCase()}`;
-  const avatarEmoji = profile?.avatar_emoji ?? "🧑‍💻";
+  const avatarEmoji = metaEmoji || profile?.avatar_emoji || "🧑‍💻";
 
   const weekKey = getWeekKey();
 

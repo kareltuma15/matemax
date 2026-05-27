@@ -112,14 +112,14 @@ export async function POST(req: NextRequest) {
     for (const row of xpRows ?? []) levelMap.set(row.user_id, row.current_level ?? "zacatecnik");
   }
 
-  // Fetch streaks from user_progress
+  // Fetch streaks from user_xp (synced at end of each training session)
   const streakMap = new Map<string, number>();
   if (userIds.length > 0) {
-    const { data: progressRows } = await supabase
-      .from("user_progress")
+    const { data: xpStreakRows } = await supabase
+      .from("user_xp")
       .select("user_id, streak")
       .in("user_id", userIds);
-    for (const row of progressRows ?? []) streakMap.set(row.user_id, row.streak ?? 0);
+    for (const row of xpStreakRows ?? []) streakMap.set(row.user_id, row.streak ?? 0);
   }
 
   // Fetch who already trained today — skip them

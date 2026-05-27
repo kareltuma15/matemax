@@ -74,12 +74,12 @@ export async function remoteSaveSM2Card(data: SM2Row): Promise<void> {
     .upsert(data, { onConflict: "user_id,example_id" });
 }
 
-export async function remoteSyncXP(userId: string, totalXp: number, levelKey: string, freezeCount = 0): Promise<void> {
+export async function remoteSyncXP(userId: string, totalXp: number, levelKey: string, freezeCount = 0, streak = 0): Promise<void> {
   if (!supabase) return;
   await supabase
     .from("user_xp")
     .upsert(
-      { user_id: userId, total_xp: totalXp, current_level: levelKey, freeze_count: freezeCount, updated_at: new Date().toISOString() },
+      { user_id: userId, total_xp: totalXp, current_level: levelKey, freeze_count: freezeCount, streak, updated_at: new Date().toISOString() },
       { onConflict: "user_id" }
     );
 }

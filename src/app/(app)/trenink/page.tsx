@@ -371,7 +371,7 @@ function TreningPageInner() {
       try {
         await remoteLogSession({ user_id: uid, date: localDateStr(), xp_earned: xpEarned, correct, total: answered });
         const level = getLevelFromXP(p.xp);
-        await remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0);
+        await remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0, p.streak ?? 0);
         await remoteSyncBadges(uid, gamState.earnedBadges);
 
         // Sync SM2 cards pro tuto session (rodičovský dashboard z nich čte téma breakdown)

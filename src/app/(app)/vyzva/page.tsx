@@ -183,7 +183,7 @@ export default function VyzvaPage() {
                 const uid = data.session.user.id;
                 const today = new Date().toISOString().slice(0, 10);
                 remoteLogSession({ user_id: uid, date: today, xp_earned: challenge.xp_reward, correct, total });
-                remoteSyncXP(uid, newXP, levelKey);
+                remoteSyncXP(uid, newXP, levelKey, progress.freezeCount ?? 0, progress.streak ?? 0);
               }
             });
           }
