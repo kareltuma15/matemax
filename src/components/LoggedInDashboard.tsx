@@ -17,6 +17,7 @@ import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getTodayTopic } from "@/lib/studijni-plan";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
+import PushSubscribeNudge from "@/components/PushSubscribeNudge";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -418,6 +419,9 @@ export default function LoggedInDashboard({
 
       {/* Content */}
       <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-4">
+
+        {/* Push subscribe nudge (streak ≥ 3, not yet subscribed) */}
+        <PushSubscribeNudge streak={streak} userId={session.user.id} />
 
         {/* Parent message banner */}
         {parentMessage && (
