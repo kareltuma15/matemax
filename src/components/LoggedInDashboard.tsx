@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import XPProgressBar from "@/components/XPProgressBar";
@@ -102,6 +102,49 @@ function computeWeeklyStats(): WeeklyStats | null {
   } catch { return null; }
 }
 
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".scroll-reveal");
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
+  const [val, setVal] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      const t0 = performance.now();
+      const dur = 1000;
+      function step(now: number) {
+        const p = Math.min((now - t0) / dur, 1);
+        setVal(Math.round(p * end));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }, { threshold: 0.5 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [end]);
+  return <span ref={ref}>{val}{suffix}</span>;
+}
+
+const HERO_SYMBOLS = [
+  { s: "π", top: "15%", right: "8%",  size: 28, delay: "0s"   },
+  { s: "√", top: "60%", right: "4%",  size: 22, delay: "1.2s" },
+  { s: "∑", top: "25%", left:  "3%",  size: 24, delay: "0.6s" },
+  { s: "∞", top: "70%", left:  "6%",  size: 20, delay: "1.8s" },
+] as const;
+
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 
 export default function LoggedInDashboard({
@@ -137,6 +180,7 @@ export default function LoggedInDashboard({
     todayTopic?: { tema: string; label: string; score: number } | null;
   }>(null);
   const { isPremium } = usePremium();
+  useScrollReveal();
 
   useEffect(() => {
     let cancelled = false;
@@ -336,6 +380,12 @@ export default function LoggedInDashboard({
       <section className="hero-animated relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-[0.06] translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: "#00B4D8" }} />
         <div className="absolute bottom-0 left-0 w-52 h-52 rounded-full opacity-[0.05] -translate-x-1/2 translate-y-1/2 pointer-events-none" style={{ background: "#2E6DA4" }} />
+        {HERO_SYMBOLS.map(({ s, size, delay, ...pos }) => (
+          <span key={s} className="float absolute font-bold select-none pointer-events-none"
+            style={{ ...pos, fontSize: size, color: "#fff", opacity: 0.07, animationDelay: delay }}>
+            {s}
+          </span>
+        ))}
 
         <div className="max-w-2xl mx-auto px-6 py-10 md:py-14 relative z-10">
           <p className="text-blue-300 text-sm font-semibold mb-1">{getGreeting()},</p>
@@ -354,7 +404,7 @@ export default function LoggedInDashboard({
             </span>
             {xp > 0 && (
               <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300" style={{ background: "rgba(255,255,255,0.10)" }}>
-                ⚡ {xp} XP
+                ⚡ <CountUp end={xp} /> XP
               </span>
             )}
           </div>
@@ -403,7 +453,7 @@ export default function LoggedInDashboard({
           const maxCount = Math.max(...weeklyStats.days.map((d) => d.count), 1);
           const todayStr = new Date().toISOString().slice(0, 10);
           return (
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 stagger-1">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 stagger-1 card-hover scroll-reveal">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Tento týden</p>
                 <span
@@ -415,12 +465,15 @@ export default function LoggedInDashboard({
               </div>
 
               {/* Mini bar chart */}
-              <div className="flex items-end gap-1 mb-3" style={{ height: 44 }}>
+              <div className="flex items-end gap-1 mb-3" style={{ height: 58 }}>
                 {weeklyStats.days.map(({ date, count, label }) => {
                   const barH = count > 0 ? Math.max(6, Math.round((count / maxCount) * 36)) : 4;
                   const isToday = date === todayStr;
                   return (
-                    <div key={date} className="flex-1 flex flex-col items-center gap-1">
+                    <div key={date} className="flex-1 flex flex-col items-center" style={{ gap: 2 }}>
+                      <span className="text-[8px] font-bold leading-none" style={{ color: isToday ? "#0D1B3E" : "#2E6DA4", opacity: count > 0 ? 1 : 0 }}>
+                        {count}
+                      </span>
                       <div className="w-full flex items-end" style={{ height: 36 }}>
                         <div
                           className="w-full rounded-sm"
@@ -503,7 +556,7 @@ export default function LoggedInDashboard({
         {!isPremium && (
           <Link
             href="/cenik"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-opacity hover:opacity-90"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl card-hover"
             style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "1px solid #2E6DA4" }}
           >
             <span className="text-xl shrink-0">🔒</span>
@@ -512,7 +565,7 @@ export default function LoggedInDashboard({
               <p className="text-xs text-blue-300 mt-0.5">Geometrie, Mocniny, Výrazy a další · od 99 Kč/měsíc</p>
             </div>
             <span
-              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg whitespace-nowrap"
+              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg whitespace-nowrap btn-shimmer"
               style={{ background: "#2E6DA4", color: "#fff" }}
             >
               Odemknout →
@@ -607,7 +660,7 @@ export default function LoggedInDashboard({
         {hasWrongCards && (
           <Link
             href="/trenink?rezim=chyby"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors card-hover scroll-reveal"
             style={{ background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626" }}
           >
             <span className="text-lg">🔄</span>
@@ -780,7 +833,7 @@ export default function LoggedInDashboard({
 
         {/* Slabá témata */}
         {weakTopics.length > 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 scroll-reveal card-hover">
             <p className="text-sm font-bold mb-3" style={{ color: "#0D1B3E" }}>🎯 Kde máš mezery</p>
             <div className="flex flex-col gap-2">
               {weakTopics.map(({ tema, score }) => {

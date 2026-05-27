@@ -22,19 +22,24 @@ const RARITY_LABEL: Record<BadgeRarity, string> = {
 };
 
 function BadgeItem({ badge, earned }: { badge: BadgeConfig; earned: boolean }) {
+  const glowColor = RARITY_BORDER[badge.rarity];
   return (
     <div
       title={`${badge.label}\n${badge.description}\n(${RARITY_LABEL[badge.rarity]})`}
-      className="flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 transition-all"
+      className="flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 transition-all relative"
       style={{
-        borderColor: earned ? RARITY_BORDER[badge.rarity] : "#e2e8f0",
+        borderColor: earned ? glowColor : "#e2e8f0",
         background: earned ? "white" : "#f8fafc",
-        opacity: earned ? 1 : 0.4,
+        opacity: earned ? 1 : 0.45,
+        boxShadow: earned ? `0 0 8px 1px ${glowColor}55` : "none",
       }}
     >
       <span className="text-2xl" style={{ filter: earned ? "none" : "grayscale(1)" }}>
         {badge.icon_emoji}
       </span>
+      {!earned && (
+        <span className="absolute top-1 right-1 text-[10px] leading-none opacity-70">🔒</span>
+      )}
       <p className="text-[10px] font-semibold text-center text-slate-700 leading-tight line-clamp-2 w-full">
         {badge.label}
       </p>

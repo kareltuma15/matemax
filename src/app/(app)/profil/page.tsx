@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -31,6 +31,30 @@ const AVATAR_EMOJIS = [
 ];
 
 const ALL_TOPICS = Object.keys(TEMA_LABELS);
+
+function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
+  const [val, setVal] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      const t0 = performance.now();
+      const dur = 1000;
+      function step(now: number) {
+        const p = Math.min((now - t0) / dur, 1);
+        setVal(Math.round(p * end));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }, { threshold: 0.5 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [end]);
+  return <span ref={ref}>{val}{suffix}</span>;
+}
 
 interface TopicScore {
   tema: string;
@@ -110,6 +134,16 @@ export default function ProfilPage() {
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
   const [soundOn, setSoundOn]             = useState(true);
+
+  useEffect(() => {
+    const els = document.querySelectorAll(".scroll-reveal:not(.is-visible)");
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [activeTab]);
 
   useEffect(() => {
     setSoundOn(isSoundEnabled());
@@ -484,24 +518,32 @@ export default function ProfilPage() {
     <div className="flex flex-col gap-4">
 
       {/* ── HERO SECTION ── */}
-      <div
-        className="rounded-2xl overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 60%, #0D1B3E 100%)" }}
-      >
+      <div className="hero-animated rounded-2xl overflow-hidden">
         <div className="px-6 pt-7 pb-6 flex flex-col items-center text-center">
-          {/* Large avatar */}
-          <div
-            className="rounded-full flex items-center justify-center mb-3"
-            style={{
-              width: "72px", height: "72px",
-              background: "rgba(255,255,255,0.12)",
-              border: "3px solid rgba(255,255,255,0.25)",
-            }}
-          >
-            {avatarEmoji
-              ? <span className="text-3xl leading-none">{avatarEmoji}</span>
-              : <span className="text-white text-3xl font-black">{initials}</span>
-            }
+          {/* Large avatar + edit button */}
+          <div className="relative mb-3">
+            <div
+              className="rounded-full flex items-center justify-center"
+              style={{
+                width: "72px", height: "72px",
+                background: "rgba(255,255,255,0.12)",
+                border: "3px solid rgba(255,255,255,0.25)",
+              }}
+            >
+              {avatarEmoji
+                ? <span className="text-3xl leading-none">{avatarEmoji}</span>
+                : <span className="text-white text-3xl font-black">{initials}</span>
+              }
+            </div>
+            <button
+              type="button"
+              onClick={() => { setShowPersonaForm(true); setTimeout(() => document.getElementById("nastaveni-section")?.scrollIntoView({ behavior: "smooth" }), 50); }}
+              className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-sm shadow-md press-scale"
+              style={{ background: "#2E6DA4", border: "2px solid rgba(255,255,255,0.3)" }}
+              title="Upravit profil"
+            >
+              ✏️
+            </button>
           </div>
           <p className="text-white font-bold text-base leading-tight">
             {displayName || email || "Nepřihlášen"}
@@ -581,10 +623,47 @@ export default function ProfilPage() {
       {activeTab === "prehled" && (
         <div className="tab-enter flex flex-col gap-4">
 
+          {/* Countdown to přijímačky */}
+          <CountdownBanner variant="full" />
+
+          {/* ── SEKCE: STATISTIKY ── */}
+          <div className="scroll-reveal">
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Statistiky</p>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center card-hover">
+                <p className="text-2xl font-black text-orange-500"><CountUp end={streak} /></p>
+                <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🔥 Streak<br />dní</p>
+                {freezeCount > 0 && (
+                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: "#0369a1" }}>🧊 ×{freezeCount}</p>
+                )}
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center card-hover">
+                <p className="text-2xl font-black" style={{ color: "#0D1B3E" }}><CountUp end={totalSolved} /></p>
+                <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">📚 Příkladů<br />celkem</p>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center card-hover">
+                {overallAccuracy !== null ? (
+                  <>
+                    <p className="text-2xl font-black"
+                      style={{ color: overallAccuracy >= 70 ? "#16a34a" : overallAccuracy >= 50 ? "#d97706" : "#dc2626" }}>
+                      <CountUp end={overallAccuracy} suffix="%" />
+                    </p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🎯 Úspěšnost<br />průměr</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-2xl font-black text-slate-300">—</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🎯 Úspěšnost<br />po diagnostice</p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* ── SEKCE: TVŮJ PLÁN ── */}
           {isPremium ? (
             <div
-              className="rounded-2xl p-4 flex items-center gap-4"
+              className="rounded-2xl p-4 flex items-center gap-4 card-hover scroll-reveal"
               style={{ background: "linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%)", border: "1.5px solid #fde68a" }}
             >
               <div
@@ -613,7 +692,7 @@ export default function ProfilPage() {
             </div>
           ) : (
             <div
-              className="rounded-2xl p-4 flex items-center gap-4"
+              className="rounded-2xl p-4 flex items-center gap-4 card-hover scroll-reveal"
               style={{ background: "#f8faff", border: "1.5px solid #bfdbfe" }}
             >
               <div
@@ -630,7 +709,7 @@ export default function ProfilPage() {
               </div>
               <Link
                 href="/cenik"
-                className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white transition-opacity hover:opacity-90"
+                className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white btn-shimmer"
                 style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
               >
                 Upgradovat →
@@ -638,45 +717,8 @@ export default function ProfilPage() {
             </div>
           )}
 
-          {/* Countdown to přijímačky */}
-          <CountdownBanner variant="full" />
-
-          {/* ── SEKCE: STATISTIKY ── */}
-          <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Statistiky</p>
-            <div className="grid grid-cols-3 gap-2">
-              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center">
-                <p className="text-2xl font-black text-orange-500">{streak}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🔥 Streak<br />dní</p>
-                {freezeCount > 0 && (
-                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: "#0369a1" }}>🧊 ×{freezeCount}</p>
-                )}
-              </div>
-              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center">
-                <p className="text-2xl font-black" style={{ color: "#0D1B3E" }}>{totalSolved}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">📚 Příkladů<br />celkem</p>
-              </div>
-              <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center">
-                {overallAccuracy !== null ? (
-                  <>
-                    <p className="text-2xl font-black"
-                      style={{ color: overallAccuracy >= 70 ? "#16a34a" : overallAccuracy >= 50 ? "#d97706" : "#dc2626" }}>
-                      {overallAccuracy}%
-                    </p>
-                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🎯 Úspěšnost<br />průměr</p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-2xl font-black text-slate-300">—</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">🎯 Úspěšnost<br />po diagnostice</p>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
           {/* ── SEKCE: PŘIPRAVENOST ── */}
-          <div>
+          <div className="scroll-reveal">
             <div className="flex items-baseline justify-between mb-2 px-1">
               <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Připravenost na přijímačky</p>
               <p className="text-[10px] text-slate-300">z tréninku + SM-2</p>
@@ -779,9 +821,9 @@ export default function ProfilPage() {
 
           {/* ── SEKCE: CÍLE & ODZNAKY ── */}
           {nextBadge && earnedBadges.length < allBadges.length && (
-            <div>
+            <div className="scroll-reveal">
               <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nejbližší cíl</p>
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3">
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 card-hover">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
                   style={{ background: "#f8fafc", border: "2px solid #e2e8f0" }}
@@ -870,7 +912,7 @@ export default function ProfilPage() {
           )}
 
           {/* ── SEKCE: TÉMATA ── */}
-          <div>
+          <div className="scroll-reveal">
             <div className="flex items-baseline justify-between mb-2 px-1">
               <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Silná a slabá místa</p>
               <p className="text-[10px] text-slate-300">z diagnostického testu</p>
@@ -935,7 +977,7 @@ export default function ProfilPage() {
           </div>
 
           {/* ── SEKCE: AKTIVITA ── */}
-          <div>
+          <div className="scroll-reveal">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Aktivita</p>
             <ActivityHeatmap />
           </div>
@@ -975,18 +1017,28 @@ export default function ProfilPage() {
                   {sessions.slice(0, 20).map((s, i) => {
                     const pctVal = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
                     const color = pctVal >= 80 ? "#16a34a" : pctVal >= 50 ? "#d97706" : "#dc2626";
+                    const dotBg = pctVal >= 80 ? "#22c55e" : pctVal >= 50 ? "#f59e0b" : "#ef4444";
                     const temaLabel = s.temas.map((t) => TEMA_LABELS[t] ?? t).join(", ");
                     return (
                       <tr key={i} className="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-slate-600 whitespace-nowrap text-xs">{s.date}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-xs">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full shrink-0" style={{ background: dotBg }} />
+                            <span className="text-slate-600">{s.date}</span>
+                          </div>
+                        </td>
                         <td className="px-4 py-3 text-slate-700 max-w-[120px]">
                           <span className="truncate block text-xs">{temaLabel || "—"}</span>
                         </td>
-                        <td className="px-4 py-3 text-center">
-                          <span className="font-semibold text-xs" style={{ color }}>
-                            {s.correct}/{s.total}
-                          </span>
-                          <span className="text-[10px] text-slate-400 ml-1">({pctVal}%)</span>
+                        <td className="px-4 py-3">
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="font-semibold text-xs" style={{ color }}>
+                              {s.correct}/{s.total} <span className="text-[10px] text-slate-400">({pctVal}%)</span>
+                            </span>
+                            <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden" style={{ maxWidth: 64 }}>
+                              <div className="h-1.5 rounded-full" style={{ width: `${pctVal}%`, background: dotBg }} />
+                            </div>
+                          </div>
                         </td>
                         <td className="px-4 py-3 text-right font-bold text-xs" style={{ color: "#2E6DA4" }}>
                           +{s.xp}
@@ -1041,7 +1093,7 @@ export default function ProfilPage() {
       )}
 
       {/* ── SPODNÍ AKCE (vždy viditelné, mimo tabu) ── */}
-      <div>
+      <div id="nastaveni-section">
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nastavení & účet</p>
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
 
