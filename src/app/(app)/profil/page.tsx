@@ -137,13 +137,24 @@ export default function ProfilPage() {
   const [soundOn, setSoundOn]             = useState(true);
 
   useEffect(() => {
-    const els = document.querySelectorAll(".scroll-reveal:not(.is-visible)");
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
-      { threshold: 0.12 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    let raf1: number, raf2: number;
+    let io: IntersectionObserver | null = null;
+    // Double rAF: wait for view-transition + layout to settle before observing
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const els = document.querySelectorAll<Element>(".scroll-reveal:not(.is-visible)");
+        io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
+          { threshold: 0 }
+        );
+        els.forEach((el) => io!.observe(el));
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      io?.disconnect();
+    };
   }, [activeTab]);
 
   useEffect(() => {
