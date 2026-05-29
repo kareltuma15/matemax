@@ -35,6 +35,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [showTip, setShowTip]           = useState(false);
   const [wrongAttempts, setWrongAttempts] = useState(0);
   const [lastWrongInput, setLastWrongInput] = useState("");
+  const [isFlipping, setIsFlipping]     = useState(false);
 
   // AI hint state
   const [aiHint, setAiHint]             = useState<string | null>(null);
@@ -54,6 +55,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     setShowTip(false);
     setWrongAttempts(0);
     setLastWrongInput("");
+    setIsFlipping(false);
     setAiHint(null);
     setAiHintLoading(false);
     setAiHintError(false);
@@ -88,14 +90,26 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setStatus("correct");
       setFlashColor("green");
       setXpLabel("+10 XP");
+      setIsFlipping(true);
       playCorrect();
+      // Small confetti burst on every correct answer
+      import("canvas-confetti").then(({ default: c }) => c({
+        particleCount: 35,
+        spread: 52,
+        origin: { y: 0.6 },
+        startVelocity: 22,
+        gravity: 1.3,
+        colors: ["#2E6DA4", "#0D1B3E", "#fbbf24", "#22c55e", "#ffffff"],
+      }));
       const newConsec = consecutiveCorrect + 1;
       if (newConsec >= 5) {
-        import("canvas-confetti").then(({ default: c }) => c({ particleCount: 100, spread: 65, origin: { y: 0.5 } }));
+        // Extra large burst for combo ≥5
+        import("canvas-confetti").then(({ default: c }) => c({ particleCount: 80, spread: 70, origin: { y: 0.45 } }));
         setComboText(`🔥 ${newConsec} v řadě!`);
       } else if (newConsec >= 3) {
         setComboText("+combo! 🔥");
       }
+      setTimeout(() => setIsFlipping(false), 420);
       setTimeout(() => setComboText(null), 1500);
       setTimeout(() => setFlashColor(""), 350);
     } else {
@@ -107,6 +121,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setXpLabel("+1 XP");
       setShaking(true);
       playWrong();
+      // Screen shake — celá stránka se jemně zatřese
+      document.body.classList.add("screen-shake");
+      setTimeout(() => document.body.classList.remove("screen-shake"), 450);
       setTimeout(() => setFlashColor(""), 350);
       setTimeout(() => setShaking(false), 500);
       // Show static tip after 1st wrong (if available)
@@ -191,10 +208,12 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       <div
         key={cardKey}
         className={`card-enter bg-white rounded-2xl shadow-sm border p-6 flex flex-col gap-5 relative transition-colors duration-200 ${
-          shaking
+          isFlipping
+            ? "card-flip border-green-400"
+            : shaking
             ? "wrong-shake border-red-300"
             : status === "correct"
-            ? "correct-pop border-green-400"
+            ? "border-green-400"
             : "border-slate-200"
         }`}
       >
