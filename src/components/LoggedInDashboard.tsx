@@ -104,6 +104,33 @@ function computeWeeklyStats(): WeeklyStats | null {
   } catch { return null; }
 }
 
+function useTilt(strength = 8) {
+  useEffect(() => {
+    const cards = document.querySelectorAll<HTMLElement>(".tilt-card");
+    const handlers: Array<{ el: HTMLElement; onMove: (e: MouseEvent) => void; onLeave: () => void }> = [];
+    cards.forEach((el) => {
+      const onMove = (e: MouseEvent) => {
+        const r = el.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width  - 0.5) * strength;
+        const y = ((e.clientY - r.top)  / r.height - 0.5) * strength;
+        el.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${-y}deg) scale(1.02)`;
+        el.style.boxShadow = `${-x * 0.8}px ${y * 0.8}px 20px rgba(13,27,62,0.12)`;
+      };
+      const onLeave = () => {
+        el.style.transform = "";
+        el.style.boxShadow = "";
+      };
+      el.addEventListener("mousemove", onMove);
+      el.addEventListener("mouseleave", onLeave);
+      handlers.push({ el, onMove, onLeave });
+    });
+    return () => handlers.forEach(({ el, onMove, onLeave }) => {
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+    });
+  }, [strength]);
+}
+
 function useScrollReveal() {
   useEffect(() => {
     let raf1: number, raf2: number;
@@ -188,6 +215,7 @@ export default function LoggedInDashboard({
   }>(null);
   const { isPremium } = usePremium();
   useScrollReveal();
+  useTilt();
 
   useEffect(() => {
     let cancelled = false;
@@ -802,7 +830,7 @@ export default function LoggedInDashboard({
         {/* Dnešní výzva */}
         <Link
           href="/vyzva"
-          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md stagger-4"
+          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md stagger-4 tilt-card"
           style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
         >
           <div className="px-5 py-4 flex items-center justify-between">
@@ -840,7 +868,7 @@ export default function LoggedInDashboard({
         {/* CERMAT test */}
         <Link
           href="/cermat-test"
-          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md stagger-5"
+          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md stagger-5 tilt-card"
         >
           <div className="px-5 py-4 flex items-center justify-between">
             <div>

@@ -370,6 +370,22 @@ body {
   animation: screen-shake 0.42s ease-out;
 }
 
+/* ── 3D hover tilt — karty se nakloní ke kurzoru ───────────── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+  will-change: transform;
+}
+.tilt-card:not(:hover) {
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+/* ── Parallax hero layer ────────────────────────────────────── */
+.hero-parallax-layer {
+  will-change: transform;
+  pointer-events: none;
+}
+
 /* ── Modal spring entrance ──────────────────────────────────── */
 @keyframes modal-spring-in {
   0%   { transform: scale(0.80) translateY(24px); opacity: 0; }

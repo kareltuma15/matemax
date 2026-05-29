@@ -171,6 +171,18 @@ const MATH_SYMBOLS = [
 
 // ─── HOOKS ───────────────────────────────────────────────────────────────────
 
+function useParallax() {
+  useEffect(() => {
+    const layer = document.querySelector<HTMLElement>(".hero-parallax-layer");
+    if (!layer) return;
+    const onScroll = () => {
+      layer.style.transform = `translateY(${window.scrollY * 0.28}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+}
+
 function useScrollReveal() {
   useEffect(() => {
     let raf1: number, raf2: number;
@@ -326,6 +338,7 @@ export default function LandingPage() {
   const [streak, setStreak] = useState(0);
 
   useScrollReveal();
+  useParallax();
 
   useEffect(() => {
     const diag = localStorage.getItem("matemax-diag-done") === "1";
@@ -407,16 +420,18 @@ export default function LandingPage() {
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden hero-animated">
-        {/* Floatující math symboly */}
-        {MATH_SYMBOLS.map(({ symbol, top, left, size, delay, opacity }) => (
-          <span
-            key={`${symbol}-${top}`}
-            className="float absolute pointer-events-none select-none text-white font-black"
-            style={{ top, left, fontSize: size, animationDelay: delay, opacity }}
-          >
-            {symbol}
-          </span>
-        ))}
+        {/* Parallax math symboly — pohybují se pomaleji než obsah */}
+        <div className="hero-parallax-layer absolute inset-0">
+          {MATH_SYMBOLS.map(({ symbol, top, left, size, delay, opacity }) => (
+            <span
+              key={`${symbol}-${top}`}
+              className="float absolute select-none text-white font-black"
+              style={{ top, left, fontSize: size, animationDelay: delay, opacity }}
+            >
+              {symbol}
+            </span>
+          ))}
+        </div>
 
         <div className="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center relative z-10">
           <Badge>Nový produkt od Matematika Snadno</Badge>
