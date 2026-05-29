@@ -35,12 +35,12 @@ export default function ProgressMilestoneModal({ count, xpBonus, onClose }: Prop
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay"
       style={{ background: "rgba(0,0,0,0.55)" }}
       onClick={onClose}
     >
       <div
-        className="rounded-2xl p-8 max-w-xs w-full text-center shadow-2xl fade-in-up"
+        className="rounded-2xl p-8 max-w-xs w-full text-center shadow-2xl modal-spring"
         style={{ background: cfg.bg, border: `2px solid ${cfg.border}` }}
         onClick={(e) => e.stopPropagation()}
       >
