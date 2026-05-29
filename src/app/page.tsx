@@ -173,21 +173,31 @@ const MATH_SYMBOLS = [
 
 function useScrollReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>(".scroll-reveal");
-    if (!els.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    let raf1: number, raf2: number;
+    // Double rAF: wait for view-transition + layout paint before observing.
+    // On Safari iOS, IntersectionObserver fires before styles settle otherwise.
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const els = document.querySelectorAll<HTMLElement>(".scroll-reveal");
+        if (!els.length) return;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0, rootMargin: "0px 0px -30px 0px" }
+        );
+        els.forEach((el) => observer.observe(el));
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
   }, []);
 }
 
