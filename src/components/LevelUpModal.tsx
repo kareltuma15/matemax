@@ -20,12 +20,12 @@ export default function LevelUpModal({ level, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay"
       style={{ background: "rgba(0,0,0,0.65)" }}
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl"
+        className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl modal-spring"
         onClick={(e) => e.stopPropagation()}
       >
         <div

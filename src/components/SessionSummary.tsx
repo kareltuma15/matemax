@@ -202,8 +202,10 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
 
 export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], onRestart, onRestartChyby }: Props) {
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-  const animPct = useCountUp(pct);
-  const animXp  = useCountUp(xpEarned);
+  const animPct     = useCountUp(pct);
+  const animXp      = useCountUp(xpEarned);
+  const animCorrect = useCountUp(correct);
+  const animStreak  = useCountUp(streak);
   const [shareState, setShareState] = useState<"idle" | "loading" | "copied" | "error">("idle");
 
   async function handleShare() {
@@ -287,7 +289,7 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
           {animPct} %
         </p>
         <p className="mt-2 text-sm font-medium" style={{ color: headerColor, opacity: 0.75 }}>
-          {correct} z {total} správně{skipped > 0 ? ` · ${skipped} přeskočeno` : ""}
+          {animCorrect} z {total} správně{skipped > 0 ? ` · ${skipped} přeskočeno` : ""}
         </p>
       </div>
 
@@ -300,7 +302,7 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
           </div>
           <div className="flex-1 rounded-xl bg-orange-50 border border-orange-100 p-3 text-center">
             <p className="text-xs text-orange-400 font-medium mb-0.5">Streak</p>
-            <p className="text-xl font-black text-orange-500">🔥 {streak} dní</p>
+            <p className="text-xl font-black text-orange-500">🔥 {animStreak} dní</p>
           </div>
         </div>
 

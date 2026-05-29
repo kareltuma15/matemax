@@ -402,15 +402,15 @@ export default function LoggedInDashboard({
 
           {/* Stats pills */}
           <div className="flex items-center gap-2 mt-3 flex-wrap">
-            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
+            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white glass-card">
               <span className={streak >= 3 ? "streak-bounce" : ""}>🔥</span>
               {streak} {streak === 1 ? "den" : "dní"}
             </span>
-            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>
+            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white glass-card">
               📝 {todayCount}/{DAILY_GOAL} dnes
             </span>
             {xp > 0 && (
-              <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300" style={{ background: "rgba(255,255,255,0.10)" }}>
+              <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300 glass-card">
                 ⚡ <CountUp end={xp} /> XP
               </span>
             )}

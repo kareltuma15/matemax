@@ -26,8 +26,8 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix 
           <h1 className="text-lg font-black text-white">📚 Mapa témat</h1>
           {!isPremium && (
             <span
-              className="text-[11px] font-bold px-2.5 py-1 rounded-full"
-              style={{ background: "rgba(255,255,255,0.12)", color: "#93c5fd" }}
+              className="text-[11px] font-bold px-2.5 py-1 rounded-full glass-card"
+              style={{ color: "#93c5fd" }}
             >
               {freeTopics.length} / {allTopics.length} zdarma
             </span>

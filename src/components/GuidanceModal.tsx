@@ -21,12 +21,12 @@ export default function GuidanceModal({ type, daysSince, onClose, firstName, str
 
     return (
       <div
-        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 modal-overlay"
         style={{ background: "rgba(0,0,0,0.55)" }}
         onClick={onClose}
       >
         <div
-          className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl fade-in-up"
+          className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl modal-spring"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -122,12 +122,12 @@ export default function GuidanceModal({ type, daysSince, onClose, firstName, str
   if (type === "diagnostika") {
     return (
       <div
-        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 modal-overlay"
         style={{ background: "rgba(0,0,0,0.55)" }}
         onClick={onClose}
       >
         <div
-          className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl fade-in-up"
+          className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl modal-spring"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -182,12 +182,12 @@ export default function GuidanceModal({ type, daysSince, onClose, firstName, str
   const daysText = daysSince === 1 ? "1 den" : `${daysSince} dní`;
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 modal-overlay"
       style={{ background: "rgba(0,0,0,0.55)" }}
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl fade-in-up"
+        className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl modal-spring"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
