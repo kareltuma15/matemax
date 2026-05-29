@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   const H = 800;
 
   const readinessLabel =
-    readiness >= 90 ? "Vynikajici priprava" :
+    readiness >= 90 ? "Mistrovska priprava" :
     readiness >= 80 ? "Vynikajici priprava" :
     readiness >= 70 ? "Dobra priprava" :
     readiness >= 60 ? "Solidni zaklad" :
