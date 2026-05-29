@@ -6915,6 +6915,1266 @@
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
+    },
+    {
+      "id": "VYR_026",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď x = 4: 3x − 5 = ?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Dosadíme x = 4: 3·4 − 5",
+        "12 − 5 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_027",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď a = 6: 4a + 2 = ?",
+      "odpoved": "26",
+      "reseni_kroky": [
+        "Dosadíme a = 6: 4·6 + 2",
+        "24 + 2 = 26"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_028",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď n = 3: n · (n + 1) = ?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Dosadíme n = 3: 3 · (3 + 1)",
+        "3 · 4 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_029",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď x = 7: 2x − 7 = ?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Dosadíme x = 7: 2·7 − 7",
+        "14 − 7 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_030",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď t = 2: 5t + 3t = ?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Dosadíme t = 2: 5·2 + 3·2",
+        "10 + 6 = 16"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_031",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď k = 5: k² − k = ?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "Dosadíme k = 5: 5² − 5",
+        "25 − 5 = 20"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_032",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď x = 8: x/2 + 3 = ?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Dosadíme x = 8: 8/2 + 3",
+        "4 + 3 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_033",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 1,
+      "zadani": "Dosaď a = 3, b = 4: 2a + b = ?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Dosadíme: 2·3 + 4",
+        "6 + 4 = 10"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_034",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 3: (2x + 1)(x − 2) = ?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Dosadíme x = 3: (6 + 1)(3 − 2)",
+        "7 · 1 = 7"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_035",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 4: x² − 2x − 8 = ?",
+      "odpoved": "0",
+      "reseni_kroky": [
+        "Dosadíme x = 4: 16 − 8 − 8",
+        "16 − 16 = 0"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_036",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 2: 3x² + 2x − 1 = ?",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "Dosadíme x = 2: 3·4 + 4 − 1",
+        "12 + 4 − 1 = 15"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_037",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď a = 3: (a + 2)² − a² = ?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "(3 + 2)² = 5² = 25",
+        "25 − 3² = 25 − 9 = 16"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_038",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 1: x⁴ + x³ + x² + x = ?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Dosadíme x = 1: 1 + 1 + 1 + 1",
+        "= 4"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_039",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 5, y = 2: (x − y)² = ?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "x − y = 5 − 2 = 3",
+        "3² = 9"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_040",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď a = 4, b = 2: a² − b² = ?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "a² = 16, b² = 4",
+        "16 − 4 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_041",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = −2: x² − 3x + 2 = ?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "x² = 4, −3x = 6 (pro x=−2)",
+        "4 + 6 + 2 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_042",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď n = 4: n · (n − 1) · (n − 2) = ?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Dosadíme n = 4: 4 · 3 · 2",
+        "= 24"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_043",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 3: (x + 1)/(x − 1) = ?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Dosadíme x = 3: (3 + 1)/(3 − 1)",
+        "4/2 = 2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_044",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď a = 6, b = 3: (a + b)/(a − b) = ?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "(6 + 3)/(6 − 3) = 9/3",
+        "= 3"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_045",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 2,
+      "zadani": "Dosaď x = 9: √x + x/3 = ?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "√9 = 3 a 9/3 = 3",
+        "3 + 3 = 6"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_046",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 2: (x² + 2x)/(x + 2) = ?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Dosadíme: (4 + 4)/(2 + 2) = 8/4",
+        "= 2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_047",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď a = 3, b = 2: a³ − b³ = ?",
+      "odpoved": "19",
+      "reseni_kroky": [
+        "a³ = 27, b³ = 8",
+        "27 − 8 = 19"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_048",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 4: x² − 4√x + 4 = ?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "x² = 16, 4√x = 4·2 = 8",
+        "16 − 8 + 4 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_049",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 2: (x + 1)³ − (x − 1)³ = ?",
+      "odpoved": "26",
+      "reseni_kroky": [
+        "(x+1)³ = 3³ = 27, (x−1)³ = 1³ = 1",
+        "27 − 1 = 26"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_050",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 5: x² − 7x + 10 = ?",
+      "odpoved": "0",
+      "reseni_kroky": [
+        "25 − 35 + 10 = 0",
+        "(x−2)(x−5) = 0 pro x=5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_051",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 3, y = 2: (x + y)³ = ?",
+      "odpoved": "125",
+      "reseni_kroky": [
+        "x + y = 5",
+        "5³ = 125"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_052",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď a = 5, b = 4: (a + b)² − (a − b)² = ?",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "(a+b)²−(a−b)² = 4ab",
+        "4 · 5 · 4 = 80"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_053",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 6: x² − x − 30 = ?",
+      "odpoved": "0",
+      "reseni_kroky": [
+        "36 − 6 − 30 = 0",
+        "(x−6)(x+5) = 0 pro x=6"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_054",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 2: 2^x + 3^x = ?",
+      "odpoved": "13",
+      "reseni_kroky": [
+        "2^2 = 4, 3^2 = 9",
+        "4 + 9 = 13"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_055",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 3, y = 1: (x² − y²)/(x + y) = ?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "x² − y² = (x+y)(x−y) → zrušíme (x+y)",
+        "Zbyde x − y = 3 − 1 = 2"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_056",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď a = 5: a² − (a + 3)(a − 3) = ?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "(a+3)(a−3) = a² − 9",
+        "a² − (a²−9) = 9"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_057",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 3, y = 2: x⁴ − y⁴ = ?",
+      "odpoved": "65",
+      "reseni_kroky": [
+        "x⁴ = 81, y⁴ = 16",
+        "81 − 16 = 65"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_058",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď n = 10: n(n + 1)/2 − n = ?",
+      "odpoved": "45",
+      "reseni_kroky": [
+        "10·11/2 = 55",
+        "55 − 10 = 45"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_059",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď x = 4, y = 2: (x² + xy + y²)(x − y) = ?",
+      "odpoved": "56",
+      "reseni_kroky": [
+        "Vzorec: (x²+xy+y²)(x−y) = x³ − y³",
+        "4³ − 2³ = 64 − 8 = 56"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR_060",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Dosaď a = 3, b = 2: (a + b)² − (a − b)² = ?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "(a+b)²−(a−b)² = 4ab",
+        "4 · 3 · 2 = 24"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_036",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 4, 8, 12, 16, ___",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "Rozdíl: 4",
+        "16 + 4 = 20"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_037",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 30, 25, 20, 15, ___",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Rozdíl: −5",
+        "15 − 5 = 10"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_038",
+      "tema": "cisselne_rady",
+      "podtema": "geometricka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 2, 4, 8, 16, 32, ___",
+      "odpoved": "64",
+      "reseni_kroky": [
+        "Kvocient: 2",
+        "32 · 2 = 64"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_039",
+      "tema": "cisselne_rady",
+      "podtema": "geometricka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 1, 10, 100, ___",
+      "odpoved": "1000",
+      "reseni_kroky": [
+        "Kvocient: 10",
+        "100 · 10 = 1000"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_040",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 7, 14, 21, 28, ___",
+      "odpoved": "35",
+      "reseni_kroky": [
+        "Rozdíl: 7",
+        "28 + 7 = 35"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_041",
+      "tema": "cisselne_rady",
+      "podtema": "kvadraticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 36, 49, 64, 81, ___",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "Jsou to druhé mocniny: 6², 7², 8², 9², 10²",
+        "10² = 100"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_042",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 2, 5, 8, 11, ___",
+      "odpoved": "14",
+      "reseni_kroky": [
+        "Rozdíl: 3",
+        "11 + 3 = 14"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_043",
+      "tema": "cisselne_rady",
+      "podtema": "ruzna_vzorec",
+      "obtiznost": 1,
+      "zadani": "Doplň: 2, 4, 6, 10, 16, ___",
+      "odpoved": "26",
+      "reseni_kroky": [
+        "Každý člen = součet dvou předchozích",
+        "10 + 16 = 26"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_044",
+      "tema": "cisselne_rady",
+      "podtema": "kvadraticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Doplň: 4, 9, 16, 25, 36, ___",
+      "odpoved": "49",
+      "reseni_kroky": [
+        "Jsou to druhé mocniny od 2: 2², 3², 4², 5², 6², 7²",
+        "7² = 49"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_045",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 1,
+      "zadani": "Součet: 3 + 6 + 9 + ... + 30 = ?",
+      "odpoved": "165",
+      "reseni_kroky": [
+        "Aritmetická řada: n = 10 členů",
+        "S = 10 · (3 + 30)/2 = 10 · 16,5 = 165"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_046",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 2,
+      "zadani": "Jaký je 8. člen posloupnosti 1, 4, 7, 10, ...?",
+      "odpoved": "22",
+      "reseni_kroky": [
+        "Rozdíl d = 3, a₁ = 1",
+        "a₈ = 1 + 7 · 3 = 22"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_047",
+      "tema": "cisselne_rady",
+      "podtema": "ruzna_vzorec",
+      "obtiznost": 2,
+      "zadani": "Doplň: 1, 1, 2, 4, 7, 13, ___",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Každý člen = součet tří předchozích",
+        "4 + 7 + 13 = 24"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_048",
+      "tema": "cisselne_rady",
+      "podtema": "ruzna_vzorec",
+      "obtiznost": 2,
+      "zadani": "Doplň: 1, 2, 6, 24, ___",
+      "odpoved": "120",
+      "reseni_kroky": [
+        "Jsou to faktoriály: 1!, 2!, 3!, 4!, 5!",
+        "5! = 120"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_049",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 2,
+      "zadani": "Jaký je 12. člen posloupnosti 100, 95, 90, ...?",
+      "odpoved": "45",
+      "reseni_kroky": [
+        "d = −5, a₁ = 100",
+        "a₁₂ = 100 + 11 · (−5) = 45"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_050",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 2,
+      "zadani": "Součet: 1 + 4 + 7 + ... + 28 = ?",
+      "odpoved": "145",
+      "reseni_kroky": [
+        "n = (28−1)/3 + 1 = 10 členů",
+        "S = 10 · (1 + 28)/2 = 145"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_051",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 2,
+      "zadani": "Kolik je součet prvních 50 přirozených čísel?",
+      "odpoved": "1275",
+      "reseni_kroky": [
+        "S = n(n+1)/2 = 50 · 51/2",
+        "= 1275"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_052",
+      "tema": "cisselne_rady",
+      "podtema": "ruzna_vzorec",
+      "obtiznost": 2,
+      "zadani": "Doplň: 3, 4, 7, 11, 18, 29, ___",
+      "odpoved": "47",
+      "reseni_kroky": [
+        "Každý člen = součet dvou předchozích",
+        "18 + 29 = 47"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_053",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 2,
+      "zadani": "Jaký je 100. člen posloupnosti 1, 3, 5, ...?",
+      "odpoved": "199",
+      "reseni_kroky": [
+        "Lichá čísla: a₁ = 1, d = 2",
+        "a₁₀₀ = 1 + 99 · 2 = 199"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_054",
+      "tema": "cisselne_rady",
+      "podtema": "trojuhelnikova_cisla",
+      "obtiznost": 2,
+      "zadani": "Doplň: 0, 1, 3, 6, 10, 15, ___",
+      "odpoved": "21",
+      "reseni_kroky": [
+        "Trojúhelníková čísla: rozdíl roste o 1",
+        "15 + 6 = 21"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_055",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 2,
+      "zadani": "Součet: 1 + 3 + 5 + ... + 29 = ?",
+      "odpoved": "225",
+      "reseni_kroky": [
+        "Součet prvních n lichých čísel = n²",
+        "n = 15 → 15² = 225"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_056",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Jaký je součet prvních 10 členů posloupnosti 2, 5, 8, ...?",
+      "odpoved": "155",
+      "reseni_kroky": [
+        "a₁=2, d=3, a₁₀=29",
+        "S = 10·(2+29)/2 = 155"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_057",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Kolik členů má posloupnost 3, 7, 11, ..., 99?",
+      "odpoved": "25",
+      "reseni_kroky": [
+        "aₙ = 3 + (n−1)·4 = 99",
+        "n − 1 = 24 → n = 25"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_058",
+      "tema": "cisselne_rady",
+      "podtema": "kvadraticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Jaký je 7. člen posloupnosti aₙ = 2n² − 1?",
+      "odpoved": "97",
+      "reseni_kroky": [
+        "Dosadíme n = 7: 2 · 49 − 1",
+        "98 − 1 = 97"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_059",
+      "tema": "cisselne_rady",
+      "podtema": "kvadraticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Doplň: 1, 5, 14, 30, 55, ___",
+      "odpoved": "91",
+      "reseni_kroky": [
+        "Jsou to součty druhých mocnin: 1², 1²+2², ..., 1²+...+5²",
+        "55 + 6² = 55 + 36 = 91"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_060",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Součet: 10 + 20 + 30 + ... + 100 = ?",
+      "odpoved": "550",
+      "reseni_kroky": [
+        "n = 10 členů, a₁ = 10, a₁₀ = 100",
+        "S = 10·(10+100)/2 = 550"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_061",
+      "tema": "cisselne_rady",
+      "podtema": "geometricka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Jaký je 7. člen posloupnosti 1, 3, 9, 27, ...?",
+      "odpoved": "729",
+      "reseni_kroky": [
+        "Kvocient r = 3",
+        "a₇ = 3^(7−1) = 3⁶ = 729"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_062",
+      "tema": "cisselne_rady",
+      "podtema": "geometricka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Součet prvních 5 členů posloupnosti 1, 2, 4, 8, 16, ...?",
+      "odpoved": "31",
+      "reseni_kroky": [
+        "S = a₁·(rⁿ−1)/(r−1) = 1·(32−1)/(2−1)",
+        "= 31"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_063",
+      "tema": "cisselne_rady",
+      "podtema": "ruzna_vzorec",
+      "obtiznost": 3,
+      "zadani": "Doplň: 1, 3, 7, 15, 31, ___",
+      "odpoved": "63",
+      "reseni_kroky": [
+        "Každý člen = 2·předchozí + 1",
+        "2 · 31 + 1 = 63"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_064",
+      "tema": "cisselne_rady",
+      "podtema": "aritmeticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Jaký je 50. člen posloupnosti 2, 4, 6, 8, ...?",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "Sudá čísla: aₙ = 2n",
+        "a₅₀ = 2 · 50 = 100"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "CIS_065",
+      "tema": "cisselne_rady",
+      "podtema": "kvadraticka_posloupnost",
+      "obtiznost": 3,
+      "zadani": "Součet: 1² + 2² + 3² + ... + 10² = ?",
+      "odpoved": "385",
+      "reseni_kroky": [
+        "Vzorec: n(n+1)(2n+1)/6",
+        "10·11·21/6 = 385"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_041",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 4³",
+      "odpoved": "64",
+      "reseni_kroky": [
+        "4³ = 4 · 4 · 4",
+        "16 · 4 = 64"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_042",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: (−4)²",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "(−4)² = (−4)·(−4)",
+        "Záporné × záporné = kladné: 16"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_043",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: √225",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "Hledáme x: x² = 225",
+        "15² = 225 → √225 = 15"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_044",
+      "tema": "mocniny",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 3³ · 3²",
+      "odpoved": "243",
+      "reseni_kroky": [
+        "Stejný základ → sečteme exponenty: 3^(3+2) = 3⁵",
+        "3⁵ = 243"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_045",
+      "tema": "mocniny",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 2⁶ ÷ 2³",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Stejný základ → odečteme exponenty: 2^(6−3) = 2³",
+        "2³ = 8"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_046",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: √(6² + 8²)",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "6² + 8² = 36 + 64 = 100",
+        "√100 = 10"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_047",
+      "tema": "mocniny",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: (3²)³",
+      "odpoved": "729",
+      "reseni_kroky": [
+        "Mocnina mocniny → násobíme exponenty: 3^(2·3) = 3⁶",
+        "3⁶ = 729"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_048",
+      "tema": "mocniny",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: (2²)³",
+      "odpoved": "64",
+      "reseni_kroky": [
+        "2^(2·3) = 2⁶",
+        "2⁶ = 64"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_049",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: √(16 · 25)",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "√16 · √25 = 4 · 5",
+        "= 20"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_050",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 2,
+      "zadani": "Vypočítej: 1² + 2² + 3² + 4²",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "1 + 4 + 9 + 16",
+        "= 30"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_051",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: 2⁷",
+      "odpoved": "128",
+      "reseni_kroky": [
+        "2⁷ = 2⁶ · 2 = 64 · 2",
+        "= 128"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_052",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: 2⁸",
+      "odpoved": "256",
+      "reseni_kroky": [
+        "2⁸ = 2⁷ · 2 = 128 · 2",
+        "= 256"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_053",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: √(13² − 5²)",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "169 − 25 = 144",
+        "√144 = 12"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_054",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (−2)⁴",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Sudý exponent → výsledek kladný",
+        "(−2)⁴ = 16"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_055",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (−3)⁴",
+      "odpoved": "81",
+      "reseni_kroky": [
+        "Sudý exponent → výsledek kladný",
+        "3⁴ = 81"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_056",
+      "tema": "mocniny",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (3 · 2)²",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "(ab)² = a²b² nebo přímý výpočet: 6²",
+        "= 36"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_057",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: √(4 · 9 · 25)",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "√4 · √9 · √25 = 2 · 3 · 5",
+        "= 30"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_058",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: 5³ − 5²",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "5³ = 125, 5² = 25",
+        "125 − 25 = 100"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_059",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: 4³ + 2⁴",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "4³ = 64, 2⁴ = 16",
+        "64 + 16 = 80"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_060",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: √(3⁴)",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "3⁴ = 81",
+        "√81 = 9 (nebo: (3⁴)^(1/2) = 3² = 9)"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_061",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (1/3)³",
+      "odpoved": "1/27",
+      "reseni_kroky": [
+        "(1/3)³ = 1³/3³ = 1/27",
+        "Výsledek: 1/27"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_062",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: √256",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "16² = 256",
+        "√256 = 16"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_063",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: 2⁹",
+      "odpoved": "512",
+      "reseni_kroky": [
+        "2⁹ = 2⁸ · 2 = 256 · 2",
+        "= 512"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_064",
+      "tema": "mocniny",
+      "podtema": "umocnovani",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: (2/3)³",
+      "odpoved": "8/27",
+      "reseni_kroky": [
+        "(2/3)³ = 2³/3³ = 8/27",
+        "Výsledek: 8/27"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "MOC_065",
+      "tema": "mocniny",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Vypočítej: √(16/25)",
+      "odpoved": "4/5",
+      "reseni_kroky": [
+        "√(16/25) = √16/√25",
+        "= 4/5"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
     }
   ]
 }
