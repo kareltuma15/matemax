@@ -138,21 +138,28 @@ export default function ProfilPage() {
 
   useEffect(() => {
     let raf1: number, raf2: number;
+    let fallbackId: ReturnType<typeof setTimeout>;
     let io: IntersectionObserver | null = null;
-    // Double rAF: wait for view-transition + layout to settle before observing
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
-        const els = document.querySelectorAll<Element>(".scroll-reveal:not(.is-visible)");
+        const els = Array.from(document.querySelectorAll<HTMLElement>(".scroll-reveal"));
+        if (!els.length) return;
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        els.forEach(el => { if (el.getBoundingClientRect().top < vh) el.classList.add("is-visible"); });
         io = new IntersectionObserver(
-          (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
+          (entries) => entries.forEach(e => e.isIntersecting && e.target.classList.add("is-visible")),
           { threshold: 0 }
         );
-        els.forEach((el) => io!.observe(el));
+        els.filter(el => !el.classList.contains("is-visible")).forEach(el => io!.observe(el));
+        fallbackId = setTimeout(() => {
+          document.querySelectorAll<HTMLElement>(".scroll-reveal:not(.is-visible)").forEach(el => el.classList.add("is-visible"));
+        }, 800);
       });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      clearTimeout(fallbackId);
       io?.disconnect();
     };
   }, [activeTab]);

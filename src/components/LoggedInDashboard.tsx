@@ -134,17 +134,27 @@ function useTilt(strength = 8) {
 function useScrollReveal() {
   useEffect(() => {
     let raf1: number, raf2: number;
+    let fallbackId: ReturnType<typeof setTimeout>;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
-        const els = document.querySelectorAll(".scroll-reveal");
+        const els = Array.from(document.querySelectorAll<HTMLElement>(".scroll-reveal"));
+        if (!els.length) return;
+        // Immediately reveal elements already in viewport (Safari IO unreliable on initial load)
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        els.forEach(el => { if (el.getBoundingClientRect().top < vh) el.classList.add("is-visible"); });
+        // IO for below-fold elements
         const io = new IntersectionObserver(
-          (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
-          { threshold: 0, rootMargin: "0px 0px -30px 0px" }
+          (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); } }),
+          { threshold: 0 }
         );
-        els.forEach((el) => io.observe(el));
+        els.filter(el => !el.classList.contains("is-visible")).forEach(el => io.observe(el));
+        // Safari fallback: force-reveal anything still hidden after 800ms
+        fallbackId = setTimeout(() => {
+          document.querySelectorAll<HTMLElement>(".scroll-reveal:not(.is-visible)").forEach(el => el.classList.add("is-visible"));
+        }, 800);
       });
     });
-    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); clearTimeout(fallbackId); };
   }, []);
 }
 

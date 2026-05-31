@@ -186,29 +186,30 @@ function useParallax() {
 function useScrollReveal() {
   useEffect(() => {
     let raf1: number, raf2: number;
-    // Double rAF: wait for view-transition + layout paint before observing.
-    // On Safari iOS, IntersectionObserver fires before styles settle otherwise.
+    let fallbackId: ReturnType<typeof setTimeout>;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
-        const els = document.querySelectorAll<HTMLElement>(".scroll-reveal");
+        const els = Array.from(document.querySelectorAll<HTMLElement>(".scroll-reveal"));
         if (!els.length) return;
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0, rootMargin: "0px 0px -30px 0px" }
+        // Immediately reveal elements in viewport (Safari IO unreliable on initial load)
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        els.forEach(el => { if (el.getBoundingClientRect().top < vh) el.classList.add("is-visible"); });
+        // IO for below-fold elements, no negative rootMargin (causes Safari issues)
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); } }),
+          { threshold: 0 }
         );
-        els.forEach((el) => observer.observe(el));
+        els.filter(el => !el.classList.contains("is-visible")).forEach(el => io.observe(el));
+        // Safari fallback: force-reveal anything still hidden after 800ms
+        fallbackId = setTimeout(() => {
+          document.querySelectorAll<HTMLElement>(".scroll-reveal:not(.is-visible)").forEach(el => el.classList.add("is-visible"));
+        }, 800);
       });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      clearTimeout(fallbackId);
     };
   }, []);
 }
