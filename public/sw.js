@@ -1,4 +1,4 @@
-const CACHE = "matemax-v2";
+const CACHE = "matemax-v3";
 const OFFLINE_PAGES = ["/", "/diagnostika", "/trenink"];
 
 self.addEventListener("install", (e) => {

@@ -87,7 +87,9 @@
       "PowerShell(netstat *)",
       "PowerShell(try { $r = Invoke-WebRequest \"http://127.0.0.1:3001/api/share-card?mode=streak&streak=7\" -UseBasicParsing -TimeoutSec 30; \"Status: $\\($r.StatusCode\\), CT: $\\($r.Headers['Content-Type']\\)\" } catch { \"Error: $\\($_.Exception.Message\\)\" })",
       "Bash(curl *)",
-      "Bash(nslookup *)"
+      "Bash(nslookup *)",
+      "Bash(Get-Item lighthouse-report.json, lighthouse-report-2.json, tmp-page.html)",
+      "Bash(Select-Object Name, LastWriteTime, Length)"
     ]
   }
 }

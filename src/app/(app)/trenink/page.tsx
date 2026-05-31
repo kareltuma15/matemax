@@ -36,6 +36,7 @@ import LoggedInTopicMap from "@/components/LoggedInTopicMap";
 
 // Rare modals — lazy loaded to keep initial bundle small
 const BadgeToast = dynamic(() => import("@/components/BadgeToast"), { ssr: false });
+const AchievementOverlay = dynamic(() => import("@/components/AchievementOverlay"), { ssr: false });
 const FirstSessionModal = dynamic(() => import("@/components/FirstSessionModal"), { ssr: false });
 const LevelUpModal = dynamic(() => import("@/components/LevelUpModal"), { ssr: false });
 const StreakMilestoneModal = dynamic(() => import("@/components/StreakMilestoneModal"), { ssr: false });
@@ -619,6 +620,9 @@ function TreningPageInner() {
   const dismissToast = useCallback(() => {
     setBadgeQueue((q) => q.slice(1));
   }, []);
+  // epic/legendary get full-screen overlay, rest get toast
+  const currentToastCfg = currentToast ? getBadgeConfig(currentToast) : null;
+  const useOverlay = currentToastCfg?.rarity === "epic" || currentToastCfg?.rarity === "legendary";
 
   if (!hydrated) {
     return (
@@ -776,7 +780,10 @@ function TreningPageInner() {
     )];
     return (
       <>
-        {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+        {currentToast && (useOverlay
+  ? <AchievementOverlay key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
+  : <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
+)}
         {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
         {streakMilestone && (
           <StreakMilestoneModal
@@ -861,7 +868,10 @@ function TreningPageInner() {
   if (isTopicLocked(currentExample.tema, isPremium)) {
     return (
       <>
-        {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+        {currentToast && (useOverlay
+  ? <AchievementOverlay key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
+  : <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
+)}
         {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
         <XPProgressBar xp={xp} className="mb-3" />
         <UpgradeCard
@@ -876,7 +886,10 @@ function TreningPageInner() {
 
   return (
     <>
-      {currentToast && <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />}
+      {currentToast && (useOverlay
+  ? <AchievementOverlay key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
+  : <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
+)}
       {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
       {streakMilestone && (
         <StreakMilestoneModal

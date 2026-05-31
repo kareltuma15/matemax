@@ -440,40 +440,6 @@ body {
   animation: gradient-shift 12s ease infinite;
 }
 
-/* ── View Transitions API — page navigation crossfade ─────── */
-@keyframes vt-fade-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-@keyframes vt-fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* @supports guard: prevents Safari from applying these rules when VT is
-   unsupported or partially implemented — avoids content stuck at opacity:0 */
-@supports (view-transition-name: none) {
-  ::view-transition-old(root) {
-    animation: 150ms ease-in forwards vt-fade-out;
-  }
-
-  ::view-transition-new(root) {
-    /* No delay + forwards (not both): content is never pre-hidden before
-       the animation starts, eliminating the Safari race condition. */
-    animation: 200ms ease-out forwards vt-fade-in;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(*),
-    ::view-transition-new(*),
-    ::view-transition-group(*) {
-      animation-duration: 0s !important;
-      animation-delay: 0s !important;
-    }
-  }
-}
-
 /* ── Scroll reveal ─────────────────────────────────────────── */
 .scroll-reveal {
   opacity: 0;
