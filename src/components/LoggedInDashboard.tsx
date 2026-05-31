@@ -394,14 +394,14 @@ export default function LoggedInDashboard({
       {/* Nav */}
       <nav
         className="sticky top-0 z-50 border-b border-gray-100 shadow-sm"
-        style={{ backgroundColor: "rgba(255,255,255,0.95)", WebkitBackdropFilter: "blur(8px)", backdropFilter: "blur(8px)" }}
+        style={{ backgroundColor: "var(--nav-bg)", WebkitBackdropFilter: "blur(8px)", backdropFilter: "blur(8px)" }}
       >
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
               M²
             </div>
-            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+            <span className="font-bold text-base" style={{ color: "var(--text-primary)" }}>MateMax</span>
           </div>
           <div className="flex items-center gap-3">
             <Link
@@ -503,10 +503,10 @@ export default function LoggedInDashboard({
           return (
             <div className="bg-white rounded-2xl border border-slate-200 p-5 stagger-1 card-hover scroll-reveal">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Tento týden</p>
+                <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Tento týden</p>
                 <span
                   className="text-xs font-bold px-2.5 py-0.5 rounded-full"
-                  style={{ background: "#eff6ff", color: "#2E6DA4" }}
+                  style={{ background: "var(--surface-3)", color: "#2E6DA4" }}
                 >
                   +{weeklyStats.totalXP} XP
                 </span>
@@ -527,7 +527,7 @@ export default function LoggedInDashboard({
                           className="w-full rounded-sm"
                           style={{
                             height: barH,
-                            background: isToday ? "#0D1B3E" : count > 0 ? "#2E6DA4" : "#e2e8f0",
+                            background: isToday ? "var(--navy)" : count > 0 ? "#2E6DA4" : "var(--border-color)",
                             transition: "height 0.5s ease",
                           }}
                         />
@@ -546,12 +546,12 @@ export default function LoggedInDashboard({
               {/* Stats row */}
               <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100">
                 <div className="text-center">
-                  <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                  <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>
                     {weeklyStats.totalExamples}
                   </p>
                   <p className="text-[10px] text-slate-400">příkladů</p>
                 </div>
-                <div className="text-center" style={{ borderLeft: "1px solid #f1f5f9", borderRight: "1px solid #f1f5f9" }}>
+                <div className="text-center" style={{ borderLeft: "1px solid var(--border-color)", borderRight: "1px solid var(--border-color)" }}>
                   <p
                     className="text-base font-black"
                     style={{ color: acc >= 70 ? "#15803d" : "#f59e0b" }}
@@ -561,7 +561,7 @@ export default function LoggedInDashboard({
                   <p className="text-[10px] text-slate-400">správně</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                  <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>
                     {weeklyStats.topicsCount}
                   </p>
                   <p className="text-[10px] text-slate-400">
@@ -577,11 +577,11 @@ export default function LoggedInDashboard({
         {xp === 0 && streak === 0 && todayCount === 0 && (
           <div
             className="rounded-2xl p-5 flex items-start gap-4 fade-in-up"
-            style={{ background: "#f0f7ff", border: "1px solid #bfdbfe" }}
+            style={{ background: "var(--surface-2)", border: "1px solid var(--border-color)" }}
           >
             <span className="text-3xl shrink-0 mt-0.5">🚀</span>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>
+              <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>
                 Vítej v MateMax! Začni svůj první trénink
               </p>
               <p className="text-xs text-slate-500 mt-1 leading-snug">
@@ -628,7 +628,7 @@ export default function LoggedInDashboard({
               <Link
                 href="/trenink?rezim=sm2"
                 className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
+                style={{ background: "var(--surface-3)", color: "#2E6DA4", border: "1px solid var(--border-color)" }}
               >
                 <span>🃏</span>
                 <span>{dueCount} karet ke zkoušení</span>
@@ -638,7 +638,7 @@ export default function LoggedInDashboard({
               <Link
                 href="/profil"
                 className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors whitespace-nowrap"
-                style={{ background: "#f8faff", color: readinessScore.color, border: `1px solid ${readinessScore.color}30` }}
+                style={{ background: "var(--surface-0)", color: readinessScore.color, border: `1px solid ${readinessScore.color}30` }}
               >
                 <span>📊</span>
                 <div className="flex flex-col leading-none">
@@ -819,7 +819,7 @@ export default function LoggedInDashboard({
               </>
             ) : (
               <>
-                <p className="text-base font-black" style={{ color: "#0D1B3E" }}>
+                <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>
                   {todayCount === 0 ? "Zatím žádné příklady" : `${todayCount} příkladů hotovo`}
                 </p>
                 <p className="text-xs text-slate-400 mt-0.5">
@@ -867,7 +867,7 @@ export default function LoggedInDashboard({
         {/* Týdenní žebříček */}
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 scroll-reveal stagger-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold" style={{ color: "#0D1B3E" }}>🏆 Týdenní žebříček</span>
+            <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>🏆 Týdenní žebříček</span>
             <Link href="/vyzva" className="text-xs font-semibold" style={{ color: "#2E6DA4" }}>
               Splnit výzvu →
             </Link>
@@ -883,7 +883,7 @@ export default function LoggedInDashboard({
           <div className="px-5 py-4 flex items-center justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: "#2E6DA4" }}>CERMAT test</p>
-              <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>Otestuj se na čisto</p>
+              <p className="text-base font-extrabold" style={{ color: "var(--text-primary)" }}>Otestuj se na čisto</p>
               <p className="text-xs text-slate-400 mt-0.5">Simulace přijímaček · 15 příkladů · 25 min</p>
             </div>
             <span className="text-3xl">🎯</span>
@@ -893,7 +893,7 @@ export default function LoggedInDashboard({
         {/* Slabá témata */}
         {weakTopics.length > 0 && (
           <div className="bg-white rounded-2xl border border-slate-200 p-5 scroll-reveal card-hover">
-            <p className="text-sm font-bold mb-3" style={{ color: "#0D1B3E" }}>🎯 Kde máš mezery</p>
+            <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>🎯 Kde máš mezery</p>
             <div className="flex flex-col gap-2">
               {weakTopics.map(({ tema, score }) => {
                 const locked = !isPremium && PREMIUM_TOPICS.has(tema);

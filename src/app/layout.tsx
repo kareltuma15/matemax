@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import PwaSetup from "@/components/PwaSetup";
+import { THEME_SCRIPT } from "@/lib/theme";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://matemax.matematika-snadno.cz"),
@@ -37,8 +38,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="cs" className="h-full scroll-smooth">
-      <body className="min-h-full" style={{ background: "#F8FAFF", color: "#0D1B3E" }}>
+    <html lang="cs" className="h-full scroll-smooth" suppressHydrationWarning>
+      <head>
+        {/* Anti-flash: apply theme before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
+      <body className="min-h-full" style={{ background: "var(--surface-1)", color: "var(--text-primary)" }}>
         <PwaSetup />
         {children}
       </body>

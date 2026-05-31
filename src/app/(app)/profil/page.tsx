@@ -18,6 +18,7 @@ import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
+import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 import ShareButton from "@/components/ShareButton";
 
@@ -135,6 +136,7 @@ export default function ProfilPage() {
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
   const [soundOn, setSoundOn]             = useState(true);
+  const [darkMode, setDarkMode]           = useState<Theme>("light");
 
   useEffect(() => {
     let raf1: number, raf2: number;
@@ -166,6 +168,7 @@ export default function ProfilPage() {
 
   useEffect(() => {
     setSoundOn(isSoundEnabled());
+    setDarkMode(getTheme());
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
         setEmail(data.session?.user.email ?? null);
@@ -1177,6 +1180,34 @@ export default function ProfilPage() {
               </form>
             )}
           </div>
+
+          {/* Dark mode */}
+          <button
+            type="button"
+            onClick={() => {
+              const next: Theme = darkMode === "dark" ? "light" : "dark";
+              setDarkMode(next);
+              setTheme(next);
+            }}
+            className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{darkMode === "dark" ? "🌙" : "☀️"}</span>
+              <div>
+                <p className="text-sm font-semibold text-slate-800">Tmavý režim</p>
+                <p className="text-xs text-slate-400">{darkMode === "dark" ? "Aktivní" : "Vypnutý — sleduje systémové nastavení"}</p>
+              </div>
+            </div>
+            <div
+              className="relative w-10 h-6 rounded-full transition-colors"
+              style={{ background: darkMode === "dark" ? "#2E6DA4" : "#cbd5e1" }}
+            >
+              <div
+                className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"
+                style={{ transform: darkMode === "dark" ? "translateX(20px)" : "translateX(2px)" }}
+              />
+            </div>
+          </button>
 
           {/* Zvukový feedback */}
           <button
