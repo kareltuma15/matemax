@@ -6,7 +6,14 @@ import { DBExample, TEMA_LABELS } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
+import MathDisplay from "./MathDisplay";
 import { playCorrect, playWrong } from "@/lib/sound";
+
+/** Renderuje text nebo LaTeX podle typu příkladu */
+function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
+  if (ex.latex) return <MathDisplay tex={text} displayMode={display} />;
+  return <MathText text={text} large={large} />;
+}
 
 interface Props {
   example: DBExample;
@@ -267,9 +274,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         {/* Question */}
         <div className="text-center py-2">
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Vypočítej</p>
-          <p className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
-            <MathText text={example.zadani} large />
-          </p>
+          <div className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
+            <ExMath ex={example} text={example.zadani} large display={example.latex} />
+          </div>
         </div>
 
         {/* Static tip (idle only) */}
@@ -338,7 +345,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <div className="flex-1">
               <p className="font-bold text-green-700">Správně!</p>
               <p className="text-sm text-green-600">
-                Výsledek: <strong><MathText text={example.odpoved} /></strong>
+                Výsledek: <strong><ExMath ex={example} text={example.odpoved} /></strong>
               </p>
               {consecutiveCorrect + 1 >= 3 && (
                 <p className="text-sm font-semibold text-amber-600 mt-1">
@@ -363,7 +370,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                 </p>
                 {!canRetry && (
                   <p className="text-sm text-slate-600 mt-1">
-                    Správně: <strong className="text-slate-800"><MathText text={example.odpoved} /></strong>
+                    Správně: <strong className="text-slate-800"><ExMath ex={example} text={example.odpoved} /></strong>
                   </p>
                 )}
               </div>
@@ -508,7 +515,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                         className="text-sm leading-snug pb-3 pt-0.5"
                         style={{ color: "#1e293b" }}
                       >
-                        <MathText text={krok} />
+                        <ExMath ex={example} text={krok} />
                       </p>
                     </li>
                   ))}
@@ -518,7 +525,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                   style={{ borderColor: "#e2e8f0", color: "#64748b" }}
                 >
                   <span>✓</span>
-                  <span>Správná odpověď: <MathText text={example.odpoved} /></span>
+<span>Správná odpověď: <ExMath ex={example} text={example.odpoved} /></span>
                 </div>
               </div>
             )}

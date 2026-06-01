@@ -6,6 +6,12 @@ import { examples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import { TEMA_LABELS, DBExample } from "@/types";
 import MathText from "@/components/MathText";
+import MathDisplay from "@/components/MathDisplay";
+
+function ExMath({ ex, text, large }: { ex: DBExample; text: string; large?: boolean }) {
+  if (ex.latex) return <MathDisplay tex={text} displayMode={large} />;
+  return <MathText text={text} large={large} />;
+}
 import { playCorrect, playWrong } from "@/lib/sound";
 
 const TOTAL_TIME = 60;
@@ -264,7 +270,7 @@ export default function RychlyMod() {
             {idx + 1} / {QUESTION_COUNT} · {TEMA_LABELS[q.tema] ?? q.tema}
           </p>
           <p className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
-            <MathText text={q.zadani} large />
+            <ExMath ex={q} text={q.zadani} large />
           </p>
         </div>
 

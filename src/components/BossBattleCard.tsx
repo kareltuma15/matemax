@@ -4,7 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { DBExample } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "./MathText";
+import MathDisplay from "./MathDisplay";
 import { playCorrect, playWrong } from "@/lib/sound";
+
+function ExMath({ ex, text, large }: { ex: DBExample; text: string; large?: boolean }) {
+  if (ex.latex) return <MathDisplay tex={text} displayMode={large} />;
+  return <MathText text={text} large={large} />;
+}
 
 const BOSS_TIME = 60; // seconds
 const BOSS_XP   = 50;
@@ -152,7 +158,7 @@ export default function BossBattleCard({ example, temaLabel, onComplete }: Props
           className="rounded-xl p-4 text-sm w-full"
           style={{ background: "rgba(255,255,255,0.05)", color: "#d1fae5" }}
         >
-          Správná odpověď: <strong className="text-white"><MathText text={example.odpoved} /></strong>
+          Správná odpověď: <strong className="text-white"><ExMath ex={example} text={example.odpoved} /></strong>
         </div>
         <button
           type="button"
@@ -260,7 +266,7 @@ export default function BossBattleCard({ example, temaLabel, onComplete }: Props
       >
         <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#fca5a5" }}>Vypočítej</p>
         <p className="text-2xl font-bold text-white leading-snug">
-          <MathText text={example.zadani} large />
+          <ExMath ex={example} text={example.zadani} large />
         </p>
       </div>
 

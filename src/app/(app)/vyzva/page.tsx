@@ -5,6 +5,7 @@ import Link from "next/link";
 import { examples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "@/components/MathText";
+import MathDisplay from "@/components/MathDisplay";
 import challengesJson from "@/data/daily-challenges.json";
 import type { DBExample } from "@/types";
 import { TEMA_LABELS } from "@/types";
@@ -499,7 +500,9 @@ export default function VyzvaPage() {
               {TEMA_LABELS[ex?.tema ?? ""] ?? ex?.tema}
             </p>
             <div className="text-xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
-              <MathText text={ex?.zadani ?? ""} large />
+              {ex?.latex
+                ? <MathDisplay tex={ex.zadani} displayMode />
+                : <MathText text={ex?.zadani ?? ""} large />}
             </div>
 
             {/* Feedback overlay */}

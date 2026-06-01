@@ -8,6 +8,8 @@ export interface DBExample {
   reseni_kroky: string[];
   cas_sekund: number;
   sm2_interval: number;
+  /** Pokud true, zadani a reseni_kroky používají LaTeX syntaxi — renderováno přes KaTeX */
+  latex?: boolean;
 }
 
 export interface SM2Card {

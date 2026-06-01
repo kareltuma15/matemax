@@ -3,9 +3,15 @@
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import Link from "next/link";
-import { TEMA_LABELS } from "@/types";
+import { DBExample, TEMA_LABELS } from "@/types";
 import { examples } from "@/data/examples";
 import MathText from "./MathText";
+import MathDisplay from "./MathDisplay";
+
+function ExMath({ ex, text }: { ex: DBExample; text: string }) {
+  if (ex.latex) return <MathDisplay tex={text} />;
+  return <MathText text={text} />;
+}
 
 export interface WrongAnswer {
   exampleId: string;
@@ -74,14 +80,14 @@ function WrongAnswersReview({ wrongAnswers }: { wrongAnswers: WrongAnswer[] }) {
                 </span>
               </div>
               <p className="text-sm font-medium text-slate-700 mb-2">
-                <MathText text={ex.zadani} />
+                <ExMath ex={ex} text={ex.zadani} />
               </p>
               <div className="flex flex-col gap-1 text-xs">
                 <span className="text-red-600">
                   ✗ Tvoje: <strong><MathText text={userAnswer || "—"} /></strong>
                 </span>
                 <span className="text-green-700">
-                  ✓ Správně: <strong><MathText text={ex.odpoved} /></strong>
+                  ✓ Správně: <strong><ExMath ex={ex} text={ex.odpoved} /></strong>
                 </span>
               </div>
             </div>

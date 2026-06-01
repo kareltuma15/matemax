@@ -5,6 +5,7 @@ import Link from "next/link";
 import { examples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "@/components/MathText";
+import MathDisplay from "@/components/MathDisplay";
 import { TEMA_LABELS } from "@/types";
 import { supabase } from "@/lib/supabase";
 import { trackEvent } from "@/lib/analytics";
@@ -320,7 +321,7 @@ export default function CermatTestPage() {
                   {TEMA_LABELS[ex.tema] ?? ex.tema} · obtížnost {ex.obtiznost}
                 </p>
                 <p className="text-sm font-semibold text-slate-800 mb-2">
-                  <MathText text={ex.zadani} />
+                  {ex.latex ? <MathDisplay tex={ex.zadani} /> : <MathText text={ex.zadani} />}
                 </p>
                 <div className="flex flex-col gap-1">
                   {userAnswer.trim() && (
@@ -329,7 +330,7 @@ export default function CermatTestPage() {
                     </p>
                   )}
                   <p className="text-sm" style={{ color: "#16a34a" }}>
-                    Správně: <strong><MathText text={ex.odpoved} /></strong>
+                    Správně: <strong>{ex.latex ? <MathDisplay tex={ex.odpoved} /> : <MathText text={ex.odpoved} />}</strong>
                   </p>
                 </div>
               </div>
@@ -436,7 +437,7 @@ export default function CermatTestPage() {
           </div>
 
           <p className="text-base font-semibold leading-snug" style={{ color: "#0D1B3E" }}>
-            <MathText text={ex.zadani} large />
+            {ex.latex ? <MathDisplay tex={ex.zadani} displayMode /> : <MathText text={ex.zadani} large />}
           </p>
 
           <input
