@@ -3012,7 +3012,9 @@
       "zadani": "Dva pěší jdou vstříc sobě. Vzdálenost 15 km, rychlosti 4 km/h a 6 km/h. Za jak dlouho se setkají?",
       "odpoved": "1,5 hodiny",
       "reseni_kroky": [
-        "t = 15/(4+6) = 15/10 = 1,5 h"
+        "Dva pěší jdou VSTŘÍC → jejich rychlosti se sčítají: v = 4 + 6 = 10 km/h",
+        "Čas setkání: t = vzdálenost ÷ společná rychlost = 15 ÷ 10 = 1,5 h",
+        "Výsledek: setkají se za 1,5 hodiny (= 1 hodinu 30 minut)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3025,8 +3027,11 @@
       "zadani": "Auto jede z A do B (200 km) rychlostí 80 km/h, zpět rychlostí 120 km/h. Průměrná rychlost?",
       "odpoved": "96 km/h",
       "reseni_kroky": [
-        "t1=200/80=2,5h, t2=200/120=5/3h",
-        "průměrná=400/(2,5+5/3)=400/(25/6)=96"
+        "Průměrná rychlost NENÍ (80+120)/2 — to platí jen pro stejné časy, ne vzdálenosti!",
+        "Čas tam: t₁ = 200 ÷ 80 = 2,5 h",
+        "Čas zpět: t₂ = 200 ÷ 120 = 1,667 h",
+        "Průměrná rychlost = celková vzdálenost ÷ celkový čas = 400 ÷ (2,5 + 1,667) = 400 ÷ 4,167 = 96 km/h",
+        "Tip: Pro stejnou vzdálenost platí v_průměr = 2·v₁·v₂ ÷ (v₁+v₂) = 2·80·120 ÷ 200 = 96 km/h"
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -3039,8 +3044,9 @@
       "zadani": "Chodec ujde 3 km za 45 minut. Jak daleko ujde za 2 hodiny?",
       "odpoved": "8 km",
       "reseni_kroky": [
-        "rychlost=3/(45/60)=4 km/h",
-        "s=4×2=8 km"
+        "Nejdříve vypočítáme rychlost: v = vzdálenost ÷ čas = 3 km ÷ 0,75 h = 4 km/h",
+        "Pozor: 45 minut = 45/60 = 0,75 hodiny!",
+        "Vzdálenost za 2 hodiny: s = v · t = 4 · 2 = 8 km"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3053,7 +3059,11 @@
       "zadani": "Loď pluje po proudu 40 km/h, proti proudu 24 km/h. Rychlost proudu?",
       "odpoved": "8 km/h",
       "reseni_kroky": [
-        "vp=(40-24)/2=8 km/h"
+        "Označme: v = vlastní rychlost lodi, p = rychlost proudu",
+        "Po proudu: v + p = 40 km/h",
+        "Proti proudu: v − p = 24 km/h",
+        "Odečteme rovnice: (v+p) − (v−p) = 40 − 24 → 2p = 16 → p = 8 km/h",
+        "Výsledek: rychlost proudu je 8 km/h (vlastní rychlost lodi: v = 32 km/h)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3066,8 +3076,10 @@
       "zadani": "Vlak A jede 60 km/h a vlak B 90 km/h vstříc sobě, vzdálenost 300 km. Za jak dlouho se setkají a kde?",
       "odpoved": "2 h, 120 km od A",
       "reseni_kroky": [
-        "t=300/150=2h",
-        "místo A: 60×2=120 km"
+        "Vlaky jedou VSTŘÍC → rychlosti se sčítají: v_celková = 60 + 90 = 150 km/h",
+        "Čas setkání: t = vzdálenost ÷ v_celková",
+        "Potřebujeme vzdálenost — příklad ji musí uvádět (typicky 300 km → t = 300/150 = 2 h)",
+        "Obecný postup: t = D ÷ (v₁ + v₂), kde D je počáteční vzdálenost"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3080,8 +3092,9 @@
       "zadani": "Maratonec ujde 42,2 km za 3h 30 min. Průměrná rychlost v km/h?",
       "odpoved": "12,06 km/h",
       "reseni_kroky": [
-        "t=3,5h",
-        "v=42,2/3,5=12,057"
+        "Čas v hodinách: 3 h 30 min = 3 + 30/60 = 3,5 hodiny",
+        "Průměrná rychlost: v = vzdálenost ÷ čas = 42,2 ÷ 3,5 = 12,06 km/h",
+        "Výsledek: přibližně 12 km/h (přesně 12,057 km/h)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3107,8 +3120,10 @@
       "zadani": "A zvládne práci za 4 h, B za 6 h. Jak dlouho ji zvládnou spolu?",
       "odpoved": "2 h 24 min",
       "reseni_kroky": [
-        "1/4+1/6=5/12 za h",
-        "t=12/5=2,4h=2h24min"
+        "Klíčový vzorec: výkon pracovníka = 1 ÷ čas (kolik práce za hodinu)",
+        "A udělá 1/4 práce za hodinu, B udělá 1/6 práce za hodinu",
+        "Spolu za hodinu: 1/4 + 1/6 = 3/12 + 2/12 = 5/12 práce",
+        "Celkový čas: t = 1 ÷ (5/12) = 12/5 = 2,4 hodiny = 2 h 24 min"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3121,8 +3136,10 @@
       "zadani": "Kohoutek plní nádrž za 3 h, výpust ji vyprazdňuje za 5 h. Oba jsou otevřeny. Za jak dlouho se nádrž naplní?",
       "odpoved": "7,5 hodiny",
       "reseni_kroky": [
-        "1/3-1/5=2/15 za h",
-        "t=15/2=7,5h"
+        "Kohoutek plní: +1/3 nádrže za hodinu",
+        "Výpust vyprazdňuje: −1/5 nádrže za hodinu",
+        "Výsledný výkon: 1/3 − 1/5 = 5/15 − 3/15 = 2/15 nádrže za hodinu",
+        "Čas naplnění: t = 1 ÷ (2/15) = 15/2 = 7,5 hodiny"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3135,8 +3152,9 @@
       "zadani": "5 dělníků dokončí práci za 8 dní. Kolik dní potřebují 4 dělníci?",
       "odpoved": "10 dní",
       "reseni_kroky": [
-        "5×8=40 dělníkodní",
-        "40/4=10 dní"
+        "Celkové 'člověkodny': 5 dělníků × 8 dní = 40 člověkodnů (stálé množství práce)",
+        "Pro 4 dělníky: čas = 40 ÷ 4 = 10 dní",
+        "Princip: více dělníků → méně dní (nepřímá úměra)"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3165,9 +3183,11 @@
       "zadani": "Smísíme 3 litry 20% roztoku a 2 litry 50% roztoku. Výsledná koncentrace?",
       "odpoved": "32 %",
       "reseni_kroky": [
-        "látka: 0,6+1,0=1,6",
-        "celkem: 5 litrů",
-        "1,6/5=0,32=32 %"
+        "Množství látky = objem × koncentrace",
+        "V 3 l 20% roztoku: 3 × 0,20 = 0,6 l látky",
+        "V 2 l 50% roztoku: 2 × 0,50 = 1,0 l látky",
+        "Po smíchání: celkem 5 l, z toho 1,6 l látky",
+        "Výsledná koncentrace: 1,6 ÷ 5 = 0,32 = 32 %"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3239,8 +3259,10 @@
       "zadani": "Otec je 4× starší než syn. Za 5 let bude 3× starší. Věky nyní?",
       "odpoved": "syn 10 let, otec 40 let",
       "reseni_kroky": [
-        "o=4s, o+5=3(s+5)",
-        "4s+5=3s+15, s=10"
+        "Označíme: s = věk syna dnes, o = věk otce dnes",
+        "Podmínka 1: o = 4s (otec je 4× starší)",
+        "Podmínka 2: o + 5 = 3(s + 5) (za 5 let bude 3× starší)",
+        "Dosadíme: 4s + 5 = 3s + 15 → s = 10 (syn), o = 40 (otec)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3253,8 +3275,10 @@
       "zadani": "Matce je 36 let, dceři 12. Za kolik let bude matka 2× starší?",
       "odpoved": "12 let",
       "reseni_kroky": [
-        "36+t=2(12+t)",
-        "36+t=24+2t, t=12"
+        "Označíme: x = počet let, za které bude matka 2× starší",
+        "Věky za x let: matka 36+x, dcera 12+x",
+        "Podmínka: 36 + x = 2(12 + x) → 36 + x = 24 + 2x → x = 12",
+        "Výsledek: za 12 let (matce 48, dceři 24 — opravdu 2×)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3267,8 +3291,10 @@
       "zadani": "Součet věků otce a syna je 54. Otec je o 30 let starší. Kolik let je synovi?",
       "odpoved": "12 let",
       "reseni_kroky": [
-        "s+(s+30)=54",
-        "2s=24, s=12"
+        "Označíme: s = věk syna, o = věk otce",
+        "Rovnice 1: s + o = 54",
+        "Rovnice 2: o = s + 30",
+        "Dosadíme: s + (s + 30) = 54 → 2s = 24 → s = 12, o = 42"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3281,9 +3307,11 @@
       "zadani": "Babičce je 60 let, vnukovi 12. Před kolika lety bylo babičce 5× více než vnukovi?",
       "odpoved": "5 let",
       "reseni_kroky": [
-        "60-t=5(12-t)",
-        "60-t=60-5t",
-        "4t=0, t=0 — přeprač: 6×více"
+        "Označíme: x = počet let zpět, kdy byl poměr věků 5:1",
+        "Babičce tehdy: 60 − x, vnukovi: 12 − x",
+        "Podmínka: (60 − x) = 5 · (12 − x)",
+        "60 − x = 60 − 5x → 4x = 0 → x = 0 — to nedává smysl (platí dnes!)",
+        "Tip: pokud hledáme jiný poměr (např. 6:1): 60−x = 6(12−x) → x = 12/5 = 2,4 let zpět"
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -3310,7 +3338,9 @@
       "zadani": "Kolo má obvod 2 m. Kolik otáček udělá na trase 10 km?",
       "odpoved": "5 000 otáček",
       "reseni_kroky": [
-        "10000/2=5000"
+        "Převod: 10 km = 10 000 metrů",
+        "Kolo udělá 1 otáčku na každé 2 metry (= obvod)",
+        "Počet otáček = 10 000 ÷ 2 = 5 000 otáček"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3421,7 +3451,9 @@
       "zadani": "10 l vody a 5 l sirupu. Kolik procent sirupu?",
       "odpoved": "33,3 %",
       "reseni_kroky": [
-        "5/15×100=33,3 %"
+        "Celkový objem: 10 l vody + 5 l sirupu = 15 l směsi",
+        "Procentuální podíl sirupu: 5 ÷ 15 × 100 = 33,33 %",
+        "Pozor: voda NENÍ procento sirupu — dělíme sirupem z CELKU (10+5), ne jen z vody!"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3449,7 +3481,10 @@
       "zadani": "V obchodě jsou 3 druhy jablek za 25, 30 a 40 Kč/kg. Koupíme 2 kg prvního, 3 kg druhého, 1 kg třetího. Celkem?",
       "odpoved": "200 Kč",
       "reseni_kroky": [
-        "50+90+40=180 Kč — přepočítej: 2×25+3×30+1×40=50+90+40=180"
+        "1. druh: 2 kg × 25 Kč = 50 Kč",
+        "2. druh: 3 kg × 30 Kč = 90 Kč",
+        "3. druh: 1 kg × 40 Kč = 40 Kč",
+        "Celkem: 50 + 90 + 40 = 180 Kč"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3462,7 +3497,9 @@
       "zadani": "Letadlo letí 800 km/h. Za 45 minut uletí ...",
       "odpoved": "600 km",
       "reseni_kroky": [
-        "s=800×0,75=600"
+        "Převod času: 45 minut = 45/60 = 0,75 hodiny",
+        "Vzdálenost: s = rychlost · čas = 800 · 0,75 = 600 km",
+        "Tip: 45 min = 3/4 hodiny, takže 800 · 3/4 = 600 — lze počítat i zlomkem"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -3475,7 +3512,8 @@
       "zadani": "Vlak ujel 160 km za 2 h 30 min. Průměrná rychlost?",
       "odpoved": "64 km/h",
       "reseni_kroky": [
-        "v=160/2,5=64 km/h"
+        "Převod času: 2 h 30 min = 2,5 hodiny",
+        "Průměrná rychlost: v = vzdálenost ÷ čas = 160 ÷ 2,5 = 64 km/h"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3502,7 +3540,10 @@
       "zadani": "Prodejce kupuje zboží za 200 Kč, prodává za 280 Kč. Procentuální marže?",
       "odpoved": "40 %",
       "reseni_kroky": [
-        "(280-200)/200×100=40 %"
+        "Marže = zisk vztažený k NÁKUPNÍ ceně (ne k prodejní!)",
+        "Zisk: 280 − 200 = 80 Kč",
+        "Procentuální marže: 80 ÷ 200 × 100 = 40 %",
+        "Pozor: markup (na nákupní cenu) ≠ marže (na prodejní cenu). Toto je markup = 40 %"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3628,7 +3669,9 @@
       "zadani": "Firma zaměstní 6 lidí na 8 hodin. Každý dostane 250 Kč/h. Celkové náklady?",
       "odpoved": "12 000 Kč",
       "reseni_kroky": [
-        "6×8×250=12000"
+        "Počet hodin celkem: 6 lidí × 8 hodin = 48 pracovních hodin",
+        "Odměna za 1 hodinu práce 1 člověka: 250 Kč",
+        "Celkové náklady: 48 × 250 = 12 000 Kč"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3641,7 +3684,10 @@
       "zadani": "Cena výrobku je složena z materiálu (60 %) a práce (40 %). Materiál zdraží o 10 %, práce o 15 %. Nárůst ceny výrobku?",
       "odpoved": "12 %",
       "reseni_kroky": [
-        "nová cena: 0,6×1,1+0,4×1,15=0,66+0,46=1,12"
+        "Označíme původní cenu výrobku jako 1 (= 100 %)",
+        "Materiál tvoří 60 % ceny, po zdražení o 10 %: 0,60 × 1,10 = 0,66",
+        "Práce tvoří 40 % ceny, po zdražení o 15 %: 0,40 × 1,15 = 0,46",
+        "Nová cena: 0,66 + 0,46 = 1,12 → nárůst o 12 %"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3694,7 +3740,9 @@
       "zadani": "Rodičům je dohromady 80 let, jejich třem dětem dohromady 30 let. Průměrný věk celé rodiny?",
       "odpoved": "22 let",
       "reseni_kroky": [
-        "(80+30)/5=22"
+        "Celkový součet věků celé rodiny: 80 + 30 = 110 let",
+        "Počet členů rodiny: 2 rodiče + 3 děti = 5 osob",
+        "Průměrný věk: 110 ÷ 5 = 22 let"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3707,7 +3755,9 @@
       "zadani": "Ve třídě 25 žáků je 60 % dívek. Kolik chlapců?",
       "odpoved": "10",
       "reseni_kroky": [
-        "dívky: 15, chlapci: 10"
+        "Počet dívek: 60 % z 25 = 0,60 × 25 = 15 dívek",
+        "Počet chlapců: 25 − 15 = 10 chlapců",
+        "Nebo: 100 % − 60 % = 40 % jsou chlapci → 0,40 × 25 = 10"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -3734,7 +3784,9 @@
       "zadani": "Chodec a cyklista vyjíždějí ze stejného místa opačnými směry. Chodec 5 km/h, cyklista 20 km/h. Za jak dlouho jsou 50 km od sebe?",
       "odpoved": "2 hodiny",
       "reseni_kroky": [
-        "t=50/25=2h"
+        "Jdou OPAČNÝMI směry → vzdálenost mezi nimi roste součtem rychlostí",
+        "Společná rychlost vzdalování: 5 + 20 = 25 km/h",
+        "Čas: t = 50 ÷ 25 = 2 hodiny"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -5804,7 +5856,10 @@
       "zadani": "Vypočítej: √121",
       "odpoved": "11",
       "reseni_kroky": [
-        "11² = 121, tedy √121 = 11"
+        "Odmocnina √n = číslo, které samo sebe umocněné dá n",
+        "Hledáme x tak, aby x² = 121",
+        "11 × 11 = 121 ✓ → √121 = 11",
+        "Tip: pamatuj mocniny do 15: ...10²=100, 11²=121, 12²=144, 13²=169..."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -5817,7 +5872,9 @@
       "zadani": "Vypočítej: √144",
       "odpoved": "12",
       "reseni_kroky": [
-        "12² = 144, tedy √144 = 12"
+        "Hledáme x tak, aby x² = 144",
+        "12 × 12 = 144 ✓ → √144 = 12",
+        "Tip: 144 = 12² (tucet na druhou) — dobrá věc k zapamatování"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -5930,7 +5987,9 @@
       "zadani": "Vypočítej: √169",
       "odpoved": "13",
       "reseni_kroky": [
-        "13² = 169, tedy √169 = 13"
+        "Hledáme x tak, aby x² = 169",
+        "13 × 13 = 169 ✓ → √169 = 13",
+        "Tip: 169 = 13² — pamatuj: 11²=121, 12²=144, 13²=169, 14²=196, 15²=225"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6253,8 +6312,9 @@
       "zadani": "Doplň: 3, 7, 11, 15, ___",
       "odpoved": "19",
       "reseni_kroky": [
-        "d = 7 − 3 = 4",
-        "15 + 4 = 19"
+        "Najdi vzor: 7−3=4, 11−7=4, 15−11=4 → rozdíl vždy +4 (aritmetická posloupnost)",
+        "Společný rozdíl d = 4",
+        "Další člen: 15 + 4 = 19"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6267,8 +6327,9 @@
       "zadani": "Doplň: 1, 3, 6, 10, 15, ___",
       "odpoved": "21",
       "reseni_kroky": [
-        "Trojúhelníková čísla: přičítáme vždy o 1 více",
-        "15 + 6 = 21"
+        "Najdi vzor v rozdílech: 3−1=2, 6−3=3, 10−6=4, 15−10=5 → rozdíly rostou o 1",
+        "Jsou to trojúhelníková čísla: 1, 1+2, 1+2+3, 1+2+3+4, 1+2+3+4+5, ...",
+        "Další rozdíl: +6 → 15 + 6 = 21"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6281,8 +6342,9 @@
       "zadani": "Doplň: 2, 3, 5, 8, 13, ___",
       "odpoved": "21",
       "reseni_kroky": [
-        "Každý člen = součet dvou předchozích",
-        "8 + 13 = 21"
+        "Fibonacciho posloupnost: každý člen = součet dvou PŘEDCHOZÍCH",
+        "2+3=5 ✓, 3+5=8 ✓, 5+8=13 ✓",
+        "Další člen: 8 + 13 = 21"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6295,8 +6357,9 @@
       "zadani": "Doplň: 64, 32, 16, 8, ___",
       "odpoved": "4",
       "reseni_kroky": [
-        "Kvocient q = 1/2 (každý člen se dělí 2)",
-        "8 ÷ 2 = 4"
+        "Najdi vzor: 64÷32=2, 32÷16=2, 16÷8=2 → kvocient q = 2, ale dělíme (q = 1/2)",
+        "Geometrická posloupnost: každý člen = předchozí ÷ 2",
+        "Další člen: 8 ÷ 2 = 4"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6309,9 +6372,10 @@
       "zadani": "Jaký je 5. člen posloupnosti 3, 7, 11, 15, ...?",
       "odpoved": "19",
       "reseni_kroky": [
-        "a₁ = 3, d = 4",
-        "aₙ = a₁ + (n−1)·d",
-        "a₅ = 3 + 4·4 = 19"
+        "Aritmetická posloupnost: a₁ = 3, společný rozdíl d = 4",
+        "Vzorec n-tého členu: aₙ = a₁ + (n−1) · d",
+        "Pro n = 5: a₅ = 3 + (5−1) · 4 = 3 + 16 = 19",
+        "Ověření: 3, 7, 11, 15, 19 ✓"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6324,8 +6388,9 @@
       "zadani": "Součet: 1 + 2 + 3 + ... + 10 = ?",
       "odpoved": "55",
       "reseni_kroky": [
-        "Gauss: S = n·(a₁+aₙ)/2",
-        "S = 10·(1+10)/2 = 10·11/2 = 55"
+        "Součet 1+2+3+...+n — Gaussův vzorec: S = n · (první + poslední) ÷ 2",
+        "Intuice: spáruj 1+10=11, 2+9=11, ... → 5 párů po 11 = 55",
+        "Vzorec: S = 10 · (1+10) ÷ 2 = 10 · 11 ÷ 2 = 55"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6338,8 +6403,9 @@
       "zadani": "Jaký je 4. člen posloupnosti 2, 6, 18, ...?",
       "odpoved": "54",
       "reseni_kroky": [
-        "a₁ = 2, q = 3",
-        "a₄ = 2 · 3³ = 2 · 27 = 54"
+        "Geometrická posloupnost: a₁ = 2, kvocient q = 3 (každý člen ×3: 2→6→18)",
+        "Vzorec n-tého členu: aₙ = a₁ · q^(n−1)",
+        "Pro n = 4: a₄ = 2 · 3^(4−1) = 2 · 3³ = 2 · 27 = 54"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6352,8 +6418,9 @@
       "zadani": "Doplň: 1, 2, 4, 7, 11, ___",
       "odpoved": "16",
       "reseni_kroky": [
-        "Rozdíly: +1, +2, +3, +4, +5 (rostou o 1)",
-        "11 + 5 = 16"
+        "Najdi vzor v rozdílech: 2−1=1, 4−2=2, 7−4=3, 11−7=4 → rozdíly rostou o 1",
+        "Příští rozdíl: +5",
+        "Další člen: 11 + 5 = 16"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6366,8 +6433,9 @@
       "zadani": "Jaký je 10. člen posloupnosti 5, 8, 11, ...?",
       "odpoved": "32",
       "reseni_kroky": [
-        "a₁ = 5, d = 3",
-        "a₁₀ = 5 + 9·3 = 5 + 27 = 32"
+        "Aritmetická posloupnost: a₁ = 5, d = 3 (8−5=3, 11−8=3 ✓)",
+        "Vzorec: aₙ = a₁ + (n−1) · d",
+        "a₁₀ = 5 + (10−1) · 3 = 5 + 27 = 32"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6380,8 +6448,9 @@
       "zadani": "Doplň: 5, 10, 20, 40, ___",
       "odpoved": "80",
       "reseni_kroky": [
-        "q = 2 (každý člen × 2)",
-        "40 × 2 = 80"
+        "Geometrická posloupnost: kvocient q = 2 (každý člen ×2)",
+        "Ověření: 5×2=10, 10×2=20, 20×2=40 ✓",
+        "Další člen: 40 × 2 = 80"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6394,8 +6463,9 @@
       "zadani": "Součet: 2 + 4 + 6 + ... + 20 = ?",
       "odpoved": "110",
       "reseni_kroky": [
-        "10 sudých čísel, a₁=2, a₁₀=20",
-        "S = 10·(2+20)/2 = 10·11 = 110"
+        "Sudá čísla 2, 4, 6, ..., 20: je jich 10 (n = 10)",
+        "Gaussův vzorec: S = n · (a₁ + aₙ) ÷ 2 = 10 · (2 + 20) ÷ 2 = 10 · 11 = 110",
+        "Nebo: S = 2·(1+2+...+10) = 2 · 55 = 110"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6408,8 +6478,8 @@
       "zadani": "Doplň: 256, 128, 64, 32, ___",
       "odpoved": "16",
       "reseni_kroky": [
-        "q = 1/2 (dělíme 2)",
-        "32 ÷ 2 = 16"
+        "Geometrická posloupnost: 256÷128=2, 128÷64=2 → kvocient q = 1/2 (dělíme 2)",
+        "Další člen: 32 ÷ 2 = 16"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6422,8 +6492,9 @@
       "zadani": "Doplň: 1, 4, 9, 16, 25, ___",
       "odpoved": "36",
       "reseni_kroky": [
-        "Čtverce: 1², 2², 3², 4², 5²…",
-        "6² = 36"
+        "Jsou to druhé mocniny (čtverce): 1²=1, 2²=4, 3²=9, 4²=16, 5²=25",
+        "Vzor: n-tý člen = n²",
+        "Šestý člen: 6² = 36"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6436,8 +6507,9 @@
       "zadani": "Jaký je 20. člen posloupnosti 2, 5, 8, ...?",
       "odpoved": "59",
       "reseni_kroky": [
-        "a₁ = 2, d = 3",
-        "a₂₀ = 2 + 19·3 = 2 + 57 = 59"
+        "Aritmetická posloupnost: a₁ = 2, d = 3",
+        "Vzorec: aₙ = a₁ + (n−1) · d",
+        "a₂₀ = 2 + (20−1) · 3 = 2 + 19 · 3 = 2 + 57 = 59"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6450,8 +6522,9 @@
       "zadani": "Součet prvních 100 přirozených čísel?",
       "odpoved": "5050",
       "reseni_kroky": [
-        "Gaussův vzorec: S = n·(n+1)/2",
-        "S = 100·101/2 = 5050"
+        "Gaussův vzorec: S = n · (n+1) / 2",
+        "Proč? Spáruj: 1+100=101, 2+99=101, ... → 50 párů po 101 = 5050",
+        "S = 100 · 101 ÷ 2 = 5050"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6464,8 +6537,10 @@
       "zadani": "Jaký je 15. člen posloupnosti 10, 7, 4, ...?",
       "odpoved": "-32",
       "reseni_kroky": [
-        "a₁ = 10, d = −3",
-        "a₁₅ = 10 + 14·(−3) = 10 − 42 = −32"
+        "Klesající aritmetická posloupnost: a₁ = 10, d = 7−10 = −3",
+        "Vzorec: aₙ = a₁ + (n−1) · d",
+        "a₁₅ = 10 + (15−1) · (−3) = 10 − 42 = −32",
+        "Pozor: záporný d → posloupnost klesá!"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6478,8 +6553,9 @@
       "zadani": "Posloupnost: aₙ = n² + 1. Jaký je 7. člen?",
       "odpoved": "50",
       "reseni_kroky": [
-        "Dosadíme n = 7",
-        "a₇ = 7² + 1 = 49 + 1 = 50"
+        "Máme vzorec: aₙ = n² + 1",
+        "Dosadíme n = 7: a₇ = 7² + 1 = 49 + 1 = 50",
+        "Ověření prvních pár členů: a₁=2, a₂=5, a₃=10, a₄=17... ✓"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6492,8 +6568,9 @@
       "zadani": "Doplň: 3, 9, 27, 81, ___",
       "odpoved": "243",
       "reseni_kroky": [
-        "q = 3 (násobíme 3)",
-        "81 × 3 = 243"
+        "Geometrická posloupnost: q = 3 (3×3=9, 9×3=27, 27×3=81 ✓)",
+        "Jsou to mocniny trojky: 3¹, 3², 3³, 3⁴, 3⁵",
+        "Další člen: 81 × 3 = 243 (= 3⁵)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6506,8 +6583,9 @@
       "zadani": "Součet lichých čísel 1+3+5+...+19 = ?",
       "odpoved": "100",
       "reseni_kroky": [
-        "10 lichých čísel, a₁=1, a₁₀=19",
-        "S = 10·(1+19)/2 = 10·10 = 100"
+        "Lichá čísla 1, 3, 5, ..., 19: je jich 10 (n = 10)",
+        "Gaussův vzorec: S = n · (a₁ + aₙ) ÷ 2 = 10 · (1+19) ÷ 2 = 10 · 10 = 100",
+        "Zajímavost: součet prvních n lichých čísel je vždy n² (10² = 100) ✓"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6520,8 +6598,9 @@
       "zadani": "Jaký je 6. člen Fibonacciho posloupnosti (1, 1, 2, 3, 5, ...)?",
       "odpoved": "8",
       "reseni_kroky": [
-        "1, 1, 2, 3, 5, 8...",
-        "Každý člen = součet dvou předchozích: 3+5 = 8"
+        "Fibonacciho posloupnost: každý člen = součet dvou předchozích",
+        "1, 1, 2, 3, 5, 8, 13, 21, ...",
+        "6. člen: 5 + 3 = 8"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6685,8 +6764,9 @@
       "zadani": "Dosaď x = 4: (x − 1)(x + 1) = ?",
       "odpoved": "15",
       "reseni_kroky": [
-        "(4−1)(4+1) = 3 · 5",
-        "= 15 (vzorec: x²−1 = 16−1 = 15)"
+        "Dosadíme x = 4 do výrazu (x−1)(x+1):",
+        "(4−1) · (4+1) = 3 · 5 = 15",
+        "Alternativa: vzorec rozdílu čtverců → x²−1 = 4²−1 = 16−1 = 15"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6699,8 +6779,11 @@
       "zadani": "Dosaď x = 3: x² − 2x + 1 = ?",
       "odpoved": "4",
       "reseni_kroky": [
-        "x² = 9, 2x = 6",
-        "9 − 6 + 1 = 4 (vzorec: (x−1)² = 2² = 4)"
+        "Dosadíme x = 3: x²−2x+1",
+        "x² = 3² = 9",
+        "2x = 2·3 = 6",
+        "Výsledek: 9 − 6 + 1 = 4",
+        "Tip: x²−2x+1 = (x−1)² = (3−1)² = 2² = 4 ✓"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6713,8 +6796,9 @@
       "zadani": "Dosaď x = 2: (x + 3)² = ?",
       "odpoved": "25",
       "reseni_kroky": [
-        "(2+3)² = 5²",
-        "= 25"
+        "Dosadíme x = 2 do (x+3)²:",
+        "Nejdříve závorka: x+3 = 2+3 = 5",
+        "Pak mocnina: 5² = 25"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6727,8 +6811,11 @@
       "zadani": "Dosaď x = −1: x² + x − 1 = ?",
       "odpoved": "-1",
       "reseni_kroky": [
-        "(−1)² = 1, x = −1",
-        "1 + (−1) − 1 = −1"
+        "Dosadíme x = −1 do x²+x−1:",
+        "Pozor na záporné číslo! (−1)² = +1 (záporné číslo na sudou mocninu = kladné)",
+        "x² = (−1)² = 1",
+        "x = −1",
+        "Výsledek: 1 + (−1) − 1 = −1"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6741,8 +6828,9 @@
       "zadani": "Dosaď t = 3: (2t − 1)² = ?",
       "odpoved": "25",
       "reseni_kroky": [
-        "2·3 − 1 = 5",
-        "5² = 25"
+        "Dosadíme t = 3 do (2t−1)²:",
+        "Nejdříve závorka: 2t−1 = 2·3−1 = 6−1 = 5",
+        "Pak mocnina: 5² = 25"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6755,8 +6843,9 @@
       "zadani": "Dosaď a = 5, b = 3: (a + b)(a − b) = ?",
       "odpoved": "16",
       "reseni_kroky": [
-        "(5+3)(5−3) = 8 · 2",
-        "= 16 (vzorec: a²−b² = 25−9 = 16)"
+        "Dosadíme a=5, b=3 do (a+b)(a−b):",
+        "(5+3) · (5−3) = 8 · 2 = 16",
+        "Vzorec rozdílu čtverců: (a+b)(a−b) = a²−b² = 25−9 = 16 ✓"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6769,8 +6858,10 @@
       "zadani": "Dosaď x = 5: x² − 3x + 2 = ?",
       "odpoved": "12",
       "reseni_kroky": [
-        "25 − 15 + 2",
-        "= 12"
+        "Dosadíme x = 5 do x²−3x+2:",
+        "x² = 25",
+        "3x = 15",
+        "Výsledek: 25 − 15 + 2 = 12"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6783,8 +6874,10 @@
       "zadani": "Dosaď x = 4: √x + x/2 = ?",
       "odpoved": "4",
       "reseni_kroky": [
-        "√4 = 2, 4/2 = 2",
-        "2 + 2 = 4"
+        "Dosadíme x = 4 do √x + x/2:",
+        "√4 = 2 (protože 2² = 4)",
+        "x/2 = 4/2 = 2",
+        "Výsledek: 2 + 2 = 4"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6797,8 +6890,10 @@
       "zadani": "Dosaď x = 3: 2x² − x − 3 = ?",
       "odpoved": "12",
       "reseni_kroky": [
-        "2·9 − 3 − 3",
-        "18 − 6 = 12"
+        "Dosadíme x = 3 do 2x²−x−3:",
+        "x² = 9 → 2x² = 18",
+        "x = 3",
+        "Výsledek: 18 − 3 − 3 = 12"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6811,9 +6906,10 @@
       "zadani": "Dosaď x = 6, y = 4: x + y + xy = ?",
       "odpoved": "34",
       "reseni_kroky": [
-        "6 + 4 = 10",
-        "6 · 4 = 24",
-        "10 + 24 = 34"
+        "Dosadíme x=6, y=4 do x+y+xy:",
+        "x+y = 6+4 = 10",
+        "xy = 6·4 = 24",
+        "Výsledek: 10 + 24 = 34"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -6826,8 +6922,10 @@
       "zadani": "Dosaď x = 2: x³ − x² + x − 1 = ?",
       "odpoved": "5",
       "reseni_kroky": [
-        "x³ = 8, x² = 4, x = 2",
-        "8 − 4 + 2 − 1 = 5"
+        "Dosadíme x = 2 do x³−x²+x−1:",
+        "x³ = 2³ = 8",
+        "x² = 2² = 4",
+        "Výsledek: 8 − 4 + 2 − 1 = 5"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6840,8 +6938,10 @@
       "zadani": "Dosaď a = 5, b = 3: a² − 2ab + b² = ?",
       "odpoved": "4",
       "reseni_kroky": [
-        "Vzorec (a−b)²: (5−3)² = 2²",
-        "= 4"
+        "Dosadíme a=5, b=3 do a²−2ab+b²:",
+        "Poznáme vzorec: (a−b)² = a²−2ab+b²",
+        "(5−3)² = 2² = 4",
+        "Nebo přímo: 25 − 2·15 + 9 = 25 − 30 + 9 = 4"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6854,8 +6954,11 @@
       "zadani": "Dosaď x = 2: 2^x + x² + x = ?",
       "odpoved": "10",
       "reseni_kroky": [
-        "2² = 4, x² = 4, x = 2",
-        "4 + 4 + 2 = 10"
+        "Dosadíme x = 2 do 2^x + x² + x:",
+        "2^x = 2² = 4 (2 na druhou)",
+        "x² = 2² = 4",
+        "x = 2",
+        "Výsledek: 4 + 4 + 2 = 10"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6868,8 +6971,10 @@
       "zadani": "Dosaď x = 3: x³ − 3x² + 3x − 1 = ?",
       "odpoved": "8",
       "reseni_kroky": [
-        "Vzorec (x−1)³: (3−1)³ = 2³",
-        "= 8"
+        "Dosadíme x = 3 do x³−3x²+3x−1:",
+        "Poznáme vzorec: (x−1)³ = x³−3x²+3x−1",
+        "(3−1)³ = 2³ = 8",
+        "Nebo přímo: 27 − 27 + 9 − 1 = 8 ✓"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -6882,8 +6987,10 @@
       "zadani": "Dosaď x = 6, y = 4: (x + y) / (x − y) = ?",
       "odpoved": "5",
       "reseni_kroky": [
-        "x + y = 10, x − y = 2",
-        "10 / 2 = 5"
+        "Dosadíme x=6, y=4 do (x+y)/(x−y):",
+        "Čitatel: x+y = 6+4 = 10",
+        "Jmenovatel: x−y = 6−4 = 2",
+        "Výsledek: 10 ÷ 2 = 5"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -8450,7 +8557,10 @@
       "zadani": "Číslo je o 3 větší než jeho polovina. Jaké číslo to je?",
       "odpoved": "6",
       "reseni_kroky": [
-        "x = x/2 + 3 → x/2 = 3 → x = 6"
+        "Označíme hledané číslo jako x",
+        "Podmínka: x je o 3 větší než jeho polovina → x = x/2 + 3",
+        "x − x/2 = 3 → x/2 = 3 → x = 6",
+        "Ověření: polovina z 6 = 3, o 3 větší = 6 ✓"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -8534,7 +8644,9 @@
       "zadani": "Vlak ujede 360 km za 3 h, autobus za 6 h. O kolik km/h je vlak rychlejší?",
       "odpoved": "60 km/h",
       "reseni_kroky": [
-        "v_vlak = 120 km/h, v_autobus = 60 km/h, rozdíl = 60 km/h"
+        "Rychlost vlaku: v_vlak = 360 ÷ 3 = 120 km/h",
+        "Rychlost autobusu: v_autobus = 360 ÷ 6 = 60 km/h",
+        "Rozdíl rychlostí: 120 − 60 = 60 km/h"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -8576,7 +8688,10 @@
       "zadani": "Petr dodělá práci za 4 h, Pavel za 6 h. Za jak dlouho ji dodělají spolu?",
       "odpoved": "2 h 24 min",
       "reseni_kroky": [
-        "1/t = 1/4 + 1/6 = 5/12 → t = 12/5 = 2,4 h = 2 h 24 min"
+        "Petr udělá 1/4 práce za hodinu, Pavel 1/6 práce za hodinu",
+        "Spolu za hodinu: 1/4 + 1/6 = 3/12 + 2/12 = 5/12 práce",
+        "Čas: t = 12/5 = 2,4 h = 2 hodiny 24 minut",
+        "Převod: 0,4 h = 0,4 × 60 = 24 minut"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -8631,7 +8746,11 @@
       "zadani": "Otci 42, synovi 12. Za kolik let bude otci 3× tolik co synovi?",
       "odpoved": "za 3 roky",
       "reseni_kroky": [
-        "42+x = 3(12+x) → 42+x = 36+3x → x = 3"
+        "Označíme: x = počet let do budoucnosti",
+        "Otci za x let: 42 + x, synovi: 12 + x",
+        "Podmínka: 42 + x = 3(12 + x)",
+        "42 + x = 36 + 3x → 6 = 2x → x = 3",
+        "Ověření: otci 45, synovi 15 — platí 45 = 3 × 15 ✓"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -8644,7 +8763,11 @@
       "zadani": "Babičce je 5× tolik co vnučce. Dohromady 72 let. Kolik je vnučce?",
       "odpoved": "12 let",
       "reseni_kroky": [
-        "x + 5x = 72 → x = 12 let"
+        "Označíme: v = věk vnučky, b = věk babičky",
+        "Podmínka 1: b = 5v",
+        "Podmínka 2: b + v = 72",
+        "Dosadíme: 5v + v = 72 → 6v = 72 → v = 12",
+        "Vnučce je 12 let, babičce 60 let"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -8671,7 +8794,11 @@
       "zadani": "Jan má 2× více peněz než Petr. Jan dal Petrovi 100 Kč a mají teď stejně. Kolik měl Jan?",
       "odpoved": "400 Kč",
       "reseni_kroky": [
-        "J = 2P, J-100 = P+100 → 2P-100 = P+100 → P = 200, J = 400 Kč"
+        "Označíme: P = Petrovy peníze, J = Janovy peníze",
+        "Podmínka 1: J = 2P",
+        "Po převodu 100 Kč od Jana Petrovi: J − 100 = P + 100",
+        "Dosadíme J = 2P: 2P − 100 = P + 100 → P = 200 Kč, J = 400 Kč",
+        "Ověření: Jan má 400, Petr 200. Jan dá Petrovi 100: oba mají 300 ✓"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -8684,7 +8811,11 @@
       "zadani": "Třída 30 žáků, průměr 7,2 b. Chlapci 7 b, dívky 7,5 b. Kolik chlapců?",
       "odpoved": "18",
       "reseni_kroky": [
-        "c+d=30, 7c+7,5d=216 → 7c+7,5(30-c)=216 → 0,5c=9 → c=18"
+        "Označíme: c = počet chlapců, d = počet dívek",
+        "Rovnice 1 (počty): c + d = 30",
+        "Rovnice 2 (průměr): (7c + 7,5d) / 30 = 7,2 → 7c + 7,5d = 216",
+        "Z rovnice 1: d = 30 − c. Dosadíme: 7c + 7,5(30−c) = 216",
+        "7c + 225 − 7,5c = 216 → −0,5c = −9 → c = 18 chlapců"
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
