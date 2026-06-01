@@ -98,6 +98,99 @@ function getBadgeProgress(
   return null;
 }
 
+// ── Trend Accuracy Chart ─────────────────────────────────────────────────────
+function TrendChart({ sessions }: { sessions: SessionHistoryEntry[] }) {
+  const data = sessions
+    .slice()
+    .reverse() // nejstarší první
+    .slice(-12)
+    .map((s) => ({
+      date: s.date,
+      pct: s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0,
+    }));
+
+  if (data.length < 2) return null;
+
+  const W = 320, H = 100, PAD_L = 28, PAD_R = 8, PAD_T = 8, PAD_B = 24;
+  const chartW = W - PAD_L - PAD_R;
+  const chartH = H - PAD_T - PAD_B;
+  const n = data.length;
+  const step = chartW / (n - 1);
+
+  function x(i: number) { return PAD_L + i * step; }
+  function y(pct: number) { return PAD_T + chartH - (pct / 100) * chartH; }
+
+  const linePath = data.map((d, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(1)} ${y(d.pct).toFixed(1)}`).join(" ");
+  const areaPath = `${linePath} L ${x(n - 1).toFixed(1)} ${(PAD_T + chartH).toFixed(1)} L ${PAD_L.toFixed(1)} ${(PAD_T + chartH).toFixed(1)} Z`;
+
+  const avg = Math.round(data.reduce((s, d) => s + d.pct, 0) / n);
+  const firstHalf = data.slice(0, Math.floor(n / 2));
+  const secondHalf = data.slice(Math.floor(n / 2));
+  const avgFirst = firstHalf.reduce((s, d) => s + d.pct, 0) / firstHalf.length;
+  const avgSecond = secondHalf.reduce((s, d) => s + d.pct, 0) / secondHalf.length;
+  const trend = avgSecond - avgFirst;
+  const trendColor = trend > 3 ? "#16a34a" : trend < -3 ? "#dc2626" : "#d97706";
+  const trendLabel = trend > 3 ? `▲ +${Math.round(trend)} %` : trend < -3 ? `▼ ${Math.round(trend)} %` : "→ stabilní";
+
+  // Y gridlines at 0, 50, 100
+  const gridLines = [0, 50, 100];
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 p-4">
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <p className="text-xs font-black text-slate-700">Trend přesnosti</p>
+          <p className="text-[10px] text-slate-400 mt-0.5">posledních {n} trénink{n <= 4 ? "y" : "ů"}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-sm font-black" style={{ color: trendColor }}>{trendLabel}</p>
+          <p className="text-[10px] text-slate-400">průměr {avg} %</p>
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: H }}>
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2E6DA4" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="#2E6DA4" stopOpacity="0.01" />
+          </linearGradient>
+        </defs>
+
+        {/* Grid lines */}
+        {gridLines.map((g) => (
+          <g key={g}>
+            <line x1={PAD_L} y1={y(g)} x2={W - PAD_R} y2={y(g)}
+              stroke="#e2e8f0" strokeWidth="1" strokeDasharray={g === 0 ? "0" : "3 3"} />
+            <text x={PAD_L - 4} y={y(g) + 3.5} textAnchor="end"
+              fontSize="8" fill="#94a3b8">{g}</text>
+          </g>
+        ))}
+
+        {/* Area fill */}
+        <path d={areaPath} fill="url(#chartGrad)" />
+
+        {/* Line */}
+        <path d={linePath} fill="none" stroke="#2E6DA4" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+
+        {/* Data points */}
+        {data.map((d, i) => {
+          const dotColor = d.pct >= 80 ? "#22c55e" : d.pct >= 50 ? "#f59e0b" : "#ef4444";
+          return (
+            <g key={i}>
+              <circle cx={x(i)} cy={y(d.pct)} r="4" fill="#fff" stroke={dotColor} strokeWidth="2" />
+              {/* Date label — only first, middle, last */}
+              {(i === 0 || i === n - 1 || i === Math.floor(n / 2)) && (
+                <text x={x(i)} y={H - 4} textAnchor="middle" fontSize="8" fill="#94a3b8">
+                  {d.date.slice(5)} {/* MM-DD */}
+                </text>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
 export default function ProfilPage() {
   const router = useRouter();
   const [activeTab, setActiveTab]        = useState<Tab>("prehled");
@@ -915,68 +1008,100 @@ export default function ProfilPage() {
 
           {/* ── SEKCE: TÉMATA ── */}
           <div className="scroll-reveal">
-            <div className="flex items-baseline justify-between mb-2 px-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Silná a slabá místa</p>
-              <p className="text-[10px] text-slate-300">z diagnostického testu</p>
-            </div>
-            {topicScores.length > 0 ? (
-              <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
-                {(topicsExpanded ? topicScores : topicScores.slice(0, 5)).map(({ tema, score, correct, total }) => {
-                  const pctVal = Math.round(score * 100);
-                  const barColor = score >= 0.67 ? "#22c55e" : score >= 0.4 ? "#f59e0b" : "#ef4444";
-                  const textColor = score >= 0.67 ? "#166534" : score >= 0.4 ? "#92400e" : "#991b1b";
-                  const locked = !isPremium && PREMIUM_TOPICS.has(tema);
-                  const sm2 = sm2TopicStats[tema];
-                  return (
-                    <Link key={tema} href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                      className="flex flex-col gap-1 px-4 py-3 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm text-slate-700 w-28 shrink-0 truncate">
-                          {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
-                        </span>
-                        <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-                          <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: locked ? "#cbd5e1" : barColor }} />
-                        </div>
-                        <span className="text-xs font-bold shrink-0 w-10 text-right" style={{ color: locked ? "#94a3b8" : textColor }}>
-                          {locked ? "Premium" : `${pctVal}%`}
-                        </span>
-                      </div>
-                      {sm2 && sm2.practiced > 0 && !locked && (
-                        <div className="flex items-center gap-3 pl-0">
-                          <span className="w-28 shrink-0" />
-                          <div className="flex items-center gap-2 text-[11px]" style={{ color: "#64748b" }}>
-                            <span>🃏</span>
-                            <span>{sm2.practiced} procvičeno</span>
-                            {sm2.mastered > 0 && (
-                              <>
-                                <span className="text-slate-300">·</span>
-                                <span style={{ color: "#2E6DA4" }}>{sm2.mastered} zvládnuto</span>
-                              </>
-                            )}
-                            <span className="text-slate-300">·</span>
-                            <span>{sm2.total} celkem</span>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 px-1">Silná a slabá místa</p>
+            {topicScores.length > 0 ? (() => {
+              const weak   = topicScores.filter((t) => t.score < 0.5);
+              const middle = topicScores.filter((t) => t.score >= 0.5 && t.score < 0.8);
+              const strong = topicScores.filter((t) => t.score >= 0.8);
+              return (
+                <div className="flex flex-col gap-3">
+                  {/* Slabá místa — akční karty */}
+                  {weak.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      <p className="text-[10px] font-bold uppercase tracking-wide px-1" style={{ color: "#dc2626" }}>🔴 Procvičit</p>
+                      {weak.map(({ tema, score }) => {
+                        const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                        const pctVal = Math.round(score * 100);
+                        return (
+                          <div key={tema} className="rounded-xl p-3.5 flex items-center justify-between gap-3"
+                            style={{ background: "#fef2f2", border: "1.5px solid #fecaca" }}>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-bold" style={{ color: "#991b1b" }}>
+                                {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
+                              </p>
+                              <p className="text-xs mt-0.5" style={{ color: "#dc2626" }}>{pctVal} % úspěšnost</p>
+                            </div>
+                            <Link
+                              href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg text-white"
+                              style={{ background: locked ? "#94a3b8" : "#dc2626" }}
+                            >
+                              {locked ? "Odemknout" : "Procvičit →"}
+                            </Link>
                           </div>
-                        </div>
-                      )}
-                    </Link>
-                  );
-                })}
-                {topicScores.length > 5 && (
-                  <button
-                    onClick={() => setTopicsExpanded((v) => !v)}
-                    className="w-full py-2.5 text-xs font-semibold border-t border-slate-100 transition-colors hover:bg-slate-50"
-                    style={{ color: "#2E6DA4" }}
-                  >
-                    {topicsExpanded ? "▲ Skrýt" : `▼ Zobrazit všechna témata (${topicScores.length})`}
-                  </button>
-                )}
-              </div>
-            ) : (
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Střed — kompaktní bary */}
+                  {middle.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      <p className="text-[10px] font-bold uppercase tracking-wide px-1" style={{ color: "#d97706" }}>🟡 Posílit</p>
+                      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden divide-y divide-slate-50">
+                        {middle.map(({ tema, score }) => {
+                          const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                          const pctVal = Math.round(score * 100);
+                          return (
+                            <Link key={tema} href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                              className="flex items-center gap-3 px-4 py-3 hover:bg-amber-50 transition-colors">
+                              <span className="text-xs font-semibold text-slate-700 w-24 shrink-0 truncate">
+                                {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
+                              </span>
+                              <div className="flex-1 bg-amber-100 rounded-full h-2 overflow-hidden">
+                                <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: "#f59e0b" }} />
+                              </div>
+                              <span className="text-xs font-bold w-9 text-right shrink-0" style={{ color: "#d97706" }}>
+                                {locked ? "🔒" : `${pctVal}%`}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Silná témata — chips */}
+                  {strong.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wide px-1 mb-2" style={{ color: "#16a34a" }}>🟢 Zvládáš</p>
+                      <div className="flex flex-wrap gap-2">
+                        {strong.map(({ tema, score }) => (
+                          <Link key={tema} href={`/trenink?tema=${tema}`}
+                            className="text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1"
+                            style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534" }}>
+                            ✓ {TEMA_LABELS[tema]} · {Math.round(score * 100)} %
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })() : (
               <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center text-slate-400 text-sm">
                 Nejdřív projdi diagnostický test — uvidíš svá silná a slabá témata.
               </div>
             )}
           </div>
+
+          {/* ── SEKCE: TREND CHART ── */}
+          {sessions.length >= 2 && (
+            <div className="scroll-reveal">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Vývoj přípravy</p>
+              <TrendChart sessions={sessions} />
+            </div>
+          )}
 
           {/* ── SEKCE: AKTIVITA ── */}
           <div className="scroll-reveal">

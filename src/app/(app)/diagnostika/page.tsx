@@ -601,60 +601,127 @@ function DiagResults({ onStart }: { onStart: () => void }) {
     if (raw) results = JSON.parse(raw);
   } catch { /* ignore */ }
 
-  // Build rows from actual result temas (not just STEPS)
   const rows = Object.entries(results)
     .filter(([, v]) => v.total > 0)
     .map(([tema, v]) => ({
       tema,
       label: RESULT_LABELS[tema] ?? tema,
+      pct: Math.round((v.correct / v.total) * 100),
       correct: v.correct,
       total: v.total,
-    }));
+    }))
+    .sort((a, b) => a.pct - b.pct); // nejslabší první
 
-  const weakest = rows.length > 0
-    ? rows.reduce((a, b) => (a.correct / a.total) <= (b.correct / b.total) ? a : b)
-    : null;
+  const procvicit = rows.filter((r) => r.pct < 50);
+  const posilit   = rows.filter((r) => r.pct >= 50 && r.pct < 80);
+  const zvladas   = rows.filter((r) => r.pct >= 80);
+
+  const topWeakest = procvicit[0] ?? posilit[0] ?? null;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div>
         <h2 className="text-xl font-bold mb-1" style={{ color: "#0D1B3E" }}>Tvoje mapa mezer</h2>
         <p className="text-sm text-slate-500">Výsledky diagnostického testu</p>
       </div>
 
-      <div className="flex flex-col gap-3">
-        {rows.map((row) => {
-          const pct = Math.round((row.correct / row.total) * 100);
-          const barColor = pct >= 80 ? "#22c55e" : pct >= 50 ? "#f59e0b" : "#ef4444";
-          const textColor = pct >= 80 ? "text-green-700" : pct >= 50 ? "text-amber-600" : "text-red-600";
-          return (
-            <div key={row.tema} className="bg-white rounded-xl border border-slate-200 p-4 flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>{row.label}</span>
-                <span className={`text-sm font-bold ${textColor}`}>{row.correct}/{row.total} správně</span>
+      {/* Procvičit — slabá místa */}
+      {procvicit.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-black uppercase tracking-widest px-1" style={{ color: "#dc2626" }}>
+            🔴 Procvičit — tady máš mezery
+          </p>
+          {procvicit.map((row) => (
+            <div
+              key={row.tema}
+              className="rounded-xl p-4 flex items-center justify-between gap-3"
+              style={{ background: "#fef2f2", border: "1.5px solid #fecaca" }}
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold" style={{ color: "#991b1b" }}>{row.label}</p>
+                <p className="text-xs mt-0.5" style={{ color: "#dc2626" }}>
+                  {row.correct} z {row.total} správně · {row.pct} %
+                </p>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2">
-                <div
-                  className="h-2 rounded-full transition-all duration-700"
-                  style={{ width: `${pct}%`, background: barColor }}
-                />
+              <button
+                onClick={onStart}
+                className="shrink-0 text-xs font-black px-3 py-2 rounded-lg text-white"
+                style={{ background: "#dc2626" }}
+              >
+                Procvičit →
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Posílit — střed */}
+      {posilit.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-black uppercase tracking-widest px-1" style={{ color: "#d97706" }}>
+            🟡 Posílit — jde to, ale dá se zlepšit
+          </p>
+          {posilit.map((row) => (
+            <div
+              key={row.tema}
+              className="rounded-xl p-3 flex items-center justify-between gap-3"
+              style={{ background: "#fffbeb", border: "1.5px solid #fde68a" }}
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold" style={{ color: "#92400e" }}>{row.label}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <div className="flex-1 bg-amber-100 rounded-full h-1.5 overflow-hidden">
+                    <div className="h-1.5 rounded-full" style={{ width: `${row.pct}%`, background: "#f59e0b" }} />
+                  </div>
+                  <span className="text-xs font-bold shrink-0" style={{ color: "#d97706" }}>{row.pct} %</span>
+                </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {weakest && (
-        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-          <p className="text-sm font-semibold text-indigo-800">
-            💡 Doporučení: Začni procvičovat <strong>{weakest.label}</strong> — tam je největší prostor pro zlepšení.
+      {/* Zvládáš — silná témata */}
+      {zvladas.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-black uppercase tracking-widest px-1" style={{ color: "#16a34a" }}>
+            🟢 Zvládáš — tohle ti jde
           </p>
+          <div className="flex flex-wrap gap-2">
+            {zvladas.map((row) => (
+              <span
+                key={row.tema}
+                className="text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5"
+                style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534" }}
+              >
+                ✓ {row.label} · {row.pct} %
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* CTA — začni od nejslabšího */}
+      {topWeakest && (
+        <div
+          className="rounded-xl p-4 flex items-center gap-3"
+          style={{ background: "#eff6ff", border: "1.5px solid #bfdbfe" }}
+        >
+          <span className="text-2xl shrink-0">🎯</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-black" style={{ color: "#1e40af" }}>
+              Začni s: {topWeakest.label}
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: "#3b82f6" }}>
+              Největší prostor pro zlepšení — MateMax připraví příklady přesně pro tebe
+            </p>
+          </div>
         </div>
       )}
 
       <button
         onClick={onStart}
-        className="w-full py-3 text-white font-semibold rounded-xl text-base"
+        className="w-full py-3 text-white font-bold rounded-xl text-base"
         style={{ background: "#0D1B3E" }}
       >
         Začít trénovat →

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
@@ -40,57 +40,6 @@ function useCountUp(target: number, duration = 900): number {
   return val;
 }
 
-function TopicProgressBar({ tema }: { tema: string }) {
-  const [score, setScore] = useState<{ correct: number; total: number } | null>(null);
-  const barRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("matemax-diag-results");
-      if (raw) {
-        const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
-        if (results[tema]) setScore(results[tema]);
-      }
-    } catch { /* ignore */ }
-  }, [tema]);
-
-  // Also check SM2 cards stats
-  useEffect(() => {
-    if (score) return;
-    try {
-      const raw = localStorage.getItem("matemax-gamification");
-      if (raw) {
-        const g = JSON.parse(raw);
-        const ts = g.topicStats?.[tema];
-        if (ts && ts.total > 0) setScore(ts);
-      }
-    } catch { /* ignore */ }
-  }, [tema, score]);
-
-  if (!score || score.total === 0) return null;
-
-  const pct = Math.round((score.correct / score.total) * 100);
-  const barColor = pct >= 80 ? "#22c55e" : pct >= 50 ? "#f59e0b" : "#ef4444";
-  const textColor = pct >= 80 ? "#166534" : pct >= 50 ? "#92400e" : "#991b1b";
-
-  return (
-    <div className="flex items-center gap-2">
-      <span className="text-xs text-slate-600 w-28 shrink-0 truncate">
-        {TEMA_LABELS[tema] ?? tema}
-      </span>
-      <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-        <div
-          ref={barRef}
-          className="h-2 rounded-full bar-animate"
-          style={{ width: `${pct}%`, background: barColor }}
-        />
-      </div>
-      <span className="text-xs font-bold w-9 text-right shrink-0" style={{ color: textColor }}>
-        {pct} %
-      </span>
-    </div>
-  );
-}
 
 function WrongAnswersReview({ wrongAnswers }: { wrongAnswers: WrongAnswer[] }) {
   const [open, setOpen] = useState(false);
@@ -201,12 +150,15 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
 }
 
 export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], onRestart, onRestartChyby }: Props) {
-  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  // Skipped examples count against score — 3 správně ze 7 celkových = 43 %, ne 100 %
+  const effectiveTotal = total + skipped;
+  const pct = effectiveTotal > 0 ? Math.round((correct / effectiveTotal) * 100) : 0;
   const animPct     = useCountUp(pct);
   const animXp      = useCountUp(xpEarned);
   const animCorrect = useCountUp(correct);
   const animStreak  = useCountUp(streak);
   const [shareState, setShareState] = useState<"idle" | "loading" | "copied" | "error">("idle");
+
 
   async function handleShare() {
     setShareState("loading");
@@ -242,7 +194,7 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
   const tier = pct >= 80 ? "great" : pct >= 50 ? "good" : "low";
   const headerBg    = tier === "great" ? "#dcfce7" : tier === "good" ? "#dbeafe" : "#ffedd5";
   const headerColor = tier === "great" ? "#166534" : tier === "good" ? "#1e40af" : "#9a3412";
-  const title       = tier === "great" ? "Výborně! 🏆" : tier === "good" ? "Dobrá práce! 💪" : "Nevzdávej to! 🔥";
+  const title       = tier === "great" ? (skipped === 0 ? "Výborně! 🏆" : "Skvělá přesnost! 💪") : tier === "good" ? "Dobrá práce! 💪" : "Nevzdávej to! 🔥";
 
   // Confetti při 100% (perfect session) — největší oslava, dvě dávky pro intenzitu
   useEffect(() => {
@@ -265,20 +217,6 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
     }, 300);
     return () => clearTimeout(t);
   }, [pct, total]);
-
-  // Collect all practiced topics for progress bars (union of session + known diag topics)
-  const [allTopics, setAllTopics] = useState<string[]>(topics);
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("matemax-diag-results");
-      if (raw) {
-        const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
-        const diagTopics = Object.keys(results).filter((t) => results[t].total > 0);
-        const merged = [...new Set([...topics, ...diagTopics])];
-        setAllTopics(merged);
-      }
-    } catch { /* ignore */ }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -321,16 +259,6 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
                 </span>
               ))}
             </div>
-          </div>
-        )}
-
-        {/* Mini progress bars per topic */}
-        {allTopics.length > 0 && (
-          <div className="flex flex-col gap-2 pt-1">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">📈 Tvůj pokrok</p>
-            {allTopics.map((tema) => (
-              <TopicProgressBar key={tema} tema={tema} />
-            ))}
           </div>
         )}
 

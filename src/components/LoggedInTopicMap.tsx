@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
 import { FREE_TOPICS, PREMIUM_TOPICS } from "@/lib/subscription";
@@ -10,10 +11,51 @@ interface Props {
   onStartMix: () => void;
 }
 
+function useDiagScores(): Record<string, number> {
+  const [scores, setScores] = useState<Record<string, number>>({});
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("matemax-diag-results");
+      if (!raw) return;
+      const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
+      const s: Record<string, number> = {};
+      for (const [tema, v] of Object.entries(results)) {
+        if (v.total > 0) s[tema] = Math.round((v.correct / v.total) * 100);
+      }
+      setScores(s);
+    } catch { /* ignore */ }
+  }, []);
+  return scores;
+}
+
+function DiagDot({ pct }: { pct: number | undefined }) {
+  if (pct === undefined) return null;
+  const color = pct >= 80 ? "#22c55e" : pct >= 50 ? "#f59e0b" : "#ef4444";
+  return (
+    <span
+      className="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+      style={{ background: pct >= 80 ? "#f0fdf4" : pct >= 50 ? "#fffbeb" : "#fef2f2", color }}
+    >
+      {pct} %
+    </span>
+  );
+}
+
 export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix }: Props) {
+  const diagScores = useDiagScores();
   const allTopics = Object.keys(TEMA_LABELS);
-  const freeTopics = allTopics.filter((t) => FREE_TOPICS.has(t));
+  const freeTopics = allTopics
+    .filter((t) => FREE_TOPICS.has(t))
+    .sort((a, b) => {
+      // Slabá témata (nižší skóre) jdou první; bez diagnostiky na konec
+      const sa = diagScores[a] ?? 101;
+      const sb = diagScores[b] ?? 101;
+      return sa - sb;
+    });
   const premiumTopics = allTopics.filter((t) => PREMIUM_TOPICS.has(t));
+
+  // Nejslabší téma (< 50 %) dostane "Začni tady" badge
+  const weakestFree = freeTopics.find((t) => (diagScores[t] ?? 101) < 50) ?? null;
 
   return (
     <div className="flex flex-col gap-4">
@@ -46,22 +88,42 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix 
           ✅ Zdarma
         </p>
         <div className="flex flex-col gap-2">
-          {freeTopics.map((tema) => (
-            <button
-              key={tema}
-              onClick={() => onSelectTopic(tema)}
-              className="w-full bg-white rounded-xl border-2 px-4 py-3 flex items-center justify-between hover:shadow-md transition-shadow text-left"
-              style={{ borderColor: "#2E6DA4" }}
-            >
-              <span className="text-sm font-bold text-slate-800">{TEMA_LABELS[tema]}</span>
-              <span
-                className="text-sm font-bold px-3 py-1 rounded-full shrink-0"
-                style={{ background: "#eff6ff", color: "#2E6DA4" }}
+          {freeTopics.map((tema) => {
+            const isWeakest = tema === weakestFree;
+            const score = diagScores[tema];
+            const borderColor = score !== undefined
+              ? (score < 50 ? "#fca5a5" : score < 80 ? "#fde68a" : "#86efac")
+              : "#2E6DA4";
+            const bg = score !== undefined
+              ? (score < 50 ? "#fff5f5" : score < 80 ? "#fffef0" : "#f0fdf4")
+              : "#fff";
+            return (
+              <button
+                key={tema}
+                onClick={() => onSelectTopic(tema)}
+                className="w-full rounded-xl border-2 px-4 py-3 flex items-center gap-3 hover:shadow-md transition-shadow text-left"
+                style={{ borderColor, background: bg }}
               >
-                Procvičovat →
-              </span>
-            </button>
-          ))}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-sm font-bold text-slate-800">{TEMA_LABELS[tema]}</span>
+                    {isWeakest && (
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: "#dc2626", color: "#fff" }}>
+                        🎯 Začni tady
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <DiagDot pct={score} />
+                <span
+                  className="text-xs font-bold px-2.5 py-1 rounded-full shrink-0"
+                  style={{ background: "#eff6ff", color: "#2E6DA4" }}
+                >
+                  Procvičovat →
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
