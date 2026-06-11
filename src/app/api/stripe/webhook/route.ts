@@ -66,6 +66,24 @@ export async function POST(req: Request) {
             session.subscription as string
           );
         }
+        // Jednorázová platba za online test nanečisto
+        if (session.mode === "payment" && session.metadata?.type === "online_test") {
+          const enrollmentId = session.metadata.enrollment_id;
+          if (enrollmentId) {
+            const { error } = await supabaseAdmin
+              .from("online_test_enrollments")
+              .update({
+                payment_status: "paid",
+                stripe_payment_intent_id: session.payment_intent as string,
+              })
+              .eq("id", enrollmentId);
+            if (error) {
+              console.error("webhook: online_test enrollment update failed", enrollmentId, error);
+            }
+          } else {
+            console.error("webhook: online_test checkout without enrollment_id", session.id);
+          }
+        }
         break;
       }
 
