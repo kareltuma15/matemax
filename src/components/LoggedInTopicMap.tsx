@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { TEMA_LABELS } from "@/types";
+import { TEMA_LABELS, PODTEMA_SLOVNI_ORDER, PODTEMA_LABELS } from "@/types";
 import { FREE_TOPICS, PREMIUM_TOPICS } from "@/lib/subscription";
 
 interface Props {
   isPremium: boolean;
-  onSelectTopic: (tema: string) => void;
+  onSelectTopic: (tema: string, podtema?: string) => void;
   onStartMix: () => void;
 }
 
@@ -43,6 +43,7 @@ function DiagDot({ pct }: { pct: number | undefined }) {
 
 export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix }: Props) {
   const diagScores = useDiagScores();
+  const [expandedSlovni, setExpandedSlovni] = useState(false);
   const allTopics = Object.keys(TEMA_LABELS);
   const freeTopics = allTopics
     .filter((t) => FREE_TOPICS.has(t))
@@ -97,31 +98,55 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix 
             const bg = score !== undefined
               ? (score < 50 ? "#fff5f5" : score < 80 ? "#fffef0" : "#f0fdf4")
               : "#fff";
+            const isSlovni = tema === "slovni_ulohy";
             return (
-              <button
-                key={tema}
-                onClick={() => onSelectTopic(tema)}
-                className="w-full rounded-xl border-2 px-4 py-3 flex items-center gap-3 hover:shadow-md transition-shadow text-left"
-                style={{ borderColor, background: bg }}
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-bold text-slate-800">{TEMA_LABELS[tema]}</span>
-                    {isWeakest && (
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: "#dc2626", color: "#fff" }}>
-                        🎯 Začni tady
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <DiagDot pct={score} />
-                <span
-                  className="text-xs font-bold px-2.5 py-1 rounded-full shrink-0"
-                  style={{ background: "#eff6ff", color: "#2E6DA4" }}
+              <div key={tema} className="flex flex-col gap-2">
+                <button
+                  onClick={() => (isSlovni ? setExpandedSlovni((v) => !v) : onSelectTopic(tema))}
+                  className="w-full rounded-xl border-2 px-4 py-3 flex items-center gap-3 hover:shadow-md transition-shadow text-left"
+                  style={{ borderColor, background: bg }}
                 >
-                  Procvičovat →
-                </span>
-              </button>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-sm font-bold text-slate-800">{TEMA_LABELS[tema]}</span>
+                      {isWeakest && (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: "#dc2626", color: "#fff" }}>
+                          🎯 Začni tady
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <DiagDot pct={score} />
+                  <span
+                    className="text-xs font-bold px-2.5 py-1 rounded-full shrink-0"
+                    style={{ background: "#eff6ff", color: "#2E6DA4" }}
+                  >
+                    {isSlovni ? (expandedSlovni ? "Skrýt ▴" : "Vyber typ ▾") : "Procvičovat →"}
+                  </span>
+                </button>
+
+                {isSlovni && expandedSlovni && (
+                  <div className="flex flex-wrap gap-2 pl-2 pb-1">
+                    <button
+                      onClick={() => onSelectTopic("slovni_ulohy")}
+                      className="text-xs font-bold px-3 py-1.5 rounded-full border-2 hover:shadow-sm transition-shadow"
+                      style={{ borderColor: "#2E6DA4", color: "#2E6DA4", background: "#fff" }}
+                    >
+                      Všechny
+                    </button>
+                    {PODTEMA_SLOVNI_ORDER.map((pt) => (
+                      <button
+                        key={pt}
+                        onClick={() => onSelectTopic("slovni_ulohy", pt)}
+                        className="text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 hover:shadow-sm transition-shadow"
+                        style={{ background: "#fff", color: "#334155" }}
+                      >
+                        {PODTEMA_LABELS[pt]}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>

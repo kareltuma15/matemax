@@ -44,7 +44,7 @@ const ProgressMilestoneModal = dynamic(() => import("@/components/ProgressMilest
 const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr: false });
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
-import { TEMA_LABELS, DBExample } from "@/types";
+import { TEMA_LABELS, PODTEMA_LABELS, DBExample } from "@/types";
 
 function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
   const hard = examples.filter(
@@ -207,7 +207,7 @@ function TreningPageInner() {
   const [hydrated, setHydrated]     = useState(false);
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
   const [temaFilter, setTemaFilter]     = useState<string | null>(urlTema);
-  const [podtemaFilter] = useState<string | null>(urlPodtema);
+  const [podtemaFilter, setPodtemaFilter] = useState<string | null>(urlPodtema);
   const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [bossBattle, setBossBattle]     = useState<{ example: DBExample } | null>(null);
@@ -605,7 +605,7 @@ function TreningPageInner() {
   function restart(rezim?: "chyby" | "sm2" | null) {
     clearSessionDraft();
     setRezimFilter(rezim ?? null);
-    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false));
+    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false, podtemaFilter));
     setCurrentIdx(0);
     setCorrect(0);
     setSkipped(0);
@@ -660,9 +660,10 @@ function TreningPageInner() {
     return (
       <LoggedInTopicMap
         isPremium={isPremium}
-        onSelectTopic={(tema) => {
+        onSelectTopic={(tema, podtema) => {
           setTemaFilter(tema);
-          setSessionIds(buildSession(cards, tema, null, false));
+          setPodtemaFilter(podtema ?? null);
+          setSessionIds(buildSession(cards, tema, null, false, podtema ?? null));
         }}
         onStartMix={() => {
           setSessionIds(buildSession(cards, null, null, false));
@@ -948,6 +949,9 @@ function TreningPageInner() {
           style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
         >
           🎯 Cílený trénink: <strong className="ml-1">{TEMA_LABELS[temaFilter] ?? temaFilter}</strong>
+          {podtemaFilter && (
+            <strong> · {PODTEMA_LABELS[podtemaFilter] ?? podtemaFilter}</strong>
+          )}
         </div>
       )}
 
