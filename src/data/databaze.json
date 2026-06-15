@@ -1018,8 +1018,8 @@
     },
     {
       "id": "PRO_001",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 10 % z čísla 200?",
       "odpoved": "20",
@@ -1031,8 +1031,8 @@
     },
     {
       "id": "PRO_002",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 25 % z čísla 80?",
       "odpoved": "20",
@@ -1044,8 +1044,8 @@
     },
     {
       "id": "PRO_003",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 50 % z čísla 140?",
       "odpoved": "70",
@@ -1057,8 +1057,8 @@
     },
     {
       "id": "PRO_004",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 1 % z čísla 500?",
       "odpoved": "5",
@@ -1070,8 +1070,8 @@
     },
     {
       "id": "PRO_005",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 20 % z čísla 450?",
       "odpoved": "90",
@@ -1083,8 +1083,8 @@
     },
     {
       "id": "PRO_006",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 75 % z čísla 200?",
       "odpoved": "150",
@@ -1096,8 +1096,8 @@
     },
     {
       "id": "PRO_007",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 5 % z čísla 60?",
       "odpoved": "3",
@@ -1109,8 +1109,8 @@
     },
     {
       "id": "PRO_008",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 30 % z čísla 90?",
       "odpoved": "27",
@@ -1122,8 +1122,8 @@
     },
     {
       "id": "PRO_009",
-      "tema": "procenta",
-      "podtema": "procentove_vyjadreni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik procent je číslo 15 z čísla 50?",
       "odpoved": "30 %",
@@ -1135,8 +1135,8 @@
     },
     {
       "id": "PRO_010",
-      "tema": "procenta",
-      "podtema": "procentove_vyjadreni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik procent je číslo 12 z čísla 60?",
       "odpoved": "20 %",
@@ -1148,8 +1148,8 @@
     },
     {
       "id": "PRO_011",
-      "tema": "procenta",
-      "podtema": "procentove_vyjadreni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik procent je číslo 3 z čísla 4?",
       "odpoved": "75 %",
@@ -1161,8 +1161,8 @@
     },
     {
       "id": "PRO_012",
-      "tema": "procenta",
-      "podtema": "procentove_vyjadreni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik procent je číslo 1 z čísla 8?",
       "odpoved": "12,5 %",
@@ -1174,8 +1174,8 @@
     },
     {
       "id": "PRO_013",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 100 % z čísla 37?",
       "odpoved": "37",
@@ -1187,8 +1187,8 @@
     },
     {
       "id": "PRO_014",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 40 % z čísla 250?",
       "odpoved": "100",
@@ -1200,8 +1200,8 @@
     },
     {
       "id": "PRO_015",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 15 % z čísla 120?",
       "odpoved": "18",
@@ -1213,8 +1213,8 @@
     },
     {
       "id": "PRO_016",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "25 % z čísla je 15. Jaké je číslo?",
       "odpoved": "60",
@@ -1226,8 +1226,8 @@
     },
     {
       "id": "PRO_017",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "10 % z čísla je 8. Jaké je číslo?",
       "odpoved": "80",
@@ -1239,8 +1239,8 @@
     },
     {
       "id": "PRO_018",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "30 % z čísla je 18. Jaké je číslo?",
       "odpoved": "60",
@@ -1252,8 +1252,8 @@
     },
     {
       "id": "PRO_019",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Po slevě 20 % stojí zboží 320 Kč. Kolik stálo původně?",
       "odpoved": "400 Kč",
@@ -1266,8 +1266,8 @@
     },
     {
       "id": "PRO_020",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Po zdražení 15 % stojí produkt 575 Kč. Kolik stál dřív?",
       "odpoved": "500 Kč",
@@ -1280,8 +1280,8 @@
     },
     {
       "id": "PRO_021",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "60 % školy jsou dívky — 180 dívek. Kolik žáků má škola?",
       "odpoved": "300",
@@ -1293,8 +1293,8 @@
     },
     {
       "id": "PRO_022",
-      "tema": "procenta",
-      "podtema": "slevy",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Zboží za 800 Kč je se slevou 25 %. Kolik zaplatíš?",
       "odpoved": "600 Kč",
@@ -1306,8 +1306,8 @@
     },
     {
       "id": "PRO_023",
-      "tema": "procenta",
-      "podtema": "slevy",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "T-shirt stojí 350 Kč, sleva 30 %. Kolik ušetříš?",
       "odpoved": "105 Kč",
@@ -1319,8 +1319,8 @@
     },
     {
       "id": "PRO_024",
-      "tema": "procenta",
-      "podtema": "slevy",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena klesla z 240 Kč na 180 Kč. O kolik procent?",
       "odpoved": "25 %",
@@ -1333,8 +1333,8 @@
     },
     {
       "id": "PRO_025",
-      "tema": "procenta",
-      "podtema": "zdrazeni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena vzrostla z 500 Kč na 600 Kč. O kolik procent?",
       "odpoved": "20 %",
@@ -1346,8 +1346,8 @@
     },
     {
       "id": "PRO_026",
-      "tema": "procenta",
-      "podtema": "zdrazeni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Plat 25 000 Kč se zvýšil o 8 %. Jaký je nový plat?",
       "odpoved": "27 000 Kč",
@@ -1359,8 +1359,8 @@
     },
     {
       "id": "PRO_027",
-      "tema": "procenta",
-      "podtema": "urokove",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Vložíš 10 000 Kč na 3 % ročně na 1 rok. Kolik dostaneš?",
       "odpoved": "10 300 Kč",
@@ -1373,8 +1373,8 @@
     },
     {
       "id": "PRO_028",
-      "tema": "procenta",
-      "podtema": "urokove",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Úvěr 20 000 Kč, 5 % ročně. Kolik zaplatíš úroků za rok?",
       "odpoved": "1 000 Kč",
@@ -1386,8 +1386,8 @@
     },
     {
       "id": "PRO_029",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Ve třídě 30 žáků je 40 % dívek. Kolik je chlapců?",
       "odpoved": "18",
@@ -1400,8 +1400,8 @@
     },
     {
       "id": "PRO_030",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Obec má 1200 obyvatel. 35 % jsou děti. Kolik dospělých?",
       "odpoved": "780",
@@ -1414,8 +1414,8 @@
     },
     {
       "id": "PRO_031",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Zboží zdražilo o 10 %, pak zlevnilo o 10 %. Výsledná změna?",
       "odpoved": "-1 %",
@@ -1427,8 +1427,8 @@
     },
     {
       "id": "PRO_032",
-      "tema": "procenta",
-      "podtema": "slezy",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena byla 1 200 Kč, po slevě 960 Kč. Kolik % sleva?",
       "odpoved": "20 %",
@@ -1441,8 +1441,8 @@
     },
     {
       "id": "PRO_033",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Jaké je 120 % z čísla 250?",
       "odpoved": "300",
@@ -1454,8 +1454,8 @@
     },
     {
       "id": "PRO_034",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Kolik je 0,5 % z čísla 2 000?",
       "odpoved": "10",
@@ -1467,8 +1467,8 @@
     },
     {
       "id": "PRO_035",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Žák dostal 34 bodů z 40. Kolik % úspěšnosti?",
       "odpoved": "85 %",
@@ -1480,8 +1480,8 @@
     },
     {
       "id": "PRO_036",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "80 % z čísla je 64. Jaké je číslo?",
       "odpoved": "80",
@@ -1493,8 +1493,8 @@
     },
     {
       "id": "PRO_037",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Obchod prodal 150 kusů, což je 60 % skladu. Kolik kusů je na skladě?",
       "odpoved": "250",
@@ -1506,8 +1506,8 @@
     },
     {
       "id": "PRO_038",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "O kolik procent je 75 větší než 60?",
       "odpoved": "25 %",
@@ -1519,8 +1519,8 @@
     },
     {
       "id": "PRO_039",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "O kolik procent je 80 menší než 100?",
       "odpoved": "20 %",
@@ -1532,8 +1532,8 @@
     },
     {
       "id": "PRO_040",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Kolik je 12,5 % z čísla 160?",
       "odpoved": "20",
@@ -1545,8 +1545,8 @@
     },
     {
       "id": "PRO_041",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena vzrostla o 25 % a pak o dalších 20 %. Celkové navýšení?",
       "odpoved": "50 %",
@@ -1558,8 +1558,8 @@
     },
     {
       "id": "PRO_042",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Výsledek testu: 42 bodů z 60. Kolik % úspěšnosti?",
       "odpoved": "70 %",
@@ -1571,8 +1571,8 @@
     },
     {
       "id": "PRO_043",
-      "tema": "procenta",
-      "podtema": "slevy",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Původní cena 450 Kč, sleva 15 %. Jaká je sleva v korunách?",
       "odpoved": "67,50 Kč",
@@ -1584,8 +1584,8 @@
     },
     {
       "id": "PRO_044",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "45 % z čísla je 27. Jaké je číslo?",
       "odpoved": "60",
@@ -1597,8 +1597,8 @@
     },
     {
       "id": "PRO_045",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Z 200 uchazečů bylo přijato 64 %. Kolik bylo přijato?",
       "odpoved": "128",
@@ -1610,8 +1610,8 @@
     },
     {
       "id": "PRO_046",
-      "tema": "procenta",
-      "podtema": "slozena_procenta",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Plat 30 000 Kč vzrostl o 5 %, pak ještě o 4 %. Jaký je výsledný plat?",
       "odpoved": "32 760 Kč",
@@ -1624,8 +1624,8 @@
     },
     {
       "id": "PRO_047",
-      "tema": "procenta",
-      "podtema": "slozena_procenta",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Cena klesá každý rok o 10 %. Po 3 letech z ceny 1 000 Kč zbyde?",
       "odpoved": "729 Kč",
@@ -1637,8 +1637,8 @@
     },
     {
       "id": "PRO_048",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Auto koupeno za 300 000 Kč ztrácí každý rok 15 % hodnoty. Hodnota po 2 letech?",
       "odpoved": "216 750 Kč",
@@ -1650,8 +1650,8 @@
     },
     {
       "id": "PRO_049",
-      "tema": "procenta",
-      "podtema": "procenta_zlomky",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "O kolik procent je 5/4 větší než 3/4?",
       "odpoved": "66,7 %",
@@ -1664,8 +1664,8 @@
     },
     {
       "id": "PRO_050",
-      "tema": "procenta",
-      "podtema": "procenta_zlomky",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Vyjádři jako procento: 7/20",
       "odpoved": "35 %",
@@ -1677,8 +1677,8 @@
     },
     {
       "id": "PRO_051",
-      "tema": "procenta",
-      "podtema": "urokove",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Vložíš 50 000 Kč na 4 % ročně. Kolik bude na účtu po 3 letech (složené úročení)?",
       "odpoved": "56 243,20 Kč",
@@ -1690,8 +1690,8 @@
     },
     {
       "id": "PRO_052",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Obchod má 30 % marži. Nákupní cena je 700 Kč. Prodejní cena?",
       "odpoved": "910 Kč",
@@ -1703,8 +1703,8 @@
     },
     {
       "id": "PRO_053",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Po dvou slevách 20 % a 25 % je výsledná cena 360 Kč. Původní cena?",
       "odpoved": "600 Kč",
@@ -1718,8 +1718,8 @@
     },
     {
       "id": "PRO_054",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Škola má 40 % chlapců. Přibyli 3 chlapci a počet dívek zůstal. Nyní je 43 % chlapců. Kolik bylo původně žáků?",
       "odpoved": "100",
@@ -1734,8 +1734,8 @@
     },
     {
       "id": "PRO_055",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Investice 10 000 Kč s 6% ročním výnosem. Po kolika letech přesáhne 13 000 Kč?",
       "odpoved": "5 let",
@@ -1749,8 +1749,8 @@
     },
     {
       "id": "PRO_056",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Kolik je 37,5 % z čísla 240?",
       "odpoved": "90",
@@ -1762,8 +1762,8 @@
     },
     {
       "id": "PRO_057",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Počet obyvatel města klesl o 5 % na 19 000. Původní počet?",
       "odpoved": "20 000",
@@ -1775,8 +1775,8 @@
     },
     {
       "id": "PRO_058",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 200 % z čísla 45?",
       "odpoved": "90",
@@ -1788,8 +1788,8 @@
     },
     {
       "id": "PRO_059",
-      "tema": "procenta",
-      "podtema": "procentove_vyjadreni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Kolik procent je 7 z 28?",
       "odpoved": "25 %",
@@ -1801,8 +1801,8 @@
     },
     {
       "id": "PRO_060",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Benzín zdražil ze 40 Kč na 46 Kč za litr. O kolik procent?",
       "odpoved": "15 %",
@@ -1814,8 +1814,8 @@
     },
     {
       "id": "PRO_061",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Zboží nejdřív zdražilo o 20 %, pak zlevnilo o 20 %. Výsledná cena vs. původní?",
       "odpoved": "96 % (pokles o 4 %)",
@@ -1827,8 +1827,8 @@
     },
     {
       "id": "PRO_062",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Ze 150 studentů splnilo zkoušku 126. Kolik procent?",
       "odpoved": "84 %",
@@ -1840,8 +1840,8 @@
     },
     {
       "id": "PRO_063",
-      "tema": "procenta",
-      "podtema": "slevy",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Tři slevy: 10 %, 5 %, 2 %. Výsledná sleva z 1 000 Kč?",
       "odpoved": "167,36 Kč",
@@ -1854,8 +1854,8 @@
     },
     {
       "id": "PRO_064",
-      "tema": "procenta",
-      "podtema": "zakladni",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 150 % z čísla 60?",
       "odpoved": "90",
@@ -1867,8 +1867,8 @@
     },
     {
       "id": "PRO_065",
-      "tema": "procenta",
-      "podtema": "urokove",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Půjčka 5 000 Kč na 12 % ročně na 6 měsíců. Kolik zaplatíš úroků?",
       "odpoved": "300 Kč",
@@ -1880,8 +1880,8 @@
     },
     {
       "id": "PRO_066",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "V testu 25 otázek, správně 80 %. Kolik správných odpovědí?",
       "odpoved": "20",
@@ -1893,8 +1893,8 @@
     },
     {
       "id": "PRO_067",
-      "tema": "procenta",
-      "podtema": "procentovy_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "15 % čísla je 12. Jaké je 40 % tohoto čísla?",
       "odpoved": "32",
@@ -1907,8 +1907,8 @@
     },
     {
       "id": "PRO_068",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Město A má 50 000 obyvatel a roste o 2 % ročně. Město B má 55 000 a klesá o 1 % ročně. Po kolika letech bude počet obyvatel stejný?",
       "odpoved": "cca 6 let",
@@ -1922,8 +1922,8 @@
     },
     {
       "id": "PRO_069",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Výrobce prodává zboží za cenu o 40 % vyšší, než je výrobní cena. Prodejní cena je 280 Kč. Výrobní cena?",
       "odpoved": "200 Kč",
@@ -1935,8 +1935,8 @@
     },
     {
       "id": "PRO_070",
-      "tema": "procenta",
-      "podtema": "kombinovane",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Kolik procent z celku tvoří 3 kusy, pokud celek tvoří 12 kusů?",
       "odpoved": "25 %",
@@ -2952,7 +2952,7 @@
     {
       "id": "SLO_001",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Vlakem jedeš 2 hodiny rychlostí 80 km/h. Jakou vzdálenost ujedeš?",
       "odpoved": "160 km",
@@ -2965,7 +2965,7 @@
     {
       "id": "SLO_002",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Cyklista ujede 45 km za 3 hodiny. Jaká je jeho průměrná rychlost?",
       "odpoved": "15 km/h",
@@ -2978,7 +2978,7 @@
     {
       "id": "SLO_003",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Autem jedete 120 km rychlostí 60 km/h. Jak dlouho jedete?",
       "odpoved": "2 hodiny",
@@ -2991,7 +2991,7 @@
     {
       "id": "SLO_004",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Z Prahy vyjede vlak v 8:00 rychlostí 100 km/h. V 9:00 vyjede druhý vlak rychlostí 150 km/h stejným směrem. Ve kolik hodin druhý vlak první dožene?",
       "odpoved": "11:00",
@@ -3007,7 +3007,7 @@
     {
       "id": "SLO_005",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Dva pěší jdou vstříc sobě. Vzdálenost 15 km, rychlosti 4 km/h a 6 km/h. Za jak dlouho se setkají?",
       "odpoved": "1,5 hodiny",
@@ -3022,7 +3022,7 @@
     {
       "id": "SLO_006",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Auto jede z A do B (200 km) rychlostí 80 km/h, zpět rychlostí 120 km/h. Průměrná rychlost?",
       "odpoved": "96 km/h",
@@ -3039,7 +3039,7 @@
     {
       "id": "SLO_007",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Chodec ujde 3 km za 45 minut. Jak daleko ujde za 2 hodiny?",
       "odpoved": "8 km",
@@ -3054,7 +3054,7 @@
     {
       "id": "SLO_008",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Loď pluje po proudu 40 km/h, proti proudu 24 km/h. Rychlost proudu?",
       "odpoved": "8 km/h",
@@ -3071,7 +3071,7 @@
     {
       "id": "SLO_009",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Vlak A jede 60 km/h a vlak B 90 km/h vstříc sobě, vzdálenost 300 km. Za jak dlouho se setkají a kde?",
       "odpoved": "2 h, 120 km od A",
@@ -3087,7 +3087,7 @@
     {
       "id": "SLO_010",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Maratonec ujde 42,2 km za 3h 30 min. Průměrná rychlost v km/h?",
       "odpoved": "12,06 km/h",
@@ -3102,7 +3102,7 @@
     {
       "id": "SLO_011",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 1,
       "zadani": "Jeden dělník postaví zeď za 6 dní. Jakou část postaví za 1 den?",
       "odpoved": "1/6",
@@ -3115,7 +3115,7 @@
     {
       "id": "SLO_012",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "A zvládne práci za 4 h, B za 6 h. Jak dlouho ji zvládnou spolu?",
       "odpoved": "2 h 24 min",
@@ -3131,7 +3131,7 @@
     {
       "id": "SLO_013",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Kohoutek plní nádrž za 3 h, výpust ji vyprazdňuje za 5 h. Oba jsou otevřeny. Za jak dlouho se nádrž naplní?",
       "odpoved": "7,5 hodiny",
@@ -3147,7 +3147,7 @@
     {
       "id": "SLO_014",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "5 dělníků dokončí práci za 8 dní. Kolik dní potřebují 4 dělníci?",
       "odpoved": "10 dní",
@@ -3162,7 +3162,7 @@
     {
       "id": "SLO_015",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "A pracuje 3× rychleji než B. Spolu dokončí práci za 3 hodiny. Jak dlouho by ji sám dokončil B?",
       "odpoved": "16 hodin",
@@ -3178,7 +3178,7 @@
     {
       "id": "SLO_016",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Smísíme 3 litry 20% roztoku a 2 litry 50% roztoku. Výsledná koncentrace?",
       "odpoved": "32 %",
@@ -3195,7 +3195,7 @@
     {
       "id": "SLO_017",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Kolik litrů 30% roztoku přidáme k 6 litrům 10% roztoku, aby výsledek byl 20%?",
       "odpoved": "6 litrů",
@@ -3210,7 +3210,7 @@
     {
       "id": "SLO_018",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Mícháme čaj za 120 Kč/100g a za 80 Kč/100g. Chceme 200g za 95 Kč/100g. Kolik gramů každého?",
       "odpoved": "75 g drahého, 125 g levného",
@@ -3224,7 +3224,7 @@
     {
       "id": "SLO_019",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Slitina 20% Cu + slitina 80% Cu → 100g s 50% Cu. Kolik gramů každé?",
       "odpoved": "50 g a 50 g",
@@ -3239,7 +3239,7 @@
     {
       "id": "SLO_020",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Roztok soli: přidáme 200 ml vody k 300 ml 15% roztoku. Nová koncentrace?",
       "odpoved": "9 %",
@@ -3254,7 +3254,7 @@
     {
       "id": "SLO_021",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Otec je 4× starší než syn. Za 5 let bude 3× starší. Věky nyní?",
       "odpoved": "syn 10 let, otec 40 let",
@@ -3270,7 +3270,7 @@
     {
       "id": "SLO_022",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Matce je 36 let, dceři 12. Za kolik let bude matka 2× starší?",
       "odpoved": "12 let",
@@ -3286,7 +3286,7 @@
     {
       "id": "SLO_023",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Součet věků otce a syna je 54. Otec je o 30 let starší. Kolik let je synovi?",
       "odpoved": "12 let",
@@ -3302,7 +3302,7 @@
     {
       "id": "SLO_024",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Babičce je 60 let, vnukovi 12. Před kolika lety bylo babičce 5× více než vnukovi?",
       "odpoved": "5 let",
@@ -3319,7 +3319,7 @@
     {
       "id": "SLO_025",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Sourozenecký věkový průměr je 14 let. Nejstarší je o 6 let starší než nejmladší. Nejmladší je 11 let. Věk středního sourozence?",
       "odpoved": "14 let",
@@ -3333,7 +3333,7 @@
     {
       "id": "SLO_026",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Kolo má obvod 2 m. Kolik otáček udělá na trase 10 km?",
       "odpoved": "5 000 otáček",
@@ -3348,7 +3348,7 @@
     {
       "id": "SLO_027",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Vlak jede přes most délky 500 m. Délka vlaku 100 m, rychlost 60 km/h. Za jak dlouho přejede?",
       "odpoved": "36 sekund",
@@ -3362,7 +3362,7 @@
     {
       "id": "SLO_028",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Zahradník dokáže pokosit louku za 4 hodiny. Po 1 hodině mu přijde pomoc. Spolu dokončí za další hodinu. Jak rychle pracuje pomocník?",
       "odpoved": "za 1,5 hodiny sám",
@@ -3376,7 +3376,7 @@
     {
       "id": "SLO_029",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Obdélník se prodloužil o 20 % a zúžil o 10 %. Změna obsahu?",
       "odpoved": "navýšení o 8 %",
@@ -3390,7 +3390,7 @@
     {
       "id": "SLO_030",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Skupina turistů má dojít 60 km za 3 dny. 1. den ujdou 2/5, 2. den 1/3 zbytku. Kolik zbývá 3. den?",
       "odpoved": "22 km",
@@ -3405,7 +3405,7 @@
     {
       "id": "SLO_031",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Auto jede 40 km/h. Za 3 hodiny urazí ...",
       "odpoved": "120 km",
@@ -3418,7 +3418,7 @@
     {
       "id": "SLO_032",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Město A a B jsou vzdáleny 180 km. Z A vyjede auto v 9:00 rychlostí 90 km/h, z B vyjede auto ve stejný čas rychlostí 60 km/h. Kdy se setkají?",
       "odpoved": "10:12",
@@ -3432,7 +3432,7 @@
     {
       "id": "SLO_033",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Čerpadlo A plní bazén za 6 h, čerpadlo B za 4 h. Po jak dlouhé společné práci bude bazén plný ze 3/4?",
       "odpoved": "1 h 48 min",
@@ -3446,7 +3446,7 @@
     {
       "id": "SLO_034",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "10 l vody a 5 l sirupu. Kolik procent sirupu?",
       "odpoved": "33,3 %",
@@ -3461,7 +3461,7 @@
     {
       "id": "SLO_035",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 1,
       "zadani": "Nyní je Evě 15 let a Adamovi 9 let. Před kolika lety bylo Evě 2× více let?",
       "odpoved": "3 roky",
@@ -3476,7 +3476,7 @@
     {
       "id": "SLO_036",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "finance",
       "obtiznost": 2,
       "zadani": "V obchodě jsou 3 druhy jablek za 25, 30 a 40 Kč/kg. Koupíme 2 kg prvního, 3 kg druhého, 1 kg třetího. Celkem?",
       "odpoved": "200 Kč",
@@ -3492,7 +3492,7 @@
     {
       "id": "SLO_037",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Letadlo letí 800 km/h. Za 45 minut uletí ...",
       "odpoved": "600 km",
@@ -3507,7 +3507,7 @@
     {
       "id": "SLO_038",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Vlak ujel 160 km za 2 h 30 min. Průměrná rychlost?",
       "odpoved": "64 km/h",
@@ -3521,7 +3521,7 @@
     {
       "id": "SLO_039",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 3,
       "zadani": "3 stroje vyrábí 300 ks za 5 hodin. Kolik strojů je třeba na 400 ks za 4 hodiny?",
       "odpoved": "5 strojů",
@@ -3535,7 +3535,7 @@
     {
       "id": "SLO_040",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Prodejce kupuje zboží za 200 Kč, prodává za 280 Kč. Procentuální marže?",
       "odpoved": "40 %",
@@ -3551,7 +3551,7 @@
     {
       "id": "SLO_041",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Přijde na vás v 10:00 nájemce. Bydlíte 5 km daleko. Jedete na kole 15 km/h. V kolik vyjete, abyste přijeli v 9:55?",
       "odpoved": "9:35",
@@ -3565,7 +3565,7 @@
     {
       "id": "SLO_042",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Výletníci vyjdou v 8:00, 4 km/h. Ve 9:00 vyjíždí auto 60 km/h, aby je dohonilo. Za jak dlouho?",
       "odpoved": "4 minuty",
@@ -3579,7 +3579,7 @@
     {
       "id": "SLO_043",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Stavba mostu trvá 10 dní pro 15 dělníků. Kolik dělníků je třeba, aby to trvalo 6 dní?",
       "odpoved": "25 dělníků",
@@ -3593,7 +3593,7 @@
     {
       "id": "SLO_044",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Přilijeme 4 l vody k 1 l 60% kyseliny. Výsledná koncentrace?",
       "odpoved": "12 %",
@@ -3608,7 +3608,7 @@
     {
       "id": "SLO_045",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Pavel je 2× starší než Tomáš. Za 4 roky bude Pavel o 8 let starší. Věky nyní?",
       "odpoved": "Tomáš 8 let, Pavel 16 let",
@@ -3622,7 +3622,7 @@
     {
       "id": "SLO_046",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "finance",
       "obtiznost": 2,
       "zadani": "Za 5 jablek a 3 hrušky zaplatíme 47 Kč. Za 3 jablka a 5 hrušek 49 Kč. Cena 1 jablka?",
       "odpoved": "5 Kč",
@@ -3636,7 +3636,7 @@
     {
       "id": "SLO_047",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "finance",
       "obtiznost": 2,
       "zadani": "Cena vstupenky pro dospělého je 2× cena dětské. Za 2 dospělé a 3 děti zaplatíme 350 Kč. Dětská cena?",
       "odpoved": "50 Kč",
@@ -3650,7 +3650,7 @@
     {
       "id": "SLO_048",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Cyklista jede po okruzhu 10 km. 1. kolo 20 km/h, 2. kolo 25 km/h. Průměrná rychlost?",
       "odpoved": "22,2 km/h",
@@ -3664,7 +3664,7 @@
     {
       "id": "SLO_049",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 3,
       "zadani": "Firma zaměstní 6 lidí na 8 hodin. Každý dostane 250 Kč/h. Celkové náklady?",
       "odpoved": "12 000 Kč",
@@ -3679,7 +3679,7 @@
     {
       "id": "SLO_050",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "finance",
       "obtiznost": 3,
       "zadani": "Cena výrobku je složena z materiálu (60 %) a práce (40 %). Materiál zdraží o 10 %, práce o 15 %. Nárůst ceny výrobku?",
       "odpoved": "12 %",
@@ -3695,7 +3695,7 @@
     {
       "id": "SLO_051",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Koňara jede 30 km/h. Za kolik hodin ujede 90 km?",
       "odpoved": "3 hodiny",
@@ -3708,7 +3708,7 @@
     {
       "id": "SLO_052",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 1,
       "zadani": "Řemeslník udělá 15 kusů za hodinu. Kolik za 4 hodiny?",
       "odpoved": "60 kusů",
@@ -3721,7 +3721,7 @@
     {
       "id": "SLO_053",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Dva vlaky jedou vstříc z měst vzdálených 360 km. Rychlosti 80 a 100 km/h. Kde se setkají od prvního města?",
       "odpoved": "160 km",
@@ -3735,7 +3735,7 @@
     {
       "id": "SLO_054",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Rodičům je dohromady 80 let, jejich třem dětem dohromady 30 let. Průměrný věk celé rodiny?",
       "odpoved": "22 let",
@@ -3750,7 +3750,7 @@
     {
       "id": "SLO_055",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Ve třídě 25 žáků je 60 % dívek. Kolik chlapců?",
       "odpoved": "10",
@@ -3765,7 +3765,7 @@
     {
       "id": "SLO_056",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Hokej: 3 góly dohromady za 2 zápasy. 1. zápas: méně o 1 gól. Skóre?",
       "odpoved": "1:2",
@@ -3779,7 +3779,7 @@
     {
       "id": "SLO_057",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Chodec a cyklista vyjíždějí ze stejného místa opačnými směry. Chodec 5 km/h, cyklista 20 km/h. Za jak dlouho jsou 50 km od sebe?",
       "odpoved": "2 hodiny",
@@ -3794,7 +3794,7 @@
     {
       "id": "SLO_058",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Stavitel dokončí dům za 120 dní, s pomocníkem za 80 dní. Jak rychle pracuje pomocník sám?",
       "odpoved": "240 dní",
@@ -3808,7 +3808,7 @@
     {
       "id": "SLO_059",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "finance",
       "obtiznost": 3,
       "zadani": "Cena vstupenky na dospělou a dítě je 180 Kč. Dospělá je o 60 Kč dražší než dítě. Cena dítěte?",
       "odpoved": "60 Kč",
@@ -3822,7 +3822,7 @@
     {
       "id": "SLO_060",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Obchod prodal ve 3 dnech 480 kg ovoce. Každý den prodal o 20 kg více než předchozí. Kolik v 1. den?",
       "odpoved": "140 kg",
@@ -4761,7 +4761,7 @@
     },
     {
       "id": "KOM_001",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_procenta",
       "obtiznost": 2,
       "zadani": "Čtverec: strana 10 cm. Strana se zvětší o 10 %. Nárůst obsahu?",
@@ -4776,7 +4776,7 @@
     },
     {
       "id": "KOM_002",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_procenta",
       "obtiznost": 2,
       "zadani": "Kruh: r = 6 cm. Poloměr klesne o 20 %. Pokles obsahu?",
@@ -4791,7 +4791,7 @@
     },
     {
       "id": "KOM_003",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_procenta",
       "obtiznost": 2,
       "zadani": "Kolik je 3/5 z 25 % ze čísla 200?",
@@ -4805,7 +4805,7 @@
     },
     {
       "id": "KOM_004",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_slova",
       "obtiznost": 2,
       "zadani": "Součet čísla a jeho trojnásobku je 48. Jaké číslo?",
@@ -4818,7 +4818,7 @@
     },
     {
       "id": "KOM_005",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_rovnice",
       "obtiznost": 2,
       "zadani": "Obvod obdélníku je 34 cm. Délka je o 3 cm větší než šířka. Obsah?",
@@ -4833,7 +4833,7 @@
     },
     {
       "id": "KOM_006",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_soustava",
       "obtiznost": 2,
       "zadani": "Ve třídě A je 40 % dívek, ve třídě B 60 % dívek. Dohromady 50 %. Poměr počtu žáků?",
@@ -4847,7 +4847,7 @@
     },
     {
       "id": "KOM_007",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_rovnice",
       "obtiznost": 2,
       "zadani": "Číslo zvětšené o jeho třetinu a jeho čtvrtinu je 13. Číslo?",
@@ -4862,7 +4862,7 @@
     },
     {
       "id": "KOM_008",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_pravdepodobnost",
       "obtiznost": 2,
       "zadani": "Čtverec 4×4. Náhodně hozený bod padne dovnitř. P(padne do kruhu r=2 vepsaného)?",
@@ -4875,7 +4875,7 @@
     },
     {
       "id": "KOM_009",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_geometrie",
       "obtiznost": 2,
       "zadani": "Pravoúhlý trojúhelník, odvěsny x a x+7, přepona x+8. Najdi x.",
@@ -4891,7 +4891,7 @@
     },
     {
       "id": "KOM_010",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_slovni",
       "obtiznost": 2,
       "zadani": "Petr vyřešil 2/5 úloh pondělí a 1/3 úterý. Zbývá 14 úloh. Celkem?",
@@ -4906,7 +4906,7 @@
     },
     {
       "id": "KOM_011",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_procenta",
       "obtiznost": 3,
       "zadani": "Obdélník 20×15 cm. Délka se zvýší o 10 %, šířka klesne o 10 %. Změna obsahu?",
@@ -4920,7 +4920,7 @@
     },
     {
       "id": "KOM_012",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_geometrie",
       "obtiznost": 2,
       "zadani": "Trojúhelník: základna 2/3 výšky. Výška je 12 cm. Obsah?",
@@ -4934,7 +4934,7 @@
     },
     {
       "id": "KOM_013",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_pravdepodobnost",
       "obtiznost": 2,
       "zadani": "Škola: 55 % dívek. Náhodně vybereme 1 žáka. P(vybrán chlapec)?",
@@ -4947,7 +4947,7 @@
     },
     {
       "id": "KOM_014",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_funkce",
       "obtiznost": 2,
       "zadani": "Přímka y = ax + b prochází (2,5) a (-1,-1). Koeficienty a, b?",
@@ -4961,7 +4961,7 @@
     },
     {
       "id": "KOM_015",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_pytagoras",
       "obtiznost": 2,
       "zadani": "Obdélník: úhlopříčka 17 cm, jedna strana 8 cm. Obsah?",
@@ -4975,7 +4975,7 @@
     },
     {
       "id": "KOM_016",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_rovnice",
       "obtiznost": 2,
       "zadani": "Číslo zdraženo o 15 % a pak zlevněno o 20 %. Výsledná změna?",
@@ -4988,7 +4988,7 @@
     },
     {
       "id": "KOM_017",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "funkce_rovnice",
       "obtiznost": 2,
       "zadani": "Pro která x je y = 3x - 6 kladné?",
@@ -5001,7 +5001,7 @@
     },
     {
       "id": "KOM_018",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "pravdepodobnost_kombinace",
       "obtiznost": 3,
       "zadani": "Ze skupiny 5 č. (1,2,3,4,5) vybereme 2. P(součet > 6)?",
@@ -5016,7 +5016,7 @@
     },
     {
       "id": "KOM_019",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_procenta",
       "obtiznost": 2,
       "zadani": "5/8 ze zboží je prodáno. Zbývá 150 kusů. Celkem?",
@@ -5029,7 +5029,7 @@
     },
     {
       "id": "KOM_020",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_soustava",
       "obtiznost": 2,
       "zadani": "Dva čtverce: obvody se liší o 12 cm, plochy se liší o 15 cm². Strany?",
@@ -5040,7 +5040,7 @@
     },
     {
       "id": "KOM_021",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_slovni",
       "obtiznost": 2,
       "zadani": "Jan snědl 1/3 koláče, Pavel 1/4. Zbývá 150 g. Kolik vážil celý koláč?",
@@ -5054,7 +5054,7 @@
     },
     {
       "id": "KOM_022",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_procenta",
       "obtiznost": 2,
       "zadani": "Zahrada 100 m² se zmenší o 15 %. Nová plocha?",
@@ -5067,7 +5067,7 @@
     },
     {
       "id": "KOM_023",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_slovni",
       "obtiznost": 2,
       "zadani": "Vlak A jede 80 km/h, vlak B jede 100 km/h vstříc. Vzdálenost 360 km. Za jak dlouho se setkají?",
@@ -5080,7 +5080,7 @@
     },
     {
       "id": "KOM_024",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "pravdepodobnost_cisla",
       "obtiznost": 2,
       "zadani": "Z číslic 1,2,3,4 sestavíme 2místné číslo bez opakování. P(číslo > 30)?",
@@ -5095,7 +5095,7 @@
     },
     {
       "id": "KOM_025",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_funkce",
       "obtiznost": 2,
       "zadani": "Přímka prochází počátkem a vrcholem čtverce (4,4). Rovnice přímky?",
@@ -5109,7 +5109,7 @@
     },
     {
       "id": "KOM_026",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_soustava",
       "obtiznost": 3,
       "zadani": "Jeden zlomek je o 1/4 větší než druhý, součet je 3/2. Jaké jsou?",
@@ -5123,7 +5123,7 @@
     },
     {
       "id": "KOM_027",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_slovni",
       "obtiznost": 3,
       "zadani": "Chodník kolem čtverce zahrady 10×10 m je 1 m široký. Plocha chodníku?",
@@ -5138,7 +5138,7 @@
     },
     {
       "id": "KOM_028",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_slovni",
       "obtiznost": 2,
       "zadani": "Ze 40 studentů 60 % složilo zkoušku. Kolik studentů neuspělo?",
@@ -5151,7 +5151,7 @@
     },
     {
       "id": "KOM_029",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_procenta",
       "obtiznost": 2,
       "zadani": "Cena výrobku klesla o 12 % na 176 Kč. Původní cena?",
@@ -5164,7 +5164,7 @@
     },
     {
       "id": "KOM_030",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "funkce_geometrie",
       "obtiznost": 2,
       "zadani": "Čára y=3 a kruh se středem (0,0) a r=5. Kolik společných bodů mají?",
@@ -5177,7 +5177,7 @@
     },
     {
       "id": "KOM_031",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_procenta",
       "obtiznost": 2,
       "zadani": "Válec: r zdvojnásoben, h stejná. O kolik % vzroste objem?",
@@ -5191,7 +5191,7 @@
     },
     {
       "id": "KOM_032",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_rovnice",
       "obtiznost": 2,
       "zadani": "(x+1)/(x-1) = 2 (x ≠ 1). Hodnota x?",
@@ -5206,7 +5206,7 @@
     },
     {
       "id": "KOM_033",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "pravdepodobnost_slovni",
       "obtiznost": 2,
       "zadani": "V pytlíku 5 červených, 3 modré, 2 žluté. Vytáhneme 1. P(není žlutá)?",
@@ -5219,7 +5219,7 @@
     },
     {
       "id": "KOM_034",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_pytagoras",
       "obtiznost": 2,
       "zadani": "Střecha: výška hřebene 3 m, šířka domu 8 m. Délka střešní plochy?",
@@ -5232,7 +5232,7 @@
     },
     {
       "id": "KOM_035",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_zlomky",
       "obtiznost": 2,
       "zadani": "Vyjádři jako zlomek: 37,5 %",
@@ -5245,7 +5245,7 @@
     },
     {
       "id": "KOM_036",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_slovni",
       "obtiznost": 2,
       "zadani": "Mamince je 3× více let než synovi. Za 12 let bude 2× více. Věky?",
@@ -5259,7 +5259,7 @@
     },
     {
       "id": "KOM_037",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_rovnice",
       "obtiznost": 3,
       "zadani": "Čtverec a rovnostranný trojúhelník mají stejný obvod 24 cm. Který má větší obsah?",
@@ -5273,7 +5273,7 @@
     },
     {
       "id": "KOM_038",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "funkce_procenta",
       "obtiznost": 2,
       "zadani": "Funkce y = 1000 × 0,9^x modeluje pokles ceny. Hodnota po 3 letech?",
@@ -5286,7 +5286,7 @@
     },
     {
       "id": "KOM_039",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_pravdepodobnost",
       "obtiznost": 2,
       "zadani": "Ze 4 karet (1/2, 1/3, 1/4, 1/5) vytáhneme dvě. P(součet > 1/2)?",
@@ -5299,7 +5299,7 @@
     },
     {
       "id": "KOM_040",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_soustava",
       "obtiznost": 2,
       "zadani": "Perimetr obdélníku je 26 cm. Úhlopříčka je 10 cm. Rozměry?",
@@ -5314,7 +5314,7 @@
     },
     {
       "id": "KOM_041",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "pravdepodobnost_kombinace",
       "obtiznost": 2,
       "zadani": "Z 10 čísel (1–10) vybereme 3. P(all tři sudá)?",
@@ -5327,7 +5327,7 @@
     },
     {
       "id": "KOM_042",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_rovnice",
       "obtiznost": 2,
       "zadani": "Po 30% slevě a pak 20% zdražení je cena 840 Kč. Původní cena?",
@@ -5341,7 +5341,7 @@
     },
     {
       "id": "KOM_043",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_zlomky",
       "obtiznost": 2,
       "zadani": "Třetina kruhu r=6 cm. Obsah (π≈3,14)?",
@@ -5354,7 +5354,7 @@
     },
     {
       "id": "KOM_044",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "funkce_slovni",
       "obtiznost": 2,
       "zadani": "Taxík: základní sazba 40 Kč + 25 Kč/km. Rovnice ceny?",
@@ -5367,7 +5367,7 @@
     },
     {
       "id": "KOM_045",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "funkce_slovni",
       "obtiznost": 2,
       "zadani": "Taxík: základní sazba 40 Kč + 25 Kč/km. Cena za 12 km?",
@@ -5380,7 +5380,7 @@
     },
     {
       "id": "KOM_046",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_pravdepodobnost",
       "obtiznost": 3,
       "zadani": "Na 10×10 cm šachovnici hodíme šipku. P(zasáhne černé pole)?",
@@ -5393,7 +5393,7 @@
     },
     {
       "id": "KOM_047",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_geometrie",
       "obtiznost": 3,
       "zadani": "Lichoběžník: základny 8 a 12 cm, výška = průměr základen. Obsah?",
@@ -5408,7 +5408,7 @@
     },
     {
       "id": "KOM_048",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_zlomky",
       "obtiznost": 2,
       "zadani": "Kolik procent je 7/20?",
@@ -5421,7 +5421,7 @@
     },
     {
       "id": "KOM_049",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_funkce",
       "obtiznost": 2,
       "zadani": "Přímka y = 2x + k prochází středem (3, 9). Hodnota k?",
@@ -5434,7 +5434,7 @@
     },
     {
       "id": "KOM_050",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_slovni",
       "obtiznost": 2,
       "zadani": "Cesta kolem obdélníkové zahrady 30×20 m je 2 m široká. Plocha cesty?",
@@ -5449,7 +5449,7 @@
     },
     {
       "id": "KOM_051",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "zlomky_procenta",
       "obtiznost": 1,
       "zadani": "Vyjádři jako procento: 3/4",
@@ -5462,7 +5462,7 @@
     },
     {
       "id": "KOM_052",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_slovni",
       "obtiznost": 1,
       "zadani": "Slevy 10 %: cena 180 Kč. Ušetříš?",
@@ -5475,7 +5475,7 @@
     },
     {
       "id": "KOM_053",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_procenta",
       "obtiznost": 2,
       "zadani": "Strana čtverce se zkrátí o 20 %. Plocha klesne o?",
@@ -5488,7 +5488,7 @@
     },
     {
       "id": "KOM_054",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_slovni",
       "obtiznost": 3,
       "zadani": "Dvě čísla v poměru 3:5 mají součin 135. Jaká jsou?",
@@ -5503,7 +5503,7 @@
     },
     {
       "id": "KOM_055",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "funkce_procenta",
       "obtiznost": 2,
       "zadani": "Populace roste o 2 % ročně. Nyní 10 000. Po 1 roce?",
@@ -5516,7 +5516,7 @@
     },
     {
       "id": "KOM_056",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_zlomky",
       "obtiznost": 2,
       "zadani": "5/8 délky tyče je 30 cm. Celá tyč?",
@@ -5529,7 +5529,7 @@
     },
     {
       "id": "KOM_057",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "pravdepodobnost_slovni",
       "obtiznost": 2,
       "zadani": "Tříčlenná komise z 5 mužů a 3 žen. P(aspoň 1 žena)?",
@@ -5542,7 +5542,7 @@
     },
     {
       "id": "KOM_058",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "rovnice_geometrie",
       "obtiznost": 3,
       "zadani": "Kružnice se středem (0,0) prochází bodem (3,4). Rovnice kružnice?",
@@ -5556,7 +5556,7 @@
     },
     {
       "id": "KOM_059",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "procenta_zlomky",
       "obtiznost": 2,
       "zadani": "Colik je 150 % z 2/5 čísla 60?",
@@ -5570,7 +5570,7 @@
     },
     {
       "id": "KOM_060",
-      "tema": "kombinovane",
+      "tema": "souhrnne",
       "podtema": "geometrie_kombinovane",
       "obtiznost": 3,
       "zadani": "Kruh je vepsán do rovnostranného trojúhelníku se stranou 6 cm. Poloměr kruhu?",
@@ -5583,7 +5583,7 @@
     },
     {
       "id": "MOC_001",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 2²",
@@ -5597,7 +5597,7 @@
     },
     {
       "id": "MOC_002",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 3²",
@@ -5610,7 +5610,7 @@
     },
     {
       "id": "MOC_003",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 4²",
@@ -5623,7 +5623,7 @@
     },
     {
       "id": "MOC_004",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 5²",
@@ -5636,7 +5636,7 @@
     },
     {
       "id": "MOC_005",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 6²",
@@ -5649,7 +5649,7 @@
     },
     {
       "id": "MOC_006",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 7²",
@@ -5662,7 +5662,7 @@
     },
     {
       "id": "MOC_007",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
       "zadani": "Vypočítej: 10²",
@@ -5675,7 +5675,7 @@
     },
     {
       "id": "MOC_008",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √4",
@@ -5689,7 +5689,7 @@
     },
     {
       "id": "MOC_009",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √9",
@@ -5702,7 +5702,7 @@
     },
     {
       "id": "MOC_010",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √16",
@@ -5715,7 +5715,7 @@
     },
     {
       "id": "MOC_011",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √25",
@@ -5728,7 +5728,7 @@
     },
     {
       "id": "MOC_012",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √36",
@@ -5741,7 +5741,7 @@
     },
     {
       "id": "MOC_013",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √49",
@@ -5754,7 +5754,7 @@
     },
     {
       "id": "MOC_014",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √64",
@@ -5767,7 +5767,7 @@
     },
     {
       "id": "MOC_015",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: √100",
@@ -5780,7 +5780,7 @@
     },
     {
       "id": "MOC_016",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 2³",
@@ -5794,7 +5794,7 @@
     },
     {
       "id": "MOC_017",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 3³",
@@ -5808,7 +5808,7 @@
     },
     {
       "id": "MOC_018",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 2⁴",
@@ -5822,7 +5822,7 @@
     },
     {
       "id": "MOC_019",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: (-3)²",
@@ -5836,7 +5836,7 @@
     },
     {
       "id": "MOC_020",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: (-2)³",
@@ -5850,7 +5850,7 @@
     },
     {
       "id": "MOC_021",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √121",
@@ -5866,7 +5866,7 @@
     },
     {
       "id": "MOC_022",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √144",
@@ -5881,7 +5881,7 @@
     },
     {
       "id": "MOC_023",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Zjednodušs: 2³ · 2²",
@@ -5895,7 +5895,7 @@
     },
     {
       "id": "MOC_024",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Zjednodušs: 4⁴ ÷ 4²",
@@ -5909,7 +5909,7 @@
     },
     {
       "id": "MOC_025",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 3² + 4²",
@@ -5923,7 +5923,7 @@
     },
     {
       "id": "MOC_026",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 5² − 3²",
@@ -5937,7 +5937,7 @@
     },
     {
       "id": "MOC_027",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 2⁵",
@@ -5951,7 +5951,7 @@
     },
     {
       "id": "MOC_028",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: (1/2)²",
@@ -5966,7 +5966,7 @@
     },
     {
       "id": "MOC_029",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √(3² + 4²)",
@@ -5981,7 +5981,7 @@
     },
     {
       "id": "MOC_030",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √169",
@@ -5996,7 +5996,7 @@
     },
     {
       "id": "MOC_031",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(5² + 12²)",
@@ -6011,7 +6011,7 @@
     },
     {
       "id": "MOC_032",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
       "zadani": "Vypočítej: 2^10",
@@ -6025,7 +6025,7 @@
     },
     {
       "id": "MOC_033",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 3⁴",
@@ -6039,7 +6039,7 @@
     },
     {
       "id": "MOC_034",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: (-1)^100",
@@ -6053,7 +6053,7 @@
     },
     {
       "id": "MOC_035",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: (-1)^101",
@@ -6067,7 +6067,7 @@
     },
     {
       "id": "MOC_036",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
       "zadani": "Vypočítej: 6² × 2³",
@@ -6081,7 +6081,7 @@
     },
     {
       "id": "MOC_037",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(49 + 576)",
@@ -6095,7 +6095,7 @@
     },
     {
       "id": "MOC_038",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(10² − 8²)",
@@ -6110,7 +6110,7 @@
     },
     {
       "id": "MOC_039",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
       "zadani": "Vypočítej: (2³)²",
@@ -6124,7 +6124,7 @@
     },
     {
       "id": "MOC_040",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 10³ − 10²",
@@ -6138,7 +6138,7 @@
     },
     {
       "id": "CIS_001",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 2, 4, 6, 8, ___",
@@ -6152,7 +6152,7 @@
     },
     {
       "id": "CIS_002",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 3, 5, 7, ___",
@@ -6166,7 +6166,7 @@
     },
     {
       "id": "CIS_003",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 5, 10, 15, 20, ___",
@@ -6180,7 +6180,7 @@
     },
     {
       "id": "CIS_004",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 100, 90, 80, 70, ___",
@@ -6194,7 +6194,7 @@
     },
     {
       "id": "CIS_005",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 2, 4, 8, ___",
@@ -6208,7 +6208,7 @@
     },
     {
       "id": "CIS_006",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 3, 6, 12, 24, ___",
@@ -6222,7 +6222,7 @@
     },
     {
       "id": "CIS_007",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 4, 9, 16, ___",
@@ -6236,7 +6236,7 @@
     },
     {
       "id": "CIS_008",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 0, 3, 6, 9, 12, ___",
@@ -6250,7 +6250,7 @@
     },
     {
       "id": "CIS_009",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 2, 6, 18, 54, ___",
@@ -6264,7 +6264,7 @@
     },
     {
       "id": "CIS_010",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 50, 45, 40, 35, ___",
@@ -6278,7 +6278,7 @@
     },
     {
       "id": "CIS_011",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "fibonacciho_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 1, 2, 3, 5, 8, ___",
@@ -6292,7 +6292,7 @@
     },
     {
       "id": "CIS_012",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kubicka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 8, 27, 64, ___",
@@ -6306,7 +6306,7 @@
     },
     {
       "id": "CIS_013",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Doplň: 3, 7, 11, 15, ___",
@@ -6321,7 +6321,7 @@
     },
     {
       "id": "CIS_014",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "trojuhelnikova_cisla",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 3, 6, 10, 15, ___",
@@ -6336,7 +6336,7 @@
     },
     {
       "id": "CIS_015",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "fibonacciho_posloupnost",
       "obtiznost": 2,
       "zadani": "Doplň: 2, 3, 5, 8, 13, ___",
@@ -6351,7 +6351,7 @@
     },
     {
       "id": "CIS_016",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 2,
       "zadani": "Doplň: 64, 32, 16, 8, ___",
@@ -6366,7 +6366,7 @@
     },
     {
       "id": "CIS_017",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Jaký je 5. člen posloupnosti 3, 7, 11, 15, ...?",
@@ -6382,7 +6382,7 @@
     },
     {
       "id": "CIS_018",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Součet: 1 + 2 + 3 + ... + 10 = ?",
@@ -6397,7 +6397,7 @@
     },
     {
       "id": "CIS_019",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 2,
       "zadani": "Jaký je 4. člen posloupnosti 2, 6, 18, ...?",
@@ -6412,7 +6412,7 @@
     },
     {
       "id": "CIS_020",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 2, 4, 7, 11, ___",
@@ -6427,7 +6427,7 @@
     },
     {
       "id": "CIS_021",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Jaký je 10. člen posloupnosti 5, 8, 11, ...?",
@@ -6442,7 +6442,7 @@
     },
     {
       "id": "CIS_022",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 2,
       "zadani": "Doplň: 5, 10, 20, 40, ___",
@@ -6457,7 +6457,7 @@
     },
     {
       "id": "CIS_023",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Součet: 2 + 4 + 6 + ... + 20 = ?",
@@ -6472,7 +6472,7 @@
     },
     {
       "id": "CIS_024",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 2,
       "zadani": "Doplň: 256, 128, 64, 32, ___",
@@ -6486,7 +6486,7 @@
     },
     {
       "id": "CIS_025",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 4, 9, 16, 25, ___",
@@ -6501,7 +6501,7 @@
     },
     {
       "id": "CIS_026",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je 20. člen posloupnosti 2, 5, 8, ...?",
@@ -6516,7 +6516,7 @@
     },
     {
       "id": "CIS_027",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Součet prvních 100 přirozených čísel?",
@@ -6531,7 +6531,7 @@
     },
     {
       "id": "CIS_028",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je 15. člen posloupnosti 10, 7, 4, ...?",
@@ -6547,7 +6547,7 @@
     },
     {
       "id": "CIS_029",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 3,
       "zadani": "Posloupnost: aₙ = n² + 1. Jaký je 7. člen?",
@@ -6562,7 +6562,7 @@
     },
     {
       "id": "CIS_030",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 3,
       "zadani": "Doplň: 3, 9, 27, 81, ___",
@@ -6577,7 +6577,7 @@
     },
     {
       "id": "CIS_031",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Součet lichých čísel 1+3+5+...+19 = ?",
@@ -6592,7 +6592,7 @@
     },
     {
       "id": "CIS_032",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 3,
       "zadani": "Jaký je 6. člen Fibonacciho posloupnosti (1, 1, 2, 3, 5, ...)?",
@@ -6607,7 +6607,7 @@
     },
     {
       "id": "CIS_033",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Kolik členů má posloupnost 5, 8, 11, ..., 50?",
@@ -6622,7 +6622,7 @@
     },
     {
       "id": "CIS_034",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je 5. člen posloupnosti 1, 2, 4, 8, ...?",
@@ -6636,7 +6636,7 @@
     },
     {
       "id": "CIS_035",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 3,
       "zadani": "Součet: 1² + 2² + 3² + 4² + 5² = ?",
@@ -7515,7 +7515,7 @@
     },
     {
       "id": "CIS_036",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 4, 8, 12, 16, ___",
@@ -7529,7 +7529,7 @@
     },
     {
       "id": "CIS_037",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 30, 25, 20, 15, ___",
@@ -7543,7 +7543,7 @@
     },
     {
       "id": "CIS_038",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 2, 4, 8, 16, 32, ___",
@@ -7557,7 +7557,7 @@
     },
     {
       "id": "CIS_039",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 10, 100, ___",
@@ -7571,7 +7571,7 @@
     },
     {
       "id": "CIS_040",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 7, 14, 21, 28, ___",
@@ -7585,7 +7585,7 @@
     },
     {
       "id": "CIS_041",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 36, 49, 64, 81, ___",
@@ -7599,7 +7599,7 @@
     },
     {
       "id": "CIS_042",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 2, 5, 8, 11, ___",
@@ -7613,7 +7613,7 @@
     },
     {
       "id": "CIS_043",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 1,
       "zadani": "Doplň: 2, 4, 6, 10, 16, ___",
@@ -7627,7 +7627,7 @@
     },
     {
       "id": "CIS_044",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Doplň: 4, 9, 16, 25, 36, ___",
@@ -7641,7 +7641,7 @@
     },
     {
       "id": "CIS_045",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 1,
       "zadani": "Součet: 3 + 6 + 9 + ... + 30 = ?",
@@ -7655,7 +7655,7 @@
     },
     {
       "id": "CIS_046",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Jaký je 8. člen posloupnosti 1, 4, 7, 10, ...?",
@@ -7669,7 +7669,7 @@
     },
     {
       "id": "CIS_047",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 1, 2, 4, 7, 13, ___",
@@ -7683,7 +7683,7 @@
     },
     {
       "id": "CIS_048",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 2, 6, 24, ___",
@@ -7697,7 +7697,7 @@
     },
     {
       "id": "CIS_049",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Jaký je 12. člen posloupnosti 100, 95, 90, ...?",
@@ -7711,7 +7711,7 @@
     },
     {
       "id": "CIS_050",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Součet: 1 + 4 + 7 + ... + 28 = ?",
@@ -7725,7 +7725,7 @@
     },
     {
       "id": "CIS_051",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Kolik je součet prvních 50 přirozených čísel?",
@@ -7739,7 +7739,7 @@
     },
     {
       "id": "CIS_052",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 2,
       "zadani": "Doplň: 3, 4, 7, 11, 18, 29, ___",
@@ -7753,7 +7753,7 @@
     },
     {
       "id": "CIS_053",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Jaký je 100. člen posloupnosti 1, 3, 5, ...?",
@@ -7767,7 +7767,7 @@
     },
     {
       "id": "CIS_054",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "trojuhelnikova_cisla",
       "obtiznost": 2,
       "zadani": "Doplň: 0, 1, 3, 6, 10, 15, ___",
@@ -7781,7 +7781,7 @@
     },
     {
       "id": "CIS_055",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 2,
       "zadani": "Součet: 1 + 3 + 5 + ... + 29 = ?",
@@ -7795,7 +7795,7 @@
     },
     {
       "id": "CIS_056",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je součet prvních 10 členů posloupnosti 2, 5, 8, ...?",
@@ -7809,7 +7809,7 @@
     },
     {
       "id": "CIS_057",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Kolik členů má posloupnost 3, 7, 11, ..., 99?",
@@ -7823,7 +7823,7 @@
     },
     {
       "id": "CIS_058",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je 7. člen posloupnosti aₙ = 2n² − 1?",
@@ -7837,7 +7837,7 @@
     },
     {
       "id": "CIS_059",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Doplň: 1, 5, 14, 30, 55, ___",
@@ -7851,7 +7851,7 @@
     },
     {
       "id": "CIS_060",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Součet: 10 + 20 + 30 + ... + 100 = ?",
@@ -7865,7 +7865,7 @@
     },
     {
       "id": "CIS_061",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je 7. člen posloupnosti 1, 3, 9, 27, ...?",
@@ -7879,7 +7879,7 @@
     },
     {
       "id": "CIS_062",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "geometricka_posloupnost",
       "obtiznost": 3,
       "zadani": "Součet prvních 5 členů posloupnosti 1, 2, 4, 8, 16, ...?",
@@ -7893,7 +7893,7 @@
     },
     {
       "id": "CIS_063",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "ruzna_vzorec",
       "obtiznost": 3,
       "zadani": "Doplň: 1, 3, 7, 15, 31, ___",
@@ -7907,7 +7907,7 @@
     },
     {
       "id": "CIS_064",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "aritmeticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Jaký je 50. člen posloupnosti 2, 4, 6, 8, ...?",
@@ -7921,7 +7921,7 @@
     },
     {
       "id": "CIS_065",
-      "tema": "cisselne_rady",
+      "tema": "grafy_logika",
       "podtema": "kvadraticka_posloupnost",
       "obtiznost": 3,
       "zadani": "Součet: 1² + 2² + 3² + ... + 10² = ?",
@@ -7935,7 +7935,7 @@
     },
     {
       "id": "MOC_041",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 4³",
@@ -7949,7 +7949,7 @@
     },
     {
       "id": "MOC_042",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: (−4)²",
@@ -7963,7 +7963,7 @@
     },
     {
       "id": "MOC_043",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √225",
@@ -7977,7 +7977,7 @@
     },
     {
       "id": "MOC_044",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Vypočítej: 3³ · 3²",
@@ -7991,7 +7991,7 @@
     },
     {
       "id": "MOC_045",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Vypočítej: 2⁶ ÷ 2³",
@@ -8005,7 +8005,7 @@
     },
     {
       "id": "MOC_046",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √(6² + 8²)",
@@ -8019,7 +8019,7 @@
     },
     {
       "id": "MOC_047",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Vypočítej: (3²)³",
@@ -8033,7 +8033,7 @@
     },
     {
       "id": "MOC_048",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Vypočítej: (2²)³",
@@ -8047,7 +8047,7 @@
     },
     {
       "id": "MOC_049",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: √(16 · 25)",
@@ -8061,7 +8061,7 @@
     },
     {
       "id": "MOC_050",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
       "zadani": "Vypočítej: 1² + 2² + 3² + 4²",
@@ -8075,7 +8075,7 @@
     },
     {
       "id": "MOC_051",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 2⁷",
@@ -8089,7 +8089,7 @@
     },
     {
       "id": "MOC_052",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 2⁸",
@@ -8103,7 +8103,7 @@
     },
     {
       "id": "MOC_053",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(13² − 5²)",
@@ -8117,7 +8117,7 @@
     },
     {
       "id": "MOC_054",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: (−2)⁴",
@@ -8131,7 +8131,7 @@
     },
     {
       "id": "MOC_055",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: (−3)⁴",
@@ -8145,7 +8145,7 @@
     },
     {
       "id": "MOC_056",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
       "zadani": "Vypočítej: (3 · 2)²",
@@ -8159,7 +8159,7 @@
     },
     {
       "id": "MOC_057",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(4 · 9 · 25)",
@@ -8173,7 +8173,7 @@
     },
     {
       "id": "MOC_058",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 5³ − 5²",
@@ -8187,7 +8187,7 @@
     },
     {
       "id": "MOC_059",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 4³ + 2⁴",
@@ -8201,7 +8201,7 @@
     },
     {
       "id": "MOC_060",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(3⁴)",
@@ -8215,7 +8215,7 @@
     },
     {
       "id": "MOC_061",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: (1/3)³",
@@ -8229,7 +8229,7 @@
     },
     {
       "id": "MOC_062",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √256",
@@ -8243,7 +8243,7 @@
     },
     {
       "id": "MOC_063",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: 2⁹",
@@ -8257,7 +8257,7 @@
     },
     {
       "id": "MOC_064",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
       "zadani": "Vypočítej: (2/3)³",
@@ -8271,7 +8271,7 @@
     },
     {
       "id": "MOC_065",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: √(16/25)",
@@ -8552,7 +8552,7 @@
     {
       "id": "SLO_061",
       "tema": "slovni_ulohy",
-      "podtema": "kvadraticke",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Číslo je o 3 větší než jeho polovina. Jaké číslo to je?",
       "odpoved": "6",
@@ -8568,7 +8568,7 @@
     {
       "id": "SLO_062",
       "tema": "slovni_ulohy",
-      "podtema": "kvadraticke",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Součin dvou po sobě jdoucích přirozených čísel je 72. Jaká jsou?",
       "odpoved": "8 a 9",
@@ -8583,7 +8583,7 @@
     {
       "id": "SLO_063",
       "tema": "slovni_ulohy",
-      "podtema": "kvadraticke",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Obdélník má obsah 60 cm². Délka je o 7 cm větší než šířka. Rozměry?",
       "odpoved": "5 × 12 cm",
@@ -8597,7 +8597,7 @@
     {
       "id": "SLO_064",
       "tema": "slovni_ulohy",
-      "podtema": "kvadraticke",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Součet čtverce čísla a trojnásobku téhož čísla je 40. Jaké je to číslo (kladné)?",
       "odpoved": "5",
@@ -8611,7 +8611,7 @@
     {
       "id": "SLO_065",
       "tema": "slovni_ulohy",
-      "podtema": "kvadraticke",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Čtvercová zahrada: prodloužení délky o 4 m a šířky o 2 m dá obsah 120 m². Původní strana?",
       "odpoved": "8 m",
@@ -8625,7 +8625,7 @@
     {
       "id": "SLO_066",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Dva cyklisté jedou vstříc ze vzdálenosti 90 km, rychlosti 25 a 20 km/h. Za jak dlouho se setkají?",
       "odpoved": "2 hodiny",
@@ -8639,7 +8639,7 @@
     {
       "id": "SLO_067",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Vlak ujede 360 km za 3 h, autobus za 6 h. O kolik km/h je vlak rychlejší?",
       "odpoved": "60 km/h",
@@ -8654,7 +8654,7 @@
     {
       "id": "SLO_068",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Auto jede 80 km/h. Motocykl vyjede ze stejného místa o 30 min později rychlostí 120 km/h. Za jak dlouho motor dohonní auto?",
       "odpoved": "1 hodina",
@@ -8669,7 +8669,7 @@
     {
       "id": "SLO_069",
       "tema": "slovni_ulohy",
-      "podtema": "pohybove",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Dvě lodě plují z přístavu v opačných směrech, 35 a 25 km/h. Za jak dlouho jsou 300 km od sebe?",
       "odpoved": "5 hodin",
@@ -8683,7 +8683,7 @@
     {
       "id": "SLO_070",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Petr dodělá práci za 4 h, Pavel za 6 h. Za jak dlouho ji dodělají spolu?",
       "odpoved": "2 h 24 min",
@@ -8699,7 +8699,7 @@
     {
       "id": "SLO_071",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 3,
       "zadani": "Čerpadlo A plní nádrž za 8 h, čerpadlo B ji vyprazdňuje za 12 h. Oba najednou — za kolik hodin se naplní?",
       "odpoved": "24 hodin",
@@ -8713,7 +8713,7 @@
     {
       "id": "SLO_072",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Smícháme 3 l 40% roztoku a 2 l 20% roztoku. Výsledná koncentrace?",
       "odpoved": "32%",
@@ -8727,7 +8727,7 @@
     {
       "id": "SLO_073",
       "tema": "slovni_ulohy",
-      "podtema": "smesi",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "200 g 30% roztoku cukru. Kolik gramů cukru přidáme, aby vznikl 50% roztok?",
       "odpoved": "80 g",
@@ -8741,7 +8741,7 @@
     {
       "id": "SLO_074",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Otci 42, synovi 12. Za kolik let bude otci 3× tolik co synovi?",
       "odpoved": "za 3 roky",
@@ -8758,7 +8758,7 @@
     {
       "id": "SLO_075",
       "tema": "slovni_ulohy",
-      "podtema": "vekove",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Babičce je 5× tolik co vnučce. Dohromady 72 let. Kolik je vnučce?",
       "odpoved": "12 let",
@@ -8775,7 +8775,7 @@
     {
       "id": "SLO_076",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 2,
       "zadani": "Prodáno 60 vstupenek. Dospělý 50 Kč, dítě 30 Kč. Celkem 2400 Kč. Kolik dospělých?",
       "odpoved": "30",
@@ -8789,7 +8789,7 @@
     {
       "id": "SLO_077",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Jan má 2× více peněz než Petr. Jan dal Petrovi 100 Kč a mají teď stejně. Kolik měl Jan?",
       "odpoved": "400 Kč",
@@ -8806,7 +8806,7 @@
     {
       "id": "SLO_078",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Třída 30 žáků, průměr 7,2 b. Chlapci 7 b, dívky 7,5 b. Kolik chlapců?",
       "odpoved": "18",
@@ -8823,7 +8823,7 @@
     {
       "id": "SLO_079",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Tři čísla v poměru 2:3:5, součet 80. Jaká jsou?",
       "odpoved": "16, 24, 40",
@@ -8837,7 +8837,7 @@
     {
       "id": "SLO_080",
       "tema": "slovni_ulohy",
-      "podtema": "kombinovane",
+      "podtema": "ostatni",
       "obtiznost": 3,
       "zadani": "Zboží se zlevní o 20 % a pak o dalších 10 %. Celkové zlevnění v %?",
       "odpoved": "28 %",

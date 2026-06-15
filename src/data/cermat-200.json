@@ -6,8 +6,8 @@
   "examples": [
     {
       "id": "t01_01",
-      "tema": "pomer_meritko",
-      "podtema": "zakladni_pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Dělte číslo 90 v poměru 2 : 3.",
       "odpoved": "36 a 54",
@@ -23,8 +23,8 @@
     },
     {
       "id": "t01_02",
-      "tema": "pomer_meritko",
-      "podtema": "zakladni_pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Petra a Jan si rozdělí 120 Kč v poměru 1 : 3. Kolik dostane Jan?",
       "odpoved": "90 Kč",
@@ -40,8 +40,8 @@
     },
     {
       "id": "t01_03",
-      "tema": "pomer_meritko",
-      "podtema": "m_ritko_mapy",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Na mapě v měřítku 1 : 50 000 měří vzdálenost dvou měst 6 cm. Jaká je skutečná vzdálenost?",
       "odpoved": "3 km",
@@ -55,8 +55,8 @@
     },
     {
       "id": "t01_04",
-      "tema": "pomer_meritko",
-      "podtema": "m_ritko_mapy",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Skutečná délka silnice je 12 km. Jaká bude délka na mapě s měřítkem 1 : 200 000?",
       "odpoved": "6 cm",
@@ -69,8 +69,8 @@
     },
     {
       "id": "t01_05",
-      "tema": "pomer_meritko",
-      "podtema": "zakladni_pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Zjednodušte poměr 36 : 48.",
       "odpoved": "3 : 4",
@@ -85,8 +85,8 @@
     },
     {
       "id": "t01_06",
-      "tema": "pomer_meritko",
-      "podtema": "trojclenka",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Za 4 hodiny pracovník vyrobí 60 výrobků. Kolik vyrobí za 7 hodin?",
       "odpoved": "105 výrobků",
@@ -99,8 +99,8 @@
     },
     {
       "id": "t01_07",
-      "tema": "pomer_meritko",
-      "podtema": "trojclenka",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Recept na 4 porce vyžaduje 320 g mouky. Kolik mouky potřebujeme na 6 porcí?",
       "odpoved": "480 g",
@@ -113,8 +113,8 @@
     },
     {
       "id": "t01_08",
-      "tema": "pomer_meritko",
-      "podtema": "zakladni_pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Ve třídě je 15 dívek a 12 chlapců. Zapište poměr dívek k chlapcům v základním tvaru.",
       "odpoved": "5 : 4",
@@ -129,8 +129,8 @@
     },
     {
       "id": "t01_09",
-      "tema": "pomer_meritko",
-      "podtema": "m_ritko_planu",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Plán pokoje má měřítko 1 : 50. Pokoj na plánu má rozměry 6 cm × 4 cm. Jaké jsou skutečné rozměry?",
       "odpoved": "3 m × 2 m",
@@ -143,8 +143,8 @@
     },
     {
       "id": "t01_10",
-      "tema": "pomer_meritko",
-      "podtema": "zakladni_pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Roztok obsahuje vodu a líh v poměru 7 : 3. Kolik litrů lihu je v 20 litrech roztoku?",
       "odpoved": "6 litrů",
@@ -158,8 +158,8 @@
     },
     {
       "id": "t01_11",
-      "tema": "pomer_meritko",
-      "podtema": "pom_r_tri_cisel",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Rozdělte 360 Kč mezi Adama, Bořka a Cecílii v poměru 2 : 3 : 4.",
       "odpoved": "Adam 80 Kč, Bořek 120 Kč, Cecílie 160 Kč",
@@ -175,8 +175,8 @@
     },
     {
       "id": "t01_12",
-      "tema": "pomer_meritko",
-      "podtema": "m_ritko_mapy",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Na mapě 1 : 25 000 jsou dvě vesnice vzdáleny 8,4 cm. Turista jde průměrnou rychlostí 5 km/h. Za jak dlouho dojde z jedné vesnice do druhé?",
       "odpoved": "2 hodiny a 6 minut",
@@ -192,8 +192,8 @@
     },
     {
       "id": "t01_13",
-      "tema": "pomer_meritko",
-      "podtema": "prima_um_rnost",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Stroj A vyrobí 80 ks za 2 hodiny. Kolik kusů vyrobí stejný stroj za 7,5 hodiny?",
       "odpoved": "300 ks",
@@ -206,8 +206,8 @@
     },
     {
       "id": "t01_14",
-      "tema": "pomer_meritko",
-      "podtema": "pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Poměr délky a šířky obdélníku je 5 : 3 a obvod je 80 cm. Určete rozměry obdélníku.",
       "odpoved": "Délka 25 cm, šířka 15 cm",
@@ -222,8 +222,8 @@
     },
     {
       "id": "t01_15",
-      "tema": "pomer_meritko",
-      "podtema": "m_ritko",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Budova vysoká 45 m je na fotografii zobrazena ve výšce 9 cm. V jakém měřítku je fotografie?",
       "odpoved": "1 : 500",
@@ -236,8 +236,8 @@
     },
     {
       "id": "t01_16",
-      "tema": "pomer_meritko",
-      "podtema": "neprima_um_rnost",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Práci zvládne 6 dělníků za 8 dní. Za kolik dní ji zvládnou 4 dělníci?",
       "odpoved": "12 dní",
@@ -250,8 +250,8 @@
     },
     {
       "id": "t01_17",
-      "tema": "pomer_meritko",
-      "podtema": "pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Smíchají se dva roztoky: 3 litry s 20% koncentrací a 7 litrů s 60% koncentrací. Jaká je výsledná koncentrace?",
       "odpoved": "48 %",
@@ -267,8 +267,8 @@
     },
     {
       "id": "t01_18",
-      "tema": "pomer_meritko",
-      "podtema": "slozeny_pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Pavel, Radek a Simona investovali do firmy v poměru 3 : 5 : 7. Firma vydělala 180 000 Kč. Pavel dostane o kolik méně než Simona?",
       "odpoved": "O 48 000 Kč méně",
@@ -284,8 +284,8 @@
     },
     {
       "id": "t01_19",
-      "tema": "pomer_meritko",
-      "podtema": "m_ritko_plocha",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Na plánu v měřítku 1 : 500 má zahrada tvar obdélníku o rozměrech 6 cm × 4 cm. Jaká je skutečná plocha zahrady?",
       "odpoved": "6 000 m²",
@@ -301,8 +301,8 @@
     },
     {
       "id": "t01_20",
-      "tema": "pomer_meritko",
-      "podtema": "pom_r",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Poměr věků otce a syna je nyní 7 : 2. Za 6 let bude poměr jejich věků 13 : 5. Kolik let je nyní otci?",
       "odpoved": "42 let",
@@ -621,8 +621,8 @@
     },
     {
       "id": "t03_01",
-      "tema": "procenta",
-      "podtema": "vypocet_procent",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 15 % z čísla 80?",
       "odpoved": "12",
@@ -635,8 +635,8 @@
     },
     {
       "id": "t03_02",
-      "tema": "procenta",
-      "podtema": "procentova_cast",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Ze 40 žáků bylo 24 přítomno. Kolik procent žáků chybělo?",
       "odpoved": "40 %",
@@ -649,8 +649,8 @@
     },
     {
       "id": "t03_03",
-      "tema": "procenta",
-      "podtema": "zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "20 % z neznámého čísla je 14. Jaké je toto číslo?",
       "odpoved": "70",
@@ -663,8 +663,8 @@
     },
     {
       "id": "t03_04",
-      "tema": "procenta",
-      "podtema": "vypocet_procent",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Cena kalhot je 800 Kč. Jsou zlevněny o 25 %. Jaká je nová cena?",
       "odpoved": "600 Kč",
@@ -677,8 +677,8 @@
     },
     {
       "id": "t03_05",
-      "tema": "procenta",
-      "podtema": "vypocet_procent",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Plat byl 25 000 Kč. Po zvýšení o 8 % je plat...",
       "odpoved": "27 000 Kč",
@@ -691,8 +691,8 @@
     },
     {
       "id": "t03_06",
-      "tema": "procenta",
-      "podtema": "promile",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik je 5 ‰ z čísla 4 000?",
       "odpoved": "20",
@@ -705,8 +705,8 @@
     },
     {
       "id": "t03_07",
-      "tema": "procenta",
-      "podtema": "procentova_cast",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Ve škole je 450 žáků. 36 žáků chodí do zájmového kroužku šachu. Kolik procent žáků hraje šachy?",
       "odpoved": "8 %",
@@ -718,8 +718,8 @@
     },
     {
       "id": "t03_08",
-      "tema": "procenta",
-      "podtema": "zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Po slevě 30 % stojí zboží 350 Kč. Jaká byla původní cena?",
       "odpoved": "500 Kč",
@@ -733,8 +733,8 @@
     },
     {
       "id": "t03_09",
-      "tema": "procenta",
-      "podtema": "vypocet_procent",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Kolik procent je číslo 45 z čísla 180?",
       "odpoved": "25 %",
@@ -746,8 +746,8 @@
     },
     {
       "id": "t03_10",
-      "tema": "procenta",
-      "podtema": "promile",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 1,
       "zadani": "Řeka má průtok 2 000 litrů za sekundu. 3,5 ‰ tvoří kal. Kolik litrů kalu proteče za sekundu?",
       "odpoved": "7 litrů",
@@ -760,8 +760,8 @@
     },
     {
       "id": "t03_11",
-      "tema": "procenta",
-      "podtema": "slozene_procento",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena výrobku vzrostla o 10 % a pak ještě o 10 %. O kolik procent vzrostla cena celkem?",
       "odpoved": "21 %",
@@ -776,8 +776,8 @@
     },
     {
       "id": "t03_12",
-      "tema": "procenta",
-      "podtema": "dph",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena bez DPH je 1 200 Kč. DPH je 21 %. Kolik zaplatíte celkem?",
       "odpoved": "1 452 Kč",
@@ -790,8 +790,8 @@
     },
     {
       "id": "t03_13",
-      "tema": "procenta",
-      "podtema": "zaklad_zp_tny_vypocet",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Cena po zdražení o 15 % je 2 300 Kč. Jaká byla původní cena?",
       "odpoved": "2 000 Kč",
@@ -805,8 +805,8 @@
     },
     {
       "id": "t03_14",
-      "tema": "procenta",
-      "podtema": "procentova_cast",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "V nádobě je 3 litry alkoholu. Celá nádoba má objem 12 litrů. Kolik procent tvoří alkohol? Doplňte vodou na 40% roztok – kolik vody přidáme?",
       "odpoved": "Nyní 25 %. Přidáme 4,5 litrů vody.",
@@ -821,8 +821,8 @@
     },
     {
       "id": "t03_15",
-      "tema": "procenta",
-      "podtema": "vypocet_procent",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Škola měla loni 520 žáků, letos 494. O kolik procent klesl počet žáků?",
       "odpoved": "5 %",
@@ -835,8 +835,8 @@
     },
     {
       "id": "t03_16",
-      "tema": "procenta",
-      "podtema": "slozene_procento",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Vklad 10 000 Kč je uložen na 2 roky s úrokem 5 % ročně (složený). Kolik bude mít vkladatel po 2 letech?",
       "odpoved": "11 025 Kč",
@@ -849,8 +849,8 @@
     },
     {
       "id": "t03_17",
-      "tema": "procenta",
-      "podtema": "promile_zaklad",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Řidič má v krvi 0,8 ‰ alkoholu. Lékař zjistil, že to odpovídá 1,2 gramu alkoholu. Kolik gramů krve má řidič v těle?",
       "odpoved": "1 500 g",
@@ -864,8 +864,8 @@
     },
     {
       "id": "t03_18",
-      "tema": "procenta",
-      "podtema": "slozene_procenty",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Auto ztrácí každý rok 15 % hodnoty. Auto stálo nové 400 000 Kč. Kolik bude stát po 3 letech?",
       "odpoved": "245 050 Kč",
@@ -880,8 +880,8 @@
     },
     {
       "id": "t03_19",
-      "tema": "procenta",
-      "podtema": "zaklad_zp_tny_vypocet",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Po dvou po sobě jdoucích slevách 20 % a 25 % stojí zboží 480 Kč. Jaká byla původní cena?",
       "odpoved": "800 Kč",
@@ -896,8 +896,8 @@
     },
     {
       "id": "t03_20",
-      "tema": "procenta",
-      "podtema": "slozene_procenty",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Firma zvýšila cenu o 20 % a pak snížila o 20 %. Je výsledná cena stejná jako původní?",
       "odpoved": "Ne, je o 4 % nižší",
@@ -912,7 +912,7 @@
     },
     {
       "id": "t04_01",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "mocniny_prirozenych_cisel",
       "obtiznost": 1,
       "zadani": "Vypočítejte: 3⁴",
@@ -925,7 +925,7 @@
     },
     {
       "id": "t04_02",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: √144",
@@ -938,7 +938,7 @@
     },
     {
       "id": "t04_03",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: 2⁵ + 3²",
@@ -953,7 +953,7 @@
     },
     {
       "id": "t04_04",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: √(16 × 25)",
@@ -967,7 +967,7 @@
     },
     {
       "id": "t04_05",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "mocniny_zapornych_cisel",
       "obtiznost": 1,
       "zadani": "Vypočítejte: (−3)²",
@@ -980,7 +980,7 @@
     },
     {
       "id": "t04_06",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: 10³",
@@ -993,7 +993,7 @@
     },
     {
       "id": "t04_07",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: √(81/25)",
@@ -1008,7 +1008,7 @@
     },
     {
       "id": "t04_08",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "mocniny_porovnani",
       "obtiznost": 1,
       "zadani": "Které je větší: 2⁶ nebo 3⁴?",
@@ -1023,7 +1023,7 @@
     },
     {
       "id": "t04_09",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pythagorova_v_ta",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Vypočítejte přeponu.",
@@ -1038,7 +1038,7 @@
     },
     {
       "id": "t04_10",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Zjednodušte: 5² × 5³",
@@ -1053,7 +1053,7 @@
     },
     {
       "id": "t04_11",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pravidla_pro_mocniny",
       "obtiznost": 2,
       "zadani": "Zjednodušte: (2³)⁴ ÷ 2⁶",
@@ -1068,7 +1068,7 @@
     },
     {
       "id": "t04_12",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny_zjednoduseni",
       "obtiznost": 2,
       "zadani": "Zjednodušte: √72",
@@ -1082,7 +1082,7 @@
     },
     {
       "id": "t04_13",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pythagorova_v_ta",
       "obtiznost": 2,
       "zadani": "Kosočtverec má stranu 13 cm a kratší úhlopříčku 10 cm. Vypočítejte delší úhlopříčku.",
@@ -1099,7 +1099,7 @@
     },
     {
       "id": "t04_14",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pravidla_pro_mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítejte: 4² + 3³ − √49 + 2⁰",
@@ -1116,7 +1116,7 @@
     },
     {
       "id": "t04_15",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny_vypocet",
       "obtiznost": 2,
       "zadani": "Obsah čtverce je 169 cm². Jaký je obvod?",
@@ -1130,7 +1130,7 @@
     },
     {
       "id": "t04_16",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pravidla_pro_mocniny",
       "obtiznost": 2,
       "zadani": "Zjednodušte: (3 × 4)² ÷ 6²",
@@ -1145,7 +1145,7 @@
     },
     {
       "id": "t04_17",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "odmocniny_rovnice",
       "obtiznost": 2,
       "zadani": "Řešte rovnici: x² = 225",
@@ -1160,7 +1160,7 @@
     },
     {
       "id": "t04_18",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "komplexni_vypocet",
       "obtiznost": 3,
       "zadani": "Vypočítejte: √(3² + 4²) × 2³ − (√25)²",
@@ -1178,7 +1178,7 @@
     },
     {
       "id": "t04_19",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pythagorova_v_ta_aplikace",
       "obtiznost": 3,
       "zadani": "Žebřík je opřen o zeď. Spodek žebříku je 2,4 m od zdi, žebřík má délku 4 m. V jaké výšce se dotýká zdi?",
@@ -1193,7 +1193,7 @@
     },
     {
       "id": "t04_20",
-      "tema": "mocniny",
+      "tema": "vyrazy",
       "podtema": "pravidla_zaporne_mocniny",
       "obtiznost": 3,
       "zadani": "Vyjádřete jako zlomek: 2⁻³ + 3⁻²",
@@ -1522,7 +1522,7 @@
     },
     {
       "id": "t06_01",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obvod_a_obsah_ctverce",
       "obtiznost": 1,
       "zadani": "Čtverec má stranu 9 cm. Vypočítejte obvod a obsah.",
@@ -1536,7 +1536,7 @@
     },
     {
       "id": "t06_02",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obvod_a_obsah_obdelniku",
       "obtiznost": 1,
       "zadani": "Obdélník má délku 14 cm a šířku 6 cm. Vypočítejte obsah.",
@@ -1549,7 +1549,7 @@
     },
     {
       "id": "t06_03",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_trojuhelniku",
       "obtiznost": 1,
       "zadani": "Trojúhelník má základnu 10 cm a výšku 6 cm. Vypočítejte obsah.",
@@ -1562,7 +1562,7 @@
     },
     {
       "id": "t06_04",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "kruznice_obvod",
       "obtiznost": 1,
       "zadani": "Kružnice má průměr 14 cm. Vypočítejte obvod (π ≈ 3,14).",
@@ -1576,7 +1576,7 @@
     },
     {
       "id": "t06_05",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "kruznice_obsah",
       "obtiznost": 1,
       "zadani": "Kruh má poloměr 5 cm. Vypočítejte obsah (π ≈ 3,14).",
@@ -1589,7 +1589,7 @@
     },
     {
       "id": "t06_06",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obvod_trojuhelniku",
       "obtiznost": 1,
       "zadani": "Rovnostranný trojúhelník má stranu 7 cm. Vypočítejte obvod.",
@@ -1602,7 +1602,7 @@
     },
     {
       "id": "t06_07",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_rovnob_zniku",
       "obtiznost": 1,
       "zadani": "Rovnoběžník má základnu 12 cm a výšku 5 cm. Vypočítejte obsah.",
@@ -1615,7 +1615,7 @@
     },
     {
       "id": "t06_08",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_lichob_zniku",
       "obtiznost": 1,
       "zadani": "Lichoběžník má základny 8 cm a 12 cm, výšku 5 cm. Vypočítejte obsah.",
@@ -1628,7 +1628,7 @@
     },
     {
       "id": "t06_09",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "pythagorova_v_ta",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník má odvěsny 5 cm a 12 cm. Jaká je přepona?",
@@ -1642,7 +1642,7 @@
     },
     {
       "id": "t06_10",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_ctverce_zp_tny_vypocet",
       "obtiznost": 1,
       "zadani": "Obsah čtverce je 196 cm². Jaký je obvod?",
@@ -1656,7 +1656,7 @@
     },
     {
       "id": "t06_11",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "slozene_tvary",
       "obtiznost": 2,
       "zadani": "Zahrada má tvar obdélníku 20 m × 12 m. Uprostřed je čtvercový bazén 4 m × 4 m. Jaká je plocha záhonů?",
@@ -1671,7 +1671,7 @@
     },
     {
       "id": "t06_12",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_kruhu_aplikace",
       "obtiznost": 2,
       "zadani": "Kruhový pozemek má obvod 62,8 m. Jaký je jeho obsah? (π ≈ 3,14)",
@@ -1685,7 +1685,7 @@
     },
     {
       "id": "t06_13",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "trojuhelnik_vyska",
       "obtiznost": 2,
       "zadani": "Trojúhelník má základnu 8 cm a obsah 28 cm². Jaká je výška?",
@@ -1701,7 +1701,7 @@
     },
     {
       "id": "t06_14",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_lichob_zniku",
       "obtiznost": 2,
       "zadani": "Lichoběžník ABCD má AB = 10 cm, CD = 6 cm, výška = 4 cm. Vypočítejte obsah. Kolik stojí pokrytí podlahy toho tvaru za 150 Kč/m², pokud jsou rozměry v metrech?",
@@ -1717,7 +1717,7 @@
     },
     {
       "id": "t06_15",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "slozene_tvary",
       "obtiznost": 2,
       "zadani": "Tvar se skládá z obdélníku 10 cm × 4 cm a půlkruhu na kratší straně (průměr 4 cm). Vypočítejte celkový obvod (π ≈ 3,14).",
@@ -1732,7 +1732,7 @@
     },
     {
       "id": "t06_16",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_ctverce_vztah_ke_kruznici",
       "obtiznost": 2,
       "zadani": "Do čtverce o straně 10 cm je vepsána kružnice. Jaký je obsah plochy mimo kružnici? (π ≈ 3,14)",
@@ -1748,7 +1748,7 @@
     },
     {
       "id": "t06_17",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obvod_zp_tny_vypocet",
       "obtiznost": 2,
       "zadani": "Obdélník má obvod 60 cm a délka je 2,5krát větší než šířka. Určete rozměry.",
@@ -1765,7 +1765,7 @@
     },
     {
       "id": "t06_18",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "slozene_obrazce",
       "obtiznost": 3,
       "zadani": "Zahrada ve tvaru písmene L: velký obdélník 15 × 8 m, z něho odebrán obdélník 5 × 4 m. Vypočítejte obvod a obsah.",
@@ -1780,7 +1780,7 @@
     },
     {
       "id": "t06_19",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_mezikruzi",
       "obtiznost": 3,
       "zadani": "Velký kruh má poloměr 8 cm, malý kruh uvnitř poloměr 5 cm. Jaká je plocha mezikruží? (π ≈ 3,14)",
@@ -1795,7 +1795,7 @@
     },
     {
       "id": "t06_20",
-      "tema": "geometrie_rovinna",
+      "tema": "geometrie",
       "podtema": "obsah_trojuhelniku_aplikace",
       "obtiznost": 3,
       "zadani": "Úsečka AB má délku 10 cm a úsečka CD rovnoběžná s AB má délku 6 cm. Vzdálenost AB a CD je 4 cm. Tři body tvoří trojúhelník s vrcholem V ve výšce 3 cm nad AB (V leží na CD). Vypočítejte obsah trojúhelníku AVB.",
@@ -1810,7 +1810,7 @@
     },
     {
       "id": "t07_01",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_kvadru",
       "obtiznost": 1,
       "zadani": "Kvádr má rozměry 5 cm × 4 cm × 3 cm. Vypočítejte objem.",
@@ -1823,7 +1823,7 @@
     },
     {
       "id": "t07_02",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "povrch_kvadru",
       "obtiznost": 1,
       "zadani": "Kvádr má rozměry 6 cm × 4 cm × 3 cm. Vypočítejte povrch.",
@@ -1839,7 +1839,7 @@
     },
     {
       "id": "t07_03",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_krychle",
       "obtiznost": 1,
       "zadani": "Krychle má stranu 4 cm. Vypočítejte objem a povrch.",
@@ -1853,7 +1853,7 @@
     },
     {
       "id": "t07_04",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_valce",
       "obtiznost": 1,
       "zadani": "Válec má poloměr podstavy 3 cm a výšku 10 cm. Vypočítejte objem (π ≈ 3,14).",
@@ -1866,7 +1866,7 @@
     },
     {
       "id": "t07_05",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "povrch_valce",
       "obtiznost": 1,
       "zadani": "Válec má poloměr 5 cm a výšku 8 cm. Vypočítejte celkový povrch (π ≈ 3,14).",
@@ -1881,7 +1881,7 @@
     },
     {
       "id": "t07_06",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_hranolu",
       "obtiznost": 1,
       "zadani": "Přímý hranol má trojúhelníkovou podstavu (a=6 cm, h=4 cm) a výšku 10 cm. Vypočítejte objem.",
@@ -1895,7 +1895,7 @@
     },
     {
       "id": "t07_07",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_kvadru_aplikace",
       "obtiznost": 1,
       "zadani": "Akvárium má rozměry 60 cm × 30 cm × 40 cm. Kolik litrů vody pojme (1 litr = 1 dm³)?",
@@ -1909,7 +1909,7 @@
     },
     {
       "id": "t07_08",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "povrch_krychle",
       "obtiznost": 1,
       "zadani": "Povrch krychle je 150 cm². Jaká je délka hrany?",
@@ -1924,7 +1924,7 @@
     },
     {
       "id": "t07_09",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_kuzele",
       "obtiznost": 1,
       "zadani": "Kužel má poloměr podstavy 3 cm a výšku 7 cm. Vypočítejte objem (π ≈ 3,14).",
@@ -1939,7 +1939,7 @@
     },
     {
       "id": "t07_10",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_koule",
       "obtiznost": 1,
       "zadani": "Koule má poloměr 6 cm. Vypočítejte objem (π ≈ 3,14).",
@@ -1953,7 +1953,7 @@
     },
     {
       "id": "t07_11",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_kvadru_zp_tny_vypocet",
       "obtiznost": 2,
       "zadani": "Kvádr má čtvercovou podstavu a výšku 12 cm. Objem je 432 cm³. Jaká je strana podstavy?",
@@ -1969,7 +1969,7 @@
     },
     {
       "id": "t07_12",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "povrch_jehlanu",
       "obtiznost": 2,
       "zadani": "Pravidelný čtyřboký jehlan má stranu podstavy 6 cm a výšku stěny (apotéma) 5 cm. Vypočítejte povrch.",
@@ -1984,7 +1984,7 @@
     },
     {
       "id": "t07_13",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_a_povrch_valce",
       "obtiznost": 2,
       "zadani": "Válcová nádoba má průměr 20 cm a výšku 30 cm. Kolik kg barvy spotřebujeme na nátěr vnějšího pláště a dna (1 kg barvy pokryje 5 m²)? π ≈ 3,14",
@@ -2001,7 +2001,7 @@
     },
     {
       "id": "t07_14",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "sit_t_les",
       "obtiznost": 2,
       "zadani": "Kolik papíru (v cm²) potřebujeme na výrobu uzavřené krabičky (kvádru) o rozměrech 10 × 6 × 4 cm? (Bez přesahu.)",
@@ -2016,7 +2016,7 @@
     },
     {
       "id": "t07_15",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_preliti",
       "obtiznost": 2,
       "zadani": "Kvádr je naplněn vodou (15 × 10 × 8 cm). Přelijeme do válce o poloměru 5 cm. Jak vysoko bude hladina? (π ≈ 3,14)",
@@ -2031,7 +2031,7 @@
     },
     {
       "id": "t07_16",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_koule_a_valce",
       "obtiznost": 2,
       "zadani": "Kulička o poloměru 3 cm je zcela ponořena do válce s vodou (r = 6 cm). O kolik cm stoupne hladina? (π ≈ 3,14)",
@@ -2047,7 +2047,7 @@
     },
     {
       "id": "t07_17",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "povrch_objem_kombinace",
       "obtiznost": 2,
       "zadani": "Krychle má objem 125 cm³. Kolik procent povrchu tvoří jedna stěna?",
@@ -2063,7 +2063,7 @@
     },
     {
       "id": "t07_18",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "objem_jehlanu",
       "obtiznost": 3,
       "zadani": "Pravidelný čtyřboký jehlan má podstavu 8 × 8 cm a výšku 6 cm. Vypočítejte objem.",
@@ -2078,7 +2078,7 @@
     },
     {
       "id": "t07_19",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "povrch_kuzele",
       "obtiznost": 3,
       "zadani": "Kužel má poloměr podstavy 5 cm a výšku 12 cm. Vypočítejte celkový povrch. (π ≈ 3,14)",
@@ -2094,7 +2094,7 @@
     },
     {
       "id": "t07_20",
-      "tema": "geometrie_prostorova",
+      "tema": "geometrie",
       "podtema": "kombinace_t_les",
       "obtiznost": 3,
       "zadani": "Těleso se skládá z kvádru (10×6×4 cm) a na jeho vrchní straně sedí jehlan (podstava 6×6 cm, výška 3 cm). Vypočítejte celkový objem.",
@@ -2110,7 +2110,7 @@
     {
       "id": "t08_01",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_rychlost",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Cyklista jede rychlostí 18 km/h po dobu 2,5 hodiny. Jakou vzdálenost ujede?",
       "odpoved": "45 km",
@@ -2123,7 +2123,7 @@
     {
       "id": "t08_02",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_cas",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Vzdálenost dvou měst je 120 km. Auto jede rychlostí 80 km/h. Za jak dlouho dojede?",
       "odpoved": "1,5 hodiny (1 h 30 min)",
@@ -2136,7 +2136,7 @@
     {
       "id": "t08_03",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_rychlost",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Vlak ujel 210 km za 3,5 hodiny. Jaká je jeho průměrná rychlost?",
       "odpoved": "60 km/h",
@@ -2149,7 +2149,7 @@
     {
       "id": "t08_04",
       "tema": "slovni_ulohy",
-      "podtema": "prima_um_rnost",
+      "podtema": "umera",
       "obtiznost": 1,
       "zadani": "5 dělníků postaví zeď za 12 dní. Kolik dní potřebuje 1 dělník?",
       "odpoved": "60 dní",
@@ -2178,7 +2178,7 @@
     {
       "id": "t08_06",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_protijedouci",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Dva chodci vyrazí vstříc sobě ze vzdálenosti 24 km. Jeden jde 4 km/h, druhý 2 km/h. Za jak dlouho se setkají?",
       "odpoved": "Za 4 hodiny",
@@ -2192,7 +2192,7 @@
     {
       "id": "t08_07",
       "tema": "slovni_ulohy",
-      "podtema": "neprima_um_rnost",
+      "podtema": "umera",
       "obtiznost": 1,
       "zadani": "Auto spotřebuje 7 l na 100 km. Kolik litrů spotřebuje na 350 km?",
       "odpoved": "24,5 litrů",
@@ -2206,7 +2206,7 @@
     {
       "id": "t08_08",
       "tema": "slovni_ulohy",
-      "podtema": "prima_um_rnost",
+      "podtema": "spolecna_prace",
       "obtiznost": 1,
       "zadani": "Kohoutek naplní nádrž za 4 hodiny. Po 1,5 hodině se otevře druhý kohoutek a naplní nádrž za 3 hodiny. Jak jsou výkony kohoutků v poměru?",
       "odpoved": "Poměr 3 : 4",
@@ -2221,7 +2221,7 @@
     {
       "id": "t08_09",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_stejny_sm_r",
+      "podtema": "pohyb",
       "obtiznost": 1,
       "zadani": "Chodec vyjde v 8:00 rychlostí 5 km/h. O hodinu později vyjde cyklista rychlostí 15 km/h týmž směrem. V kolik hodin cyklista chodce dohoní?",
       "odpoved": "V 9:30",
@@ -2237,7 +2237,7 @@
     {
       "id": "t08_10",
       "tema": "slovni_ulohy",
-      "podtema": "prace",
+      "podtema": "spolecna_prace",
       "obtiznost": 1,
       "zadani": "Kobereček tká 1 tkadlena za 8 dní. Kolik tkalek ho utká za 2 dny?",
       "odpoved": "4 tkadle",
@@ -2251,7 +2251,7 @@
     {
       "id": "t08_11",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_setkani",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Vlak A jede 80 km/h, vlak B jede 60 km/h naproti. Vyjedou zároveň, vzdálenost 350 km. Za jak dlouho se setkají a kde (od A)?",
       "odpoved": "Za 2,5 h, 200 km od A",
@@ -2281,7 +2281,7 @@
     {
       "id": "t08_13",
       "tema": "slovni_ulohy",
-      "podtema": "prima_a_neprima_um_rnost",
+      "podtema": "umera",
       "obtiznost": 2,
       "zadani": "Zásoby jídla vystačí 12 vojákům na 30 dní. Přišlo 6 nových vojáků. Na kolik dní zásoby vystačí?",
       "odpoved": "20 dní",
@@ -2296,7 +2296,7 @@
     {
       "id": "t08_14",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_zpatecni_cesta",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Tam jede auto rychlostí 60 km/h, zpět 90 km/h. Vzdálenost tam je 180 km. Jaká je průměrná rychlost celé cesty?",
       "odpoved": "72 km/h",
@@ -2312,7 +2312,7 @@
     {
       "id": "t08_15",
       "tema": "slovni_ulohy",
-      "podtema": "prace_preruseni",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Dělník A pracuje 3 hodiny, pak odejde. Dělník B pracuje celých 8 hodin. Dohromady dokončí dílo přesně. A dokončí dílo sám za 12 h. Za kolik hodin ho dokončí B sám?",
       "odpoved": "Za 8 hodin",
@@ -2329,7 +2329,7 @@
     {
       "id": "t08_16",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_vlak_a_chodec",
+      "podtema": "pohyb",
       "obtiznost": 2,
       "zadani": "Chodec jde 4 km/h. Vlak (délka 200 m) ho předjede za 18 sekund. Jaká je rychlost vlaku?",
       "odpoved": "44 km/h",
@@ -2344,7 +2344,7 @@
     {
       "id": "t08_17",
       "tema": "slovni_ulohy",
-      "podtema": "prace_kombinace",
+      "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "Troje stádo krav: 10 krav spase louku za 12 dní, 15 krav za 8 dní. Kolik krav spase louku za 6 dní?",
       "odpoved": "20 krav",
@@ -2359,7 +2359,7 @@
     {
       "id": "t08_18",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_sledovani",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Dva chodci vyjdou ze stejného místa opačnými směry. Jeden jde 5 km/h, druhý 3 km/h. Za jak dlouho budou od sebe 32 km? A kde bude každý z nich?",
       "odpoved": "Za 4 hodiny. První chodec bude 20 km, druhý 12 km od startu.",
@@ -2375,7 +2375,7 @@
     {
       "id": "t08_19",
       "tema": "slovni_ulohy",
-      "podtema": "spolecna_prace_komplex",
+      "podtema": "spolecna_prace",
       "obtiznost": 3,
       "zadani": "Pumpa A naplní nádrž za 8 h, B za 12 h. Nejprve pracuje A 2 h sám, pak pracují obě dohromady. Za jak dlouho se nádrž naplní celkem?",
       "odpoved": "Za 6 hodin celkem",
@@ -2392,7 +2392,7 @@
     {
       "id": "t08_20",
       "tema": "slovni_ulohy",
-      "podtema": "pohyb_komplex",
+      "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Auto vyjede v 9:00 rychlostí 90 km/h. V 10:30 vyjede stejnou trasou motocykl rychlostí 120 km/h. V kolik hodin motorka dohání auto a jak daleko od startu?",
       "odpoved": "Ve 13:30, 360 km od startu",
@@ -2713,7 +2713,7 @@
     },
     {
       "id": "t10_01",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "ciselne_zakonitosti",
       "obtiznost": 1,
       "zadani": "Najděte chybějící číslo v řadě: 2, 5, 10, 17, 26, ___",
@@ -2728,7 +2728,7 @@
     },
     {
       "id": "t10_02",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "pravdivostni_tabulka",
       "obtiznost": 1,
       "zadani": "Jsou-li tato tvrzení pravdivá: 'Všichni žáci v kroužku hrají šachy nebo fotbal. Karel nehraje fotbal.' Co platí o Karlovi?",
@@ -2743,7 +2743,7 @@
     },
     {
       "id": "t10_03",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_posloupnosti",
       "obtiznost": 1,
       "zadani": "Najděte chybějící číslo: 3, 6, 12, 24, ___, 96",
@@ -2757,7 +2757,7 @@
     },
     {
       "id": "t10_04",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "logicka_dedukce",
       "obtiznost": 1,
       "zadani": "Adam je vyšší než Bořek. Bořek je vyšší než Cecil. Kdo je nejmenší?",
@@ -2771,7 +2771,7 @@
     },
     {
       "id": "t10_05",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "sit_a_prostorove_mysleni",
       "obtiznost": 1,
       "zadani": "Krychle má čísla 1–6 na stěnách. Protilehlé stěny dávají vždy 7. Číslo 3 je nahoře. Jaké číslo je dole?",
@@ -2786,7 +2786,7 @@
     },
     {
       "id": "t10_06",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_tabulka",
       "obtiznost": 1,
       "zadani": "V tabulce platí zákonitost pro každý řádek: [2, 5, 3], [4, 10, 6], [3, 7, ?]. Najděte ?.",
@@ -2801,7 +2801,7 @@
     },
     {
       "id": "t10_07",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "rozvrh_kombinatorika",
       "obtiznost": 1,
       "zadani": "3 žáci si mají rozdělit 3 různé úkoly (každý právě jeden). Kolik existuje způsobů rozdělení?",
@@ -2814,7 +2814,7 @@
     },
     {
       "id": "t10_08",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_cisla",
       "obtiznost": 1,
       "zadani": "Čísla 1 až 100 jsou napsána za sebou: 12345678910111213... Jaká číslice je na 15. místě?",
@@ -2831,7 +2831,7 @@
     },
     {
       "id": "t10_09",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "logicka_dedukce",
       "obtiznost": 1,
       "zadani": "V obchodě jsou 3 krabice: červená, modrá, zelená. V každé je jiný předmět: kniha, hračka, sešit. Víme: Kniha není v červené. Hračka je v modré. Co je v zelené krabici?",
@@ -2847,7 +2847,7 @@
     },
     {
       "id": "t10_10",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_obrazce",
       "obtiznost": 1,
       "zadani": "Vzorec: 1 čtvereček = 4 zápalky, 2 čtverečky vedle sebe = 7 zápalek, 3 = 10 zápalek. Kolik zápalek tvoří 10 čtverečků v řadě?",
@@ -2862,7 +2862,7 @@
     },
     {
       "id": "t10_11",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "dedukce_tabulka",
       "obtiznost": 2,
       "zadani": "Čtyři přátelé (Adam, Bořek, Cecil, Dan) mají různá povolání (lékař, učitel, řidič, kuchař). Víme: (1) Adam není lékař ani učitel. (2) Bořek není řidič. (3) Cecil je lékař. Kdo je učitel?",
@@ -2881,7 +2881,7 @@
     },
     {
       "id": "t10_12",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "ciselna_zakonitost",
       "obtiznost": 2,
       "zadani": "Fibonacciho posloupnost: 1, 1, 2, 3, 5, 8, 13, 21, ... Jaká jsou dvě následující čísla?",
@@ -2896,7 +2896,7 @@
     },
     {
       "id": "t10_13",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "kombinatorika_vyb_r",
       "obtiznost": 2,
       "zadani": "Z 5 žáků vybíráme 2 do soutěže (nezáleží na pořadí). Kolik způsobů výběru existuje?",
@@ -2909,7 +2909,7 @@
     },
     {
       "id": "t10_14",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_dvojice_cisel",
       "obtiznost": 2,
       "zadani": "Zákonitost: (3, 9), (5, 25), (7, 49), (4, ?). Jaká je chybějící hodnota?",
@@ -2924,7 +2924,7 @@
     },
     {
       "id": "t10_15",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "logicka_dedukce_lhari_a_pravdomluvni",
       "obtiznost": 2,
       "zadani": "Na ostrově žijí jen pravdomluvní (vždy pravda) a lháři (vždy lžou). Osoba A říká: 'Jsem lhář.' Je A pravdomluvný nebo lhář?",
@@ -2939,7 +2939,7 @@
     },
     {
       "id": "t10_16",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_v_tabulce",
       "obtiznost": 2,
       "zadani": "Magický čtverec 3×3 má v každém řádku, sloupci a diagonále součet 15. Jsou zadána čísla: střed=5, roh=2. Doplňte políčko napravo od 2 (vrchní řádek, prostřední sloupec).",
@@ -2955,7 +2955,7 @@
     },
     {
       "id": "t10_17",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "kombinatorika_hesla",
       "obtiznost": 2,
       "zadani": "Kolik čtyřciferných čísel lze sestavit z číslic 1, 2, 3, 4, pokud se každá číslice použije právě jednou?",
@@ -2969,7 +2969,7 @@
     },
     {
       "id": "t10_18",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "komplexni_dedukce",
       "obtiznost": 3,
       "zadani": "Pět závodníků (A–E) doběhlo cílem. Víme: (1) A skončil před B. (2) C skončil za D. (3) E skončil mezi A a B. (4) D skončil jako první. Seřaďte závodníky.",
@@ -2986,7 +2986,7 @@
     },
     {
       "id": "t10_19",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "zakonitost_slozena",
       "obtiznost": 3,
       "zadani": "Řada čísel: 1, 4, 9, 16, 25, ... (čtverce). Jaký je součet prvních 10 členů?",
@@ -3002,7 +3002,7 @@
     },
     {
       "id": "t10_20",
-      "tema": "logicke_ulohy",
+      "tema": "grafy_logika",
       "podtema": "kombinatorika_cesty",
       "obtiznost": 3,
       "zadani": "Síť ulic je mřížka 3×3 (4 uzly × 4 uzly = 16 uzlů). Kolik nejkratších cest vede z levého dolního rohu do pravého horního rohu? (Pohyb jen doprava nebo nahoru.)",

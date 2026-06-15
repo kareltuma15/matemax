@@ -6,11 +6,10 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 
 function topicLabel(tema: string): string {
   const MAP: Record<string, string> = {
-    zlomky: "Zlomky & procenta", rovnice: "Rovnice", geometrie: "Geometrie",
-    geometrie_rovinna: "Geometrie (2D)", geometrie_prostorova: "Geometrie (3D)",
-    mocniny: "Mocniny", procenta: "Procenta", slovni_ulohy: "Slovní úlohy",
-    pomer_meritko: "Poměr a měřítko", uhly: "Úhly", vyrazy: "Výrazy",
-    logicke_ulohy: "Logika", mix: "Mix témat",
+    zlomky: "Zlomky", vyrazy: "Výrazy", rovnice: "Rovnice", geometrie: "Geometrie",
+    slovni_ulohy: "Slovní úlohy", grafy_logika: "Grafy a logika",
+    konstrukce: "Konstrukční úlohy", uhly: "Úhly", souhrnne: "Souhrnné",
+    mix: "Mix témat",
   };
   return MAP[tema] ?? tema;
 }

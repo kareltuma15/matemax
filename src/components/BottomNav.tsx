@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 const STUDENT_ITEMS = [
-  { href: "/",        icon: "🏠", label: "Domů" },
-  { href: "/trenink", icon: "💪", label: "Trénink" },
-  { href: "/vyzva",   icon: "🏆", label: "Výzva" },
-  { href: "/profil",  icon: "👤", label: "Profil" },
+  { href: "/",                icon: "🏠", label: "Domů" },
+  { href: "/trenink",         icon: "💪", label: "Trénink" },
+  { href: "/vyzva",           icon: "🏆", label: "Výzva" },
+  { href: "/testy-nanecisto", icon: "📝", label: "Testy" },
+  { href: "/profil",          icon: "👤", label: "Profil" },
 ];
 
 const PARENT_NAV_ITEMS = [

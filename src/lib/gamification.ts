@@ -188,14 +188,14 @@ export function checkBadgesOnLevelUp(state: GamificationState, newLevelKey: Leve
   return r;
 }
 
-const ALL_TOPIC_KEYS = ["zlomky", "rovnice", "geometrie", "mocniny", "slovni_ulohy", "procenta"];
+const ALL_TOPIC_KEYS = ["zlomky", "vyrazy", "rovnice", "geometrie", "slovni_ulohy", "grafy_logika", "uhly"];
 const TOPIC_BADGE_MAP: [string, string][] = [
   ["badge_zlomky_master",       "zlomky"],
   ["badge_rovnice_master",      "rovnice"],
   ["badge_geometrie_master",    "geometrie"],
-  ["badge_mocniny_master",      "mocniny"],
+  ["badge_mocniny_master",      "vyrazy"],       // mocniny sloučeny do vyrazy
   ["badge_slovni_ulohy_master", "slovni_ulohy"],
-  ["badge_procenta_master",     "procenta"],
+  ["badge_procenta_master",     "procenta"],     // legacy: procenta = podtéma slovních úloh, badge subsumován (netriggeruje)
 ];
 
 function topicMastered(

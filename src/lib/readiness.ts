@@ -1,9 +1,10 @@
 import { loadGamification } from "./gamification";
 import { TEMA_LABELS } from "@/types";
 
+// 9 sjednocených témat (konstrukce zatím bez obsahu, souhrnne = mix → mimo readiness skill skóre)
 export const CERMAT_TOPICS = [
-  "zlomky", "procenta", "rovnice", "geometrie", "mocniny",
-  "slovni_ulohy", "pomer_meritko", "uhly", "logicke_ulohy",
+  "zlomky", "vyrazy", "rovnice", "geometrie",
+  "slovni_ulohy", "grafy_logika", "uhly",
 ];
 
 export interface TopicReadiness {

@@ -57,10 +57,10 @@ interface DiagQuestion {
 }
 
 const STEPS: { label: string; tema: string }[] = [
-  { label: "Zlomky & procenta", tema: "zlomky" },
+  { label: "Zlomky", tema: "zlomky" },
   { label: "Rovnice", tema: "rovnice" },
   { label: "Geometrie", tema: "geometrie" },
-  { label: "Mocniny", tema: "mocniny" },
+  { label: "Výrazy", tema: "vyrazy" },
   { label: "Slovní úlohy", tema: "slovni_ulohy" },
   { label: "Různé", tema: "ruzne" },
 ];
@@ -135,21 +135,21 @@ const QUESTIONS: DiagQuestion[] = [
   // Krok 4 — Mocniny
   {
     id: 10,
-    tema: "mocniny",
+    tema: "vyrazy",
     text: "Zjednodušs: 3² × 3³",
     options: ["3⁶", "9⁵", "3⁵", "6⁵"],
     correct: 2,
   },
   {
     id: 11,
-    tema: "mocniny",
+    tema: "vyrazy",
     text: "Roznásob: (x + 3)(x − 2)",
     options: ["x² − x − 6", "x² + x + 6", "x² + x − 6", "x² − 5x − 6"],
     correct: 2,
   },
   {
     id: 12,
-    tema: "mocniny",
+    tema: "vyrazy",
     text: "Zjednodušs: √50 + √8",
     options: ["√58", "6√2", "7√2", "8√2"],
     correct: 2,
@@ -179,7 +179,7 @@ const QUESTIONS: DiagQuestion[] = [
   // Krok 6 — Různé (poměr, úhly, logika)
   {
     id: 16,
-    tema: "pomer_meritko",
+    tema: "slovni_ulohy",
     text: "Rozdělte 120 Kč v poměru 3 : 5. Kolik je větší část?",
     options: ["45 Kč", "60 Kč", "75 Kč", "80 Kč"],
     correct: 2,
@@ -193,7 +193,7 @@ const QUESTIONS: DiagQuestion[] = [
   },
   {
     id: 18,
-    tema: "logicke_ulohy",
+    tema: "grafy_logika",
     text: "Jan je starší než Petr. Petr je starší než Eva. Kdo je nejmladší?",
     options: ["Jan", "Petr", "Eva", "Nelze určit"],
     correct: 2,
@@ -583,15 +583,14 @@ function DiagPlanModal({ onStart, onClose }: { onStart: () => void; onClose: () 
 
 // Human-readable labels for all temas that may appear in results
 const RESULT_LABELS: Record<string, string> = {
-  zlomky:              "Zlomky & procenta",
-  procenta:            "Procenta",
-  rovnice:             "Rovnice",
-  geometrie:           "Geometrie",
-  mocniny:             "Mocniny",
-  slovni_ulohy:        "Slovní úlohy",
-  pomer_meritko:       "Poměr a měřítko",
-  uhly:                "Úhly",
-  logicke_ulohy:       "Logické úlohy",
+  zlomky:       "Zlomky",
+  vyrazy:       "Výrazy",
+  rovnice:      "Rovnice",
+  geometrie:    "Geometrie",
+  slovni_ulohy: "Slovní úlohy",
+  grafy_logika: "Grafy a logika",
+  uhly:         "Úhly",
+  ruzne:        "Různé",
 };
 
 function DiagResults({ onStart }: { onStart: () => void }) {

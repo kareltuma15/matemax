@@ -9,16 +9,14 @@ const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 function topicLabel(tema: string): string {
   const MAP: Record<string, string> = {
     zlomky: "Zlomky",
-    rovnice: "Rovnice",
-    geometrie_rovinna: "Geometrie (2D)",
-    geometrie_prostorova: "Geometrie (3D)",
-    mocniny: "Mocniny",
-    procenta: "Procenta",
-    slovni_ulohy: "Slovní úlohy",
-    pomer_meritko: "Poměr a měřítko",
-    uhly: "Úhly",
     vyrazy: "Výrazy",
-    logicke_ulohy: "Logika",
+    rovnice: "Rovnice",
+    geometrie: "Geometrie",
+    slovni_ulohy: "Slovní úlohy",
+    grafy_logika: "Grafy a logika",
+    konstrukce: "Konstrukční úlohy",
+    uhly: "Úhly",
+    souhrnne: "Souhrnné",
     mix: "Mix témat",
   };
   return MAP[tema] ?? tema;
