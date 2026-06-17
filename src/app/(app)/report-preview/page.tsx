@@ -16,7 +16,7 @@ const TEST_DATA = {
   time_spent_min: "63",
   weak_topic_1: "Geometrie",
   weak_pct_1: "45",
-  weak_topic_2: "Mocniny a odmocniny",
+  weak_topic_2: "Výrazy",
   weak_pct_2: "52",
   weak_topic_3: "Slovní úlohy",
   weak_pct_3: "61",
