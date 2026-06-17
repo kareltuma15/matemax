@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { examples } from "@/data/examples";
@@ -56,151 +56,188 @@ interface DiagQuestion {
   tema: string;
 }
 
+// 8 CERMAT témat — žádné "Různé", žádné nerovnice ani pravděpodobnost
 const STEPS: { label: string; tema: string }[] = [
-  { label: "Zlomky", tema: "zlomky" },
-  { label: "Rovnice", tema: "rovnice" },
-  { label: "Geometrie", tema: "geometrie" },
-  { label: "Výrazy", tema: "vyrazy" },
+  { label: "Zlomky",       tema: "zlomky" },
+  { label: "Výrazy",       tema: "vyrazy" },
+  { label: "Rovnice",      tema: "rovnice" },
+  { label: "Geometrie",    tema: "geometrie" },
   { label: "Slovní úlohy", tema: "slovni_ulohy" },
-  { label: "Různé", tema: "ruzne" },
+  { label: "Grafy a logika", tema: "grafy_logika" },
+  { label: "Konstrukce",   tema: "konstrukce" },
+  { label: "Úhly",         tema: "uhly" },
 ];
 
+// 16 otázek: 2 per téma, distribuce správných odpovědí A/B/C/D rovnoměrná (4× každá)
 const QUESTIONS: DiagQuestion[] = [
-  // Krok 1 — Zlomky
+  // ── Krok 1: Zlomky ──────────────────────────────────────────────────────────
   {
     id: 1,
     tema: "zlomky",
-    text: "Vypočítej: ½ + ⅓ = ?",
-    options: ["2/5", "5/6", "2/6", "1/6"],
-    correct: 1,
+    text: "Vypočti: ¾ − ⅓",
+    options: ["5/12", "4/12", "1/4", "7/12"],
+    correct: 0, // A: 9/12 − 4/12 = 5/12
   },
   {
     id: 2,
     tema: "zlomky",
-    text: "Kolik je 30 % z čísla 120?",
-    options: ["30", "36", "40", "42"],
-    correct: 1,
+    text: "Vyjádři zlomek 18/24 v základním tvaru.",
+    options: ["9/12", "6/8", "3/4", "2/3"],
+    correct: 2, // C: GCD(18,24)=6 → 3/4
   },
+  // ── Krok 2: Výrazy ──────────────────────────────────────────────────────────
   {
     id: 3,
-    tema: "zlomky",
-    text: "Po slevě 25 % stojí výrobek 450 Kč. Jaká byla původní cena?",
-    options: ["562,50 Kč", "675 Kč", "600 Kč", "540 Kč"],
-    correct: 2,
+    tema: "vyrazy",
+    text: "Roznásob závorku: (x + 3)²",
+    options: ["x² + 9", "x² + 6x + 9", "x² + 3x + 9", "x² − 6x + 9"],
+    correct: 1, // B: (a+b)² = a²+2ab+b²
   },
-  // Krok 2 — Rovnice
   {
     id: 4,
-    tema: "rovnice",
-    text: "Vyřeš: 2x + 6 = 14",
-    options: ["x = 3", "x = 4", "x = 5", "x = 10"],
-    correct: 1,
+    tema: "vyrazy",
+    text: "Rozlož na součin: a² − 16",
+    options: ["(a − 4)²", "a(a − 16)", "(a + 4)²", "(a − 4)(a + 4)"],
+    correct: 3, // D: rozdíl čtverců a²−b²=(a−b)(a+b)
   },
+  // ── Krok 3: Rovnice ─────────────────────────────────────────────────────────
   {
     id: 5,
     tema: "rovnice",
-    text: "Vyřeš: 3(x − 2) = x + 4",
-    options: ["x = 4", "x = 3", "x = 5", "x = 7"],
-    correct: 2,
+    text: "Vyřeš: 4x − 6 = 2x + 8",
+    options: ["x = 7", "x = 4", "x = 3", "x = 1"],
+    correct: 0, // A: 2x=14 → x=7
   },
   {
     id: 6,
     tema: "rovnice",
-    text: "Vyřeš nerovnici: 2x − 5 > 1",
-    options: ["x > 2", "x > 3", "x < 3", "x > 6"],
-    correct: 1,
+    text: "Vyřeš soustavu rovnic: x + y = 10,  x − y = 4",
+    options: ["x = 3, y = 7", "x = 4, y = 6", "x = 7, y = 3", "x = 6, y = 4"],
+    correct: 2, // C: sečtením 2x=14→x=7, y=3
   },
-  // Krok 3 — Geometrie
+  // ── Krok 4: Geometrie ───────────────────────────────────────────────────────
   {
     id: 7,
     tema: "geometrie",
-    text: "Obsah obdélníku o rozměrech 8 × 5 cm?",
-    options: ["26 cm²", "13 cm²", "40 cm²", "45 cm²"],
-    correct: 2,
+    text: "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Jaká je délka přepony?",
+    options: ["7 cm", "10 cm", "12 cm", "14 cm"],
+    correct: 1, // B: √(36+64)=√100=10
   },
   {
     id: 8,
     tema: "geometrie",
-    text: "Pravoúhlý trojúhelník, odvěsny 9 cm a 12 cm. Jak dlouhá je přepona?",
-    options: ["13 cm", "15 cm", "21 cm", "11 cm"],
-    correct: 1,
+    text: "Objem kvádru o rozměrech 4 cm × 3 cm × 5 cm:",
+    options: ["24 cm³", "47 cm³", "94 cm³", "60 cm³"],
+    correct: 3, // D: 4×3×5=60
   },
+  // ── Krok 5: Slovní úlohy ────────────────────────────────────────────────────
   {
     id: 9,
-    tema: "geometrie",
-    text: "Objem válce: r = 5 cm, v = 6 cm (π ≈ 3,14)?",
-    options: ["314 cm³", "188,4 cm³", "471 cm³", "942 cm³"],
-    correct: 2,
+    tema: "slovni_ulohy",
+    text: "Vlak jede rychlostí 90 km/h. Za jak dlouho ujede 270 km?",
+    options: ["2 hod", "2,5 hod", "3 hod", "4 hod"],
+    correct: 2, // C: t = 270/90 = 3
   },
-  // Krok 4 — Mocniny
   {
     id: 10,
-    tema: "vyrazy",
-    text: "Zjednodušs: 3² × 3³",
-    options: ["3⁶", "9⁵", "3⁵", "6⁵"],
-    correct: 2,
+    tema: "slovni_ulohy",
+    text: "Pracovník A zvládne práci za 6 hod, pracovník B za 4 hod. Za jak dlouho ji zvládnou společně?",
+    options: ["2,4 hod", "5 hod", "3 hod", "2 hod"],
+    correct: 0, // A: 1/(1/6+1/4)=12/5=2,4
   },
+  // ── Krok 6: Grafy a logika ──────────────────────────────────────────────────
   {
     id: 11,
-    tema: "vyrazy",
-    text: "Roznásob: (x + 3)(x − 2)",
-    options: ["x² − x − 6", "x² + x + 6", "x² + x − 6", "x² − 5x − 6"],
-    correct: 2,
+    tema: "grafy_logika",
+    text: "V koláčovém grafu jedno pole zaujímá 72°. Kolik procent celku představuje?",
+    options: ["25 %", "33 %", "15 %", "20 %"],
+    correct: 3, // D: 72/360=0,2=20 %
   },
   {
     id: 12,
-    tema: "vyrazy",
-    text: "Zjednodušs: √50 + √8",
-    options: ["√58", "6√2", "7√2", "8√2"],
-    correct: 2,
+    tema: "grafy_logika",
+    text: "Posloupnost: 1, 3, 7, 13, 21, … Jaké je následující číslo?",
+    options: ["27", "31", "28", "33"],
+    correct: 1, // B: rozdíly +2,+4,+6,+8 → +10 → 31
   },
-  // Krok 5 — Slovní úlohy
+  // ── Krok 7: Konstrukční úlohy (s obrázkem) ──────────────────────────────────
   {
     id: 13,
-    tema: "slovni_ulohy",
-    text: "Auto jede rychlostí 90 km/h. Jak daleko ujede za 2 hodiny?",
-    options: ["45 km", "180 km", "90 km", "270 km"],
-    correct: 1,
+    tema: "konstrukce",
+    text: "Chceš sestrojit osu úsečky AB. Jaký je PRVNÍ krok?",
+    options: [
+      "Narýsuj kružnici se středem A procházející bodem B",
+      "Přilož pravítko a nakresli přímku AB",
+      "Naměř délku AB a vyznač její střed pravítkem",
+      "Narýsuj kolmici v bodě A na úsečku AB",
+    ],
+    correct: 0, // A: kružnice ze dvou středů → průsečíky dají osu
   },
   {
     id: 14,
-    tema: "slovni_ulohy",
-    text: "Kolika různými způsoby lze seřadit 3 knihy na polici?",
-    options: ["3", "9", "6", "12"],
-    correct: 2,
+    tema: "konstrukce",
+    text: "Lze sestrojit trojúhelník se stranami 4 cm, 6 cm a 11 cm?",
+    options: [
+      "Ano, vždy lze",
+      "Ano, ale pouze jako tupouhlý",
+      "Ne, trojúhelník nelze sestrojit",
+      "Záleží na pořadí zadaných stran",
+    ],
+    correct: 2, // C: 4+6=10 < 11 — trojúhelníková nerovnost nesplněna
   },
+  // ── Krok 8: Úhly ────────────────────────────────────────────────────────────
   {
     id: 15,
-    tema: "slovni_ulohy",
-    text: "Hodíme dvě kostky. Jaká je pravděpodobnost, že součet bodů je 8?",
-    options: ["4/36", "5/36", "6/36", "8/36"],
-    correct: 1,
+    tema: "uhly",
+    text: "V trojúhelníku jsou dva vnitřní úhly 55° a 75°. Jak velký je třetí vnitřní úhel?",
+    options: ["40°", "60°", "45°", "50°"],
+    correct: 3, // D: 180−55−75=50°
   },
-  // Krok 6 — Různé (poměr, úhly, logika)
   {
     id: 16,
-    tema: "slovni_ulohy",
-    text: "Rozdělte 120 Kč v poměru 3 : 5. Kolik je větší část?",
-    options: ["45 Kč", "60 Kč", "75 Kč", "80 Kč"],
-    correct: 2,
-  },
-  {
-    id: 17,
     tema: "uhly",
-    text: "Jak velký je doplňkový úhel k úhlu 65°?",
-    options: ["25°", "35°", "115°", "125°"],
-    correct: 2,
-  },
-  {
-    id: 18,
-    tema: "grafy_logika",
-    text: "Jan je starší než Petr. Petr je starší než Eva. Kdo je nejmladší?",
-    options: ["Jan", "Petr", "Eva", "Nelze určit"],
-    correct: 2,
+    text: "Přímky p a q jsou rovnoběžné, příčka je protíná. Střídavé vnitřní úhly jsou:",
+    options: [
+      "Doplňkové — jejich součet je 90°",
+      "Shodné — jsou si rovny",
+      "Vedlejší — jejich součet je 180°",
+      "Různé — záleží na sklonu příčky",
+    ],
+    correct: 1, // B: střídavé úhly u rovnoběžek jsou shodné
   },
 ];
 
-const QUESTIONS_PER_STEP = 3;
+const QUESTIONS_PER_STEP = 2;
+
+// SVG ilustrace ke konstrukčním otázkám
+const QUESTION_IMAGES: Record<number, React.ReactNode> = {
+  // Q13 — osa úsečky AB
+  13: (
+    <div className="my-1 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
+      <svg viewBox="0 0 240 68" className="w-full" style={{ maxHeight: 68 }} aria-hidden="true">
+        <circle cx="28" cy="38" r="5" fill="#0D1B3E" />
+        <text x="28" y="22" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0D1B3E">A</text>
+        <circle cx="212" cy="38" r="5" fill="#0D1B3E" />
+        <text x="212" y="22" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0D1B3E">B</text>
+        <line x1="33" y1="38" x2="207" y2="38" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="7,5" />
+        <text x="120" y="62" textAnchor="middle" fontSize="11" fill="#64748b">úsečka AB</text>
+      </svg>
+    </div>
+  ),
+  // Q14 — tři délky stran
+  14: (
+    <div className="my-1 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
+      <svg viewBox="0 0 260 96" className="w-full" style={{ maxHeight: 96 }} aria-hidden="true">
+        <line x1="10" y1="22" x2="90" y2="22" stroke="#334155" strokeWidth="3" strokeLinecap="round" />
+        <text x="50" y="15" textAnchor="middle" fontSize="11" fill="#64748b">4 cm</text>
+        <line x1="10" y1="52" x2="130" y2="52" stroke="#334155" strokeWidth="3" strokeLinecap="round" />
+        <text x="70" y="45" textAnchor="middle" fontSize="11" fill="#64748b">6 cm</text>
+        <line x1="10" y1="82" x2="230" y2="82" stroke="#2E6DA4" strokeWidth="3.5" strokeLinecap="round" />
+        <text x="120" y="75" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#2E6DA4">11 cm</text>
+      </svg>
+    </div>
+  ),
+};
 
 function getStepQuestions(stepIdx: number): DiagQuestion[] {
   return QUESTIONS.slice(stepIdx * QUESTIONS_PER_STEP, (stepIdx + 1) * QUESTIONS_PER_STEP);
@@ -418,6 +455,7 @@ export default function DiagnostikaPage() {
                 {q.text}
               </p>
             </div>
+            {QUESTION_IMAGES[q.id]}
             <div className="flex flex-col gap-2">
               {q.options.map((opt, optIdx) => (
                 <button
@@ -589,8 +627,8 @@ const RESULT_LABELS: Record<string, string> = {
   geometrie:    "Geometrie",
   slovni_ulohy: "Slovní úlohy",
   grafy_logika: "Grafy a logika",
+  konstrukce:   "Konstrukční úlohy",
   uhly:         "Úhly",
-  ruzne:        "Různé",
 };
 
 function DiagResults({ onStart }: { onStart: () => void }) {
