@@ -60,7 +60,7 @@ const PRICING = [
       "✓ 10 příkladů denně",
       "✓ Základní statistiky",
       "✗ Týdenní report pro rodiče",
-      "✗ Plná databáze 700+ příkladů (všechna témata)",
+      "✗ Plná databáze 900+ příkladů (všechna témata)",
       "✗ CERMAT cvičné testy",
     ],
     cta: "Začít zdarma",
@@ -104,7 +104,7 @@ const FAQS = [
   },
   {
     q: "Mohu MateMax použít i bez přijímaček?",
-    a: "Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze 700+ příkladů pokrývá celý 2. stupeň ZŠ — zlomky, rovnice, geometrie, procenta, mocniny i slovní úlohy.",
+    a: "Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze 900+ příkladů pokrývá 9 témat CERMAT přijímaček — zlomky, výrazy, rovnice, geometrie, slovní úlohy, grafy, konstrukce, úhly a souhrnné.",
   },
   {
     q: "Jak se liší MateMax od pracovního sešitu Matematika Snadno?",
@@ -514,7 +514,7 @@ export default function LandingPage() {
                   "Reálné příklady z CERMAT testů",
                   "Okamžitá zpětná vazba",
                   "Nápověda při každé chybě",
-                  "5 témat: zlomky, rovnice, procenta…",
+                  "3 témata zdarma: zlomky, rovnice, geometrie",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <span className="font-bold flex-shrink-0" style={{ color: "#00B4D8" }}>✓</span>
@@ -571,7 +571,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
             <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
-              <CountUp end={700} suffix="+" />
+              <CountUp end={900} suffix="+" />
             </div>
             <div className="text-sm text-gray-500 mt-1">příkladů v databázi</div>
           </div>
