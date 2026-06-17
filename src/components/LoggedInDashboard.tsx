@@ -18,6 +18,7 @@ import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getTodayTopic } from "@/lib/studijni-plan";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import PushSubscribeNudge from "@/components/PushSubscribeNudge";
+import TopicPathMap from "@/components/TopicPathMap";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -703,6 +704,9 @@ export default function LoggedInDashboard({
             </div>
           </div>
         )}
+
+        {/* Visual topic path map */}
+        <TopicPathMap isPremium={isPremium} />
 
         {/* Opakovat chyby CTA */}
         {hasWrongCards && (
