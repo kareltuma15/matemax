@@ -3178,7 +3178,7 @@
     {
       "id": "SLO_016",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Smísíme 3 litry 20% roztoku a 2 litry 50% roztoku. Výsledná koncentrace?",
       "odpoved": "32 %",
@@ -3195,7 +3195,7 @@
     {
       "id": "SLO_017",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Kolik litrů 30% roztoku přidáme k 6 litrům 10% roztoku, aby výsledek byl 20%?",
       "odpoved": "6 litrů",
@@ -3210,7 +3210,7 @@
     {
       "id": "SLO_018",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "finance",
       "obtiznost": 2,
       "zadani": "Mícháme čaj za 120 Kč/100g a za 80 Kč/100g. Chceme 200g za 95 Kč/100g. Kolik gramů každého?",
       "odpoved": "75 g drahého, 125 g levného",
@@ -3224,7 +3224,7 @@
     {
       "id": "SLO_019",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Slitina 20% Cu + slitina 80% Cu → 100g s 50% Cu. Kolik gramů každé?",
       "odpoved": "50 g a 50 g",
@@ -3239,7 +3239,7 @@
     {
       "id": "SLO_020",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Roztok soli: přidáme 200 ml vody k 300 ml 15% roztoku. Nová koncentrace?",
       "odpoved": "9 %",
@@ -3254,7 +3254,7 @@
     {
       "id": "SLO_021",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Otec je 4× starší než syn. Za 5 let bude 3× starší. Věky nyní?",
       "odpoved": "syn 10 let, otec 40 let",
@@ -3270,7 +3270,7 @@
     {
       "id": "SLO_022",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Matce je 36 let, dceři 12. Za kolik let bude matka 2× starší?",
       "odpoved": "12 let",
@@ -3286,7 +3286,7 @@
     {
       "id": "SLO_023",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Součet věků otce a syna je 54. Otec je o 30 let starší. Kolik let je synovi?",
       "odpoved": "12 let",
@@ -3302,7 +3302,7 @@
     {
       "id": "SLO_024",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Babičce je 60 let, vnukovi 12. Před kolika lety bylo babičce 5× více než vnukovi?",
       "odpoved": "5 let",
@@ -3319,7 +3319,7 @@
     {
       "id": "SLO_025",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Sourozenecký věkový průměr je 14 let. Nejstarší je o 6 let starší než nejmladší. Nejmladší je 11 let. Věk středního sourozence?",
       "odpoved": "14 let",
@@ -3376,7 +3376,7 @@
     {
       "id": "SLO_029",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Obdélník se prodloužil o 20 % a zúžil o 10 %. Změna obsahu?",
       "odpoved": "navýšení o 8 %",
@@ -3390,7 +3390,7 @@
     {
       "id": "SLO_030",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Skupina turistů má dojít 60 km za 3 dny. 1. den ujdou 2/5, 2. den 1/3 zbytku. Kolik zbývá 3. den?",
       "odpoved": "22 km",
@@ -3461,7 +3461,7 @@
     {
       "id": "SLO_035",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 1,
       "zadani": "Nyní je Evě 15 let a Adamovi 9 let. Před kolika lety bylo Evě 2× více let?",
       "odpoved": "3 roky",
@@ -3593,7 +3593,7 @@
     {
       "id": "SLO_044",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Přilijeme 4 l vody k 1 l 60% kyseliny. Výsledná koncentrace?",
       "odpoved": "12 %",
@@ -3608,7 +3608,7 @@
     {
       "id": "SLO_045",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Pavel je 2× starší než Tomáš. Za 4 roky bude Pavel o 8 let starší. Věky nyní?",
       "odpoved": "Tomáš 8 let, Pavel 16 let",
@@ -3735,7 +3735,7 @@
     {
       "id": "SLO_054",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Rodičům je dohromady 80 let, jejich třem dětem dohromady 30 let. Průměrný věk celé rodiny?",
       "odpoved": "22 let",
@@ -3750,7 +3750,7 @@
     {
       "id": "SLO_055",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Ve třídě 25 žáků je 60 % dívek. Kolik chlapců?",
       "odpoved": "10",
@@ -3765,7 +3765,7 @@
     {
       "id": "SLO_056",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Hokej: 3 góly dohromady za 2 zápasy. 1. zápas: méně o 1 gól. Skóre?",
       "odpoved": "1:2",
@@ -3822,7 +3822,7 @@
     {
       "id": "SLO_060",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Obchod prodal ve 3 dnech 480 kg ovoce. Každý den prodal o 20 kg více než předchozí. Kolik v 1. den?",
       "odpoved": "140 kg",
@@ -8552,7 +8552,7 @@
     {
       "id": "SLO_061",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Číslo je o 3 větší než jeho polovina. Jaké číslo to je?",
       "odpoved": "6",
@@ -8568,7 +8568,7 @@
     {
       "id": "SLO_062",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Součin dvou po sobě jdoucích přirozených čísel je 72. Jaká jsou?",
       "odpoved": "8 a 9",
@@ -8583,7 +8583,7 @@
     {
       "id": "SLO_063",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Obdélník má obsah 60 cm². Délka je o 7 cm větší než šířka. Rozměry?",
       "odpoved": "5 × 12 cm",
@@ -8597,7 +8597,7 @@
     {
       "id": "SLO_064",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Součet čtverce čísla a trojnásobku téhož čísla je 40. Jaké je to číslo (kladné)?",
       "odpoved": "5",
@@ -8611,7 +8611,7 @@
     {
       "id": "SLO_065",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Čtvercová zahrada: prodloužení délky o 4 m a šířky o 2 m dá obsah 120 m². Původní strana?",
       "odpoved": "8 m",
@@ -8713,7 +8713,7 @@
     {
       "id": "SLO_072",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Smícháme 3 l 40% roztoku a 2 l 20% roztoku. Výsledná koncentrace?",
       "odpoved": "32%",
@@ -8727,7 +8727,7 @@
     {
       "id": "SLO_073",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "200 g 30% roztoku cukru. Kolik gramů cukru přidáme, aby vznikl 50% roztok?",
       "odpoved": "80 g",
@@ -8741,7 +8741,7 @@
     {
       "id": "SLO_074",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Otci 42, synovi 12. Za kolik let bude otci 3× tolik co synovi?",
       "odpoved": "za 3 roky",
@@ -8758,7 +8758,7 @@
     {
       "id": "SLO_075",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Babičce je 5× tolik co vnučce. Dohromady 72 let. Kolik je vnučce?",
       "odpoved": "12 let",
@@ -8775,7 +8775,7 @@
     {
       "id": "SLO_076",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "finance",
       "obtiznost": 2,
       "zadani": "Prodáno 60 vstupenek. Dospělý 50 Kč, dítě 30 Kč. Celkem 2400 Kč. Kolik dospělých?",
       "odpoved": "30",
@@ -8789,7 +8789,7 @@
     {
       "id": "SLO_077",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "finance",
       "obtiznost": 3,
       "zadani": "Jan má 2× více peněz než Petr. Jan dal Petrovi 100 Kč a mají teď stejně. Kolik měl Jan?",
       "odpoved": "400 Kč",
@@ -8806,7 +8806,7 @@
     {
       "id": "SLO_078",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Třída 30 žáků, průměr 7,2 b. Chlapci 7 b, dívky 7,5 b. Kolik chlapců?",
       "odpoved": "18",
@@ -8823,7 +8823,7 @@
     {
       "id": "SLO_079",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Tři čísla v poměru 2:3:5, součet 80. Jaká jsou?",
       "odpoved": "16, 24, 40",
@@ -8837,7 +8837,7 @@
     {
       "id": "SLO_080",
       "tema": "slovni_ulohy",
-      "podtema": "ostatni",
+      "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Zboží se zlevní o 20 % a pak o dalších 10 %. Celkové zlevnění v %?",
       "odpoved": "28 %",
