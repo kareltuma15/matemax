@@ -785,56 +785,47 @@ export default function ProfilPage() {
 
           {/* ── SEKCE: PŘIPRAVENOST ── */}
           <div className="scroll-reveal">
-            <div className="flex items-baseline justify-between mb-2 px-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Připravenost na přijímačky</p>
-              <p className="text-[10px] text-slate-300">z tréninku + SM-2</p>
-            </div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost na přijímačky</p>
             <ReadinessCard />
 
-            {/* Odhadovaný výsledek přijímaček */}
+            {/* Kompaktní řádek: odhadované body + certifikát */}
             {readinessScore > 0 && (() => {
               const pts = Math.round(readinessScore / 100 * 50);
               const clr = pts >= 38 ? "#16a34a" : pts >= 28 ? "#d97706" : "#dc2626";
-              const bg  = pts >= 38 ? "#f0fdf4" : pts >= 28 ? "#fffbeb" : "#fef2f2";
-              const bdr = pts >= 38 ? "#bbf7d0" : pts >= 28 ? "#fde68a" : "#fecaca";
-              const lbl = pts >= 38 ? "Výborný výsledek" : pts >= 28 ? "Dobrý výsledek" : "Je co zlepšit";
-              const desc = pts >= 43
-                ? "Na top gymnázia (GJK, SSPŠ) zpravidla stačí 40–50 bodů."
-                : pts >= 35
-                ? "Většina gymnázií přijímá od 30–40 bodů."
-                : pts >= 22
-                ? "Na odborné školy s maturitou zpravidla stačí 20–30 bodů."
-                : "Pravidelným tréninkem lze výsledek výrazně zlepšit.";
+              const desc = pts >= 38 ? "Výborný výsledek · většina gymnázií od 30 b." : pts >= 28 ? "Dobrý výsledek · odborné školy od 20 b." : "Je co zlepšit — pravidelný trénink pomůže";
               return (
-                <div className="mt-2 rounded-2xl p-4" style={{ background: bg, border: `1.5px solid ${bdr}` }}>
-                  <p className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: clr }}>
-                    🎯 Odhadovaný výsledek přijímaček
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <div className="shrink-0 text-center">
-                      <p className="text-4xl font-black leading-none" style={{ color: clr }}>~{pts}</p>
-                      <p className="text-xs font-semibold mt-0.5" style={{ color: clr }}>/ 50 bodů</p>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black leading-tight" style={{ color: clr }}>{lbl}</p>
-                      <p className="text-xs leading-snug mt-1" style={{ color: clr, opacity: 0.8 }}>{desc}</p>
-                      {/* Mini progress bar */}
-                      <div className="mt-2 bg-white/60 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="h-2 rounded-full transition-all duration-700"
-                          style={{ width: `${(pts / 50) * 100}%`, background: clr }}
-                        />
-                      </div>
-                    </div>
+                <div className="mt-2 flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="shrink-0 text-center">
+                    <p className="text-xl font-black leading-none" style={{ color: clr }}>~{pts}</p>
+                    <p className="text-[10px] font-semibold text-slate-400">/ 50 b.</p>
                   </div>
-                  <p className="text-[10px] mt-3 leading-snug" style={{ color: clr, opacity: 0.6 }}>
-                    * Odhad vychází z výsledků tréninku. Pro přesnější výsledek zkus cvičný test níže.
-                  </p>
+                  <p className="flex-1 text-xs text-slate-500 leading-snug">{desc}</p>
+                  {readinessScore >= 60 && (
+                    isPremium ? (
+                      <button
+                        onClick={handleDownloadCertificate}
+                        disabled={certState === "loading"}
+                        className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg transition-all disabled:opacity-60"
+                        style={{ background: "#fbbf24", color: "#0D1B3E" }}
+                      >
+                        {certState === "loading" ? "…" : certState === "done" ? "✓" : "🎓"}
+                      </button>
+                    ) : (
+                      <Link
+                        href="/cenik"
+                        className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg"
+                        style={{ background: "#fef3c7", color: "#92400e" }}
+                      >
+                        🎓 Certifikát
+                      </Link>
+                    )
+                  )}
                 </div>
               );
             })()}
 
-            {cermatLast ? (
+            {/* Poslední CERMAT test — pouze pokud ho žák absolvoval */}
+            {cermatLast && (
               <Link
                 href="/cermat-test"
                 className="mt-2 flex items-center justify-between bg-white rounded-2xl border border-slate-200 p-4 hover:border-blue-200 transition-colors"
@@ -851,66 +842,6 @@ export default function ProfilPage() {
                   </span>
                 </div>
               </Link>
-            ) : (
-              <Link
-                href="/cermat-test"
-                className="mt-2 flex items-center justify-between rounded-2xl p-4 hover:opacity-90 transition-opacity"
-                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-              >
-                <div>
-                  <p className="text-xs font-black text-white">🎯 Simulace CERMAT testu</p>
-                  <p className="text-[10px] text-blue-200 mt-0.5">Otestuj se za podmínek reálných přijímaček</p>
-                </div>
-                <span className="text-white text-lg">→</span>
-              </Link>
-            )}
-            {readinessScore >= 60 && (
-              <div
-                className="mt-2 rounded-2xl overflow-hidden"
-                style={{ border: "2px solid #fbbf24" }}
-              >
-                {/* Header row */}
-                <div
-                  className="px-4 py-3 flex items-center justify-between gap-3"
-                  style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)" }}
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-black text-white">
-                      {readinessScore >= 80 ? `🏆 Výborná příprava! ${readinessScore} %` : `📈 Tvůj pokrok: ${readinessScore} %`}
-                    </p>
-                    <p className="text-[10px] text-blue-200 mt-0.5">
-                      {isPremium ? "Vygeneruj a sdílej certifikát připravenosti" : "🔒 Certifikát připravenosti — Premium funkce"}
-                    </p>
-                  </div>
-                  {isPremium ? (
-                    <button
-                      onClick={handleDownloadCertificate}
-                      disabled={certState === "loading"}
-                      className="px-3 py-2 rounded-xl font-bold text-xs transition-all disabled:opacity-60 shrink-0"
-                      style={{ background: "#fbbf24", color: "#0D1B3E" }}
-                    >
-                      {certState === "loading" ? "…" : certState === "done" ? "✓ Stažen" : certState === "error" ? "Chyba" : "🎓 Stáhnout"}
-                    </button>
-                  ) : (
-                    <Link
-                      href="/cenik"
-                      className="px-3 py-2 rounded-xl font-bold text-xs shrink-0 transition-opacity hover:opacity-80"
-                      style={{ background: "#fbbf24", color: "#0D1B3E" }}
-                    >
-                      Upgradovat →
-                    </Link>
-                  )}
-                </div>
-                {/* Certificate preview (only for Premium) */}
-                {isPremium && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={`/api/certificate?name=${encodeURIComponent(displayName || (email ? email.split("@")[0] : "Student"))}&readiness=${readinessScore}&xp=${xp}&streak=${streak}`}
-                    alt="Náhled certifikátu"
-                    style={{ width: "100%", display: "block", aspectRatio: "3/2", objectFit: "cover" }}
-                  />
-                )}
-              </div>
             )}
           </div>
 
