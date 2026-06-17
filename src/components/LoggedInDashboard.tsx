@@ -8,9 +8,7 @@ import BottomNav from "@/components/BottomNav";
 import { TEMA_LABELS } from "@/types";
 import type { Session } from "@supabase/supabase-js";
 import challengesJson from "@/data/daily-challenges.json";
-import { getReadiness } from "@/lib/readiness";
 import { localLoadCards, localLoadSessions } from "@/lib/storage";
-import { isDue } from "@/lib/sm2";
 import CountdownBanner from "@/components/CountdownBanner";
 import GuidanceModal from "@/components/GuidanceModal";
 import { usePremium } from "@/lib/premium";
@@ -56,8 +54,6 @@ function getDailyQuote(): string {
 }
 
 const DAILY_GOAL = 10;
-const RING_R = 40;
-const RING_C = 2 * Math.PI * RING_R;
 
 interface WeakTopic {
   tema: string;
@@ -214,9 +210,6 @@ export default function LoggedInDashboard({
   const [challengeDoneToday, setChallengeDoneToday] = useState(false);
   const [parentMessage, setParentMessage] = useState<string | null>(null);
   const [parentMessageId, setParentMessageId] = useState<string | null>(null);
-  const [dueCount, setDueCount] = useState(0);
-  const [readinessScore, setReadinessScore] = useState<{ score: number; label: string; color: string } | null>(null);
-  const [suggestedTopics, setSuggestedTopics] = useState<Array<{ tema: string; label: string }>>([]);
   const [hasWrongCards, setHasWrongCards] = useState(false);
   const [weeklyStats, setWeeklyStats] = useState<WeeklyStats | null>(null);
   const [guidanceModal, setGuidanceModal] = useState<null | {
@@ -297,36 +290,10 @@ export default function LoggedInDashboard({
 
   useEffect(() => {
     const cards = localLoadCards();
-    setDueCount(cards.filter(isDue).length);
     setHasWrongCards(cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2));
     setWeeklyStats(computeWeeklyStats());
 
-    const r = getReadiness();
-    if (r.hasData) setReadinessScore({ score: r.score, label: r.label, color: r.color });
-
-    // Suggested topics: weakest that have been at least touched
-    const sessions = localLoadSessions();
-    const lastPracticed: Record<string, string> = {};
-    for (const s of sessions) {
-      for (const t of s.temas) {
-        if (!lastPracticed[t]) lastPracticed[t] = s.date;
-      }
-    }
     const todayStr = new Date().toISOString().slice(0, 10);
-    const suggested = r.topics
-      .filter((t) => t.score > 0 || t.practiced > 0)
-      .map((t) => {
-        const last = lastPracticed[t.tema];
-        const daysSince = last
-          ? Math.floor((new Date(todayStr).getTime() - new Date(last).getTime()) / 86400000)
-          : 99;
-        const urgency = (1 - t.score / 100) * 0.6 + Math.min(daysSince, 7) / 7 * 0.4;
-        return { ...t, urgency };
-      })
-      .sort((a, b) => b.urgency - a.urgency)
-      .slice(0, 3)
-      .map(({ tema, label }) => ({ tema, label }));
-    setSuggestedTopics(suggested);
     try {
       const raw = localStorage.getItem("matemax-today");
       if (raw) {
@@ -377,8 +344,6 @@ export default function LoggedInDashboard({
     setParentMessage(null);
     setParentMessageId(null);
   }
-
-  const goalMet = todayCount >= DAILY_GOAL;
 
   return (
     <div className="bg-white min-h-screen">
@@ -624,91 +589,70 @@ export default function LoggedInDashboard({
           </Link>
         )}
 
-        {/* Due cards + readiness pill row */}
-        {(dueCount > 0 || readinessScore) && (
-          <div className="flex gap-2">
-            {dueCount > 0 && (
-              <Link
-                href="/trenink?rezim=sm2"
-                className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                style={{ background: "var(--surface-3)", color: "#2E6DA4", border: "1px solid var(--border-color)" }}
-              >
-                <span>🃏</span>
-                <span>{dueCount} karet ke zkoušení</span>
-              </Link>
-            )}
-            {readinessScore && (
-              <Link
-                href="/profil"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors whitespace-nowrap"
-                style={{ background: "var(--surface-0)", color: readinessScore.color, border: `1px solid ${readinessScore.color}30` }}
-              >
-                <span>📊</span>
-                <div className="flex flex-col leading-none">
-                  <span className="text-[9px] font-semibold opacity-60 uppercase tracking-wide">Připravenost</span>
-                  <span className="text-sm">{readinessScore.score} %</span>
-                </div>
-              </Link>
-            )}
-          </div>
-        )}
-
-        {/* Dnešní výzva — nejslabší téma z diagnostiky */}
-        {diagDone && weakTopics.length > 0 && (
-          <div
-            className="rounded-2xl overflow-hidden"
-            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-          >
-            <div className="px-5 py-4">
-              <p className="text-xs font-bold uppercase tracking-wide text-blue-300 mb-1">Dnešní výzva</p>
-              <p className="text-xl font-black text-white">
-                {TEMA_LABELS[weakTopics[0].tema] ?? weakTopics[0].tema}
-              </p>
-              <div className="flex items-center gap-2 mt-1.5">
-                <span className="bg-white/20 rounded-full px-2.5 py-0.5 text-xs font-bold text-white">
-                  Připravenost: {Math.round(weakTopics[0].score * 100)} %
-                </span>
-                <span className="text-xs text-blue-200">Nejslabší téma — procvič ho dnes</span>
-              </div>
-            </div>
-            <Link
-              href={`/trenink?tema=${weakTopics[0].tema}`}
-              className="block px-5 py-3 text-center font-black text-sm text-white"
-              style={{ background: "rgba(255,255,255,0.12)", borderTop: "1px solid rgba(255,255,255,0.15)" }}
-            >
-              Začít trénink →
-            </Link>
-          </div>
-        )}
-
-        {/* Suggested topics */}
-        {suggestedTopics.length > 0 && (
-          <div className="bg-white rounded-2xl border border-slate-100 p-4">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3">
-              💡 Dnes doporučujeme
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {suggestedTopics.map(({ tema, label }) => {
-                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
-                return (
-                  <Link
-                    key={tema}
-                    href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
-                    style={locked
-                      ? { background: "#f1f5f9", color: "#94a3b8", border: "1px solid #e2e8f0" }
-                      : { background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-                  >
-                    {locked ? "🔒 " : ""}{label} {locked ? "" : "→"}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
         {/* Visual topic path map */}
         <TopicPathMap isPremium={isPremium} />
+
+        {/* Dnešní úkol — studijní plán + denní progress */}
+        {(() => {
+          const todayTopic = getTodayTopic();
+          const topicToShow = todayTopic ?? (weakTopics.length > 0 ? {
+            tema: weakTopics[0].tema,
+            label: TEMA_LABELS[weakTopics[0].tema] ?? weakTopics[0].tema,
+            score: Math.round(weakTopics[0].score * 100),
+          } : null);
+          if (!topicToShow) return null;
+          const locked = !isPremium && PREMIUM_TOPICS.has(topicToShow.tema);
+          const practiceHref = locked ? "/cenik" : `/trenink?tema=${topicToShow.tema}`;
+          const SMALL_RING_C = 2 * Math.PI * 22;
+          const goalMet2 = todayCount >= DAILY_GOAL;
+          return (
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+              <div className="px-5 pt-4 pb-3 flex items-center gap-4">
+                <svg width="52" height="52" viewBox="0 0 56 56" fill="none" className="shrink-0">
+                  <circle cx="28" cy="28" r="22" stroke="#e2e8f0" strokeWidth="6" />
+                  <circle
+                    cx="28" cy="28" r="22"
+                    stroke={goalMet2 ? "#22c55e" : "#2E6DA4"}
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeDasharray={SMALL_RING_C}
+                    strokeDashoffset={SMALL_RING_C * (1 - Math.min(1, todayCount / DAILY_GOAL))}
+                    transform="rotate(-90 28 28)"
+                  />
+                  <text x="28" y="33" textAnchor="middle" fontSize="11" fontWeight="800" fill={goalMet2 ? "#16a34a" : "#0D1B3E"}>
+                    {todayCount}/{DAILY_GOAL}
+                  </text>
+                </svg>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-black uppercase tracking-wide text-slate-400">
+                    {todayTopic ? "Studijní plán — dnes" : "Kde máš mezery"}
+                  </p>
+                  <p className="text-base font-black mt-0.5" style={{ color: "var(--text-primary)" }}>
+                    {topicToShow.label}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    {goalMet2 ? "Cíl splněn 🎉" : `${DAILY_GOAL - todayCount} příkladů do splnění cíle`}
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 border-t border-slate-100">
+                <Link
+                  href={practiceHref}
+                  className="py-3 text-center text-sm font-bold border-r border-slate-100 hover:bg-slate-50 transition-colors"
+                  style={{ color: locked ? "#94a3b8" : "#2E6DA4" }}
+                >
+                  {locked ? "🔒 Premium →" : "Procvičit →"}
+                </Link>
+                <Link
+                  href="/studijni-plan"
+                  className="py-3 text-center text-sm font-semibold text-slate-400 hover:bg-slate-50 transition-colors"
+                >
+                  Studijní plán →
+                </Link>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Opakovat chyby CTA */}
         {hasWrongCards && (
@@ -742,108 +686,7 @@ export default function LoggedInDashboard({
           </span>
         </Link>
 
-        {/* Stats row */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center stagger-1 card-hover">
-            <p className="text-xs text-slate-400 font-medium mb-1">Streak</p>
-            <p className="text-2xl font-black">
-              <span className={streak > 0 ? "streak-bounce" : ""}>🔥</span>{" "}
-              <span className={streak >= 3 ? "streak-gold" : "text-orange-500"}>{streak}</span>
-            </p>
-            <p className="text-xs text-slate-400">dní v řadě</p>
-          </div>
-          <div
-            className="rounded-2xl border p-4 text-center stagger-2 card-hover"
-            style={{ background: diagDone ? "#f0fdf4" : "#fff7ed", borderColor: diagDone ? "#bbf7d0" : "#fed7aa" }}
-          >
-            <p className="text-xs font-medium mb-1" style={{ color: diagDone ? "#166534" : "#92400e" }}>
-              Diagnostika
-            </p>
-            <p className="text-xl mb-0.5">{diagDone ? "✅" : "🎯"}</p>
-            <p className="text-xs font-semibold" style={{ color: diagDone ? "#166534" : "#92400e" }}>
-              {diagDone ? "Hotovo" : "Ještě ne"}
-            </p>
-          </div>
-        </div>
-
-        {/* Daily goal – SVG ring */}
-        <div
-          className="rounded-2xl p-5 flex items-center gap-5 stagger-3 card-hover"
-          style={goalMet
-            ? { background: "#f0fdf4", border: "2px solid #bbf7d0" }
-            : { background: "#fff", border: "1px solid #e2e8f0" }
-          }
-        >
-          {/* Ring */}
-          <div className="shrink-0">
-            <svg width="88" height="88" viewBox="0 0 96 96" fill="none">
-              <defs>
-                <linearGradient id="goal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor={goalMet ? "#22c55e" : "#0D1B3E"} />
-                  <stop offset="100%" stopColor={goalMet ? "#16a34a" : "#2E6DA4"} />
-                </linearGradient>
-              </defs>
-              {/* Track */}
-              <circle cx="48" cy="48" r={RING_R} stroke="#e2e8f0" strokeWidth="9" />
-              {/* Progress */}
-              <circle
-                cx="48" cy="48" r={RING_R}
-                stroke="url(#goal-grad)"
-                strokeWidth="9"
-                strokeLinecap="round"
-                strokeDasharray={RING_C}
-                strokeDashoffset={RING_C * (1 - Math.min(1, todayCount / DAILY_GOAL))}
-                transform="rotate(-90 48 48)"
-                style={{ transition: "stroke-dashoffset 0.7s ease" }}
-              />
-              {/* Center text */}
-              <text x="48" y="43" textAnchor="middle" fontSize="20" fontWeight="800" fill={goalMet ? "#15803d" : "#0D1B3E"}>
-                {todayCount}
-              </text>
-              <text x="48" y="58" textAnchor="middle" fontSize="11" fill="#94a3b8">
-                z {DAILY_GOAL}
-              </text>
-            </svg>
-          </div>
-
-          {/* Text */}
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold uppercase tracking-wide mb-0.5" style={{ color: goalMet ? "#166534" : "#64748b" }}>
-              Dnešní cíl
-            </p>
-            {goalMet ? (
-              <>
-                <p className="text-base font-black" style={{ color: "#15803d" }}>Splněno! +15 XP bonus 🎉</p>
-                <p className="text-xs mt-1" style={{ color: "#16a34a" }}>{todayCount} příkladů dnes</p>
-                <Link
-                  href="/trenink"
-                  className="inline-block mt-2 text-xs font-bold px-3 py-1.5 rounded-lg"
-                  style={{ background: "#22c55e", color: "#fff" }}
-                >
-                  Procvičovat dál →
-                </Link>
-              </>
-            ) : (
-              <>
-                <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>
-                  {todayCount === 0 ? "Zatím žádné příklady" : `${todayCount} příkladů hotovo`}
-                </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Ještě {DAILY_GOAL - todayCount} do splnění cíle
-                </p>
-                <Link
-                  href="/trenink"
-                  className="inline-block mt-2 text-xs font-bold px-3 py-1.5 rounded-lg"
-                  style={{ background: "#0D1B3E", color: "#fff" }}
-                >
-                  Jít trénovat →
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Dnešní výzva */}
+        {/* Denní výzva */}
         <Link
           href="/vyzva"
           className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md stagger-4 tilt-card"
@@ -880,21 +723,6 @@ export default function LoggedInDashboard({
           </div>
           <WeeklyLeaderboard compact />
         </div>
-
-        {/* CERMAT test */}
-        <Link
-          href="/cermat-test"
-          className="block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all active:scale-[0.98] hover:shadow-md stagger-5 tilt-card"
-        >
-          <div className="px-5 py-4 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: "#2E6DA4" }}>CERMAT test</p>
-              <p className="text-base font-extrabold" style={{ color: "var(--text-primary)" }}>Otestuj se na čisto</p>
-              <p className="text-xs text-slate-400 mt-0.5">Simulace přijímaček · 15 příkladů · 25 min</p>
-            </div>
-            <span className="text-3xl">🎯</span>
-          </div>
-        </Link>
 
         {/* Slabá témata */}
         {weakTopics.length > 0 && (
@@ -945,6 +773,13 @@ export default function LoggedInDashboard({
         </Link>
 
         {/* Secondary CTAs */}
+        <Link
+          href="/studijni-plan"
+          className="block w-full py-3.5 text-center rounded-2xl font-black text-sm"
+          style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
+        >
+          📅 Studijní plán →
+        </Link>
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/profil"
@@ -956,17 +791,17 @@ export default function LoggedInDashboard({
             <Link
               href="/diagnostika"
               className="block py-3 text-center rounded-xl font-semibold text-sm"
-              style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
+              style={{ background: "#fff7ed", color: "#92400e", border: "2px solid #fed7aa" }}
             >
               🎯 Spustit diagnostiku
             </Link>
           ) : (
             <Link
-              href="/studijni-plan"
+              href="/cermat-test"
               className="block py-3 text-center rounded-xl font-semibold text-sm"
-              style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
+              style={{ background: "#f0fdf4", color: "#166534", border: "2px solid #bbf7d0" }}
             >
-              📅 Studijní plán
+              🎯 CERMAT test
             </Link>
           )}
         </div>
