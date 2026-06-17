@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 500,
+    "total": 704,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -15,7 +15,8 @@
       "reseni_kroky": "Pole kroku reseni",
       "cas_sekund": "Doporuceny cas v sekundach",
       "sm2_interval": "Pocatecni SM2 interval pro spaced repetition"
-    }
+    },
+    "updated": "2026-06-17"
   },
   "examples": [
     {
@@ -9694,6 +9695,313 @@
         "Výsledek: -\\frac{11}{10} + 0 = -\\frac{11}{10}"
       ],
       "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_001",
+      "tema": "konstrukce",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Co je osa usecky AB?",
+      "odpoved": "Prima kolma na AB prochazejici strede AB",
+      "reseni_kroky": [
+        "Osa usecky AB je prima kolma na AB prochazejici jejim stredem.",
+        "Kazdy bod osy ma stejnou vzdalenost od bodu A i od bodu B.",
+        "Konstrukce: z A a B sestav kruznice se stejnym polomerem r > AB/2. Pruseciky kruznic = dva body osy."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_002",
+      "tema": "konstrukce",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Co je osa uhlu?",
+      "odpoved": "Poloprima z vrcholu uhlu delici ho na dve shodne casti",
+      "reseni_kroky": [
+        "Osa uhlu je poloprima vychazejici z vrcholu uhlu, ktera ho rozdeli na dva shodne uhly.",
+        "Kazdy bod osy uhlu ma stejnou vzdalenost od obou ramen uhlu.",
+        "Konstrukce: z vrcholu sestav kruznici, pruseciky s rameny oznac P a Q. Z P a Q sestav kruznice se stejnym polomerem. Jejich prusecik V urci osu uhlu."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_003",
+      "tema": "konstrukce",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Bodem P vedeme kolmici k prime p. Kolik takovich kolmic existuje?",
+      "odpoved": "Prave 1 kolmice",
+      "reseni_kroky": [
+        "Z libovolneho bodu P existuje prave jedna kolmice k prime p.",
+        "Delka kolmice (od P k pate kolmice) = vzdalenost bodu P od primy p.",
+        "Konstrukce: z P sestav kruznici protinajici p ve dvou bodech X, Y. Osa usecky XY je hledana kolmice."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_004",
+      "tema": "konstrukce",
+      "podtema": "zakladni",
+      "obtiznost": 1,
+      "zadani": "Bodem P (P lezi mimo primu p) vedeme rovnobezku s p. Kolik takovich rovnobezek existuje?",
+      "odpoved": "Prave 1 rovnobezka",
+      "reseni_kroky": [
+        "Bodem P, ktery nelezi na p, prochazi prave jedna rovnobezka s p (axiom rovnobeznosti).",
+        "Konstrukce: spust z P kolmici na p (pata F). Z P sestav kolmici k PF — to je hledana rovnobezka."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_005",
+      "tema": "konstrukce",
+      "podtema": "zakladni",
+      "obtiznost": 2,
+      "zadani": "Jak se nazyva kruznice prochazejici vsemi tremi vrcholy trojuhelniku ABC? Jak najdeme jeji stred?",
+      "odpoved": "Kruznice opsana; stred = prusecik os stran trojuhelniku",
+      "reseni_kroky": [
+        "Kruznice opsana trojuhelniku prochazi vrcholy A, B, C.",
+        "Stred kruznice opsane = prusecik os stran AB a BC (staci osy dvou stran).",
+        "Polomer r = |OA| = |OB| = |OC|."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_006",
+      "tema": "konstrukce",
+      "podtema": "zakladni",
+      "obtiznost": 2,
+      "zadani": "Bod P lezi na ose usecky AB. Co plati pro vzdalenosti |PA| a |PB|?",
+      "odpoved": "|PA| = |PB|",
+      "reseni_kroky": [
+        "Osa usecky AB je geometricke misto bodu stejne vzdalenych od A i B.",
+        "Pro kazdy bod P na ose usecky: |PA| = |PB|.",
+        "Obracene: pokud |PA| = |PB|, pak P lezi na ose usecky AB."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_007",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 1,
+      "zadani": "Sestroj trojuhelnik se stranami a = 3 cm, b = 4 cm, c = 5 cm. Kolik reseni?",
+      "odpoved": "1 reseni",
+      "reseni_kroky": [
+        "Over trojuhelnikovou nerovnost:",
+        "3 + 4 = 7 > 5  |  3 + 5 = 8 > 4  |  4 + 5 = 9 > 3 — vse splneno.",
+        "Metoda SSS: narysuj zakladnu c = 5 cm, z krajnich bodu sestav kruznice r1 = 4 cm a r2 = 3 cm. Prusecik = treti vrchol.",
+        "Zrcadlovy obraz se nepocita jako druhe reseni => 1 reseni."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_008",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 1,
+      "zadani": "Sestroj trojuhelnik se stranami a = 2 cm, b = 3 cm, c = 6 cm. Kolik reseni?",
+      "odpoved": "0 reseni — trojuhelnikova nerovnost neni splnena",
+      "reseni_kroky": [
+        "Over: 2 + 3 = 5 < 6 — nesplneno.",
+        "Strana c je prilis dlouha, kruznice z krajnich bodu zakladny by se neprotnuly.",
+        "0 reseni."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_009",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 1,
+      "zadani": "Sestroj trojuhelnik se stranami a = 5 cm, b = 5 cm, c = 8 cm. Kolik reseni?",
+      "odpoved": "1 reseni (rovnoramenny)",
+      "reseni_kroky": [
+        "Over: 5+5=10>8, 5+8=13>5 — splneno.",
+        "Rovnoramenny trojuhelnik (a = b).",
+        "Postup SSS: narysuj zakladnu c = 8 cm, z obou koncu sestav kruznice r = 5 cm. Prusecik = vrchol A.",
+        "1 reseni."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_010",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Sestroj trojuhelnik ABC: a = 5 cm, b = 3 cm, c = 8 cm. Kolik reseni?",
+      "odpoved": "0 reseni — a + b = c (degenerovany pripad)",
+      "reseni_kroky": [
+        "Over: 5 + 3 = 8 = c — trojuhelnikova nerovnost vyzaduje ostrou nerovnost (>), nikoli rovnost.",
+        "Body A, B, C by lezely na jedne prime — trojuhelnik by mel nulovou plochu.",
+        "0 reseni."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_011",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Sestroj trojuhelnik ABC: b = 6 cm, c = 4 cm, uhel alfa = 70 stupnu (strany b, c a sevrajici uhel alfa). Kolik reseni?",
+      "odpoved": "1 reseni (pripad SUS vzdy da 1 reseni)",
+      "reseni_kroky": [
+        "Pripad SUS (dve strany a sevreny uhel) jednoznacne urcuje trojuhelnik.",
+        "Postup: narysuj AB = c = 4 cm. Z bodu A sestav paprsek pod uhlem 70 stupnu. Na paprsku vyznac C ve vzdalenosti b = 6 cm. Spoj B s C.",
+        "1 reseni."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_012",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Sestroj trojuhelnik ABC: c = 7 cm, alfa = 50 stupnu, beta = 60 stupnu (pripad USU). Kolik reseni?",
+      "odpoved": "1 reseni (alfa + beta = 110 stupnu < 180 stupnu)",
+      "reseni_kroky": [
+        "Over: alfa + beta = 50 + 60 = 110 < 180 => gama = 180 - 110 = 70 > 0.",
+        "Pripad USU (strana a dva prileble uhly) da 1 reseni.",
+        "Postup: narysuj AB = c = 7 cm. Z A sestav paprsek pod 50 stupni, z B pod 60 stupni. Prusecik = C.",
+        "1 reseni."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_013",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Sestroj trojuhelnik ABC: c = 7 cm, alfa = 80 stupnu, beta = 110 stupnu. Kolik reseni?",
+      "odpoved": "0 reseni — alfa + beta = 190 stupnu > 180 stupnu",
+      "reseni_kroky": [
+        "Over: alfa + beta = 80 + 110 = 190 > 180.",
+        "Treti uhel by byl gama = 180 - 190 = -10 stupnu — to neexistuje.",
+        "0 reseni."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_014",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Sestroj trojuhelnik ABC: a = 5 cm, b = 6 cm, uhel gama = 120 stupnu (SUS s tupym uhlem). Kolik reseni?",
+      "odpoved": "1 reseni",
+      "reseni_kroky": [
+        "Pripad SUS — vzdy 1 reseni, na velikosti uhlu nezalezi.",
+        "Postup: narysuj AC = b = 6 cm. Z bodu C sestav paprsek pod uhlem 120 stupnu. Na paprsku vyznac B ve vzdalenosti a = 5 cm. Spoj A s B.",
+        "1 reseni."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_015",
+      "tema": "konstrukce",
+      "podtema": "pocet_reseni",
+      "obtiznost": 3,
+      "zadani": "Trojuhelnik ABC: a = 5 cm, c = 8 cm, alfa = 30 stupnu (SSU — strana a naproti uhlu alfa). Kolik reseni?",
+      "odpoved": "2 reseni",
+      "reseni_kroky": [
+        "Vypocti vysku: h = c * sin(alfa) = 8 * sin(30) = 8 * 0,5 = 4 cm",
+        "Porovnej a s h a c: h = 4 < a = 5 < c = 8",
+        "h < a < c => kruznice protina zakladnu ve 2 bodech => 2 polohy vrcholu C.",
+        "2 reseni (ostry i tupy trojuhelnik)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_016",
+      "tema": "konstrukce",
+      "podtema": "pocet_reseni",
+      "obtiznost": 3,
+      "zadani": "Trojuhelnik ABC: a = 4 cm, c = 8 cm, alfa = 30 stupnu (SSU). Kolik reseni?",
+      "odpoved": "1 reseni (pravouhly trojuhelnik)",
+      "reseni_kroky": [
+        "Vyska: h = c * sin(alfa) = 8 * 0,5 = 4 cm",
+        "a = 4 cm = h = 4 cm",
+        "a = h => kruznice se zakladny dotyka v jednom bode => pravouhly trojuhelnik (uhel u C = 90 stupnu).",
+        "1 reseni."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_017",
+      "tema": "konstrukce",
+      "podtema": "pocet_reseni",
+      "obtiznost": 3,
+      "zadani": "Trojuhelnik ABC: a = 2 cm, c = 8 cm, alfa = 30 stupnu (SSU). Kolik reseni?",
+      "odpoved": "0 reseni",
+      "reseni_kroky": [
+        "Vyska: h = c * sin(alfa) = 8 * 0,5 = 4 cm",
+        "a = 2 cm < h = 4 cm",
+        "a < h => strana a je prilis kratka, kruznice nedosahne zakladnu => 0 reseni."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_018",
+      "tema": "konstrukce",
+      "podtema": "pocet_reseni",
+      "obtiznost": 3,
+      "zadani": "Trojuhelnik ABC: a = 10 cm, c = 8 cm, alfa = 30 stupnu (SSU). Kolik reseni?",
+      "odpoved": "1 reseni (a > c)",
+      "reseni_kroky": [
+        "Vyska: h = c * sin(alfa) = 8 * 0,5 = 4 cm",
+        "a = 10 cm > c = 8 cm",
+        "a > c => kruznice protina zakladnu pouze na jedne strane => 1 reseni."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_019",
+      "tema": "konstrukce",
+      "podtema": "pocet_reseni",
+      "obtiznost": 2,
+      "zadani": "Sestroj rovnostranny trojuhelnik se stranou 6 cm. Kolik reseni?",
+      "odpoved": "1 reseni",
+      "reseni_kroky": [
+        "Over: 6+6=12>6 — trojuhelnikova nerovnost splnena.",
+        "Vsechny strany stejne => rovnostranny trojuhelnik, vsechny uhly = 60 stupnu.",
+        "1 reseni (zrcadlovy obraz rovnostranneho trojuhelniku je shodny — nepocita se)."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KON_020",
+      "tema": "konstrukce",
+      "podtema": "pocet_reseni",
+      "obtiznost": 3,
+      "zadani": "Shrnuti SSU: kdy ma konstrukce 0 / 1 / 2 reseni? (strana a naproti uhlu alfa, strana c, vyska h = c*sin(alfa))",
+      "odpoved": "a < h => 0; a = h => 1 (pravy uhel); h < a < c => 2; a >= c => 1",
+      "reseni_kroky": [
+        "Vyska z vrcholu naproti zakladne: h = c * sin(alfa)",
+        "a < h => 0 reseni (kruznice nedosahne zakladnu)",
+        "a = h => 1 reseni (pravouhly trojuhelnik u vrcholu C)",
+        "h < a < c => 2 reseni (ostry i tupy trojuhelnik)",
+        "a >= c => 1 reseni (kruznice protina zakladnu jen z jedne strany)",
+        "Pozor: pro alfa >= 90 stupnu vzdy max. 1 reseni."
+      ],
+      "cas_sekund": 90,
       "sm2_interval": 1
     }
   ]
