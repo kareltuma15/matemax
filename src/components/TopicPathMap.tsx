@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
@@ -127,31 +127,43 @@ function nodeTextColor(locked: boolean, started: boolean): string {
 
 export default function TopicPathMap({ isPremium }: Props) {
   const scores = useScores();
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [drawProgress, setDrawProgress] = useState(0);
 
   const started = (key: string) => (scores[key] ?? 0) > 0;
   const locked  = (key: string) => !isPremium && PREMIUM_TOPICS.has(key);
 
   const startedCount = NODES.filter(([k]) => started(k)).length;
 
-  // Path progress: find last started node index in snake order
   const SNAKE_ORDER = NODES.map(([k]) => k);
   let lastStartedIdx = -1;
   for (let i = 0; i < SNAKE_ORDER.length; i++) {
     if (started(SNAKE_ORDER[i])) lastStartedIdx = i;
   }
 
-  // Build a partial snake path up to the last started node for the progress fill
-  // We approximate by drawing the full path and using stroke-dashoffset
-  // Total approximate path length (used for progress animation)
-  // Horizontal: 240 × 2 + (row0 short segments before curves) ≈ 480
-  // Vertical: 150 × 2 = 300
-  // Curves: 4 × quarter-circle × R ≈ 4 × 0.5π × 28 ≈ 176
-  // Total ≈ 956; we'll use 960 as a round number for dasharray
   const APPROX_LENGTH = 960;
   const progressFill = lastStartedIdx < 0 ? 0 : ((lastStartedIdx) / 8) * APPROX_LENGTH;
 
+  // Animate the progress path draw when the map scrolls into view
+  useEffect(() => {
+    if (progressFill <= 0) return;
+    const el = mapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setDrawProgress(progressFill), 120);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [progressFill]);
+
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div ref={mapRef} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
       {/* Header */}
       <div className="px-5 pt-4 pb-2 flex items-center justify-between">
         <div>
@@ -193,7 +205,7 @@ export default function TopicPathMap({ isPremium }: Props) {
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {/* Progress fill (blue) */}
+          {/* Progress fill — animates in when map enters viewport */}
           {progressFill > 0 && (
             <path
               d={SNAKE_D}
@@ -202,7 +214,9 @@ export default function TopicPathMap({ isPremium }: Props) {
               strokeWidth="16"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeDasharray={`${progressFill} ${APPROX_LENGTH}`}
+              strokeDasharray={APPROX_LENGTH}
+              strokeDashoffset={APPROX_LENGTH - drawProgress}
+              style={{ transition: "stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1)" }}
             />
           )}
           {/* Checkpoint dots at each node center (behind the HTML nodes) */}

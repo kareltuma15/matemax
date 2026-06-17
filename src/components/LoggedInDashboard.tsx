@@ -459,22 +459,22 @@ export default function LoggedInDashboard({
         <CountdownBanner variant="compact" />
         <XPProgressBar xp={xp} />
 
-        {/* Mini bento stat tiles — 3 barevné dlaždice */}
+        {/* Mini bento stat tiles — 3 barevné dlaždice se stagger reveal + 3D tilt */}
         {(streak > 0 || xp > 0 || todayCount > 0) && (
           <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-2xl p-3 flex flex-col gap-0.5" style={{ background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)" }}>
+            <div className="rounded-2xl p-3 flex flex-col gap-0.5 tile-3d scroll-reveal delay-1" style={{ background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)" }}>
               <span className="text-xl">{streak >= 3 ? "🔥" : "⚡"}</span>
-              <p className="text-xl font-black text-white leading-tight">{streak}</p>
+              <p className="text-xl font-black text-white leading-tight"><CountUp end={streak} /></p>
               <p className="text-[10px] text-purple-200 leading-tight">{streak === 1 ? "den" : "dní"} streak</p>
             </div>
-            <div className="rounded-2xl p-3 flex flex-col gap-0.5" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>
+            <div className="rounded-2xl p-3 flex flex-col gap-0.5 tile-3d scroll-reveal delay-2" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>
               <span className="text-xl">📝</span>
               <p className="text-xl font-black text-white leading-tight">{todayCount}<span className="text-sm text-blue-300">/{DAILY_GOAL}</span></p>
               <p className="text-[10px] text-blue-300 leading-tight">příkladů dnes</p>
             </div>
-            <div className="rounded-2xl p-3 flex flex-col gap-0.5" style={{ background: "linear-gradient(135deg, #064E3B 0%, #059669 100%)" }}>
+            <div className="rounded-2xl p-3 flex flex-col gap-0.5 tile-3d scroll-reveal delay-3" style={{ background: "linear-gradient(135deg, #064E3B 0%, #059669 100%)" }}>
               <span className="text-xl">⚡</span>
-              <p className="text-xl font-black text-white leading-tight">{xp}</p>
+              <p className="text-xl font-black text-white leading-tight"><CountUp end={xp} /></p>
               <p className="text-[10px] text-emerald-300 leading-tight">celkem XP</p>
             </div>
           </div>
@@ -572,8 +572,8 @@ export default function LoggedInDashboard({
         {/* Main CTA — hned po Dnešním úkolu */}
         <Link
           href="/trenink"
-          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale"
-          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale btn-shimmer"
+          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #7c3aed 50%, #2E6DA4 100%)" }}
         >
           💪 Pokračovat v tréninku →
         </Link>
@@ -635,7 +635,7 @@ export default function LoggedInDashboard({
 
           <Link
             href="/rychly-mod"
-            className="rounded-2xl border border-slate-200 p-3 flex flex-col justify-between press-scale"
+            className="rounded-2xl border border-slate-200 p-3 flex flex-col justify-between press-scale tile-3d"
             style={{ background: "linear-gradient(145deg, #f8faff 0%, #eff6ff 100%)" }}
           >
             <div>

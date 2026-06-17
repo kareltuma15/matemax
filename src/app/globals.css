@@ -552,3 +552,16 @@ body {
   left: 150%;
   transition: left 0.5s ease-in-out;
 }
+
+/* ── Tile 3D hover tilt (pure CSS, bento dlaždice) ────────────── */
+.tile-3d {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  will-change: transform;
+}
+.tile-3d:hover {
+  transform: perspective(420px) rotateX(-4deg) rotateY(4deg) scale(1.04);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+}
+.tile-3d:active {
+  transform: perspective(420px) scale(0.97);
+}
