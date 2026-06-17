@@ -233,9 +233,11 @@ export default function LoggedInDashboard({
 
     // Sync diagDone ze Supabase před rozhodováním — opravuje bug po odhlášení/přihlášení
     async function decideModal() {
-      let effectiveDiagDone = diagDone;
+      // Čti localStorage synchronně — opravuje race condition kdy prop diagDone přichází jako false při prvním renderu
+      const localDiagDone = localStorage.getItem("matemax-diag-done") === "1";
+      let effectiveDiagDone = diagDone || localDiagDone;
 
-      if (supabase && !diagDone) {
+      if (supabase && !effectiveDiagDone) {
         try {
           const { data: rows } = await supabase
             .from("diagnostic_results")

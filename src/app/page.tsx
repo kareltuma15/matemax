@@ -128,12 +128,12 @@ const TESTIMONIALS = [
   {
     quote: "Syn se poprvé začal učit sám. Po dvou týdnech vidím zlepšení — a to jsem ho nemusela ani nutit.",
     name: "Petra K.",
-    role: "maminka devťáka",
+    role: "maminka deváťáka",
     emoji: "👩",
     stars: 5,
   },
   {
-    quote: "Konečně chápu zlomky! Vždycky mi to šlo zle, ale tady mi algoritmus opakoval přesně ty příklady, kde jsem chyboval.",
+    quote: "Konečně chápu zlomky! Vždycky mi to vůbec nešlo, ale tady mi algoritmus opakoval přesně ty příklady, kde jsem chyboval.",
     name: "Tomáš, 14 let",
     role: "žák 9. třídy",
     emoji: "🧑‍💻",
@@ -450,7 +450,7 @@ export default function LandingPage() {
             příprava na přijímačky bez stresu a bez doučování.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 sm:gap-3 max-w-xs sm:max-w-none mx-auto">
             {["Pro žáky 8. a 9. třídy", "Příklady ve stylu CERMAT", "Funguje na mobilu i PC", "Rodiče mají přehled"].map((tag) => (
               <span key={tag} className="text-sm bg-white/10 text-blue-100 px-4 py-2 rounded-full border border-white/20">
                 ✓ {tag}
