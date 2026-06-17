@@ -459,6 +459,27 @@ export default function LoggedInDashboard({
         <CountdownBanner variant="compact" />
         <XPProgressBar xp={xp} />
 
+        {/* Mini bento stat tiles — 3 barevné dlaždice */}
+        {(streak > 0 || xp > 0 || todayCount > 0) && (
+          <div className="grid grid-cols-3 gap-2">
+            <div className="rounded-2xl p-3 flex flex-col gap-0.5" style={{ background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)" }}>
+              <span className="text-xl">{streak >= 3 ? "🔥" : "⚡"}</span>
+              <p className="text-xl font-black text-white leading-tight">{streak}</p>
+              <p className="text-[10px] text-purple-200 leading-tight">{streak === 1 ? "den" : "dní"} streak</p>
+            </div>
+            <div className="rounded-2xl p-3 flex flex-col gap-0.5" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>
+              <span className="text-xl">📝</span>
+              <p className="text-xl font-black text-white leading-tight">{todayCount}<span className="text-sm text-blue-300">/{DAILY_GOAL}</span></p>
+              <p className="text-[10px] text-blue-300 leading-tight">příkladů dnes</p>
+            </div>
+            <div className="rounded-2xl p-3 flex flex-col gap-0.5" style={{ background: "linear-gradient(135deg, #064E3B 0%, #059669 100%)" }}>
+              <span className="text-xl">⚡</span>
+              <p className="text-xl font-black text-white leading-tight">{xp}</p>
+              <p className="text-[10px] text-emerald-300 leading-tight">celkem XP</p>
+            </div>
+          </div>
+        )}
+
         {/* Day-0 welcome — brand new user */}
         {xp === 0 && streak === 0 && todayCount === 0 && (
           <div
@@ -576,29 +597,25 @@ export default function LoggedInDashboard({
         {/* Mapa učení */}
         <TopicPathMap isPremium={isPremium} />
 
-        {/* Kde máš mezery — kontextuálně po mapě */}
-        {weakTopics.length > 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 card-hover">
-            <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>🎯 Kde máš mezery</p>
-            <div className="flex flex-col gap-2">
-              {weakTopics.map(({ tema, score }) => {
-                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
-                return (
-                  <Link
-                    key={tema}
-                    href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl border transition-colors hover:bg-slate-50"
-                    style={{ borderColor: "#e2e8f0" }}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-base">{locked ? "🔒" : "📉"}</span>
-                      <span className="text-sm font-semibold text-slate-700">
-                        {TEMA_LABELS[tema] ?? tema}
+        {/* Bento 2-col: Kde máš mezery compact + Rychlý mód tile */}
+        <div className="grid gap-3" style={{ gridTemplateColumns: weakTopics.length > 0 ? "1fr 1fr" : "1fr" }}>
+          {weakTopics.length > 0 && (
+            <div className="bg-white rounded-2xl border border-slate-200 p-3 flex flex-col card-hover">
+              <p className="text-[10px] font-black uppercase tracking-wide text-slate-400 mb-2">📉 Slabá místa</p>
+              <div className="flex flex-col gap-0.5 flex-1">
+                {weakTopics.slice(0, 3).map(({ tema, score }) => {
+                  const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                  return (
+                    <Link
+                      key={tema}
+                      href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                      className="flex items-center justify-between py-1.5 border-b border-slate-50 last:border-0"
+                    >
+                      <span className="text-xs font-semibold text-slate-700 truncate mr-1">
+                        {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
                       </span>
-                    </div>
-                    <div className="flex items-center gap-2">
                       <span
-                        className="text-xs font-bold px-2 py-0.5 rounded-full"
+                        className="text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
                         style={{
                           background: score < 0.4 ? "#fef2f2" : "#fff7ed",
                           color: score < 0.4 ? "#991b1b" : "#92400e",
@@ -606,14 +623,34 @@ export default function LoggedInDashboard({
                       >
                         {Math.round(score * 100)} %
                       </span>
-                      <span className="text-xs text-slate-400">{locked ? "Premium →" : "procvičit →"}</span>
-                    </div>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                })}
+              </div>
+              <Link href="/diagnostika" className="text-[10px] font-semibold mt-2 block" style={{ color: "#2E6DA4" }}>
+                Celý přehled →
+              </Link>
             </div>
-          </div>
-        )}
+          )}
+
+          <Link
+            href="/rychly-mod"
+            className="rounded-2xl border border-slate-200 p-3 flex flex-col justify-between press-scale"
+            style={{ background: "linear-gradient(145deg, #f8faff 0%, #eff6ff 100%)" }}
+          >
+            <div>
+              <span className="text-2xl">⚡</span>
+              <p className="text-sm font-black mt-1" style={{ color: "#0D1B3E" }}>Rychlý mód</p>
+              <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">10 příkladů · 60 s · rekord</p>
+            </div>
+            <span
+              className="mt-3 text-xs font-black px-2.5 py-1.5 rounded-xl w-fit text-white"
+              style={{ background: "#2E6DA4" }}
+            >
+              Spustit →
+            </span>
+          </Link>
+        </div>
 
         {/* Statistika tohoto týdne */}
         {weeklyStats && (() => {
@@ -715,21 +752,6 @@ export default function LoggedInDashboard({
               )}
             </div>
           </div>
-        </Link>
-
-        {/* Rychlý mód — kompaktní, světlý */}
-        <Link
-          href="/rychly-mod"
-          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-slate-200 transition-colors hover:bg-slate-50 press-scale"
-        >
-          <span className="text-xl">⚡</span>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Rychlý mód</p>
-            <p className="text-xs text-slate-400">10 příkladů · 60 sekund · osobní rekord</p>
-          </div>
-          <span className="text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap" style={{ background: "#eff6ff", color: "#2E6DA4" }}>
-            Hrát →
-          </span>
         </Link>
 
         {/* Premium upsell — až na konci, neruší flow */}
