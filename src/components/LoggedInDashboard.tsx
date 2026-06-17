@@ -431,7 +431,7 @@ export default function LoggedInDashboard({
       {/* Content */}
       <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-4">
 
-        {/* Push subscribe nudge (streak ≥ 3, not yet subscribed) */}
+        {/* Push subscribe nudge */}
         <PushSubscribeNudge streak={streak} userId={session.user.id} />
 
         {/* Parent message banner */}
@@ -455,93 +455,11 @@ export default function LoggedInDashboard({
           </div>
         )}
 
-        {/* Countdown */}
+        {/* Countdown + XP bar */}
         <CountdownBanner variant="compact" />
-
-        {/* XP bar */}
         <XPProgressBar xp={xp} />
 
-        {/* Tento týden */}
-        {weeklyStats && (() => {
-          const acc = weeklyStats.totalExamples > 0
-            ? Math.round((weeklyStats.totalCorrect / weeklyStats.totalExamples) * 100)
-            : 0;
-          const maxCount = Math.max(...weeklyStats.days.map((d) => d.count), 1);
-          const todayStr = new Date().toISOString().slice(0, 10);
-          return (
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 stagger-1 card-hover scroll-reveal">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Tento týden</p>
-                <span
-                  className="text-xs font-bold px-2.5 py-0.5 rounded-full"
-                  style={{ background: "var(--surface-3)", color: "#2E6DA4" }}
-                >
-                  +{weeklyStats.totalXP} XP
-                </span>
-              </div>
-
-              {/* Mini bar chart */}
-              <div className="flex items-end gap-1 mb-3" style={{ height: 58 }}>
-                {weeklyStats.days.map(({ date, count, label }) => {
-                  const barH = count > 0 ? Math.max(6, Math.round((count / maxCount) * 36)) : 4;
-                  const isToday = date === todayStr;
-                  return (
-                    <div key={date} className="flex-1 flex flex-col items-center" style={{ gap: 2 }}>
-                      <span className="text-[8px] font-bold leading-none" style={{ color: isToday ? "#0D1B3E" : "#2E6DA4", opacity: count > 0 ? 1 : 0 }}>
-                        {count}
-                      </span>
-                      <div className="w-full flex items-end" style={{ height: 36 }}>
-                        <div
-                          className="w-full rounded-sm"
-                          style={{
-                            height: barH,
-                            background: isToday ? "var(--navy)" : count > 0 ? "#2E6DA4" : "var(--border-color)",
-                            transition: "height 0.5s ease",
-                          }}
-                        />
-                      </div>
-                      <span
-                        className="text-[9px] font-medium"
-                        style={{ color: isToday ? "#0D1B3E" : "#94a3b8" }}
-                      >
-                        {label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Stats row */}
-              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100">
-                <div className="text-center">
-                  <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>
-                    {weeklyStats.totalExamples}
-                  </p>
-                  <p className="text-[10px] text-slate-400">příkladů</p>
-                </div>
-                <div className="text-center" style={{ borderLeft: "1px solid var(--border-color)", borderRight: "1px solid var(--border-color)" }}>
-                  <p
-                    className="text-base font-black"
-                    style={{ color: acc >= 70 ? "#15803d" : "#f59e0b" }}
-                  >
-                    {acc}&nbsp;%
-                  </p>
-                  <p className="text-[10px] text-slate-400">správně</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>
-                    {weeklyStats.topicsCount}
-                  </p>
-                  <p className="text-[10px] text-slate-400">
-                    {weeklyStats.topicsCount === 1 ? "téma" : weeklyStats.topicsCount < 5 ? "témata" : "témat"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        })()}
-
-        {/* Day-0 welcome card — brand new user with no activity yet */}
+        {/* Day-0 welcome — brand new user */}
         {xp === 0 && streak === 0 && todayCount === 0 && (
           <div
             className="rounded-2xl p-5 flex items-start gap-4 fade-in-up"
@@ -567,30 +485,6 @@ export default function LoggedInDashboard({
             </div>
           </div>
         )}
-
-        {/* Premium upsell banner — only for free users */}
-        {!isPremium && (
-          <Link
-            href="/cenik"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl card-hover"
-            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "1px solid #2E6DA4" }}
-          >
-            <span className="text-xl shrink-0">🔒</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-black text-white leading-tight">9 prémiových témat čeká</p>
-              <p className="text-xs text-blue-300 mt-0.5">Geometrie, Mocniny, Výrazy a další · od 99 Kč/měsíc</p>
-            </div>
-            <span
-              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg whitespace-nowrap btn-shimmer"
-              style={{ background: "#2E6DA4", color: "#fff" }}
-            >
-              Odemknout →
-            </span>
-          </Link>
-        )}
-
-        {/* Visual topic path map */}
-        <TopicPathMap isPremium={isPremium} />
 
         {/* Dnešní úkol — studijní plán + denní progress */}
         {(() => {
@@ -625,7 +519,7 @@ export default function LoggedInDashboard({
                 </svg>
                 <div className="flex-1 min-w-0">
                   <p className="text-[10px] font-black uppercase tracking-wide text-slate-400">
-                    {todayTopic ? "Studijní plán — dnes" : "Kde máš mezery"}
+                    {todayTopic ? "Studijní plán — dnes" : "Doporučujeme procvičit"}
                   </p>
                   <p className="text-base font-black mt-0.5" style={{ color: "var(--text-primary)" }}>
                     {topicToShow.label}
@@ -654,42 +548,152 @@ export default function LoggedInDashboard({
           );
         })()}
 
-        {/* Opakovat chyby CTA */}
+        {/* Main CTA — hned po Dnešním úkolu */}
+        <Link
+          href="/trenink"
+          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale"
+          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+        >
+          💪 Pokračovat v tréninku →
+        </Link>
+
+        {/* Procvičit chyby */}
         {hasWrongCards && (
           <Link
             href="/trenink?rezim=chyby"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors card-hover scroll-reveal"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors card-hover"
             style={{ background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626" }}
           >
             <span className="text-lg">🔄</span>
             <div>
-              <p className="text-sm font-bold">Procvičit chyby</p>
+              <p className="text-sm font-bold">Zopakovat chyby</p>
               <p className="text-xs" style={{ color: "#ef4444" }}>Příklady kde sis nebyl jistý</p>
             </div>
             <span className="ml-auto text-sm font-semibold">→</span>
           </Link>
         )}
 
-        {/* Rychlý mód */}
-        <Link
-          href="/rychly-mod"
-          className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors press-scale"
-          style={{ background: "#0D1B3E", border: "1px solid #1e3a6e" }}
-        >
-          <span className="text-xl">⚡</span>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-black text-white">Rychlý mód</p>
-            <p className="text-xs text-blue-300">10 příkladů · 60 sekund · osobní rekord</p>
+        {/* Mapa učení */}
+        <TopicPathMap isPremium={isPremium} />
+
+        {/* Kde máš mezery — kontextuálně po mapě */}
+        {weakTopics.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 card-hover">
+            <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>🎯 Kde máš mezery</p>
+            <div className="flex flex-col gap-2">
+              {weakTopics.map(({ tema, score }) => {
+                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                return (
+                  <Link
+                    key={tema}
+                    href={locked ? "/cenik" : `/trenink?tema=${tema}`}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl border transition-colors hover:bg-slate-50"
+                    style={{ borderColor: "#e2e8f0" }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-base">{locked ? "🔒" : "📉"}</span>
+                      <span className="text-sm font-semibold text-slate-700">
+                        {TEMA_LABELS[tema] ?? tema}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="text-xs font-bold px-2 py-0.5 rounded-full"
+                        style={{
+                          background: score < 0.4 ? "#fef2f2" : "#fff7ed",
+                          color: score < 0.4 ? "#991b1b" : "#92400e",
+                        }}
+                      >
+                        {Math.round(score * 100)} %
+                      </span>
+                      <span className="text-xs text-slate-400">{locked ? "Premium →" : "procvičit →"}</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-          <span className="text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap" style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}>
-            Hrát →
-          </span>
-        </Link>
+        )}
+
+        {/* Statistika tohoto týdne */}
+        {weeklyStats && (() => {
+          const acc = weeklyStats.totalExamples > 0
+            ? Math.round((weeklyStats.totalCorrect / weeklyStats.totalExamples) * 100)
+            : 0;
+          const maxCount = Math.max(...weeklyStats.days.map((d) => d.count), 1);
+          const todayStr = new Date().toISOString().slice(0, 10);
+          return (
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 card-hover">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Tento týden</p>
+                <span
+                  className="text-xs font-bold px-2.5 py-0.5 rounded-full"
+                  style={{ background: "var(--surface-3)", color: "#2E6DA4" }}
+                >
+                  +{weeklyStats.totalXP} XP
+                </span>
+              </div>
+              <div className="flex items-end gap-1 mb-3" style={{ height: 58 }}>
+                {weeklyStats.days.map(({ date, count, label }) => {
+                  const barH = count > 0 ? Math.max(6, Math.round((count / maxCount) * 36)) : 4;
+                  const isToday = date === todayStr;
+                  return (
+                    <div key={date} className="flex-1 flex flex-col items-center" style={{ gap: 2 }}>
+                      <span className="text-[8px] font-bold leading-none" style={{ color: isToday ? "#0D1B3E" : "#2E6DA4", opacity: count > 0 ? 1 : 0 }}>
+                        {count}
+                      </span>
+                      <div className="w-full flex items-end" style={{ height: 36 }}>
+                        <div
+                          className="w-full rounded-sm"
+                          style={{
+                            height: barH,
+                            background: isToday ? "var(--navy)" : count > 0 ? "#2E6DA4" : "var(--border-color)",
+                            transition: "height 0.5s ease",
+                          }}
+                        />
+                      </div>
+                      <span className="text-[9px] font-medium" style={{ color: isToday ? "#0D1B3E" : "#94a3b8" }}>
+                        {label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100">
+                <div className="text-center">
+                  <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>{weeklyStats.totalExamples}</p>
+                  <p className="text-[10px] text-slate-400">příkladů</p>
+                </div>
+                <div className="text-center" style={{ borderLeft: "1px solid var(--border-color)", borderRight: "1px solid var(--border-color)" }}>
+                  <p className="text-base font-black" style={{ color: acc >= 70 ? "#15803d" : "#f59e0b" }}>{acc}&nbsp;%</p>
+                  <p className="text-[10px] text-slate-400">správně</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-base font-black" style={{ color: "var(--text-primary)" }}>{weeklyStats.topicsCount}</p>
+                  <p className="text-[10px] text-slate-400">
+                    {weeklyStats.topicsCount === 1 ? "téma" : weeklyStats.topicsCount < 5 ? "témata" : "témat"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Týdenní žebříček */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>🏆 Týdenní žebříček</span>
+            <Link href="/vyzva" className="text-xs font-semibold" style={{ color: "#2E6DA4" }}>
+              Splnit výzvu →
+            </Link>
+          </div>
+          <WeeklyLeaderboard compact />
+        </div>
 
         {/* Denní výzva */}
         <Link
           href="/vyzva"
-          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md stagger-4 tilt-card"
+          className="block rounded-2xl overflow-hidden shadow-sm transition-all active:scale-[0.98] hover:shadow-md tilt-card"
           style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
         >
           <div className="px-5 py-4 flex items-center justify-between">
@@ -713,73 +717,43 @@ export default function LoggedInDashboard({
           </div>
         </Link>
 
-        {/* Týdenní žebříček */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 scroll-reveal stagger-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>🏆 Týdenní žebříček</span>
-            <Link href="/vyzva" className="text-xs font-semibold" style={{ color: "#2E6DA4" }}>
-              Splnit výzvu →
-            </Link>
+        {/* Rychlý mód — kompaktní, světlý */}
+        <Link
+          href="/rychly-mod"
+          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-slate-200 transition-colors hover:bg-slate-50 press-scale"
+        >
+          <span className="text-xl">⚡</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Rychlý mód</p>
+            <p className="text-xs text-slate-400">10 příkladů · 60 sekund · osobní rekord</p>
           </div>
-          <WeeklyLeaderboard compact />
-        </div>
+          <span className="text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap" style={{ background: "#eff6ff", color: "#2E6DA4" }}>
+            Hrát →
+          </span>
+        </Link>
 
-        {/* Slabá témata */}
-        {weakTopics.length > 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 scroll-reveal card-hover">
-            <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>🎯 Kde máš mezery</p>
-            <div className="flex flex-col gap-2">
-              {weakTopics.map(({ tema, score }) => {
-                const locked = !isPremium && PREMIUM_TOPICS.has(tema);
-                return (
-                <Link
-                  key={tema}
-                  href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                  className="flex items-center justify-between px-4 py-3 rounded-xl border transition-colors hover:bg-slate-50"
-                  style={{ borderColor: "#e2e8f0" }}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-base">{locked ? "🔒" : "📉"}</span>
-                    <span className="text-sm font-semibold text-slate-700">
-                      {TEMA_LABELS[tema] ?? tema}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="text-xs font-bold px-2 py-0.5 rounded-full"
-                      style={{
-                        background: score < 0.4 ? "#fef2f2" : "#fff7ed",
-                        color: score < 0.4 ? "#991b1b" : "#92400e",
-                      }}
-                    >
-                      {Math.round(score * 100)} %
-                    </span>
-                    <span className="text-xs text-slate-400">{locked ? "Premium →" : "procvičit →"}</span>
-                  </div>
-                </Link>
-                );
-              })}
+        {/* Premium upsell — až na konci, neruší flow */}
+        {!isPremium && (
+          <Link
+            href="/cenik"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl card-hover"
+            style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)", border: "1px solid #2E6DA4" }}
+          >
+            <span className="text-xl shrink-0">🔒</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-black text-white leading-tight">6 témat za Premium — odemkni vše</p>
+              <p className="text-xs text-blue-300 mt-0.5">Výrazy, Geometrie, Grafy, Konstrukce a další · od 99 Kč</p>
             </div>
-          </div>
+            <span
+              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg whitespace-nowrap btn-shimmer"
+              style={{ background: "#2E6DA4", color: "#fff" }}
+            >
+              Odemknout →
+            </span>
+          </Link>
         )}
 
-        {/* Main CTA */}
-        <Link
-          href="/trenink"
-          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale"
-          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-        >
-          💪 Pokračovat v tréninku →
-        </Link>
-
-        {/* Secondary CTAs */}
-        <Link
-          href="/studijni-plan"
-          className="block w-full py-3.5 text-center rounded-2xl font-black text-sm"
-          style={{ background: "#eff6ff", color: "#2E6DA4", border: "2px solid #bfdbfe" }}
-        >
-          📅 Studijní plán →
-        </Link>
+        {/* Spodní akce */}
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/profil"
