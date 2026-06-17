@@ -1,7 +1,8 @@
 {
   "metadata": {
     "source": "CERMAT 200",
-    "total": 200
+    "total": 200,
+    "updated": "2026-06-17"
   },
   "examples": [
     {
@@ -326,104 +327,111 @@
       "tema": "zlomky",
       "podtema": "scitani_a_odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 1/4 + 1/6",
+      "zadani": "Vypočítejte: $\\frac{1}{4} + \\frac{1}{6}$",
       "odpoved": "5/12",
       "reseni_kroky": [
         "Společný jmenovatel: NSN(4,6) = 12",
-        "1/4 = 3/12, 1/6 = 2/12",
-        "3/12 + 2/12 = 5/12"
+        "\\frac{1}{4} = \\frac{3}{12}, \\frac{1}{6} = \\frac{2}{12}",
+        "\\frac{3}{12} + \\frac{2}{12} = \\frac{5}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_02",
       "tema": "zlomky",
       "podtema": "scitani_a_odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 3/5 − 1/4",
+      "zadani": "Vypočítejte: $\\frac{3}{5} − \\frac{1}{4}$",
       "odpoved": "7/20",
       "reseni_kroky": [
         "Společný jmenovatel: NSN(5,4) = 20",
-        "3/5 = 12/20, 1/4 = 5/20",
-        "12/20 − 5/20 = 7/20"
+        "\\frac{3}{5} = \\frac{12}{20}, \\frac{1}{4} = \\frac{5}{20}",
+        "\\frac{12}{20} − \\frac{5}{20} = \\frac{7}{20}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_03",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 2/3 × 3/4",
+      "zadani": "Vypočítejte: $\\frac{2}{3} \\times \\frac{3}{4}$",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "2/3 × 3/4 = (2×3)/(3×4) = 6/12",
-        "Zkrácení: 6/12 = 1/2"
+        "\\frac{2}{3} \\times \\frac{3}{4} = \\frac{2\\times3}{3\\times4} = \\frac{6}{12}",
+        "Zkrácení: \\frac{6}{12} = \\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_04",
       "tema": "zlomky",
       "podtema": "d_leni",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 5/6 ÷ 5/3",
+      "zadani": "Vypočítejte: $\\frac{5}{6} \\div \\frac{5}{3}$",
       "odpoved": "1/2",
       "reseni_kroky": [
         "Dělení = násobení převráceným zlomkem",
-        "5/6 × 3/5 = 15/30",
-        "Zkrácení: 15/30 = 1/2"
+        "\\frac{5}{6} \\times \\frac{3}{5} = \\frac{15}{30}",
+        "Zkrácení: \\frac{15}{30} = \\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_05",
       "tema": "zlomky",
       "podtema": "scitani_a_odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 2 + 3/7",
+      "zadani": "Vypočítejte: $2 + \\frac{3}{7}$",
       "odpoved": "17/7",
       "reseni_kroky": [
-        "2 = 14/7",
-        "14/7 + 3/7 = 17/7"
+        "2 = \\frac{14}{7}",
+        "\\frac{14}{7} + \\frac{3}{7} = \\frac{17}{7}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_06",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 1,
-      "zadani": "Převeďte smíšené číslo 3 a 2/5 na zlomek.",
+      "zadani": "Převeďte smíšené číslo 3 a $\\frac{2}{5}$ na zlomek.",
       "odpoved": "17/5",
       "reseni_kroky": [
-        "3 a 2/5 = 3 + 2/5",
-        "3 = 15/5",
-        "15/5 + 2/5 = 17/5"
+        "3 a \\frac{2}{5} = 3 + \\frac{2}{5}",
+        "3 = \\frac{15}{5}",
+        "\\frac{15}{5} + \\frac{2}{5} = \\frac{17}{5}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_07",
       "tema": "zlomky",
       "podtema": "porovnavani",
       "obtiznost": 1,
-      "zadani": "Které číslo je větší: 5/8 nebo 7/12?",
+      "zadani": "Které číslo je větší: $\\frac{5}{8} nebo \\frac{7}{12}?$",
       "odpoved": "5/8 je větší",
       "reseni_kroky": [
         "Společný jmenovatel: NSN(8,12) = 24",
-        "5/8 = 15/24",
-        "7/12 = 14/24",
-        "15/24 > 14/24, tedy 5/8 > 7/12"
+        "\\frac{5}{8} = \\frac{15}{24}",
+        "\\frac{7}{12} = \\frac{14}{24}",
+        "\\frac{15}{24} > \\frac{14}{24}, tedy \\frac{5}{8} > \\frac{7}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_08",
@@ -433,159 +441,170 @@
       "zadani": "Kolik je jedna třetina z tří čtvrtin?",
       "odpoved": "1/4",
       "reseni_kroky": [
-        "1/3 z 3/4 = 1/3 × 3/4",
-        "= 3/12 = 1/4"
+        "\\frac{1}{3} z \\frac{3}{4} = \\frac{1}{3} \\times \\frac{3}{4}",
+        "= \\frac{3}{12} = \\frac{1}{4}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_09",
       "tema": "zlomky",
       "podtema": "scitani_a_odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 7/9 − 1/3 + 1/9",
+      "zadani": "Vypočítejte: $\\frac{7}{9} − \\frac{1}{3} + \\frac{1}{9}$",
       "odpoved": "5/9",
       "reseni_kroky": [
-        "1/3 = 3/9",
-        "7/9 − 3/9 + 1/9 = (7 − 3 + 1)/9 = 5/9"
+        "\\frac{1}{3} = \\frac{3}{9}",
+        "\\frac{7}{9} − \\frac{3}{9} + \\frac{1}{9} = (7 − 3 + 1)/9 = \\frac{5}{9}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_10",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 4/5 × 10",
+      "zadani": "Vypočítejte: $\\frac{4}{5} \\times 10$",
       "odpoved": "8",
       "reseni_kroky": [
-        "4/5 × 10 = 40/5 = 8"
+        "\\frac{4}{5} \\times 10 = \\frac{40}{5} = 8"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_11",
       "tema": "zlomky",
       "podtema": "smisena_cisla_operace",
       "obtiznost": 2,
-      "zadani": "Vypočítejte: 2 a 1/3 + 1 a 3/4",
+      "zadani": "Vypočítejte: $2 a \\frac{1}{3} + 1 a \\frac{3}{4}$",
       "odpoved": "4 a 1/12",
       "reseni_kroky": [
-        "Převod: 7/3 + 7/4",
-        "Společný jmenovatel 12: 28/12 + 21/12 = 49/12",
-        "49/12 = 4 a 1/12"
+        "Převod: \\frac{7}{3} + \\frac{7}{4}",
+        "Společný jmenovatel 12: \\frac{28}{12} + \\frac{21}{12} = \\frac{49}{12}",
+        "\\frac{49}{12} = 4 a \\frac{1}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_12",
       "tema": "zlomky",
       "podtema": "komplexni_vypocet",
       "obtiznost": 2,
-      "zadani": "Vypočítejte: (3/4 − 1/6) × 12",
+      "zadani": "Vypočítejte: $(\\frac{3}{4} − \\frac{1}{6}) \\times 12$",
       "odpoved": "7",
       "reseni_kroky": [
-        "3/4 − 1/6: společný jmenovatel 12",
-        "9/12 − 2/12 = 7/12",
-        "7/12 × 12 = 7"
+        "\\frac{3}{4} − \\frac{1}{6}: společný jmenovatel 12",
+        "\\frac{9}{12} − \\frac{2}{12} = \\frac{7}{12}",
+        "\\frac{7}{12} \\times 12 = 7"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_13",
       "tema": "zlomky",
       "podtema": "d_leni",
       "obtiznost": 2,
-      "zadani": "Vypočítejte: (2/3 ÷ 4/9) − 1/2",
+      "zadani": "Vypočítejte: $(\\frac{2}{3} \\div \\frac{4}{9}) − \\frac{1}{2}$",
       "odpoved": "1",
       "reseni_kroky": [
-        "2/3 ÷ 4/9 = 2/3 × 9/4 = 18/12 = 3/2",
-        "3/2 − 1/2 = 2/2 = 1"
+        "\\frac{2}{3} \\div \\frac{4}{9} = \\frac{2}{3} \\times \\frac{9}{4} = \\frac{18}{12} = \\frac{3}{2}",
+        "\\frac{3}{2} − \\frac{1}{2} = \\frac{2}{2} = 1"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_14",
       "tema": "zlomky",
       "podtema": "slovni_uloha",
       "obtiznost": 2,
-      "zadani": "Jana přečetla 2/5 knihy v pondělí a 1/4 v úterý. Kolik (jako zlomek) jí zbývá dočíst?",
+      "zadani": "Jana přečetla $\\frac{2}{5}$ knihy v pondělí a $\\frac{1}{4}$ v úterý. Kolik (jako zlomek) jí zbývá dočíst?",
       "odpoved": "7/20",
       "reseni_kroky": [
-        "Přečteno celkem: 2/5 + 1/4",
-        "Společný jmenovatel 20: 8/20 + 5/20 = 13/20",
-        "Zbývá: 1 − 13/20 = 7/20"
+        "Přečteno celkem: \\frac{2}{5} + \\frac{1}{4}",
+        "Společný jmenovatel 20: \\frac{8}{20} + \\frac{5}{20} = \\frac{13}{20}",
+        "Zbývá: 1 − \\frac{13}{20} = \\frac{7}{20}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_15",
       "tema": "zlomky",
       "podtema": "scitani_a_odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítejte: 5/6 − 3/8 + 7/24",
+      "zadani": "Vypočítejte: $\\frac{5}{6} − \\frac{3}{8} + \\frac{7}{24}$",
       "odpoved": "3/4",
       "reseni_kroky": [
         "Společný jmenovatel: NSN(6,8,24) = 24",
-        "5/6 = 20/24, 3/8 = 9/24, 7/24",
-        "20/24 − 9/24 + 7/24 = 18/24 = 3/4"
+        "\\frac{5}{6} = \\frac{20}{24}, \\frac{3}{8} = \\frac{9}{24}, \\frac{7}{24}",
+        "\\frac{20}{24} − \\frac{9}{24} + \\frac{7}{24} = \\frac{18}{24} = \\frac{3}{4}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_16",
       "tema": "zlomky",
       "podtema": "komplexni_vypocet",
       "obtiznost": 2,
-      "zadani": "Kolik je 3/8 z čísla 56?",
+      "zadani": "Kolik je $\\frac{3}{8}$ z čísla 56?",
       "odpoved": "21",
       "reseni_kroky": [
-        "3/8 × 56 = 168/8 = 21"
+        "\\frac{3}{8} \\times 56 = \\frac{168}{8} = 21"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_17",
       "tema": "zlomky",
       "podtema": "rovnice_se_zlomky",
       "obtiznost": 2,
-      "zadani": "Řešte rovnici: x/3 + x/4 = 7",
+      "zadani": "Řešte rovnici: $\\frac{x}{3} + \\frac{x}{4} = 7$",
       "odpoved": "x = 12",
       "reseni_kroky": [
         "Společný jmenovatel 12",
-        "4x/12 + 3x/12 = 7",
-        "7x/12 = 7",
-        "x = 7 × 12/7 = 12"
+        "4\\frac{x}{12} + 3\\frac{x}{12} = 7",
+        "7\\frac{x}{12} = 7",
+        "x = 7 \\times \\frac{12}{7} = 12"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_18",
       "tema": "zlomky",
       "podtema": "komplexni_vypocet",
       "obtiznost": 3,
-      "zadani": "Vypočítejte: (2/3 + 1/2) ÷ (5/6 − 1/4) × 3/7",
+      "zadani": "Vypočítejte: $(\\frac{2}{3} + \\frac{1}{2}) \\div (\\frac{5}{6} − \\frac{1}{4}) \\times \\frac{3}{7}$",
       "odpoved": "9/14",
       "reseni_kroky": [
-        "2/3 + 1/2 = 4/6 + 3/6 = 7/6",
-        "5/6 − 1/4 = 10/12 − 3/12 = 7/12",
-        "7/6 ÷ 7/12 = 7/6 × 12/7 = 12/6 = 2",
-        "2 × 3/7 = 6/7... oprava: ",
-        "(7/6) ÷ (7/12) = 7/6 × 12/7 = 84/42 = 2",
-        "2 × 3/7 = 6/7"
+        "\\frac{2}{3} + \\frac{1}{2} = \\frac{4}{6} + \\frac{3}{6} = \\frac{7}{6}",
+        "\\frac{5}{6} − \\frac{1}{4} = \\frac{10}{12} − \\frac{3}{12} = \\frac{7}{12}",
+        "\\frac{7}{6} \\div \\frac{7}{12} = \\frac{7}{6} \\times \\frac{12}{7} = \\frac{12}{6} = 2",
+        "2 \\times \\frac{3}{7} = \\frac{6}{7}... oprava: ",
+        "(\\frac{7}{6}) \\div (\\frac{7}{12}) = \\frac{7}{6} \\times \\frac{12}{7} = \\frac{84}{42} = 2",
+        "2 \\times \\frac{3}{7} = \\frac{6}{7}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_19",
@@ -595,29 +614,31 @@
       "zadani": "Nádrž se plní třemi potrubími. První naplní nádrž za 6 h, druhé za 4 h, třetí za 12 h. Za jak dlouho naplní nádrž všechna tři dohromady?",
       "odpoved": "2 hodiny",
       "reseni_kroky": [
-        "Za 1 h první: 1/6 nádrže",
-        "Za 1 h druhé: 1/4 nádrže",
-        "Za 1 h třetí: 1/12 nádrže",
-        "Celkem za 1 h: 1/6+1/4+1/12 = 2/12+3/12+1/12 = 6/12 = 1/2",
-        "Celkový čas: 1 ÷ (1/2) = 2 hodiny"
+        "Za 1 h první: \\frac{1}{6} nádrže",
+        "Za 1 h druhé: \\frac{1}{4} nádrže",
+        "Za 1 h třetí: \\frac{1}{12} nádrže",
+        "Celkem za 1 h: \\frac{1}{6}+\\frac{1}{4}+\\frac{1}{12} = \\frac{2}{12}+\\frac{3}{12}+\\frac{1}{12} = \\frac{6}{12} = \\frac{1}{2}",
+        "Celkový čas: 1 \\div (\\frac{1}{2}) = 2 hodiny"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t02_20",
       "tema": "zlomky",
       "podtema": "komplexni_vypocet",
       "obtiznost": 3,
-      "zadani": "Číslo A je o 2/5 větší než číslo B. Číslo B je o 1/3 menší než číslo C, přičemž C = 60. Určete A.",
+      "zadani": "Číslo A je o $\\frac{2}{5}$ větší než číslo B. Číslo B je o $\\frac{1}{3}$ menší než číslo C, přičemž C = 60. Určete A.",
       "odpoved": "A = 56",
       "reseni_kroky": [
         "C = 60",
-        "B je o 1/3 menší než C: B = C − (1/3)×C = 60 − 20 = 40",
-        "A je o 2/5 větší než B: A = B + (2/5)×B = 40 + 16 = 56"
+        "B je o \\frac{1}{3} menší než C: B = C − (\\frac{1}{3})\\timesC = 60 − 20 = 40",
+        "A je o \\frac{2}{5} větší než B: A = B + (\\frac{2}{5})\\timesB = 40 + 16 = 56"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t03_01",
@@ -915,111 +936,119 @@
       "tema": "vyrazy",
       "podtema": "mocniny_prirozenych_cisel",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 3⁴",
+      "zadani": "Vypočítejte: $3^{4}$",
       "odpoved": "81",
       "reseni_kroky": [
-        "3⁴ = 3 × 3 × 3 × 3 = 9 × 9 = 81"
+        "3^{4} = 3 \\times 3 \\times 3 \\times 3 = 9 \\times 9 = 81"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_02",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: √144",
+      "zadani": "Vypočítejte: $\\sqrt{144}$",
       "odpoved": "12",
       "reseni_kroky": [
-        "12² = 144, tedy √144 = 12"
+        "12^{2} = 144, tedy \\sqrt{144} = 12"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_03",
       "tema": "vyrazy",
       "podtema": "mocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 2⁵ + 3²",
+      "zadani": "Vypočítejte: $2^{5} + 3^{2}$",
       "odpoved": "41",
       "reseni_kroky": [
-        "2⁵ = 32",
-        "3² = 9",
+        "2^{5} = 32",
+        "3^{2} = 9",
         "32 + 9 = 41"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_04",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: √(16 × 25)",
+      "zadani": "Vypočítejte: $\\sqrt{16 \\times 25}$",
       "odpoved": "20",
       "reseni_kroky": [
-        "16 × 25 = 400",
-        "√400 = 20"
+        "16 \\times 25 = 400",
+        "\\sqrt{400} = 20"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_05",
       "tema": "vyrazy",
       "podtema": "mocniny_zapornych_cisel",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: (−3)²",
+      "zadani": "Vypočítejte: $(−3)^{2}$",
       "odpoved": "9",
       "reseni_kroky": [
-        "(−3)² = (−3) × (−3) = 9 (záporné × záporné = kladné)"
+        "(−3)^{2} = (−3) \\times (−3) = 9 (záporné \\times záporné = kladné)"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_06",
       "tema": "vyrazy",
       "podtema": "mocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: 10³",
+      "zadani": "Vypočítejte: $10^{3}$",
       "odpoved": "1 000",
       "reseni_kroky": [
-        "10³ = 10 × 10 × 10 = 1 000"
+        "10^{3} = 10 \\times 10 \\times 10 = 1 000"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_07",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítejte: √(81/25)",
+      "zadani": "Vypočítejte: $\\sqrt{\\frac{81}{25}}$",
       "odpoved": "9/5",
       "reseni_kroky": [
-        "√81 = 9",
-        "√25 = 5",
-        "√(81/25) = 9/5"
+        "\\sqrt{81} = 9",
+        "\\sqrt{25} = 5",
+        "\\sqrt{\\frac{81}{25}} = \\frac{9}{5}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_08",
       "tema": "vyrazy",
       "podtema": "mocniny_porovnani",
       "obtiznost": 1,
-      "zadani": "Které je větší: 2⁶ nebo 3⁴?",
+      "zadani": "Které je větší: $2^{6} nebo 3^{4}?$",
       "odpoved": "2⁶ = 64, 3⁴ = 81, tedy 3⁴ je větší",
       "reseni_kroky": [
-        "2⁶ = 64",
-        "3⁴ = 81",
+        "2^{6} = 64",
+        "3^{4} = 81",
         "64 < 81"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_09",
@@ -1029,56 +1058,60 @@
       "zadani": "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Vypočítejte přeponu.",
       "odpoved": "10 cm",
       "reseni_kroky": [
-        "c² = a² + b²",
-        "c² = 36 + 64 = 100",
-        "c = √100 = 10 cm"
+        "c^{2} = a^{2} + b^{2}",
+        "c^{2} = 36 + 64 = 100",
+        "c = \\sqrt{100} = 10 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_10",
       "tema": "vyrazy",
       "podtema": "mocniny",
       "obtiznost": 1,
-      "zadani": "Zjednodušte: 5² × 5³",
+      "zadani": "Zjednodušte: $5^{2} \\times 5^{3}$",
       "odpoved": "5⁵ = 3 125",
       "reseni_kroky": [
-        "Pravidlo: aᵐ × aⁿ = aᵐ⁺ⁿ",
-        "5² × 5³ = 5⁵",
-        "5⁵ = 3 125"
+        "Pravidlo: aᵐ \\times aⁿ = aᵐ⁺ⁿ",
+        "5^{2} \\times 5^{3} = 5^{5}",
+        "5^{5} = 3 125"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_11",
       "tema": "vyrazy",
       "podtema": "pravidla_pro_mocniny",
       "obtiznost": 2,
-      "zadani": "Zjednodušte: (2³)⁴ ÷ 2⁶",
+      "zadani": "Zjednodušte: $(2^{3})^{4} \\div 2^{6}$",
       "odpoved": "2⁶ = 64",
       "reseni_kroky": [
-        "(2³)⁴ = 2¹²",
-        "2¹² ÷ 2⁶ = 2¹²⁻⁶ = 2⁶",
-        "2⁶ = 64"
+        "(2^{3})^{4} = 2¹^{2}",
+        "2¹^{2} \\div 2^{6} = 2¹^{2}⁻^{6} = 2^{6}",
+        "2^{6} = 64"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_12",
       "tema": "vyrazy",
       "podtema": "odmocniny_zjednoduseni",
       "obtiznost": 2,
-      "zadani": "Zjednodušte: √72",
+      "zadani": "Zjednodušte: $\\sqrt{72}$",
       "odpoved": "6√2",
       "reseni_kroky": [
-        "72 = 36 × 2",
-        "√72 = √36 × √2 = 6√2"
+        "72 = 36 \\times 2",
+        "\\sqrt{72} = \\sqrt{36} \\times \\sqrt{2} = 6\\sqrt{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_13",
@@ -1089,92 +1122,98 @@
       "odpoved": "24 cm",
       "reseni_kroky": [
         "Úhlopříčky kosočtverce se půlí kolmo",
-        "Polovina kratší úhlopříčky: 10/2 = 5 cm",
-        "Pythagorova věta: (d₂/2)² = 13² − 5²",
-        "(d₂/2)² = 169 − 25 = 144",
+        "Polovina kratší úhlopříčky: \\frac{10}{2} = 5 cm",
+        "Pythagorova věta: (d₂/2)^{2} = 13^{2} − 5^{2}",
+        "(d₂/2)^{2} = 169 − 25 = 144",
         "d₂/2 = 12 cm → d₂ = 24 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_14",
       "tema": "vyrazy",
       "podtema": "pravidla_pro_mocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítejte: 4² + 3³ − √49 + 2⁰",
+      "zadani": "Vypočítejte: $4^{2} + 3^{3} − \\sqrt{49} + 2⁰$",
       "odpoved": "60",
       "reseni_kroky": [
-        "4² = 16",
-        "3³ = 27",
-        "√49 = 7",
+        "4^{2} = 16",
+        "3^{3} = 27",
+        "\\sqrt{49} = 7",
         "2⁰ = 1",
         "16 + 27 − 7 + 1 = 37... oprava: 16+27=43, 43−7=36, 36+1=37"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_15",
       "tema": "vyrazy",
       "podtema": "odmocniny_vypocet",
       "obtiznost": 2,
-      "zadani": "Obsah čtverce je 169 cm². Jaký je obvod?",
+      "zadani": "Obsah čtverce je 169 cm^{2}. Jaký je obvod?",
       "odpoved": "52 cm",
       "reseni_kroky": [
-        "Strana: a = √169 = 13 cm",
-        "Obvod: 4 × 13 = 52 cm"
+        "Strana: a = \\sqrt{169} = 13 cm",
+        "Obvod: 4 \\times 13 = 52 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_16",
       "tema": "vyrazy",
       "podtema": "pravidla_pro_mocniny",
       "obtiznost": 2,
-      "zadani": "Zjednodušte: (3 × 4)² ÷ 6²",
+      "zadani": "Zjednodušte: $(3 \\times 4)^{2} \\div 6^{2}$",
       "odpoved": "4",
       "reseni_kroky": [
-        "(3 × 4)² = 12² = 144",
-        "6² = 36",
-        "144 ÷ 36 = 4"
+        "(3 \\times 4)^{2} = 12^{2} = 144",
+        "6^{2} = 36",
+        "144 \\div 36 = 4"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_17",
       "tema": "vyrazy",
       "podtema": "odmocniny_rovnice",
       "obtiznost": 2,
-      "zadani": "Řešte rovnici: x² = 225",
+      "zadani": "Řešte rovnici: $x^{2} = 225$",
       "odpoved": "x = 15 nebo x = −15",
       "reseni_kroky": [
-        "x² = 225",
-        "x = ±√225",
+        "x^{2} = 225",
+        "x = ±\\sqrt{225}",
         "x = ±15"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_18",
       "tema": "vyrazy",
       "podtema": "komplexni_vypocet",
       "obtiznost": 3,
-      "zadani": "Vypočítejte: √(3² + 4²) × 2³ − (√25)²",
+      "zadani": "Vypočítejte: $\\sqrt{3^{2} + 4^{2}} \\times 2^{3} − (\\sqrt{25})^{2}$",
       "odpoved": "15",
       "reseni_kroky": [
-        "3² = 9, 4² = 16 → 9+16 = 25",
-        "√25 = 5",
-        "2³ = 8",
-        "5 × 8 = 40",
-        "(√25)² = 25",
+        "3^{2} = 9, 4^{2} = 16 → 9+16 = 25",
+        "\\sqrt{25} = 5",
+        "2^{3} = 8",
+        "5 \\times 8 = 40",
+        "(\\sqrt{25})^{2} = 25",
         "40 − 25 = 15"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_19",
@@ -1184,27 +1223,29 @@
       "zadani": "Žebřík je opřen o zeď. Spodek žebříku je 2,4 m od zdi, žebřík má délku 4 m. V jaké výšce se dotýká zdi?",
       "odpoved": "3,2 m",
       "reseni_kroky": [
-        "Pythagorova věta: h² + 2,4² = 4²",
-        "h² = 16 − 5,76 = 10,24",
-        "h = √10,24 = 3,2 m"
+        "Pythagorova věta: h^{2} + 2,4^{2} = 4^{2}",
+        "h^{2} = 16 − 5,76 = 10,24",
+        "h = \\sqrt{10},24 = 3,2 m"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t04_20",
       "tema": "vyrazy",
       "podtema": "pravidla_zaporne_mocniny",
       "obtiznost": 3,
-      "zadani": "Vyjádřete jako zlomek: 2⁻³ + 3⁻²",
+      "zadani": "Vyjádřete jako zlomek: $2⁻^{3} + 3⁻^{2}$",
       "odpoved": "17/72",
       "reseni_kroky": [
-        "2⁻³ = 1/2³ = 1/8",
-        "3⁻² = 1/3² = 1/9",
-        "1/8 + 1/9 = 9/72 + 8/72 = 17/72"
+        "2⁻^{3} = \\frac{1}{2}^{3} = \\frac{1}{8}",
+        "3⁻^{2} = \\frac{1}{3}^{2} = \\frac{1}{9}",
+        "\\frac{1}{8} + \\frac{1}{9} = \\frac{9}{72} + \\frac{8}{72} = \\frac{17}{72}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "t05_01",

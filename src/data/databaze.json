@@ -24,747 +24,799 @@
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 1/3 + 1/3",
+      "zadani": "Vypočítej: $\\frac{1}{3} + \\frac{1}{3}$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné → sečteme jen čitatele: 1 + 1 = 2",
-        "Výsledek: 2/3"
+        "Výsledek: \\frac{2}{3}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_002",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 1/4 + 1/4",
+      "zadani": "Vypočítej: $\\frac{1}{4} + \\frac{1}{4}$",
       "odpoved": "1/2",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné → sečteme čitatele: 1 + 1 = 2",
-        "2/4 zkrátíme: GCD(2,4) = 2 → 2/4 = 1/2"
+        "\\frac{2}{4} zkrátíme: GCD(2,4) = 2 → \\frac{2}{4} = \\frac{1}{2}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_003",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 2/5 + 1/5",
+      "zadani": "Vypočítej: $\\frac{2}{5} + \\frac{1}{5}$",
       "odpoved": "3/5",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné → sečteme čitatele: 2 + 1 = 3",
-        "Výsledek: 3/5 (nelze zkrátit)"
+        "Výsledek: \\frac{3}{5} (nelze zkrátit)"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_004",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 1/3 + 1/4",
+      "zadani": "Vypočítej: $\\frac{1}{3} + \\frac{1}{4}$",
       "odpoved": "7/12",
       "reseni_kroky": [
         "Hledáme NSN(3, 4) = 12",
-        "Převedeme: 1/3 = 4/12 a 1/4 = 3/12",
-        "Sečteme: 4/12 + 3/12 = 7/12"
+        "Převedeme: \\frac{1}{3} = \\frac{4}{12} a \\frac{1}{4} = \\frac{3}{12}",
+        "Sečteme: \\frac{4}{12} + \\frac{3}{12} = \\frac{7}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_005",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 1/2 + 1/6",
+      "zadani": "Vypočítej: $\\frac{1}{2} + \\frac{1}{6}$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Hledáme NSN(2, 6) = 6",
-        "Převedeme: 1/2 = 3/6, 1/6 zůstává 1/6",
-        "Sečteme: 3/6 + 1/6 = 4/6 = 2/3"
+        "Převedeme: \\frac{1}{2} = \\frac{3}{6}, \\frac{1}{6} zůstává \\frac{1}{6}",
+        "Sečteme: \\frac{3}{6} + \\frac{1}{6} = \\frac{4}{6} = \\frac{2}{3}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_006",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 3/4 - 1/4",
+      "zadani": "Vypočítej: $\\frac{3}{4} - \\frac{1}{4}$",
       "odpoved": "1/2",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné → odečteme čitatele: 3 − 1 = 2",
-        "2/4 zkrátíme: GCD(2,4) = 2 → 2/4 = 1/2"
+        "\\frac{2}{4} zkrátíme: GCD(2,4) = 2 → \\frac{2}{4} = \\frac{1}{2}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_007",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 5/6 - 1/6",
+      "zadani": "Vypočítej: $\\frac{5}{6} - \\frac{1}{6}$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné → odečteme čitatele: 5 − 1 = 4",
-        "4/6 zkrátíme: GCD(4,6) = 2 → 4/6 = 2/3"
+        "\\frac{4}{6} zkrátíme: GCD(4,6) = 2 → \\frac{4}{6} = \\frac{2}{3}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_008",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 3/4 - 1/2",
+      "zadani": "Vypočítej: $\\frac{3}{4} - \\frac{1}{2}$",
       "odpoved": "1/4",
       "reseni_kroky": [
         "Hledáme NSN(4, 2) = 4",
-        "Převedeme: 1/2 = 2/4",
-        "Odečteme: 3/4 − 2/4 = 1/4"
+        "Převedeme: \\frac{1}{2} = \\frac{2}{4}",
+        "Odečteme: \\frac{3}{4} − \\frac{2}{4} = \\frac{1}{4}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_009",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 1/2 × 1/3",
+      "zadani": "Vypočítej: $\\frac{1}{2} \\times \\frac{1}{3}$",
       "odpoved": "1/6",
       "reseni_kroky": [
-        "Násobení zlomků: čitatele × čitatele, jmenovatele × jmenovatele",
-        "1 × 1 = 1, 2 × 3 = 6",
-        "Výsledek: 1/6"
+        "Násobení zlomků: čitatele \\times čitatele, jmenovatele \\times jmenovatele",
+        "1 \\times 1 = 1, 2 \\times 3 = 6",
+        "Výsledek: \\frac{1}{6}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_010",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 2/3 × 3/4",
+      "zadani": "Vypočítej: $\\frac{2}{3} \\times \\frac{3}{4}$",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "Násobíme: (2 × 3) / (3 × 4) = 6/12",
-        "Zkrátíme: GCD(6, 12) = 6 → 6/12 = 1/2"
+        "Násobíme: \\frac{2 \\times 3}{3 \\times 4} = \\frac{6}{12}",
+        "Zkrátíme: GCD(6, 12) = 6 → \\frac{6}{12} = \\frac{1}{2}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_011",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2/3 + 3/4",
+      "zadani": "Vypočítej: $\\frac{2}{3} + \\frac{3}{4}$",
       "odpoved": "17/12",
       "reseni_kroky": [
         "NSN(3, 4) = 12",
-        "2/3 = 8/12, 3/4 = 9/12",
-        "8/12 + 9/12 = 17/12 (nevlastní zlomek, nelze zkrátit)"
+        "\\frac{2}{3} = \\frac{8}{12}, \\frac{3}{4} = \\frac{9}{12}",
+        "\\frac{8}{12} + \\frac{9}{12} = \\frac{17}{12} (nevlastní zlomek, nelze zkrátit)"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_012",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 1/4 + 2/5",
+      "zadani": "Vypočítej: $\\frac{1}{4} + \\frac{2}{5}$",
       "odpoved": "13/20",
       "reseni_kroky": [
         "NSN(4, 5) = 20",
-        "1/4 = 5/20, 2/5 = 8/20",
-        "5/20 + 8/20 = 13/20"
+        "\\frac{1}{4} = \\frac{5}{20}, \\frac{2}{5} = \\frac{8}{20}",
+        "\\frac{5}{20} + \\frac{8}{20} = \\frac{13}{20}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_013",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5/6 + 3/4",
+      "zadani": "Vypočítej: $\\frac{5}{6} + \\frac{3}{4}$",
       "odpoved": "19/12",
       "reseni_kroky": [
         "NSN(6, 4) = 12",
-        "5/6 = 10/12, 3/4 = 9/12",
-        "10/12 + 9/12 = 19/12"
+        "\\frac{5}{6} = \\frac{10}{12}, \\frac{3}{4} = \\frac{9}{12}",
+        "\\frac{10}{12} + \\frac{9}{12} = \\frac{19}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_014",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2/3 + 3/4 - 1/6",
+      "zadani": "Vypočítej: $\\frac{2}{3} + \\frac{3}{4} - \\frac{1}{6}$",
       "odpoved": "5/4",
       "reseni_kroky": [
         "NSN(3, 4, 6) = 12",
-        "2/3 = 8/12, 3/4 = 9/12, 1/6 = 2/12",
-        "8/12 + 9/12 − 2/12 = 15/12 = 5/4"
+        "\\frac{2}{3} = \\frac{8}{12}, \\frac{3}{4} = \\frac{9}{12}, \\frac{1}{6} = \\frac{2}{12}",
+        "\\frac{8}{12} + \\frac{9}{12} − \\frac{2}{12} = \\frac{15}{12} = \\frac{5}{4}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_015",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 1/2 + 1/3 + 1/6",
+      "zadani": "Vypočítej: $\\frac{1}{2} + \\frac{1}{3} + \\frac{1}{6}$",
       "odpoved": "1",
       "reseni_kroky": [
         "NSN(2, 3, 6) = 6",
-        "1/2 = 3/6, 1/3 = 2/6, 1/6 = 1/6",
-        "3/6 + 2/6 + 1/6 = 6/6 = 1"
+        "\\frac{1}{2} = \\frac{3}{6}, \\frac{1}{3} = \\frac{2}{6}, \\frac{1}{6} = \\frac{1}{6}",
+        "\\frac{3}{6} + \\frac{2}{6} + \\frac{1}{6} = \\frac{6}{6} = 1"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_016",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5/6 - 2/3",
+      "zadani": "Vypočítej: $\\frac{5}{6} - \\frac{2}{3}$",
       "odpoved": "1/6",
       "reseni_kroky": [
         "NSN(6, 3) = 6",
-        "2/3 = 4/6",
-        "5/6 − 4/6 = 1/6"
+        "\\frac{2}{3} = \\frac{4}{6}",
+        "\\frac{5}{6} − \\frac{4}{6} = \\frac{1}{6}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_017",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 7/8 - 3/4",
+      "zadani": "Vypočítej: $\\frac{7}{8} - \\frac{3}{4}$",
       "odpoved": "1/8",
       "reseni_kroky": [
         "NSN(8, 4) = 8",
-        "3/4 = 6/8",
-        "7/8 − 6/8 = 1/8"
+        "\\frac{3}{4} = \\frac{6}{8}",
+        "\\frac{7}{8} − \\frac{6}{8} = \\frac{1}{8}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_018",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5/4 - 2/3",
+      "zadani": "Vypočítej: $\\frac{5}{4} - \\frac{2}{3}$",
       "odpoved": "7/12",
       "reseni_kroky": [
         "NSN(4, 3) = 12",
-        "5/4 = 15/12, 2/3 = 8/12",
-        "15/12 − 8/12 = 7/12"
+        "\\frac{5}{4} = \\frac{15}{12}, \\frac{2}{3} = \\frac{8}{12}",
+        "\\frac{15}{12} − \\frac{8}{12} = \\frac{7}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_019",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3/5 × 5/6",
+      "zadani": "Vypočítej: $\\frac{3}{5} \\times \\frac{5}{6}$",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "Násobíme: (3 × 5) / (5 × 6) = 15/30",
-        "GCD(15, 30) = 15 → 15/30 = 1/2"
+        "Násobíme: \\frac{3 \\times 5}{5 \\times 6} = \\frac{15}{30}",
+        "GCD(15, 30) = 15 → \\frac{15}{30} = \\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_020",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 4/7 × 7/8",
+      "zadani": "Vypočítej: $\\frac{4}{7} \\times \\frac{7}{8}$",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "Násobíme: (4 × 7) / (7 × 8) = 28/56",
-        "GCD(28, 56) = 28 → 28/56 = 1/2"
+        "Násobíme: \\frac{4 \\times 7}{7 \\times 8} = \\frac{28}{56}",
+        "GCD(28, 56) = 28 → \\frac{28}{56} = \\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_021",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2/3 × 9/10",
+      "zadani": "Vypočítej: $\\frac{2}{3} \\times \\frac{9}{10}$",
       "odpoved": "3/5",
       "reseni_kroky": [
-        "Násobíme: (2 × 9) / (3 × 10) = 18/30",
-        "GCD(18, 30) = 6 → 18/30 = 3/5"
+        "Násobíme: \\frac{2 \\times 9}{3 \\times 10} = \\frac{18}{30}",
+        "GCD(18, 30) = 6 → \\frac{18}{30} = \\frac{3}{5}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_022",
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3/4 ÷ 1/2",
+      "zadani": "Vypočítej: $\\frac{3}{4} \\div \\frac{1}{2}$",
       "odpoved": "3/2",
       "reseni_kroky": [
-        "Dělení = násobení převráceným zlomkem: 3/4 ÷ 1/2 = 3/4 × 2/1",
-        "3 × 2 = 6, 4 × 1 = 4 → 6/4",
-        "GCD(6,4) = 2 → 6/4 = 3/2"
+        "Dělení = násobení převráceným zlomkem: \\frac{3}{4} \\div \\frac{1}{2} = \\frac{3}{4} \\times \\frac{2}{1}",
+        "3 \\times 2 = 6, 4 \\times 1 = 4 → \\frac{6}{4}",
+        "GCD(6,4) = 2 → \\frac{6}{4} = \\frac{3}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_023",
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2/3 ÷ 4/9",
+      "zadani": "Vypočítej: $\\frac{2}{3} \\div \\frac{4}{9}$",
       "odpoved": "3/2",
       "reseni_kroky": [
-        "Dělení: 2/3 ÷ 4/9 = 2/3 × 9/4",
-        "(2 × 9) / (3 × 4) = 18/12",
-        "GCD(18,12) = 6 → 18/12 = 3/2"
+        "Dělení: \\frac{2}{3} \\div \\frac{4}{9} = \\frac{2}{3} \\times \\frac{9}{4}",
+        "\\frac{2 \\times 9}{3 \\times 4} = \\frac{18}{12}",
+        "GCD(18,12) = 6 → \\frac{18}{12} = \\frac{3}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_024",
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5/8 ÷ 5/4",
+      "zadani": "Vypočítej: $\\frac{5}{8} \\div \\frac{5}{4}$",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "Dělení: 5/8 ÷ 5/4 = 5/8 × 4/5",
-        "(5 × 4) / (8 × 5) = 20/40",
-        "GCD(20,40) = 20 → 20/40 = 1/2"
+        "Dělení: \\frac{5}{8} \\div \\frac{5}{4} = \\frac{5}{8} \\times \\frac{4}{5}",
+        "\\frac{5 \\times 4}{8 \\times 5} = \\frac{20}{40}",
+        "GCD(20,40) = 20 → \\frac{20}{40} = \\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_025",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Převeď na zlomek: 2 a 3/4",
+      "zadani": "Převeď na zlomek: $2 a \\frac{3}{4}$",
       "odpoved": "11/4",
       "reseni_kroky": [
-        "Smíšené číslo 2 a 3/4: celá část × jmenovatel + čitatel",
-        "2 × 4 + 3 = 11",
-        "Výsledek: 11/4"
+        "Smíšené číslo 2 a \\frac{3}{4}: celá část \\times jmenovatel + čitatel",
+        "2 \\times 4 + 3 = 11",
+        "Výsledek: \\frac{11}{4}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_026",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Převeď na zlomek: 3 a 2/5",
+      "zadani": "Převeď na zlomek: $3 a \\frac{2}{5}$",
       "odpoved": "17/5",
       "reseni_kroky": [
-        "Smíšené číslo 3 a 2/5: 3 × 5 + 2 = 17",
-        "Výsledek: 17/5"
+        "Smíšené číslo 3 a \\frac{2}{5}: 3 \\times 5 + 2 = 17",
+        "Výsledek: \\frac{17}{5}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_027",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Převeď na smíšené číslo: 7/3",
+      "zadani": "Převeď na smíšené číslo: $\\frac{7}{3}$",
       "odpoved": "2 a 1/3",
       "reseni_kroky": [
-        "7 ÷ 3 = 2 se zbytkem 1",
-        "2 je celá část, 1/3 je zlomková část",
-        "Výsledek: 2 a 1/3"
+        "7 \\div 3 = 2 se zbytkem 1",
+        "2 je celá část, \\frac{1}{3} je zlomková část",
+        "Výsledek: 2 a \\frac{1}{3}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_028",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Převeď na smíšené číslo: 11/4",
+      "zadani": "Převeď na smíšené číslo: $\\frac{11}{4}$",
       "odpoved": "2 a 3/4",
       "reseni_kroky": [
-        "11 ÷ 4 = 2 se zbytkem 3",
-        "2 je celá část, 3/4 je zlomková část",
-        "Výsledek: 2 a 3/4"
+        "11 \\div 4 = 2 se zbytkem 3",
+        "2 je celá část, \\frac{3}{4} je zlomková část",
+        "Výsledek: 2 a \\frac{3}{4}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_029",
       "tema": "zlomky",
       "podtema": "zkracovani",
       "obtiznost": 2,
-      "zadani": "Zkrať zlomek: 12/18",
+      "zadani": "Zkrať zlomek: $\\frac{12}{18}$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Hledáme GCD(12, 18) = 6",
-        "12 ÷ 6 = 2, 18 ÷ 6 = 3",
-        "Zkrácený zlomek: 2/3"
+        "12 \\div 6 = 2, 18 \\div 6 = 3",
+        "Zkrácený zlomek: \\frac{2}{3}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_030",
       "tema": "zlomky",
       "podtema": "zkracovani",
       "obtiznost": 2,
-      "zadani": "Zkrať zlomek: 15/25",
+      "zadani": "Zkrať zlomek: $\\frac{15}{25}$",
       "odpoved": "3/5",
       "reseni_kroky": [
         "Hledáme GCD(15, 25) = 5",
-        "15 ÷ 5 = 3, 25 ÷ 5 = 5",
-        "Zkrácený zlomek: 3/5"
+        "15 \\div 5 = 3, 25 \\div 5 = 5",
+        "Zkrácený zlomek: \\frac{3}{5}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_031",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3 a 1/2 + 1 a 3/4",
+      "zadani": "Vypočítej: $3 a \\frac{1}{2} + 1 a \\frac{3}{4}$",
       "odpoved": "5 a 1/4",
       "reseni_kroky": [
-        "3,5+1,75=5,25=5 a 1/4"
+        "3,5+1,75=5,25=5 a \\frac{1}{4}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_032",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5 a 1/3 - 2 a 2/3",
+      "zadani": "Vypočítej: $5 a \\frac{1}{3} - 2 a \\frac{2}{3}$",
       "odpoved": "2 a 2/3",
       "reseni_kroky": [
-        "16/3-8/3=8/3=2 a 2/3"
+        "\\frac{16}{3}\\frac{-8}{3}=\\frac{8}{3}=2 a \\frac{2}{3}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_033",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 1 a 1/2 × 2/3",
+      "zadani": "Vypočítej: $1 a \\frac{1}{2} \\times \\frac{2}{3}$",
       "odpoved": "1",
       "reseni_kroky": [
-        "3/2 × 2/3 = 6/6 = 1"
+        "\\frac{3}{2} \\times \\frac{2}{3} = \\frac{6}{6} = 1"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_034",
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2 a 1/4 ÷ 3/4",
+      "zadani": "Vypočítej: $2 a \\frac{1}{4} \\div \\frac{3}{4}$",
       "odpoved": "3",
       "reseni_kroky": [
-        "9/4 ÷ 3/4 = 9/4 × 4/3 = 36/12 = 3"
+        "\\frac{9}{4} \\div \\frac{3}{4} = \\frac{9}{4} \\times \\frac{4}{3} = \\frac{36}{12} = 3"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_035",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 1/6 + 1/4 + 1/3",
+      "zadani": "Vypočítej: $\\frac{1}{6} + \\frac{1}{4} + \\frac{1}{3}$",
       "odpoved": "3/4",
       "reseni_kroky": [
         "NSN=12",
-        "2/12+3/12+4/12=9/12=3/4"
+        "\\frac{2}{12}+\\frac{3}{12}+\\frac{4}{12}=\\frac{9}{12}=\\frac{3}{4}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_036",
       "tema": "zlomky",
       "podtema": "porovnavani",
       "obtiznost": 2,
-      "zadani": "Porovnej: 3/4 a 5/6",
+      "zadani": "Porovnej: $\\frac{3}{4} a \\frac{5}{6}$",
       "odpoved": "3/4 < 5/6",
       "reseni_kroky": [
         "NSN=12",
-        "9/12 < 10/12"
+        "\\frac{9}{12} < \\frac{10}{12}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_037",
       "tema": "zlomky",
       "podtema": "porovnavani",
       "obtiznost": 2,
-      "zadani": "Porovnej: 7/8 a 5/6",
+      "zadani": "Porovnej: $\\frac{7}{8} a \\frac{5}{6}$",
       "odpoved": "7/8 > 5/6",
       "reseni_kroky": [
         "NSN=24",
-        "21/24 > 20/24"
+        "\\frac{21}{24} > \\frac{20}{24}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_038",
       "tema": "zlomky",
       "podtema": "zkracovani",
       "obtiznost": 2,
-      "zadani": "Zkrať: 24/36",
+      "zadani": "Zkrať: $\\frac{24}{36}$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "GCD(24,36)=12",
-        "výsledek: 2/3"
+        "výsledek: \\frac{2}{3}"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_039",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5/6 × 12/25",
+      "zadani": "Vypočítej: $\\frac{5}{6} \\times \\frac{12}{25}$",
       "odpoved": "2/5",
       "reseni_kroky": [
-        "60/150 = 2/5"
+        "\\frac{60}{150} = \\frac{2}{5}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_040",
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 7/8 ÷ 7/4",
+      "zadani": "Vypočítej: $\\frac{7}{8} \\div \\frac{7}{4}$",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "7/8 × 4/7 = 28/56 = 1/2"
+        "\\frac{7}{8} \\times \\frac{4}{7} = \\frac{28}{56} = \\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_041",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3/8 + 5/12",
+      "zadani": "Vypočítej: $\\frac{3}{8} + \\frac{5}{12}$",
       "odpoved": "19/24",
       "reseni_kroky": [
         "NSN=24",
-        "9/24+10/24=19/24"
+        "\\frac{9}{24}+\\frac{10}{24}=\\frac{19}{24}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_042",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 11/12 - 3/8",
+      "zadani": "Vypočítej: $\\frac{11}{12} - \\frac{3}{8}$",
       "odpoved": "13/24",
       "reseni_kroky": [
         "NSN=24",
-        "22/24-9/24=13/24"
+        "\\frac{22}{24}\\frac{-9}{24}=\\frac{13}{24}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_043",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2 a 3/4 + 1 a 1/2",
+      "zadani": "Vypočítej: $2 a \\frac{3}{4} + 1 a \\frac{1}{2}$",
       "odpoved": "4 a 1/4",
       "reseni_kroky": [
-        "11/4+3/2=11/4+6/4=17/4=4 a 1/4"
+        "\\frac{11}{4}+\\frac{3}{2}=\\frac{11}{4}+\\frac{6}{4}=\\frac{17}{4}=4 a \\frac{1}{4}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_044",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3 a 1/3 - 1 a 2/3",
+      "zadani": "Vypočítej: $3 a \\frac{1}{3} - 1 a \\frac{2}{3}$",
       "odpoved": "1 a 2/3",
       "reseni_kroky": [
-        "10/3-5/3=5/3=1 a 2/3"
+        "\\frac{10}{3}\\frac{-5}{3}=\\frac{5}{3}=1 a \\frac{2}{3}"
       ],
       "cas_sekund": 105,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_045",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2 a 1/5 × 1 a 2/3",
+      "zadani": "Vypočítej: $2 a \\frac{1}{5} \\times 1 a \\frac{2}{3}$",
       "odpoved": "3 a 2/3",
       "reseni_kroky": [
-        "11/5 × 5/3 = 55/15 = 11/3 = 3 a 2/3"
+        "\\frac{11}{5} \\times \\frac{5}{3} = \\frac{55}{15} = \\frac{11}{3} = 3 a \\frac{2}{3}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_046",
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3 a 3/4 ÷ 1 a 1/2",
+      "zadani": "Vypočítej: $3 a \\frac{3}{4} \\div 1 a \\frac{1}{2}$",
       "odpoved": "2 a 1/2",
       "reseni_kroky": [
-        "15/4 ÷ 3/2 = 15/4 × 2/3 = 30/12 = 5/2 = 2 a 1/2"
+        "\\frac{15}{4} \\div \\frac{3}{2} = \\frac{15}{4} \\times \\frac{2}{3} = \\frac{30}{12} = \\frac{5}{2} = 2 a \\frac{1}{2}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_047",
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5/9 + 2/3",
+      "zadani": "Vypočítej: $\\frac{5}{9} + \\frac{2}{3}$",
       "odpoved": "11/9",
       "reseni_kroky": [
         "NSN=9",
-        "5/9+6/9=11/9"
+        "\\frac{5}{9}+\\frac{6}{9}=\\frac{11}{9}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_048",
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 4/5 - 3/10",
+      "zadani": "Vypočítej: $\\frac{4}{5} - \\frac{3}{10}$",
       "odpoved": "1/2",
       "reseni_kroky": [
         "NSN=10",
-        "8/10-3/10=5/10=1/2"
+        "\\frac{8}{10}\\frac{-3}{10}=\\frac{5}{10}=\\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_049",
       "tema": "zlomky",
       "podtema": "zkracovani",
       "obtiznost": 2,
-      "zadani": "Zkrať: 48/72",
+      "zadani": "Zkrať: $\\frac{48}{72}$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "GCD(48,72)=24",
-        "výsledek: 2/3"
+        "výsledek: \\frac{2}{3}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_050",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3/4 × 8/9",
+      "zadani": "Vypočítej: $\\frac{3}{4} \\times \\frac{8}{9}$",
       "odpoved": "2/3",
       "reseni_kroky": [
-        "24/36=2/3"
+        "\\frac{24}{36}=\\frac{2}{3}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_051",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (3/4 + 1/3) × (2 - 1/2)",
+      "zadani": "Vypočítej: $(\\frac{3}{4} + \\frac{1}{3}) \\times (2 - \\frac{1}{2})$",
       "odpoved": "19/8",
       "reseni_kroky": [
-        "3/4+1/3=13/12",
-        "2-1/2=3/2",
-        "13/12×3/2=39/24=13/8"
+        "\\frac{3}{4}+\\frac{1}{3}=\\frac{13}{12}",
+        "2\\frac{-1}{2}=\\frac{3}{2}",
+        "\\frac{13}{12}\\times\\frac{3}{2}=\\frac{39}{24}=\\frac{13}{8}"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_052",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (5/6 - 1/4) ÷ (1/3 + 1/4)",
+      "zadani": "Vypočítej: $(\\frac{5}{6} - \\frac{1}{4}) \\div (\\frac{1}{3} + \\frac{1}{4})$",
       "odpoved": "14/7",
       "reseni_kroky": [
-        "5/6-1/4=7/12",
-        "1/3+1/4=7/12",
-        "7/12÷7/12=1",
+        "\\frac{5}{6}\\frac{-1}{4}=\\frac{7}{12}",
+        "\\frac{1}{3}+\\frac{1}{4}=\\frac{7}{12}",
+        "\\frac{7}{12}\\div\\frac{7}{12}=1",
         "Pozor: výsledek je 1"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_053",
       "tema": "zlomky",
       "podtema": "rovnice",
       "obtiznost": 3,
-      "zadani": "Vyřeš: x/3 + x/4 = 7",
+      "zadani": "Vyřeš: $\\frac{x}{3} + \\frac{x}{4} = 7$",
       "odpoved": "x = 12",
       "reseni_kroky": [
         "NSN=12",
@@ -773,14 +825,15 @@
         "x=12"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_054",
       "tema": "zlomky",
       "podtema": "rovnice",
       "obtiznost": 3,
-      "zadani": "Vyřeš: x/2 - x/5 = 3",
+      "zadani": "Vyřeš: $\\frac{x}{2} - \\frac{x}{5} = 3$",
       "odpoved": "x = 10",
       "reseni_kroky": [
         "NSN=10",
@@ -789,23 +842,25 @@
         "x=10"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_055",
       "tema": "zlomky",
       "podtema": "rovnice",
       "obtiznost": 3,
-      "zadani": "Vyřeš: 2/3 x + 1/4 = 3/4",
+      "zadani": "Vyřeš: $\\frac{2}{3} x + \\frac{1}{4} = \\frac{3}{4}$",
       "odpoved": "x = 3/4",
       "reseni_kroky": [
         "NSN=12",
         "8x+3=9",
         "8x=6",
-        "x=6/8=3/4"
+        "x=\\frac{6}{8}=\\frac{3}{4}"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_056",
@@ -815,39 +870,42 @@
       "zadani": "Číslo zvětšené o jeho polovinu je 15. Jaké je číslo?",
       "odpoved": "10",
       "reseni_kroky": [
-        "x+x/2=15",
-        "3x/2=15",
+        "x+\\frac{x}{2}=15",
+        "3\\frac{x}{2}=15",
         "x=10"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_057",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Třetina z 3/5 čísla 90 je ...",
+      "zadani": "Třetina z $\\frac{3}{5}$ čísla 90 je ...",
       "odpoved": "18",
       "reseni_kroky": [
-        "3/5×90=54",
-        "1/3×54=18"
+        "\\frac{3}{5}\\times90=54",
+        "\\frac{1}{3}\\times54=18"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_058",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (1/2 + 1/3) × (1/4 + 1/6)",
+      "zadani": "Vypočítej: $(\\frac{1}{2} + \\frac{1}{3}) \\times (\\frac{1}{4} + \\frac{1}{6})$",
       "odpoved": "5/12",
       "reseni_kroky": [
-        "5/6 × 5/12 = 25/72 — PŘEPOČTI: (5/6)×(5/12)=25/72"
+        "\\frac{5}{6} \\times \\frac{5}{12} = \\frac{25}{72} — PŘEPOČTI: (\\frac{5}{6})\\times(\\frac{5}{12})=\\frac{25}{72}"
       ],
       "cas_sekund": 180,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_059",
@@ -857,17 +915,18 @@
       "zadani": "Jaká část z 60 je 45?",
       "odpoved": "3/4",
       "reseni_kroky": [
-        "45/60=3/4"
+        "\\frac{45}{60}=\\frac{3}{4}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_060",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vyřeš: (x-1)/3 = (x+1)/4",
+      "zadani": "Vyřeš: $(x-1)/3 = (x+1)/4$",
       "odpoved": "x = 7",
       "reseni_kroky": [
         "4(x-1)=3(x+1)",
@@ -875,105 +934,113 @@
         "x=7"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_061",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 2/3 - 1/4 + 5/6 - 3/8",
+      "zadani": "Vypočítej: $\\frac{2}{3} - \\frac{1}{4} + \\frac{5}{6} - \\frac{3}{8}$",
       "odpoved": "3/4 = 18/24",
       "reseni_kroky": [
         "NSN=24",
-        "16/24-6/24+20/24-9/24=21/24=7/8"
+        "\\frac{16}{24}\\frac{-6}{24}+\\frac{20}{24}\\frac{-9}{24}=\\frac{21}{24}=\\frac{7}{8}"
       ],
       "cas_sekund": 180,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_062",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Součet dvou čísel je 5/3. Jedno číslo je 7/12. Jaké je druhé?",
+      "zadani": "Součet dvou čísel je $\\frac{5}{3}$. Jedno číslo je $\\frac{7}{12}$. Jaké je druhé?",
       "odpoved": "13/12",
       "reseni_kroky": [
-        "5/3-7/12=20/12-7/12=13/12"
+        "\\frac{5}{3}\\frac{-7}{12}=\\frac{20}{12}\\frac{-7}{12}=\\frac{13}{12}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_063",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Kolik je 3/5 ze 4/7 z čísla 35?",
+      "zadani": "Kolik je $\\frac{3}{5}$ ze $\\frac{4}{7}$ z čísla 35?",
       "odpoved": "12",
       "reseni_kroky": [
-        "4/7×35=20",
-        "3/5×20=12"
+        "\\frac{4}{7}\\times35=20",
+        "\\frac{3}{5}\\times20=12"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_064",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Petr snědl 3/8 pizzy, Pavel 1/4 pizzy. Kolik zbývá?",
+      "zadani": "Petr snědl $\\frac{3}{8}$ pizzy, Pavel $\\frac{1}{4}$ pizzy. Kolik zbývá?",
       "odpoved": "3/8",
       "reseni_kroky": [
-        "3/8+1/4=3/8+2/8=5/8",
-        "1-5/8=3/8"
+        "\\frac{3}{8}+\\frac{1}{4}=\\frac{3}{8}+\\frac{2}{8}=\\frac{5}{8}",
+        "1\\frac{-5}{8}=\\frac{3}{8}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_065",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Seřaď od nejmenšího: 3/4, 2/3, 7/10",
+      "zadani": "Seřaď od nejmenšího: $\\frac{3}{4}, \\frac{2}{3}, \\frac{7}{10}$",
       "odpoved": "2/3, 7/10, 3/4",
       "reseni_kroky": [
         "NSN=60",
-        "40/60, 42/60, 45/60",
-        "pořadí: 2/3 < 7/10 < 3/4"
+        "\\frac{40}{60}, \\frac{42}{60}, \\frac{45}{60}",
+        "pořadí: \\frac{2}{3} < \\frac{7}{10} < \\frac{3}{4}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_066",
       "tema": "zlomky",
       "podtema": "rovnice",
       "obtiznost": 3,
-      "zadani": "Vyřeš: 1/(x+1) = 1/4 (x ≠ -1)",
+      "zadani": "Vyřeš: $1/(x+1) = \\frac{1}{4} (x ≠ -1)$",
       "odpoved": "x = 3",
       "reseni_kroky": [
         "x+1=4",
         "x=3"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_067",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vypočítej: ((2/3)²) × (3/2)",
+      "zadani": "Vypočítej: $((\\frac{2}{3})^{2}) \\times (\\frac{3}{2})$",
       "odpoved": "2/3",
       "reseni_kroky": [
-        "(2/3)²=4/9",
-        "4/9×3/2=12/18=2/3"
+        "(\\frac{2}{3})^{2}=\\frac{4}{9}",
+        "\\frac{4}{9}\\times\\frac{3}{2}=\\frac{12}{18}=\\frac{2}{3}"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "latex": true
     },
     {
       "id": "ZLO_068",
@@ -986,14 +1053,15 @@
         "48-12-16=20"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_069",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Vyřeš: x/4 + x/6 = 5",
+      "zadani": "Vyřeš: $\\frac{x}{4} + \\frac{x}{6} = 5$",
       "odpoved": "x = 12",
       "reseni_kroky": [
         "NSN=12",
@@ -1002,20 +1070,22 @@
         "x=12"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "ZLO_070",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "zadani": "Jaký zlomek je uprostřed mezi 1/4 a 3/4?",
+      "zadani": "Jaký zlomek je uprostřed mezi $\\frac{1}{4}$ a $\\frac{3}{4}$?",
       "odpoved": "1/2",
       "reseni_kroky": [
-        "(1/4+3/4)/2=1/2"
+        "(\\frac{1}{4}+\\frac{3}{4})/2=\\frac{1}{2}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "PRO_001",
@@ -5587,555 +5657,595 @@
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 2²",
+      "zadani": "Vypočítej: $2^{2}$",
       "odpoved": "4",
       "reseni_kroky": [
-        "2² znamená 2 × 2",
-        "2 × 2 = 4"
+        "2^{2} znamená 2 \\times 2",
+        "2 \\times 2 = 4"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_002",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 3²",
+      "zadani": "Vypočítej: $3^{2}$",
       "odpoved": "9",
       "reseni_kroky": [
-        "3² = 3 × 3 = 9"
+        "3^{2} = 3 \\times 3 = 9"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_003",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 4²",
+      "zadani": "Vypočítej: $4^{2}$",
       "odpoved": "16",
       "reseni_kroky": [
-        "4² = 4 × 4 = 16"
+        "4^{2} = 4 \\times 4 = 16"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_004",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 5²",
+      "zadani": "Vypočítej: $5^{2}$",
       "odpoved": "25",
       "reseni_kroky": [
-        "5² = 5 × 5 = 25"
+        "5^{2} = 5 \\times 5 = 25"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_005",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 6²",
+      "zadani": "Vypočítej: $6^{2}$",
       "odpoved": "36",
       "reseni_kroky": [
-        "6² = 6 × 6 = 36"
+        "6^{2} = 6 \\times 6 = 36"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_006",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 7²",
+      "zadani": "Vypočítej: $7^{2}$",
       "odpoved": "49",
       "reseni_kroky": [
-        "7² = 7 × 7 = 49"
+        "7^{2} = 7 \\times 7 = 49"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_007",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 1,
-      "zadani": "Vypočítej: 10²",
+      "zadani": "Vypočítej: $10^{2}$",
       "odpoved": "100",
       "reseni_kroky": [
-        "10² = 10 × 10 = 100"
+        "10^{2} = 10 \\times 10 = 100"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_008",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √4",
+      "zadani": "Vypočítej: $\\sqrt{4}$",
       "odpoved": "2",
       "reseni_kroky": [
         "Hledáme číslo, jehož čtverec je 4",
-        "2² = 4, tedy √4 = 2"
+        "2^{2} = 4, tedy \\sqrt{4} = 2"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_009",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √9",
+      "zadani": "Vypočítej: $\\sqrt{9}$",
       "odpoved": "3",
       "reseni_kroky": [
-        "3² = 9, tedy √9 = 3"
+        "3^{2} = 9, tedy \\sqrt{9} = 3"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_010",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √16",
+      "zadani": "Vypočítej: $\\sqrt{16}$",
       "odpoved": "4",
       "reseni_kroky": [
-        "4² = 16, tedy √16 = 4"
+        "4^{2} = 16, tedy \\sqrt{16} = 4"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_011",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √25",
+      "zadani": "Vypočítej: $\\sqrt{25}$",
       "odpoved": "5",
       "reseni_kroky": [
-        "5² = 25, tedy √25 = 5"
+        "5^{2} = 25, tedy \\sqrt{25} = 5"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_012",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √36",
+      "zadani": "Vypočítej: $\\sqrt{36}$",
       "odpoved": "6",
       "reseni_kroky": [
-        "6² = 36, tedy √36 = 6"
+        "6^{2} = 36, tedy \\sqrt{36} = 6"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_013",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √49",
+      "zadani": "Vypočítej: $\\sqrt{49}$",
       "odpoved": "7",
       "reseni_kroky": [
-        "7² = 49, tedy √49 = 7"
+        "7^{2} = 49, tedy \\sqrt{49} = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_014",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √64",
+      "zadani": "Vypočítej: $\\sqrt{64}$",
       "odpoved": "8",
       "reseni_kroky": [
-        "8² = 64, tedy √64 = 8"
+        "8^{2} = 64, tedy \\sqrt{64} = 8"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_015",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 1,
-      "zadani": "Vypočítej: √100",
+      "zadani": "Vypočítej: $\\sqrt{100}$",
       "odpoved": "10",
       "reseni_kroky": [
-        "10² = 100, tedy √100 = 10"
+        "10^{2} = 100, tedy \\sqrt{100} = 10"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_016",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2³",
+      "zadani": "Vypočítej: $2^{3}$",
       "odpoved": "8",
       "reseni_kroky": [
-        "2³ = 2 × 2 × 2",
-        "2 × 2 = 4, 4 × 2 = 8"
+        "2^{3} = 2 \\times 2 \\times 2",
+        "2 \\times 2 = 4, 4 \\times 2 = 8"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_017",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3³",
+      "zadani": "Vypočítej: $3^{3}$",
       "odpoved": "27",
       "reseni_kroky": [
-        "3³ = 3 × 3 × 3",
-        "3 × 3 = 9, 9 × 3 = 27"
+        "3^{3} = 3 \\times 3 \\times 3",
+        "3 \\times 3 = 9, 9 \\times 3 = 27"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_018",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2⁴",
+      "zadani": "Vypočítej: $2^{4}$",
       "odpoved": "16",
       "reseni_kroky": [
-        "2⁴ = 2 × 2 × 2 × 2",
-        "2² = 4, 4² = 16"
+        "2^{4} = 2 \\times 2 \\times 2 \\times 2",
+        "2^{2} = 4, 4^{2} = 16"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_019",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: (-3)²",
+      "zadani": "Vypočítej: $(-3)^{2}$",
       "odpoved": "9",
       "reseni_kroky": [
-        "(-3)² = (-3) × (-3)",
-        "Záporné × záporné = kladné: 9"
+        "(-3)^{2} = (-3) \\times (-3)",
+        "Záporné \\times záporné = kladné: 9"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_020",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: (-2)³",
+      "zadani": "Vypočítej: $(-2)^{3}$",
       "odpoved": "-8",
       "reseni_kroky": [
-        "(-2)³ = (-2) × (-2) × (-2)",
-        "(-2)² = 4, 4 × (-2) = -8"
+        "(-2)^{3} = (-2) \\times (-2) \\times (-2)",
+        "(-2)^{2} = 4, 4 \\times (-2) = -8"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_021",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √121",
+      "zadani": "Vypočítej: $\\sqrt{121}$",
       "odpoved": "11",
       "reseni_kroky": [
-        "Odmocnina √n = číslo, které samo sebe umocněné dá n",
-        "Hledáme x tak, aby x² = 121",
-        "11 × 11 = 121 ✓ → √121 = 11",
-        "Tip: pamatuj mocniny do 15: ...10²=100, 11²=121, 12²=144, 13²=169..."
+        "Odmocnina \\sqrt{n} = číslo, které samo sebe umocněné dá n",
+        "Hledáme x tak, aby x^{2} = 121",
+        "11 \\times 11 = 121 ✓ → \\sqrt{121} = 11",
+        "Tip: pamatuj mocniny do 15: ...10^{2}=100, 11^{2}=121, 12^{2}=144, 13^{2}=169..."
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_022",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √144",
+      "zadani": "Vypočítej: $\\sqrt{144}$",
       "odpoved": "12",
       "reseni_kroky": [
-        "Hledáme x tak, aby x² = 144",
-        "12 × 12 = 144 ✓ → √144 = 12",
-        "Tip: 144 = 12² (tucet na druhou) — dobrá věc k zapamatování"
+        "Hledáme x tak, aby x^{2} = 144",
+        "12 \\times 12 = 144 ✓ → \\sqrt{144} = 12",
+        "Tip: 144 = 12^{2} (tucet na druhou) — dobrá věc k zapamatování"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_023",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Zjednodušs: 2³ · 2²",
+      "zadani": "Zjednodušs: $2^{3} \\cdot 2^{2}$",
       "odpoved": "32",
       "reseni_kroky": [
-        "Stejný základ → sečteme exponenty: 2³ · 2² = 2^(3+2) = 2⁵",
-        "2⁵ = 32"
+        "Stejný základ → sečteme exponenty: 2^{3} \\cdot 2^{2} = 2^(3+2) = 2^{5}",
+        "2^{5} = 32"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_024",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Zjednodušs: 4⁴ ÷ 4²",
+      "zadani": "Zjednodušs: $4^{4} \\div 4^{2}$",
       "odpoved": "16",
       "reseni_kroky": [
-        "Stejný základ → odečteme exponenty: 4⁴ ÷ 4² = 4^(4−2) = 4²",
-        "4² = 16"
+        "Stejný základ → odečteme exponenty: 4^{4} \\div 4^{2} = 4^(4−2) = 4^{2}",
+        "4^{2} = 16"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_025",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3² + 4²",
+      "zadani": "Vypočítej: $3^{2} + 4^{2}$",
       "odpoved": "25",
       "reseni_kroky": [
-        "3² = 9, 4² = 16",
+        "3^{2} = 9, 4^{2} = 16",
         "9 + 16 = 25"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_026",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 5² − 3²",
+      "zadani": "Vypočítej: $5^{2} − 3^{2}$",
       "odpoved": "16",
       "reseni_kroky": [
-        "5² = 25, 3² = 9",
+        "5^{2} = 25, 3^{2} = 9",
         "25 − 9 = 16"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_027",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2⁵",
+      "zadani": "Vypočítej: $2^{5}$",
       "odpoved": "32",
       "reseni_kroky": [
-        "2⁵ = 2 × 2 × 2 × 2 × 2",
-        "2² = 4, 2³ = 8, 2⁴ = 16, 2⁵ = 32"
+        "2^{5} = 2 \\times 2 \\times 2 \\times 2 \\times 2",
+        "2^{2} = 4, 2^{3} = 8, 2^{4} = 16, 2^{5} = 32"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_028",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: (1/2)²",
+      "zadani": "Vypočítej: $(\\frac{1}{2})^{2}$",
       "odpoved": "1/4",
       "reseni_kroky": [
-        "(1/2)² = 1/2 × 1/2",
-        "Čitatele: 1×1=1, jmenovatele: 2×2=4",
-        "Výsledek: 1/4"
+        "(\\frac{1}{2})^{2} = \\frac{1}{2} \\times \\frac{1}{2}",
+        "Čitatele: 1\\times1=1, jmenovatele: 2\\times2=4",
+        "Výsledek: \\frac{1}{4}"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_029",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √(3² + 4²)",
+      "zadani": "Vypočítej: $\\sqrt{3^{2} + 4^{2}}$",
       "odpoved": "5",
       "reseni_kroky": [
-        "Nejprve výrazy pod odmocninou: 3² = 9, 4² = 16",
+        "Nejprve výrazy pod odmocninou: 3^{2} = 9, 4^{2} = 16",
         "9 + 16 = 25",
-        "√25 = 5 (Pythagorova trojice 3-4-5)"
+        "\\sqrt{25} = 5 (Pythagorova trojice 3-4-5)"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_030",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √169",
+      "zadani": "Vypočítej: $\\sqrt{169}$",
       "odpoved": "13",
       "reseni_kroky": [
-        "Hledáme x tak, aby x² = 169",
-        "13 × 13 = 169 ✓ → √169 = 13",
-        "Tip: 169 = 13² — pamatuj: 11²=121, 12²=144, 13²=169, 14²=196, 15²=225"
+        "Hledáme x tak, aby x^{2} = 169",
+        "13 \\times 13 = 169 ✓ → \\sqrt{169} = 13",
+        "Tip: 169 = 13^{2} — pamatuj: 11^{2}=121, 12^{2}=144, 13^{2}=169, 14^{2}=196, 15^{2}=225"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_031",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(5² + 12²)",
+      "zadani": "Vypočítej: $\\sqrt{5^{2} + 12^{2}}$",
       "odpoved": "13",
       "reseni_kroky": [
-        "5² = 25, 12² = 144",
+        "5^{2} = 25, 12^{2} = 144",
         "25 + 144 = 169",
-        "√169 = 13 (Pythagorova trojice 5-12-13)"
+        "\\sqrt{169} = 13 (Pythagorova trojice 5-12-13)"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_032",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 2^10",
+      "zadani": "Vypočítej: $2^{10}$",
       "odpoved": "1024",
       "reseni_kroky": [
-        "2⁵ = 32",
-        "2^10 = (2⁵)² = 32² = 1024"
+        "2^{5} = 32",
+        "2^{10} = (2^{5})^{2} = 32^{2} = 1024"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_033",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 3⁴",
+      "zadani": "Vypočítej: $3^{4}$",
       "odpoved": "81",
       "reseni_kroky": [
-        "3² = 9",
-        "3⁴ = (3²)² = 9² = 81"
+        "3^{2} = 9",
+        "3^{4} = (3^{2})^{2} = 9^{2} = 81"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_034",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (-1)^100",
+      "zadani": "Vypočítej: $(-1)^{100}$",
       "odpoved": "1",
       "reseni_kroky": [
         "Sudý exponent → výsledek vždy kladný",
         "(-1)^sudé = 1"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_035",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (-1)^101",
+      "zadani": "Vypočítej: $(-1)^{101}$",
       "odpoved": "-1",
       "reseni_kroky": [
         "Lichý exponent → výsledek záporný",
         "(-1)^liché = -1"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_036",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 6² × 2³",
+      "zadani": "Vypočítej: $6^{2} \\times 2^{3}$",
       "odpoved": "288",
       "reseni_kroky": [
-        "6² = 36, 2³ = 8",
-        "36 × 8 = 288"
+        "6^{2} = 36, 2^{3} = 8",
+        "36 \\times 8 = 288"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_037",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(49 + 576)",
+      "zadani": "Vypočítej: $\\sqrt{49 + 576}$",
       "odpoved": "25",
       "reseni_kroky": [
         "49 + 576 = 625",
-        "√625: 25² = 625, tedy √625 = 25"
+        "\\sqrt{625}: 25^{2} = 625, tedy \\sqrt{625} = 25"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_038",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(10² − 8²)",
+      "zadani": "Vypočítej: $\\sqrt{10^{2} − 8^{2}}$",
       "odpoved": "6",
       "reseni_kroky": [
-        "10² = 100, 8² = 64",
+        "10^{2} = 100, 8^{2} = 64",
         "100 − 64 = 36",
-        "√36 = 6"
+        "\\sqrt{36} = 6"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_039",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (2³)²",
+      "zadani": "Vypočítej: $(2^{3})^{2}$",
       "odpoved": "64",
       "reseni_kroky": [
-        "(2³)² = 2^(3×2) = 2⁶",
-        "2⁶ = 64"
+        "(2^{3})^{2} = 2^(3\\times2) = 2^{6}",
+        "2^{6} = 64"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_040",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 10³ − 10²",
+      "zadani": "Vypočítej: $10^{3} − 10^{2}$",
       "odpoved": "900",
       "reseni_kroky": [
-        "10³ = 1000, 10² = 100",
+        "10^{3} = 1000, 10^{2} = 100",
         "1000 − 100 = 900"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "CIS_001",
@@ -6654,865 +6764,925 @@
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 3: 2x + 1 = ?",
+      "zadani": "Dosaď x = 3: $2x + 1 = ?$",
       "odpoved": "7",
       "reseni_kroky": [
-        "Dosadíme x = 3: 2·3 + 1",
+        "Dosadíme x = 3: 2\\cdot3 + 1",
         "6 + 1 = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_002",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 5: x − 2 = ?",
+      "zadani": "Dosaď x = 5: $x − 2 = ?$",
       "odpoved": "3",
       "reseni_kroky": [
         "Dosadíme: 5 − 2 = 3"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_003",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď a = 4: 3a − 2 = ?",
+      "zadani": "Dosaď a = 4: $3a − 2 = ?$",
       "odpoved": "10",
       "reseni_kroky": [
-        "3·4 − 2 = 12 − 2 = 10"
+        "3\\cdot4 − 2 = 12 − 2 = 10"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_004",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 10: 5x − 3 = ?",
+      "zadani": "Dosaď x = 10: $5x − 3 = ?$",
       "odpoved": "47",
       "reseni_kroky": [
-        "5·10 − 3 = 50 − 3 = 47"
+        "5\\cdot10 − 3 = 50 − 3 = 47"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_005",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 2, y = 3: x² + y = ?",
+      "zadani": "Dosaď x = 2, y = 3: $x^{2} + y = ?$",
       "odpoved": "7",
       "reseni_kroky": [
-        "x² = 2² = 4",
+        "x^{2} = 2^{2} = 4",
         "4 + 3 = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_006",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 0: x³ + x + 5 = ?",
+      "zadani": "Dosaď x = 0: $x^{3} + x + 5 = ?$",
       "odpoved": "5",
       "reseni_kroky": [
-        "0³ + 0 + 5 = 0 + 0 + 5 = 5"
+        "0^{3} + 0 + 5 = 0 + 0 + 5 = 5"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_007",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď a = 2, b = 3: a² + b² = ?",
+      "zadani": "Dosaď a = 2, b = 3: $a^{2} + b^{2} = ?$",
       "odpoved": "13",
       "reseni_kroky": [
-        "a² = 4, b² = 9",
+        "a^{2} = 4, b^{2} = 9",
         "4 + 9 = 13"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_008",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď n = 10: n(n+1)/2 = ?",
+      "zadani": "Dosaď n = 10: $\\frac{n(n+1)}{2} = ?$",
       "odpoved": "55",
       "reseni_kroky": [
-        "10 · 11 / 2",
-        "110 / 2 = 55"
+        "10 \\cdot \\frac{11}{2}",
+        "\\frac{110}{2} = 55"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_009",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 4: (x − 1)(x + 1) = ?",
+      "zadani": "Dosaď x = 4: $(x − 1)(x + 1) = ?$",
       "odpoved": "15",
       "reseni_kroky": [
         "Dosadíme x = 4 do výrazu (x−1)(x+1):",
-        "(4−1) · (4+1) = 3 · 5 = 15",
-        "Alternativa: vzorec rozdílu čtverců → x²−1 = 4²−1 = 16−1 = 15"
+        "(4−1) \\cdot (4+1) = 3 \\cdot 5 = 15",
+        "Alternativa: vzorec rozdílu čtverců → x^{2}−1 = 4^{2}−1 = 16−1 = 15"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_010",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 3: x² − 2x + 1 = ?",
+      "zadani": "Dosaď x = 3: $x^{2} − 2x + 1 = ?$",
       "odpoved": "4",
       "reseni_kroky": [
-        "Dosadíme x = 3: x²−2x+1",
-        "x² = 3² = 9",
-        "2x = 2·3 = 6",
+        "Dosadíme x = 3: x^{2}−2x+1",
+        "x^{2} = 3^{2} = 9",
+        "2x = 2\\cdot3 = 6",
         "Výsledek: 9 − 6 + 1 = 4",
-        "Tip: x²−2x+1 = (x−1)² = (3−1)² = 2² = 4 ✓"
+        "Tip: x^{2}−2x+1 = (x−1)^{2} = (3−1)^{2} = 2^{2} = 4 ✓"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_011",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 2: (x + 3)² = ?",
+      "zadani": "Dosaď x = 2: $(x + 3)^{2} = ?$",
       "odpoved": "25",
       "reseni_kroky": [
-        "Dosadíme x = 2 do (x+3)²:",
+        "Dosadíme x = 2 do (x+3)^{2}:",
         "Nejdříve závorka: x+3 = 2+3 = 5",
-        "Pak mocnina: 5² = 25"
+        "Pak mocnina: 5^{2} = 25"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_012",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = −1: x² + x − 1 = ?",
+      "zadani": "Dosaď x = −1: $x^{2} + x − 1 = ?$",
       "odpoved": "-1",
       "reseni_kroky": [
-        "Dosadíme x = −1 do x²+x−1:",
-        "Pozor na záporné číslo! (−1)² = +1 (záporné číslo na sudou mocninu = kladné)",
-        "x² = (−1)² = 1",
+        "Dosadíme x = −1 do x^{2}+x−1:",
+        "Pozor na záporné číslo! (−1)^{2} = +1 (záporné číslo na sudou mocninu = kladné)",
+        "x^{2} = (−1)^{2} = 1",
         "x = −1",
         "Výsledek: 1 + (−1) − 1 = −1"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_013",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď t = 3: (2t − 1)² = ?",
+      "zadani": "Dosaď t = 3: $(2t − 1)^{2} = ?$",
       "odpoved": "25",
       "reseni_kroky": [
-        "Dosadíme t = 3 do (2t−1)²:",
-        "Nejdříve závorka: 2t−1 = 2·3−1 = 6−1 = 5",
-        "Pak mocnina: 5² = 25"
+        "Dosadíme t = 3 do (2t−1)^{2}:",
+        "Nejdříve závorka: 2t−1 = 2\\cdot3−1 = 6−1 = 5",
+        "Pak mocnina: 5^{2} = 25"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_014",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď a = 5, b = 3: (a + b)(a − b) = ?",
+      "zadani": "Dosaď a = 5, b = 3: $(a + b)(a − b) = ?$",
       "odpoved": "16",
       "reseni_kroky": [
         "Dosadíme a=5, b=3 do (a+b)(a−b):",
-        "(5+3) · (5−3) = 8 · 2 = 16",
-        "Vzorec rozdílu čtverců: (a+b)(a−b) = a²−b² = 25−9 = 16 ✓"
+        "(5+3) \\cdot (5−3) = 8 \\cdot 2 = 16",
+        "Vzorec rozdílu čtverců: (a+b)(a−b) = a^{2}−b^{2} = 25−9 = 16 ✓"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_015",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 5: x² − 3x + 2 = ?",
+      "zadani": "Dosaď x = 5: $x^{2} − 3x + 2 = ?$",
       "odpoved": "12",
       "reseni_kroky": [
-        "Dosadíme x = 5 do x²−3x+2:",
-        "x² = 25",
+        "Dosadíme x = 5 do x^{2}−3x+2:",
+        "x^{2} = 25",
         "3x = 15",
         "Výsledek: 25 − 15 + 2 = 12"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_016",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 4: √x + x/2 = ?",
+      "zadani": "Dosaď x = 4: $\\sqrt{x} + \\frac{x}{2} = ?$",
       "odpoved": "4",
       "reseni_kroky": [
-        "Dosadíme x = 4 do √x + x/2:",
-        "√4 = 2 (protože 2² = 4)",
-        "x/2 = 4/2 = 2",
+        "Dosadíme x = 4 do \\sqrt{x} + \\frac{x}{2}:",
+        "\\sqrt{4} = 2 (protože 2^{2} = 4)",
+        "\\frac{x}{2} = \\frac{4}{2} = 2",
         "Výsledek: 2 + 2 = 4"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_017",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 3: 2x² − x − 3 = ?",
+      "zadani": "Dosaď x = 3: $2x^{2} − x − 3 = ?$",
       "odpoved": "12",
       "reseni_kroky": [
-        "Dosadíme x = 3 do 2x²−x−3:",
-        "x² = 9 → 2x² = 18",
+        "Dosadíme x = 3 do 2x^{2}−x−3:",
+        "x^{2} = 9 → 2x^{2} = 18",
         "x = 3",
         "Výsledek: 18 − 3 − 3 = 12"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_018",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 6, y = 4: x + y + xy = ?",
+      "zadani": "Dosaď x = 6, y = 4: $x + y + xy = ?$",
       "odpoved": "34",
       "reseni_kroky": [
         "Dosadíme x=6, y=4 do x+y+xy:",
         "x+y = 6+4 = 10",
-        "xy = 6·4 = 24",
+        "xy = 6\\cdot4 = 24",
         "Výsledek: 10 + 24 = 34"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_019",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 2: x³ − x² + x − 1 = ?",
+      "zadani": "Dosaď x = 2: $x^{3} − x^{2} + x − 1 = ?$",
       "odpoved": "5",
       "reseni_kroky": [
-        "Dosadíme x = 2 do x³−x²+x−1:",
-        "x³ = 2³ = 8",
-        "x² = 2² = 4",
+        "Dosadíme x = 2 do x^{3}−x^{2}+x−1:",
+        "x^{3} = 2^{3} = 8",
+        "x^{2} = 2^{2} = 4",
         "Výsledek: 8 − 4 + 2 − 1 = 5"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_020",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď a = 5, b = 3: a² − 2ab + b² = ?",
+      "zadani": "Dosaď a = 5, b = 3: $a^{2} − 2ab + b^{2} = ?$",
       "odpoved": "4",
       "reseni_kroky": [
-        "Dosadíme a=5, b=3 do a²−2ab+b²:",
-        "Poznáme vzorec: (a−b)² = a²−2ab+b²",
-        "(5−3)² = 2² = 4",
-        "Nebo přímo: 25 − 2·15 + 9 = 25 − 30 + 9 = 4"
+        "Dosadíme a=5, b=3 do a^{2}−2ab+b^{2}:",
+        "Poznáme vzorec: (a−b)^{2} = a^{2}−2ab+b^{2}",
+        "(5−3)^{2} = 2^{2} = 4",
+        "Nebo přímo: 25 − 2\\cdot15 + 9 = 25 − 30 + 9 = 4"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_021",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 2: 2^x + x² + x = ?",
+      "zadani": "Dosaď x = 2: $2^x + x^{2} + x = ?$",
       "odpoved": "10",
       "reseni_kroky": [
-        "Dosadíme x = 2 do 2^x + x² + x:",
-        "2^x = 2² = 4 (2 na druhou)",
-        "x² = 2² = 4",
+        "Dosadíme x = 2 do 2^x + x^{2} + x:",
+        "2^x = 2^{2} = 4 (2 na druhou)",
+        "x^{2} = 2^{2} = 4",
         "x = 2",
         "Výsledek: 4 + 4 + 2 = 10"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_022",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 3: x³ − 3x² + 3x − 1 = ?",
+      "zadani": "Dosaď x = 3: $x^{3} − 3x^{2} + 3x − 1 = ?$",
       "odpoved": "8",
       "reseni_kroky": [
-        "Dosadíme x = 3 do x³−3x²+3x−1:",
-        "Poznáme vzorec: (x−1)³ = x³−3x²+3x−1",
-        "(3−1)³ = 2³ = 8",
+        "Dosadíme x = 3 do x^{3}−3x^{2}+3x−1:",
+        "Poznáme vzorec: (x−1)^{3} = x^{3}−3x^{2}+3x−1",
+        "(3−1)^{3} = 2^{3} = 8",
         "Nebo přímo: 27 − 27 + 9 − 1 = 8 ✓"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_023",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 6, y = 4: (x + y) / (x − y) = ?",
+      "zadani": "Dosaď x = 6, y = 4: $\\frac{x + y}{x − y} = ?$",
       "odpoved": "5",
       "reseni_kroky": [
-        "Dosadíme x=6, y=4 do (x+y)/(x−y):",
+        "Dosadíme x=6, y=4 do \\frac{x+y}{x−y}:",
         "Čitatel: x+y = 6+4 = 10",
         "Jmenovatel: x−y = 6−4 = 2",
-        "Výsledek: 10 ÷ 2 = 5"
+        "Výsledek: 10 \\div 2 = 5"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_024",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 2: x⁴ − 2x³ + x² = ?",
+      "zadani": "Dosaď x = 2: $x^{4} − 2x^{3} + x^{2} = ?$",
       "odpoved": "4",
       "reseni_kroky": [
-        "x²(x²−2x+1) = x²(x−1)²",
-        "4 · 1 = 4"
+        "x^{2}(x^{2}−2x+1) = x^{2}(x−1)^{2}",
+        "4 \\cdot 1 = 4"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_025",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď n = 5: n² + 2n − 3 = ?",
+      "zadani": "Dosaď n = 5: $n^{2} + 2n − 3 = ?$",
       "odpoved": "32",
       "reseni_kroky": [
         "25 + 10 − 3",
         "= 32"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_026",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 4: 3x − 5 = ?",
+      "zadani": "Dosaď x = 4: $3x − 5 = ?$",
       "odpoved": "7",
       "reseni_kroky": [
-        "Dosadíme x = 4: 3·4 − 5",
+        "Dosadíme x = 4: 3\\cdot4 − 5",
         "12 − 5 = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_027",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď a = 6: 4a + 2 = ?",
+      "zadani": "Dosaď a = 6: $4a + 2 = ?$",
       "odpoved": "26",
       "reseni_kroky": [
-        "Dosadíme a = 6: 4·6 + 2",
+        "Dosadíme a = 6: 4\\cdot6 + 2",
         "24 + 2 = 26"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_028",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď n = 3: n · (n + 1) = ?",
+      "zadani": "Dosaď n = 3: $n \\cdot (n + 1) = ?$",
       "odpoved": "12",
       "reseni_kroky": [
-        "Dosadíme n = 3: 3 · (3 + 1)",
-        "3 · 4 = 12"
+        "Dosadíme n = 3: 3 \\cdot (3 + 1)",
+        "3 \\cdot 4 = 12"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_029",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 7: 2x − 7 = ?",
+      "zadani": "Dosaď x = 7: $2x − 7 = ?$",
       "odpoved": "7",
       "reseni_kroky": [
-        "Dosadíme x = 7: 2·7 − 7",
+        "Dosadíme x = 7: 2\\cdot7 − 7",
         "14 − 7 = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_030",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď t = 2: 5t + 3t = ?",
+      "zadani": "Dosaď t = 2: $5t + 3t = ?$",
       "odpoved": "16",
       "reseni_kroky": [
-        "Dosadíme t = 2: 5·2 + 3·2",
+        "Dosadíme t = 2: 5\\cdot2 + 3\\cdot2",
         "10 + 6 = 16"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_031",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď k = 5: k² − k = ?",
+      "zadani": "Dosaď k = 5: $k^{2} − k = ?$",
       "odpoved": "20",
       "reseni_kroky": [
-        "Dosadíme k = 5: 5² − 5",
+        "Dosadíme k = 5: 5^{2} − 5",
         "25 − 5 = 20"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_032",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď x = 8: x/2 + 3 = ?",
+      "zadani": "Dosaď x = 8: $\\frac{x}{2} + 3 = ?$",
       "odpoved": "7",
       "reseni_kroky": [
-        "Dosadíme x = 8: 8/2 + 3",
+        "Dosadíme x = 8: \\frac{8}{2} + 3",
         "4 + 3 = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_033",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 1,
-      "zadani": "Dosaď a = 3, b = 4: 2a + b = ?",
+      "zadani": "Dosaď a = 3, b = 4: $2a + b = ?$",
       "odpoved": "10",
       "reseni_kroky": [
-        "Dosadíme: 2·3 + 4",
+        "Dosadíme: 2\\cdot3 + 4",
         "6 + 4 = 10"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_034",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 3: (2x + 1)(x − 2) = ?",
+      "zadani": "Dosaď x = 3: $(2x + 1)(x − 2) = ?$",
       "odpoved": "7",
       "reseni_kroky": [
         "Dosadíme x = 3: (6 + 1)(3 − 2)",
-        "7 · 1 = 7"
+        "7 \\cdot 1 = 7"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_035",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 4: x² − 2x − 8 = ?",
+      "zadani": "Dosaď x = 4: $x^{2} − 2x − 8 = ?$",
       "odpoved": "0",
       "reseni_kroky": [
         "Dosadíme x = 4: 16 − 8 − 8",
         "16 − 16 = 0"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_036",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 2: 3x² + 2x − 1 = ?",
+      "zadani": "Dosaď x = 2: $3x^{2} + 2x − 1 = ?$",
       "odpoved": "15",
       "reseni_kroky": [
-        "Dosadíme x = 2: 3·4 + 4 − 1",
+        "Dosadíme x = 2: 3\\cdot4 + 4 − 1",
         "12 + 4 − 1 = 15"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_037",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď a = 3: (a + 2)² − a² = ?",
+      "zadani": "Dosaď a = 3: $(a + 2)^{2} − a^{2} = ?$",
       "odpoved": "16",
       "reseni_kroky": [
-        "(3 + 2)² = 5² = 25",
-        "25 − 3² = 25 − 9 = 16"
+        "(3 + 2)^{2} = 5^{2} = 25",
+        "25 − 3^{2} = 25 − 9 = 16"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_038",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 1: x⁴ + x³ + x² + x = ?",
+      "zadani": "Dosaď x = 1: $x^{4} + x^{3} + x^{2} + x = ?$",
       "odpoved": "4",
       "reseni_kroky": [
         "Dosadíme x = 1: 1 + 1 + 1 + 1",
         "= 4"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_039",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 5, y = 2: (x − y)² = ?",
+      "zadani": "Dosaď x = 5, y = 2: $(x − y)^{2} = ?$",
       "odpoved": "9",
       "reseni_kroky": [
         "x − y = 5 − 2 = 3",
-        "3² = 9"
+        "3^{2} = 9"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_040",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď a = 4, b = 2: a² − b² = ?",
+      "zadani": "Dosaď a = 4, b = 2: $a^{2} − b^{2} = ?$",
       "odpoved": "12",
       "reseni_kroky": [
-        "a² = 16, b² = 4",
+        "a^{2} = 16, b^{2} = 4",
         "16 − 4 = 12"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_041",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = −2: x² − 3x + 2 = ?",
+      "zadani": "Dosaď x = −2: $x^{2} − 3x + 2 = ?$",
       "odpoved": "12",
       "reseni_kroky": [
-        "x² = 4, −3x = 6 (pro x=−2)",
+        "x^{2} = 4, −3x = 6 (pro x=−2)",
         "4 + 6 + 2 = 12"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_042",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď n = 4: n · (n − 1) · (n − 2) = ?",
+      "zadani": "Dosaď n = 4: $n \\cdot (n − 1) \\cdot (n − 2) = ?$",
       "odpoved": "24",
       "reseni_kroky": [
-        "Dosadíme n = 4: 4 · 3 · 2",
+        "Dosadíme n = 4: 4 \\cdot 3 \\cdot 2",
         "= 24"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_043",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 3: (x + 1)/(x − 1) = ?",
+      "zadani": "Dosaď x = 3: $\\frac{x + 1}{x − 1} = ?$",
       "odpoved": "2",
       "reseni_kroky": [
-        "Dosadíme x = 3: (3 + 1)/(3 − 1)",
-        "4/2 = 2"
+        "Dosadíme x = 3: \\frac{3 + 1}{3 − 1}",
+        "\\frac{4}{2} = 2"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_044",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď a = 6, b = 3: (a + b)/(a − b) = ?",
+      "zadani": "Dosaď a = 6, b = 3: $\\frac{a + b}{a − b} = ?$",
       "odpoved": "3",
       "reseni_kroky": [
-        "(6 + 3)/(6 − 3) = 9/3",
+        "\\frac{6 + 3}{6 − 3} = \\frac{9}{3}",
         "= 3"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_045",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = 9: √x + x/3 = ?",
+      "zadani": "Dosaď x = 9: $\\sqrt{x} + \\frac{x}{3} = ?$",
       "odpoved": "6",
       "reseni_kroky": [
-        "√9 = 3 a 9/3 = 3",
+        "\\sqrt{9} = 3 a \\frac{9}{3} = 3",
         "3 + 3 = 6"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_046",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 2: (x² + 2x)/(x + 2) = ?",
+      "zadani": "Dosaď x = 2: $\\frac{x^{2} + 2x}{x + 2} = ?$",
       "odpoved": "2",
       "reseni_kroky": [
-        "Dosadíme: (4 + 4)/(2 + 2) = 8/4",
+        "Dosadíme: \\frac{4 + 4}{2 + 2} = \\frac{8}{4}",
         "= 2"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_047",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď a = 3, b = 2: a³ − b³ = ?",
+      "zadani": "Dosaď a = 3, b = 2: $a^{3} − b^{3} = ?$",
       "odpoved": "19",
       "reseni_kroky": [
-        "a³ = 27, b³ = 8",
+        "a^{3} = 27, b^{3} = 8",
         "27 − 8 = 19"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_048",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 4: x² − 4√x + 4 = ?",
+      "zadani": "Dosaď x = 4: $x^{2} − 4\\sqrt{x} + 4 = ?$",
       "odpoved": "12",
       "reseni_kroky": [
-        "x² = 16, 4√x = 4·2 = 8",
+        "x^{2} = 16, 4\\sqrt{x} = 4\\cdot2 = 8",
         "16 − 8 + 4 = 12"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_049",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 2: (x + 1)³ − (x − 1)³ = ?",
+      "zadani": "Dosaď x = 2: $(x + 1)^{3} − (x − 1)^{3} = ?$",
       "odpoved": "26",
       "reseni_kroky": [
-        "(x+1)³ = 3³ = 27, (x−1)³ = 1³ = 1",
+        "(x+1)^{3} = 3^{3} = 27, (x−1)^{3} = 1^{3} = 1",
         "27 − 1 = 26"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_050",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 5: x² − 7x + 10 = ?",
+      "zadani": "Dosaď x = 5: $x^{2} − 7x + 10 = ?$",
       "odpoved": "0",
       "reseni_kroky": [
         "25 − 35 + 10 = 0",
         "(x−2)(x−5) = 0 pro x=5"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_051",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 3, y = 2: (x + y)³ = ?",
+      "zadani": "Dosaď x = 3, y = 2: $(x + y)^{3} = ?$",
       "odpoved": "125",
       "reseni_kroky": [
         "x + y = 5",
-        "5³ = 125"
+        "5^{3} = 125"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_052",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď a = 5, b = 4: (a + b)² − (a − b)² = ?",
+      "zadani": "Dosaď a = 5, b = 4: $(a + b)^{2} − (a − b)^{2} = ?$",
       "odpoved": "80",
       "reseni_kroky": [
-        "(a+b)²−(a−b)² = 4ab",
-        "4 · 5 · 4 = 80"
+        "(a+b)^{2}−(a−b)^{2} = 4ab",
+        "4 \\cdot 5 \\cdot 4 = 80"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_053",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 6: x² − x − 30 = ?",
+      "zadani": "Dosaď x = 6: $x^{2} − x − 30 = ?$",
       "odpoved": "0",
       "reseni_kroky": [
         "36 − 6 − 30 = 0",
         "(x−6)(x+5) = 0 pro x=6"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_054",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 2: 2^x + 3^x = ?",
+      "zadani": "Dosaď x = 2: $2^x + 3^x = ?$",
       "odpoved": "13",
       "reseni_kroky": [
         "2^2 = 4, 3^2 = 9",
         "4 + 9 = 13"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_055",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 3, y = 1: (x² − y²)/(x + y) = ?",
+      "zadani": "Dosaď x = 3, y = 1: $\\frac{x^{2} − y^{2}}{x + y} = ?$",
       "odpoved": "2",
       "reseni_kroky": [
-        "x² − y² = (x+y)(x−y) → zrušíme (x+y)",
+        "x^{2} − y^{2} = (x+y)(x−y) → zrušíme (x+y)",
         "Zbyde x − y = 3 − 1 = 2"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_056",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď a = 5: a² − (a + 3)(a − 3) = ?",
+      "zadani": "Dosaď a = 5: $a^{2} − (a + 3)(a − 3) = ?$",
       "odpoved": "9",
       "reseni_kroky": [
-        "(a+3)(a−3) = a² − 9",
-        "a² − (a²−9) = 9"
+        "(a+3)(a−3) = a^{2} − 9",
+        "a^{2} − (a^{2}−9) = 9"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_057",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 3, y = 2: x⁴ − y⁴ = ?",
+      "zadani": "Dosaď x = 3, y = 2: $x^{4} − y^{4} = ?$",
       "odpoved": "65",
       "reseni_kroky": [
-        "x⁴ = 81, y⁴ = 16",
+        "x^{4} = 81, y^{4} = 16",
         "81 − 16 = 65"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_058",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď n = 10: n(n + 1)/2 − n = ?",
+      "zadani": "Dosaď n = 10: $\\frac{n(n + 1)}{2} − n = ?$",
       "odpoved": "45",
       "reseni_kroky": [
-        "10·11/2 = 55",
+        "10\\cdot\\frac{11}{2} = 55",
         "55 − 10 = 45"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_059",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď x = 4, y = 2: (x² + xy + y²)(x − y) = ?",
+      "zadani": "Dosaď x = 4, y = 2: $(x^{2} + xy + y^{2})(x − y) = ?$",
       "odpoved": "56",
       "reseni_kroky": [
-        "Vzorec: (x²+xy+y²)(x−y) = x³ − y³",
-        "4³ − 2³ = 64 − 8 = 56"
+        "Vzorec: (x^{2}+xy+y^{2})(x−y) = x^{3} − y^{3}",
+        "4^{3} − 2^{3} = 64 − 8 = 56"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "VYR_060",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 3,
-      "zadani": "Dosaď a = 3, b = 2: (a + b)² − (a − b)² = ?",
+      "zadani": "Dosaď a = 3, b = 2: $(a + b)^{2} − (a − b)^{2} = ?$",
       "odpoved": "24",
       "reseni_kroky": [
-        "(a+b)²−(a−b)² = 4ab",
-        "4 · 3 · 2 = 24"
+        "(a+b)^{2}−(a−b)^{2} = 4ab",
+        "4 \\cdot 3 \\cdot 2 = 24"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "CIS_036",
@@ -7939,350 +8109,375 @@
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 4³",
+      "zadani": "Vypočítej: $4^{3}$",
       "odpoved": "64",
       "reseni_kroky": [
-        "4³ = 4 · 4 · 4",
-        "16 · 4 = 64"
+        "4^{3} = 4 \\cdot 4 \\cdot 4",
+        "16 \\cdot 4 = 64"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_042",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: (−4)²",
+      "zadani": "Vypočítej: $(−4)^{2}$",
       "odpoved": "16",
       "reseni_kroky": [
-        "(−4)² = (−4)·(−4)",
-        "Záporné × záporné = kladné: 16"
+        "(−4)^{2} = (−4)\\cdot(−4)",
+        "Záporné \\times záporné = kladné: 16"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_043",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √225",
+      "zadani": "Vypočítej: $\\sqrt{225}$",
       "odpoved": "15",
       "reseni_kroky": [
-        "Hledáme x: x² = 225",
-        "15² = 225 → √225 = 15"
+        "Hledáme x: x^{2} = 225",
+        "15^{2} = 225 → \\sqrt{225} = 15"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_044",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 3³ · 3²",
+      "zadani": "Vypočítej: $3^{3} \\cdot 3^{2}$",
       "odpoved": "243",
       "reseni_kroky": [
-        "Stejný základ → sečteme exponenty: 3^(3+2) = 3⁵",
-        "3⁵ = 243"
+        "Stejný základ → sečteme exponenty: 3^(3+2) = 3^{5}",
+        "3^{5} = 243"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_045",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 2⁶ ÷ 2³",
+      "zadani": "Vypočítej: $2^{6} \\div 2^{3}$",
       "odpoved": "8",
       "reseni_kroky": [
-        "Stejný základ → odečteme exponenty: 2^(6−3) = 2³",
-        "2³ = 8"
+        "Stejný základ → odečteme exponenty: 2^(6−3) = 2^{3}",
+        "2^{3} = 8"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_046",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √(6² + 8²)",
+      "zadani": "Vypočítej: $\\sqrt{6^{2} + 8^{2}}$",
       "odpoved": "10",
       "reseni_kroky": [
-        "6² + 8² = 36 + 64 = 100",
-        "√100 = 10"
+        "6^{2} + 8^{2} = 36 + 64 = 100",
+        "\\sqrt{100} = 10"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_047",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Vypočítej: (3²)³",
+      "zadani": "Vypočítej: $(3^{2})^{3}$",
       "odpoved": "729",
       "reseni_kroky": [
-        "Mocnina mocniny → násobíme exponenty: 3^(2·3) = 3⁶",
-        "3⁶ = 729"
+        "Mocnina mocniny → násobíme exponenty: 3^(2\\cdot3) = 3^{6}",
+        "3^{6} = 729"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_048",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Vypočítej: (2²)³",
+      "zadani": "Vypočítej: $(2^{2})^{3}$",
       "odpoved": "64",
       "reseni_kroky": [
-        "2^(2·3) = 2⁶",
-        "2⁶ = 64"
+        "2^(2\\cdot3) = 2^{6}",
+        "2^{6} = 64"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_049",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 2,
-      "zadani": "Vypočítej: √(16 · 25)",
+      "zadani": "Vypočítej: $\\sqrt{16 \\cdot 25}$",
       "odpoved": "20",
       "reseni_kroky": [
-        "√16 · √25 = 4 · 5",
+        "\\sqrt{16} \\cdot \\sqrt{25} = 4 \\cdot 5",
         "= 20"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_050",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: 1² + 2² + 3² + 4²",
+      "zadani": "Vypočítej: $1^{2} + 2^{2} + 3^{2} + 4^{2}$",
       "odpoved": "30",
       "reseni_kroky": [
         "1 + 4 + 9 + 16",
         "= 30"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_051",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 2⁷",
+      "zadani": "Vypočítej: $2^{7}$",
       "odpoved": "128",
       "reseni_kroky": [
-        "2⁷ = 2⁶ · 2 = 64 · 2",
+        "2^{7} = 2^{6} \\cdot 2 = 64 \\cdot 2",
         "= 128"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_052",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 2⁸",
+      "zadani": "Vypočítej: $2^{8}$",
       "odpoved": "256",
       "reseni_kroky": [
-        "2⁸ = 2⁷ · 2 = 128 · 2",
+        "2^{8} = 2^{7} \\cdot 2 = 128 \\cdot 2",
         "= 256"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_053",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(13² − 5²)",
+      "zadani": "Vypočítej: $\\sqrt{13^{2} − 5^{2}}$",
       "odpoved": "12",
       "reseni_kroky": [
         "169 − 25 = 144",
-        "√144 = 12"
+        "\\sqrt{144} = 12"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_054",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (−2)⁴",
+      "zadani": "Vypočítej: $(−2)^{4}$",
       "odpoved": "16",
       "reseni_kroky": [
         "Sudý exponent → výsledek kladný",
-        "(−2)⁴ = 16"
+        "(−2)^{4} = 16"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_055",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (−3)⁴",
+      "zadani": "Vypočítej: $(−3)^{4}$",
       "odpoved": "81",
       "reseni_kroky": [
         "Sudý exponent → výsledek kladný",
-        "3⁴ = 81"
+        "3^{4} = 81"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_056",
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (3 · 2)²",
+      "zadani": "Vypočítej: $(3 \\cdot 2)^{2}$",
       "odpoved": "36",
       "reseni_kroky": [
-        "(ab)² = a²b² nebo přímý výpočet: 6²",
+        "(ab)^{2} = a^{2}b^{2} nebo přímý výpočet: 6^{2}",
         "= 36"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_057",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(4 · 9 · 25)",
+      "zadani": "Vypočítej: $\\sqrt{4 \\cdot 9 \\cdot 25}$",
       "odpoved": "30",
       "reseni_kroky": [
-        "√4 · √9 · √25 = 2 · 3 · 5",
+        "\\sqrt{4} \\cdot \\sqrt{9} \\cdot \\sqrt{25} = 2 \\cdot 3 \\cdot 5",
         "= 30"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_058",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 5³ − 5²",
+      "zadani": "Vypočítej: $5^{3} − 5^{2}$",
       "odpoved": "100",
       "reseni_kroky": [
-        "5³ = 125, 5² = 25",
+        "5^{3} = 125, 5^{2} = 25",
         "125 − 25 = 100"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_059",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 4³ + 2⁴",
+      "zadani": "Vypočítej: $4^{3} + 2^{4}$",
       "odpoved": "80",
       "reseni_kroky": [
-        "4³ = 64, 2⁴ = 16",
+        "4^{3} = 64, 2^{4} = 16",
         "64 + 16 = 80"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_060",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(3⁴)",
+      "zadani": "Vypočítej: $\\sqrt{3^{4}}$",
       "odpoved": "9",
       "reseni_kroky": [
-        "3⁴ = 81",
-        "√81 = 9 (nebo: (3⁴)^(1/2) = 3² = 9)"
+        "3^{4} = 81",
+        "\\sqrt{81} = 9 (nebo: (3^{4})^(\\frac{1}{2}) = 3^{2} = 9)"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_061",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (1/3)³",
+      "zadani": "Vypočítej: $(\\frac{1}{3})^{3}$",
       "odpoved": "1/27",
       "reseni_kroky": [
-        "(1/3)³ = 1³/3³ = 1/27",
-        "Výsledek: 1/27"
+        "(\\frac{1}{3})^{3} = 1^{3}/3^{3} = \\frac{1}{27}",
+        "Výsledek: \\frac{1}{27}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_062",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √256",
+      "zadani": "Vypočítej: $\\sqrt{256}$",
       "odpoved": "16",
       "reseni_kroky": [
-        "16² = 256",
-        "√256 = 16"
+        "16^{2} = 256",
+        "\\sqrt{256} = 16"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_063",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: 2⁹",
+      "zadani": "Vypočítej: $2^{9}$",
       "odpoved": "512",
       "reseni_kroky": [
-        "2⁹ = 2⁸ · 2 = 256 · 2",
+        "2^{9} = 2^{8} \\cdot 2 = 256 \\cdot 2",
         "= 512"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_064",
       "tema": "vyrazy",
       "podtema": "umocnovani",
       "obtiznost": 3,
-      "zadani": "Vypočítej: (2/3)³",
+      "zadani": "Vypočítej: $(\\frac{2}{3})^{3}$",
       "odpoved": "8/27",
       "reseni_kroky": [
-        "(2/3)³ = 2³/3³ = 8/27",
-        "Výsledek: 8/27"
+        "(\\frac{2}{3})^{3} = 2^{3}/3^{3} = \\frac{8}{27}",
+        "Výsledek: \\frac{8}{27}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "MOC_065",
       "tema": "vyrazy",
       "podtema": "odmocniny",
       "obtiznost": 3,
-      "zadani": "Vypočítej: √(16/25)",
+      "zadani": "Vypočítej: $\\sqrt{\\frac{16}{25}}$",
       "odpoved": "4/5",
       "reseni_kroky": [
-        "√(16/25) = √16/√25",
-        "= 4/5"
+        "\\sqrt{\\frac{16}{25}} = \\sqrt{16}/\\sqrt{25}",
+        "= \\frac{4}{5}"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "latex": true
     },
     {
       "id": "GEO_071",
@@ -8855,92 +9050,92 @@
       "tema": "zlomky",
       "podtema": "scitani_odcitani",
       "obtiznost": 1,
-      "zadani": "Pizza: sníš 2/9 pizzy, bratr sní 4/9 pizzy. Jakou část pizzy sníte dohromady?",
+      "zadani": "Pizza: $sníš \\frac{2}{9} pizzy, bratr sní \\frac{4}{9} pizzy. Jakou část pizzy sníte dohromady?$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné (9) → sečteme čitatele: 2 + 4 = 6",
-        "Výsledek: 6/9 — zkrátíme: GCD(6,9)=3 → 6/9 = 2/3"
+        "Výsledek: \\frac{6}{9} — zkrátíme: GCD(6,9)=3 → \\frac{6}{9} = \\frac{2}{3}"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_02",
       "tema": "zlomky",
       "podtema": "scitani_odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočti: 7/10 − 3/10 = ?",
+      "zadani": "Vypočti: $\\frac{7}{10} − \\frac{3}{10} = ?$",
       "odpoved": "2/5",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné (10) → odečteme čitatele: 7 − 3 = 4",
-        "4/10 zkrátíme: GCD(4,10)=2 → 4/10 = 2/5"
+        "\\frac{4}{10} zkrátíme: GCD(4,10)=2 → \\frac{4}{10} = \\frac{2}{5}"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_03",
       "tema": "zlomky",
       "podtema": "zkracovani",
       "obtiznost": 1,
-      "zadani": "Zkrať zlomek 18/24 na základní tvar.",
+      "zadani": "Zkrať zlomek $\\frac{18}{24}$ na základní tvar.",
       "odpoved": "3/4",
       "reseni_kroky": [
-        "Najdi GCD(18, 24): 18 = 2·9, 24 = 2·12 → GCD = 6",
-        "18÷6 = 3, 24÷6 = 4 → základní tvar: 3/4"
+        "Najdi GCD(18, 24): 18 = 2\\cdot9, 24 = 2\\cdot12 → GCD = 6",
+        "18\\div6 = 3, 24\\div6 = 4 → základní tvar: \\frac{3}{4}"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_04",
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 1,
-      "zadani": "Převeď na smíšené číslo: 13/4 = ?",
+      "zadani": "Převeď na smíšené číslo: $\\frac{13}{4} = ?$",
       "odpoved": "3 1/4",
       "reseni_kroky": [
-        "Vydělíme: 13 ÷ 4 = 3 se zbytkem 1",
-        "Celá část = 3, zlomková část = 1/4",
-        "Výsledek: 3 celé 1/4"
+        "Vydělíme: 13 \\div 4 = 3 se zbytkem 1",
+        "Celá část = 3, zlomková část = \\frac{1}{4}",
+        "Výsledek: 3 celé \\frac{1}{4}"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_05",
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 1,
-      "zadani": "Vypočti: 3/5 · 1/3 = ?",
+      "zadani": "Vypočti: $\\frac{3}{5} \\cdot \\frac{1}{3} = ?$",
       "odpoved": "1/5",
       "reseni_kroky": [
-        "Násobíme čitatele: 3 · 1 = 3",
-        "Násobíme jmenovatele: 5 · 3 = 15",
-        "3/15 zkrátíme: GCD(3,15)=3 → 3/15 = 1/5"
+        "Násobíme čitatele: 3 \\cdot 1 = 3",
+        "Násobíme jmenovatele: 5 \\cdot 3 = 15",
+        "\\frac{3}{15} zkrátíme: GCD(3,15)=3 → \\frac{3}{15} = \\frac{1}{5}"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_06",
       "tema": "zlomky",
       "podtema": "scitani_odcitani",
       "obtiznost": 1,
-      "zadani": "Vypočti: 5/6 − 1/6 = ?",
+      "zadani": "Vypočti: $\\frac{5}{6} − \\frac{1}{6} = ?$",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné (6) → odečteme čitatele: 5 − 1 = 4",
-        "4/6 zkrátíme: GCD(4,6)=2 → 4/6 = 2/3"
+        "\\frac{4}{6} zkrátíme: GCD(4,6)=2 → \\frac{4}{6} = \\frac{2}{3}"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_07",
@@ -8948,7 +9143,7 @@
       "podtema": "scitani_odcitani",
       "obtiznost": 2,
       "latex": true,
-      "zadani": "\\frac{5}{6} - \\frac{3}{4} + \\frac{1}{8} = ?",
+      "zadani": "$\\frac{5}{6}$ - $\\frac{3}{4}$ + $\\frac{1}{8}$ = ?",
       "odpoved": "5/24",
       "reseni_kroky": [
         "Nejmenší společný jmenovatel (LSJ) čísel 6, 4, 8 = 24",
@@ -8964,7 +9159,7 @@
       "podtema": "nasobeni_deleni",
       "obtiznost": 2,
       "latex": true,
-      "zadani": "\\frac{3}{5} \\cdot \\frac{10}{9} - \\frac{1}{3} = ?",
+      "zadani": "$\\frac{3}{5}$ \\cdot $\\frac{10}{9}$ - $\\frac{1}{3}$ = ?",
       "odpoved": "1/3",
       "reseni_kroky": [
         "Nejdříve násobíme: \\frac{3}{5} \\cdot \\frac{10}{9} = \\frac{30}{45} = \\frac{2}{3}",
@@ -8979,7 +9174,7 @@
       "podtema": "smisena_cisla",
       "obtiznost": 2,
       "latex": true,
-      "zadani": "2\\frac{1}{4} + 1\\frac{2}{3} = ?",
+      "zadani": "2$\\frac{1}{4}$ + 1$\\frac{2}{3}$ = ?",
       "odpoved": "3 11/12",
       "reseni_kroky": [
         "Převedeme na zlomky: 2\\frac{1}{4} = \\frac{9}{4}, \\quad 1\\frac{2}{3} = \\frac{5}{3}",
@@ -8994,16 +9189,16 @@
       "tema": "zlomky",
       "podtema": "slovni_uloha",
       "obtiznost": 2,
-      "zadani": "V zahradě tvoří tulipány 3/8 plochy a růže 1/4 plochy. Zbytek je trávník. Jakou část plochy tvoří trávník?",
+      "zadani": "V zahradě tvoří tulipány $\\frac{3}{8}$ plochy a růže $\\frac{1}{4}$ plochy. Zbytek je trávník. Jakou část plochy tvoří trávník?",
       "odpoved": "3/8",
       "reseni_kroky": [
-        "Převedeme na stejného jmenovatele: 1/4 = 2/8",
-        "Tulipány + růže: 3/8 + 2/8 = 5/8",
-        "Trávník: 1 − 5/8 = 8/8 − 5/8 = 3/8"
+        "Převedeme na stejného jmenovatele: \\frac{1}{4} = \\frac{2}{8}",
+        "Tulipány + růže: \\frac{3}{8} + \\frac{2}{8} = \\frac{5}{8}",
+        "Trávník: 1 − \\frac{5}{8} = \\frac{8}{8} − \\frac{5}{8} = \\frac{3}{8}"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_11",
@@ -9091,7 +9286,7 @@
       "podtema": "smisena_cisla",
       "obtiznost": 3,
       "latex": true,
-      "zadani": "\\frac{2\\frac{1}{3} - \\frac{5}{6}}{\\frac{7}{9}} + \\frac{3}{14} = ?",
+      "zadani": "\\frac{2$\\frac{1}{3}$ - $\\frac{5}{6}$}{$\\frac{7}{9}$} + $\\frac{3}{14}$ = ?",
       "odpoved": "67/28",
       "reseni_kroky": [
         "Čitatel zlomku: 2\\frac{1}{3} = \\frac{7}{3} = \\frac{14}{6}; \\quad \\frac{14}{6} - \\frac{5}{6} = \\frac{9}{6} = \\frac{3}{2}",
@@ -9106,33 +9301,33 @@
       "tema": "zlomky",
       "podtema": "slovni_uloha",
       "obtiznost": 3,
-      "zadani": "Nádoba byla plná. Nejdřív se vypilo 3/8, pak dolila 1/4 celého objemu a nakonec odčerpala 1/6 celého objemu. Jaká část je plná?",
+      "zadani": "Nádoba byla plná. Nejdřív se vypilo $\\frac{3}{8}$, pak dolila $\\frac{1}{4}$ celého objemu a nakonec odčerpala $\\frac{1}{6}$ celého objemu. Jaká část je plná?",
       "odpoved": "17/24",
       "reseni_kroky": [
         "LSJ(8, 4, 6) = 24",
-        "Odečteme 3/8 = 9/24: zbyde 15/24",
-        "Přidáme 1/4 = 6/24: máme 21/24",
-        "Odečteme 1/6 = 4/24: zbyde 17/24"
+        "Odečteme \\frac{3}{8} = \\frac{9}{24}: zbyde \\frac{15}{24}",
+        "Přidáme \\frac{1}{4} = \\frac{6}{24}: máme \\frac{21}{24}",
+        "Odečteme \\frac{1}{6} = \\frac{4}{24}: zbyde \\frac{17}{24}"
       ],
       "cas_sekund": 150,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ZLO_18",
       "tema": "zlomky",
       "podtema": "slovni_uloha",
       "obtiznost": 3,
-      "zadani": "První den se snědly 2/5 zásob, druhý den 1/3 ze zbytku a třetí den posledních 18 kg. Kolik kg bylo na začátku?",
+      "zadani": "První den se snědly $\\frac{2}{5}$ zásob, druhý den $\\frac{1}{3}$ ze zbytku a třetí den posledních 18 kg. Kolik kg bylo na začátku?",
       "odpoved": "45 kg",
       "reseni_kroky": [
-        "Po 1. dni zbývá: 1 − 2/5 = 3/5 celku",
-        "Druhý den se sní 1/3 ze zbytku = 1/3 · 3/5 = 1/5 celku → zbývá 2/5",
-        "Třetí den: 2/5 celku = 18 kg → 1/5 celku = 9 kg → celkem = 45 kg"
+        "Po 1. dni zbývá: 1 − \\frac{2}{5} = \\frac{3}{5} celku",
+        "Druhý den se sní \\frac{1}{3} ze zbytku = \\frac{1}{3} \\cdot \\frac{3}{5} = \\frac{1}{5} celku → zbývá \\frac{2}{5}",
+        "Třetí den: \\frac{2}{5} celku = 18 kg → \\frac{1}{5} celku = 9 kg → celkem = 45 kg"
       ],
       "cas_sekund": 150,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_ROV_01",
@@ -9419,7 +9614,7 @@
       "tema": "vyrazy",
       "podtema": "zjednodusovani",
       "obtiznost": 1,
-      "zadani": "Uprav na nejjednodušší tvar: 7x + 3x − 5",
+      "zadani": "Uprav na nejjednodušší tvar: $7x + 3x − 5$",
       "odpoved": "10x − 5",
       "reseni_kroky": [
         "Sečteme členy s x: 7x + 3x = 10x",
@@ -9427,14 +9622,14 @@
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_02",
       "tema": "vyrazy",
       "podtema": "zjednodusovani",
       "obtiznost": 1,
-      "zadani": "Uprav: 4a − 9 + 2a + 6",
+      "zadani": "Uprav: $4a − 9 + 2a + 6$",
       "odpoved": "6a − 3",
       "reseni_kroky": [
         "Seskupíme: (4a + 2a) + (−9 + 6)",
@@ -9442,14 +9637,14 @@
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_03",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 1,
-      "zadani": "Roznásob a uprav: 3(2x − 5) + x",
+      "zadani": "Roznásob a uprav: $3(2x − 5) + x$",
       "odpoved": "7x − 15",
       "reseni_kroky": [
         "Roznásobíme: 6x − 15 + x",
@@ -9457,14 +9652,14 @@
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_04",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 1,
-      "zadani": "Roznásob a uprav: 5 − 2(y − 4)",
+      "zadani": "Roznásob a uprav: $5 − 2(y − 4)$",
       "odpoved": "13 − 2y",
       "reseni_kroky": [
         "Pozor na záporné znaménko: −2(y−4) = −2y + 8",
@@ -9472,29 +9667,29 @@
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_05",
       "tema": "vyrazy",
       "podtema": "vytkani",
       "obtiznost": 1,
-      "zadani": "Vytkni společný člen: 6m + 12",
+      "zadani": "Vytkni společný člen: $6m + 12$",
       "odpoved": "6(m + 2)",
       "reseni_kroky": [
         "Společný člen: 6",
-        "6m + 12 = 6 · m + 6 · 2 = 6(m + 2)"
+        "6m + 12 = 6 \\cdot m + 6 \\cdot 2 = 6(m + 2)"
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_06",
       "tema": "vyrazy",
       "podtema": "zjednodusovani",
       "obtiznost": 1,
-      "zadani": "Uprav: 8p − 3(2p − 1) + 4",
+      "zadani": "Uprav: $8p − 3(2p − 1) + 4$",
       "odpoved": "2p + 7",
       "reseni_kroky": [
         "−3(2p−1) = −6p + 3",
@@ -9502,14 +9697,14 @@
       ],
       "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_07",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 2,
-      "zadani": "Roznásob a uprav: 4(2x − 3) − 2(x + 5)",
+      "zadani": "Roznásob a uprav: $4(2x − 3) − 2(x + 5)$",
       "odpoved": "6x − 22",
       "reseni_kroky": [
         "8x − 12 − 2x − 10",
@@ -9517,119 +9712,119 @@
       ],
       "cas_sekund": 75,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_08",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 2,
-      "zadani": "Uprav: 3a(a − 2) + 2(1 − a)",
+      "zadani": "Uprav: $3a(a − 2) + 2(1 − a)$",
       "odpoved": "3a² − 8a + 2",
       "reseni_kroky": [
-        "3a·a − 3a·2 + 2·1 − 2·a",
-        "= 3a² − 6a + 2 − 2a",
-        "= 3a² − 8a + 2"
+        "3a\\cdota − 3a\\cdot2 + 2\\cdot1 − 2\\cdota",
+        "= 3a^{2} − 6a + 2 − 2a",
+        "= 3a^{2} − 8a + 2"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_09",
       "tema": "vyrazy",
       "podtema": "vytkani",
       "obtiznost": 2,
-      "zadani": "Uprav a rozlož na součin vytknutím: 9k² − 6k",
+      "zadani": "Uprav a rozlož na součin vytknutím: $9k^{2} − 6k$",
       "odpoved": "3k(3k − 2)",
       "reseni_kroky": [
         "Společný člen: 3k",
-        "9k² − 6k = 3k · 3k − 3k · 2 = 3k(3k − 2)"
+        "9k^{2} − 6k = 3k \\cdot 3k − 3k \\cdot 2 = 3k(3k − 2)"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_10",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 2,
-      "zadani": "Uprav: (2x + 3)(x − 1) − x(x + 4)",
+      "zadani": "Uprav: $(2x + 3)(x − 1) − x(x + 4)$",
       "odpoved": "x² − 3x − 3",
       "reseni_kroky": [
-        "(2x+3)(x−1) = 2x²−2x+3x−3 = 2x²+x−3",
-        "x(x+4) = x²+4x",
-        "2x²+x−3 − (x²+4x) = x²−3x−3"
+        "(2x+3)(x−1) = 2x^{2}−2x+3x−3 = 2x^{2}+x−3",
+        "x(x+4) = x^{2}+4x",
+        "2x^{2}+x−3 − (x^{2}+4x) = x^{2}−3x−3"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_11",
       "tema": "vyrazy",
       "podtema": "dosazovani",
       "obtiznost": 2,
-      "zadani": "Dosaď x = −2 a vypočti: 5x² − 3x + 1",
+      "zadani": "Dosaď x = −2 a vypočti: $5x^{2} − 3x + 1$",
       "odpoved": "27",
       "reseni_kroky": [
-        "x² = (−2)² = 4 → 5·4 = 20",
-        "−3·(−2) = +6",
+        "x^{2} = (−2)^{2} = 4 → 5\\cdot4 = 20",
+        "−3\\cdot(−2) = +6",
         "20 + 6 + 1 = 27"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_12",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 2,
-      "zadani": "Uprav: (3y − 1)² − y(2y + 5)",
+      "zadani": "Uprav: $(3y − 1)^{2} − y(2y + 5)$",
       "odpoved": "7y² − 11y + 1",
       "reseni_kroky": [
-        "(3y−1)² = 9y²−6y+1",
-        "y(2y+5) = 2y²+5y",
-        "9y²−6y+1 − 2y²−5y = 7y²−11y+1"
+        "(3y−1)^{2} = 9y^{2}−6y+1",
+        "y(2y+5) = 2y^{2}+5y",
+        "9y^{2}−6y+1 − 2y^{2}−5y = 7y^{2}−11y+1"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_13",
       "tema": "vyrazy",
       "podtema": "roznasobeni",
       "obtiznost": 3,
-      "zadani": "Uprav: (x + 2)(1 − x) − 2x(−1/2)x",
+      "zadani": "Uprav: $(x + 2)(1 − x) − 2x(\\frac{−1}{2})x$",
       "odpoved": "−2x² − x + 2",
       "reseni_kroky": [
-        "(x+2)(1−x) = x−x²+2−2x = −x²−x+2",
-        "−2x·(−1/2)·x = x²",
-        "−x²−x+2 + x²... pozor: −2x·(−1/2)x = x², takže celkem: −x²−x+2+x² ... výsledek záleží na pořadí operací",
-        "Správně: −x²−x+2 − x² = −2x²−x+2"
+        "(x+2)(1−x) = x−x^{2}+2−2x = −x^{2}−x+2",
+        "−2x\\cdot(\\frac{−1}{2})\\cdotx = x^{2}",
+        "−x^{2}−x+2 + x^{2}... pozor: −2x\\cdot(\\frac{−1}{2})x = x^{2}, takže celkem: −x^{2}−x+2+x^{2} ... výsledek záleží na pořadí operací",
+        "Správně: −x^{2}−x+2 − x^{2} = −2x^{2}−x+2"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_14",
       "tema": "vyrazy",
       "podtema": "vzorce",
       "obtiznost": 3,
-      "zadani": "Uprav a rozlož: 1 − 2n + 2n(1 − 8n)",
+      "zadani": "Uprav a rozlož: $1 − 2n + 2n(1 − 8n)$",
       "odpoved": "(1 − 4n)(1 + 4n)",
       "reseni_kroky": [
-        "Roznásobíme: 1 − 2n + 2n − 16n²",
-        "= 1 − 16n²",
-        "Vzorec: a² − b² = (a−b)(a+b) → 1 − 16n² = (1−4n)(1+4n)"
+        "Roznásobíme: 1 − 2n + 2n − 16n^{2}",
+        "= 1 − 16n^{2}",
+        "Vzorec: a^{2} − b^{2} = (a−b)(a+b) → 1 − 16n^{2} = (1−4n)(1+4n)"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
-      "latex": false
+      "latex": true
     },
     {
       "id": "SES_VYR_15",
@@ -9686,7 +9881,7 @@
       "podtema": "slozeny_zlomek",
       "obtiznost": 3,
       "latex": true,
-      "zadani": "\\left(\\frac{11}{5} - \\frac{11}{6}\\right) \\div \\left(-\\frac{1}{3}\\right) + \\left(\\frac{6}{5} \\div \\frac{9}{15} - 2\\right) = ?",
+      "zadani": "\\left($\\frac{11}{5}$ - $\\frac{11}{6}$\\right) \\div \\left(-$\\frac{1}{3}$\\right) + \\left($\\frac{6}{5}$ \\div $\\frac{9}{15}$ - 2\\right) = ?",
       "odpoved": "-6/5",
       "reseni_kroky": [
         "Část 1: \\frac{11}{5} - \\frac{11}{6} = \\frac{66}{30} - \\frac{55}{30} = \\frac{11}{30}",
