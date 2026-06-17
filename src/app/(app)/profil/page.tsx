@@ -639,21 +639,6 @@ export default function ProfilPage() {
             </div>
           </div>
 
-          {/* Bottom stats row inside hero */}
-          <div className="grid grid-cols-3 gap-2 mt-4">
-            <div className="rounded-xl py-2 text-center" style={{ background: "rgba(255,255,255,0.1)" }}>
-              <p className="text-xl font-black text-white">{streak}</p>
-              <p className="text-[10px] text-blue-200">🔥 streak</p>
-            </div>
-            <div className="rounded-xl py-2 text-center" style={{ background: "rgba(255,255,255,0.1)" }}>
-              <p className="text-xl font-black text-white">{totalSolved}</p>
-              <p className="text-[10px] text-blue-200">📚 příkladů</p>
-            </div>
-            <div className="rounded-xl py-2 text-center" style={{ background: "rgba(255,255,255,0.1)" }}>
-              <p className="text-xl font-black text-white">{overallAccuracy !== null ? `${overallAccuracy} %` : "—"}</p>
-              <p className="text-[10px] text-blue-200">🎯 přesnost</p>
-            </div>
-          </div>
         </div>
       </div>
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import XPProgressBar from "@/components/XPProgressBar";
 import BottomNav from "@/components/BottomNav";
-import { TEMA_LABELS } from "@/types";
+import { TEMA_LABELS, temaLabel } from "@/types";
 import type { Session } from "@supabase/supabase-js";
 import challengesJson from "@/data/daily-challenges.json";
 import { localLoadCards, localLoadSessions } from "@/lib/storage";
@@ -512,7 +512,7 @@ export default function LoggedInDashboard({
           const todayTopic = getTodayTopic();
           const topicToShow = todayTopic ?? (weakTopics.length > 0 ? {
             tema: weakTopics[0].tema,
-            label: TEMA_LABELS[weakTopics[0].tema] ?? weakTopics[0].tema,
+            label: temaLabel(weakTopics[0].tema),
             score: Math.round(weakTopics[0].score * 100),
           } : null);
           if (!topicToShow) return null;
@@ -612,7 +612,7 @@ export default function LoggedInDashboard({
                       className="flex items-center justify-between py-1.5 border-b border-slate-50 last:border-0"
                     >
                       <span className="text-xs font-semibold text-slate-700 truncate mr-1">
-                        {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
+                        {locked ? "🔒 " : ""}{temaLabel(tema)}
                       </span>
                       <span
                         className="text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
@@ -635,12 +635,11 @@ export default function LoggedInDashboard({
 
           <Link
             href="/rychly-mod"
-            className="rounded-2xl border border-slate-200 p-3 flex flex-col justify-between press-scale tile-3d"
-            style={{ background: "linear-gradient(145deg, #f8faff 0%, #eff6ff 100%)" }}
+            className="rounded-2xl border border-slate-200 bg-blue-50 p-3 flex flex-col justify-between press-scale tile-3d"
           >
             <div>
               <span className="text-2xl">⚡</span>
-              <p className="text-sm font-black mt-1" style={{ color: "#0D1B3E" }}>Rychlý mód</p>
+              <p className="text-sm font-black mt-1" style={{ color: "var(--text-primary)" }}>Rychlý mód</p>
               <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">10 příkladů · 60 s · rekord</p>
             </div>
             <span

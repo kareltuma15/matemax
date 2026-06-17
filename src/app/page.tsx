@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, Fragment } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabase";
-import { loadProgress } from "@/lib/progress";
+import { loadProgress, saveProgress } from "@/lib/progress";
 import type { Session } from "@supabase/supabase-js";
 import { getSmartRedirect } from "@/lib/smart-redirect";
 
@@ -352,6 +352,27 @@ export default function LandingPage() {
           const p = loadProgress();
           setXp(p.xp);
           setStreak(p.streak);
+          // Restore stats from Supabase (handles localStorage clear / new device)
+          if (supabase) {
+            (async () => {
+              try {
+                const { data: xpRow } = await supabase!
+                  .from('user_xp')
+                  .select('total_xp, streak')
+                  .eq('user_id', data.session!.user.id)
+                  .single();
+                if (!xpRow) return;
+                const remoteXP = (xpRow.total_xp as number) ?? 0;
+                const remoteStreak = (xpRow.streak as number) ?? 0;
+                if (remoteXP > p.xp || remoteStreak > p.streak) {
+                  const merged = { ...p, xp: Math.max(p.xp, remoteXP), streak: Math.max(p.streak, remoteStreak) };
+                  saveProgress(merged);
+                  setXp(merged.xp);
+                  setStreak(merged.streak);
+                }
+              } catch { /* ignore */ }
+            })();
+          }
 
           const params = new URLSearchParams(window.location.search);
           if (params.get("login") === "1") {

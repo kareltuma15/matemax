@@ -43,10 +43,6 @@ export default function ReadinessCard() {
     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
       {/* Header */}
       <div className="px-5 pt-5 pb-4">
-        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-3">
-          📊 Připravenost na přijímačky
-        </p>
-
         <div className="flex items-center gap-5">
           <Gauge score={data.score} color={data.color} />
 

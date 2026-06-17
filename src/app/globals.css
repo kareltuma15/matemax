@@ -197,8 +197,13 @@ body {
 [data-theme="dark"] .text-gray-700       { color: #cbd5e1 !important; }
 [data-theme="dark"] .text-slate-600,
 [data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-slate-600,
+[data-theme="dark"] .text-gray-600       { color: #94a3b8 !important; }
+
 [data-theme="dark"] .text-slate-500,
 [data-theme="dark"] .text-gray-500       { color: var(--text-secondary) !important; }
+
+[data-theme="dark"] .text-orange-500     { color: #fb923c !important; }
 
 [data-theme="dark"] .border-slate-200,
 [data-theme="dark"] .border-slate-100,
