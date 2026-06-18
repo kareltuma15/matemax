@@ -28,5 +28,6 @@ export function toggleTheme(): Theme {
   return next;
 }
 
-// Inline script content — prevents flash of wrong theme on first load
-export const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('matemax-theme');var p=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='dark'||(t===null&&p)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`;
+// Dark mode temporarily disabled — always enforce light
+// To re-enable: restore the original THEME_SCRIPT with dark branch
+export const THEME_SCRIPT = `(function(){try{localStorage.removeItem('matemax-theme');document.documentElement.removeAttribute('data-theme');}catch(e){}})();`;

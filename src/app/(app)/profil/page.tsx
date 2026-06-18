@@ -1242,34 +1242,6 @@ export default function ProfilPage() {
             )}
           </div>
 
-          {/* Dark mode */}
-          <button
-            type="button"
-            onClick={() => {
-              const next: Theme = darkMode === "dark" ? "light" : "dark";
-              setDarkMode(next);
-              setTheme(next);
-            }}
-            className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors text-left"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-xl">{darkMode === "dark" ? "🌙" : "☀️"}</span>
-              <div>
-                <p className="text-sm font-semibold text-slate-800">Tmavý režim</p>
-                <p className="text-xs text-slate-400">{darkMode === "dark" ? "Aktivní" : "Vypnutý — sleduje systémové nastavení"}</p>
-              </div>
-            </div>
-            <div
-              className="relative w-10 h-6 rounded-full transition-colors"
-              style={{ background: darkMode === "dark" ? "#2E6DA4" : "#cbd5e1" }}
-            >
-              <div
-                className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"
-                style={{ transform: darkMode === "dark" ? "translateX(20px)" : "translateX(2px)" }}
-              />
-            </div>
-          </button>
-
           {/* Zvukový feedback */}
           <button
             type="button"
