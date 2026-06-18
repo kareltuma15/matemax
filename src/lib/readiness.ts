@@ -33,29 +33,37 @@ export function getReadiness(): ReadinessData {
     if (raw) diag = JSON.parse(raw);
   } catch { /* ignore */ }
 
+  // Minimum examples to reach full readiness credit (realistic CERMAT prep threshold)
+  const FULL_PRACTICE = 30;
+
   const topics: TopicReadiness[] = CERMAT_TOPICS.map((tema) => {
     const g = gam.topicStats[tema];
     const d = diag[tema];
 
+    const n = g?.total ?? 0;
     let score = 0;
-    if (g && g.total >= 3) {
-      const practiceScore = (g.correct / g.total) * 100;
-      const diagScore = d && d.total > 0 ? (d.correct / d.total) * 100 : practiceScore;
-      // Practice is more current; diagnostic gives a baseline
-      score = practiceScore * 0.65 + diagScore * 0.35;
-    } else if (g && g.total > 0) {
-      // Too few reps — discount proportionally
-      score = (g.correct / g.total) * 100 * (g.total / 3) * 0.8;
+
+    if (n >= 3) {
+      const practiceAcc = (g!.correct / g!.total) * 100;
+      const diagAcc = d && d.total > 0 ? (d.correct / d.total) * 100 : practiceAcc;
+      const rawScore = practiceAcc * 0.65 + diagAcc * 0.35;
+      // Quantity gate: fewer examples = heavily discounted readiness
+      // Need ~30 well-answered examples to reach full credit
+      const quantityFactor = Math.min(1, n / FULL_PRACTICE);
+      score = rawScore * quantityFactor;
+    } else if (n > 0) {
+      score = (g!.correct / g!.total) * 100 * (n / FULL_PRACTICE) * 0.7;
     } else if (d && d.total > 0) {
-      // Only diagnostic — discount for lack of actual practice
-      score = (d.correct / d.total) * 100 * 0.55;
+      // Only diagnostic (typically 3–5 questions) — heavily discounted
+      const diagAcc = (d.correct / d.total) * 100;
+      score = diagAcc * Math.min(0.30, d.total / FULL_PRACTICE);
     }
 
     return {
       tema,
       label: TEMA_LABELS[tema] ?? tema,
       score: Math.round(Math.min(100, Math.max(0, score))),
-      practiced: g?.total ?? 0,
+      practiced: n,
     };
   });
 

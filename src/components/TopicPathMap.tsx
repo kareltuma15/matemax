@@ -86,17 +86,19 @@ function useScores(): Record<string, number> {
         }
       }
 
+      const FULL_PRACTICE = 30;
       const combined: Record<string, number> = {};
       for (const key of Object.keys(TEMA_LABELS)) {
         const d = diagScores[key];
         const p = practiceScores[key];
         const n = practicedCount[key] ?? 0;
         if (n >= 3) {
-          combined[key] = Math.round((p ?? d ?? 0) * 0.65 + (d ?? p ?? 0) * 0.35);
+          const raw = (p ?? d ?? 0) * 0.65 + (d ?? p ?? 0) * 0.35;
+          combined[key] = Math.round(raw * Math.min(1, n / FULL_PRACTICE));
         } else if (n > 0) {
-          combined[key] = Math.round((p ?? 0) * (n / 3) * 0.8);
+          combined[key] = Math.round((p ?? 0) * (n / FULL_PRACTICE) * 0.8);
         } else if (d !== undefined) {
-          combined[key] = Math.round(d * 0.55);
+          combined[key] = Math.round(d * Math.min(0.30, 5 / FULL_PRACTICE));
         }
       }
       setScores(combined);
