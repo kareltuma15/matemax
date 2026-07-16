@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { sendSubmissionReceived } from "@/lib/online-test-emails";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -135,6 +136,28 @@ export async function POST(
   if (updErr) {
     console.error("submit: update submission failed", updErr);
     return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
+
+  // Potvrzení „arch přijat" — arch je odevzdaný, případné selhání emailu
+  // nesmí žákovi vrátit chybu.
+  const { data: sessionRow } = await supabaseAdmin
+    .from("online_test_sessions")
+    .select("title")
+    .eq("id", id)
+    .maybeSingle();
+  const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+  const jmeno =
+    (typeof meta.first_name === "string" && meta.first_name) ||
+    (typeof meta.full_name === "string" && meta.full_name.split(" ")[0]) ||
+    (user.email ?? "").split("@")[0];
+  if (user.email && sessionRow) {
+    await sendSubmissionReceived({
+      to: user.email,
+      jmeno,
+      title: sessionRow.title,
+      sessionId: id,
+      photoCount: photoPaths.length,
+    });
   }
 
   return NextResponse.json({ ok: true, photos: photoPaths.length });

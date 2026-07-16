@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { stripe } from "@/lib/stripe";
+import { sendEnrollmentConfirmation } from "@/lib/online-test-emails";
 import type Stripe from "stripe";
 
 const supabaseAdmin = createClient(
@@ -33,6 +34,49 @@ async function setPremium(customerId: string, isPremium: boolean, subscriptionId
     },
     { onConflict: "user_id" }
   );
+}
+
+// Potvrzení přihlášení na test nanečisto. Stripe umí webhook zopakovat,
+// proto se odeslání hlídá přes confirm_sent_at. Selhání emailu nesmí shodit
+// webhook — platba už proběhla a enrollment je zaplacený.
+async function sendOnlineTestConfirmation(enrollmentId: string) {
+  try {
+    const { data: enrollment } = await supabaseAdmin
+      .from("online_test_enrollments")
+      .select("id, user_id, session_id, confirm_sent_at")
+      .eq("id", enrollmentId)
+      .maybeSingle();
+    if (!enrollment || enrollment.confirm_sent_at) return;
+
+    const { data: session } = await supabaseAdmin
+      .from("online_test_sessions")
+      .select("id, title, scheduled_at")
+      .eq("id", enrollment.session_id)
+      .maybeSingle();
+    if (!session) return;
+
+    const { data: userRes } = await supabaseAdmin.auth.admin.getUserById(enrollment.user_id);
+    const to = userRes?.user?.email;
+    if (!to) return;
+
+    const meta = (userRes.user?.user_metadata ?? {}) as Record<string, unknown>;
+    const jmeno =
+      (typeof meta.first_name === "string" && meta.first_name) ||
+      (typeof meta.full_name === "string" && meta.full_name.split(" ")[0]) ||
+      to.split("@")[0];
+
+    const ok = await sendEnrollmentConfirmation({
+      to, jmeno, title: session.title, scheduledAt: session.scheduled_at, sessionId: session.id,
+    });
+    if (ok) {
+      await supabaseAdmin
+        .from("online_test_enrollments")
+        .update({ confirm_sent_at: new Date().toISOString() })
+        .eq("id", enrollmentId);
+    }
+  } catch (err) {
+    console.error("webhook: online_test confirmation email failed", enrollmentId, err);
+  }
 }
 
 export async function POST(req: Request) {
@@ -79,6 +123,8 @@ export async function POST(req: Request) {
               .eq("id", enrollmentId);
             if (error) {
               console.error("webhook: online_test enrollment update failed", enrollmentId, error);
+            } else {
+              await sendOnlineTestConfirmation(enrollmentId);
             }
           } else {
             console.error("webhook: online_test checkout without enrollment_id", session.id);

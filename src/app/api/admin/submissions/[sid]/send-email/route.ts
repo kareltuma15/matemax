@@ -4,7 +4,8 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { TEST_TOPICS, TEST_TOPIC_LABELS, TEST_MAX_POINTS } from "@/lib/online-test-topics";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://matemax.matematika-snadno.cz";
-const FROM = process.env.FEEDBACK_EMAIL_FROM ?? "Karel Tůma <onboarding@resend.dev>";
+// Ověřená doména — stejná, ze které chodí ostatní maily z aplikace
+const FROM = process.env.FEEDBACK_EMAIL_FROM ?? "Karel Tůma <noreply@matematika-snadno.cz>";
 
 function esc(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
