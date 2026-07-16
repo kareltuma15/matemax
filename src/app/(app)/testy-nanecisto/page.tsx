@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import type { PublicTestSession } from "@/app/api/testy/route";
@@ -101,6 +102,10 @@ export default function TestyNanecistoPage() {
     }
   }
 
+  // Proběhlé termíny vrací API jen ty, na které je žák přihlášen
+  const mine = sessions.filter((s) => s.past);
+  const upcoming = sessions.filter((s) => !s.past);
+
   return (
     <div className="flex flex-col gap-6">
       {/* Hero */}
@@ -145,7 +150,37 @@ export default function TestyNanecistoPage() {
         </div>
       )}
 
-      {!loading && !error && sessions.length === 0 && (
+      {/* Tvoje proběhlé testy — sem se chodí nahrát arch a pro výsledky */}
+      {mine.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <div className="text-xs font-bold uppercase tracking-widest" style={{ color: "#94a3b8" }}>
+            Tvoje testy
+          </div>
+          {mine.map((s) => (
+            <div
+              key={s.id}
+              className="rounded-2xl p-5 flex flex-col gap-3"
+              style={{ background: "#fff", border: "2px solid #16a34a" }}
+            >
+              <div>
+                <div className="font-bold" style={{ color: "#0D1B3E" }}>{s.title}</div>
+                <div className="text-sm capitalize" style={{ color: "#64748b" }}>
+                  Proběhl {formatDate(s.scheduled_at)}
+                </div>
+              </div>
+              <Link
+                href={`/test/${s.id}`}
+                className="rounded-xl px-4 py-2.5 text-center text-sm font-bold block"
+                style={{ background: "#16a34a", color: "#fff" }}
+              >
+                Otevřít testovou místnost →
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!loading && !error && upcoming.length === 0 && (
         <div className="rounded-2xl p-8 text-center" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
           <div className="text-3xl mb-2">📅</div>
           <div className="font-bold mb-1" style={{ color: "#0D1B3E" }}>Žádné vypsané termíny</div>
@@ -155,51 +190,62 @@ export default function TestyNanecistoPage() {
         </div>
       )}
 
-      <div className="flex flex-col gap-3">
-        {sessions.map((s) => {
-          const full = s.remaining === 0;
-          return (
-            <div
-              key={s.id}
-              className="rounded-2xl p-5 flex flex-col gap-3"
-              style={{ background: "#fff", border: s.enrolled ? "2px solid #16a34a" : "1px solid #e2e8f0" }}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <div className="font-bold" style={{ color: "#0D1B3E" }}>{s.title}</div>
-                  <div className="text-sm capitalize" style={{ color: "#64748b" }}>
-                    {formatDate(s.scheduled_at)}
-                  </div>
-                  <div className="text-sm" style={{ color: "#64748b" }}>
-                    start v {formatTime(s.scheduled_at)} · {s.duration_minutes} minut
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-xl font-black" style={{ color: "#0D1B3E" }}>{s.price_czk} Kč</div>
-                  <div className="text-xs font-bold" style={{ color: full ? "#dc2626" : "#16a34a" }}>
-                    {full ? "Obsazeno" : `Zbývá ${s.remaining} míst`}
-                  </div>
-                </div>
-              </div>
-
-              {s.enrolled ? (
-                <div className="rounded-xl px-4 py-2.5 text-center text-sm font-bold" style={{ background: "#dcfce7", color: "#16a34a" }}>
-                  Přihlášen ✅
-                </div>
-              ) : (
-                <button
-                  onClick={() => handleEnroll(s.id)}
-                  disabled={full || checkingOut === s.id}
-                  className="rounded-xl px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40"
-                  style={{ background: "#2E6DA4" }}
-                >
-                  {checkingOut === s.id ? "Přesměrovávám na platbu…" : full ? "Termín je plný" : "Přihlásit se"}
-                </button>
-              )}
+      {upcoming.length > 0 && (
+        <div className="flex flex-col gap-3">
+          {mine.length > 0 && (
+            <div className="text-xs font-bold uppercase tracking-widest" style={{ color: "#94a3b8" }}>
+              Vypsané termíny
             </div>
-          );
-        })}
-      </div>
+          )}
+          {upcoming.map((s) => {
+            const full = s.remaining === 0;
+            return (
+              <div
+                key={s.id}
+                className="rounded-2xl p-5 flex flex-col gap-3"
+                style={{ background: "#fff", border: s.enrolled ? "2px solid #16a34a" : "1px solid #e2e8f0" }}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="font-bold" style={{ color: "#0D1B3E" }}>{s.title}</div>
+                    <div className="text-sm capitalize" style={{ color: "#64748b" }}>
+                      {formatDate(s.scheduled_at)}
+                    </div>
+                    <div className="text-sm" style={{ color: "#64748b" }}>
+                      start v {formatTime(s.scheduled_at)} · {s.duration_minutes} minut
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xl font-black" style={{ color: "#0D1B3E" }}>{s.price_czk} Kč</div>
+                    <div className="text-xs font-bold" style={{ color: full ? "#dc2626" : "#16a34a" }}>
+                      {full ? "Obsazeno" : `Zbývá ${s.remaining} míst`}
+                    </div>
+                  </div>
+                </div>
+
+                {s.enrolled ? (
+                  <Link
+                    href={`/test/${s.id}`}
+                    className="rounded-xl px-4 py-2.5 text-center text-sm font-bold block"
+                    style={{ background: "#16a34a", color: "#fff" }}
+                  >
+                    Přihlášen ✅ · Otevřít testovou místnost →
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => handleEnroll(s.id)}
+                    disabled={full || checkingOut === s.id}
+                    className="rounded-xl px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40"
+                    style={{ background: "#2E6DA4" }}
+                  >
+                    {checkingOut === s.id ? "Přesměrovávám na platbu…" : full ? "Termín je plný" : "Přihlásit se"}
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

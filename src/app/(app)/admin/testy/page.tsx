@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import type { AdminTestSession } from "@/app/api/admin/testy/route";
@@ -357,6 +358,13 @@ export default function AdminTestyPage() {
                 onUpload={(f) => handleUpload(s.id, "rozbor", f)}
               />
               <div className="ml-auto flex items-center gap-2">
+                <Link
+                  href={`/admin/testy/${s.id}/submissions`}
+                  className="rounded-lg px-3 py-1.5 text-xs font-bold"
+                  style={{ background: "#f1f5f9", color: "#0D1B3E" }}
+                >
+                  📥 Odevzdané
+                </Link>
                 <button
                   onClick={() => handleTogglePublish(s)}
                   disabled={toggling === s.id}

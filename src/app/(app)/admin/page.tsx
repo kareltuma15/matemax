@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import type { AdminUser } from "@/app/api/admin/users/route";
@@ -149,13 +150,22 @@ export default function AdminPage() {
             <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#93c5fd" }}>Admin panel</div>
             <div className="text-2xl font-black text-white">MateMax Dashboard</div>
           </div>
-          <button
-            onClick={handleRefresh}
-            className="rounded-xl px-3 py-2 text-xs font-bold"
-            style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
-          >
-            ↻ Obnovit
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin/testy"
+              className="rounded-xl px-3 py-2 text-xs font-bold"
+              style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
+            >
+              📝 Testy
+            </Link>
+            <button
+              onClick={handleRefresh}
+              className="rounded-xl px-3 py-2 text-xs font-bold"
+              style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
+            >
+              ↻ Obnovit
+            </button>
+          </div>
         </div>
       </div>
 
