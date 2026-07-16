@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import webpush from "web-push";
 import { supabase } from "@/lib/supabase";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { runTestReminders } from "@/lib/test-reminders";
 
 if (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
@@ -78,8 +79,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  // Připomínky na testy nanečisto se vezou s tímhle cronem — Vercel Hobby
+  // dovolí jen 2 crony a oba sloty jsou obsazené. Běží první a ve vlastním
+  // try/catch, aby je nezablokoval problém s push notifikacemi níž
+  // (chybějící VAPID klíče níže rovnou vracejí 503).
+  let reminders: unknown = null;
+  try {
+    reminders = await runTestReminders();
+  } catch (err) {
+    console.error("[daily-push] test-reminders selhaly", err);
+    reminders = { ok: false, error: "exception" };
+  }
+
   if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
-    return NextResponse.json({ error: "VAPID keys not configured" }, { status: 503 });
+    return NextResponse.json({ error: "VAPID keys not configured", reminders }, { status: 503 });
   }
 
   if (!supabase) {
@@ -191,7 +204,7 @@ export async function POST(req: NextRequest) {
   }
 
   console.log(`[daily-push] sent=${sent} failed=${failed} skipped=${skipped} removed=${gone.length}`);
-  return NextResponse.json({ ok: true, sent, failed, skipped, removed: gone.length });
+  return NextResponse.json({ ok: true, sent, failed, skipped, removed: gone.length, reminders });
 }
 
 export async function GET(req: NextRequest) {
