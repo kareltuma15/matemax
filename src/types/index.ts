@@ -1,3 +1,11 @@
+/** Jeden krok interaktivní konstrukce — žák vybírá správnou volbu postupu. */
+export interface ConstructionStep {
+  otazka: string;         // "Jaký je první krok konstrukce?"
+  volby: string[];        // nabídnuté možnosti postupu
+  spravna: number;        // index správné volby ve `volby`
+  vysvetleni?: string;    // proč je to správně (ukáže se po výběru)
+}
+
 export interface DBExample {
   id: string;
   tema: string;
@@ -10,6 +18,14 @@ export interface DBExample {
   sm2_interval: number;
   /** Pokud true, zadani a reseni_kroky používají LaTeX syntaxi — renderováno přes KaTeX */
   latex?: boolean;
+  /** Výchozí situace („V rovině leží úsečka AB") — u konstrukčních úloh. */
+  kontext?: string;
+  /**
+   * Interaktivní konstrukce: místo textové odpovědi žák vybírá správný postup
+   * krok za krokem. Když je vyplněno, trénink místo PracticeCard vykreslí
+   * ConstructionCard. Viz kapitola 7 pracovního sešitu.
+   */
+  kroky_volby?: ConstructionStep[];
 }
 
 export interface SM2Card {
@@ -80,6 +96,15 @@ export const PODTEMA_LABELS: Record<string, string> = {
   // Geometrie (kapitola 4 sešitu, 4A/4B)
   rovinne:        "Rovinné obrazce",
   prostorova:     "Prostorová tělesa",
+  // Konstrukce (kapitola 7 sešitu)
+  osa_usecky:         "Osa úsečky",
+  osa_uhlu:           "Osa úhlu",
+  kolmice:            "Kolmice",
+  trojuhelnik_sss:    "Trojúhelník (sss)",
+  trojuhelnik_sus:    "Trojúhelník (sus)",
+  kruznice_opsana:    "Kružnice opsaná",
+  kruznice_vepsana:   "Kružnice vepsaná",
+  obdelnik_thales:    "Obdélník (Thales)",
   ostatni:        "Ostatní",
 };
 

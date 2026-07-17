@@ -27,6 +27,7 @@ import {
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import PracticeCard from "@/components/PracticeCard";
+import ConstructionCard from "@/components/ConstructionCard";
 import BossBattleCard from "@/components/BossBattleCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
@@ -964,14 +965,24 @@ function TreningPageInner() {
         </div>
       )}
 
-      <PracticeCard
-        example={currentExample}
-        cardNumber={currentIdx + 1}
-        total={sessionIds.length}
-        consecutiveCorrect={consecutiveCorrectRef.current}
-        onResult={handleResult}
-        onSkip={handleSkip}
-      />
+      {currentExample.kroky_volby && currentExample.kroky_volby.length > 0 ? (
+        <ConstructionCard
+          example={currentExample}
+          cardNumber={currentIdx + 1}
+          total={sessionIds.length}
+          onResult={handleResult}
+          onSkip={handleSkip}
+        />
+      ) : (
+        <PracticeCard
+          example={currentExample}
+          cardNumber={currentIdx + 1}
+          total={sessionIds.length}
+          consecutiveCorrect={consecutiveCorrectRef.current}
+          onResult={handleResult}
+          onSkip={handleSkip}
+        />
+      )}
     </>
   );
 }

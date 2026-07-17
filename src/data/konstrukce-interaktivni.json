@@ -1,0 +1,411 @@
+{
+  "metadata": {
+    "source": "Pracovní sešit 2026/27 — kapitola 7 (Konstrukční úlohy)",
+    "description": "Interaktivní konstrukce: žák vybírá správný postup krok za krokem (varianta b). Distraktory dle typických chyb ze sešitu.",
+    "total": 8,
+    "updated": "2026-07-17"
+  },
+  "examples": [
+    {
+      "id": "KONI_001",
+      "tema": "konstrukce",
+      "podtema": "osa_usecky",
+      "obtiznost": 1,
+      "kontext": "V rovině leží úsečka AB.",
+      "zadani": "Sestroj osu úsečky AB.",
+      "odpoved": "Osa = přímka procházející průsečíky dvou stejných kružnic se středy A a B.",
+      "reseni_kroky": [
+        "Zvol poloměr r > |AB| : 2 (o kousek víc než polovina).",
+        "Kružnice se středem A a poloměrem r.",
+        "Kružnice se středem B a stejným poloměrem r.",
+        "Průsečíky kružnic označ P a Q.",
+        "Osa je přímka PQ."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Jaký poloměr r zvolíš pro obě kružnice?",
+          "volby": [
+            "r > |AB| : 2 (o kousek víc než polovina úsečky)",
+            "r < |AB| : 2 (o kousek míň než polovina úsečky)",
+            "r = |AB| (celá délka úsečky)"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Kružnice se protnou jen když je poloměr větší než polovina AB. Menší poloměr se míjí."
+        },
+        {
+          "otazka": "Kde jsou středy obou pomocných kružnic?",
+          "volby": [
+            "V krajních bodech A a B",
+            "V již nalezeném středu úsečky",
+            "Jedna ve středu, druhá v bodě A"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Body osy mají stejnou vzdálenost od A i od B — proto rýsujeme z obou krajních bodů."
+        },
+        {
+          "otazka": "Co jsou body P a Q?",
+          "volby": [
+            "Průsečíky obou kružnic (nad a pod úsečkou)",
+            "Krajní body úsečky A a B",
+            "Body doteku kružnic s úsečkou"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Kružnice se stejným poloměrem se protnou ve dvou bodech — ty leží na ose."
+        },
+        {
+          "otazka": "Jak dokončíš konstrukci osy?",
+          "volby": [
+            "Narýsuješ přímku PQ",
+            "Narýsuješ úsečku AP",
+            "Spojíš P se středem úsečky"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Přímka PQ je kolmá na AB a prochází jejím středem — to je osa úsečky."
+        }
+      ]
+    },
+    {
+      "id": "KONI_002",
+      "tema": "konstrukce",
+      "podtema": "osa_uhlu",
+      "obtiznost": 1,
+      "kontext": "Je dán úhel s vrcholem V a rameny.",
+      "zadani": "Sestroj osu úhlu.",
+      "odpoved": "Osa úhlu = polopřímka z vrcholu procházející průsečíkem oblouků z obou ramen.",
+      "reseni_kroky": [
+        "Kružnice se středem ve vrcholu V protne obě ramena v bodech K a L.",
+        "Kružnice se středem K a poloměrem r.",
+        "Kružnice se středem L a stejným poloměrem r, průsečík označ M.",
+        "Osa úhlu je polopřímka VM."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Jaký je první krok?",
+          "volby": [
+            "Kružnice z vrcholu V, která protne obě ramena v bodech K a L",
+            "Změřím úhel úhloměrem a vydělím dvěma",
+            "Spojím konce obou ramen úsečkou"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Konstrukce osy úhlu je bez úhloměru — začínáme obloukem z vrcholu, který vyznačí stejnou vzdálenost na obou ramenech."
+        },
+        {
+          "otazka": "Co uděláš s body K a L?",
+          "volby": [
+            "Z každého narýsuješ kružnici stejného poloměru a najdeš průsečík M",
+            "Spojíš je úsečkou a najdeš její střed",
+            "Narýsuješ osu úsečky KL a skončíš"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Průsečík M dvou stejných oblouků z K a L má stejnou vzdálenost od obou ramen — leží na ose úhlu."
+        },
+        {
+          "otazka": "Kde leží osa úhlu?",
+          "volby": [
+            "Je to polopřímka VM z vrcholu",
+            "Je to přímka KL",
+            "Je to kolmice v bodě M"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Osa úhlu vychází z vrcholu V a dělí úhel na dvě shodné části — polopřímka VM."
+        }
+      ]
+    },
+    {
+      "id": "KONI_003",
+      "tema": "konstrukce",
+      "podtema": "kolmice",
+      "obtiznost": 1,
+      "kontext": "Je dána přímka p a bod P (leží mimo přímku).",
+      "zadani": "Sestroj kolmici k přímce p procházející bodem P.",
+      "odpoved": "Kolmice = spojnice bodu P s průsečíkem dvou oblouků pod přímkou.",
+      "reseni_kroky": [
+        "Kružnice se středem P protne přímku p ve dvou bodech A a B.",
+        "Kružnice se středem A a poloměrem r.",
+        "Kružnice se středem B a stejným poloměrem r, průsečík Q (na druhé straně přímky).",
+        "Kolmice je přímka PQ."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Jaký je první krok?",
+          "volby": [
+            "Kružnice z bodu P, která protne přímku p ve dvou bodech A a B",
+            "Přiložím pravítko na oko kolmo k p",
+            "Narýsuji rovnoběžku s p bodem P"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Nejdřív si obloukem z P vyznačíme na přímce dva stejně vzdálené body A a B."
+        },
+        {
+          "otazka": "Co uděláš s body A a B?",
+          "volby": [
+            "Z obou narýsuješ stejné kružnice a najdeš jejich průsečík Q",
+            "Spojíš je s bodem P",
+            "Změříš jejich vzdálenost a vyneseš ji nahoru"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Průsečík Q dvou stejných oblouků z A a B leží na kolmici — stejně jako u osy úsečky."
+        },
+        {
+          "otazka": "Jak dostaneš hledanou kolmici?",
+          "volby": [
+            "Narýsuješ přímku PQ",
+            "Narýsuješ přímku AB",
+            "Spojíš A a Q"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Přímka PQ prochází bodem P a je kolmá na přímku p."
+        }
+      ]
+    },
+    {
+      "id": "KONI_004",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik_sss",
+      "obtiznost": 2,
+      "kontext": "Trojúhelník ABC má strany a = 5 cm, b = 4 cm, c = 6 cm.",
+      "zadani": "Sestroj trojúhelník ABC ze tří stran (sss).",
+      "odpoved": "Narýsuj stranu c, pak vrchol C jako průsečík kružnic k(A; b) a k(B; a).",
+      "reseni_kroky": [
+        "Narýsuj stranu c = |AB| = 6 cm.",
+        "Kružnice se středem A a poloměrem b = 4 cm.",
+        "Kružnice se středem B a poloměrem a = 5 cm.",
+        "Vrchol C je průsečík obou kružnic.",
+        "Spoj C s A a B — trojúhelník ABC."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Čím konstrukci začneš?",
+          "volby": [
+            "Narýsuji jednu stranu, např. c = |AB| = 6 cm",
+            "Narýsuji rovnou všechny tři strany vedle sebe",
+            "Nanesu úhloměrem vnitřní úhel"
+          ],
+          "spravna": 0,
+          "vysvetleni": "U zadání sss začínáme jednou stranou jako základnou — nejlépe tou nejdelší."
+        },
+        {
+          "otazka": "Jak najdeš vrchol C?",
+          "volby": [
+            "Jako průsečík kružnic k(A; 4 cm) a k(B; 5 cm)",
+            "Jako průsečík kružnic k(A; 6 cm) a k(B; 6 cm)",
+            "Změřím pravítkem 4 cm kolmo z A"
+          ],
+          "spravna": 0,
+          "vysvetleni": "C je od A vzdálen b = 4 cm a od B vzdálen a = 5 cm — proto průsečík těchto dvou kružnic."
+        },
+        {
+          "otazka": "Jak konstrukci dokončíš?",
+          "volby": [
+            "Spojím C s A a s B",
+            "Spojím jen C s A",
+            "Narýsuji kolmici z C na AB"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Spojením vrcholu C s oběma krajními body základny vznikne hledaný trojúhelník."
+        }
+      ]
+    },
+    {
+      "id": "KONI_005",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik_sus",
+      "obtiznost": 2,
+      "kontext": "Trojúhelník ABC: strana c = |AB| = 5 cm, strana b = |AC| = 4 cm a sevřený úhel α = 60° při vrcholu A.",
+      "zadani": "Sestroj trojúhelník ABC (strana–úhel–strana).",
+      "odpoved": "Narýsuj AB, v A nanes úhel 60°, na rameno nanes 4 cm (bod C), spoj s B.",
+      "reseni_kroky": [
+        "Narýsuj stranu c = |AB| = 5 cm.",
+        "V bodě A nanes úhloměrem úhel α = 60°.",
+        "Na rameno úhlu nanes vzdálenost |AC| = 4 cm — vznikne bod C.",
+        "Spoj C s B — trojúhelník ABC."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Čím začneš u zadání sus?",
+          "volby": [
+            "Narýsuji stranu, která sousedí s daným úhlem, např. c = |AB| = 5 cm",
+            "Narýsuji stranu a naproti danému úhlu",
+            "Nanesu nejdřív úhel 60° do prázdna"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Daný úhel je sevřený mezi dvěma danými stranami, takže začínáme jednou z nich."
+        },
+        {
+          "otazka": "Jaký je druhý krok?",
+          "volby": [
+            "V bodě A nanesu úhloměrem úhel 60°",
+            "V bodě B nanesu úhel 60°",
+            "Narýsuji kružnici k(A; 4 cm) a hledám průsečík"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Úhel α = 60° je při vrcholu A, mezi stranami AB a AC — nanáší se v bodě A."
+        },
+        {
+          "otazka": "Jak najdeš vrchol C?",
+          "volby": [
+            "Na rameno úhlu nanesu |AC| = 4 cm",
+            "Na rameno úhlu nanesu |AB| = 5 cm",
+            "Vrchol C je průsečík dvou kružnic"
+          ],
+          "spravna": 0,
+          "vysvetleni": "C leží na rameni úhlu ve vzdálenosti dané druhé strany b = 4 cm od vrcholu A."
+        }
+      ]
+    },
+    {
+      "id": "KONI_006",
+      "tema": "konstrukce",
+      "podtema": "kruznice_opsana",
+      "obtiznost": 2,
+      "kontext": "Je dán trojúhelník ABC.",
+      "zadani": "Sestroj kružnici opsanou trojúhelníku ABC.",
+      "odpoved": "Střed = průsečík os stran; poloměr = vzdálenost středu k libovolnému vrcholu.",
+      "reseni_kroky": [
+        "Sestroj osu strany AB.",
+        "Sestroj osu strany BC.",
+        "Průsečík os je střed S kružnice opsané.",
+        "Poloměr = |SA|; narýsuj kružnici se středem S, která projde všemi vrcholy."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Které přímky sestrojíš pro nalezení středu?",
+          "volby": [
+            "Osy stran trojúhelníku",
+            "Osy vnitřních úhlů trojúhelníku",
+            "Výšky trojúhelníku"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Opsaná drží vrcholy → osy stran. (Pomůcka: opsaná = osy stran, vepsaná = osy úhlů.)"
+        },
+        {
+          "otazka": "Co je průsečík dvou os stran?",
+          "volby": [
+            "Střed S kružnice opsané",
+            "Těžiště trojúhelníku",
+            "Střed vepsané kružnice"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Bod se stejnou vzdáleností od všech tří vrcholů — střed opsané kružnice."
+        },
+        {
+          "otazka": "Jaký zvolíš poloměr?",
+          "volby": [
+            "Vzdálenost středu S k libovolnému vrcholu (|SA|)",
+            "Polovinu nejdelší strany",
+            "Vzdálenost středu k nejbližší straně"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Kružnice opsaná prochází vrcholy, takže poloměr je vzdálenost středu k vrcholu."
+        }
+      ]
+    },
+    {
+      "id": "KONI_007",
+      "tema": "konstrukce",
+      "podtema": "kruznice_vepsana",
+      "obtiznost": 3,
+      "kontext": "Je dán trojúhelník ABC.",
+      "zadani": "Sestroj kružnici vepsanou trojúhelníku ABC.",
+      "odpoved": "Střed = průsečík os úhlů; poloměr = kolmá vzdálenost středu ke straně.",
+      "reseni_kroky": [
+        "Sestroj osu vnitřního úhlu při vrcholu A.",
+        "Sestroj osu vnitřního úhlu při vrcholu B.",
+        "Průsečík os úhlů je střed S vepsané kružnice.",
+        "Spusť kolmici ze středu S na jednu stranu — pata určuje poloměr.",
+        "Narýsuj kružnici se středem S, která se dotýká všech stran."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Které přímky sestrojíš pro nalezení středu?",
+          "volby": [
+            "Osy vnitřních úhlů trojúhelníku",
+            "Osy stran trojúhelníku",
+            "Těžnice trojúhelníku"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Vepsaná je uvnitř, drží se stran a úhlů → osy úhlů. (Opsaná = osy stran.)"
+        },
+        {
+          "otazka": "Co je průsečík os úhlů?",
+          "volby": [
+            "Střed S vepsané kružnice",
+            "Střed opsané kružnice",
+            "Průsečík výšek (ortocentrum)"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Bod se stejnou kolmou vzdáleností od všech tří stran — střed vepsané kružnice."
+        },
+        {
+          "otazka": "Jak určíš poloměr vepsané kružnice?",
+          "volby": [
+            "Spustím kolmici ze středu S na stranu; vzdálenost k patě je poloměr",
+            "Změřím vzdálenost středu S k nejbližšímu vrcholu",
+            "Vezmu polovinu nejkratší strany"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Vepsaná kružnice se stran dotýká, takže poloměr je kolmá vzdálenost středu ke straně."
+        }
+      ]
+    },
+    {
+      "id": "KONI_008",
+      "tema": "konstrukce",
+      "podtema": "obdelnik_thales",
+      "obtiznost": 3,
+      "kontext": "Body A a C jsou protější vrcholy obdélníku ABCD. Strana AB má délku 5 cm.",
+      "zadani": "Sestroj vrcholy B a D obdélníku ABCD a najdi všechna řešení.",
+      "odpoved": "B leží na Thaletově kružnici nad AC a zároveň na k(A; 5 cm) — dvě řešení; D je obraz B ve středové souměrnosti podle středu S.",
+      "reseni_kroky": [
+        "Sestroj střed S úsečky AC.",
+        "Thaletova kružnice t se středem S nad průměrem AC.",
+        "Kružnice k(A; 5 cm).",
+        "Vrchol B = průsečík t a k(A; 5 cm) — až dvě řešení.",
+        "Vrchol D = obraz B ve středové souměrnosti se středem S.",
+        "Narýsuj obdélník ABCD pro každé řešení."
+      ],
+      "kroky_volby": [
+        {
+          "otazka": "Úhel u vrcholu B je pravý. Na které křivce proto vrchol B leží?",
+          "volby": [
+            "Na Thaletově kružnici nad průměrem AC",
+            "Na ose úsečky AC",
+            "Na kružnici se středem C a poloměrem 5 cm"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Bod, ze kterého vidíme úsečku AC pod pravým úhlem, leží na Thaletově kružnici nad AC."
+        },
+        {
+          "otazka": "Druhá podmínka je |AB| = 5 cm. Jak ji do konstrukce přidáš?",
+          "volby": [
+            "Kružnicí k(A; 5 cm)",
+            "Kružnicí k(C; 5 cm)",
+            "Osou úhlu při vrcholu A"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Vrchol B je od A vzdálen 5 cm, takže leží i na kružnici se středem A a poloměrem 5 cm."
+        },
+        {
+          "otazka": "Kolik má úloha řešení?",
+          "volby": [
+            "Dvě — Thaletova kružnice a k(A; 5 cm) se protnou ve dvou bodech",
+            "Jedno — kružnice se dotýkají v jednom bodě",
+            "Nekonečně mnoho"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Počet řešení = počet průsečíků obou kružnic. Zde se protnou ve dvou bodech → dvě řešení."
+        },
+        {
+          "otazka": "Jak najdeš vrchol D?",
+          "volby": [
+            "Jako obraz B ve středové souměrnosti se středem S",
+            "Jako průsečík Thaletovy kružnice s přímkou AB",
+            "Jako obraz A v osové souměrnosti podle BC"
+          ],
+          "spravna": 0,
+          "vysvetleni": "Úhlopříčky obdélníku se půlí ve středu S, takže D leží souměrně k B podle S."
+        }
+      ]
+    }
+  ]
+}
