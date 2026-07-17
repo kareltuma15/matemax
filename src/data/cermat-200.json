@@ -372,7 +372,7 @@
     {
       "id": "t02_04",
       "tema": "zlomky",
-      "podtema": "d_leni",
+      "podtema": "deleni",
       "obtiznost": 1,
       "zadani": "Vypočítejte: $\\frac{5}{6} \\div \\frac{5}{3}$",
       "odpoved": "1/2",
@@ -436,7 +436,7 @@
     {
       "id": "t02_08",
       "tema": "zlomky",
-      "podtema": "d_leni",
+      "podtema": "deleni",
       "obtiznost": 1,
       "zadani": "Kolik je jedna třetina z tří čtvrtin?",
       "odpoved": "1/4",
@@ -512,7 +512,7 @@
     {
       "id": "t02_13",
       "tema": "zlomky",
-      "podtema": "d_leni",
+      "podtema": "deleni",
       "obtiznost": 2,
       "zadani": "Vypočítejte: $(\\frac{2}{3} \\div \\frac{4}{9}) − \\frac{1}{2}$",
       "odpoved": "1",
@@ -1053,7 +1053,7 @@
     {
       "id": "t04_09",
       "tema": "vyrazy",
-      "podtema": "pythagorova_v_ta",
+      "podtema": "pythagorova_veta",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Vypočítejte přeponu.",
       "odpoved": "10 cm",
@@ -1116,7 +1116,7 @@
     {
       "id": "t04_13",
       "tema": "vyrazy",
-      "podtema": "pythagorova_v_ta",
+      "podtema": "pythagorova_veta",
       "obtiznost": 2,
       "zadani": "Kosočtverec má stranu 13 cm a kratší úhlopříčku 10 cm. Vypočítejte delší úhlopříčku.",
       "odpoved": "24 cm",
@@ -1218,7 +1218,7 @@
     {
       "id": "t04_19",
       "tema": "vyrazy",
-      "podtema": "pythagorova_v_ta_aplikace",
+      "podtema": "pythagorova_veta_aplikace",
       "obtiznost": 3,
       "zadani": "Žebřík je opřen o zeď. Spodek žebříku je 2,4 m od zdi, žebřík má délku 4 m. V jaké výšce se dotýká zdi?",
       "odpoved": "3,2 m",
@@ -1564,7 +1564,7 @@
     {
       "id": "t06_01",
       "tema": "geometrie",
-      "podtema": "obvod_a_obsah_ctverce",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Čtverec má stranu 9 cm. Vypočítejte obvod a obsah.",
       "odpoved": "Obvod = 36 cm, Obsah = 81 cm²",
@@ -1578,7 +1578,7 @@
     {
       "id": "t06_02",
       "tema": "geometrie",
-      "podtema": "obvod_a_obsah_obdelniku",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Obdélník má délku 14 cm a šířku 6 cm. Vypočítejte obsah.",
       "odpoved": "84 cm²",
@@ -1591,7 +1591,7 @@
     {
       "id": "t06_03",
       "tema": "geometrie",
-      "podtema": "obsah_trojuhelniku",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Trojúhelník má základnu 10 cm a výšku 6 cm. Vypočítejte obsah.",
       "odpoved": "30 cm²",
@@ -1604,7 +1604,7 @@
     {
       "id": "t06_04",
       "tema": "geometrie",
-      "podtema": "kruznice_obvod",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Kružnice má průměr 14 cm. Vypočítejte obvod (π ≈ 3,14).",
       "odpoved": "43,96 cm",
@@ -1618,7 +1618,7 @@
     {
       "id": "t06_05",
       "tema": "geometrie",
-      "podtema": "kruznice_obsah",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Kruh má poloměr 5 cm. Vypočítejte obsah (π ≈ 3,14).",
       "odpoved": "78,5 cm²",
@@ -1631,7 +1631,7 @@
     {
       "id": "t06_06",
       "tema": "geometrie",
-      "podtema": "obvod_trojuhelniku",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Rovnostranný trojúhelník má stranu 7 cm. Vypočítejte obvod.",
       "odpoved": "21 cm",
@@ -1644,7 +1644,7 @@
     {
       "id": "t06_07",
       "tema": "geometrie",
-      "podtema": "obsah_rovnob_zniku",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Rovnoběžník má základnu 12 cm a výšku 5 cm. Vypočítejte obsah.",
       "odpoved": "60 cm²",
@@ -1657,7 +1657,7 @@
     {
       "id": "t06_08",
       "tema": "geometrie",
-      "podtema": "obsah_lichob_zniku",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Lichoběžník má základny 8 cm a 12 cm, výšku 5 cm. Vypočítejte obsah.",
       "odpoved": "50 cm²",
@@ -1670,7 +1670,7 @@
     {
       "id": "t06_09",
       "tema": "geometrie",
-      "podtema": "pythagorova_v_ta",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník má odvěsny 5 cm a 12 cm. Jaká je přepona?",
       "odpoved": "13 cm",
@@ -1684,7 +1684,7 @@
     {
       "id": "t06_10",
       "tema": "geometrie",
-      "podtema": "obsah_ctverce_zp_tny_vypocet",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Obsah čtverce je 196 cm². Jaký je obvod?",
       "odpoved": "56 cm",
@@ -1698,7 +1698,7 @@
     {
       "id": "t06_11",
       "tema": "geometrie",
-      "podtema": "slozene_tvary",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Zahrada má tvar obdélníku 20 m × 12 m. Uprostřed je čtvercový bazén 4 m × 4 m. Jaká je plocha záhonů?",
       "odpoved": "224 m²",
@@ -1713,7 +1713,7 @@
     {
       "id": "t06_12",
       "tema": "geometrie",
-      "podtema": "obsah_kruhu_aplikace",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kruhový pozemek má obvod 62,8 m. Jaký je jeho obsah? (π ≈ 3,14)",
       "odpoved": "314 m²",
@@ -1727,7 +1727,7 @@
     {
       "id": "t06_13",
       "tema": "geometrie",
-      "podtema": "trojuhelnik_vyska",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Trojúhelník má základnu 8 cm a obsah 28 cm². Jaká je výška?",
       "odpoved": "7 cm",
@@ -1743,7 +1743,7 @@
     {
       "id": "t06_14",
       "tema": "geometrie",
-      "podtema": "obsah_lichob_zniku",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Lichoběžník ABCD má AB = 10 cm, CD = 6 cm, výška = 4 cm. Vypočítejte obsah. Kolik stojí pokrytí podlahy toho tvaru za 150 Kč/m², pokud jsou rozměry v metrech?",
       "odpoved": "S = 32 cm², pro metrové rozměry: 4,8 m² × 150 = 720 Kč",
@@ -1759,7 +1759,7 @@
     {
       "id": "t06_15",
       "tema": "geometrie",
-      "podtema": "slozene_tvary",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Tvar se skládá z obdélníku 10 cm × 4 cm a půlkruhu na kratší straně (průměr 4 cm). Vypočítejte celkový obvod (π ≈ 3,14).",
       "odpoved": "34,28 cm",
@@ -1774,7 +1774,7 @@
     {
       "id": "t06_16",
       "tema": "geometrie",
-      "podtema": "obsah_ctverce_vztah_ke_kruznici",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Do čtverce o straně 10 cm je vepsána kružnice. Jaký je obsah plochy mimo kružnici? (π ≈ 3,14)",
       "odpoved": "21,5 cm²",
@@ -1790,7 +1790,7 @@
     {
       "id": "t06_17",
       "tema": "geometrie",
-      "podtema": "obvod_zp_tny_vypocet",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Obdélník má obvod 60 cm a délka je 2,5krát větší než šířka. Určete rozměry.",
       "odpoved": "Délka 21,43 cm, šířka 8,57 cm",
@@ -1807,7 +1807,7 @@
     {
       "id": "t06_18",
       "tema": "geometrie",
-      "podtema": "slozene_obrazce",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Zahrada ve tvaru písmene L: velký obdélník 15 × 8 m, z něho odebrán obdélník 5 × 4 m. Vypočítejte obvod a obsah.",
       "odpoved": "Obsah = 100 m², Obvod = 46 m",
@@ -1822,7 +1822,7 @@
     {
       "id": "t06_19",
       "tema": "geometrie",
-      "podtema": "obsah_mezikruzi",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Velký kruh má poloměr 8 cm, malý kruh uvnitř poloměr 5 cm. Jaká je plocha mezikruží? (π ≈ 3,14)",
       "odpoved": "121,9 cm² (přibližně 122 cm²)",
@@ -1837,7 +1837,7 @@
     {
       "id": "t06_20",
       "tema": "geometrie",
-      "podtema": "obsah_trojuhelniku_aplikace",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Úsečka AB má délku 10 cm a úsečka CD rovnoběžná s AB má délku 6 cm. Vzdálenost AB a CD je 4 cm. Tři body tvoří trojúhelník s vrcholem V ve výšce 3 cm nad AB (V leží na CD). Vypočítejte obsah trojúhelníku AVB.",
       "odpoved": "15 cm²",
@@ -1852,7 +1852,7 @@
     {
       "id": "t07_01",
       "tema": "geometrie",
-      "podtema": "objem_kvadru",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Kvádr má rozměry 5 cm × 4 cm × 3 cm. Vypočítejte objem.",
       "odpoved": "60 cm³",
@@ -1865,7 +1865,7 @@
     {
       "id": "t07_02",
       "tema": "geometrie",
-      "podtema": "povrch_kvadru",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Kvádr má rozměry 6 cm × 4 cm × 3 cm. Vypočítejte povrch.",
       "odpoved": "108 cm²",
@@ -1881,7 +1881,7 @@
     {
       "id": "t07_03",
       "tema": "geometrie",
-      "podtema": "objem_krychle",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Krychle má stranu 4 cm. Vypočítejte objem a povrch.",
       "odpoved": "Objem = 64 cm³, Povrch = 96 cm²",
@@ -1895,7 +1895,7 @@
     {
       "id": "t07_04",
       "tema": "geometrie",
-      "podtema": "objem_valce",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Válec má poloměr podstavy 3 cm a výšku 10 cm. Vypočítejte objem (π ≈ 3,14).",
       "odpoved": "282,6 cm³",
@@ -1908,7 +1908,7 @@
     {
       "id": "t07_05",
       "tema": "geometrie",
-      "podtema": "povrch_valce",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Válec má poloměr 5 cm a výšku 8 cm. Vypočítejte celkový povrch (π ≈ 3,14).",
       "odpoved": "408,2 cm²",
@@ -1923,7 +1923,7 @@
     {
       "id": "t07_06",
       "tema": "geometrie",
-      "podtema": "objem_hranolu",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Přímý hranol má trojúhelníkovou podstavu (a=6 cm, h=4 cm) a výšku 10 cm. Vypočítejte objem.",
       "odpoved": "120 cm³",
@@ -1937,7 +1937,7 @@
     {
       "id": "t07_07",
       "tema": "geometrie",
-      "podtema": "objem_kvadru_aplikace",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Akvárium má rozměry 60 cm × 30 cm × 40 cm. Kolik litrů vody pojme (1 litr = 1 dm³)?",
       "odpoved": "72 litrů",
@@ -1951,7 +1951,7 @@
     {
       "id": "t07_08",
       "tema": "geometrie",
-      "podtema": "povrch_krychle",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Povrch krychle je 150 cm². Jaká je délka hrany?",
       "odpoved": "5 cm",
@@ -1966,7 +1966,7 @@
     {
       "id": "t07_09",
       "tema": "geometrie",
-      "podtema": "objem_kuzele",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Kužel má poloměr podstavy 3 cm a výšku 7 cm. Vypočítejte objem (π ≈ 3,14).",
       "odpoved": "65,94 cm³",
@@ -1981,7 +1981,7 @@
     {
       "id": "t07_10",
       "tema": "geometrie",
-      "podtema": "objem_koule",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Koule má poloměr 6 cm. Vypočítejte objem (π ≈ 3,14).",
       "odpoved": "904,32 cm³",
@@ -1995,7 +1995,7 @@
     {
       "id": "t07_11",
       "tema": "geometrie",
-      "podtema": "objem_kvadru_zp_tny_vypocet",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kvádr má čtvercovou podstavu a výšku 12 cm. Objem je 432 cm³. Jaká je strana podstavy?",
       "odpoved": "6 cm",
@@ -2011,7 +2011,7 @@
     {
       "id": "t07_12",
       "tema": "geometrie",
-      "podtema": "povrch_jehlanu",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Pravidelný čtyřboký jehlan má stranu podstavy 6 cm a výšku stěny (apotéma) 5 cm. Vypočítejte povrch.",
       "odpoved": "96 cm²",
@@ -2026,7 +2026,7 @@
     {
       "id": "t07_13",
       "tema": "geometrie",
-      "podtema": "objem_a_povrch_valce",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Válcová nádoba má průměr 20 cm a výšku 30 cm. Kolik kg barvy spotřebujeme na nátěr vnějšího pláště a dna (1 kg barvy pokryje 5 m²)? π ≈ 3,14",
       "odpoved": "≈ 0,252 kg",
@@ -2043,7 +2043,7 @@
     {
       "id": "t07_14",
       "tema": "geometrie",
-      "podtema": "sit_t_les",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kolik papíru (v cm²) potřebujeme na výrobu uzavřené krabičky (kvádru) o rozměrech 10 × 6 × 4 cm? (Bez přesahu.)",
       "odpoved": "248 cm²",
@@ -2058,7 +2058,7 @@
     {
       "id": "t07_15",
       "tema": "geometrie",
-      "podtema": "objem_preliti",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kvádr je naplněn vodou (15 × 10 × 8 cm). Přelijeme do válce o poloměru 5 cm. Jak vysoko bude hladina? (π ≈ 3,14)",
       "odpoved": "≈ 15,29 cm",
@@ -2073,7 +2073,7 @@
     {
       "id": "t07_16",
       "tema": "geometrie",
-      "podtema": "objem_koule_a_valce",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kulička o poloměru 3 cm je zcela ponořena do válce s vodou (r = 6 cm). O kolik cm stoupne hladina? (π ≈ 3,14)",
       "odpoved": "0,5 cm",
@@ -2089,7 +2089,7 @@
     {
       "id": "t07_17",
       "tema": "geometrie",
-      "podtema": "povrch_objem_kombinace",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Krychle má objem 125 cm³. Kolik procent povrchu tvoří jedna stěna?",
       "odpoved": "16,67 %",
@@ -2105,7 +2105,7 @@
     {
       "id": "t07_18",
       "tema": "geometrie",
-      "podtema": "objem_jehlanu",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Pravidelný čtyřboký jehlan má podstavu 8 × 8 cm a výšku 6 cm. Vypočítejte objem.",
       "odpoved": "128 cm³",
@@ -2120,7 +2120,7 @@
     {
       "id": "t07_19",
       "tema": "geometrie",
-      "podtema": "povrch_kuzele",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Kužel má poloměr podstavy 5 cm a výšku 12 cm. Vypočítejte celkový povrch. (π ≈ 3,14)",
       "odpoved": "282,6 cm²",
@@ -2136,7 +2136,7 @@
     {
       "id": "t07_20",
       "tema": "geometrie",
-      "podtema": "kombinace_t_les",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Těleso se skládá z kvádru (10×6×4 cm) a na jeho vrchní straně sedí jehlan (podstava 6×6 cm, výška 3 cm). Vypočítejte celkový objem.",
       "odpoved": "276 cm³",
@@ -2554,7 +2554,7 @@
     {
       "id": "t09_08",
       "tema": "uhly",
-      "podtema": "vn_jsi_uhel_trojuhelniku",
+      "podtema": "vnejsi_uhel_trojuhelniku",
       "obtiznost": 1,
       "zadani": "Vnější úhel trojúhelníku je 130°. Dva vnitřní úhly sousední s tímto vnějším úhlem jsou 50° a β. Jaký je β?",
       "odpoved": "80°",
@@ -2599,7 +2599,7 @@
     {
       "id": "t09_11",
       "tema": "uhly",
-      "podtema": "rovnob_znik_uhly",
+      "podtema": "rovnobeznik_uhly",
       "obtiznost": 2,
       "zadani": "Rovnoběžník má jeden úhel 70°. Jaké jsou zbývající tři úhly?",
       "odpoved": "110°, 70°, 110°",
@@ -2631,7 +2631,7 @@
     {
       "id": "t09_13",
       "tema": "uhly",
-      "podtema": "trojuhelnik_vn_jsi_uhel",
+      "podtema": "trojuhelnik_vnejsi_uhel",
       "obtiznost": 2,
       "zadani": "V trojúhelníku ABC je α = 50°, β = 65°. Určete vnější úhel u vrcholu C.",
       "odpoved": "115°",
@@ -2661,7 +2661,7 @@
     {
       "id": "t09_15",
       "tema": "uhly",
-      "podtema": "pricka_a_rovnob_zky_neznamy_uhel",
+      "podtema": "pricka_a_rovnobezky_neznamy_uhel",
       "obtiznost": 2,
       "zadani": "Přímky p ∥ q. Příčka t svírá s p úhel (3x + 10)° a s q úhel (5x − 20)°. Tyto úhly jsou střídavé. Najděte x a oba úhly.",
       "odpoved": "x = 15, úhly = 55°",
@@ -2677,7 +2677,7 @@
     {
       "id": "t09_16",
       "tema": "uhly",
-      "podtema": "trojuhelnik_rovnice_z_uhl",
+      "podtema": "trojuhelnik_rovnice_z_uhlu",
       "obtiznost": 2,
       "zadani": "Trojúhelník má úhly α = x, β = 2x, γ = 3x. Určete všechny tři úhly.",
       "odpoved": "30°, 60°, 90° — jde o pravoúhlý trojúhelník",
@@ -2707,7 +2707,7 @@
     {
       "id": "t09_18",
       "tema": "uhly",
-      "podtema": "kombinace_rovnob_zek_a_trojuhelniku",
+      "podtema": "kombinace_rovnobezek_a_trojuhelniku",
       "obtiznost": 3,
       "zadani": "Přímky AB ∥ CD. Bod E leží mezi přímkami. Úhel BAE = 35°, úhel DCE = 40°. Jaký je úhel AEC?",
       "odpoved": "75°",
@@ -2938,7 +2938,7 @@
     {
       "id": "t10_13",
       "tema": "grafy_logika",
-      "podtema": "kombinatorika_vyb_r",
+      "podtema": "kombinatorika_vyber",
       "obtiznost": 2,
       "zadani": "Z 5 žáků vybíráme 2 do soutěže (nezáleží na pořadí). Kolik způsobů výběru existuje?",
       "odpoved": "10",

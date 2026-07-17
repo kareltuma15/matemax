@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { DBExample, TEMA_LABELS } from "@/types";
+import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import { checkAnswer } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
@@ -250,7 +250,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               {topicLabel}
             </span>
             <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[80px]">
-              {example.podtema.replace(/_/g, " ")}
+              {podtemaLabel(example.podtema)}
             </span>
           </div>
           <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
@@ -459,7 +459,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                 <span>🔄</span>
                 <span>Procvičit podobné příklady</span>
                 <span className="text-xs opacity-50 ml-auto">
-                  {(TEMA_LABELS[example.tema] ?? example.tema)} · {example.podtema.replace(/_/g, " ")}
+                  {(TEMA_LABELS[example.tema] ?? example.tema)} · {podtemaLabel(example.podtema)}
                 </span>
               </Link>
             )}

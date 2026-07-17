@@ -3907,7 +3907,7 @@
     {
       "id": "GEO_001",
       "tema": "geometrie",
-      "podtema": "ctverec",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Čtverec má stranu 5 cm. Obvod?",
       "odpoved": "20 cm",
@@ -3920,7 +3920,7 @@
     {
       "id": "GEO_002",
       "tema": "geometrie",
-      "podtema": "ctverec",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Čtverec má stranu 7 cm. Obsah?",
       "odpoved": "49 cm²",
@@ -3933,7 +3933,7 @@
     {
       "id": "GEO_003",
       "tema": "geometrie",
-      "podtema": "obdelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Obdélník 8×5 cm. Obvod?",
       "odpoved": "26 cm",
@@ -3946,7 +3946,7 @@
     {
       "id": "GEO_004",
       "tema": "geometrie",
-      "podtema": "obdelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Obdélník 6×4 cm. Obsah?",
       "odpoved": "24 cm²",
@@ -3959,7 +3959,7 @@
     {
       "id": "GEO_005",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Trojúhelník se základnou 8 cm a výškou 5 cm. Obsah?",
       "odpoved": "20 cm²",
@@ -3972,7 +3972,7 @@
     {
       "id": "GEO_006",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Kruh s poloměrem 3 cm. Obvod (π≈3,14)?",
       "odpoved": "18,84 cm",
@@ -3985,7 +3985,7 @@
     {
       "id": "GEO_007",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Kruh s poloměrem 5 cm. Obsah (π≈3,14)?",
       "odpoved": "78,5 cm²",
@@ -3998,7 +3998,7 @@
     {
       "id": "GEO_008",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník: odvěsny 3 a 4 cm. Přepona?",
       "odpoved": "5 cm",
@@ -4011,7 +4011,7 @@
     {
       "id": "GEO_009",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník: odvěsny 5 a 12 cm. Přepona?",
       "odpoved": "13 cm",
@@ -4024,7 +4024,7 @@
     {
       "id": "GEO_010",
       "tema": "geometrie",
-      "podtema": "ctverec",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Čtverec má obvod 24 cm. Délka strany?",
       "odpoved": "6 cm",
@@ -4037,7 +4037,7 @@
     {
       "id": "GEO_011",
       "tema": "geometrie",
-      "podtema": "obdelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Obdélník má obvod 30 cm a délku 10 cm. Šířka?",
       "odpoved": "5 cm",
@@ -4050,7 +4050,7 @@
     {
       "id": "GEO_012",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Pravoúhlý trojúhelník: přepona 10 cm, jedna odvěsna 6 cm. Druhá odvěsna?",
       "odpoved": "8 cm",
@@ -4063,7 +4063,7 @@
     {
       "id": "GEO_013",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Rovnoramenný trojúhelník: ramena 10 cm, základna 12 cm. Výška na základnu?",
       "odpoved": "8 cm",
@@ -4076,7 +4076,7 @@
     {
       "id": "GEO_014",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Rovnoramenný trojúhelník: ramena 10 cm, základna 12 cm. Obsah?",
       "odpoved": "48 cm²",
@@ -4089,7 +4089,7 @@
     {
       "id": "GEO_015",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kruh s průměrem 14 cm. Obsah (π≈3,14)?",
       "odpoved": "153,86 cm²",
@@ -4102,7 +4102,7 @@
     {
       "id": "GEO_016",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kruh s průměrem 20 cm. Obvod (π≈3,14)?",
       "odpoved": "62,8 cm",
@@ -4115,7 +4115,7 @@
     {
       "id": "GEO_017",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Krychle se stranou 4 cm. Objem?",
       "odpoved": "64 cm³",
@@ -4128,7 +4128,7 @@
     {
       "id": "GEO_018",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Krychle se stranou 4 cm. Povrch?",
       "odpoved": "96 cm²",
@@ -4141,7 +4141,7 @@
     {
       "id": "GEO_019",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kvádr 5×4×3 cm. Objem?",
       "odpoved": "60 cm³",
@@ -4154,7 +4154,7 @@
     {
       "id": "GEO_020",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kvádr 5×4×3 cm. Povrch?",
       "odpoved": "94 cm²",
@@ -4167,7 +4167,7 @@
     {
       "id": "GEO_021",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Válec: r=3 cm, h=10 cm. Objem (π≈3,14)?",
       "odpoved": "282,6 cm³",
@@ -4180,7 +4180,7 @@
     {
       "id": "GEO_022",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Válec: r=4 cm, h=7 cm. Povrch (π≈3,14)?",
       "odpoved": "276,32 cm²",
@@ -4193,7 +4193,7 @@
     {
       "id": "GEO_023",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Zkontroluj: Je trojúhelník se stranami 6, 8, 10 pravoúhlý?",
       "odpoved": "Ano",
@@ -4206,7 +4206,7 @@
     {
       "id": "GEO_024",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Zkontroluj: Je trojúhelník 5, 7, 8 pravoúhlý?",
       "odpoved": "Ne",
@@ -4219,7 +4219,7 @@
     {
       "id": "GEO_025",
       "tema": "geometrie",
-      "podtema": "ctverec",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Čtverec má obsah 81 cm². Délka strany?",
       "odpoved": "9 cm",
@@ -4232,7 +4232,7 @@
     {
       "id": "GEO_026",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Trojúhelník se stranami 5, 5, 6 cm. Obsah?",
       "odpoved": "12 cm²",
@@ -4246,7 +4246,7 @@
     {
       "id": "GEO_027",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Zahrada 20×15 m s kruhovým bazénem r=3 m. Plocha zahrady bez bazénu (π≈3,14)?",
       "odpoved": "271,74 m²",
@@ -4259,7 +4259,7 @@
     {
       "id": "GEO_028",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Tečna k ružnici z bodu vzdáleného 10 cm od středu, poloměr 6 cm. Délka tečny?",
       "odpoved": "8 cm",
@@ -4272,7 +4272,7 @@
     {
       "id": "GEO_029",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Rovnostranný trojúhelník se stranou 6 cm. Výška?",
       "odpoved": "3√3 ≈ 5,2 cm",
@@ -4285,7 +4285,7 @@
     {
       "id": "GEO_030",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Rovnostranný trojúhelník se stranou 6 cm. Obsah?",
       "odpoved": "9√3 ≈ 15,6 cm²",
@@ -4298,7 +4298,7 @@
     {
       "id": "GEO_031",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Jehlan se čtvercovou základnou 4 cm a výškou 3 cm. Objem?",
       "odpoved": "16 cm³",
@@ -4311,7 +4311,7 @@
     {
       "id": "GEO_032",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kužel: r=3 cm, h=4 cm. Objem (π≈3,14)?",
       "odpoved": "37,68 cm³",
@@ -4324,7 +4324,7 @@
     {
       "id": "GEO_033",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "V obdélníku 12×5 cm. Délka úhlopříčky?",
       "odpoved": "13 cm",
@@ -4337,7 +4337,7 @@
     {
       "id": "GEO_034",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Výška budovy 15 m, vzdálenost od základny 8 m. Délka tyče od základny ke střeše?",
       "odpoved": "17 m",
@@ -4350,7 +4350,7 @@
     {
       "id": "GEO_035",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "L-tvar: obdélník 10×8 minus obdélník 4×3. Obsah?",
       "odpoved": "68 cm²",
@@ -4363,7 +4363,7 @@
     {
       "id": "GEO_036",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Čtverec se zvětší o 20 %. O kolik procent vzroste obsah?",
       "odpoved": "44 %",
@@ -4376,7 +4376,7 @@
     {
       "id": "GEO_037",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Kruh se zvětší o 10 %. O kolik procent vzroste obsah?",
       "odpoved": "21 %",
@@ -4389,7 +4389,7 @@
     {
       "id": "GEO_038",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Heronův vzorec: trojúhelník se stranami 7, 8, 9. Obsah?",
       "odpoved": "26,83 cm²",
@@ -4403,7 +4403,7 @@
     {
       "id": "GEO_039",
       "tema": "geometrie",
-      "podtema": "podobnost",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Dva podobné trojúhelníky, poměr stran 2:3. Poměr obsahu?",
       "odpoved": "4:9",
@@ -4416,7 +4416,7 @@
     {
       "id": "GEO_040",
       "tema": "geometrie",
-      "podtema": "podobnost",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Podobné obdélníky, poměr délek 3:5. Poměr ploch?",
       "odpoved": "9:25",
@@ -4429,7 +4429,7 @@
     {
       "id": "GEO_041",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Válec: objem 1000 cm³, výška 10 cm. Poloměr (π≈3,14)?",
       "odpoved": "5,64 cm",
@@ -4443,7 +4443,7 @@
     {
       "id": "GEO_042",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Koule: poloměr 6 cm. Objem (π≈3,14)?",
       "odpoved": "904,32 cm³",
@@ -4456,7 +4456,7 @@
     {
       "id": "GEO_043",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kruhový sektor: r=10 cm, úhel 60°. Délka oblouku (π≈3,14)?",
       "odpoved": "10,47 cm",
@@ -4469,7 +4469,7 @@
     {
       "id": "GEO_044",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kruhový sektor: r=8 cm, úhel 90°. Obsah sektoru (π≈3,14)?",
       "odpoved": "50,24 cm²",
@@ -4482,7 +4482,7 @@
     {
       "id": "GEO_045",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Čtverec má úhlopříčku 10 cm. Délka strany?",
       "odpoved": "5√2 ≈ 7,07 cm",
@@ -4496,7 +4496,7 @@
     {
       "id": "GEO_046",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Hranatý hranol 3×4×5 cm. Délka prostorové úhlopříčky?",
       "odpoved": "5√2 ≈ 7,07 cm",
@@ -4510,7 +4510,7 @@
     {
       "id": "GEO_047",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Trojúhelník se stranami 3, 4, 5. Jaký je typ?",
       "odpoved": "Pravoúhlý",
@@ -4523,7 +4523,7 @@
     {
       "id": "GEO_048",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kolik čtvercových dlaždic 20×20 cm potřebujeme na podlahu 4×3 m?",
       "odpoved": "300 ks",
@@ -4537,7 +4537,7 @@
     {
       "id": "GEO_049",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Plot obklopuje pozemek 60×40 m. Kolik metrů plotu?",
       "odpoved": "200 m",
@@ -4550,7 +4550,7 @@
     {
       "id": "GEO_050",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Krychle má povrch 150 cm². Délka strany?",
       "odpoved": "5 cm",
@@ -4563,7 +4563,7 @@
     {
       "id": "GEO_051",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Obdélník s úhlopříčkou 13 cm a jednou stranou 5 cm. Druhá strana a obsah?",
       "odpoved": "12 cm, 60 cm²",
@@ -4577,7 +4577,7 @@
     {
       "id": "GEO_052",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Rovnoramenný lichoběžník: základny 10 a 6 cm, ramena 5 cm. Obsah?",
       "odpoved": "32 cm²",
@@ -4591,7 +4591,7 @@
     {
       "id": "GEO_053",
       "tema": "geometrie",
-      "podtema": "podobnost",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Fotka 10×15 cm se zvětší tak, že kratší strana je 25 cm. Jak dlouhá bude delší strana?",
       "odpoved": "37,5 cm",
@@ -4605,7 +4605,7 @@
     {
       "id": "GEO_054",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Obsah trojúhelníku je 30 cm². Výška je 6 cm. Základna?",
       "odpoved": "10 cm",
@@ -4618,7 +4618,7 @@
     {
       "id": "GEO_055",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kolísání kola: průměr 26 palců (1 palec = 2,54 cm). Obvod (π≈3,14)?",
       "odpoved": "207,07 cm",
@@ -4631,7 +4631,7 @@
     {
       "id": "GEO_056",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 1,
       "zadani": "Kvádr: délka 10 cm, šířka 5 cm, výška 2 cm. Objem?",
       "odpoved": "100 cm³",
@@ -4644,7 +4644,7 @@
     {
       "id": "GEO_057",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Zahrada tvaru písmene L: celkový obdélník 15×10 m, z pravého horního rohu odebrán čtverec 5×5 m. Obsah?",
       "odpoved": "125 m²",
@@ -4657,7 +4657,7 @@
     {
       "id": "GEO_058",
       "tema": "geometrie",
-      "podtema": "podobnost",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Mapu v měřítku 1:50 000. Na mapě vzdálenost 3 cm. Skutečná vzdálenost?",
       "odpoved": "1,5 km",
@@ -4670,7 +4670,7 @@
     {
       "id": "GEO_059",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Diamant (čtverec) s úhlopříčkami 16 cm a 12 cm. Obsah?",
       "odpoved": "96 cm²",
@@ -4683,7 +4683,7 @@
     {
       "id": "GEO_060",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Obvod rovnostranného trojúhelníku je 24 cm. Délka strany?",
       "odpoved": "8 cm",
@@ -4696,7 +4696,7 @@
     {
       "id": "GEO_061",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Půlkruh s průměrem 10 cm. Obsah (π≈3,14)?",
       "odpoved": "39,25 cm²",
@@ -4709,7 +4709,7 @@
     {
       "id": "GEO_062",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Odvěsny pravoúhlého trojúhelníku jsou v poměru 3:4. Přepona je 15 cm. Odvěsny?",
       "odpoved": "9 a 12 cm",
@@ -4724,7 +4724,7 @@
     {
       "id": "GEO_063",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Čtverec a kruh mají stejný obvod 40 cm. Který má větší obsah?",
       "odpoved": "Kruh (127,4 vs. 100 cm²)",
@@ -4738,7 +4738,7 @@
     {
       "id": "GEO_064",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kužel: r=5, h=12. Délka strany (povrchová)?",
       "odpoved": "13 cm",
@@ -4751,7 +4751,7 @@
     {
       "id": "GEO_065",
       "tema": "geometrie",
-      "podtema": "trojuhelnik",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Úhly trojúhelníku jsou v poměru 1:2:3. Jaké jsou úhly?",
       "odpoved": "30°, 60°, 90°",
@@ -4765,7 +4765,7 @@
     {
       "id": "GEO_066",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kruh je vepsán do čtverce se stranou 10 cm. Plocha mezi čtvercem a kruhem?",
       "odpoved": "21,5 cm²",
@@ -4778,7 +4778,7 @@
     {
       "id": "GEO_067",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Z plechu 50×30 cm vystřihneme 4 kruhy s průměrem 10 cm. Zbývající plocha (π≈3,14)?",
       "odpoved": "1185,6 cm²",
@@ -4791,7 +4791,7 @@
     {
       "id": "GEO_068",
       "tema": "geometrie",
-      "podtema": "pythagoras",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Výška jedle 12 m, vzdálenost od paty 5 m. Délka lana od vrcholu k patě?",
       "odpoved": "13 m",
@@ -4804,7 +4804,7 @@
     {
       "id": "GEO_069",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Válec a kužel mají stejný poloměr a výšku. Poměr objemů?",
       "odpoved": "3:1",
@@ -4819,7 +4819,7 @@
     {
       "id": "GEO_070",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Pětiúhelník má vnitřní úhly 110°, 120°, 95°, 130° a x. Jaký je x?",
       "odpoved": "85°",
@@ -8482,7 +8482,7 @@
     {
       "id": "GEO_071",
       "tema": "geometrie",
-      "podtema": "obvodovy_uhel",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Středový úhel AOB = 80°. Jak velký je obvodový úhel ACB nad stejnou tětivou AB?",
       "odpoved": "40°",
@@ -8495,7 +8495,7 @@
     {
       "id": "GEO_072",
       "tema": "geometrie",
-      "podtema": "obvodovy_uhel",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Obvodový úhel ABC = 55°. Jak velký je středový úhel AOC nad stejnou tětivou AC?",
       "odpoved": "110°",
@@ -8508,7 +8508,7 @@
     {
       "id": "GEO_073",
       "tema": "geometrie",
-      "podtema": "obvodovy_uhel",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Bod P leží na kružnici. AB je průměr. Jak velký je úhel APB (Thaletova věta)?",
       "odpoved": "90°",
@@ -8521,7 +8521,7 @@
     {
       "id": "GEO_074",
       "tema": "geometrie",
-      "podtema": "obvodovy_uhel",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Ve vepsaném čtyřúhelníku ABCD je úhel A = 115°. Jak velký je protilehlý úhel C?",
       "odpoved": "65°",
@@ -8535,7 +8535,7 @@
     {
       "id": "GEO_075",
       "tema": "geometrie",
-      "podtema": "obvodovy_uhel",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Obvodový úhel ADB = 40° (D na menším oblouku). Obvodový úhel ACB (C na větším oblouku)?",
       "odpoved": "140°",
@@ -8548,7 +8548,7 @@
     {
       "id": "GEO_076",
       "tema": "geometrie",
-      "podtema": "pravidelny_mnohouhelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Jaký je součet vnitřních úhlů pětiúhelníku?",
       "odpoved": "540°",
@@ -8561,7 +8561,7 @@
     {
       "id": "GEO_077",
       "tema": "geometrie",
-      "podtema": "pravidelny_mnohouhelnik",
+      "podtema": "rovinne",
       "obtiznost": 1,
       "zadani": "Pravidelný šestiúhelník má stranu 5 cm. Obvod?",
       "odpoved": "30 cm",
@@ -8574,7 +8574,7 @@
     {
       "id": "GEO_078",
       "tema": "geometrie",
-      "podtema": "pravidelny_mnohouhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Vnitřní úhel pravidelného osmiúhelníku?",
       "odpoved": "135°",
@@ -8587,7 +8587,7 @@
     {
       "id": "GEO_079",
       "tema": "geometrie",
-      "podtema": "pravidelny_mnohouhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kolik úhlopříček má šestiúhelník?",
       "odpoved": "9",
@@ -8600,7 +8600,7 @@
     {
       "id": "GEO_080",
       "tema": "geometrie",
-      "podtema": "pravidelny_mnohouhelnik",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Vnější úhel pravidelného dvanáctiúhelníku?",
       "odpoved": "30°",
@@ -8613,7 +8613,7 @@
     {
       "id": "GEO_081",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Obdélník má obvod 24 cm a délka je 2× větší než šířka. Obsah?",
       "odpoved": "32 cm²",
@@ -8627,7 +8627,7 @@
     {
       "id": "GEO_082",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Pravý trojúhelník: přepona 13 cm, odvěsna 5 cm. Druhá odvěsna?",
       "odpoved": "12 cm",
@@ -8640,7 +8640,7 @@
     {
       "id": "GEO_083",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Rovnoramenný trojúhelník: základna 10 cm, ramena 13 cm. Výška na základnu?",
       "odpoved": "12 cm",
@@ -8654,7 +8654,7 @@
     {
       "id": "GEO_084",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kosočtverec má úhlopříčky 12 cm a 16 cm. Obsah?",
       "odpoved": "96 cm²",
@@ -8667,7 +8667,7 @@
     {
       "id": "GEO_085",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Obdélník má úhlopříčku 10 cm a kratší stranu 6 cm. Obsah?",
       "odpoved": "48 cm²",
@@ -8681,7 +8681,7 @@
     {
       "id": "GEO_086",
       "tema": "geometrie",
-      "podtema": "kruznice",
+      "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Kružnice má průměr 14 cm. Obsah? (pi = 3,14)",
       "odpoved": "153,86 cm²",
@@ -8695,7 +8695,7 @@
     {
       "id": "GEO_087",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Válec: polomer 5 cm, výška 8 cm. Objem? (pi = 3,14)",
       "odpoved": "628 cm³",
@@ -8708,7 +8708,7 @@
     {
       "id": "GEO_088",
       "tema": "geometrie",
-      "podtema": "teleso",
+      "podtema": "prostorova",
       "obtiznost": 3,
       "zadani": "Kvádr 4×5×6 cm. Délka prostorové úhlopříčky?",
       "odpoved": "sqrt(77) cm ≈ 8,8 cm",
@@ -8721,7 +8721,7 @@
     {
       "id": "GEO_089",
       "tema": "geometrie",
-      "podtema": "podobnost",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Dva podobné trojúhelníky mají poměr stran 2:3. Jaký je poměr jejich ploch?",
       "odpoved": "4:9",
@@ -8734,7 +8734,7 @@
     {
       "id": "GEO_090",
       "tema": "geometrie",
-      "podtema": "kombinovane",
+      "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Trojúhelník má strany 3, 4, 5 cm. Je pravoúhlý? Jaký je jeho obsah?",
       "odpoved": "Ano, S = 6 cm²",

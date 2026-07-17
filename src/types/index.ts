@@ -70,14 +70,26 @@ export const PODTEMA_SLOVNI_ORDER = [
 ] as const;
 
 export const PODTEMA_LABELS: Record<string, string> = {
+  // Slovní úlohy (kapitola 5 sešitu, 5A–5F)
   pomer_meritko:  "Poměr a měřítko",
   pohyb:          "Pohyb",
   spolecna_prace: "Společná práce",
   umera:          "Úměra",
   procenta:       "Procenta",
   finance:        "Finance",
+  // Geometrie (kapitola 4 sešitu, 4A/4B)
+  rovinne:        "Rovinné obrazce",
+  prostorova:     "Prostorová tělesa",
   ostatni:        "Ostatní",
 };
+
+// Podtémata geometrie (kapitola 4 sešitu) — pořadí dle sešitu 4A/4B
+export const PODTEMA_GEOMETRIE_ORDER = ["rovinne", "prostorova"] as const;
+
+/** Čitelný label podtématu; poškozené/neznámé slugy zobrazí s mezerami místo _. */
+export function podtemaLabel(podtema: string): string {
+  return PODTEMA_LABELS[podtema] ?? podtema.replace(/_/g, " ");
+}
 
 export const TEMA_COLORS: Record<string, string> = {
   zlomky:       "bg-blue-500",
