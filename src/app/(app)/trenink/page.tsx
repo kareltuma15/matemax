@@ -120,6 +120,34 @@ function loadDiagScores(): Record<string, number> {
   } catch { return {}; }
 }
 
+// ── Difficulty-aware progrese (pedagogika sešitu: „začni lehkými, nepřeskakuj
+// rovnou na těžké") ──────────────────────────────────────────────────────────
+// Vyšší úroveň se v tématu odemkne, až žák tu nižší prokazatelně zvládá.
+const UNLOCK_CORRECT = 4;   // kolik správných odpovědí na úrovni odemkne další
+const DIAG_UNLOCK_L2 = 0.6; // diagnostika ≥ 60 % v tématu rovnou odemkne L2
+const DIAG_UNLOCK_L3 = 0.85; // ≥ 85 % odemkne i L3
+
+/** Nejvyšší odemčená obtížnost (1–3) pro dané téma podle SM-2 karet + diagnostiky. */
+function unlockedMaxLevel(
+  tema: string,
+  cards: SM2Card[],
+  exById: Map<string, DBExample>,
+  diagScores: Record<string, number>
+): 1 | 2 | 3 {
+  const correctAt: Record<number, number> = { 1: 0, 2: 0, 3: 0 };
+  for (const c of cards) {
+    if (c.lastQuality < 3) continue; // jen prokázané správné odpovědi
+    const ex = exById.get(c.exampleId);
+    if (!ex || ex.tema !== tema) continue;
+    correctAt[ex.obtiznost]++;
+  }
+  const diag = diagScores[tema] ?? 0;
+  let lvl: 1 | 2 | 3 = 1;
+  if (correctAt[1] >= UNLOCK_CORRECT || diag >= DIAG_UNLOCK_L2) lvl = 2;
+  if (lvl === 2 && (correctAt[2] >= UNLOCK_CORRECT || diag >= DIAG_UNLOCK_L3)) lvl = 3;
+  return lvl;
+}
+
 function buildSession(
   cards: SM2Card[],
   temaFilter?: string | null,
@@ -158,6 +186,19 @@ function buildSession(
 
   const cardMap = new Map(cards.map((c) => [c.exampleId, c]));
   const diagScores = loadDiagScores();
+  const exById = new Map(examples.map((e) => [e.id, e]));
+
+  // Odemčená obtížnost per téma — počítá se jednou na téma
+  const levelCache = new Map<string, 1 | 2 | 3>();
+  const maxLevel = (tema: string): 1 | 2 | 3 => {
+    let v = levelCache.get(tema);
+    if (v === undefined) { v = unlockedMaxLevel(tema, cards, exById, diagScores); levelCache.set(tema, v); }
+    return v;
+  };
+
+  // Ramp: session se řadí od nejlehčích po nejtěžší (postupné zahřátí)
+  const rampSort = (ids: string[]): string[] =>
+    [...ids].sort((a, b) => (exById.get(a)?.obtiznost ?? 1) - (exById.get(b)?.obtiznost ?? 1));
 
   const due = pool.filter((ex) => {
     const card = cardMap.get(ex.id);
@@ -168,19 +209,27 @@ function buildSession(
     const fallback = temaFilter
       ? cards.filter((c) => pool.some((ex) => ex.id === c.exampleId))
       : [...cards];
-    return fallback
+    const ids = fallback
       .sort((a, b) => a.nextReview - b.nextReview)
       .slice(0, SESSION_SIZE)
       .map((c) => c.exampleId);
+    return rampSort(ids);
   }
 
-  const scored = due.map((ex) => {
+  // Gating: neukazuj příklad nad odemčenou úrovní tématu. Pokud by tím zbylo
+  // málo příkladů (nové téma bez L1 v poolu apod.), gating pro jistotu vypneme.
+  const gated = due.filter((ex) => ex.obtiznost <= maxLevel(ex.tema));
+  const workingPool = gated.length >= Math.min(SESSION_SIZE, due.length) ? gated : due;
+
+  // Výběr řídí slabina tématu (diagnostika); obtížnost řeší gating + ramp výše.
+  const scored = workingPool.map((ex) => {
     const diagScore = diagScores[ex.tema] ?? 1;
     const jitter = Math.random() * 0.1;
-    return { ex, sort: diagScore + ex.obtiznost * 0.01 + jitter };
+    return { ex, sort: diagScore + jitter };
   });
   scored.sort((a, b) => a.sort - b.sort);
-  return scored.slice(0, SESSION_SIZE).map((s) => s.ex.id);
+  const chosen = scored.slice(0, SESSION_SIZE).map((s) => s.ex.id);
+  return rampSort(chosen);
 }
 
 function enqueueBadges(
