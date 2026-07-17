@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "source": "Pracovní sešit 2026/27 — kapitola 8 (Určování úhlů) + souhrnné mixy",
+    "description": "Doplnění nejtenčích míst dle auditu 2026-07: úhly L2/L3 a souhrnné L1.",
+    "total": 13,
+    "updated": "2026-07-17"
+  },
+  "examples": [
+    {
+      "id": "UHL_L2_01",
+      "tema": "uhly",
+      "podtema": "vnejsi_uhel",
+      "obtiznost": 2,
+      "zadani": "V trojúhelníku ABC je α = 55° a β = 40°. Jaký je vnější úhel u vrcholu C?",
+      "odpoved": "95°",
+      "reseni_kroky": [
+        "Vnější úhel je roven součtu dvou vnitřních úhlů u zbylých vrcholů.",
+        "Vnější úhel u C = α + β = 55° + 40°.",
+        "Výsledek: 95°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_02",
+      "tema": "uhly",
+      "podtema": "rovnobezky",
+      "obtiznost": 2,
+      "zadani": "Přímky p ∥ q protíná příčka. S přímkou p svírá úhel 65°. Jaký je souhlasný úhel u přímky q?",
+      "odpoved": "65°",
+      "reseni_kroky": [
+        "Souhlasné úhly (poloha F) u rovnoběžek protnutých příčkou jsou shodné.",
+        "Souhlasný úhel u q má stejnou velikost jako úhel u p.",
+        "Výsledek: 65°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_03",
+      "tema": "uhly",
+      "podtema": "ctyruhelnik",
+      "obtiznost": 2,
+      "zadani": "Ve čtyřúhelníku jsou tři úhly 90°, 85° a 100°. Jaký je čtvrtý úhel?",
+      "odpoved": "85°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů čtyřúhelníku je vždy 360°.",
+        "Čtvrtý úhel = 360° − 90° − 85° − 100° = 360° − 275°.",
+        "Výsledek: 85°."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_04",
+      "tema": "uhly",
+      "podtema": "vedlejsi_uhly",
+      "obtiznost": 2,
+      "zadani": "Dvě přímky se protínají. Jeden úhel je o 40° větší než jeho vedlejší úhel. Urči velikosti obou úhlů.",
+      "odpoved": "70° a 110°",
+      "reseni_kroky": [
+        "Vedlejší úhly mají součet 180°. Menší označíme x, větší x + 40°.",
+        "x + (x + 40°) = 180° → 2x = 140° → x = 70°.",
+        "Úhly jsou 70° a 110°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_05",
+      "tema": "uhly",
+      "podtema": "rovnoramenny_trojuhelnik",
+      "obtiznost": 2,
+      "zadani": "Rovnoramenný trojúhelník má úhel při základně 65°. Jaký je úhel u vrcholu (proti základně)?",
+      "odpoved": "50°",
+      "reseni_kroky": [
+        "V rovnoramenném trojúhelníku jsou oba úhly při základně shodné: 65° a 65°.",
+        "Úhel u vrcholu = 180° − 65° − 65°.",
+        "Výsledek: 50°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_01",
+      "tema": "uhly",
+      "podtema": "lichobeznik",
+      "obtiznost": 3,
+      "zadani": "Rovnoramenný lichoběžník ABCD (AB ∥ DC) má úhel ADC = 120°. Úhlopříčky se protínají v bodě S a úhel ABD = 25°. Jaká je velikost úhlu ASB?",
+      "odpoved": "130°",
+      "reseni_kroky": [
+        "AB ∥ DC → úhly DAB a ADC jsou přilehlé: DAB = 180° − 120° = 60°.",
+        "Rovnoramenný lichoběžník má osu souměrnosti, takže úhlopříčka svírá se základnou stejný úhel: BAC = ABD = 25°.",
+        "V trojúhelníku ABS: ASB = 180° − 25° − 25° = 130°."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_02",
+      "tema": "uhly",
+      "podtema": "pravidelny_mnohouhelnik",
+      "obtiznost": 3,
+      "zadani": "Jaký je vnitřní úhel pravidelného osmiúhelníku?",
+      "odpoved": "135°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů n-úhelníku je (n − 2) · 180°. Pro n = 8: 6 · 180° = 1080°.",
+        "Pravidelný osmiúhelník má všechny úhly stejné: 1080° : 8.",
+        "Výsledek: 135°."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_03",
+      "tema": "uhly",
+      "podtema": "osa_uhlu_trojuhelnik",
+      "obtiznost": 3,
+      "zadani": "V trojúhelníku ABC je α = 50° a β = 60°. Osa úhlu γ protíná stranu AB v bodě D. Jaká je velikost úhlu ADC?",
+      "odpoved": "95°",
+      "reseni_kroky": [
+        "Třetí úhel: γ = 180° − 50° − 60° = 70°.",
+        "Osa úhlu γ ho půlí: úhel ACD = 35°.",
+        "V trojúhelníku ACD: ADC = 180° − α − 35° = 180° − 50° − 35° = 95°."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_04",
+      "tema": "uhly",
+      "podtema": "rovnobezky_trojuhelnik",
+      "obtiznost": 3,
+      "zadani": "Přímky p ∥ q. Mezi nimi leží bod E. Úhel mezi p a ramenem EA je 35°, úhel mezi q a ramenem EB je 42°. Jaká je velikost úhlu AEB?",
+      "odpoved": "77°",
+      "reseni_kroky": [
+        "Bodem E vedeme pomocnou přímku rovnoběžnou s p i q.",
+        "Střídavé úhly: část úhlu AEB u přímky p je 35°, část u přímky q je 42°.",
+        "AEB = 35° + 42° = 77°."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_05",
+      "tema": "uhly",
+      "podtema": "vnejsi_uhel",
+      "obtiznost": 3,
+      "zadani": "V rovnoramenném trojúhelníku ABC (AC = BC) je vnější úhel u vrcholu C roven 80°. Jaké jsou úhly při základně AB?",
+      "odpoved": "40°",
+      "reseni_kroky": [
+        "Vnější úhel u C = součet úhlů při základně (α + β).",
+        "V rovnoramenném trojúhelníku jsou úhly při základně shodné: α = β.",
+        "2α = 80° → α = β = 40°."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU_L1_01",
+      "tema": "souhrnne",
+      "podtema": "mix",
+      "obtiznost": 1,
+      "zadani": "Vypočítej tři čtvrtiny z 200 Kč.",
+      "odpoved": "150 Kč",
+      "reseni_kroky": [
+        "Tři čtvrtiny = 3/4. Nejprve čtvrtina: 200 : 4 = 50 Kč.",
+        "Tři čtvrtiny: 3 · 50 = 150 Kč."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU_L1_02",
+      "tema": "souhrnne",
+      "podtema": "mix",
+      "obtiznost": 1,
+      "zadani": "Obdélník má rozměry 6 cm a 4 cm. Vypočítej jeho obvod a obsah.",
+      "odpoved": "obvod 20 cm, obsah 24 cm²",
+      "reseni_kroky": [
+        "Obvod = 2 · (6 + 4) = 2 · 10 = 20 cm.",
+        "Obsah = 6 · 4 = 24 cm²."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU_L1_03",
+      "tema": "souhrnne",
+      "podtema": "mix",
+      "obtiznost": 1,
+      "zadani": "Vyřeš rovnici: 2x + 5 = 15.",
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "Odečteme 5 od obou stran: 2x = 10.",
+        "Vydělíme dvěma: x = 5."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    }
+  ]
+}
