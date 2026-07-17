@@ -5,6 +5,11 @@ import { rateLimit, clientIp } from "@/lib/rate-limit";
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 export async function POST(req: NextRequest) {
+  // Bez API klíče funkci raději vypneme — klient pak hint tlačítko skryje,
+  // místo aby žákovi ukazoval chybu.
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return NextResponse.json({ error: "AI hint není nastavený", unavailable: true }, { status: 503 });
+  }
   if (!rateLimit(`hint:${clientIp(req)}`, 10, 5 * 60_000)) {
     return NextResponse.json({ error: "Příliš mnoho požadavků, zkus to za chvíli." }, { status: 429 });
   }

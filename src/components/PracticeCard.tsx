@@ -48,6 +48,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [aiHint, setAiHint]             = useState<string | null>(null);
   const [aiHintLoading, setAiHintLoading] = useState(false);
   const [aiHintError, setAiHintError]   = useState(false);
+  const [aiHintUnavailable, setAiHintUnavailable] = useState(false); // klíč nenastaven → skryj tlačítko
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -168,6 +169,8 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       const data = await res.json();
       if (data.hint) {
         setAiHint(data.hint);
+      } else if (data.unavailable) {
+        setAiHintUnavailable(true); // funkce vypnutá — tlačítko zmizí, žádná chyba
       } else {
         setAiHintError(true);
       }
@@ -399,7 +402,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                 </div>
 
                 {/* AI hint tlačítko */}
-                {!aiHint && !aiHintLoading && (
+                {!aiHint && !aiHintLoading && !aiHintUnavailable && (
                   <button
                     type="button"
                     onClick={fetchAiHint}
