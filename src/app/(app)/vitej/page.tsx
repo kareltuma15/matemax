@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { PENDING_REF_KEY } from "@/lib/referral";
+import { DIAGNOSTIC_MINUTES } from "@/lib/site-stats";
 
 export default function VitejPage() {
   const router = useRouter();
@@ -145,7 +146,7 @@ export default function VitejPage() {
         {/* Info karty */}
         <div className="grid grid-cols-3 gap-2 w-full">
           {[
-            ["⏱️", "8 minut", "diagnostika"],
+            ["⏱️", `${DIAGNOSTIC_MINUTES} minut`, "diagnostika"],
             ["📚", "9 témat", "CERMAT"],
             ["🎯", "Výsledek", "ihned"],
           ].map(([icon, title, sub]) => (

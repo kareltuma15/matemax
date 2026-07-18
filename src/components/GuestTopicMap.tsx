@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
 import { GUEST_FREE_TOPICS } from "@/lib/subscription";
+import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const ALL_TOPICS = Object.keys(TEMA_LABELS);
 
@@ -107,7 +108,7 @@ export default function GuestTopicMap({ onSelectTopic }: Props) {
           Registruj se zdarma — 2 minuty, žádná karta
         </p>
         <p className="text-xs text-blue-300 mt-2">
-          {ALL_TOPICS.length} témat · SM-2 trénink · 700+ příkladů · CERMAT simulace
+          {ALL_TOPICS.length} témat · SM-2 trénink · {EXAMPLES_LABEL} příkladů · CERMAT simulace
         </p>
       </Link>
     </div>

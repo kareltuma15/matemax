@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { loadProgress, saveProgress } from "@/lib/progress";
 import type { Session } from "@supabase/supabase-js";
 import { getSmartRedirect } from "@/lib/smart-redirect";
+import { EXAMPLES_ROUNDED, EXAMPLES_LABEL, TOPICS_COUNT, DIAGNOSTIC_MINUTES, STUDENTS_LABEL } from "@/lib/site-stats";
 
 const LoggedInDashboard = dynamic(() => import("@/components/LoggedInDashboard"), {
   ssr: false,
@@ -23,7 +24,7 @@ const HOW_IT_WORKS = [
     icon: "🎯",
     title: "Diagnostika",
     subtitle: "Zjistíme, kde stojíš",
-    desc: "MateMax začne krátkým adaptivním testem (5 minut). Automaticky pozná, která témata ovládáš a kde máš mezery — a sestaví tréninkový plán přímo na míru.",
+    desc: `MateMax začne krátkým adaptivním testem (${DIAGNOSTIC_MINUTES} minut). Automaticky pozná, která témata ovládáš a kde máš mezery — a sestaví tréninkový plán přímo na míru.`,
     color: "bg-blue-50 border-blue-200",
     accent: "text-blue-600",
   },
@@ -60,7 +61,7 @@ const PRICING = [
       "✓ 10 příkladů denně",
       "✓ Základní statistiky",
       "✗ Týdenní report pro rodiče",
-      "✗ Plná databáze 900+ příkladů (všechna témata)",
+      `✗ Plná databáze ${EXAMPLES_LABEL} příkladů (všechna témata)`,
       "✗ CERMAT cvičné testy",
     ],
     cta: "Začít zdarma",
@@ -104,7 +105,7 @@ const FAQS = [
   },
   {
     q: "Mohu MateMax použít i bez přijímaček?",
-    a: "Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze 900+ příkladů pokrývá 9 témat CERMAT přijímaček — zlomky, výrazy, rovnice, geometrie, slovní úlohy, grafy, konstrukce, úhly a souhrnné.",
+    a: `Ano, pro kohokoliv kdo chce procvičovat matematiku. Databáze ${EXAMPLES_LABEL} příkladů pokrývá ${TOPICS_COUNT} témat CERMAT přijímaček — zlomky, výrazy, rovnice, geometrie, slovní úlohy, grafy, konstrukce, úhly a souhrnné.`,
   },
   {
     q: "Jak se liší MateMax od pracovního sešitu Matematika Snadno?",
@@ -526,7 +527,7 @@ export default function LandingPage() {
               ))}
             </div>
             <p className="text-sm text-blue-200">
-              Již <strong className="text-white">1 200+</strong> žáků procvičuje každý den
+              Již <strong className="text-white">{STUDENTS_LABEL}</strong> žáků procvičuje každý den
             </p>
           </div>
 
@@ -588,7 +589,7 @@ export default function LandingPage() {
         </div>
         <div className="grid md:grid-cols-3 gap-5">
           {[
-            { icon: "🎯", title: "Diagnostický test", desc: "Zjisti kde máš mezery za 10 minut" },
+            { icon: "🎯", title: "Diagnostický test", desc: `Zjisti kde máš mezery za ${DIAGNOSTIC_MINUTES} minut` },
             { icon: "💪", title: "Denní výzvy", desc: "Každý den nová výzva, každý den o krok blíž" },
             { icon: "📊", title: "Sledování pokroku", desc: "Vidíš přesně co umíš a co ne" },
           ].map(({ icon, title, desc }, i) => (
@@ -609,7 +610,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
             <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
-              <CountUp end={900} suffix="+" />
+              <CountUp end={EXAMPLES_ROUNDED} suffix="+" />
             </div>
             <div className="text-sm text-gray-500 mt-1">příkladů v databázi</div>
           </div>

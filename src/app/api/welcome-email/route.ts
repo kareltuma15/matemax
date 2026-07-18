@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 export async function POST(req: NextRequest) {
   if (!rateLimit(`welcome-email:${clientIp(req)}`, 5, 60_000)) {
@@ -133,7 +134,7 @@ export async function POST(req: NextRequest) {
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#F8FAFF;border-radius:12px;padding:24px;">
                 <tr><td style="padding:0 0 12px;"><span style="font-size:18px;">📅</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">Každý den 7 příkladů stačí</span></td></tr>
                 <tr><td style="padding:0 0 12px;"><span style="font-size:18px;">🧠</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">SM-2 algoritmus — inteligentní opakování</span></td></tr>
-                <tr><td style="padding:0;"><span style="font-size:18px;">📊</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">700+ příkladů ve stylu CERMAT</span></td></tr>
+                <tr><td style="padding:0;"><span style="font-size:18px;">📊</span><span style="color:#0D1B3E;font-size:14px;font-weight:600;margin-left:10px;">${EXAMPLES_LABEL} příkladů ve stylu CERMAT</span></td></tr>
               </table>
             </td>
           </tr>

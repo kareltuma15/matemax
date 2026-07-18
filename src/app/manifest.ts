@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
+import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "MateMax — Přijímačky z matematiky",
     short_name: "MateMax",
-    description: "Adaptivní příprava na přijímačky z matematiky. 700+ příkladů, 10 minut denně.",
+    description: `Adaptivní příprava na přijímačky z matematiky. ${EXAMPLES_LABEL} příkladů, ${DAILY_MINUTES} minut denně.`,
     start_url: "/",
     display: "standalone",
     orientation: "portrait",

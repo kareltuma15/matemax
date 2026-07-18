@@ -3,14 +3,17 @@ import "./globals.css";
 import "katex/dist/katex.min.css";
 import PwaSetup from "@/components/PwaSetup";
 import { THEME_SCRIPT } from "@/lib/theme";
+import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
+
+const SITE_DESCRIPTION = `Adaptivní matematický trenér pro žáky 8. a 9. třídy. ${EXAMPLES_LABEL} příkladů, chytrý algoritmus, ${DAILY_MINUTES} minut denně.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://matemax.matematika-snadno.cz"),
   title: "MateMax — Příprava na přijímačky z matematiky",
-  description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
+  description: SITE_DESCRIPTION,
   openGraph: {
     title: "MateMax — Příprava na přijímačky z matematiky",
-    description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
+    description: SITE_DESCRIPTION,
     locale: "cs_CZ",
     type: "website",
     siteName: "MateMax",
@@ -18,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "MateMax — Příprava na přijímačky z matematiky",
-    description: "Adaptivní matematický trenér pro žáky 8. a 9. třídy. 700+ příkladů, chytrý algoritmus, 10 minut denně.",
+    description: SITE_DESCRIPTION,
   },
   appleWebApp: {
     capable: true,
