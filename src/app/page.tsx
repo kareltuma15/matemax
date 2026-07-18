@@ -272,26 +272,43 @@ function CountUp({ end, suffix = "", prefix = "" }: { end: number; suffix?: stri
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    function animate() {
+      if (started.current) return;
+      started.current = true;
+      // Kdo si vypnul animace, dostane rovnou výsledek
+      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+        setCount(end);
+        return;
+      }
+      const duration = 1400;
+      const startTime = performance.now();
+      function tick(now: number) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setCount(Math.round(eased * end));
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // Už ve výřezu? Spusť hned — IntersectionObserver bývá při prvním
+    // načtení nespolehlivý (stejný důvod jako u useScrollReveal výš).
+    if (el.getBoundingClientRect().top < (window.innerHeight || 0)) animate();
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const duration = 1400;
-          const startTime = performance.now();
-          function tick(now: number) {
-            const p = Math.min((now - startTime) / duration, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            setCount(Math.round(eased * end));
-            if (p < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
+      ([entry]) => { if (entry.isIntersecting) { animate(); observer.disconnect(); } },
+      { threshold: 0 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Pojistka: číslo MUSÍ být vidět. Když observer nesepne, návštěvník by
+    // jinak trvale koukal na „0+ příkladů v databázi".
+    const fallback = setTimeout(() => {
+      if (!started.current) { started.current = true; setCount(end); }
+    }, 1200);
+
+    return () => { observer.disconnect(); clearTimeout(fallback); };
   }, [end]);
 
   return <span ref={ref}>{prefix}{count}{suffix}</span>;
