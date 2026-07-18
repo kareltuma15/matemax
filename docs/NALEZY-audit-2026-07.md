@@ -16,7 +16,7 @@
 |---|---------|-----------|------|
 | 1 | Česká zadání jako matematická změť | Kritická | ✅ |
 | 2 | Statistiky na landingu ukazují nuly | Kritická | ✅ |
-| 3 | Diagnostika o 2 otázkách odemkne L3 | Důležitá | 🔴 |
+| 3 | Diagnostika o 2 otázkách odemkne L3 | Důležitá | ✅ |
 | 4 | Nekonzistentní čísla napříč aplikací | Důležitá | 🔴 |
 | 5 | Zámky v diagnostice matou | Důležitá | 🔴 |
 | 6 | Podtémata jako syrové slugy | Důležitá | 🔴 |
@@ -75,17 +75,21 @@
 
 ---
 
-## 3. Diagnostika o 2 otázkách odemkne nejtěžší úroveň 🔴
+## 3. Diagnostika o 2 otázkách odemykala nejtěžší úroveň ✅
 
 **Co se stalo:** v diagnostice jsem u zlomků trefil 2/2 → 100 % → podle pravidla `diag ≥ 85 %` se hned odemkla úroveň L3. Další trénink mi rovnou naservíroval „Střední ⭐⭐".
 
-**Proč to vadí:** dvě uhodnuté otázky nejsou důkaz zvládnutí. Žák, který tipoval, dostane těžké příklady a znechutí se. Je to v přímém rozporu s pedagogikou sešitu („začni vždy lehkými").
+**Proč to vadilo:** dvě uhodnuté otázky nejsou důkaz zvládnutí. Žák, který tipoval, dostane těžké příklady a znechutí se. V přímém rozporu s pedagogikou sešitu („začni vždy lehkými").
 
-**Příčina:** vlastní návrh z commitu `5827292` — konstanty `DIAG_UNLOCK_L2 = 0.6`, `DIAG_UNLOCK_L3 = 0.85` nad vzorkem pouhých 2 otázek na téma.
+**Příčina:** vlastní návrh z commitu `5827292` — `DIAG_UNLOCK_L3 = 0.85` nad vzorkem pouhých 2 otázek na téma.
 
-**Návrh řešení:** z diagnostiky odemykat **maximálně L2**; L3 až po prokázaném procvičení (`UNLOCK_CORRECT` správných na L2). Diagnostika má sloužit k zacílení slabin, ne k přeskočení úrovní.
+**Řešení:** diagnostika odemyká nejvýš **L2** (při 2 otázkách = obě správně; jen zabrání tomu, aby silný žák dostával samé lehké). **L3 chce prokázané procvičení** — 4 správné odpovědi na L2 v daném tématu. Konstanta `DIAG_UNLOCK_L3` odstraněna.
 
-**Kde:** `src/app/(app)/trenink/page.tsx` — `unlockedMaxLevel()`
+**Ověřeno:**
+- Deterministicky, 10 scénářů: diag 100 % → max L2 · 4×L2 → L3 · 3 správné nestačí · špatné odpovědi se nepočítají.
+- Naživo: stav „zlomky 2/2 z diagnostiky" dřív startoval na Střední, nyní session běží **Lehká → Střední ×6** a těžká se neobjeví vůbec.
+
+**Commit:** `d1db5ab`
 
 ---
 
