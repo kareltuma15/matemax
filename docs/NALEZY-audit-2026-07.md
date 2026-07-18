@@ -18,7 +18,7 @@
 | 2 | Statistiky na landingu ukazují nuly | Kritická | ✅ |
 | 3 | Diagnostika o 2 otázkách odemkne L3 | Důležitá | ✅ |
 | 4 | Nekonzistentní čísla napříč aplikací | Důležitá | ✅ |
-| 5 | Zámky v diagnostice matou | Důležitá | 🔴 |
+| 5 | Zámky v diagnostice matou | Důležitá | ✅ |
 | 6 | Podtémata jako syrové slugy | Důležitá | 🔴 |
 | 7 | Landing dlouhý a mluví na rodiče | Kosmetická | 🔴 |
 | 8 | Registrace má zbytečná pole | Kosmetická | 🔴 |
@@ -118,15 +118,17 @@
 
 ---
 
-## 5. Zámky v diagnostice matou 🔴
+## 5. Zámky v diagnostice matou ✅
 
-**Co žák vidí:** v průběhu diagnostiky jsou kroky označené `Konstrukce 🔒`, `Úhly 🔒`, `Výrazy 🔒` — ale otázky z nich stejně vyplňuje.
+**Co žák viděl:** v průběhu diagnostiky kroky označené `Konstrukce 🔒`, `Úhly 🔒`, `Výrazy 🔒` — ale otázky z nich stejně vyplňoval.
 
-**Proč to vadí:** zámek u něčeho, co právě dělám, nedává smysl. Diagnostika má změřit všechna témata — to je její smysl.
+**Proč to vadilo:** zámek u něčeho, co právě dělám, nedává smysl. Diagnostika má změřit všechna témata, aby mohla zacílit slabiny.
 
-**Návrh řešení:** v diagnostice zámky nezobrazovat vůbec. Premium gating patří do tréninku, ne do vstupního měření.
+**Řešení:** zámky z diagnostiky odstraněny (obě zobrazení — hlavička kroku i seznam pod ukazatelem). Odstraněny i osiřelé importy `isTopicLocked` / `usePremium` — diagnostika už premium stav nikde nepotřebuje. Gating zůstává v mapě témat a tréninku.
 
-**Kde:** `src/app/(app)/diagnostika/page.tsx` (seznam kroků s tématy)
+**Ověřeno:** jako host všech 8 kroků bez jediného zámku (dřív jich mělo 5), regresně mapa témat dál zamyká 7 témat a sekci „ZAMČENO".
+
+**Commit:** `3af6ee8`
 
 ---
 
