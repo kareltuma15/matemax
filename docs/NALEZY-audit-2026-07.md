@@ -17,7 +17,7 @@
 | 1 | Česká zadání jako matematická změť | Kritická | ✅ |
 | 2 | Statistiky na landingu ukazují nuly | Kritická | ✅ |
 | 3 | Diagnostika o 2 otázkách odemkne L3 | Důležitá | ✅ |
-| 4 | Nekonzistentní čísla napříč aplikací | Důležitá | 🔴 |
+| 4 | Nekonzistentní čísla napříč aplikací | Důležitá | ✅ |
 | 5 | Zámky v diagnostice matou | Důležitá | 🔴 |
 | 6 | Podtémata jako syrové slugy | Důležitá | 🔴 |
 | 7 | Landing dlouhý a mluví na rodiče | Kosmetická | 🔴 |
@@ -93,19 +93,28 @@
 
 ---
 
-## 4. Nekonzistentní čísla napříč aplikací 🔴
+## 4. Nekonzistentní čísla napříč aplikací ✅
 
-| Údaj | Uváděné hodnoty | Kde |
+| Údaj | Bylo | Nyní |
 |---|---|---|
-| Délka diagnostiky | **5 min** / **8 min** / **10 min** | landing (jak to funguje) / `/vitej` / landing (co tě čeká) |
-| Počet příkladů | **700+** / **900+** (reálně **925**) | mapa témat, meta description / landing, ceník, FAQ |
-| Počet žáků | **1 200+** / **500+** | landing / pracovní sešit |
+| Délka diagnostiky | **5 / 8 / 10 min** | **8 min** všude |
+| Počet příkladů | **700+ / 900+** (reálně 925) | **900+** všude |
+| Počet žáků | **1 200+** vs **500+** v sešitu | **500+** (shodně se sešitem) |
 
-**Proč to vadí:** žák si toho nevšimne, rodič ano — působí to nedbale a podkopává důvěru.
+**Proč to vadilo:** žák si toho nevšimne, rodič ano — působilo to nedbale.
 
-**Návrh řešení:** jeden zdroj pravdy. Počet příkladů odvozovat z dat (`examples.length`), ne psát ručně. Délku diagnostiky a počet žáků sjednotit na jedno číslo a použít všude.
+**Řešení:** `src/lib/site-stats.ts` drží čísla na jednom místě; všech 11 výskytů (landing, metadata, manifest, uvítací email, mapa témat, uvítací obrazovka) je odtud.
+- Počet příkladů zaokrouhlen dolů na padesátky → tvrzení zůstane pravdivé i po přidání příkladů.
+- Popis webu v `layout.tsx` byl 3× zkopírovaný → jedna konstanta.
+- **Vědomě bez importu dat:** landing i mapa témat jsou klientské komponenty, nemá smysl kvůli jednomu číslu tahat do bundlu 400 kB JSONu. Soulad s databází proto hlídá `scripts/check-site-stats.mjs` (selže, když se rozejdou).
 
-**Kde:** `src/app/page.tsx`, `src/app/(app)/vitej/page.tsx`, `src/app/layout.tsx` (meta description), `GuestTopicMap`
+**Rozhodnutí Karla:** 500+ žáků (shoda se sešitem), diagnostika 8 minut.
+
+**Pozn.:** „10 minut denně" u tréninku je jiný údaj a zůstává beze změny.
+
+**Ověřeno:** landing 500+ / 8 min (obě místa) / 900+, meta description 900+, mapa témat „9 témat · 900+ příkladů", nikde nezůstal nezinterpolovaný `${...}`, konzole čistá.
+
+**Commit:** `3c8bf27`
 
 ---
 
