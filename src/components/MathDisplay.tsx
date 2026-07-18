@@ -53,8 +53,11 @@ export default function MathDisplay({ tex, displayMode = false, className }: Pro
  *   - Pokud string neobsahuje $, pokusí se ho renderovat jako LaTeX přímo
  */
 function renderMixed(text: string, displayMode: boolean): string {
-  // Pokud text neobsahuje $, renderuj celé jako LaTeX (display nebo inline)
   if (!text.includes("$")) {
+    // Bez $ rozhodni podle obsahu. Věta bez matematické notace se NESMÍ poslat
+    // do KaTeXu — ten by z každého písmene udělal kurzívní proměnnou a zahodil
+    // mezery („Z čísla 48 odečteme…" → „𝑍𝑐ˇıˊ𝑠𝑙𝑎48…").
+    if (!/[\\^_{}]/.test(text)) return escapeHtml(text);
     return katex.renderToString(text, {
       displayMode,
       throwOnError: false,
@@ -76,9 +79,13 @@ function renderMixed(text: string, displayMode: boolean): string {
       });
     }
     // Prostý text — escapuj HTML
-    return part
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return escapeHtml(part);
   }).join("");
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
