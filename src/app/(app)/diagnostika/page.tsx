@@ -6,8 +6,6 @@ import Link from "next/link";
 import { examples } from "@/data/examples";
 import { createCard } from "@/lib/sm2";
 import { SM2Card } from "@/types";
-import { isTopicLocked } from "@/lib/subscription";
-import { usePremium } from "@/lib/premium";
 import { supabase } from "@/lib/supabase";
 import { remoteSyncDiagResults } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
@@ -245,7 +243,6 @@ function getStepQuestions(stepIdx: number): DiagQuestion[] {
 
 export default function DiagnostikaPage() {
   const router = useRouter();
-  const { isPremium } = usePremium();
   const [alreadyDone, setAlreadyDone] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(QUESTIONS.length).fill(null));
@@ -408,7 +405,6 @@ export default function DiagnostikaPage() {
           </span>
           <span className="font-semibold text-slate-600">
             {STEPS[stepIdx].label}
-            {isTopicLocked(STEPS[stepIdx].tema, isPremium) && " 🔒"}
           </span>
         </div>
         {/* Step labels below bars */}
@@ -420,7 +416,6 @@ export default function DiagnostikaPage() {
                 style={{ color: i === stepIdx ? "#2E6DA4" : "#94a3b8", fontWeight: i === stepIdx ? 600 : 400 }}
               >
                 {step.label}
-                {isTopicLocked(step.tema, isPremium) && " 🔒"}
               </span>
             </div>
           ))}
