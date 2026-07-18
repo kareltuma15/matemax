@@ -124,8 +124,11 @@ function loadDiagScores(): Record<string, number> {
 // rovnou na těžké") ──────────────────────────────────────────────────────────
 // Vyšší úroveň se v tématu odemkne, až žák tu nižší prokazatelně zvládá.
 const UNLOCK_CORRECT = 4;   // kolik správných odpovědí na úrovni odemkne další
-const DIAG_UNLOCK_L2 = 0.6; // diagnostika ≥ 60 % v tématu rovnou odemkne L2
-const DIAG_UNLOCK_L3 = 0.85; // ≥ 85 % odemkne i L3
+// Diagnostika má na téma jen 2 otázky — na odemčení těžké úrovně je to moc
+// tenký vzorek (dvě uhodnuté odpovědi nejsou důkaz zvládnutí). Umí proto
+// odemknout nejvýš L2, což při 2 otázkách znamená „obě správně" a jen zabrání
+// tomu, aby silný žák dostával samé lehké. L3 chce prokázané procvičení.
+const DIAG_UNLOCK_L2 = 0.6;
 
 /** Nejvyšší odemčená obtížnost (1–3) pro dané téma podle SM-2 karet + diagnostiky. */
 function unlockedMaxLevel(
@@ -144,7 +147,7 @@ function unlockedMaxLevel(
   const diag = diagScores[tema] ?? 0;
   let lvl: 1 | 2 | 3 = 1;
   if (correctAt[1] >= UNLOCK_CORRECT || diag >= DIAG_UNLOCK_L2) lvl = 2;
-  if (lvl === 2 && (correctAt[2] >= UNLOCK_CORRECT || diag >= DIAG_UNLOCK_L3)) lvl = 3;
+  if (lvl === 2 && correctAt[2] >= UNLOCK_CORRECT) lvl = 3;
   return lvl;
 }
 
