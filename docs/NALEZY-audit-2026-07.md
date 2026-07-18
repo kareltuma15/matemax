@@ -15,7 +15,7 @@
 | # | Problém | Závažnost | Stav |
 |---|---------|-----------|------|
 | 1 | Česká zadání jako matematická změť | Kritická | ✅ |
-| 2 | Statistiky na landingu ukazují nuly | Kritická | 🔴 |
+| 2 | Statistiky na landingu ukazují nuly | Kritická | ✅ |
 | 3 | Diagnostika o 2 otázkách odemkne L3 | Důležitá | 🔴 |
 | 4 | Nekonzistentní čísla napříč aplikací | Důležitá | 🔴 |
 | 5 | Zámky v diagnostice matou | Důležitá | 🔴 |
@@ -53,18 +53,25 @@
 
 ---
 
-## 2. Statistiky na landingu ukazují nuly 🔴
+## 2. Statistiky na landingu ukazovaly nuly ✅
 
-**Co návštěvník vidí:** `0+ příkladů v databázi · 0 témat CERMAT · 0 min denně stačí`
+**Co návštěvník viděl:** `0+ příkladů v databázi · 0 témat CERMAT · 0 min denně stačí`
 
-**Proč to vadí:** je to přesně v místě, kde se rodič i žák rozhoduje, jestli produktu věřit. „0 příkladů" = prázdný produkt.
+**Proč to vadilo:** je to přesně v místě, kde se rodič i žák rozhoduje, jestli produktu věřit. „0 příkladů" = prázdný produkt.
 
-**Příčina:** `CountUp` komponenta animuje z 0 na cílovou hodnotu přes `IntersectionObserver`. Při mém průchodu se nespustila ani po scrollnutí k sekci — hodnoty zůstaly na 0.
+**Příčina:** `CountUp` startoval na 0 a čekal na `IntersectionObserver` s `threshold: 0.5`. Když observer nesepnul (nespolehlivý při prvním načtení, malý viewport, rychlý scroll), nula tam zůstala natrvalo — bez jakékoli pojistky. Přitom `useScrollReveal` hned nad ním se tuhle lekci už naučil a fallback má.
 
-**Návrh řešení:** vykreslit cílové číslo rovnou a animaci brát jako progresivní vylepšení (počáteční stav = cílová hodnota, ne 0). Případně fallback timeoutem, kdyby observer nesepnul.
+**Řešení:**
+- Pojistka: když do 1,2 s nic nesepne, číslo se dosadí napřímo.
+- Start i bez observeru, když je prvek už ve výřezu (stejný vzor jako `useScrollReveal`).
+- `threshold` 0.5 → 0.
+- `prefers-reduced-motion` dostane rovnou výsledek místo animace.
 
-**Kde:** `src/app/page.tsx` (komponenta `CountUp`, ~ř. 190–215; použití ~ř. 595)
-**Pozn.:** `page.tsx` má citlivé kódování — editovat skriptem, ne Edit nástrojem.
+**Ověřeno:** mobilní výřez, bez scrollování se zobrazí 900+ / 9 / 10 min (dřív 0+ / 0 / 0 min), po doscrollování stejné hodnoty, žádné zaseknutí na mezihodnotě, konzole čistá.
+
+**Commit:** `787d2db`
+
+**Pozn.:** kódování `page.tsx` ověřeno jako čisté UTF-8 (round-trip bajtově identický) — editace skriptem proběhla bez poškození.
 
 ---
 
