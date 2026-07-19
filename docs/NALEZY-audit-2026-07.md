@@ -29,7 +29,8 @@
 | 13 | Chybí `ANTHROPIC_API_KEY` → AI hint vypnutý | Konfigurace | ⏸️ |
 | 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | ⏸️ |
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
-| 16 | Geometrie je zdarma i premium zároveň | **Kritická** | ⏸️ |
+| 16 | Geometrie je zdarma i premium zároveň | **Kritická** | 🔴 |
+| 17 | Odhlášení smaže postup, který se nevrátí | **Kritická** | 🔴 |
 
 ---
 
@@ -266,6 +267,39 @@ Geometrie je tedy současně „zdarma pro hosty" i „premium". Navíc `FREE_TO
 **Proč je to kritické:** není to kosmetika, ale rozbitý slib směrem k zákazníkovi. Zároveň to znamená, že *nevíme jistě, co je vlastně zdarma* — a to je základ monetizace.
 
 ⏸️ **Vyžaduje tvoje rozhodnutí:** která tři témata mají být zdarma? (A má se to lišit pro nepřihlášeného hosta a přihlášeného uživatele bez Premium?) Pak sjednotím na jeden zdroj pravdy.
+
+---
+
+## 17. Odhlášení smaže postup, který se už nevrátí 🔴
+
+*(Nahlásil Karel 2026-07-17: „po opětovném přihlášení se ke mně appka chová jak k novému uživateli". Potvrzeno.)*
+
+**Co žák zažije:** odhlásí se, znovu přihlásí — a je skoro na nule. Připravenost 0 %, žádná slabá místa, žádné odznaky, opakování začíná od začátku. Přestože má za sebou diagnostiku i tréninky.
+
+**Mechanismus — dvě věci dohromady:**
+
+1. `handleLogout()` v `profil/page.tsx` smaže 12 lokálních klíčů včetně `matemax-gamification`, `matemax-cards`, `matemax-progress`. Samo o sobě správně — na sdíleném zařízení nemá další uživatel vidět cizí data.
+2. Jenže většina dat se **nikdy nenačte zpět ze Supabase**. `storage.ts` obsahuje jen zápisové funkce (`remoteSync*`, `remoteSave*`) a čtení pouze z localStorage. Žádná `hydrateFromRemote()` neexistuje.
+
+**Co přežije přihlášení a co ne:**
+
+| Data | Zapisuje se na server? | Načítá se zpět? | Výsledek |
+|---|---|---|---|
+| XP, streak, level | ✅ `user_xp` | ✅ `page.tsx` | zachováno |
+| Výsledky diagnostiky | ✅ `diagnostic_results` | ✅ `LoggedInDashboard` | zachováno |
+| SM-2 karty (opakování) | ✅ `sm2_cards` | ❌ | **opakování od nuly** |
+| Odznaky | ✅ `user_badges` | ❌ | **zmizí** |
+| Historie tréninků | ✅ `sessions` | ❌ | **prázdná heatmapa** |
+| **`topicStats`** — úspěšnost po tématech | ❌ **nikam** | ❌ | **navždy pryč** |
+
+**Nejhorší je `topicStats`.** Žije jen v localStorage a na server se neposílá vůbec. Přitom pohání připravenost (`getReadiness`), skóre v mapě učení, slabá místa i statistiky v profilu. Po odhlášení je nenávratně pryč — ani teoreticky ji nejde obnovit.
+
+**Proč je to kritické:** tiše ničí to jediné, co žáka drží — vidět, že se lepší. A rozbíjí i adaptivitu: session builder bez `topicStats` a SM-2 karet neví, co žák umí, takže ho vrátí na začátek.
+
+**Návrh řešení:**
+1. Doplnit zálohu `topicStats` na server (chybí úplně).
+2. Napsat `hydrateFromRemote()` — po přihlášení natáhnout SM-2 karty, gamifikaci, odznaky a historii; slučovat podle „novější vyhrává", ne slepě přepisovat.
+3. Zavolat ji na jednom místě po přihlášení, ne rozeseté po komponentách (dnes to dělá dashboard pro diagnostiku a `page.tsx` pro XP).
 
 ---
 
