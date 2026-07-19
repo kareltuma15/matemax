@@ -31,6 +31,7 @@
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
 | 16 | Geometrie je zdarma i premium zároveň | **Kritická** | 🔴 |
 | 17 | Odhlášení smaže postup, který se nevrátí | **Kritická** | 🟡 čeká na migraci |
+| 18 | Uživatel uvízne na staré verzi (service worker) | **Kritická** | ✅ |
 
 ---
 
@@ -307,6 +308,32 @@ Geometrie je tedy současně „zdarma pro hosty" i „premium". Navíc `FREE_TO
 **Ověřeno:** 14 testů slučování nad skutečnými funkcemi (obnova z prázdna · nezahození novějšího postupu · sjednocení z obou stran · zachování `last_quality`). Bez spuštěné migrace appka nespadne — dotazy degradují a obnoví se jen odznaky a diagnostika.
 
 ⏸️ **Zbývá:** spustit `supabase/migrations/20260717_user_gamification.sql` a ověřit naživo (odhlásit → přihlásit). Přihlášený průchod nemůžu otestovat sám.
+
+---
+
+## 18. Uživatel uvízne na staré verzi (service worker) ✅
+
+*(Nahlásil Karel 2026-07-17: „vůbec se nejde přihlásit".)*
+
+**Co se dělo:** klik na „Přihlásit" vracel zacachovanou stránku tréninku, ne přihlašovací formulář. Nešlo se dostat dál.
+
+**Diagnóza:** produkce byla v pořádku — přihlašovací stránka i nasazená verze. Prozradil to detail na snímku: dole svítilo **„700+ příkladů"**, ačkoli produkce už hlásí **900+**. Karlův prohlížeč tedy držel **starý service worker** z doby, kdy byl cache-first, a servíroval stará data.
+
+**Proč se z toho nešlo dostat:**
+- `/sw.js` se posílal bez `Cache-Control`, takže prohlížeč mohl dlouho dostávat **starý sw.js z HTTP cache** — nová verze se vůbec nestáhla.
+- `PwaSetup` service worker jen zaregistroval a nikdy nevynutil kontrolu aktualizace.
+
+Dohromady: kdo jednou chytil starý SW, zůstal na něm — a nemá jak to poznat ani spravit.
+
+**Řešení:**
+- `/sw.js` se posílá s `no-cache, no-store, must-revalidate` (`next.config.ts`).
+- `PwaSetup` volá `registration.update()` při načtení i při návratu na kartu. Nový `sw.js` volá `skipWaiting` + `clients.claim`, takže po stažení hned převezme řízení.
+
+**Ověřeno:** produkční build vrací u `/sw.js` správnou hlavičku. Produkční `/prihlaseni` i `/trenink` ověřeny přímo v prohlížeči — funkční a s aktuální verzí.
+
+**Okamžitá záchrana pro postiženého uživatele:** DevTools → Application → Service Workers → Unregister + Clear site data. Nebo anonymní okno.
+
+**Commit:** `d8b73fe`
 
 ---
 
