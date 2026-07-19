@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import PwaSetup from "@/components/PwaSetup";
+import ProgressSync from "@/components/ProgressSync";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
 
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-full" style={{ background: "var(--surface-1)", color: "var(--text-primary)" }}>
         <PwaSetup />
+        <ProgressSync />
         {children}
       </body>
     </html>

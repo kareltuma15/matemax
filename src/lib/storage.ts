@@ -1,6 +1,7 @@
 // Storage facade — localStorage now, Supabase once a user is logged in
 import { supabase } from "./supabase";
 import { SM2Card, UserProgress } from "@/types";
+import { loadGamification, saveGamification, GamificationState } from "./gamification";
 
 export interface SessionHistoryEntry {
   date: string;       // "YYYY-MM-DD"
@@ -24,6 +25,8 @@ type SM2Row = {
   interval: number;
   ease: number;
   next_review: number;
+  repetitions?: number;
+  last_quality?: number;
 };
 
 // ── Local storage helpers (current default) ──────────────────────────────────
@@ -130,4 +133,155 @@ export async function remoteSyncBadges(userId: string, badgeIds: string[]): Prom
     seen: false,
   }));
   await supabase.from("user_badges").upsert(rows, { onConflict: "user_id,badge_id" });
+}
+
+// ── Záloha gamifikace ────────────────────────────────────────────────────────
+// `topicStats` (úspěšnost po tématech) se dřív neposílala nikam a odhlášení ji
+// smazalo nenávratně — a s ní připravenost, slabá místa i mapa učení.
+
+export async function remoteSyncGamification(
+  userId: string,
+  state: GamificationState
+): Promise<void> {
+  if (!supabase) return;
+  await supabase.from("user_gamification").upsert(
+    { user_id: userId, state, updated_at: new Date().toISOString() },
+    { onConflict: "user_id" }
+  );
+}
+
+// ── Obnovení postupu po přihlášení ───────────────────────────────────────────
+//
+// Odhlášení lokální data maže (správně — sdílené zařízení). Bez tohoto kroku by
+// se ale žák po přihlášení choval jako nový: bez opakování, odznaků i statistik.
+//
+// Slučujeme po polích, ne „server přepíše lokál". Kdyby se přepisovalo naslepo,
+// přihlášení na starším zařízení by zahodilo novější postup. Takhle se postup
+// nemůže ztratit ani z jedné strany.
+
+/** U každého tématu vyhrává záznam s více odpověďmi. */
+function mergeTopicStats(
+  a: Record<string, { correct: number; total: number }>,
+  b: Record<string, { correct: number; total: number }>
+): Record<string, { correct: number; total: number }> {
+  const out: Record<string, { correct: number; total: number }> = { ...a };
+  for (const [tema, rb] of Object.entries(b)) {
+    const ra = out[tema];
+    if (!ra || rb.total > ra.total || (rb.total === ra.total && rb.correct > ra.correct)) {
+      out[tema] = rb;
+    }
+  }
+  return out;
+}
+
+function laterDate(a: string | null, b: string | null): string | null {
+  if (!a) return b;
+  if (!b) return a;
+  return a > b ? a : b;
+}
+
+export function mergeGamification(
+  local: GamificationState,
+  remote: GamificationState
+): GamificationState {
+  const dominant = remote.totalSolved > local.totalSolved ? remote : local;
+  return {
+    totalSolved:         Math.max(local.totalSolved, remote.totalSolved),
+    perfectSessions:     Math.max(local.perfectSessions, remote.perfectSessions),
+    dailyGoalsCompleted: Math.max(local.dailyGoalsCompleted, remote.dailyGoalsCompleted),
+    earnedBadges:        [...new Set([...local.earnedBadges, ...remote.earnedBadges])],
+    weekendDaysSeen:     [...new Set([...local.weekendDaysSeen, ...remote.weekendDaysSeen])],
+    topicStats:          mergeTopicStats(local.topicStats, remote.topicStats),
+    lastSessionDate:     laterDate(local.lastSessionDate, remote.lastSessionDate),
+    lastDailyGoalDate:   laterDate(local.lastDailyGoalDate, remote.lastDailyGoalDate),
+    lastLevelKey:        dominant.lastLevelKey,
+    // Série správných odpovědí platí jen pro rozdělaný trénink — nepřenáší se.
+    consecutiveCorrect:  local.consecutiveCorrect,
+  };
+}
+
+/** U každého příkladu vyhrává karta s víc opakováními, při shodě pozdější termín. */
+export function mergeCards(local: SM2Card[], remote: SM2Card[]): SM2Card[] {
+  const byId = new Map<string, SM2Card>();
+  for (const c of remote) byId.set(c.exampleId, c);
+  for (const c of local) {
+    const r = byId.get(c.exampleId);
+    if (!r || c.repetitions > r.repetitions ||
+        (c.repetitions === r.repetitions && c.nextReview > r.nextReview)) {
+      byId.set(c.exampleId, c);
+    }
+  }
+  return [...byId.values()];
+}
+
+export interface HydrateResult {
+  cards: number;
+  topics: number;
+  badges: number;
+  diagRestored: boolean;
+}
+
+/**
+ * Natáhne postup ze Supabase a sloučí ho s tím, co je v prohlížeči.
+ * Volat po přihlášení. Bezpečné volat opakovaně.
+ */
+export async function hydrateFromRemote(userId: string): Promise<HydrateResult | null> {
+  if (!supabase || typeof window === "undefined") return null;
+  const result: HydrateResult = { cards: 0, topics: 0, badges: 0, diagRestored: false };
+
+  try {
+    const [gamRes, cardsRes, badgesRes, diagRes] = await Promise.all([
+      supabase.from("user_gamification").select("state").eq("user_id", userId).maybeSingle(),
+      supabase.from("sm2_cards").select("example_id, interval, ease, next_review, repetitions, last_quality").eq("user_id", userId),
+      supabase.from("user_badges").select("badge_id").eq("user_id", userId),
+      supabase.from("diagnostic_results").select("tema, correct, total").eq("user_id", userId),
+    ]);
+
+    // ── Gamifikace (topicStats, odznaky, počty) ──────────────────────────────
+    const local = loadGamification();
+    let merged = local;
+    const remoteState = gamRes.data?.state as GamificationState | undefined;
+    if (remoteState) merged = mergeGamification(local, remoteState);
+
+    // Odznaky z vlastní tabulky doplníme taky — je to zdroj pravdy o odznacích
+    const remoteBadges = (badgesRes.data ?? []).map((b) => b.badge_id as string);
+    if (remoteBadges.length > 0) {
+      merged = { ...merged, earnedBadges: [...new Set([...merged.earnedBadges, ...remoteBadges])] };
+    }
+    result.badges = merged.earnedBadges.length;
+    result.topics = Object.keys(merged.topicStats).length;
+    saveGamification(merged);
+
+    // ── SM-2 karty (stav opakování) ──────────────────────────────────────────
+    const remoteCards: SM2Card[] = (cardsRes.data ?? []).map((r) => ({
+      exampleId:   r.example_id as string,
+      interval:    (r.interval as number) ?? 0,
+      easeFactor:  (r.ease as number) ?? 2.5,
+      nextReview:  (r.next_review as number) ?? 0,
+      repetitions: (r.repetitions as number) ?? 0,
+      lastQuality: (r.last_quality as number) ?? 0,
+    }));
+    if (remoteCards.length > 0) {
+      const mergedCards = mergeCards(localLoadCards(), remoteCards);
+      localSaveCards(mergedCards);
+      result.cards = mergedCards.length;
+    }
+
+    // ── Diagnostika (aby appka nenabízela test, který už žák udělal) ─────────
+    const diagRows = diagRes.data ?? [];
+    if (diagRows.length > 0 && localStorage.getItem("matemax-diag-done") !== "1") {
+      const results: Record<string, { correct: number; total: number }> = {};
+      for (const r of diagRows) {
+        results[r.tema as string] = { correct: r.correct as number, total: r.total as number };
+      }
+      localStorage.setItem("matemax-diag-results", JSON.stringify(results));
+      localStorage.setItem("matemax-diag-done", "1");
+      result.diagRestored = true;
+    }
+
+    return result;
+  } catch (err) {
+    console.error("[hydrateFromRemote] selhalo:", err);
+    return null;
+  }
 }

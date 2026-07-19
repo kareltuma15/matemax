@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { HYDRATED_KEY } from "@/components/ProgressSync";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -486,9 +487,11 @@ export default function ProfilPage() {
       "matemax-progress", "matemax-cards", "matemax-gamification",
       "matemax-diag-done", "matemax-diag-results", "matemax-today",
       "matemax-streak-milestones", "matemax-freeze-used", "matemax-first-session-done",
-      "matemax-sessions", "matemax-session-draft", "matemax-progress-milestones",
+      "matemax-session-history", "matemax-session-draft", "matemax-progress-milestones",
     ];
     keysToRemove.forEach((k) => localStorage.removeItem(k));
+    // Hydratační značka — bez smazání by se postup po přepnutí účtu neobnovil
+    sessionStorage.removeItem(HYDRATED_KEY);
     const challengeKeys: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);

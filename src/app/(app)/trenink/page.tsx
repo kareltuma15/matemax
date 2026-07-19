@@ -6,7 +6,7 @@ import { examples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
-import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, localSaveSession } from "@/lib/storage";
+import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, remoteSyncGamification, localSaveSession } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
 import {
@@ -427,6 +427,9 @@ function TreningPageInner() {
         const level = getLevelFromXP(p.xp);
         await remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0, p.streak ?? 0);
         await remoteSyncBadges(uid, gamState.earnedBadges);
+        // Záloha gamifikace — hlavně topicStats, bez nich je po odhlášení
+        // připravenost i mapa učení na nule (nález #17)
+        await remoteSyncGamification(uid, gamState);
 
         // Sync SM2 cards pro tuto session (rodičovský dashboard z nich čte téma breakdown)
         const sessionSet = new Set(sessionIds);
@@ -438,6 +441,8 @@ function TreningPageInner() {
               interval: card.interval,
               ease: card.easeFactor,
               next_review: card.nextReview,
+              repetitions: card.repetitions,
+              last_quality: card.lastQuality,
             });
           }
         }
