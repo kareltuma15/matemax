@@ -19,7 +19,7 @@
 | 3 | Diagnostika o 2 otázkách odemkne L3 | Důležitá | ✅ |
 | 4 | Nekonzistentní čísla napříč aplikací | Důležitá | ✅ |
 | 5 | Zámky v diagnostice matou | Důležitá | ✅ |
-| 6 | Podtémata jako syrové slugy | Důležitá | 🔴 |
+| 6 | Podtémata jako syrové slugy | Důležitá | ✅ |
 | 7 | Landing dlouhý a mluví na rodiče | Kosmetická | 🔴 |
 | 8 | Registrace má zbytečná pole | Kosmetická | 🔴 |
 | 9 | Jméno z registrace se nepoužívá | Kosmetická | 🔴 |
@@ -29,6 +29,7 @@
 | 13 | Chybí `ANTHROPIC_API_KEY` → AI hint vypnutý | Konfigurace | ⏸️ |
 | 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | ⏸️ |
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
+| 16 | Geometrie je zdarma i premium zároveň | **Kritická** | ⏸️ |
 
 ---
 
@@ -132,17 +133,21 @@
 
 ---
 
-## 6. Podtémata se ukazují jako syrové slugy 🔴
+## 6. Podtémata se ukazovala jako syrové slugy ✅
 
-**Co žák vidí:** nad příkladem `odcitani`, `scitani a odcitani`, `kombinovane` — malým písmem, bez diakritiky a velkých písmen.
+**Co žák viděl:** nad příkladem `odcitani`, `scitani a odcitani`, `kombinovane` — bez diakritiky a velkých písmen. Vypadá to jako interní databázový údaj, co se omylem dostal ven.
 
-**Proč to vadí:** vypadá to jako nedodělek / interní databázový údaj, který se omylem dostal ven.
+**Řešení — dvoustupňové**, protože pojmenovat všech ~110 slugů nedává smysl (velká část je jednorázový nepořádek, viz #12):
+1. Popisky doplněny pro podtémata, která se **opravdu opakují** → **85 % příkladů** ukáže čitelný text.
+2. `podtemaLabel()` vrací `null` místo slugu, když popisek nezná — PracticeCard, ConstructionCard i filtr v tréninku pak nezobrazí nic. Zbylých 137 příkladů tak nemá podtéma raději vůbec.
 
-**Stav:** popisky mají zatím jen slovní úlohy, geometrie a konstrukce (doplněno v `6afe452` a `b028069`). Chybí zlomky, výrazy, rovnice, grafy, úhly, souhrnné.
+**Pokrytí popisky:** zlomky 96 % · výrazy 94 % · rovnice 96 % · geometrie 100 % · slovní úlohy 100 % · grafy 75 % · úhly 37 % · konstrukce 29 % · souhrnné 5 %
 
-**Návrh řešení:** doplnit `PODTEMA_LABELS` pro zbývající témata. Fallback `podtemaLabel()` už existuje, takže stačí přidat dvojice klíč → popisek. Alternativa: pokud podtéma nemá popisek, nezobrazovat ho vůbec (lepší než syrový slug).
+**Vedlejší přínos:** duplicitní slugy sdílí popisek, takže se sjednotí i vizuálně bez zásahu do dat — `linearni` / `linearni_rovnice` / `linearni_jednoduche` → všechny „Lineární rovnice".
 
-**Kde:** `src/types/index.ts` — `PODTEMA_LABELS`
+**Ověřeno:** zlomky „Sčítání a odčítání", rovnice 5× „Lineární rovnice", nikde žádné podtržítko.
+
+**Commit:** `71c0dc7`
 
 ---
 
@@ -239,6 +244,28 @@
 
 **Navíc k ověření vizuálně** (screenshoty mi v prostředí nefungovaly):
 - Je vybraná odpověď v diagnostice dost vidět? Odznak písmene se modře přebarví, ale u zvýraznění pozadí mi měření nesedělo.
+
+---
+
+## 16. Geometrie je zdarma i premium zároveň ⏸️
+
+*(Nalezeno 2026-07-17 při ověřování nálezu #6.)*
+
+**Co žák zažije:** na mapě témat vidí u Geometrie zelený štítek **„ZDARMA"**, klikne na „Procvičovat" — a dostane **„Toto téma je v Premium"**. Slib porušený o jedno kliknutí později.
+
+**Příčina:** v `src/lib/subscription.ts` jsou **tři seznamy, které si odporují**:
+
+| Seznam | Obsahuje | Používá |
+|---|---|---|
+| `GUEST_FREE_TOPICS` | zlomky, rovnice, **geometrie** | mapa témat, `isTopicLockedForGuest()` |
+| `FREE_TOPICS` | zlomky, rovnice, **slovní úlohy** | (nikde? ověřit) |
+| `PREMIUM_TOPICS` | vyrazy, **geometrie**, grafy, konstrukce, uhly, souhrnne | `isTopicLocked()` |
+
+Geometrie je tedy současně „zdarma pro hosty" i „premium". Navíc `FREE_TOPICS` uvádí jako třetí téma zdarma slovní úlohy, zatímco `GUEST_FREE_TOPICS` geometrii — dvě různé odpovědi na tutéž otázku.
+
+**Proč je to kritické:** není to kosmetika, ale rozbitý slib směrem k zákazníkovi. Zároveň to znamená, že *nevíme jistě, co je vlastně zdarma* — a to je základ monetizace.
+
+⏸️ **Vyžaduje tvoje rozhodnutí:** která tři témata mají být zdarma? (A má se to lišit pro nepřihlášeného hosta a přihlášeného uživatele bez Premium?) Pak sjednotím na jeden zdroj pravdy.
 
 ---
 
