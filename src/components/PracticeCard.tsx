@@ -252,9 +252,11 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             >
               {topicLabel}
             </span>
-            <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[80px]">
-              {podtemaLabel(example.podtema)}
-            </span>
+            {podtemaLabel(example.podtema) && (
+              <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[80px]">
+                {podtemaLabel(example.podtema)}
+              </span>
+            )}
           </div>
           <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
             <div
@@ -462,7 +464,8 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                 <span>🔄</span>
                 <span>Procvičit podobné příklady</span>
                 <span className="text-xs opacity-50 ml-auto">
-                  {(TEMA_LABELS[example.tema] ?? example.tema)} · {podtemaLabel(example.podtema)}
+                  {(TEMA_LABELS[example.tema] ?? example.tema)}
+                  {podtemaLabel(example.podtema) && ` · ${podtemaLabel(example.podtema)}`}
                 </span>
               </Link>
             )}

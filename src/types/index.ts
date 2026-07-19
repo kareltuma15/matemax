@@ -105,15 +105,88 @@ export const PODTEMA_LABELS: Record<string, string> = {
   kruznice_opsana:    "Kružnice opsaná",
   kruznice_vepsana:   "Kružnice vepsaná",
   obdelnik_thales:    "Obdélník (Thales)",
-  ostatni:        "Ostatní",
+
+  // Zlomky — některé slugy znamenají totéž, proto sdílí popisek
+  scitani:              "Sčítání",
+  odcitani:             "Odčítání",
+  scitani_a_odcitani:   "Sčítání a odčítání",
+  scitani_odcitani:     "Sčítání a odčítání",
+  nasobeni:             "Násobení",
+  deleni:               "Dělení",
+  nasobeni_deleni:      "Násobení a dělení",
+  smisena_cisla:        "Smíšená čísla",
+  smisena_cisla_operace:"Smíšená čísla",
+  zkracovani:           "Krácení",
+  porovnavani:          "Porovnávání",
+  slozeny_zlomek:       "Složený zlomek",
+  slovni_uloha:         "Slovní úloha",
+  komplexni_vypocet:    "Složený výpočet",
+  kombinovane:          "Kombinované",
+  rovnice_se_zlomky:    "Rovnice se zlomky",
+
+  // Výrazy
+  dosazovani:           "Dosazování",
+  umocnovani:           "Umocňování",
+  mocniny:              "Mocniny",
+  odmocniny:            "Odmocniny",
+  zakony_mocnin:        "Zákony mocnin",
+  pravidla_pro_mocniny: "Zákony mocnin",
+  roznasobeni:          "Roznásobení závorek",
+  vytkani:              "Vytýkání",
+  zjednodusovani:       "Zjednodušování",
+  pythagorova_veta:     "Pythagorova věta",
+
+  // Rovnice
+  linearni:             "Lineární rovnice",
+  linearni_rovnice:     "Lineární rovnice",
+  linearni_jednoduche:  "Lineární rovnice",
+  linearni_se_zavorkou: "Rovnice se závorkami",
+  linearni_rovnice_se_zavorkami: "Rovnice se závorkami",
+  zlomkova:             "Zlomková rovnice",
+  linearni_se_zlomky:   "Zlomková rovnice",
+  linearni_rovnice_se_zlomky: "Zlomková rovnice",
+  soustava:             "Soustava rovnic",
+  soustava_rovnic:      "Soustava rovnic",
+  slovni:               "Slovní úloha",
+
+  // Grafy a logika
+  aritmeticka_posloupnost: "Aritmetická posloupnost",
+  geometricka_posloupnost: "Geometrická posloupnost",
+  kvadraticka_posloupnost: "Kvadratická posloupnost",
+  ciselna_zakonitost:      "Číselná zákonitost",
+  ciselne_zakonitosti:     "Číselná zákonitost",
+  ruzna_vzorec:            "Číselná zákonitost",
+  logicka_dedukce:         "Logická dedukce",
+
+  // Úhly (kapitola 8 sešitu)
+  vnejsi_uhel:              "Vnější úhel",
+  vedlejsi_uhly:            "Vedlejší úhly",
+  rovnobezky:               "Úhly u rovnoběžek",
+  rovnobezky_trojuhelnik:   "Úhly u rovnoběžek",
+  ctyruhelnik:              "Čtyřúhelník",
+  rovnoramenny_trojuhelnik: "Rovnoramenný trojúhelník",
+  lichobeznik:              "Lichoběžník",
+  pravidelny_mnohouhelnik:  "Pravidelný mnohoúhelník",
+  osa_uhlu_trojuhelnik:     "Osa úhlu v trojúhelníku",
+
+  // Souhrnné
+  mix:                "Mix témat",
+
+  ostatni:            "Ostatní",
 };
 
 // Podtémata geometrie (kapitola 4 sešitu) — pořadí dle sešitu 4A/4B
 export const PODTEMA_GEOMETRIE_ORDER = ["rovinne", "prostorova"] as const;
 
-/** Čitelný label podtématu; poškozené/neznámé slugy zobrazí s mezerami místo _. */
-export function podtemaLabel(podtema: string): string {
-  return PODTEMA_LABELS[podtema] ?? podtema.replace(/_/g, " ");
+/**
+ * Čitelný popisek podtématu, nebo `null` když ho neznáme.
+ *
+ * Databáze má u některých témat desítky jednorázových podtémat (úhly: 28
+ * na 30 příkladů) — syrový slug typu „scitani_a_odcitani" vypadá jako
+ * nedodělek, který se omylem dostal ven. Radši nezobrazíme nic.
+ */
+export function podtemaLabel(podtema: string): string | null {
+  return PODTEMA_LABELS[podtema] ?? null;
 }
 
 export const TEMA_COLORS: Record<string, string> = {

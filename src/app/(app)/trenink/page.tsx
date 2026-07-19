@@ -45,7 +45,7 @@ const ProgressMilestoneModal = dynamic(() => import("@/components/ProgressMilest
 const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr: false });
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
-import { TEMA_LABELS, PODTEMA_LABELS, DBExample } from "@/types";
+import { TEMA_LABELS, podtemaLabel, DBExample } from "@/types";
 
 function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
   const hard = examples.filter(
@@ -1002,8 +1002,8 @@ function TreningPageInner() {
           style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
         >
           🎯 Cílený trénink: <strong className="ml-1">{TEMA_LABELS[temaFilter] ?? temaFilter}</strong>
-          {podtemaFilter && (
-            <strong> · {PODTEMA_LABELS[podtemaFilter] ?? podtemaFilter}</strong>
+          {podtemaFilter && podtemaLabel(podtemaFilter) && (
+            <strong> · {podtemaLabel(podtemaFilter)}</strong>
           )}
         </div>
       )}
