@@ -23,6 +23,20 @@ export default function VitejPage() {
       const uid = data.session.user.id;
       setEmail(data.session.user.email ?? null);
 
+      // Pojistka: kdo má diagnostiku za sebou, nemá tady co dělat. Rozhodnutí
+      // po přihlášení sice čte obnovená data, ale kdyby obnova selhala nebo se
+      // opozdila, vracející se žák by dostal „Vítej + spusť diagnostiku".
+      const { data: diagRows } = await supabase!
+        .from("diagnostic_results")
+        .select("tema")
+        .eq("user_id", uid)
+        .limit(1);
+      if (diagRows && diagRows.length > 0) {
+        localStorage.setItem("matemax-diag-done", "1");
+        router.replace("/trenink");
+        return;
+      }
+
       // Posuň stav onboardingu na welcome_shown
       supabase!
         .from("user_onboarding")

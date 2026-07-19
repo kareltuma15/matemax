@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { getSmartRedirect } from "@/lib/smart-redirect";
+import { hydrateFromRemote } from "@/lib/storage";
 
 export default function PrihlaseniPage() {
   return (
@@ -44,15 +45,23 @@ function PrihlaseniForm() {
     setLoading(true);
 
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
-      setLoading(false);
       if (authError) {
+        setLoading(false);
         setError(authError.message === "Invalid login credentials"
           ? "Špatný email nebo heslo."
           : authError.message);
         return;
       }
+
+      // Obnov postup ze serveru DŘÍV, než se rozhodne kam jít. Odhlášení maže
+      // localStorage a getSmartRedirect z něj čte — bez tohoto kroku by vracející
+      // se žák vypadal jako nový a poslali bychom ho na „Vítej + diagnostika",
+      // kterou má dávno hotovou.
+      if (data.user) await hydrateFromRemote(data.user.id);
+
+      setLoading(false);
       const next = searchParams.get("next");
       // Explicit ?next= param (e.g. from protected route) takes priority; otherwise smart redirect
       const destination = next && next.startsWith("/") ? next : getSmartRedirect();
