@@ -30,7 +30,7 @@
 | 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | ⏸️ |
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
 | 16 | Geometrie je zdarma i premium zároveň | **Kritická** | 🔴 |
-| 17 | Odhlášení smaže postup, který se nevrátí | **Kritická** | 🔴 |
+| 17 | Odhlášení smaže postup, který se nevrátí | **Kritická** | 🟡 čeká na migraci |
 
 ---
 
@@ -296,10 +296,17 @@ Geometrie je tedy současně „zdarma pro hosty" i „premium". Navíc `FREE_TO
 
 **Proč je to kritické:** tiše ničí to jediné, co žáka drží — vidět, že se lepší. A rozbíjí i adaptivitu: session builder bez `topicStats` a SM-2 karet neví, co žák umí, takže ho vrátí na začátek.
 
-**Návrh řešení:**
-1. Doplnit zálohu `topicStats` na server (chybí úplně).
-2. Napsat `hydrateFromRemote()` — po přihlášení natáhnout SM-2 karty, gamifikaci, odznaky a historii; slučovat podle „novější vyhrává", ne slepě přepisovat.
-3. Zavolat ji na jednom místě po přihlášení, ne rozeseté po komponentách (dnes to dělá dashboard pro diagnostiku a `page.tsx` pro XP).
+**Řešení (commit `0c251a8`) — 🟡 kód hotový, čeká na spuštění migrace:**
+1. Nová tabulka `user_gamification` (JSONB + RLS) pro zálohu gamifikace včetně `topicStats`.
+2. `sm2_cards` doplněny o `repetitions` a `last_quality`. Chyběly, přitom `last_quality` pohání odemykání obtížností — bez nich by se progrese L1→L2→L3 resetovala i po obnově.
+3. `hydrateFromRemote()` natáhne karty, gamifikaci, odznaky a diagnostiku. **Slučuje po polích** (max / sjednocení / novější datum), ne „server přepíše lokál" — jinak by přihlášení na starším zařízení zahodilo novější postup.
+4. `ProgressSync` v kořenovém layoutu volá obnovu z jednoho místa.
+
+**Vedlejší oprava — tichý únik dat:** odhlášení maže klíč `matemax-sessions`, jenže historie se ukládá pod `matemax-session-history`. Na sdíleném zařízení ji tak viděl další uživatel.
+
+**Ověřeno:** 14 testů slučování nad skutečnými funkcemi (obnova z prázdna · nezahození novějšího postupu · sjednocení z obou stran · zachování `last_quality`). Bez spuštěné migrace appka nespadne — dotazy degradují a obnoví se jen odznaky a diagnostika.
+
+⏸️ **Zbývá:** spustit `supabase/migrations/20260717_user_gamification.sql` a ověřit naživo (odhlásit → přihlásit). Přihlášený průchod nemůžu otestovat sám.
 
 ---
 
