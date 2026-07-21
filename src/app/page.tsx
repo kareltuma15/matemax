@@ -57,7 +57,7 @@ const PRICING = [
     highlight: false,
     features: [
       "✓ Diagnostický test",
-      "✓ 3 témata (zlomky, rovnice, geometrie)",
+      "✓ 3 témata (zlomky, výrazy, rovnice)",
       "✓ 10 příkladů denně",
       "✓ Základní statistiky",
       "✗ Týdenní report pro rodiče",
@@ -553,7 +553,7 @@ export default function LandingPage() {
                   "Reálné příklady z CERMAT testů",
                   "Okamžitá zpětná vazba",
                   "Nápověda při každé chybě",
-                  "3 témata zdarma: zlomky, rovnice, geometrie",
+                  "3 témata zdarma: zlomky, výrazy, rovnice",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <span className="font-bold flex-shrink-0" style={{ color: "#00B4D8" }}>✓</span>

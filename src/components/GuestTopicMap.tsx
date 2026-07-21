@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import { TEMA_LABELS } from "@/types";
-import { GUEST_FREE_TOPICS } from "@/lib/subscription";
+import { GUEST_FREE_TOPICS, FREE_TOPICS } from "@/lib/subscription";
 import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const ALL_TOPICS = Object.keys(TEMA_LABELS);
 
 const FREE_COLORS: Record<string, { border: string; label: string; bg: string }> = {
-  zlomky:   { border: "#2E6DA4", label: "#2E6DA4", bg: "#eff6ff" },
-  rovnice:  { border: "#16a34a", label: "#15803d", bg: "#f0fdf4" },
-  geometrie:{ border: "#9333ea", label: "#7e22ce", bg: "#faf5ff" },
+  zlomky: { border: "#2E6DA4", label: "#2E6DA4", bg: "#eff6ff" },
 };
 
 interface Props {
@@ -31,11 +29,11 @@ export default function GuestTopicMap({ onSelectTopic }: Props) {
             className="text-[11px] font-bold px-2.5 py-1 rounded-full"
             style={{ background: "rgba(255,255,255,0.12)", color: "#93c5fd" }}
           >
-            3 / {ALL_TOPICS.length} zdarma
+            {GUEST_FREE_TOPICS.size} / {ALL_TOPICS.length} zdarma
           </span>
         </div>
         <p className="text-sm text-blue-300 leading-snug">
-          Vyberte téma a začněte procvičovat. Všechna témata odemknete registrací zdarma.
+          Vyzkoušej si zlomky bez registrace. Po registraci zdarma přibydou výrazy a rovnice.
         </p>
       </div>
 
@@ -103,12 +101,12 @@ export default function GuestTopicMap({ onSelectTopic }: Props) {
         className="block rounded-2xl p-5 text-center hover:opacity-90 transition-opacity"
         style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
       >
-        <p className="text-base font-black text-white">🔓 Odemkni všechna témata</p>
+        <p className="text-base font-black text-white">🔓 Odemkni další témata zdarma</p>
         <p className="text-sm text-blue-200 mt-1">
           Registruj se zdarma — 2 minuty, žádná karta
         </p>
         <p className="text-xs text-blue-300 mt-2">
-          {ALL_TOPICS.length} témat · SM-2 trénink · {EXAMPLES_LABEL} příkladů · CERMAT simulace
+          {FREE_TOPICS.size} témata zdarma · SM-2 trénink · {EXAMPLES_LABEL} příkladů
         </p>
       </Link>
     </div>
