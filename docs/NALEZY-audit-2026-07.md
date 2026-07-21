@@ -29,7 +29,7 @@
 | 13 | Chybí `ANTHROPIC_API_KEY` → AI hint vypnutý | Konfigurace | ⏸️ |
 | 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | ⏸️ |
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
-| 16 | Geometrie je zdarma i premium zároveň | **Kritická** | 🔴 |
+| 16 | Geometrie je zdarma i premium zároveň | **Kritická** | ✅ |
 | 17 | Odhlášení smaže postup, který se nevrátí | **Kritická** | 🟡 čeká na migraci |
 | 18 | Uživatel uvízne na staré verzi (service worker) | **Kritická** | ✅ |
 
@@ -267,7 +267,19 @@ Geometrie je tedy současně „zdarma pro hosty" i „premium". Navíc `FREE_TO
 
 **Proč je to kritické:** není to kosmetika, ale rozbitý slib směrem k zákazníkovi. Zároveň to znamená, že *nevíme jistě, co je vlastně zdarma* — a to je základ monetizace.
 
-⏸️ **Vyžaduje tvoje rozhodnutí:** která tři témata mají být zdarma? (A má se to lišit pro nepřihlášeného hosta a přihlášeného uživatele bez Premium?) Pak sjednotím na jeden zdroj pravdy.
+**Řešení (commit `7db504c`):** `PREMIUM_TOPICS` se nově **odvozuje** jako „vše kromě `FREE_TOPICS`" — rozpor už nejde napsat.
+
+**Rozdělení dle Karlova rozhodnutí:**
+
+| Kdo | Témata |
+|---|---|
+| Host (nepřihlášený) | jen **zlomky** — ochutnávka, ať je důvod se registrovat |
+| Zdarma (přihlášený) | **zlomky, výrazy, rovnice** — první tři kapitoly sešitu |
+| Premium | zbylých šest |
+
+**Opraveny i sliby, které tím přestaly platit:** mapa hlásila natvrdo „3 / 9 zdarma" (→ odvozeno), „Všechna témata odemknete registrací" (registrace dá tři, ne devět), ceník sliboval „zlomky, rovnice, geometrie" (→ výrazy místo geometrie).
+
+**Ověřeno:** hostovská mapa 1/9 a jen zlomky · zlomky se hostovi spustí · geometrie ukáže zámek konzistentně v mapě i tréninku · kontrolní skript potvrdil, že žádné téma není zároveň zdarma i premium.
 
 ---
 
