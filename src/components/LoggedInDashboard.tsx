@@ -17,6 +17,7 @@ import { getTodayTopic } from "@/lib/studijni-plan";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import PushSubscribeNudge from "@/components/PushSubscribeNudge";
 import TopicPathMap from "@/components/TopicPathMap";
+import DnesniMise from "@/components/DnesniMise";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -212,6 +213,8 @@ export default function LoggedInDashboard({
   const [parentMessageId, setParentMessageId] = useState<string | null>(null);
   const [hasWrongCards, setHasWrongCards] = useState(false);
   const [weeklyStats, setWeeklyStats] = useState<WeeklyStats | null>(null);
+  // Přesný stav diagnostiky (prop může být zastaralý po přihlášení — nález #17)
+  const [diagReady, setDiagReady] = useState(diagDone);
   const [guidanceModal, setGuidanceModal] = useState<null | {
     type: "diagnostika" | "comeback" | "daily";
     daysSince?: number;
@@ -247,6 +250,7 @@ export default function LoggedInDashboard({
       }
 
       if (cancelled) return;
+      setDiagReady(effectiveDiagDone);
 
       const todayStr = new Date().toISOString().slice(0, 10);
       const shownKey = `matemax-modal-shown-${todayStr}`;
@@ -455,6 +459,9 @@ export default function LoggedInDashboard({
           </div>
         )}
 
+        {/* Dnešní mise — řízený domov, vede jednou konkrétní akcí */}
+        <DnesniMise diagDone={diagReady} isPremium={isPremium} todayCount={todayCount} />
+
         {/* Countdown + XP bar */}
         <CountdownBanner variant="compact" />
         <XPProgressBar xp={xp} />
@@ -507,75 +514,17 @@ export default function LoggedInDashboard({
           </div>
         )}
 
-        {/* Dnešní úkol — studijní plán + denní progress */}
-        {(() => {
-          const todayTopic = getTodayTopic();
-          const topicToShow = todayTopic ?? (weakTopics.length > 0 ? {
-            tema: weakTopics[0].tema,
-            label: temaLabel(weakTopics[0].tema),
-            score: Math.round(weakTopics[0].score * 100),
-          } : null);
-          if (!topicToShow) return null;
-          const locked = !isPremium && PREMIUM_TOPICS.has(topicToShow.tema);
-          const practiceHref = locked ? "/cenik" : `/trenink?tema=${topicToShow.tema}`;
-          const SMALL_RING_C = 2 * Math.PI * 22;
-          const goalMet2 = todayCount >= DAILY_GOAL;
-          return (
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-              <div className="px-5 pt-4 pb-3 flex items-center gap-4">
-                <svg width="52" height="52" viewBox="0 0 56 56" fill="none" className="shrink-0">
-                  <circle cx="28" cy="28" r="22" stroke="#e2e8f0" strokeWidth="6" />
-                  <circle
-                    cx="28" cy="28" r="22"
-                    stroke={goalMet2 ? "#22c55e" : "#2E6DA4"}
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    strokeDasharray={SMALL_RING_C}
-                    strokeDashoffset={SMALL_RING_C * (1 - Math.min(1, todayCount / DAILY_GOAL))}
-                    transform="rotate(-90 28 28)"
-                  />
-                  <text x="28" y="33" textAnchor="middle" fontSize="11" fontWeight="800" fill={goalMet2 ? "#16a34a" : "#0D1B3E"}>
-                    {todayCount}/{DAILY_GOAL}
-                  </text>
-                </svg>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[10px] font-black uppercase tracking-wide text-slate-400">
-                    {todayTopic ? "Studijní plán — dnes" : "Doporučujeme procvičit"}
-                  </p>
-                  <p className="text-base font-black mt-0.5" style={{ color: "var(--text-primary)" }}>
-                    {topicToShow.label}
-                  </p>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    {goalMet2 ? "Cíl splněn 🎉" : `${DAILY_GOAL - todayCount} příkladů do splnění cíle`}
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 border-t border-slate-100">
-                <Link
-                  href={practiceHref}
-                  className="py-3 text-center text-sm font-bold border-r border-slate-100 hover:bg-slate-50 transition-colors"
-                  style={{ color: locked ? "#94a3b8" : "#2E6DA4" }}
-                >
-                  {locked ? "🔒 Premium →" : "Procvičit →"}
-                </Link>
-                <Link
-                  href="/studijni-plan"
-                  className="py-3 text-center text-sm font-semibold text-slate-400 hover:bg-slate-50 transition-colors"
-                >
-                  Studijní plán →
-                </Link>
-              </div>
-            </div>
-          );
-        })()}
-
-        {/* Main CTA — hned po Dnešním úkolu */}
+        {/* Celý týdenní plán — vedlejší cesta pod dnešní misí */}
         <Link
-          href="/trenink"
-          className="block w-full py-4 text-white font-black rounded-2xl text-center text-lg shadow-lg glow-pulse press-scale btn-shimmer"
-          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #7c3aed 50%, #2E6DA4 100%)" }}
+          href="/studijni-plan"
+          className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors card-hover bg-white border border-slate-100 shadow-sm"
         >
-          💪 Pokračovat v tréninku →
+          <span className="text-lg">🗺️</span>
+          <div className="min-w-0">
+            <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Celý studijní plán</p>
+            <p className="text-xs text-slate-400">Co tě čeká tento týden — téma po tématu</p>
+          </div>
+          <span className="ml-auto text-sm font-semibold text-slate-400">→</span>
         </Link>
 
         {/* Procvičit chyby */}
@@ -594,8 +543,13 @@ export default function LoggedInDashboard({
           </Link>
         )}
 
-        {/* Mapa učení */}
-        <TopicPathMap isPremium={isPremium} />
+        {/* Mapa učení — vedlejší cesta: „nebo si vyber sám" */}
+        <div className="pt-1">
+          <p className="text-[11px] font-black uppercase tracking-wide text-slate-400 mb-2 px-1">
+            Nebo si vyber téma sám
+          </p>
+          <TopicPathMap isPremium={isPremium} />
+        </div>
 
         {/* Bento 2-col: Kde máš mezery compact + Rychlý mód tile */}
         <div className="grid gap-3" style={{ gridTemplateColumns: weakTopics.length > 0 ? "1fr 1fr" : "1fr" }}>

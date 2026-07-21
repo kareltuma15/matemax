@@ -1,17 +1,17 @@
-// Smart post-login redirect — determines where to send user after login
-// based on their current progress state in localStorage.
-export function getSmartRedirect(fallback = "/trenink"): string {
+// Kam po přihlášení. Řízený domov („Dnes tě čeká X") je na „/", ne v katalogu
+// témat na /trenink — žák má být veden, ne hozen do města plného možností.
+export function getSmartRedirect(fallback = "/"): string {
   if (typeof window === "undefined") return fallback;
   try {
     const diagDone = localStorage.getItem("matemax-diag-done") === "1";
     const progressRaw = localStorage.getItem("matemax-progress");
 
-    // Completely new user — no data at all → onboarding flow
+    // Úplně nový uživatel — žádná data → onboarding
     if (!diagDone && !progressRaw) {
       return "/vitej";
     }
 
-    // Check inactivity (3+ days without practice → homepage comeback modal)
+    // Delší pauza (3+ dny) → domov s comeback uvítáním
     if (progressRaw) {
       const progress = JSON.parse(progressRaw) as { lastActiveDate?: string | null };
       if (progress.lastActiveDate) {
@@ -24,8 +24,8 @@ export function getSmartRedirect(fallback = "/trenink"): string {
       }
     }
 
-    // Active user → go practice directly
-    return "/trenink";
+    // Aktivní žák → řízený domov s dnešní misí
+    return "/";
   } catch {
     return fallback;
   }
