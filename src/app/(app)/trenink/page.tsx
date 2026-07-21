@@ -46,6 +46,8 @@ const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr:
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS, podtemaLabel, DBExample } from "@/types";
+import { pickMission, snapshotReadiness } from "@/lib/mise";
+import { getReadiness } from "@/lib/readiness";
 
 function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
   const hard = examples.filter(
@@ -118,6 +120,32 @@ function loadDiagScores(): Record<string, number> {
     }
     return scores;
   } catch { return {}; }
+}
+
+/**
+ * Posun připravenosti v hlavním tématu tréninku („25 % → 34 %").
+ *
+ * Bere téma, kterého bylo v session nejvíc — u mixu jinak není co porovnávat.
+ * Vrací null, když snímek chybí nebo se nic nezlepšilo; souhrn pak kartu
+ * neukáže (radši nic než „0 % → 0 %").
+ */
+function computeTopicShift(
+  before: Record<string, number> | null,
+  practiceTopics: string[]
+): { label: string; from: number; to: number } | null {
+  if (!before || practiceTopics.length === 0) return null;
+
+  // Nejčastější téma v session
+  const counts = new Map<string, number>();
+  for (const t of practiceTopics) counts.set(t, (counts.get(t) ?? 0) + 1);
+  const main = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+
+  const from = before[main];
+  if (from === undefined) return null;
+  const to = getReadiness().topics.find((t) => t.tema === main)?.score;
+  if (to === undefined || to <= from) return null;
+
+  return { label: TEMA_LABELS[main] ?? main, from, to };
 }
 
 // ── Difficulty-aware progrese (pedagogika sešitu: „začni lehkými, nepřeskakuj
@@ -280,6 +308,8 @@ function TreningPageInner() {
   const [levelUpData, setLevelUpData]   = useState<ReturnType<typeof getLevelFromXP> | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const sessionStartRef                 = useRef(new Date());
+  // Snímek připravenosti před tréninkem — pro posun „před → po" v souhrnu
+  const readinessBeforeRef              = useRef<Record<string, number> | null>(null);
   const consecutiveCorrectRef           = useRef(0);
 
   useEffect(() => {
@@ -469,6 +499,10 @@ function TreningPageInner() {
   const handleResult = useCallback(
     (wasCorrect: boolean, userAnswer = "") => {
       if (!gamState) return;
+
+      // Připravenost PŘED první odpovědí — jinak už bude přepsaná uložením
+      // a nešlo by ukázat posun „25 % → 34 %" na konci tréninku.
+      if (!readinessBeforeRef.current) readinessBeforeRef.current = snapshotReadiness();
 
       const exId = sessionIds[currentIdx];
       const example = examples.find((ex) => ex.id === exId);
@@ -890,6 +924,8 @@ function TreningPageInner() {
           topics={practiceTopics}
           rezim={rezimFilter ?? undefined}
           wrongAnswers={wrongAnswers}
+          topicShift={computeTopicShift(readinessBeforeRef.current, practiceTopics)}
+          nextTopic={pickMission(isPremium)}
           onRestart={() => restart()}
           onRestartChyby={
             cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2)

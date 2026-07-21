@@ -18,6 +18,12 @@ export interface WrongAnswer {
   userAnswer: string;
 }
 
+export interface TopicShift {
+  label: string;
+  from: number;
+  to: number;
+}
+
 interface Props {
   correct: number;
   total: number;
@@ -27,6 +33,10 @@ interface Props {
   topics: string[];
   rezim?: "chyby" | "sm2";
   wrongAnswers?: WrongAnswer[];
+  /** Posun připravenosti v hlavním tématu — příběh o zlepšení, ne známka. */
+  topicShift?: TopicShift | null;
+  /** Co bude příště — konec tréninku má táhnout zpátky, ne jen shrnout. */
+  nextTopic?: { tema: string; label: string } | null;
   onRestart: () => void;
   onRestartChyby?: () => void;
 }
@@ -155,7 +165,7 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
   });
 }
 
-export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], onRestart, onRestartChyby }: Props) {
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby }: Props) {
   // Skipped examples count against score — 3 správně ze 7 celkových = 43 %, ne 100 %
   const effectiveTotal = total + skipped;
   const pct = effectiveTotal > 0 ? Math.round((correct / effectiveTotal) * 100) : 0;
@@ -268,9 +278,43 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
           </div>
         )}
 
-        <p className="text-xs text-slate-400 text-center">
-          Chybné příklady se ti vrátí brzy — SM-2 spaced repetition
-        </p>
+        {/* Posun v tématu — příběh o zlepšení, ne známka */}
+        {topicShift && topicShift.to > topicShift.from && (
+          <div className="rounded-xl p-3.5 border" style={{ background: "#f0fdf4", borderColor: "#bbf7d0" }}>
+            <p className="text-[11px] font-black uppercase tracking-wide mb-2" style={{ color: "#15803d" }}>
+              {topicShift.label} — tvůj posun
+            </p>
+            <div className="relative h-2.5 rounded-full overflow-hidden" style={{ background: "#dcfce7" }}>
+              <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${topicShift.from}%`, background: "#fbbf24" }} />
+              <div
+                className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
+                style={{ width: `${topicShift.to}%`, background: "#16a34a", opacity: 0.85 }}
+              />
+            </div>
+            <p className="text-sm font-black mt-2 tabular-nums" style={{ color: "#15803d" }}>
+              {topicShift.from} % → {topicShift.to} % <span aria-hidden="true">▲</span>
+            </p>
+          </div>
+        )}
+
+        {/* Zítřek — konec tréninku má táhnout zpátky */}
+        {nextTopic && (
+          <div className="rounded-xl p-3.5 border-2 border-dashed" style={{ background: "#eff6ff", borderColor: "#9dbbd9" }}>
+            <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: "#2E6DA4" }}>
+              Příště tě čeká
+            </p>
+            <p className="text-base font-black mt-0.5" style={{ color: "#0D1B3E" }}>{nextTopic.label}</p>
+            <p className="text-xs mt-0.5" style={{ color: "#5A6B8C" }}>
+              Chybné příklady se ti vrátí samy — algoritmus je pohlídá.
+            </p>
+          </div>
+        )}
+
+        {!nextTopic && (
+          <p className="text-xs text-slate-400 text-center">
+            Chybné příklady se ti vrátí brzy — SM-2 spaced repetition
+          </p>
+        )}
 
         {/* Wrong answers review */}
         {wrongAnswers.length > 0 && (
@@ -286,13 +330,23 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
           </div>
         )}
 
+        {/* Jedna hlavní cesta ven, zbytek podřadný — konec tréninku nemá být
+            další rozcestník s pěti rovnocennými tlačítky. */}
         <div className="flex flex-col gap-2 mt-1">
-          <button
-            onClick={onRestart}
-            className="w-full py-3 text-white font-semibold rounded-xl text-base"
+          <Link
+            href="/"
+            className="block w-full py-3.5 text-white font-black rounded-xl text-base text-center press-scale"
             style={{ background: "#0D1B3E" }}
           >
-            Trénovat znovu →
+            Zpět na cestu →
+          </Link>
+
+          <button
+            onClick={onRestart}
+            className="w-full py-2.5 font-bold rounded-xl border text-sm transition-colors"
+            style={{ borderColor: "#bfdbfe", color: "#2E6DA4", background: "#eff6ff" }}
+          >
+            Ještě 5 minut navíc
           </button>
 
           {onRestartChyby && correct < total && (
@@ -304,33 +358,28 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
               🔄 Procvičit chyby z tréninku
             </button>
           )}
-          <button
-            onClick={handleShare}
-            disabled={shareState === "loading"}
-            className="w-full py-2.5 font-semibold rounded-xl border text-sm transition-colors disabled:opacity-60"
-            style={{ borderColor: "#bfdbfe", color: "#2E6DA4", background: "#eff6ff" }}
-          >
-            {shareState === "loading"
-              ? "Generuji…"
-              : shareState === "copied"
-              ? "✓ Zkopírováno do schránky!"
-              : shareState === "error"
-              ? "⚠ Nepodařilo se sdílet"
-              : "📤 Sdílet výsledek"}
-          </button>
-          <Link
-            href="/profil"
-            className="block w-full py-2.5 font-medium rounded-xl border border-indigo-200 text-sm text-center transition-colors hover:bg-indigo-50"
-            style={{ color: "#2E6DA4" }}
-          >
-            📊 Zobrazit profil →
-          </Link>
-          <Link
-            href="/"
-            className="block w-full py-2.5 text-slate-500 font-medium rounded-xl border border-slate-200 text-sm hover:bg-slate-50 transition-colors text-center"
-          >
-            Zpět na úvod
-          </Link>
+
+          {/* Doplňkové akce — malé, na jednom řádku */}
+          <div className="flex items-center justify-center gap-4 pt-1">
+            <button
+              onClick={handleShare}
+              disabled={shareState === "loading"}
+              className="text-xs font-semibold transition-colors disabled:opacity-60"
+              style={{ color: "#8DA0C0" }}
+            >
+              {shareState === "loading"
+                ? "Generuji…"
+                : shareState === "copied"
+                ? "✓ Zkopírováno"
+                : shareState === "error"
+                ? "⚠ Nepovedlo se"
+                : "📤 Sdílet"}
+            </button>
+            <span aria-hidden="true" style={{ color: "#DCE4F2" }}>·</span>
+            <Link href="/profil" className="text-xs font-semibold" style={{ color: "#8DA0C0" }}>
+              📊 Profil
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { getReadiness } from "@/lib/readiness";
-import { isTopicLocked } from "@/lib/subscription";
-import { TEMA_LABELS, TEMATA_ORDER } from "@/types";
+import { pickMission } from "@/lib/mise";
 
 const DAILY_GOAL = 10;
 const SESSION_SIZE = 7;
@@ -91,34 +89,6 @@ export default function DnesniMise({
       goal={{ done: todayCount, total: DAILY_GOAL }}
     />
   );
-}
-
-/** Téma se považuje za zvládnuté a v pořadí se přeskočí. */
-const MASTERED = 70;
-
-/**
- * Dnešní téma = první nezvládnuté téma v pořadí sešitu.
- *
- * Schválně NE rotace podle dne v týdnu: kdo vynechá úterý, nesmí „přijít o
- * rovnice". Postup drží žák, ne kalendář — na tématu zůstává, dokud ho
- * nezvedne nad 70 %, pak se posune dál. Zamčená témata přeskakujeme, aby mise
- * byla vždy splnitelná.
- */
-function pickMission(isPremium: boolean): { tema: string; label: string; score: number } | null {
-  const r = getReadiness();
-  const byTema = new Map(r.topics.map((t) => [t.tema, t]));
-
-  const accessible = TEMATA_ORDER
-    .filter((tema) => !isTopicLocked(tema, isPremium))
-    .map((tema) => byTema.get(tema) ?? { tema, label: TEMA_LABELS[tema] ?? tema, score: 0, practiced: 0 });
-
-  if (accessible.length === 0) return null;
-
-  // První nezvládnuté v pořadí sešitu; když je vše nad prahem, dolaď nejslabší.
-  const next = accessible.find((t) => t.score < MASTERED)
-    ?? [...accessible].sort((a, b) => a.score - b.score)[0];
-
-  return { tema: next.tema, label: next.label ?? TEMA_LABELS[next.tema] ?? next.tema, score: next.score };
 }
 
 function Hero({
