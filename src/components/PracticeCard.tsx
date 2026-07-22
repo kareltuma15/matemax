@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
-import { checkAnswer } from "@/lib/normalize";
+import { checkAnswer, isDifferentForm } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
 import MathDisplay from "./MathDisplay";
@@ -349,9 +349,20 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <span className="text-xl mt-0.5">✓</span>
             <div className="flex-1">
               <p className="font-bold text-green-700">Správně!</p>
-              <p className="text-sm text-green-600">
-                Výsledek: <strong><ExMath ex={example} text={example.odpoved} /></strong>
-              </p>
+              {/* Žák zapsal jiný, ale rovnocenný tvar (47/12 místo 3 11/12) —
+                  pochválíme a ukážeme i druhý zápis. Z rozdílu se stane
+                  mikrolekce místo křížku. */}
+              {isDifferentForm(input, example.odpoved) ? (
+                <p className="text-sm text-green-600">
+                  Dá se zapsat i jako{" "}
+                  <strong><ExMath ex={example} text={example.odpoved} /></strong>
+                  {" "}— u přijímaček se hodí obojí.
+                </p>
+              ) : (
+                <p className="text-sm text-green-600">
+                  Výsledek: <strong><ExMath ex={example} text={example.odpoved} /></strong>
+                </p>
+              )}
               {consecutiveCorrect + 1 >= 3 && (
                 <p className="text-sm font-semibold text-amber-600 mt-1">
                   🔥 {consecutiveCorrect + 1} správně v řadě!
