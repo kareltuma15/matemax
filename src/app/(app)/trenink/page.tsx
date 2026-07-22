@@ -28,6 +28,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import PracticeCard from "@/components/PracticeCard";
 import ConstructionCard from "@/components/ConstructionCard";
+import ComparisonCard from "@/components/ComparisonCard";
 import BossBattleCard from "@/components/BossBattleCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
@@ -1058,7 +1059,15 @@ function TreningPageInner() {
         </div>
       )}
 
-      {currentExample.kroky_volby && currentExample.kroky_volby.length > 0 ? (
+      {currentExample.porovnani ? (
+        <ComparisonCard
+          example={currentExample}
+          cardNumber={currentIdx + 1}
+          total={sessionIds.length}
+          onResult={handleResult}
+          onSkip={handleSkip}
+        />
+      ) : currentExample.kroky_volby && currentExample.kroky_volby.length > 0 ? (
         <ConstructionCard
           example={currentExample}
           cardNumber={currentIdx + 1}

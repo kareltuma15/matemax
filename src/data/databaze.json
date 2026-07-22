@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 704,
+    "total": 710,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -565,30 +565,42 @@
       "tema": "zlomky",
       "podtema": "porovnavani",
       "obtiznost": 2,
-      "zadani": "Porovnej: $\\frac{3}{4} a \\frac{5}{6}$",
+      "zadani": "Porovnej $\\frac{3}{4}$ a $\\frac{5}{6}$",
       "odpoved": "3/4 < 5/6",
       "reseni_kroky": [
-        "NSN=12",
-        "\\frac{9}{12} < \\frac{10}{12}"
+        "Společný jmenovatel je 12.",
+        "$\\frac{3}{4} = \\frac{9}{12}$ a $\\frac{5}{6} = \\frac{10}{12}$",
+        "Devět dvanáctin je méně než deset dvanáctin."
       ],
-      "cas_sekund": 90,
+      "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": true
+      "latex": true,
+      "porovnani": {
+        "levy": "\\frac{3}{4}",
+        "pravy": "\\frac{5}{6}",
+        "znak": "<"
+      }
     },
     {
       "id": "ZLO_037",
       "tema": "zlomky",
       "podtema": "porovnavani",
       "obtiznost": 2,
-      "zadani": "Porovnej: $\\frac{7}{8} a \\frac{5}{6}$",
+      "zadani": "Porovnej $\\frac{7}{8}$ a $\\frac{5}{6}$",
       "odpoved": "7/8 > 5/6",
       "reseni_kroky": [
-        "NSN=24",
-        "\\frac{21}{24} > \\frac{20}{24}"
+        "Společný jmenovatel je 24.",
+        "$\\frac{7}{8} = \\frac{21}{24}$ a $\\frac{5}{6} = \\frac{20}{24}$",
+        "Dvacet jedna dvacetičtvrtin je více než dvacet."
       ],
-      "cas_sekund": 90,
+      "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": true
+      "latex": true,
+      "porovnani": {
+        "levy": "\\frac{7}{8}",
+        "pravy": "\\frac{5}{6}",
+        "znak": ">"
+      }
     },
     {
       "id": "ZLO_038",
@@ -10216,6 +10228,128 @@
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
+    },
+    {
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "latex": true,
+      "id": "ZLO_P01",
+      "obtiznost": 1,
+      "odpoved": "2/5 < 3/5",
+      "reseni_kroky": [
+        "Jmenovatelé jsou stejní, stačí porovnat čitatele.",
+        "$2 < 3$, takže $\\frac{2}{5} < \\frac{3}{5}$"
+      ],
+      "zadani": "Porovnej $\\frac{2}{5}$ a $\\frac{3}{5}$",
+      "porovnani": {
+        "levy": "\\frac{2}{5}",
+        "pravy": "\\frac{3}{5}",
+        "znak": "<"
+      }
+    },
+    {
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "latex": true,
+      "id": "ZLO_P02",
+      "obtiznost": 1,
+      "odpoved": "1/2 > 1/3",
+      "reseni_kroky": [
+        "Stejný čitatel: čím větší jmenovatel, tím menší díl.",
+        "Polovina koláče je víc než třetina."
+      ],
+      "zadani": "Porovnej $\\frac{1}{2}$ a $\\frac{1}{3}$",
+      "porovnani": {
+        "levy": "\\frac{1}{2}",
+        "pravy": "\\frac{1}{3}",
+        "znak": ">"
+      }
+    },
+    {
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "latex": true,
+      "id": "ZLO_P03",
+      "obtiznost": 1,
+      "odpoved": "0,75 = 3/4",
+      "reseni_kroky": [
+        "$\\frac{3}{4} = 3 : 4 = 0{,}75$",
+        "Obě čísla jsou stejná, jen zapsaná jinak."
+      ],
+      "zadani": "Porovnej $0{,}75$ a $\\frac{3}{4}$",
+      "porovnani": {
+        "levy": "0{,}75",
+        "pravy": "\\frac{3}{4}",
+        "znak": "="
+      }
+    },
+    {
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "latex": true,
+      "id": "ZLO_P04",
+      "obtiznost": 2,
+      "odpoved": "2/3 > 0,6",
+      "reseni_kroky": [
+        "Zlomek převedeme na desetinné číslo: $\\frac{2}{3} = 0{,}66\\ldots$",
+        "$0{,}66\\ldots > 0{,}6$"
+      ],
+      "zadani": "Porovnej $\\frac{2}{3}$ a $0{,}6$",
+      "porovnani": {
+        "levy": "\\frac{2}{3}",
+        "pravy": "0{,}6",
+        "znak": ">"
+      }
+    },
+    {
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "latex": true,
+      "id": "ZLO_P05",
+      "obtiznost": 3,
+      "odpoved": "5/7 > 7/10",
+      "reseni_kroky": [
+        "Společný jmenovatel je 70.",
+        "$\\frac{5}{7} = \\frac{50}{70}$ a $\\frac{7}{10} = \\frac{49}{70}$",
+        "$50 > 49$, takže levý zlomek je větší."
+      ],
+      "zadani": "Porovnej $\\frac{5}{7}$ a $\\frac{7}{10}$",
+      "porovnani": {
+        "levy": "\\frac{5}{7}",
+        "pravy": "\\frac{7}{10}",
+        "znak": ">"
+      }
+    },
+    {
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "latex": true,
+      "id": "ZLO_P06",
+      "obtiznost": 3,
+      "odpoved": "-2/3 > -3/4",
+      "reseni_kroky": [
+        "U záporných čísel je větší to, které leží blíž nule.",
+        "$\\frac{2}{3} = \\frac{8}{12}$ a $\\frac{3}{4} = \\frac{9}{12}$",
+        "Osm dvanáctin je blíž nule než devět, takže $-\\frac{2}{3} > -\\frac{3}{4}$"
+      ],
+      "zadani": "Porovnej $-\\frac{2}{3}$ a $-\\frac{3}{4}$",
+      "porovnani": {
+        "levy": "-\\frac{2}{3}",
+        "pravy": "-\\frac{3}{4}",
+        "znak": ">"
+      }
     }
   ]
 }

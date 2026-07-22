@@ -421,17 +421,21 @@
       "tema": "zlomky",
       "podtema": "porovnavani",
       "obtiznost": 1,
-      "zadani": "Které číslo je větší: $\\frac{5}{8} nebo \\frac{7}{12}?$",
-      "odpoved": "5/8 je větší",
+      "zadani": "Porovnej $\\frac{5}{8}$ a $\\frac{7}{12}$",
+      "odpoved": "5/8 > 7/12",
       "reseni_kroky": [
-        "Společný jmenovatel: NSN(8,12) = 24",
-        "\\frac{5}{8} = \\frac{15}{24}",
-        "\\frac{7}{12} = \\frac{14}{24}",
-        "\\frac{15}{24} > \\frac{14}{24}, tedy \\frac{5}{8} > \\frac{7}{12}"
+        "Společný jmenovatel je 24.",
+        "$\\frac{5}{8} = \\frac{15}{24}$ a $\\frac{7}{12} = \\frac{14}{24}$",
+        "$15 > 14$, takže $\\frac{5}{8}$ je větší."
       ],
-      "cas_sekund": 90,
+      "cas_sekund": 60,
       "sm2_interval": 1,
-      "latex": true
+      "latex": true,
+      "porovnani": {
+        "levy": "\\frac{5}{8}",
+        "pravy": "\\frac{7}{12}",
+        "znak": ">"
+      }
     },
     {
       "id": "t02_08",

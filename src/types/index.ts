@@ -6,6 +6,17 @@ export interface ConstructionStep {
   vysvetleni?: string;    // proč je to správně (ukáže se po výběru)
 }
 
+/**
+ * Porovnávací úloha. Psát „<" do textového pole je pro žáka past — neví,
+ * jestli se čeká „3/4 < 5/6", „<", nebo „menší". Strany se proto vykreslí
+ * a žák vybere jen znaménko.
+ */
+export interface Porovnani {
+  levy: string;              // levá strana (text nebo LaTeX dle `latex`)
+  pravy: string;             // pravá strana
+  znak: "<" | "=" | ">";     // správné znaménko
+}
+
 export interface DBExample {
   id: string;
   tema: string;
@@ -26,6 +37,11 @@ export interface DBExample {
    * ConstructionCard. Viz kapitola 7 pracovního sešitu.
    */
   kroky_volby?: ConstructionStep[];
+  /**
+   * Porovnávací úloha: místo psaní „<" žák klikne na znaménko. Když je
+   * vyplněno, trénink místo PracticeCard vykreslí ComparisonCard.
+   */
+  porovnani?: Porovnani;
 }
 
 export interface SM2Card {
