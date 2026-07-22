@@ -13,7 +13,6 @@ import CountdownBanner from "@/components/CountdownBanner";
 import GuidanceModal from "@/components/GuidanceModal";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
-import { getTodayTopic } from "@/lib/studijni-plan";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import PushSubscribeNudge from "@/components/PushSubscribeNudge";
 import TopicPathMap from "@/components/TopicPathMap";
@@ -279,13 +278,11 @@ export default function LoggedInDashboard({
         }
       } catch { /* ignore */ }
 
-      // Aktivní žák — zobraz daily uvítání s dnešním tématem
-      const topic = getTodayTopic();
-      const todayTopic = topic
-        ? { tema: topic.tema, label: topic.label, score: topic.score }
-        : null;
-      setGuidanceModal({ type: "daily", todayTopic });
-      localStorage.setItem(shownKey, "1");
+      // Aktivní žák nedostane žádný modál. Denní uvítání dřív doporučovalo téma
+      // přes getTodayTopic() (rotace podle dne), zatímco karta „Dnešní mise"
+      // vybírá sekvenčně — žák tak viděl dvě různá doporučení naráz. Navíc je
+      // to interstitial, který překrývá právě tu misi, kvůli které sem přišel.
+      // Diagnostika a návrat po pauze modál dál mají, ty nesou vlastní sdělení.
     }
 
     decideModal();
@@ -404,7 +401,7 @@ export default function LoggedInDashboard({
           </span>
         ))}
 
-        <div className="max-w-2xl mx-auto px-6 py-10 md:py-14 relative z-10">
+        <div className="max-w-2xl lg:max-w-6xl mx-auto px-6 py-10 md:py-14 relative z-10">
           <p className="text-blue-300 text-sm font-semibold mb-1">{getGreeting()},</p>
           <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
             {firstName} 👋
@@ -432,8 +429,10 @@ export default function LoggedInDashboard({
         </div>
       </section>
 
-      {/* Content */}
-      <section className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-4">
+      {/* Content — na širokém displeji dva sloupce. Do pravého jdou jen bloky,
+          které jsou na mobilu už teď dole, takže se pořadí na telefonu nemění. */}
+      <section className="max-w-2xl lg:max-w-6xl mx-auto px-6 py-8 lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-6 lg:items-start">
+        <div className="flex flex-col gap-4">
 
         {/* Push subscribe nudge */}
         <PushSubscribeNudge streak={streak} userId={session.user.id} />
@@ -605,6 +604,11 @@ export default function LoggedInDashboard({
           </Link>
         </div>
 
+        </div>
+
+        {/* Pravý sloupec (na mobilu prostě pokračuje pod hlavním) */}
+        <aside className="flex flex-col gap-4 mt-4 lg:mt-0 lg:sticky lg:top-20">
+
         {/* Statistika tohoto týdne */}
         {weeklyStats && (() => {
           const acc = weeklyStats.totalExamples > 0
@@ -754,6 +758,7 @@ export default function LoggedInDashboard({
             </Link>
           )}
         </div>
+        </aside>
       </section>
 
       <div className="border-t border-gray-100 text-center py-5 text-xs text-gray-400 pb-24">

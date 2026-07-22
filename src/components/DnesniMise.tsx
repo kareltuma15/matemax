@@ -110,28 +110,34 @@ function Hero({
   const pct = goal ? Math.min(100, Math.round((goal.done / goal.total) * 100)) : 0;
 
   return (
-    <div className="rounded-3xl p-6 flex flex-col gap-3 shadow-lg fade-in-up" style={{ background: bg }}>
-      <span className="text-[11px] font-black uppercase tracking-[0.12em]" style={{ color: "rgba(255,255,255,0.6)" }}>
-        {kicker}
-      </span>
-      <h2 className="text-3xl font-black text-white leading-none" style={{ letterSpacing: "-0.02em" }}>
-        {title}
-      </h2>
-      <p className="text-sm" style={{ color: "rgba(255,255,255,0.82)" }}>{meta}</p>
-      <p className="text-[13px] leading-snug rounded-xl px-3 py-2" style={{ background: "rgba(255,255,255,0.14)", color: "#fff" }}>
-        {why}
-      </p>
+    <div className="rounded-3xl p-6 shadow-lg fade-in-up" style={{ background: bg }}>
+      {/* Na širokém displeji text vlevo, tlačítko vpravo — aby mise nezdrobněla
+          na jednu kartu z mnoha, ale zůstala největším prvkem stránky. */}
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-8">
+        <div className="flex flex-col gap-3 lg:flex-1 lg:min-w-0">
+          <span className="text-[11px] font-black uppercase tracking-[0.12em]" style={{ color: "rgba(255,255,255,0.6)" }}>
+            {kicker}
+          </span>
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-none" style={{ letterSpacing: "-0.02em" }}>
+            {title}
+          </h2>
+          <p className="text-sm" style={{ color: "rgba(255,255,255,0.82)" }}>{meta}</p>
+          <p className="text-[13px] leading-snug rounded-xl px-3 py-2 lg:self-start" style={{ background: "rgba(255,255,255,0.14)", color: "#fff" }}>
+            {why}
+          </p>
+        </div>
 
-      <Link
-        href={href}
-        className="mt-1 block text-center font-black text-lg py-4 rounded-2xl press-scale transition-transform"
-        style={{ background: "#fff", color: "#0D1B3E", boxShadow: "0 8px 20px -8px rgba(0,0,0,0.5)" }}
-      >
-        {cta}
-      </Link>
+        <Link
+          href={href}
+          className="mt-1 lg:mt-0 block text-center font-black text-lg py-4 lg:py-5 lg:px-10 rounded-2xl press-scale transition-transform lg:shrink-0"
+          style={{ background: "#fff", color: "#0D1B3E", boxShadow: "0 8px 20px -8px rgba(0,0,0,0.5)" }}
+        >
+          {cta}
+        </Link>
+      </div>
 
       {goal && (
-        <div className="flex items-center gap-2.5 mt-0.5">
+        <div className="flex items-center gap-2.5 mt-3">
           <span className="text-[11px] font-semibold shrink-0" style={{ color: "rgba(255,255,255,0.7)" }}>
             Dnešní cíl
           </span>
