@@ -399,10 +399,10 @@
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Převeď na zlomek: $2 a \\frac{3}{4}$",
+      "zadani": "Převeď na zlomek: $2\\frac{3}{4}$",
       "odpoved": "11/4",
       "reseni_kroky": [
-        "Smíšené číslo 2 a \\frac{3}{4}: celá část \\times jmenovatel + čitatel",
+        "Smíšené číslo 2\\frac{3}{4}: celá část \\times jmenovatel + čitatel",
         "2 \\times 4 + 3 = 11",
         "Výsledek: \\frac{11}{4}"
       ],
@@ -415,10 +415,10 @@
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Převeď na zlomek: $3 a \\frac{2}{5}$",
+      "zadani": "Převeď na zlomek: $3\\frac{2}{5}$",
       "odpoved": "17/5",
       "reseni_kroky": [
-        "Smíšené číslo 3 a \\frac{2}{5}: 3 \\times 5 + 2 = 17",
+        "Smíšené číslo 3\\frac{2}{5}: 3 \\times 5 + 2 = 17",
         "Výsledek: \\frac{17}{5}"
       ],
       "cas_sekund": 75,
@@ -431,11 +431,11 @@
       "podtema": "smisena_cisla",
       "obtiznost": 2,
       "zadani": "Převeď na smíšené číslo: $\\frac{7}{3}$",
-      "odpoved": "2 a 1/3",
+      "odpoved": "2 1/3",
       "reseni_kroky": [
         "7 \\div 3 = 2 se zbytkem 1",
         "2 je celá část, \\frac{1}{3} je zlomková část",
-        "Výsledek: 2 a \\frac{1}{3}"
+        "Výsledek: 2\\frac{1}{3}"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1,
@@ -447,11 +447,11 @@
       "podtema": "smisena_cisla",
       "obtiznost": 2,
       "zadani": "Převeď na smíšené číslo: $\\frac{11}{4}$",
-      "odpoved": "2 a 3/4",
+      "odpoved": "2 3/4",
       "reseni_kroky": [
         "11 \\div 4 = 2 se zbytkem 3",
         "2 je celá část, \\frac{3}{4} je zlomková část",
-        "Výsledek: 2 a \\frac{3}{4}"
+        "Výsledek: 2\\frac{3}{4}"
       ],
       "cas_sekund": 75,
       "sm2_interval": 1,
@@ -494,10 +494,10 @@
       "tema": "zlomky",
       "podtema": "scitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $3 a \\frac{1}{2} + 1 a \\frac{3}{4}$",
-      "odpoved": "5 a 1/4",
+      "zadani": "Vypočítej: $3\\frac{1}{2} + 1\\frac{3}{4}$",
+      "odpoved": "5 1/4",
       "reseni_kroky": [
-        "3,5+1,75=5,25=5 a \\frac{1}{4}"
+        "3,5+1,75=5,25=5\\frac{1}{4}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -508,10 +508,10 @@
       "tema": "zlomky",
       "podtema": "odcitani",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $5 a \\frac{1}{3} - 2 a \\frac{2}{3}$",
-      "odpoved": "2 a 2/3",
+      "zadani": "Vypočítej: $5\\frac{1}{3} - 2\\frac{2}{3}$",
+      "odpoved": "2 2/3",
       "reseni_kroky": [
-        "\\frac{16}{3}\\frac{-8}{3}=\\frac{8}{3}=2 a \\frac{2}{3}"
+        "\\frac{16}{3}\\frac{-8}{3}=\\frac{8}{3}=2\\frac{2}{3}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -522,7 +522,7 @@
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $1 a \\frac{1}{2} \\times \\frac{2}{3}$",
+      "zadani": "Vypočítej: $1\\frac{1}{2} \\times \\frac{2}{3}$",
       "odpoved": "1",
       "reseni_kroky": [
         "\\frac{3}{2} \\times \\frac{2}{3} = \\frac{6}{6} = 1"
@@ -536,7 +536,7 @@
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $2 a \\frac{1}{4} \\div \\frac{3}{4}$",
+      "zadani": "Vypočítej: $2\\frac{1}{4} \\div \\frac{3}{4}$",
       "odpoved": "3",
       "reseni_kroky": [
         "\\frac{9}{4} \\div \\frac{3}{4} = \\frac{9}{4} \\times \\frac{4}{3} = \\frac{36}{12} = 3"
@@ -668,10 +668,10 @@
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $2 a \\frac{3}{4} + 1 a \\frac{1}{2}$",
-      "odpoved": "4 a 1/4",
+      "zadani": "Vypočítej: $2\\frac{3}{4} + 1\\frac{1}{2}$",
+      "odpoved": "4 1/4",
       "reseni_kroky": [
-        "\\frac{11}{4}+\\frac{3}{2}=\\frac{11}{4}+\\frac{6}{4}=\\frac{17}{4}=4 a \\frac{1}{4}"
+        "\\frac{11}{4}+\\frac{3}{2}=\\frac{11}{4}+\\frac{6}{4}=\\frac{17}{4}=4\\frac{1}{4}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -682,10 +682,10 @@
       "tema": "zlomky",
       "podtema": "smisena_cisla",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $3 a \\frac{1}{3} - 1 a \\frac{2}{3}$",
-      "odpoved": "1 a 2/3",
+      "zadani": "Vypočítej: $3\\frac{1}{3} - 1\\frac{2}{3}$",
+      "odpoved": "1 2/3",
       "reseni_kroky": [
-        "\\frac{10}{3}\\frac{-5}{3}=\\frac{5}{3}=1 a \\frac{2}{3}"
+        "\\frac{10}{3}\\frac{-5}{3}=\\frac{5}{3}=1\\frac{2}{3}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -696,10 +696,10 @@
       "tema": "zlomky",
       "podtema": "nasobeni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $2 a \\frac{1}{5} \\times 1 a \\frac{2}{3}$",
-      "odpoved": "3 a 2/3",
+      "zadani": "Vypočítej: $2\\frac{1}{5} \\times 1\\frac{2}{3}$",
+      "odpoved": "3 2/3",
       "reseni_kroky": [
-        "\\frac{11}{5} \\times \\frac{5}{3} = \\frac{55}{15} = \\frac{11}{3} = 3 a \\frac{2}{3}"
+        "\\frac{11}{5} \\times \\frac{5}{3} = \\frac{55}{15} = \\frac{11}{3} = 3\\frac{2}{3}"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -710,10 +710,10 @@
       "tema": "zlomky",
       "podtema": "deleni",
       "obtiznost": 2,
-      "zadani": "Vypočítej: $3 a \\frac{3}{4} \\div 1 a \\frac{1}{2}$",
-      "odpoved": "2 a 1/2",
+      "zadani": "Vypočítej: $3\\frac{3}{4} \\div 1\\frac{1}{2}$",
+      "odpoved": "2 1/2",
       "reseni_kroky": [
-        "\\frac{15}{4} \\div \\frac{3}{2} = \\frac{15}{4} \\times \\frac{2}{3} = \\frac{30}{12} = \\frac{5}{2} = 2 a \\frac{1}{2}"
+        "\\frac{15}{4} \\div \\frac{3}{2} = \\frac{15}{4} \\times \\frac{2}{3} = \\frac{30}{12} = \\frac{5}{2} = 2\\frac{1}{2}"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -2680,9 +2680,15 @@
       "tema": "rovnice",
       "podtema": "soustava",
       "obtiznost": 3,
-      "zadani": "Vyřeš soustavu: 2x+5y=17; 3x-2y=6",
-      "odpoved": "x=4, y=9/5=1,8 — přepočti: x=4, y=9/5",
-      "reseni_kroky": "...",
+      "zadani": "Vyřeš soustavu: 2x + 5y = 16; 3x − 2y = 5",
+      "odpoved": "x = 3, y = 2",
+      "reseni_kroky": [
+        "První rovnici vynásobíme 2 a druhou 5, aby se y vyrušilo:",
+        "4x + 10y = 32   a   15x − 10y = 25",
+        "Sečteme: 19x = 57 → x = 3",
+        "Dosadíme do první rovnice: 2·3 + 5y = 16 → 5y = 10 → y = 2",
+        "Zkouška: 3·3 − 2·2 = 9 − 4 = 5 ✓"
+      ],
       "cas_sekund": 150,
       "sm2_interval": 2
     },
@@ -2719,9 +2725,14 @@
       "tema": "rovnice",
       "podtema": "slovni",
       "obtiznost": 3,
-      "zadani": "Cyklista A jede 18 km/h, B jede 24 km/h a vyjede o 30 min dřív. Kdy se potkají?",
-      "odpoved": "za 1 h od výjezdu A (1,5 h od výjezdu B)",
-      "reseni_kroky": "[18t=24(t-0,5)",
+      "zadani": "Cyklista A jede rychlostí 18 km/h. O 30 minut později vyjede za ním cyklista B rychlostí 24 km/h. Za jak dlouho od výjezdu A ho dohoní?",
+      "odpoved": "za 2 hodiny",
+      "reseni_kroky": [
+        "Čas od výjezdu A označíme t (v hodinách). B jede o 0,5 h méně.",
+        "Dráhy se v okamžiku setkání rovnají: 18t = 24(t − 0,5)",
+        "18t = 24t − 12 → 6t = 12 → t = 2",
+        "A ujel 18·2 = 36 km, B ujel 24·1,5 = 36 km ✓"
+      ],
       "cas_sekund": "18t=24t-12",
       "sm2_interval": "6t=12"
     },
@@ -5103,9 +5114,16 @@
       "tema": "souhrnne",
       "podtema": "geometrie_soustava",
       "obtiznost": 2,
-      "zadani": "Dva čtverce: obvody se liší o 12 cm, plochy se liší o 15 cm². Strany?",
-      "odpoved": "a=5, b=2 — přepočítej: 4a-4b=12, a²-b²=15",
-      "reseni_kroky": "...",
+      "zadani": "Dva čtverce: jejich obvody se liší o 12 cm a obsahy o 15 cm². Jak dlouhé jsou jejich strany?",
+      "odpoved": "a = 4 cm, b = 1 cm",
+      "reseni_kroky": [
+        "Z rozdílu obvodů: 4a − 4b = 12 → a − b = 3",
+        "Z rozdílu obsahů: a² − b² = 15",
+        "Rozklad: a² − b² = (a − b)(a + b) = 15",
+        "Dosadíme a − b = 3: 3(a + b) = 15 → a + b = 5",
+        "Ze soustavy a − b = 3 a a + b = 5: a = 4, b = 1",
+        "Zkouška: obvody 16 − 4 = 12 cm ✓, obsahy 16 − 1 = 15 cm² ✓"
+      ],
       "cas_sekund": 150,
       "sm2_interval": 2
     },
@@ -7452,7 +7470,7 @@
       "zadani": "Dosaď x = 9: $\\sqrt{x} + \\frac{x}{3} = ?$",
       "odpoved": "6",
       "reseni_kroky": [
-        "\\sqrt{9} = 3 a \\frac{9}{3} = 3",
+        "\\sqrt{9} = 3\\frac{9}{3} = 3",
         "3 + 3 = 6"
       ],
       "cas_sekund": 60,
