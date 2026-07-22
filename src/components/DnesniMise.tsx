@@ -6,6 +6,13 @@ import { pickMission } from "@/lib/mise";
 const DAILY_GOAL = 10;
 const SESSION_SIZE = 7;
 
+/** 1 příklad · 2–4 příklady · 5+ příkladů */
+function sklonuj(n: number): string {
+  if (n === 1) return "příklad";
+  if (n >= 2 && n <= 4) return "příklady";
+  return "příkladů";
+}
+
 /**
  * Řízený domov — místo katalogu témat jedna konkrétní mise na dnešek.
  *
@@ -78,14 +85,22 @@ export default function DnesniMise({
       ? `💡 Tvoje nejslabší téma — právě ${mission.score} %. Pojďme ho zvednout.`
       : "💡 Tohle téma sis ještě nezkusil. Začneme od lehkých.";
 
+  // Rozdělaný den nesmí vypadat jako první přihlášení — appka má uznat,
+  // co už je hotovo, jinak žák nechápe, proč má „začít" něco, co dělal.
+  const rozdelano = todayCount > 0;
+
   return (
     <Hero
-      kicker="Dnešní trénink"
+      kicker={rozdelano ? "Pokračuj v dnešku" : "Dnešní trénink"}
       title={mission.label}
-      meta={`${SESSION_SIZE} příkladů · ~10 minut · ${remaining} do splnění cíle`}
+      meta={
+        rozdelano
+          ? `Dnes už máš ${todayCount} ${sklonuj(todayCount)} · ${remaining} do splnění cíle`
+          : `${SESSION_SIZE} příkladů · ~10 minut · ${remaining} do splnění cíle`
+      }
       why={whyText}
       href={`/trenink?tema=${mission.tema}`}
-      cta="Začít trénink →"
+      cta={rozdelano ? "Pokračovat →" : "Začít trénink →"}
       goal={{ done: todayCount, total: DAILY_GOAL }}
     />
   );

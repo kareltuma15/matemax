@@ -295,13 +295,20 @@ export default function LoggedInDashboard({
     setWeeklyStats(computeWeeklyStats());
 
     const todayStr = new Date().toISOString().slice(0, 10);
-    try {
-      const raw = localStorage.getItem("matemax-today");
-      if (raw) {
-        const daily = JSON.parse(raw) as { date: string; count: number };
-        if (daily.date === todayStr) setTodayCount(daily.count);
-      }
-    } catch { /* ignore */ }
+    function readToday() {
+      try {
+        const raw = localStorage.getItem("matemax-today");
+        if (raw) {
+          const daily = JSON.parse(raw) as { date: string; count: number };
+          if (daily.date === todayStr) setTodayCount(daily.count);
+        }
+      } catch { /* ignore */ }
+    }
+    readToday();
+    // Obnova ze serveru běží asynchronně (ProgressSync) a typicky doběhne až po
+    // tomto mountu. Bez přečtení znovu by se dnešní počet objevil až po refreshi
+    // — přesně ten stav, kdy appka po přihlášení tvrdila „začni trénink".
+    window.addEventListener("matemax-progress-update", readToday);
 
     try {
       const raw = localStorage.getItem("matemax-diag-results");
@@ -334,6 +341,8 @@ export default function LoggedInDashboard({
           }
         });
     }
+
+    return () => window.removeEventListener("matemax-progress-update", readToday);
   }, [session]);
 
   async function markMessageRead() {

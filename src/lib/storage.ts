@@ -219,6 +219,7 @@ export interface HydrateResult {
   topics: number;
   badges: number;
   diagRestored: boolean;
+  todayCount: number;
 }
 
 /**
@@ -227,7 +228,7 @@ export interface HydrateResult {
  */
 export async function hydrateFromRemote(userId: string): Promise<HydrateResult | null> {
   if (!supabase || typeof window === "undefined") return null;
-  const result: HydrateResult = { cards: 0, topics: 0, badges: 0, diagRestored: false };
+  const result: HydrateResult = { cards: 0, topics: 0, badges: 0, diagRestored: false, todayCount: 0 };
 
   try {
     const [gamRes, cardsRes, badgesRes, diagRes] = await Promise.all([
@@ -266,6 +267,37 @@ export async function hydrateFromRemote(userId: string): Promise<HydrateResult |
       localSaveCards(mergedCards);
       result.cards = mergedCards.length;
     }
+
+    // ── Dnešní počet příkladů ────────────────────────────────────────────────
+    // Žije jen v localStorage, který odhlášení maže. Bez obnovy ukazoval domov
+    // „Dnešní cíl 0/10" a mise „Začít trénink", i když žák ten den už trénoval.
+    try {
+      // Stejný formát data jako zapisovatelé (trénink, localSaveSession) — UTC.
+      // Lokální datum by se s nimi po půlnoci rozešlo a počet by zmizel.
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const { data: todayRows } = await supabase
+        .from("sessions")
+        .select("total")
+        .eq("user_id", userId)
+        .eq("date", todayStr);
+      const serverToday = (todayRows ?? []).reduce((s, r) => s + ((r.total as number) ?? 0), 0);
+      if (serverToday > 0) {
+        let local = 0;
+        try {
+          const raw = localStorage.getItem("matemax-today");
+          if (raw) {
+            const parsed = JSON.parse(raw) as { date?: string; count?: number };
+            if (parsed.date === todayStr) local = parsed.count ?? 0;
+          }
+        } catch { /* ignore */ }
+        // Vyšší vyhrává — stejně jako u zbytku slučování
+        localStorage.setItem(
+          "matemax-today",
+          JSON.stringify({ date: todayStr, count: Math.max(local, serverToday) })
+        );
+        result.todayCount = Math.max(local, serverToday);
+      }
+    } catch { /* ignore */ }
 
     // ── Diagnostika (aby appka nenabízela test, který už žák udělal) ─────────
     const diagRows = diagRes.data ?? [];
