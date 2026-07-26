@@ -12,6 +12,7 @@
 
 import { useEffect, useRef } from "react";
 import katex from "katex";
+import { obalMatiku, jeCelaMatematika } from "@/lib/mathSegment";
 
 interface Props {
   /** LaTeX výraz — buď celé zadání, nebo s $...$ inline bloky */
@@ -54,16 +55,19 @@ export default function MathDisplay({ tex, displayMode = false, className }: Pro
  */
 function renderMixed(text: string, displayMode: boolean): string {
   if (!text.includes("$")) {
-    // Bez $ rozhodni podle obsahu. Věta bez matematické notace se NESMÍ poslat
-    // do KaTeXu — ten by z každého písmene udělal kurzívní proměnnou a zahodil
-    // mezery („Z čísla 48 odečteme…" → „𝑍𝑐ˇıˊ𝑠𝑙𝑎48…").
+    // Věta bez matematické notace se NESMÍ poslat do KaTeXu — ten by z každého
+    // písmene udělal kurzívní proměnnou a zahodil mezery („Z čísla 48
+    // odečteme…" → „𝑍𝑐ˇıˊ𝑠𝑙𝑎48…").
     if (!/[\\^_{}]/.test(text)) return escapeHtml(text);
-    return katex.renderToString(text, {
-      displayMode,
-      throwOnError: false,
-      trust: false,
-      strict: false,
-    });
+    // Celé zadání je jeden výraz → zachovej display režim (velké sázení).
+    if (jeCelaMatematika(text)) {
+      return katex.renderToString(text, { displayMode, throwOnError: false, trust: false, strict: false });
+    }
+    // Jinak jde o prózu proloženou matematikou (kroky „Výsledek: \frac{2}{3}").
+    // Segmentace obalí jen matematické ostrovy; próza zůstane textem, takže se
+    // háčky ani spojky nezlomí. Dál už to teče stejnou cestou jako $…$ zápis.
+    text = obalMatiku(text);
+    if (!text.includes("$")) return escapeHtml(text);
   }
 
   // Smíšený text — rozděl na části: text a $LaTeX$ bloky
