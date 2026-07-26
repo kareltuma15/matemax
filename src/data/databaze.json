@@ -6180,7 +6180,7 @@
       "odpoved": "1",
       "reseni_kroky": [
         "Sudý exponent → výsledek vždy kladný",
-        "(-1)^sudé = 1"
+        "$(-1)^{100} = 1$"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -6195,7 +6195,7 @@
       "odpoved": "-1",
       "reseni_kroky": [
         "Lichý exponent → výsledek záporný",
-        "(-1)^liché = -1"
+        "$(-1)^{101} = -1$"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -9080,7 +9080,7 @@
       "tema": "zlomky",
       "podtema": "scitani_odcitani",
       "obtiznost": 1,
-      "zadani": "Pizza: $sníš \\frac{2}{9} pizzy, bratr sní \\frac{4}{9} pizzy. Jakou část pizzy sníte dohromady?$",
+      "zadani": "Pizza: sníš $\\frac{2}{9}$ pizzy, bratr sní $\\frac{4}{9}$ pizzy. Jakou část pizzy sníte dohromady?",
       "odpoved": "2/3",
       "reseni_kroky": [
         "Jmenovatelé jsou stejné (9) → sečteme čitatele: 2 + 4 = 6",
@@ -9752,7 +9752,7 @@
       "zadani": "Uprav: $3a(a − 2) + 2(1 − a)$",
       "odpoved": "3a² − 8a + 2",
       "reseni_kroky": [
-        "3a\\cdota − 3a\\cdot2 + 2\\cdot1 − 2\\cdota",
+        "$3a \\cdot a − 3a \\cdot 2 + 2 \\cdot 1 − 2 \\cdot a$",
         "= 3a^{2} − 6a + 2 − 2a",
         "= 3a^{2} − 8a + 2"
       ],
@@ -9829,12 +9829,11 @@
       "podtema": "roznasobeni",
       "obtiznost": 3,
       "zadani": "Uprav: $(x + 2)(1 − x) − 2x(\\frac{−1}{2})x$",
-      "odpoved": "−2x² − x + 2",
+      "odpoved": "-x + 2",
       "reseni_kroky": [
-        "(x+2)(1−x) = x−x^{2}+2−2x = −x^{2}−x+2",
-        "−2x\\cdot(\\frac{−1}{2})\\cdotx = x^{2}",
-        "−x^{2}−x+2 + x^{2}... pozor: −2x\\cdot(\\frac{−1}{2})x = x^{2}, takže celkem: −x^{2}−x+2+x^{2} ... výsledek záleží na pořadí operací",
-        "Správně: −x^{2}−x+2 − x^{2} = −2x^{2}−x+2"
+        "$(x + 2)(1 − x) = x − x^{2} + 2 − 2x = −x^{2} − x + 2$",
+        "Druhý člen: $2x \\cdot \\frac{-1}{2} \\cdot x = −x^{2}$",
+        "Celý výraz: $(−x^{2} − x + 2) − (−x^{2}) = −x + 2$"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
