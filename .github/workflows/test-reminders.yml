@@ -1,0 +1,44 @@
+# Hodinový trigger připomínek na testy nanečisto (nález #14).
+#
+# Vercel Hobby dovolí jen 2 crony a jen denní frekvenci — oba sloty drží
+# daily-push a weekly-parent-report. Připomínka „24 h předem" jede uvnitř
+# daily-push, ale „1 h předem" potřebuje hodinový běh. Ten sem dodává zdarma
+# GitHub Actions: každou celou hodinu zavolá /api/cron/test-reminders, který
+# je na to připravený (viz W1_MAX v src/lib/test-reminders).
+#
+# Než to začne fungovat, nastav v GitHubu (Settings → Secrets and variables → Actions):
+#   • Secret  CRON_SECRET   — stejná hodnota jako proměnná CRON_SECRET na Vercelu
+#   • Variable APP_BASE_URL — produkční URL bez lomítka na konci
+#                             (např. https://matemax.matematika-snadno.cz)
+
+name: Test reminders (hourly)
+
+on:
+  schedule:
+    - cron: "0 * * * *"     # každou celou hodinu (UTC)
+  workflow_dispatch: {}      # a ruční spuštění z GitHubu
+
+# Kdyby jeden běh přetekl do další hodiny, nespouštět druhý přes něj.
+concurrency:
+  group: test-reminders
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Zavolat test-reminders cron
+        env:
+          BASE_URL: ${{ vars.APP_BASE_URL }}
+          SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$BASE_URL" ] || [ -z "$SECRET" ]; then
+            echo "Chybí APP_BASE_URL (variable) nebo CRON_SECRET (secret)."
+            exit 1
+          fi
+          code=$(curl -sS -X POST "$BASE_URL/api/cron/test-reminders" \
+            -H "Authorization: Bearer $SECRET" \
+            -w "\n%{http_code}" | tee /tmp/resp.txt | tail -n1)
+          echo "Odpověď:"; sed '$d' /tmp/resp.txt
+          echo "HTTP $code"
+          test "$code" = "200"
