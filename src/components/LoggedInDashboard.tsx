@@ -522,15 +522,15 @@ export default function LoggedInDashboard({
           </div>
         )}
 
-        {/* Celý týdenní plán — vedlejší cesta pod dnešní misí */}
+        {/* Celá cesta — vedlejší pohled pod dnešní misí */}
         <Link
           href="/studijni-plan"
           className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors card-hover bg-white border border-slate-100 shadow-sm"
         >
           <span className="text-lg">🗺️</span>
           <div className="min-w-0">
-            <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Celý studijní plán</p>
-            <p className="text-xs text-slate-400">Co tě čeká tento týden — téma po tématu</p>
+            <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Tvoje cesta k přijímačkám</p>
+            <p className="text-xs text-slate-400">Celá pouť — osm témat v pořadí sešitu</p>
           </div>
           <span className="ml-auto text-sm font-semibold text-slate-400">→</span>
         </Link>
