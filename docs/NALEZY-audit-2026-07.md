@@ -21,13 +21,13 @@
 | 5 | Zámky v diagnostice matou | Důležitá | ✅ |
 | 6 | Podtémata jako syrové slugy | Důležitá | ✅ |
 | 7 | Landing dlouhý a mluví na rodiče | Kosmetická | ⏸️ čeká na rozhodnutí |
-| 8 | Registrace má zbytečná pole | Kosmetická | ⏸️ čeká na rozhodnutí (příjmení) |
+| 8 | Registrace má zbytečná pole | Kosmetická | ✅ (příjmení ponecháno) |
 | 9 | Jméno z registrace se nepoužívá | Kosmetická | ✅ |
 | 10 | Zlomkové slovní úlohy tenké na L1 | Obsahová | ✅ |
 | 11 | Rovnice skoro bez KaTeXu (9/108) | Obsahová | ✅ |
 | 12 | Podtémata roztříštěná u výrazů a grafů | Obsahová | 🔴 |
 | 13 | Chybí `ANTHROPIC_API_KEY` → AI hint vypnutý | Konfigurace | ⏸️ |
-| 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | ⏸️ |
+| 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | 🟡 kód hotový, čeká na GitHub secrets |
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
 | 16 | Geometrie je zdarma i premium zároveň | **Kritická** | ✅ |
 | 17 | Odhlášení smaže postup, který se nevrátí | **Kritická** | 🟡 čeká na migraci |
@@ -165,15 +165,15 @@
 
 ---
 
-## 8. Registrace má zbytečná pole 🔴
+## 8. Registrace má zbytečná pole ✅
 
-**Co žák vyplňuje:** Jméno, Příjmení, Email, Heslo, Heslo znovu (5 polí) + Google.
+**Co žák vyplňoval:** Jméno, Příjmení, Email, Heslo, Heslo znovu (5 polí) + Google.
 
-**Návrh řešení:** vypustit **Příjmení** (k čemu ho používáme?) a **Heslo znovu** ve prospěch tlačítka „zobrazit heslo". Každé pole navíc snižuje dokončení registrace.
+**Rozhodnutí Karla:** příjmení potřebuje (reporty s celým jménem) → **ponecháno**. Zjednodušeno jen „Heslo znovu".
 
-⏸️ **Otázka na tebe:** potřebuješ příjmení kvůli reportům pro rodiče / fakturaci?
+**Řešení:** „Heslo znovu" nahrazeno přepínačem „Zobrazit / Skrýt heslo" (5 → 4 pole). Odstraněna i kontrola shody hesel. Ověřeno: 4 pole, přepínač mění password ↔ text.
 
-**Kde:** `src/app/(auth)/registrace/form.tsx`
+**Commit:** `9fd7aa4`
 
 ---
 
