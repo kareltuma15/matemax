@@ -6,10 +6,11 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { PENDING_REF_KEY } from "@/lib/referral";
 import { DIAGNOSTIC_MINUTES } from "@/lib/site-stats";
+import { vokativ } from "@/lib/vokativ";
 
 export default function VitejPage() {
   const router = useRouter();
-  const [email, setEmail] = useState<string | null>(null);
+  const [firstName, setFirstName] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [referralGranted, setReferralGranted] = useState(false);
 
@@ -21,7 +22,12 @@ export default function VitejPage() {
         return;
       }
       const uid = data.session.user.id;
-      setEmail(data.session.user.email ?? null);
+      // Jméno z registrace (first_name), u Google účtu z full_name. Kdo nemá
+      // ani jedno (registrace jen e-mailem), zůstane bez oslovení — lepší než
+      // oslovit ho začátkem e-mailu.
+      const meta = data.session.user.user_metadata ?? {};
+      const jmeno = (meta.first_name as string) || ((meta.full_name as string) ?? "").split(" ")[0] || "";
+      setFirstName(jmeno);
 
       // Pojistka: kdo má diagnostiku za sebou, nemá tady co dělat. Rozhodnutí
       // po přihlášení sice čte obnovená data, ale kdyby obnova selhala nebo se
@@ -66,7 +72,7 @@ export default function VitejPage() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const firstName = email?.split("@")[0] ?? "student";
+  const osloveni = firstName ? `, ${vokativ(firstName)}` : "";
 
   return (
     <>
@@ -150,7 +156,7 @@ export default function VitejPage() {
         {/* Heading */}
         <div className="text-center">
           <h1 className="text-2xl font-black leading-tight" style={{ color: "#0D1B3E" }}>
-            Vítej v MateMax! 🎉
+            Vítej v MateMax{osloveni}! 🎉
           </h1>
           <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto">
             Nejdřív zjistíme kde máš mezery — pak připravíme plán přesně pro tebe.
