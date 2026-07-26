@@ -20,11 +20,11 @@
 | 4 | Nekonzistentní čísla napříč aplikací | Důležitá | ✅ |
 | 5 | Zámky v diagnostice matou | Důležitá | ✅ |
 | 6 | Podtémata jako syrové slugy | Důležitá | ✅ |
-| 7 | Landing dlouhý a mluví na rodiče | Kosmetická | 🔴 |
-| 8 | Registrace má zbytečná pole | Kosmetická | 🔴 |
-| 9 | Jméno z registrace se nepoužívá | Kosmetická | 🔴 |
-| 10 | Zlomkové slovní úlohy tenké na L1 | Obsahová | 🔴 |
-| 11 | Rovnice skoro bez KaTeXu (9/108) | Obsahová | 🔴 |
+| 7 | Landing dlouhý a mluví na rodiče | Kosmetická | ⏸️ čeká na rozhodnutí |
+| 8 | Registrace má zbytečná pole | Kosmetická | ⏸️ čeká na rozhodnutí (příjmení) |
+| 9 | Jméno z registrace se nepoužívá | Kosmetická | ✅ |
+| 10 | Zlomkové slovní úlohy tenké na L1 | Obsahová | ✅ |
+| 11 | Rovnice skoro bez KaTeXu (9/108) | Obsahová | ✅ |
 | 12 | Podtémata roztříštěná u výrazů a grafů | Obsahová | 🔴 |
 | 13 | Chybí `ANTHROPIC_API_KEY` → AI hint vypnutý | Konfigurace | ⏸️ |
 | 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | ⏸️ |
@@ -177,31 +177,40 @@
 
 ---
 
-## 9. Jméno z registrace se nepoužívá 🔴
+## 9. Jméno z registrace se nepoužívá ✅
 
-**Co se děje:** `/vitej` si počítá `firstName` z e-mailové adresy (`email.split("@")[0]`), ale nikde ho nezobrazí — proměnná je nepoužitá. Přitom jméno máme z registrace.
+**Co se dělo:** `/vitej` si počítalo `firstName` z e-mailové adresy (`email.split("@")[0]`), ale nikde ho nezobrazilo — proměnná visela nevyužitá. Přitom jméno máme z registrace.
 
-**Návrh řešení:** oslovit žáka jménem („Vítej, Aničko! 🎉“) z metadat účtu. Drobnost s velkým dopadem na pocit z první obrazovky.
+**Řešení:** nadpis nově osloví jménem z metadat účtu (`first_name`, u Google `full_name`): „Vítej v MateMax, Tomáši! 🎉". Kdo jméno nemá (registrace jen e-mailem), zůstane bez oslovení. Čeština chce 5. pád — nový `src/lib/vokativ.ts` ho tvoří konzervativně (slovník častých jmen + pravidlo -a→-o pro ženská, jinak 1. pád), aby netipoval špatný tvar. Ověřeno 14 případy.
 
-**Kde:** `src/app/(app)/vitej/page.tsx` (ř. 54)
-
----
-
-## 10. Zlomkové slovní úlohy jsou tenké na L1 🔴
-
-**Zjištění z auditu DB:** sešit má slovní úlohy v každé úrovni (pizza, zahrada), databáze má u zlomků `slovni_uloha` jen na L2/L3, na L1 žádnou.
-
-**Proč to vadí:** žák na lehké úrovni dostává jen čisté počítání, nenaučí se převádět text na výpočet — což je jádro CERMATu.
-
-**Návrh řešení:** doplnit ~5 lehkých slovních úloh se zlomky ve stylu sešitu.
+**Commit:** `daa5e4f`
 
 ---
 
-## 11. Rovnice skoro bez KaTeXu 🔴
+## 10. Zlomkové slovní úlohy jsou tenké na L1 ✅
 
-**Zjištění:** pouze **9 ze 108** příkladů u rovnic má `latex: true`, přestože zlomkové rovnice matematickou sazbu potřebují.
+**Zjištění z auditu DB:** sešit má slovní úlohy v každé úrovni (pizza, zahrada), databáze měla u zlomků `slovni_uloha` jen na L2/L3 (4 úlohy), na L1 žádnou.
 
-**Návrh řešení:** projít rovnice a u těch se zlomky doplnit KaTeX zápis. Pozor na nález #1 — zadání musí mít `$...$` kolem matematiky, ne být celé LaTeX.
+**Proč to vadilo:** žák na lehké úrovni dostával jen čisté počítání, nenaučil se převádět text na výpočet — což je jádro CERMATu.
+
+**Řešení:** přidáno 5 jednokrokových konkrétních úloh ve stylu sešitu (pizza, čokoláda, dort, třída, džus), výsledky 3/8, 1/3, 1/2, 1/4, 1/2. Matematika v `$…$`, próza venku — audit-katex čistý.
+
+**Commit:** `0bbea7d`
+
+---
+
+## 11. Rovnice skoro bez KaTeXu ✅
+
+**Zjištění:** jen **9 z 88** příkladů u rovnic mělo `latex: true`, přestože zlomkové rovnice matematickou sazbu potřebují — sázely se jako plain text „x/4 = 3".
+
+**Řešení:** 16 zlomkových rovnic převedeno na `latex: true` s `$\frac{}{}$` v zadání i krocích (ROV_050 „km/h" není zlomek, vynechána). Próza venku, audit-katex čistý.
+
+**Vedlejší nález — tři chybné výsledky** (jako ROV_047/050 dřív):
+- ROV_024: `(x+1)/2 = (x-1)/3` → x = −5, ne uvedené „x = 5" (kroky přitom −5 měly).
+- ROV_048: soustava dává x=0, y=12, ne „x=6, y=6"; krok byl navíc nedokončený „řeš soustavu".
+- ROV_069: popisná změť → správně x = 1 ± √2.
+
+**Commit:** `cc05c03`
 
 ---
 
