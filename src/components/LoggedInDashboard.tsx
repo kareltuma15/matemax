@@ -15,7 +15,7 @@ import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import PushSubscribeNudge from "@/components/PushSubscribeNudge";
-import TopicPathMap from "@/components/TopicPathMap";
+import TopicPicker from "@/components/TopicPicker";
 import DnesniMise from "@/components/DnesniMise";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -551,12 +551,12 @@ export default function LoggedInDashboard({
           </Link>
         )}
 
-        {/* Mapa učení — vedlejší cesta: „nebo si vyber sám" */}
+        {/* Výběr tématu — vedlejší cesta: „nebo si vyber sám" */}
         <div className="pt-1">
           <p className="text-[11px] font-black uppercase tracking-wide text-slate-400 mb-2 px-1">
             Nebo si vyber téma sám
           </p>
-          <TopicPathMap isPremium={isPremium} />
+          <TopicPicker isPremium={isPremium} />
         </div>
 
         {/* Bento 2-col: Kde máš mezery compact + Rychlý mód tile */}
