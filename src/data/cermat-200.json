@@ -938,7 +938,7 @@
     {
       "id": "t04_01",
       "tema": "vyrazy",
-      "podtema": "mocniny_prirozenych_cisel",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: $3^{4}$",
       "odpoved": "81",
@@ -997,7 +997,7 @@
     {
       "id": "t04_05",
       "tema": "vyrazy",
-      "podtema": "mocniny_zapornych_cisel",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítejte: $(−3)^{2}$",
       "odpoved": "9",
@@ -1041,7 +1041,7 @@
     {
       "id": "t04_08",
       "tema": "vyrazy",
-      "podtema": "mocniny_porovnani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Které je větší: $2^{6}$ nebo $3^{4}$?",
       "odpoved": "2⁶ = 64, 3⁴ = 81, tedy 3⁴ je větší",
@@ -1089,7 +1089,7 @@
     {
       "id": "t04_11",
       "tema": "vyrazy",
-      "podtema": "pravidla_pro_mocniny",
+      "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Zjednodušte: $(2^{3})^{4} \\div 2^{6}$",
       "odpoved": "2⁶ = 64",
@@ -1105,7 +1105,7 @@
     {
       "id": "t04_12",
       "tema": "vyrazy",
-      "podtema": "odmocniny_zjednoduseni",
+      "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Zjednodušte: $\\sqrt{72}$",
       "odpoved": "6√2",
@@ -1138,7 +1138,7 @@
     {
       "id": "t04_14",
       "tema": "vyrazy",
-      "podtema": "pravidla_pro_mocniny",
+      "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Vypočítejte: $4^{2} + 3^{3} − \\sqrt{49} + 2⁰$",
       "odpoved": "60",
@@ -1156,7 +1156,7 @@
     {
       "id": "t04_15",
       "tema": "vyrazy",
-      "podtema": "odmocniny_vypocet",
+      "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Obsah čtverce je 169 cm^{2}. Jaký je obvod?",
       "odpoved": "52 cm",
@@ -1171,7 +1171,7 @@
     {
       "id": "t04_16",
       "tema": "vyrazy",
-      "podtema": "pravidla_pro_mocniny",
+      "podtema": "zakony_mocnin",
       "obtiznost": 2,
       "zadani": "Zjednodušte: $(3 \\times 4)^{2} \\div 6^{2}$",
       "odpoved": "4",
@@ -1187,7 +1187,7 @@
     {
       "id": "t04_17",
       "tema": "vyrazy",
-      "podtema": "odmocniny_rovnice",
+      "podtema": "odmocniny",
       "obtiznost": 2,
       "zadani": "Řešte rovnici: $x^{2} = 225$",
       "odpoved": "x = 15 nebo x = −15",
@@ -1203,7 +1203,7 @@
     {
       "id": "t04_18",
       "tema": "vyrazy",
-      "podtema": "komplexni_vypocet",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "zadani": "Vypočítejte: $\\sqrt{3^{2} + 4^{2}} \\times 2^{3} − (\\sqrt{25})^{2}$",
       "odpoved": "15",
@@ -1222,7 +1222,7 @@
     {
       "id": "t04_19",
       "tema": "vyrazy",
-      "podtema": "pythagorova_veta_aplikace",
+      "podtema": "pythagorova_veta",
       "obtiznost": 3,
       "zadani": "Žebřík je opřen o zeď. Spodek žebříku je 2,4 m od zdi, žebřík má délku 4 m. V jaké výšce se dotýká zdi?",
       "odpoved": "3,2 m",
@@ -1238,7 +1238,7 @@
     {
       "id": "t04_20",
       "tema": "vyrazy",
-      "podtema": "pravidla_zaporne_mocniny",
+      "podtema": "zakony_mocnin",
       "obtiznost": 3,
       "zadani": "Vyjádřete jako zlomek: $2^{-3} + 3^{-2}$",
       "odpoved": "17/72",
@@ -2774,7 +2774,7 @@
     {
       "id": "t10_02",
       "tema": "grafy_logika",
-      "podtema": "pravdivostni_tabulka",
+      "podtema": "logicka_dedukce",
       "obtiznost": 1,
       "zadani": "Jsou-li tato tvrzení pravdivá: 'Všichni žáci v kroužku hrají šachy nebo fotbal. Karel nehraje fotbal.' Co platí o Karlovi?",
       "odpoved": "Karel hraje šachy.",
@@ -2789,7 +2789,7 @@
     {
       "id": "t10_03",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_posloupnosti",
+      "podtema": "posloupnosti",
       "obtiznost": 1,
       "zadani": "Najděte chybějící číslo: 3, 6, 12, 24, ___, 96",
       "odpoved": "48",
@@ -2817,7 +2817,7 @@
     {
       "id": "t10_05",
       "tema": "grafy_logika",
-      "podtema": "sit_a_prostorove_mysleni",
+      "podtema": "logicka_dedukce",
       "obtiznost": 1,
       "zadani": "Krychle má čísla 1–6 na stěnách. Protilehlé stěny dávají vždy 7. Číslo 3 je nahoře. Jaké číslo je dole?",
       "odpoved": "4",
@@ -2832,7 +2832,7 @@
     {
       "id": "t10_06",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_tabulka",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 1,
       "zadani": "V tabulce platí zákonitost pro každý řádek: [2, 5, 3], [4, 10, 6], [3, 7, ?]. Najděte ?.",
       "odpoved": "? = 4",
@@ -2847,7 +2847,7 @@
     {
       "id": "t10_07",
       "tema": "grafy_logika",
-      "podtema": "rozvrh_kombinatorika",
+      "podtema": "kombinatorika",
       "obtiznost": 1,
       "zadani": "3 žáci si mají rozdělit 3 různé úkoly (každý právě jeden). Kolik existuje způsobů rozdělení?",
       "odpoved": "6",
@@ -2860,7 +2860,7 @@
     {
       "id": "t10_08",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_cisla",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 1,
       "zadani": "Čísla 1 až 100 jsou napsána za sebou: 12345678910111213... Jaká číslice je na 15. místě?",
       "odpoved": "2 (ze čísla 12)",
@@ -2893,7 +2893,7 @@
     {
       "id": "t10_10",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_obrazce",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 1,
       "zadani": "Vzorec: 1 čtvereček = 4 zápalky, 2 čtverečky vedle sebe = 7 zápalek, 3 = 10 zápalek. Kolik zápalek tvoří 10 čtverečků v řadě?",
       "odpoved": "31 zápalek",
@@ -2908,7 +2908,7 @@
     {
       "id": "t10_11",
       "tema": "grafy_logika",
-      "podtema": "dedukce_tabulka",
+      "podtema": "logicka_dedukce",
       "obtiznost": 2,
       "zadani": "Čtyři přátelé (Adam, Bořek, Cecil, Dan) mají různá povolání (lékař, učitel, řidič, kuchař). Víme: (1) Adam není lékař ani učitel. (2) Bořek není řidič. (3) Cecil je lékař. Kdo je učitel?",
       "odpoved": "Dan je učitel",
@@ -2927,7 +2927,7 @@
     {
       "id": "t10_12",
       "tema": "grafy_logika",
-      "podtema": "ciselna_zakonitost",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Fibonacciho posloupnost: 1, 1, 2, 3, 5, 8, 13, 21, ... Jaká jsou dvě následující čísla?",
       "odpoved": "34, 55",
@@ -2942,7 +2942,7 @@
     {
       "id": "t10_13",
       "tema": "grafy_logika",
-      "podtema": "kombinatorika_vyber",
+      "podtema": "kombinatorika",
       "obtiznost": 2,
       "zadani": "Z 5 žáků vybíráme 2 do soutěže (nezáleží na pořadí). Kolik způsobů výběru existuje?",
       "odpoved": "10",
@@ -2955,7 +2955,7 @@
     {
       "id": "t10_14",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_dvojice_cisel",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Zákonitost: (3, 9), (5, 25), (7, 49), (4, ?). Jaká je chybějící hodnota?",
       "odpoved": "16",
@@ -2970,7 +2970,7 @@
     {
       "id": "t10_15",
       "tema": "grafy_logika",
-      "podtema": "logicka_dedukce_lhari_a_pravdomluvni",
+      "podtema": "logicka_dedukce",
       "obtiznost": 2,
       "zadani": "Na ostrově žijí jen pravdomluvní (vždy pravda) a lháři (vždy lžou). Osoba A říká: 'Jsem lhář.' Je A pravdomluvný nebo lhář?",
       "odpoved": "Toto tvrzení je paradox — žádná z možností není konzistentní. A nemůže být ani jedno. (V CERMAT kontextu: A je lhář a jeho výrok je lež, tedy A není lhář — paradox.)",
@@ -2985,7 +2985,7 @@
     {
       "id": "t10_16",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_v_tabulce",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Magický čtverec 3×3 má v každém řádku, sloupci a diagonále součet 15. Jsou zadána čísla: střed=5, roh=2. Doplňte políčko napravo od 2 (vrchní řádek, prostřední sloupec).",
       "odpoved": "6",
@@ -3001,7 +3001,7 @@
     {
       "id": "t10_17",
       "tema": "grafy_logika",
-      "podtema": "kombinatorika_hesla",
+      "podtema": "kombinatorika",
       "obtiznost": 2,
       "zadani": "Kolik čtyřciferných čísel lze sestavit z číslic 1, 2, 3, 4, pokud se každá číslice použije právě jednou?",
       "odpoved": "24",
@@ -3015,7 +3015,7 @@
     {
       "id": "t10_18",
       "tema": "grafy_logika",
-      "podtema": "komplexni_dedukce",
+      "podtema": "logicka_dedukce",
       "obtiznost": 3,
       "zadani": "Pět závodníků (A–E) doběhlo cílem. Víme: (1) A skončil před B. (2) C skončil za D. (3) E skončil mezi A a B. (4) D skončil jako první. Seřaďte závodníky.",
       "odpoved": "D, A, E, B, C",
@@ -3032,7 +3032,7 @@
     {
       "id": "t10_19",
       "tema": "grafy_logika",
-      "podtema": "zakonitost_slozena",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 3,
       "zadani": "Řada čísel: 1, 4, 9, 16, 25, ... (čtverce). Jaký je součet prvních 10 členů?",
       "odpoved": "385",
@@ -3048,7 +3048,7 @@
     {
       "id": "t10_20",
       "tema": "grafy_logika",
-      "podtema": "kombinatorika_cesty",
+      "podtema": "kombinatorika",
       "obtiznost": 3,
       "zadani": "Síť ulic je mřížka 3×3 (4 uzly × 4 uzly = 16 uzlů). Kolik nejkratších cest vede z levého dolního rohu do pravého horního rohu? (Pohyb jen doprava nebo nahoru.)",
       "odpoved": "20",

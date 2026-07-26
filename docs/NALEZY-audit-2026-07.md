@@ -25,7 +25,7 @@
 | 9 | Jméno z registrace se nepoužívá | Kosmetická | ✅ |
 | 10 | Zlomkové slovní úlohy tenké na L1 | Obsahová | ✅ |
 | 11 | Rovnice skoro bez KaTeXu (9/108) | Obsahová | ✅ |
-| 12 | Podtémata roztříštěná u výrazů a grafů | Obsahová | 🔴 |
+| 12 | Podtémata roztříštěná u výrazů a grafů | Obsahová | ✅ |
 | 13 | Chybí `ANTHROPIC_API_KEY` → AI hint vypnutý | Konfigurace | ⏸️ |
 | 14 | Vercel Hobby → připomínka 1 h před testem nejede | Konfigurace | 🟡 kód hotový, čeká na GitHub secrets |
 | 15 | Přihlášená část neproauditovaná | Ověření | ⏸️ |
@@ -214,13 +214,17 @@
 
 ---
 
-## 12. Podtémata roztříštěná u výrazů a grafů 🔴
+## 12. Podtémata roztříštěná u výrazů a grafů ✅
 
-**Zjištění:** výrazy mají 21 podtémat (10 s jediným příkladem), grafy a logika 26 (19 s jediným). Geometrie a slovní úlohy už sjednocené (`6afe452`).
+**Zjištění:** výrazy měly 21 podtémat (10 s jediným příkladem), grafy a logika 26. Nepořádek prosakoval do UI (podtéma nad příkladem, filtr).
 
-**Proč je to nižší priorita:** sešit u těchto témat podkapitoly nedefinuje, takže nejde o rozpor s předlohou — jen o nepořádek, který prosakuje do UI (viz #6).
+**Řešení:** obojí sjednoceno na **6 podtémat** podle typu úloh (`scripts/sjednotit-podtemata.mjs`, 100 příkladů přemapováno):
+- **Výrazy:** Dosazování (61) · Mocniny (38) · Odmocniny (29) · Úprava výrazů (18) · Zákony mocnin (14) · Pythagorova věta (3)
+- **Grafy a logika:** Aritmetická posloupnost (31) · Číselné zákonitosti (18) · Další posloupnosti (13) · Geometrická posloupnost (12) · Logická dedukce (7) · Kombinatorika (4)
 
-**Návrh řešení:** sjednotit na rozumný počet (~5–6 na téma) podle typů úloh v sešitu.
+Doplněny 3 chybějící popisky (`uprava_vyrazu`, `posloupnosti`, `kombinatorika`). Migrace je idempotentní, typecheck čistý.
+
+**Commit:** _viz git log_
 
 ---
 

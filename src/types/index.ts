@@ -150,6 +150,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   roznasobeni:          "Roznásobení závorek",
   vytkani:              "Vytýkání",
   zjednodusovani:       "Zjednodušování",
+  uprava_vyrazu:        "Úprava výrazů",
   pythagorova_veta:     "Pythagorova věta",
 
   // Rovnice
@@ -168,6 +169,8 @@ export const PODTEMA_LABELS: Record<string, string> = {
   // Grafy a logika
   aritmeticka_posloupnost: "Aritmetická posloupnost",
   geometricka_posloupnost: "Geometrická posloupnost",
+  posloupnosti:            "Další posloupnosti",
+  kombinatorika:           "Kombinatorika",
   kvadraticka_posloupnost: "Kvadratická posloupnost",
   ciselna_zakonitost:      "Číselná zákonitost",
   ciselne_zakonitosti:     "Číselná zákonitost",

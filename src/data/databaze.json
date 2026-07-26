@@ -5703,7 +5703,7 @@
     {
       "id": "MOC_001",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $2^{2}$",
       "odpoved": "4",
@@ -5718,7 +5718,7 @@
     {
       "id": "MOC_002",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $3^{2}$",
       "odpoved": "9",
@@ -5732,7 +5732,7 @@
     {
       "id": "MOC_003",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $4^{2}$",
       "odpoved": "16",
@@ -5746,7 +5746,7 @@
     {
       "id": "MOC_004",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $5^{2}$",
       "odpoved": "25",
@@ -5760,7 +5760,7 @@
     {
       "id": "MOC_005",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $6^{2}$",
       "odpoved": "36",
@@ -5774,7 +5774,7 @@
     {
       "id": "MOC_006",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $7^{2}$",
       "odpoved": "49",
@@ -5788,7 +5788,7 @@
     {
       "id": "MOC_007",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 1,
       "zadani": "Vypočítej: $10^{2}$",
       "odpoved": "100",
@@ -5915,7 +5915,7 @@
     {
       "id": "MOC_016",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $2^{3}$",
       "odpoved": "8",
@@ -5930,7 +5930,7 @@
     {
       "id": "MOC_017",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $3^{3}$",
       "odpoved": "27",
@@ -5945,7 +5945,7 @@
     {
       "id": "MOC_018",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $2^{4}$",
       "odpoved": "16",
@@ -5960,7 +5960,7 @@
     {
       "id": "MOC_019",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $(-3)^{2}$",
       "odpoved": "9",
@@ -5975,7 +5975,7 @@
     {
       "id": "MOC_020",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $(-2)^{3}$",
       "odpoved": "-8",
@@ -6053,7 +6053,7 @@
     {
       "id": "MOC_025",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $3^{2} + 4^{2}$",
       "odpoved": "25",
@@ -6068,7 +6068,7 @@
     {
       "id": "MOC_026",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $5^{2} − 3^{2}$",
       "odpoved": "16",
@@ -6083,7 +6083,7 @@
     {
       "id": "MOC_027",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $2^{5}$",
       "odpoved": "32",
@@ -6098,7 +6098,7 @@
     {
       "id": "MOC_028",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $(\\frac{1}{2})^{2}$",
       "odpoved": "1/4",
@@ -6177,7 +6177,7 @@
     {
       "id": "MOC_033",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $3^{4}$",
       "odpoved": "81",
@@ -6192,7 +6192,7 @@
     {
       "id": "MOC_034",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(-1)^{100}$",
       "odpoved": "1",
@@ -6207,7 +6207,7 @@
     {
       "id": "MOC_035",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(-1)^{101}$",
       "odpoved": "-1",
@@ -6283,7 +6283,7 @@
     {
       "id": "MOC_040",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $10^{3} − 10^{2}$",
       "odpoved": "900",
@@ -6382,7 +6382,7 @@
     {
       "id": "CIS_007",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 4, 9, 16, ___",
       "odpoved": "25",
@@ -6438,7 +6438,7 @@
     {
       "id": "CIS_011",
       "tema": "grafy_logika",
-      "podtema": "fibonacciho_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 1, 2, 3, 5, 8, ___",
       "odpoved": "13",
@@ -6452,7 +6452,7 @@
     {
       "id": "CIS_012",
       "tema": "grafy_logika",
-      "podtema": "kubicka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 1,
       "zadani": "Doplň: 1, 8, 27, 64, ___",
       "odpoved": "125",
@@ -6481,7 +6481,7 @@
     {
       "id": "CIS_014",
       "tema": "grafy_logika",
-      "podtema": "trojuhelnikova_cisla",
+      "podtema": "posloupnosti",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 3, 6, 10, 15, ___",
       "odpoved": "21",
@@ -6496,7 +6496,7 @@
     {
       "id": "CIS_015",
       "tema": "grafy_logika",
-      "podtema": "fibonacciho_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 2,
       "zadani": "Doplň: 2, 3, 5, 8, 13, ___",
       "odpoved": "21",
@@ -6572,7 +6572,7 @@
     {
       "id": "CIS_020",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 2, 4, 7, 11, ___",
       "odpoved": "16",
@@ -6632,7 +6632,7 @@
     {
       "id": "CIS_024",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Doplň: 256, 128, 64, 32, ___",
       "odpoved": "16",
@@ -6646,7 +6646,7 @@
     {
       "id": "CIS_025",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 4, 9, 16, 25, ___",
       "odpoved": "36",
@@ -6707,7 +6707,7 @@
     {
       "id": "CIS_029",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 3,
       "zadani": "Posloupnost: aₙ = n² + 1. Jaký je 7. člen?",
       "odpoved": "50",
@@ -6752,7 +6752,7 @@
     {
       "id": "CIS_032",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 3,
       "zadani": "Jaký je 6. člen Fibonacciho posloupnosti (1, 1, 2, 3, 5, ...)?",
       "odpoved": "8",
@@ -6796,7 +6796,7 @@
     {
       "id": "CIS_035",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 3,
       "zadani": "Součet: 1² + 2² + 3² + 4² + 5² = ?",
       "odpoved": "55",
@@ -7805,7 +7805,7 @@
     {
       "id": "CIS_041",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 1,
       "zadani": "Doplň: 36, 49, 64, 81, ___",
       "odpoved": "100",
@@ -7833,7 +7833,7 @@
     {
       "id": "CIS_043",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 1,
       "zadani": "Doplň: 2, 4, 6, 10, 16, ___",
       "odpoved": "26",
@@ -7847,7 +7847,7 @@
     {
       "id": "CIS_044",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 1,
       "zadani": "Doplň: 4, 9, 16, 25, 36, ___",
       "odpoved": "49",
@@ -7889,7 +7889,7 @@
     {
       "id": "CIS_047",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 1, 2, 4, 7, 13, ___",
       "odpoved": "24",
@@ -7903,7 +7903,7 @@
     {
       "id": "CIS_048",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Doplň: 1, 2, 6, 24, ___",
       "odpoved": "120",
@@ -7959,7 +7959,7 @@
     {
       "id": "CIS_052",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
       "zadani": "Doplň: 3, 4, 7, 11, 18, 29, ___",
       "odpoved": "47",
@@ -7987,7 +7987,7 @@
     {
       "id": "CIS_054",
       "tema": "grafy_logika",
-      "podtema": "trojuhelnikova_cisla",
+      "podtema": "posloupnosti",
       "obtiznost": 2,
       "zadani": "Doplň: 0, 1, 3, 6, 10, 15, ___",
       "odpoved": "21",
@@ -8043,7 +8043,7 @@
     {
       "id": "CIS_058",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 3,
       "zadani": "Jaký je 7. člen posloupnosti aₙ = 2n² − 1?",
       "odpoved": "97",
@@ -8057,7 +8057,7 @@
     {
       "id": "CIS_059",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 3,
       "zadani": "Doplň: 1, 5, 14, 30, 55, ___",
       "odpoved": "91",
@@ -8113,7 +8113,7 @@
     {
       "id": "CIS_063",
       "tema": "grafy_logika",
-      "podtema": "ruzna_vzorec",
+      "podtema": "ciselne_zakonitosti",
       "obtiznost": 3,
       "zadani": "Doplň: 1, 3, 7, 15, 31, ___",
       "odpoved": "63",
@@ -8141,7 +8141,7 @@
     {
       "id": "CIS_065",
       "tema": "grafy_logika",
-      "podtema": "kvadraticka_posloupnost",
+      "podtema": "posloupnosti",
       "obtiznost": 3,
       "zadani": "Součet: 1² + 2² + 3² + ... + 10² = ?",
       "odpoved": "385",
@@ -8155,7 +8155,7 @@
     {
       "id": "MOC_041",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $4^{3}$",
       "odpoved": "64",
@@ -8170,7 +8170,7 @@
     {
       "id": "MOC_042",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $(−4)^{2}$",
       "odpoved": "16",
@@ -8290,7 +8290,7 @@
     {
       "id": "MOC_050",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 2,
       "zadani": "Vypočítej: $1^{2} + 2^{2} + 3^{2} + 4^{2}$",
       "odpoved": "30",
@@ -8305,7 +8305,7 @@
     {
       "id": "MOC_051",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $2^{7}$",
       "odpoved": "128",
@@ -8320,7 +8320,7 @@
     {
       "id": "MOC_052",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $2^{8}$",
       "odpoved": "256",
@@ -8350,7 +8350,7 @@
     {
       "id": "MOC_054",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(−2)^{4}$",
       "odpoved": "16",
@@ -8365,7 +8365,7 @@
     {
       "id": "MOC_055",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(−3)^{4}$",
       "odpoved": "81",
@@ -8410,7 +8410,7 @@
     {
       "id": "MOC_058",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $5^{3} − 5^{2}$",
       "odpoved": "100",
@@ -8425,7 +8425,7 @@
     {
       "id": "MOC_059",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $4^{3} + 2^{4}$",
       "odpoved": "80",
@@ -8455,7 +8455,7 @@
     {
       "id": "MOC_061",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(\\frac{1}{3})^{3}$",
       "odpoved": "1/27",
@@ -8485,7 +8485,7 @@
     {
       "id": "MOC_063",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $2^{9}$",
       "odpoved": "512",
@@ -8500,7 +8500,7 @@
     {
       "id": "MOC_064",
       "tema": "vyrazy",
-      "podtema": "umocnovani",
+      "podtema": "mocniny",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(\\frac{2}{3})^{3}$",
       "odpoved": "8/27",
@@ -9660,7 +9660,7 @@
     {
       "id": "SES_VYR_01",
       "tema": "vyrazy",
-      "podtema": "zjednodusovani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 1,
       "zadani": "Uprav na nejjednodušší tvar: $7x + 3x − 5$",
       "odpoved": "10x − 5",
@@ -9675,7 +9675,7 @@
     {
       "id": "SES_VYR_02",
       "tema": "vyrazy",
-      "podtema": "zjednodusovani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 1,
       "zadani": "Uprav: $4a − 9 + 2a + 6$",
       "odpoved": "6a − 3",
@@ -9690,7 +9690,7 @@
     {
       "id": "SES_VYR_03",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 1,
       "zadani": "Roznásob a uprav: $3(2x − 5) + x$",
       "odpoved": "7x − 15",
@@ -9705,7 +9705,7 @@
     {
       "id": "SES_VYR_04",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 1,
       "zadani": "Roznásob a uprav: $5 − 2(y − 4)$",
       "odpoved": "13 − 2y",
@@ -9720,7 +9720,7 @@
     {
       "id": "SES_VYR_05",
       "tema": "vyrazy",
-      "podtema": "vytkani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 1,
       "zadani": "Vytkni společný člen: $6m + 12$",
       "odpoved": "6(m + 2)",
@@ -9735,7 +9735,7 @@
     {
       "id": "SES_VYR_06",
       "tema": "vyrazy",
-      "podtema": "zjednodusovani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 1,
       "zadani": "Uprav: $8p − 3(2p − 1) + 4$",
       "odpoved": "2p + 7",
@@ -9750,7 +9750,7 @@
     {
       "id": "SES_VYR_07",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 2,
       "zadani": "Roznásob a uprav: $4(2x − 3) − 2(x + 5)$",
       "odpoved": "6x − 22",
@@ -9765,7 +9765,7 @@
     {
       "id": "SES_VYR_08",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 2,
       "zadani": "Uprav: $3a(a − 2) + 2(1 − a)$",
       "odpoved": "3a² − 8a + 2",
@@ -9781,7 +9781,7 @@
     {
       "id": "SES_VYR_09",
       "tema": "vyrazy",
-      "podtema": "vytkani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 2,
       "zadani": "Uprav a rozlož na součin vytknutím: $9k^{2} − 6k$",
       "odpoved": "3k(3k − 2)",
@@ -9796,7 +9796,7 @@
     {
       "id": "SES_VYR_10",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 2,
       "zadani": "Uprav: $(2x + 3)(x − 1) − x(x + 4)$",
       "odpoved": "x² − 3x − 3",
@@ -9828,7 +9828,7 @@
     {
       "id": "SES_VYR_12",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 2,
       "zadani": "Uprav: $(3y − 1)^{2} − y(2y + 5)$",
       "odpoved": "7y² − 11y + 1",
@@ -9844,7 +9844,7 @@
     {
       "id": "SES_VYR_13",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "zadani": "Uprav: $(x + 2)(1 − x) − 2x(\\frac{−1}{2})x$",
       "odpoved": "-x + 2",
@@ -9860,7 +9860,7 @@
     {
       "id": "SES_VYR_14",
       "tema": "vyrazy",
-      "podtema": "vzorce",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "zadani": "Uprav a rozlož: $1 − 2n + 2n(1 − 8n)$",
       "odpoved": "(1 − 4n)(1 + 4n)",
@@ -9876,7 +9876,7 @@
     {
       "id": "SES_VYR_15",
       "tema": "vyrazy",
-      "podtema": "slozeny_zlomek",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\frac{\\dfrac{4}{9} \\cdot \\left(-\\dfrac{3}{8}\\right) + \\dfrac{1}{2}}{2 - \\dfrac{5}{6} \\cdot \\dfrac{5}{4}} = ?",
@@ -9893,7 +9893,7 @@
     {
       "id": "SES_VYR_16",
       "tema": "vyrazy",
-      "podtema": "zjednodusovani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "latex": true,
       "zadani": "Uprav: $\\left(\\frac{3}{5}x - \\frac{1}{2}\\right) - \\frac{1}{10}(4x - 15)$",
@@ -9909,7 +9909,7 @@
     {
       "id": "SES_VYR_17",
       "tema": "vyrazy",
-      "podtema": "roznasobeni",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "latex": true,
       "zadani": "Uprav: $\\frac{7a}{3}(a+3) + 2(1-3a)(a+5)$",
@@ -9925,7 +9925,7 @@
     {
       "id": "SES_VYR_18",
       "tema": "vyrazy",
-      "podtema": "slozeny_zlomek",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\left($\\frac{11}{5}$ - $\\frac{11}{6}$\\right) \\div \\left(-$\\frac{1}{3}$\\right) + \\left($\\frac{6}{5}$ \\div $\\frac{9}{15}$ - 2\\right) = ?",
