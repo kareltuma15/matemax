@@ -2,14 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { TEMA_LABELS, PODTEMA_SLOVNI_ORDER, PODTEMA_LABELS } from "@/types";
+import { TEMA_LABELS, TEMATA_ORDER } from "@/types";
 import { FREE_TOPICS, PREMIUM_TOPICS } from "@/lib/subscription";
+import { pickMission } from "@/lib/mise";
+import { computeTrainingState, type Level } from "@/lib/levels";
 
 interface Props {
   isPremium: boolean;
   onSelectTopic: (tema: string, podtema?: string) => void;
   onStartMix: () => void;
+  onStartMistakes: () => void;
 }
+
+const EMOJI: Record<string, string> = {
+  zlomky: "🍕", vyrazy: "🔢", rovnice: "⚖️", geometrie: "📐",
+  slovni_ulohy: "📝", grafy_logika: "📊", konstrukce: "📏", uhly: "🔺", souhrnne: "🏆",
+};
 
 function useDiagScores(): Record<string, number> {
   const [scores, setScores] = useState<Record<string, number>>({});
@@ -28,161 +36,176 @@ function useDiagScores(): Record<string, number> {
   return scores;
 }
 
-function DiagDot({ pct }: { pct: number | undefined }) {
-  if (pct === undefined) return null;
-  const color = pct >= 80 ? "#22c55e" : pct >= 50 ? "#f59e0b" : "#ef4444";
+function barColor(score: number): string {
+  if (score >= 70) return "#16a34a";
+  if (score >= 40) return "#d97706";
+  return "#dc2626";
+}
+
+/** Odemčené úrovně L1→L3 jako řada čipů. */
+function LevelChips({ level }: { level: Level }) {
   return (
-    <span
-      className="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-      style={{ background: pct >= 80 ? "#f0fdf4" : pct >= 50 ? "#fffbeb" : "#fef2f2", color }}
-    >
-      {pct} %
-    </span>
+    <div className="flex gap-1">
+      {([1, 2, 3] as const).map((l) => {
+        const on = l <= level;
+        return (
+          <span
+            key={l}
+            className="text-[9px] font-black px-1.5 py-0.5 rounded-full border"
+            style={
+              on
+                ? { background: "#f0fdf4", borderColor: "#bbf7d0", color: "#166534" }
+                : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#cbd5e1" }
+            }
+            title={on ? `Úroveň ${l} odemčená` : `Úroveň ${l} zamčená — trénuj níž`}
+          >
+            L{l}{on ? " ✓" : ""}
+          </span>
+        );
+      })}
+    </div>
   );
 }
 
-export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix }: Props) {
+export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix, onStartMistakes }: Props) {
   const diagScores = useDiagScores();
-  const [expandedSlovni, setExpandedSlovni] = useState(false);
-  const allTopics = Object.keys(TEMA_LABELS);
-  const freeTopics = allTopics
-    .filter((t) => FREE_TOPICS.has(t))
-    .sort((a, b) => {
-      // Slabá témata (nižší skóre) jdou první; bez diagnostiky na konec
-      const sa = diagScores[a] ?? 101;
-      const sb = diagScores[b] ?? 101;
-      return sa - sb;
-    });
-  const premiumTopics = allTopics.filter((t) => PREMIUM_TOPICS.has(t));
+  const [levels, setLevels] = useState<Record<string, Level>>({});
+  const [mistakes, setMistakes] = useState(0);
+  const [missionTema, setMissionTema] = useState<string | null>(null);
 
-  // Nejslabší téma (< 50 %) dostane "Začni tady" badge
-  const weakestFree = freeTopics.find((t) => (diagScores[t] ?? 101) < 50) ?? null;
+  useEffect(() => {
+    const st = computeTrainingState();
+    setLevels(st.levels);
+    setMistakes(st.mistakes);
+    setMissionTema(pickMission(isPremium)?.tema ?? null);
+  }, [isPremium]);
+
+  // Témata v pořadí sešitu; dostupná první, zamčená (Premium) na konec.
+  const ordered = [...TEMATA_ORDER].sort((a, b) => {
+    const la = !isPremium && PREMIUM_TOPICS.has(a) ? 1 : 0;
+    const lb = !isPremium && PREMIUM_TOPICS.has(b) ? 1 : 0;
+    return la - lb;
+  });
+  const freeCount = TEMATA_ORDER.filter((t) => FREE_TOPICS.has(t)).length;
 
   return (
-    <div className="flex flex-col gap-4">
+    // Break-out: tréninkové centrum se roztáhne přes celou plochu (jako Domů),
+    // i když session karta na /trenink zůstává úzká. Layout má overflow-x-hidden,
+    // takže w-screen nezpůsobí vodorovné rolování kvůli scrollbaru.
+    <div className="mx-[calc(50%-50vw)] w-screen px-4">
+    <div className="mx-auto max-w-6xl flex flex-col gap-5 fade-in-up">
       {/* Header */}
-      <div
-        className="rounded-2xl px-5 py-4"
-        style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)" }}
-      >
-        <div className="flex items-center justify-between mb-1">
-          <h1 className="text-lg font-black text-white">📚 Mapa témat</h1>
+      <div className="rounded-2xl px-5 py-4" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)" }}>
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg font-black text-white">🏋️ Tréninkové centrum</h1>
           {!isPremium && (
-            <span
-              className="text-[11px] font-bold px-2.5 py-1 rounded-full glass-card"
-              style={{ color: "#93c5fd" }}
-            >
-              {freeTopics.length} / {allTopics.length} zdarma
+            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full glass-card" style={{ color: "#93c5fd" }}>
+              {freeCount} / {TEMATA_ORDER.length} zdarma
             </span>
           )}
         </div>
-        <p className="text-sm text-blue-300 leading-snug">
-          {isPremium
-            ? "Máš přístup ke všem tématům. Vyber co chceš procvičovat."
-            : "Vyber téma nebo upgraduj na Premium pro všechna témata."}
-        </p>
+        <p className="text-sm text-blue-300 leading-snug mt-0.5">Vyber, jak chceš dnes trénovat.</p>
       </div>
 
-      {/* Free topics */}
+      {/* Režimy tréninku */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* Dnešní trénink — vede */}
+        <button
+          onClick={() => missionTema && onSelectTopic(missionTema)}
+          disabled={!missionTema}
+          className="text-left rounded-2xl p-4 flex flex-col gap-1 text-white press-scale disabled:opacity-70"
+          style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
+        >
+          <span className="text-2xl">🎯</span>
+          <span className="text-sm font-black">Dnešní trénink</span>
+          <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.82)" }}>
+            {missionTema ? `Pokračuj v tématu ${TEMA_LABELS[missionTema]}` : "Sedm příkladů na míru"}
+          </span>
+        </button>
+
+        {/* Rychlý mód */}
+        <Link href="/rychly-mod" className="rounded-2xl p-4 flex flex-col gap-1 bg-white border border-slate-200 card-hover">
+          <span className="text-2xl">⚡</span>
+          <span className="text-sm font-black" style={{ color: "#0D1B3E" }}>Rychlý mód</span>
+          <span className="text-[11px] text-slate-500">10 příkladů · 60 sekund</span>
+        </Link>
+
+        {/* Zopakovat chyby — jen když nějaké jsou */}
+        {mistakes > 0 ? (
+          <button
+            onClick={onStartMistakes}
+            className="text-left rounded-2xl p-4 flex flex-col gap-1 card-hover"
+            style={{ background: "#fef2f2", border: "1px solid #fecaca" }}
+          >
+            <span className="text-2xl">🔄</span>
+            <span className="text-sm font-black" style={{ color: "#991b1b" }}>Zopakovat chyby</span>
+            <span className="text-[11px]" style={{ color: "#dc2626" }}>{mistakes} {mistakes === 1 ? "příklad čeká" : mistakes <= 4 ? "příklady čekají" : "příkladů čeká"}</span>
+          </button>
+        ) : (
+          <div className="rounded-2xl p-4 flex flex-col gap-1 bg-white border border-slate-200 opacity-60">
+            <span className="text-2xl">🔄</span>
+            <span className="text-sm font-black" style={{ color: "#0D1B3E" }}>Zopakovat chyby</span>
+            <span className="text-[11px] text-slate-400">Zatím žádné chyby k opakování</span>
+          </div>
+        )}
+
+        {/* Mix témat */}
+        <button
+          onClick={onStartMix}
+          className="text-left rounded-2xl p-4 flex flex-col gap-1 bg-white border border-slate-200 card-hover"
+        >
+          <span className="text-2xl">🎲</span>
+          <span className="text-sm font-black" style={{ color: "#0D1B3E" }}>Mix témat</span>
+          <span className="text-[11px] text-slate-500">Náhodně z dostupných</span>
+        </button>
+      </div>
+
+      {/* Témata */}
       <div>
-        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2 px-1">
-          ✅ Zdarma
-        </p>
-        <div className="flex flex-col gap-2">
-          {freeTopics.map((tema) => {
-            const isWeakest = tema === weakestFree;
-            const score = diagScores[tema];
-            const borderColor = score !== undefined
-              ? (score < 50 ? "#fca5a5" : score < 80 ? "#fde68a" : "#86efac")
-              : "#2E6DA4";
-            const bg = score !== undefined
-              ? (score < 50 ? "#fff5f5" : score < 80 ? "#fffef0" : "#f0fdf4")
-              : "#fff";
-            const isSlovni = tema === "slovni_ulohy";
-            return (
-              <div key={tema} className="flex flex-col gap-2">
-                <button
-                  onClick={() => (isSlovni ? setExpandedSlovni((v) => !v) : onSelectTopic(tema))}
-                  className="w-full rounded-xl border-2 px-4 py-3 flex items-center gap-3 hover:shadow-md transition-shadow text-left"
-                  style={{ borderColor, background: bg }}
+        <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Témata</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {ordered.map((tema) => {
+            const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+            const score = diagScores[tema] ?? 0;
+            const level = levels[tema] ?? 1;
+
+            if (locked) {
+              return (
+                <Link
+                  key={tema}
+                  href="/cenik"
+                  className="rounded-2xl p-3.5 flex flex-col gap-2 bg-white border border-slate-200 opacity-70 hover:opacity-100 transition-opacity"
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-bold text-slate-800">{TEMA_LABELS[tema]}</span>
-                      {isWeakest && (
-                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: "#dc2626", color: "#fff" }}>
-                          🎯 Začni tady
-                        </span>
-                      )}
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg grayscale">🔒</span>
+                    <span className="text-sm font-bold text-slate-500 truncate">{TEMA_LABELS[tema]}</span>
+                    <span className="ml-auto text-[11px] font-bold text-slate-400 shrink-0">Premium</span>
                   </div>
-                  <DiagDot pct={score} />
-                  <span
-                    className="text-xs font-bold px-2.5 py-1 rounded-full shrink-0"
-                    style={{ background: "#eff6ff", color: "#2E6DA4" }}
-                  >
-                    {isSlovni ? (expandedSlovni ? "Skrýt ▴" : "Vyber typ ▾") : "Procvičovat →"}
-                  </span>
-                </button>
+                  <span className="text-[11px] text-slate-400">Odemkni v Premium →</span>
+                </Link>
+              );
+            }
 
-                {isSlovni && expandedSlovni && (
-                  <div className="flex flex-wrap gap-2 pl-2 pb-1">
-                    <button
-                      onClick={() => onSelectTopic("slovni_ulohy")}
-                      className="text-xs font-bold px-3 py-1.5 rounded-full border-2 hover:shadow-sm transition-shadow"
-                      style={{ borderColor: "#2E6DA4", color: "#2E6DA4", background: "#fff" }}
-                    >
-                      Všechny
-                    </button>
-                    {PODTEMA_SLOVNI_ORDER.map((pt) => (
-                      <button
-                        key={pt}
-                        onClick={() => onSelectTopic("slovni_ulohy", pt)}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 hover:shadow-sm transition-shadow"
-                        style={{ background: "#fff", color: "#334155" }}
-                      >
-                        {PODTEMA_LABELS[pt]}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Premium topics */}
-      <div>
-        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2 px-1">
-          {isPremium ? "⭐ Premium témata" : "🔒 Premium témata"}
-        </p>
-        <div className="grid grid-cols-2 gap-2">
-          {premiumTopics.map((tema) =>
-            isPremium ? (
+            return (
               <button
                 key={tema}
                 onClick={() => onSelectTopic(tema)}
-                className="bg-white rounded-xl border border-slate-200 px-3 py-2.5 flex items-center justify-between hover:shadow-sm transition-shadow text-left"
+                className="text-left rounded-2xl p-3.5 flex flex-col gap-2 bg-white border border-slate-200 card-hover"
               >
-                <span className="text-xs font-semibold text-slate-700 leading-tight">
-                  {TEMA_LABELS[tema]}
-                </span>
-                <span className="text-xs text-slate-400 shrink-0 ml-1">→</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">{EMOJI[tema]}</span>
+                  <span className="text-sm font-bold truncate" style={{ color: "#0D1B3E" }}>{TEMA_LABELS[tema]}</span>
+                  <span className="ml-auto text-xs font-black shrink-0" style={{ color: score > 0 ? barColor(score) : "#94a3b8" }}>
+                    {score > 0 ? `${score} %` : "—"}
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f7" }}>
+                  <div className="h-full rounded-full" style={{ width: `${score}%`, background: barColor(score) }} />
+                </div>
+                <LevelChips level={level} />
               </button>
-            ) : (
-              <Link
-                key={tema}
-                href="/cenik"
-                className="bg-slate-50 rounded-xl border border-slate-200 px-3 py-2.5 flex items-center gap-2 opacity-60 hover:opacity-80 transition-opacity"
-              >
-                <span className="text-base shrink-0">🔒</span>
-                <p className="text-xs font-semibold text-slate-500 leading-tight">
-                  {TEMA_LABELS[tema]}
-                </p>
-              </Link>
-            )
-          )}
+            );
+          })}
         </div>
       </div>
 
@@ -194,37 +217,10 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix 
           style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
         >
           <p className="text-base font-black text-white">⭐ Odemkni všechna témata</p>
-          <p className="text-sm text-blue-200 mt-1">
-            Premium — všech {allTopics.length} témat · 99 Kč/měsíc
-          </p>
+          <p className="text-sm text-blue-200 mt-1">Premium — všech {TEMATA_ORDER.length} témat · 99 Kč/měsíc</p>
         </Link>
       )}
-
-      {/* Rychlý mód CTA */}
-      <Link
-        href="/rychly-mod"
-        className="w-full rounded-xl border-2 border-dashed px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors"
-        style={{ borderColor: "#0D1B3E" }}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-xl">⚡</span>
-          <div>
-            <p className="text-sm font-bold text-slate-800">Rychlý mód</p>
-            <p className="text-xs text-slate-400">10 příkladů · 60 sekund</p>
-          </div>
-        </div>
-        <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: "#0D1B3E", color: "#fff" }}>
-          Hrát →
-        </span>
-      </Link>
-
-      {/* Mix CTA */}
-      <button
-        onClick={onStartMix}
-        className="w-full py-3 text-slate-500 font-medium rounded-xl border border-slate-200 text-sm hover:bg-slate-50 transition-colors"
-      >
-        🎲 Mixovat dostupná témata
-      </button>
+    </div>
     </div>
   );
 }

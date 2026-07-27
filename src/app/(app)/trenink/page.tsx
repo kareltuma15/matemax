@@ -761,6 +761,10 @@ function TreningPageInner() {
         onStartMix={() => {
           setSessionIds(buildSession(cards, null, null, false));
         }}
+        onStartMistakes={() => {
+          setRezimFilter("chyby");
+          setSessionIds(buildSession(cards, null, "chyby", false));
+        }}
       />
     );
   }
