@@ -6,6 +6,8 @@ import { TEMA_LABELS, TEMATA_ORDER } from "@/types";
 import { FREE_TOPICS, PREMIUM_TOPICS } from "@/lib/subscription";
 import { pickMission } from "@/lib/mise";
 import { computeTrainingState, type Level } from "@/lib/levels";
+import { localLoadSessions } from "@/lib/storage";
+import { getDaysUntilCermat } from "@/lib/cermat-date";
 
 interface Props {
   isPremium: boolean;
@@ -72,13 +74,32 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
   const [levels, setLevels] = useState<Record<string, Level>>({});
   const [mistakes, setMistakes] = useState(0);
   const [missionTema, setMissionTema] = useState<string | null>(null);
+  const [week, setWeek] = useState<{ total: number; bars: number[] }>({ total: 0, bars: [0, 0, 0, 0, 0, 0, 0] });
 
   useEffect(() => {
     const st = computeTrainingState();
     setLevels(st.levels);
     setMistakes(st.mistakes);
     setMissionTema(pickMission(isPremium)?.tema ?? null);
+
+    // Posledních 7 dní: kolik příkladů (pro kartu „Tvůj týden").
+    try {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const dny: string[] = [];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(today.getTime() - i * 86400000);
+        dny.push(d.toISOString().slice(0, 10));
+      }
+      const byDate: Record<string, number> = {};
+      for (const s of localLoadSessions()) byDate[s.date] = (byDate[s.date] ?? 0) + (s.total ?? 0);
+      const bars = dny.map((d) => byDate[d] ?? 0);
+      setWeek({ total: bars.reduce((a, b) => a + b, 0), bars });
+    } catch { /* ignore */ }
   }, [isPremium]);
+
+  const daysToCermat = getDaysUntilCermat();
+  const weekMax = Math.max(1, ...week.bars);
 
   // Témata v pořadí sešitu; dostupná první, zamčená (Premium) na konec.
   const ordered = [...TEMATA_ORDER].sort((a, b) => {
@@ -207,6 +228,37 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
             );
           })}
         </div>
+      </div>
+
+      {/* Spodní řada — zaplňuje prostor pod tématy a motivuje k dalšímu kroku */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {/* Tvůj týden */}
+        <div className="rounded-2xl p-4 bg-white border border-slate-200 flex flex-col gap-2">
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Tvůj týden</p>
+          <p className="text-2xl font-black leading-none" style={{ color: "#0D1B3E" }}>
+            {week.total} <span className="text-xs font-semibold text-slate-400">{week.total === 1 ? "příklad" : week.total <= 4 ? "příklady" : "příkladů"}</span>
+          </p>
+          <div className="flex items-end gap-1 h-10 mt-1">
+            {week.bars.map((v, i) => (
+              <div key={i} className="flex-1 rounded-sm" style={{ height: `${Math.max(6, (v / weekMax) * 100)}%`, background: i === 6 ? "#2E6DA4" : "#c7d2fe" }} title={`${v} příkladů`} />
+            ))}
+          </div>
+        </div>
+
+        {/* Odpočet + testy nanečisto */}
+        <Link href="/testy-nanecisto" className="rounded-2xl p-4 flex flex-col gap-1 text-white card-hover" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>
+          <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.6)" }}>Přijímačky za</p>
+          <p className="text-2xl font-black leading-none">{daysToCermat} dní</p>
+          <span className="mt-auto inline-block text-xs font-black px-3 py-1.5 rounded-lg w-fit" style={{ background: "rgba(255,255,255,0.15)" }}>🎯 Test nanečisto →</span>
+        </Link>
+
+        {/* Denní výzva */}
+        <Link href="/vyzva" className="rounded-2xl p-4 flex flex-col gap-1 card-hover" style={{ background: "#fff7ed", border: "1px solid #fed7aa" }}>
+          <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: "#c2410c" }}>Denní výzva</p>
+          <p className="text-sm font-black" style={{ color: "#9a3412" }}>Rychlé kolo za pár minut</p>
+          <p className="text-[11px]" style={{ color: "#c2410c" }}>Bonusové XP navíc</p>
+          <span className="mt-auto inline-block text-xs font-black px-3 py-1.5 rounded-lg text-white w-fit" style={{ background: "#f97316" }}>Do toho →</span>
+        </Link>
       </div>
 
       {/* Premium CTA */}
