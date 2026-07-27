@@ -1,13 +1,12 @@
 import HeaderClient from "@/components/HeaderClient";
 import BottomNav from "@/components/BottomNav";
+import AppMain from "@/components/AppMain";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#F8FAFF" }}>
+    <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: "#F8FAFF" }}>
       <HeaderClient />
-      <main className="flex-1 max-w-2xl w-full mx-auto px-4 py-8 pb-24">
-        {children}
-      </main>
+      <AppMain>{children}</AppMain>
       <footer
         className="text-center text-xs py-4 pb-20"
         style={{ color: "#94a3b8" }}

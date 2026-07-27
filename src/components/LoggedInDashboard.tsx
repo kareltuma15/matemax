@@ -17,6 +17,8 @@ import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import PushSubscribeNudge from "@/components/PushSubscribeNudge";
 import TopicPicker from "@/components/TopicPicker";
 import DnesniMise from "@/components/DnesniMise";
+import { vokativ } from "@/lib/vokativ";
+import { getDaysUntilCermat } from "@/lib/cermat-date";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -37,6 +39,13 @@ function getGreeting(): string {
   if (h >= 12 && h < 18) return "Dobré odpoledne";
   if (h >= 18 && h < 22) return "Dobrý večer";
   return "Dobrou noc";
+}
+
+/** „karel.tuma" → „Karel" — první segment e-mailu s velkým písmenem. */
+function emailToName(email: string): string {
+  const first = (email.split("@")[0] || "").split(/[._-]/)[0];
+  if (!first) return "";
+  return first.charAt(0).toUpperCase() + first.slice(1);
 }
 
 const MOTIVATIONAL_QUOTES = [
@@ -179,6 +188,43 @@ function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
   return <span ref={ref}>{val}{suffix}</span>;
 }
 
+/** Kruhový ukazatel dnešního cíle do uvítacího pásu. */
+function DailyGoalRing({ done, total }: { done: number; total: number }) {
+  const pct = Math.min(1, total > 0 ? done / total : 0);
+  const r = 38;
+  const c = 2 * Math.PI * r;
+  const splneno = done >= total;
+  const zbyva = Math.max(0, total - done);
+
+  return (
+    <div className="flex items-center gap-3 shrink-0">
+      <div className="relative" style={{ width: 88, height: 88 }}>
+        <svg width="88" height="88" viewBox="0 0 88 88" style={{ transform: "rotate(-90deg)" }} aria-hidden="true">
+          <circle cx="44" cy="44" r={r} fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="7" />
+          <circle
+            cx="44" cy="44" r={r} fill="none"
+            stroke={splneno ? "#00E5A0" : "#00B4D8"} strokeWidth="7" strokeLinecap="round"
+            strokeDasharray={c} strokeDashoffset={c - pct * c}
+            style={{ transition: "stroke-dashoffset 0.9s cubic-bezier(0.22,1,0.36,1)" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
+          <span className="text-lg font-black text-white tabular-nums">{done}/{total}</span>
+          <span className="text-[9px] text-blue-200 mt-0.5">dnes</span>
+        </div>
+      </div>
+      <div className="hidden sm:block">
+        <p className="text-[11px] font-black uppercase tracking-wide text-blue-300">Dnešní cíl</p>
+        <p className="text-sm text-white/90 leading-snug mt-0.5">
+          {splneno
+            ? <>Hotovo! 🎉<br />Streak roste</>
+            : <>Ještě {zbyva} {zbyva === 1 ? "příklad" : zbyva <= 4 ? "příklady" : "příkladů"}<br />a streak poroste 🔥</>}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const HERO_SYMBOLS = [
   { s: "π", top: "15%", right: "8%",  size: 28, delay: "0s"   },
   { s: "√", top: "60%", right: "4%",  size: 22, delay: "1.2s" },
@@ -201,8 +247,11 @@ export default function LoggedInDashboard({
 }) {
   const email = session.user.email ?? "";
   const meta = session.user.user_metadata as Record<string, string> | undefined;
-  const fullName = meta?.full_name ?? meta?.name ?? "";
-  const firstName = fullName.split(" ")[0] || email.split("@")[0];
+  // Křestní jméno: nejdřív z registrace, jinak vyčistit z e-mailu
+  // („karel.tuma" → „Karel"), ať pás neoslovuje uživatelským jménem.
+  const rawName = meta?.first_name || (meta?.full_name ?? meta?.name ?? "").split(" ")[0] || emailToName(email);
+  const firstName = vokativ(rawName);
+  const daysToCermat = getDaysUntilCermat();
   const todayChallenge = getTodayChallenge();
 
   const [todayCount, setTodayCount] = useState(0);
@@ -410,31 +459,38 @@ export default function LoggedInDashboard({
           </span>
         ))}
 
-        <div className="max-w-2xl lg:max-w-6xl mx-auto px-6 py-10 md:py-14 relative z-10">
-          <p className="text-blue-300 text-sm font-semibold mb-1">{getGreeting()},</p>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-            {firstName} 👋
-          </h1>
+        <div className="max-w-2xl lg:max-w-6xl mx-auto px-6 py-8 md:py-12 relative z-10">
+          <div className="flex items-center justify-between gap-5 flex-wrap">
+            {/* Vlevo: oslovení + čipy + citát */}
+            <div className="min-w-0">
+              <p className="text-blue-300 text-sm font-semibold mb-1">{getGreeting()},</p>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                {firstName} 👋
+              </h1>
 
-          {/* Stats pills */}
-          <div className="flex items-center gap-2 mt-3 flex-wrap">
-            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white glass-card">
-              <span className={streak >= 3 ? "streak-bounce" : ""}>🔥</span>
-              {streak} {streak === 1 ? "den" : "dní"}
-            </span>
-            <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white glass-card">
-              📝 {todayCount}/{DAILY_GOAL} dnes
-            </span>
-            {xp > 0 && (
-              <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300 glass-card">
-                ⚡ <CountUp end={xp} /> XP
-              </span>
-            )}
+              <div className="flex items-center gap-2 mt-3 flex-wrap">
+                <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white glass-card">
+                  <span className={streak >= 3 ? "streak-bounce" : ""}>🔥</span>
+                  {streak} {streak === 1 ? "den" : "dní"}
+                </span>
+                {xp > 0 && (
+                  <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-amber-300 glass-card">
+                    ⚡ <CountUp end={xp} /> XP
+                  </span>
+                )}
+                <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white glass-card">
+                  🎯 {daysToCermat} dní do přijímaček
+                </span>
+              </div>
+
+              <p className="mt-3 text-blue-200 text-sm italic leading-snug opacity-90 max-w-md">
+                &ldquo;{getDailyQuote()}&rdquo;
+              </p>
+            </div>
+
+            {/* Vpravo: kruh dnešního cíle — na mobilu se zařadí pod text */}
+            <DailyGoalRing done={todayCount} total={DAILY_GOAL} />
           </div>
-
-          <p className="mt-3 text-blue-200 text-sm italic leading-snug opacity-90">
-            &ldquo;{getDailyQuote()}&rdquo;
-          </p>
         </div>
       </section>
 
