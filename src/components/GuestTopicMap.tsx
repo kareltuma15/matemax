@@ -67,7 +67,7 @@ export default function GuestTopicMap({ onSelectTopic }: Props) {
                   className="text-sm font-bold px-3 py-1 rounded-full shrink-0"
                   style={{ background: colors.bg, color: colors.label }}
                 >
-                  Procvičovat →
+                  Procvičit →
                 </span>
               </button>
             );
