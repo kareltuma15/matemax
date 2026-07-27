@@ -14,7 +14,7 @@ import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
-import CountdownBanner from "@/components/CountdownBanner";
+import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
@@ -617,12 +617,20 @@ export default function ProfilPage() {
               {displayName && email && (
                 <p className="text-blue-300 text-xs mt-0.5 truncate">{email}</p>
               )}
-              <div
-                className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-                style={{ background: "rgba(253,224,71,0.18)", border: "1px solid rgba(253,224,71,0.4)" }}
-              >
-                <span className="text-sm">{level.icon_emoji}</span>
-                <span className="text-xs font-bold" style={{ color: "#fde047" }}>{level.rank_title}</span>
+              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                <span
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+                  style={{ background: "rgba(253,224,71,0.18)", border: "1px solid rgba(253,224,71,0.4)" }}
+                >
+                  <span className="text-sm">{level.icon_emoji}</span>
+                  <span className="text-xs font-bold" style={{ color: "#fde047" }}>{level.rank_title}</span>
+                </span>
+                <span
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-white"
+                  style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}
+                >
+                  🎯 {getDaysUntilCermat()} dní do přijímaček
+                </span>
               </div>
 
               {/* XP row */}
@@ -687,11 +695,12 @@ export default function ProfilPage() {
       </div>
 
       {/* ── TAB: PŘEHLED ── */}
+      {/* Na širokém displeji dva sloupce (jako Domů): vlevo výsledky, vpravo
+          Premium/cíl/referral. Odpočet přesunut do identity nahoře — na Domů
+          už je, tady velký banner duplikoval. */}
       {activeTab === "prehled" && (
-        <div className="tab-enter flex flex-col gap-4">
-
-          {/* Countdown to přijímačky */}
-          <CountdownBanner variant="full" />
+        <div className="tab-enter lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-5 lg:items-start">
+        <div className="flex flex-col gap-4">
 
           {/* ── SEKCE: STATISTIKY ── */}
           <div className="scroll-reveal">
@@ -731,63 +740,6 @@ export default function ProfilPage() {
           {streak >= 3 && (
             <div className="flex justify-center scroll-reveal">
               <ShareButton streak={streak} xp={xp} name={displayName} compact />
-            </div>
-          )}
-
-          {/* ── SEKCE: TVŮJ PLÁN ── */}
-          {isPremium ? (
-            <div
-              className="rounded-2xl p-4 flex items-center gap-4 card-hover scroll-reveal"
-              style={{ background: "linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%)", border: "1.5px solid #fde68a" }}
-            >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0"
-                style={{ background: "rgba(161,98,7,0.12)" }}
-              >
-                ⭐
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-black" style={{ color: "#a16207" }}>Premium plán</p>
-                <p className="text-xs mt-0.5" style={{ color: "#92400e" }}>
-                  {trialDaysLeft !== null
-                    ? `🎁 Trial · zbývá ${trialDaysLeft} ${trialDaysLeft === 1 ? "den" : trialDaysLeft <= 4 ? "dny" : "dní"}`
-                    : "Všechna témata odemčena · Plný přístup"}
-                </p>
-              </div>
-              {trialDaysLeft !== null && (
-                <Link
-                  href="/cenik"
-                  className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white"
-                  style={{ background: "#a16207" }}
-                >
-                  Aktivovat →
-                </Link>
-              )}
-            </div>
-          ) : (
-            <div
-              className="rounded-2xl p-4 flex items-center gap-4 card-hover scroll-reveal"
-              style={{ background: "#f8faff", border: "1.5px solid #bfdbfe" }}
-            >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0"
-                style={{ background: "#eff6ff" }}
-              >
-                🔓
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Zdarma plán</p>
-                <p className="text-xs mt-0.5 text-slate-500">
-                  5 z 14 témat · 9 prémiových témat uzamčeno
-                </p>
-              </div>
-              <Link
-                href="/cenik"
-                className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white btn-shimmer"
-                style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
-              >
-                Upgradovat →
-              </Link>
             </div>
           )}
 
@@ -852,98 +804,6 @@ export default function ProfilPage() {
               </Link>
             )}
           </div>
-
-          {/* ── SEKCE: CÍLE & ODZNAKY ── */}
-          {nextBadge && earnedBadges.length < allBadges.length && (
-            <div className="scroll-reveal">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nejbližší cíl</p>
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 card-hover">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
-                  style={{ background: "#f8fafc", border: "2px solid #e2e8f0" }}
-                >
-                  {nextBadge.icon_emoji}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-black text-slate-800 leading-tight">{nextBadge.label}</p>
-                    <p className="text-xs font-black shrink-0" style={{ color: "#2E6DA4" }}>+{nextBadge.xp_reward} XP</p>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-0.5">{nextBadge.description}</p>
-                  {nextBadgeProgress && (
-                    <>
-                      <div className="flex justify-between text-[10px] text-slate-400 mt-1.5 mb-0.5">
-                        <span>Pokrok</span>
-                        <span>{nextBadgeProgress.current} / {nextBadgeProgress.target}</span>
-                      </div>
-                      <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                        <div
-                          className="h-1.5 rounded-full transition-all duration-700"
-                          style={{
-                            width: `${Math.min(100, Math.round((nextBadgeProgress.current / nextBadgeProgress.target) * 100))}%`,
-                            background: "linear-gradient(90deg, #2E6DA4, #00B4D8)",
-                          }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ── SEKCE: POZVI KAMARÁDA ── */}
-          {userId && (
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Referral program</p>
-              <div
-                className="rounded-2xl p-4 flex flex-col gap-3"
-                style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}
-              >
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">🎁</span>
-                  <div>
-                    <p className="text-sm font-black" style={{ color: "#166534" }}>Pozvi kamaráda</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#15803d" }}>
-                      Oba dostanete <strong>7 dní Premium zdarma</strong> — bez karty, hned.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <div
-                    className="flex-1 rounded-xl px-3 py-2 text-xs font-mono truncate"
-                    style={{ background: "#dcfce7", color: "#166534" }}
-                  >
-                    {getReferralLink(userId)}
-                  </div>
-                  <button
-                    onClick={async () => {
-                      await navigator.clipboard.writeText(getReferralLink(userId));
-                      setReferralCopied(true);
-                      setTimeout(() => setReferralCopied(false), 2000);
-                    }}
-                    className="shrink-0 px-3 py-2 rounded-xl text-xs font-bold text-white transition-colors"
-                    style={{ background: referralCopied ? "#15803d" : "#166534" }}
-                  >
-                    {referralCopied ? "✓ Zkopírováno!" : "Kopírovat"}
-                  </button>
-                </div>
-                {typeof navigator !== "undefined" && "share" in navigator && (
-                  <button
-                    onClick={() => navigator.share({
-                      title: "MateMax — přijímačky z matematiky",
-                      text: "Připravuješ se na přijímačky? MateMax je nejlepší appka na matematiku — pozvi se mnou a oba dostaneme 7 dní Premium!",
-                      url: getReferralLink(userId),
-                    }).catch(() => {})}
-                    className="w-full py-2 rounded-xl text-sm font-bold border-2 transition-colors"
-                    style={{ borderColor: "#86efac", color: "#166534", background: "transparent" }}
-                  >
-                    📤 Sdílet odkaz
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
 
           {/* ── SEKCE: TÉMATA ── */}
           <div className="scroll-reveal">
@@ -1047,6 +907,107 @@ export default function ProfilPage() {
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Aktivita</p>
             <ActivityHeatmap />
           </div>
+
+        </div>{/* /levý sloupec */}
+
+        {/* ── PRAVÝ SLOUPEC (aside) — plán, cíl, pozvánka ── */}
+        <aside className="flex flex-col gap-4 mt-4 lg:mt-0">
+          {/* Plán */}
+          {isPremium ? (
+            <div
+              className="rounded-2xl p-4 flex items-center gap-4 card-hover"
+              style={{ background: "linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%)", border: "1.5px solid #fde68a" }}
+            >
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "rgba(161,98,7,0.12)" }}>⭐</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black" style={{ color: "#a16207" }}>Premium plán</p>
+                <p className="text-xs mt-0.5" style={{ color: "#92400e" }}>
+                  {trialDaysLeft !== null
+                    ? `🎁 Trial · zbývá ${trialDaysLeft} ${trialDaysLeft === 1 ? "den" : trialDaysLeft <= 4 ? "dny" : "dní"}`
+                    : "Všechna témata odemčena"}
+                </p>
+              </div>
+              {trialDaysLeft !== null && (
+                <Link href="/cenik" className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white" style={{ background: "#a16207" }}>Aktivovat →</Link>
+              )}
+            </div>
+          ) : (
+            <div
+              className="rounded-2xl p-4 flex items-center gap-4 card-hover"
+              style={{ background: "#f8faff", border: "1.5px solid #bfdbfe" }}
+            >
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "#eff6ff" }}>🔓</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Zdarma plán</p>
+                <p className="text-xs mt-0.5 text-slate-500">3 z 9 témat · 6 prémiových uzamčeno</p>
+              </div>
+              <Link href="/cenik" className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white btn-shimmer" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>Upgradovat →</Link>
+            </div>
+          )}
+
+          {/* Nejbližší cíl (odznak) */}
+          {nextBadge && earnedBadges.length < allBadges.length && (
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nejbližší cíl</p>
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 card-hover">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "#f8fafc", border: "2px solid #e2e8f0" }}>{nextBadge.icon_emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-sm font-black text-slate-800 leading-tight">{nextBadge.label}</p>
+                    <p className="text-xs font-black shrink-0" style={{ color: "#2E6DA4" }}>+{nextBadge.xp_reward} XP</p>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-0.5">{nextBadge.description}</p>
+                  {nextBadgeProgress && (
+                    <>
+                      <div className="flex justify-between text-[10px] text-slate-400 mt-1.5 mb-0.5">
+                        <span>Pokrok</span>
+                        <span>{nextBadgeProgress.current} / {nextBadgeProgress.target}</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                        <div className="h-1.5 rounded-full transition-all duration-700" style={{ width: `${Math.min(100, Math.round((nextBadgeProgress.current / nextBadgeProgress.target) * 100))}%`, background: "linear-gradient(90deg, #2E6DA4, #00B4D8)" }} />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Pozvi kamaráda */}
+          {userId && (
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Pozvi kamaráda</p>
+              <div className="rounded-2xl p-4 flex flex-col gap-3" style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">🎁</span>
+                  <div>
+                    <p className="text-sm font-black" style={{ color: "#166534" }}>7 dní Premium zdarma</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#15803d" }}>Pro tebe i kamaráda — bez karty, hned.</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1 rounded-xl px-3 py-2 text-xs font-mono truncate" style={{ background: "#dcfce7", color: "#166534" }}>{getReferralLink(userId)}</div>
+                  <button
+                    onClick={async () => { await navigator.clipboard.writeText(getReferralLink(userId)); setReferralCopied(true); setTimeout(() => setReferralCopied(false), 2000); }}
+                    className="shrink-0 px-3 py-2 rounded-xl text-xs font-bold text-white transition-colors"
+                    style={{ background: referralCopied ? "#15803d" : "#166534" }}
+                  >
+                    {referralCopied ? "✓" : "Kopírovat"}
+                  </button>
+                </div>
+                {typeof navigator !== "undefined" && "share" in navigator && (
+                  <button
+                    onClick={() => navigator.share({ title: "MateMax — přijímačky z matematiky", text: "Připravuješ se na přijímačky? MateMax je super appka na matematiku — pozvi se mnou a oba dostaneme 7 dní Premium!", url: getReferralLink(userId) }).catch(() => {})}
+                    className="w-full py-2 rounded-xl text-sm font-bold border-2 transition-colors"
+                    style={{ borderColor: "#86efac", color: "#166534", background: "transparent" }}
+                  >
+                    📤 Sdílet odkaz
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </aside>
         </div>
       )}
 

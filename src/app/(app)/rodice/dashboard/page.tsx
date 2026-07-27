@@ -370,18 +370,10 @@ export default function RodiceDashboard() {
         )}
       </div>
 
-      {/* ── COACHING INSIGHT ─────────────────────────────────────────── */}
-      <div
-        className="rounded-2xl p-4 flex items-start gap-3"
-        style={{ background: insight.color, border: "2px solid rgba(0,0,0,0.08)" }}
-      >
-        <span className="text-2xl flex-shrink-0">{insight.icon}</span>
-        <div>
-          <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-0.5">Tip pro vás</p>
-          <p className="text-sm font-bold text-slate-800">{insight.title}</p>
-          <p className="text-sm text-slate-600 mt-1 leading-relaxed">{insight.text}</p>
-        </div>
-      </div>
+      {/* Na širokém displeji: data vlevo, akce (tip, vzkaz, průvodce) vpravo.
+          Mobil zůstává jedním sloupcem. */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-5 lg:items-start">
+      <div className="flex flex-col gap-5">
 
       {/* ── STATS GRID ───────────────────────────────────────────────── */}
       <div>
@@ -472,75 +464,6 @@ export default function RodiceDashboard() {
         )}
       </div>
 
-      {/* ── COACHING GUIDE ───────────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
-        <button
-          type="button"
-          onClick={() => setGuideOpen((v) => !v)}
-          className="w-full flex items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📖</span>
-            <p className="text-sm font-bold" style={{ color: "#064E3B" }}>Průvodce rodiče — jak vést dítě</p>
-          </div>
-          <span
-            className="text-slate-400 text-xl font-light transition-transform duration-200 select-none"
-            style={{ transform: guideOpen ? "rotate(45deg)" : "rotate(0deg)", display: "inline-block" }}
-          >
-            +
-          </span>
-        </button>
-        {guideOpen && (
-          <div className="px-5 pb-5 flex flex-col gap-4 border-t border-slate-50">
-            {COACHING_GUIDE.map((tip) => (
-              <div key={tip.title} className="flex gap-3 pt-3">
-                <span className="text-xl flex-shrink-0">{tip.icon}</span>
-                <div>
-                  <p className="text-sm font-bold text-slate-700">{tip.title}</p>
-                  <p className="text-sm text-slate-500 mt-0.5 leading-relaxed">{tip.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ── MESSAGE TO CHILD ─────────────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border border-slate-100 p-5">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-lg">💌</span>
-          <p className="text-sm font-bold" style={{ color: "#064E3B" }}>Vzkaz pro dítě</p>
-        </div>
-        <p className="text-xs text-slate-400 mb-3 leading-relaxed">
-          Napište motivační zprávu — dítě ji uvidí na svém dashboardu jako bannner.
-        </p>
-        <form onSubmit={sendMessage} className="flex flex-col gap-3">
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value.slice(0, 200))}
-            placeholder="Např: Makej dál, věřím ti! 💪"
-            rows={3}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none transition-colors resize-none"
-            style={{ outlineColor: "#047857" }}
-            onFocus={(e) => e.target.style.borderColor = "#047857"}
-            onBlur={(e) => e.target.style.borderColor = "#e2e8f0"}
-          />
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400">{message.length}/200</span>
-            <button
-              type="submit"
-              disabled={sendingMsg || !message.trim()}
-              className="px-5 py-2.5 rounded-xl text-white font-bold text-sm disabled:opacity-50 transition-opacity"
-              style={{ background: "#047857" }}
-            >
-              {sendingMsg ? "Odesílám…" : "Odeslat vzkaz"}
-            </button>
-          </div>
-          {msgSent && <p className="text-sm font-semibold text-green-600">✅ Vzkaz byl odeslán!</p>}
-          {msgError && <p className="text-sm text-red-600">{msgError}</p>}
-        </form>
-      </div>
-
       {/* ── BOTTOM LINKS ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3">
         <Link
@@ -559,6 +482,91 @@ export default function RodiceDashboard() {
         </Link>
       </div>
 
+      </div>{/* /levý sloupec */}
+
+      {/* ── PRAVÝ SLOUPEC (akce) — tip, vzkaz, průvodce ── */}
+      <aside className="flex flex-col gap-5 mt-5 lg:mt-0">
+        {/* Tip pro vás */}
+        <div className="rounded-2xl p-4 flex items-start gap-3" style={{ background: insight.color, border: "2px solid rgba(0,0,0,0.08)" }}>
+          <span className="text-2xl flex-shrink-0">{insight.icon}</span>
+          <div>
+            <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-0.5">Tip pro vás</p>
+            <p className="text-sm font-bold text-slate-800">{insight.title}</p>
+            <p className="text-sm text-slate-600 mt-1 leading-relaxed">{insight.text}</p>
+          </div>
+        </div>
+
+        {/* Vzkaz pro dítě */}
+        <div className="bg-white rounded-2xl border border-slate-100 p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-lg">💌</span>
+            <p className="text-sm font-bold" style={{ color: "#064E3B" }}>Vzkaz pro dítě</p>
+          </div>
+          <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+            Napište motivační zprávu — dítě ji uvidí na svém dashboardu jako banner.
+          </p>
+          <form onSubmit={sendMessage} className="flex flex-col gap-3">
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value.slice(0, 200))}
+              placeholder="Např: Makej dál, věřím ti! 💪"
+              rows={3}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none transition-colors resize-none"
+              style={{ outlineColor: "#047857" }}
+              onFocus={(e) => e.target.style.borderColor = "#047857"}
+              onBlur={(e) => e.target.style.borderColor = "#e2e8f0"}
+            />
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-400">{message.length}/200</span>
+              <button
+                type="submit"
+                disabled={sendingMsg || !message.trim()}
+                className="px-5 py-2.5 rounded-xl text-white font-bold text-sm disabled:opacity-50 transition-opacity"
+                style={{ background: "#047857" }}
+              >
+                {sendingMsg ? "Odesílám…" : "Odeslat vzkaz"}
+              </button>
+            </div>
+            {msgSent && <p className="text-sm font-semibold text-green-600">✅ Vzkaz byl odeslán!</p>}
+            {msgError && <p className="text-sm text-red-600">{msgError}</p>}
+          </form>
+        </div>
+
+        {/* Průvodce rodiče */}
+        <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setGuideOpen((v) => !v)}
+            className="w-full flex items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-lg">📖</span>
+              <p className="text-sm font-bold" style={{ color: "#064E3B" }}>Průvodce rodiče — jak vést dítě</p>
+            </div>
+            <span
+              className="text-slate-400 text-xl font-light transition-transform duration-200 select-none"
+              style={{ transform: guideOpen ? "rotate(45deg)" : "rotate(0deg)", display: "inline-block" }}
+            >
+              +
+            </span>
+          </button>
+          {guideOpen && (
+            <div className="px-5 pb-5 flex flex-col gap-4 border-t border-slate-50">
+              {COACHING_GUIDE.map((tip) => (
+                <div key={tip.title} className="flex gap-3 pt-3">
+                  <span className="text-xl flex-shrink-0">{tip.icon}</span>
+                  <div>
+                    <p className="text-sm font-bold text-slate-700">{tip.title}</p>
+                    <p className="text-sm text-slate-500 mt-0.5 leading-relaxed">{tip.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </aside>
+
+      </div>{/* /grid */}
     </div>
   );
 }
