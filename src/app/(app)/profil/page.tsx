@@ -9,10 +9,11 @@ import { loadProgress } from "@/lib/progress";
 import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeConfig } from "@/lib/gamification";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
-import { TEMA_LABELS, SM2Card } from "@/types";
+import { TEMA_LABELS, TEMATA_ORDER, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
+import { computeTrainingState, type Level } from "@/lib/levels";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
@@ -34,6 +35,11 @@ const AVATAR_EMOJIS = [
 ];
 
 const ALL_TOPICS = Object.keys(TEMA_LABELS);
+
+const TOPIC_EMOJI: Record<string, string> = {
+  zlomky: "🍕", vyrazy: "🔢", rovnice: "⚖️", geometrie: "📐",
+  slovni_ulohy: "📝", grafy_logika: "📊", konstrukce: "📏", uhly: "🔺", souhrnne: "🏆",
+};
 
 function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
   const [val, setVal] = useState(0);
@@ -201,6 +207,7 @@ export default function ProfilPage() {
   const [streak, setStreak]              = useState(0);
   const [totalSolved, setTotalSolved]    = useState(0);
   const [topicScores, setTopicScores]    = useState<TopicScore[]>([]);
+  const [levels, setLevels]              = useState<Record<string, Level>>({});
   const [earnedBadges, setEarnedBadges]  = useState<string[]>([]);
   const [perfectSessions, setPerfectSessions] = useState(0);
   const [dailyGoalsCompleted, setDailyGoalsCompleted] = useState(0);
@@ -320,6 +327,9 @@ export default function ProfilPage() {
         setTopicScores(scores);
       }
     } catch { /* ignore */ }
+
+    // Odemčené úrovně L1–L3 pro „Mistrovství témat".
+    try { setLevels(computeTrainingState().levels); } catch { /* ignore */ }
 
     // Fetch diag results from Supabase for cross-device sync
     if (supabase) {
@@ -746,7 +756,7 @@ export default function ProfilPage() {
           {/* ── SEKCE: PŘIPRAVENOST ── */}
           <div className="scroll-reveal">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost na přijímačky</p>
-            <ReadinessCard />
+            <ReadinessCard compact />
 
             {/* Kompaktní řádek: odhadované body + certifikát */}
             {readinessScore > 0 && (() => {
@@ -805,91 +815,54 @@ export default function ProfilPage() {
             )}
           </div>
 
-          {/* ── SEKCE: TÉMATA ── */}
+          {/* ── SEKCE: MISTROVSTVÍ TÉMAT ── */}
+          {/* Jeden sjednocený přehled místo dřívějších tří (bary v připravenosti
+              + silná/slabá karty). Bez „Procvičit" tlačítek — akce patří na
+              Domů/Trénink, profil ukazuje výsledky. Úrovně L1–L3 jako v tréninku. */}
           <div className="scroll-reveal">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 px-1">Silná a slabá místa</p>
-            {topicScores.length > 0 ? (() => {
-              const weak   = topicScores.filter((t) => t.score < 0.5);
-              const middle = topicScores.filter((t) => t.score >= 0.5 && t.score < 0.8);
-              const strong = topicScores.filter((t) => t.score >= 0.8);
-              return (
-                <div className="flex flex-col gap-3">
-                  {/* Slabá místa — akční karty */}
-                  {weak.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                      <p className="text-[10px] font-bold uppercase tracking-wide px-1" style={{ color: "#dc2626" }}>🔴 Procvičit</p>
-                      {weak.map(({ tema, score }) => {
-                        const locked = !isPremium && PREMIUM_TOPICS.has(tema);
-                        const pctVal = Math.round(score * 100);
-                        return (
-                          <div key={tema} className="rounded-xl p-3.5 flex items-center justify-between gap-3"
-                            style={{ background: "#fef2f2", border: "1.5px solid #fecaca" }}>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-bold" style={{ color: "#991b1b" }}>
-                                {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
-                              </p>
-                              <p className="text-xs mt-0.5" style={{ color: "#dc2626" }}>{pctVal} % úspěšnost</p>
-                            </div>
-                            <Link
-                              href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                              className="shrink-0 text-xs font-black px-3 py-1.5 rounded-lg text-white"
-                              style={{ background: locked ? "#94a3b8" : "#dc2626" }}
-                            >
-                              {locked ? "Odemknout" : "Procvičit →"}
-                            </Link>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Mistrovství témat</p>
+            {topicScores.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {TEMATA_ORDER.map((tema) => {
+                  const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                  const sc = topicScores.find((t) => t.tema === tema);
+                  const pct = sc ? Math.round(sc.score * 100) : 0;
+                  const lvl = levels[tema] ?? 1;
+                  const barCol = pct >= 70 ? "#16a34a" : pct >= 40 ? "#d97706" : "#dc2626";
+                  return (
+                    <div key={tema} className="bg-white rounded-2xl border border-slate-200 p-3.5 flex flex-col gap-2" style={{ opacity: locked ? 0.7 : 1 }}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-base shrink-0">{locked ? "🔒" : (TOPIC_EMOJI[tema] ?? "•")}</span>
+                        <span className="text-sm font-bold truncate" style={{ color: locked ? "#94a3b8" : "#0D1B3E" }}>{TEMA_LABELS[tema] ?? tema}</span>
+                        <span className="ml-auto text-xs font-black shrink-0" style={{ color: locked ? "#94a3b8" : pct > 0 ? barCol : "#94a3b8" }}>
+                          {locked ? "Premium" : pct > 0 ? `${pct} %` : "—"}
+                        </span>
+                      </div>
+                      {!locked && (
+                        <>
+                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f7" }}>
+                            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: barCol }} />
                           </div>
-                        );
-                      })}
+                          <div className="flex gap-1">
+                            {([1, 2, 3] as const).map((l) => {
+                              const on = l <= lvl;
+                              return (
+                                <span key={l} className="text-[9px] font-black px-1.5 py-0.5 rounded-full border"
+                                  style={on ? { background: "#f0fdf4", borderColor: "#bbf7d0", color: "#166534" } : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#cbd5e1" }}>
+                                  L{l}{on ? " ✓" : ""}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
                     </div>
-                  )}
-
-                  {/* Střed — kompaktní bary */}
-                  {middle.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                      <p className="text-[10px] font-bold uppercase tracking-wide px-1" style={{ color: "#d97706" }}>🟡 Posílit</p>
-                      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden divide-y divide-slate-50">
-                        {middle.map(({ tema, score }) => {
-                          const locked = !isPremium && PREMIUM_TOPICS.has(tema);
-                          const pctVal = Math.round(score * 100);
-                          return (
-                            <Link key={tema} href={locked ? "/cenik" : `/trenink?tema=${tema}`}
-                              className="flex items-center gap-3 px-4 py-3 hover:bg-amber-50 transition-colors">
-                              <span className="text-xs font-semibold text-slate-700 w-24 shrink-0 truncate">
-                                {locked ? "🔒 " : ""}{TEMA_LABELS[tema] ?? tema}
-                              </span>
-                              <div className="flex-1 bg-amber-100 rounded-full h-2 overflow-hidden">
-                                <div className="h-2 rounded-full bar-animate" style={{ width: `${pctVal}%`, background: "#f59e0b" }} />
-                              </div>
-                              <span className="text-xs font-bold w-9 text-right shrink-0" style={{ color: "#d97706" }}>
-                                {locked ? "🔒" : `${pctVal}%`}
-                              </span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Silná témata — chips */}
-                  {strong.length > 0 && (
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-wide px-1 mb-2" style={{ color: "#16a34a" }}>🟢 Zvládáš</p>
-                      <div className="flex flex-wrap gap-2">
-                        {strong.map(({ tema, score }) => (
-                          <Link key={tema} href={`/trenink?tema=${tema}`}
-                            className="text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1"
-                            style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534" }}>
-                            ✓ {TEMA_LABELS[tema]} · {Math.round(score * 100)} %
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })() : (
+                  );
+                })}
+              </div>
+            ) : (
               <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center text-slate-400 text-sm">
-                Nejdřív projdi diagnostický test — uvidíš svá silná a slabá témata.
+                Nejdřív projdi diagnostický test — uvidíš mistrovství svých témat.
               </div>
             )}
           </div>

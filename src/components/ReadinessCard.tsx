@@ -29,7 +29,12 @@ function Gauge({ score, color }: { score: number; color: string }) {
   );
 }
 
-export default function ReadinessCard() {
+/**
+ * `compact` = jen měřidlo připravenosti + label (bez seznamu témat a bez CTA
+ * „Procvičit"). Používá profil, kde je rozpis témat sjednocený jinde a akce
+ * patří na Domů/Trénink, ne do přehledu výsledků.
+ */
+export default function ReadinessCard({ compact = false }: { compact?: boolean } = {}) {
   const [data, setData] = useState<ReadinessData | null>(null);
   const [expanded, setExpanded] = useState(false);
 
@@ -68,7 +73,7 @@ export default function ReadinessCard() {
               </div>
             ) : null}
 
-            {data.weakest && (
+            {data.weakest && !compact && (
               <Link
                 href={`/trenink?tema=${data.weakest.tema}`}
                 className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg w-fit mt-1"
@@ -91,8 +96,8 @@ export default function ReadinessCard() {
         </div>
       </div>
 
-      {/* Topic bars */}
-      {data.hasData && (
+      {/* Topic bars — v compact režimu skryté (rozpis témat je jinde) */}
+      {data.hasData && !compact && (
         <div className="border-t border-slate-100 px-5 py-3 flex flex-col gap-2">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">
             Témata
