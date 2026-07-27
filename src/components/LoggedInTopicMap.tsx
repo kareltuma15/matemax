@@ -162,7 +162,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
 
       {/* Témata */}
       <div>
-        <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Témata</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Témata</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {ordered.map((tema) => {
             const locked = !isPremium && PREMIUM_TOPICS.has(tema);

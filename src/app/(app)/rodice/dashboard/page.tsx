@@ -377,7 +377,7 @@ export default function RodiceDashboard() {
 
       {/* ── STATS GRID ───────────────────────────────────────────────── */}
       <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Tento týden</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Tento týden</p>
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-white rounded-2xl border border-slate-100 p-4 text-center">
             <p className="text-3xl font-extrabold" style={{ color: "#064E3B" }}>{weekTotal}</p>
@@ -418,7 +418,7 @@ export default function RodiceDashboard() {
 
       {/* ── TOPIC BREAKDOWN ──────────────────────────────────────────── */}
       <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Přehled témat</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Přehled témat</p>
         {topicTable.length > 0 ? (
           <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
             <div className="divide-y divide-slate-50">

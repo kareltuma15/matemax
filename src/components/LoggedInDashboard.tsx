@@ -609,7 +609,7 @@ export default function LoggedInDashboard({
 
         {/* Výběr tématu — vedlejší cesta: „nebo si vyber sám" */}
         <div className="pt-1">
-          <p className="text-[11px] font-black uppercase tracking-wide text-slate-400 mb-2 px-1">
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">
             Nebo si vyber téma sám
           </p>
           <TopicPicker isPremium={isPremium} />
@@ -619,7 +619,7 @@ export default function LoggedInDashboard({
         <div className="grid gap-3" style={{ gridTemplateColumns: weakTopics.length > 0 ? "1fr 1fr" : "1fr" }}>
           {weakTopics.length > 0 && (
             <div className="bg-white rounded-2xl border border-slate-200 p-3 flex flex-col card-hover">
-              <p className="text-[10px] font-black uppercase tracking-wide text-slate-400 mb-2">📉 Slabá místa</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">📉 Slabá místa</p>
               <div className="flex flex-col gap-0.5 flex-1">
                 {weakTopics.slice(0, 3).map(({ tema, score }) => {
                   const locked = !isPremium && PREMIUM_TOPICS.has(tema);

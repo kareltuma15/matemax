@@ -47,7 +47,7 @@ export default function GuidanceModal({ type, daysSince, onClose, firstName, str
           <div className="p-6 flex flex-col gap-3">
             {todayTopic ? (
               <>
-                <p className="text-xs font-bold uppercase tracking-wide text-slate-400 text-center">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 text-center">
                   Dnes ti doporučujeme
                 </p>
                 <div

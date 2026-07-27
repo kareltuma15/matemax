@@ -630,7 +630,7 @@ export default function LandingPage() {
 
             {/* Pravý sloupec — DemoCard */}
             <div>
-              <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 md:hidden">
+              <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 md:hidden">
                 Zkus si příklad hned — bez registrace
               </p>
               <div className="max-w-sm mx-auto">

@@ -173,7 +173,7 @@ function Stop({ stop }: { stop: CestaStop }) {
         style={{ border: isCurrent ? "2px solid #2E6DA4" : "1px solid #e2e8f0" }}
       >
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-black uppercase tracking-wide text-slate-400">Téma {stop.week}</span>
+          <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Téma {stop.week}</span>
           <span className={`ml-auto text-[11px] font-black px-2.5 py-0.5 rounded-full whitespace-nowrap ${pill.cls}`}>
             {pill.text(stop)}
           </span>

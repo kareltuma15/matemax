@@ -567,7 +567,7 @@ function DiagPlanModal({ onStart, onClose }: { onStart: () => void; onClose: () 
         <div className="p-6 flex flex-col gap-4">
           {focus.length > 0 && (
             <div className="flex flex-col gap-2">
-              <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Začni těmito tématy</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Začni těmito tématy</p>
               {focus.map(({ label, pct }) => (
                 <div
                   key={label}

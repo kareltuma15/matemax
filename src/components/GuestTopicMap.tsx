@@ -39,7 +39,7 @@ export default function GuestTopicMap({ onSelectTopic }: Props) {
 
       {/* Free topics */}
       <div>
-        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2 px-1">
+        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">
           ✅ Dostupná zdarma
         </p>
         <div className="flex flex-col gap-2">
@@ -77,7 +77,7 @@ export default function GuestTopicMap({ onSelectTopic }: Props) {
 
       {/* Locked topics */}
       <div>
-        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2 px-1">
+        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">
           🔒 Zamčeno — po registraci
         </p>
         <div className="grid grid-cols-2 gap-2">
