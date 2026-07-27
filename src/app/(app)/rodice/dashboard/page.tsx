@@ -464,6 +464,60 @@ export default function RodiceDashboard() {
         )}
       </div>
 
+      {/* ── VÝVOJ V ČASE ─────────────────────────────────────────────── */}
+      {(weekTotal > 0 || lastWeekTotal > 0) && (
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Vývoj v čase</p>
+          <div className="bg-white rounded-2xl border border-slate-100 p-4">
+            <div className="flex items-end gap-4 h-24">
+              {[{ label: "Minulý týden", val: lastWeekTotal, cur: false }, { label: "Tento týden", val: weekTotal, cur: true }].map((c) => {
+                const max = Math.max(1, weekTotal, lastWeekTotal);
+                return (
+                  <div key={c.label} className="flex-1 flex flex-col items-center justify-end gap-1.5 h-full">
+                    <span className="text-sm font-black" style={{ color: c.cur ? "#064E3B" : "#94a3b8" }}>{c.val}</span>
+                    <div className="w-full rounded-t-lg transition-all" style={{ height: `${Math.max(6, (c.val / max) * 100)}%`, background: c.cur ? "#059669" : "#a7f3d0", minHeight: 6 }} />
+                    <span className="text-[11px] text-slate-400">{c.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-xs mt-3 leading-relaxed" style={{ color: trendDiff >= 0 ? "#166534" : "#92400e" }}>
+              {lastWeekTotal === 0
+                ? "📈 První týden tréninku — držte palce!"
+                : trendDiff > 0
+                ? `📈 Dítě je aktivnější než minulý týden (+${trendDiff} příkladů).`
+                : trendDiff < 0
+                ? `📉 Tento týden méně než minulý (${trendDiff}). Zkuste ho jemně povzbudit.`
+                : "➡️ Stejné tempo jako minulý týden."}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── V ČEM SI VEDE JAK ────────────────────────────────────────── */}
+      {topicTable.length > 0 && (() => {
+        const sorted = [...topicTable].sort((a, b) => b.accuracy - a.accuracy);
+        const best = sorted[0];
+        const worst = sorted[sorted.length - 1];
+        return (
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">V čem si vede jak</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-2xl p-4" style={{ background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
+                <p className="text-[11px] font-bold" style={{ color: "#166534" }}>🟢 Nejlíp</p>
+                <p className="text-sm font-black mt-0.5" style={{ color: "#064E3B" }}>{best.label}</p>
+                <p className="text-xs" style={{ color: "#16a34a" }}>{best.accuracy} % úspěšnost</p>
+              </div>
+              <div className="rounded-2xl p-4" style={{ background: "#fef2f2", border: "1px solid #fecaca" }}>
+                <p className="text-[11px] font-bold" style={{ color: "#991b1b" }}>🔴 Nejhůř</p>
+                <p className="text-sm font-black mt-0.5" style={{ color: "#7f1d1d" }}>{worst.label}</p>
+                <p className="text-xs" style={{ color: "#dc2626" }}>{worst.accuracy} % úspěšnost</p>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* ── BOTTOM LINKS ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3">
         <Link
