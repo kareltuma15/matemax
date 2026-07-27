@@ -314,7 +314,7 @@ export default function ProfilPage() {
       if (raw) {
         const results = JSON.parse(raw) as Record<string, { correct: number; total: number }>;
         const scores: TopicScore[] = Object.entries(results)
-          .filter(([, v]) => v.total > 0)
+          .filter(([tema, v]) => v.total > 0 && tema in TEMA_LABELS) // jen kanonická témata, ne staré/podtématové slugy
           .map(([tema, v]) => ({ tema, score: v.correct / v.total, correct: v.correct, total: v.total }))
           .sort((a, b) => a.score - b.score); // weakest first
         setTopicScores(scores);
@@ -335,7 +335,7 @@ export default function ProfilPage() {
           localStorage.setItem("matemax-diag-results", JSON.stringify(results));
           localStorage.setItem("matemax-diag-done", "1");
           const scores: TopicScore[] = Object.entries(results)
-            .filter(([, v]) => v.total > 0)
+            .filter(([tema, v]) => v.total > 0 && tema in TEMA_LABELS) // jen kanonická témata
             .map(([tema, v]) => ({ tema, score: v.correct / v.total, correct: v.correct, total: v.total }))
             .sort((a, b) => a.score - b.score);
           setTopicScores(scores);

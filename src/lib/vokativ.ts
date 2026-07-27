@@ -17,6 +17,12 @@ const SLOVNIK: Record<string, string> = {
   daniel: "Danieli", pavel: "Pavle", josef: "Josefe", michal: "Michale",
   václav: "Václave", jaroslav: "Jaroslave", štěpán: "Štěpáne", šimon: "Šimone",
   dominik: "Dominiku", patrik: "Patriku", radek: "Radku", roman: "Romane",
+  karel: "Karle", havel: "Havle", kryštof: "Kryštofe", vít: "Víte",
+  oliver: "Olivere", sebastian: "Sebastiane", alex: "Alexi", max: "Maxi",
+  matyáš: "Matyáši", antonín: "Antoníne", richard: "Richarde", robert: "Roberte",
+  jonáš: "Jonáši", denis: "Denisi", marcel: "Marceli", emil: "Emile",
+  kamil: "Kamile", samuel: "Samueli", hugo: "Hugo", teodor: "Teodore",
+  mikuláš: "Mikuláši", ivan: "Ivane", aleš: "Aleši", milan: "Milane",
   // ženská (končící na souhlásku nebo -e, kde pravidlo -a→-o neplatí)
   karolína: "Karolíno", nikol: "Nikol", ester: "Ester", dagmar: "Dagmar",
 };
