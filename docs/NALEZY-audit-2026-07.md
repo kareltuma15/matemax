@@ -20,7 +20,7 @@
 | 4 | Nekonzistentní čísla napříč aplikací | Důležitá | ✅ |
 | 5 | Zámky v diagnostice matou | Důležitá | ✅ |
 | 6 | Podtémata jako syrové slugy | Důležitá | ✅ |
-| 7 | Landing dlouhý a mluví na rodiče | Kosmetická | ⏸️ čeká na rozhodnutí |
+| 7 | Landing dlouhý a mluví na rodiče | Kosmetická | ✅ (přepínač žák/rodič) |
 | 8 | Registrace má zbytečná pole | Kosmetická | ✅ (příjmení ponecháno) |
 | 9 | Jméno z registrace se nepoužívá | Kosmetická | ✅ |
 | 10 | Zlomkové slovní úlohy tenké na L1 | Obsahová | ✅ |
@@ -153,15 +153,20 @@
 
 ---
 
-## 7. Landing je dlouhý a mluví hlavně na rodiče 🔴
+## 7. Landing je dlouhý a mluví hlavně na rodiče ✅
 
-**Co žák vidí:** po hero sekci následuje „Pro rodiče", „Vidíte přesně, jak se dítě připravuje", srovnání s doučovatelem, ceník, FAQ. Jediná reference od žáka je „Tomáš, 14 let".
+**Co žák viděl:** po hero sekci „Pro rodiče", „Vidíte přesně, jak se dítě připravuje", srovnání s doučovatelem — stránka mluvila o žákovi ve třetí osobě („dítě") a on se v ní nepoznal.
 
-**Proč to vadí:** cílový uživatel produktu je žák, ale stránka mluví o něm ve třetí osobě („dítě"). Žák se v ní nepozná.
+**Rozhodnutí Karla:** přepínač **🎒 Jsem žák / 👨‍👩‍👧 Jsem rodič** (výchozí žák).
 
-**Návrh řešení k diskusi:** zvážit kratší cestu pro žáka (např. přepínač „jsem žák / jsem rodič", nebo posunout obsah pro rodiče níž a nahoru dát to, co zajímá žáka). Chce to rozmyslet — landing zároveň prodává rodičům, kteří platí.
+**Řešení:** přepínač v hero mění text i CTA a přepíná sekce specifické pro publikum:
+- **Žák:** hero „Matematika, která baví" + CTA „Začít zdarma"; sekce „Co tě čeká". Skryté rodičovské sekce.
+- **Rodič:** hero „Vidíte, jak se dítě připravuje" + CTA „Otevřít rodičovský přehled"; sekce „Pro rodiče" + „Srovnání s alternativami".
+- **Sdílené** (obojí): demo, čísla, jak to funguje, ukázka appky, reference, ceník, FAQ, závěrečné CTA.
 
-⏸️ **Vyžaduje tvoje rozhodnutí** — kdo je primární publikum landingu.
+Nav „Pro rodiče" přepne na rodičovský pohled. Ověřeno v prohlížeči (obě varianty, mobil bez přetečení, 0 chyb).
+
+**Commit:** _viz git log_
 
 ---
 

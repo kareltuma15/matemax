@@ -355,6 +355,10 @@ export default function LandingPage() {
   const [sessionChecked, setSessionChecked] = useState(false);
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
+  // Landing má dvě publika: žák (uživatel) a rodič (platí). Dřív mluvil hlavně
+  // na rodiče a žák se v něm nepoznal. Přepínač dá každému jeho pohled; výchozí
+  // je žák, protože appku používá on.
+  const [view, setView] = useState<"zak" | "rodic">("zak");
 
   useScrollReveal();
   useParallax();
@@ -415,6 +419,37 @@ export default function LandingPage() {
     );
   }
 
+  const isRodic = view === "rodic";
+  const hero = isRodic
+    ? {
+        h1: (
+          <>
+            Vidíte přesně, jak se <span style={{ color: "#00B4D8" }}>dítě</span>
+            <br />
+            připravuje.
+          </>
+        ),
+        sub: "Adaptivní trenér na přijímačky a týdenní report emailem. Bez zkoušení u večeře, bez drahého doučování — přehled máte každé pondělí ráno.",
+        tags: ["Týdenní report emailem", "Vidíte slabá místa", "Levnější než doučování", "Nic se neinstaluje"],
+        primary: { label: "Otevřít rodičovský přehled →", href: "/rodice/prihlaseni" },
+        secondary: { label: "Jak to funguje →", href: "#jak-to-funguje" },
+        note: "Dítě zdarma navždy pro 3 témata · Premium od 99 Kč/měsíc · Bez kreditní karty",
+      }
+    : {
+        h1: (
+          <>
+            Matematika, která <span style={{ color: "#00B4D8" }}>baví.</span>
+            <br />
+            Každý den trochu.
+          </>
+        ),
+        sub: "Chytrý trenér pro deváťáky: 10 minut denně, příklady ve stylu CERMAT a streak, který tě nakopne. Přijímačky bez stresu a bez doučování.",
+        tags: ["Pro 8. a 9. třídu", "Příklady ze CERMAT", "Streak tě nakopne", "Na mobilu i PC"],
+        primary: { label: "Začít zdarma →", href: "/vitej" },
+        secondary: { label: "Vyzkoušet CERMAT test →", href: "/cermat-test" },
+        note: "Zdarma navždy pro 3 témata · Premium od 99 Kč/měsíc · Bez kreditní karty",
+      };
+
   return (
     <div className="bg-white">
 
@@ -434,9 +469,13 @@ export default function LandingPage() {
             <a href="#jak-to-funguje" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
               Jak to funguje
             </a>
-            <a href="#pro-rodice" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
+            <button
+              type="button"
+              onClick={() => { setView("rodic"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors"
+            >
               Pro rodiče
-            </a>
+            </button>
             <a href="#cena" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
               Ceník
             </a>
@@ -476,21 +515,38 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center relative z-10">
           <Badge>Nový produkt od Matematika Snadno</Badge>
 
+          {/* Přepínač publika — každý vidí svůj pohled */}
+          <div className="mt-6 flex justify-center">
+            <div className="inline-flex rounded-full p-1 border border-white/20" style={{ background: "rgba(255,255,255,0.08)" }}>
+              {([["zak", "🎒 Jsem žák"], ["rodic", "👨‍👩‍👧 Jsem rodič"]] as const).map(([val, label]) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setView(val)}
+                  aria-pressed={view === val}
+                  className="px-4 sm:px-5 py-2 rounded-full text-sm font-bold transition-colors"
+                  style={
+                    view === val
+                      ? { background: "#fff", color: "#0D1B3E" }
+                      : { background: "transparent", color: "rgba(219,234,254,0.85)" }
+                  }
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <h1 className="mt-6 text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight">
-            Matematika, která{" "}
-            <span style={{ color: "#00B4D8" }}>baví.</span>
-            <br />
-            Každý den trochu.
+            {hero.h1}
           </h1>
 
           <p className="mt-6 text-lg md:text-xl text-blue-200 max-w-2xl mx-auto leading-relaxed">
-            MateMax je adaptivní matematický trenér pro žáky 8. a 9. třídy.
-            10 minut denně, chytrý algoritmus a týdenní report pro rodiče —
-            příprava na přijímačky bez stresu a bez doučování.
+            {hero.sub}
           </p>
 
           <div className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 sm:gap-3 max-w-xs sm:max-w-none mx-auto">
-            {["Pro žáky 8. a 9. třídy", "Příklady ve stylu CERMAT", "Funguje na mobilu i PC", "Rodiče mají přehled"].map((tag) => (
+            {hero.tags.map((tag) => (
               <span key={tag} className="text-sm bg-white/10 text-blue-100 px-4 py-2 rounded-full border border-white/20">
                 ✓ {tag}
               </span>
@@ -499,17 +555,17 @@ export default function LandingPage() {
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/vitej"
+              href={hero.primary.href}
               className="btn-shimmer inline-block text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg"
               style={{ background: "#00B4D8" }}
             >
-              Začít zdarma →
+              {hero.primary.label}
             </Link>
             <Link
-              href="/cermat-test"
+              href={hero.secondary.href}
               className="inline-block bg-white/10 hover:bg-white/20 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-white/20 transition-colors"
             >
-              Vyzkoušet CERMAT test →
+              {hero.secondary.label}
             </Link>
           </div>
 
@@ -532,7 +588,7 @@ export default function LandingPage() {
           </div>
 
           <p className="mt-4 text-sm text-blue-300">
-            Zdarma navždy pro 3 témata · Premium od 99 Kč/měsíc · Bez kreditní karty
+            {hero.note}
           </p>
         </div>
       </section>
@@ -581,7 +637,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CO TĚ ČEKÁ ───────────────────────────────────────────────── */}
+      {/* ── CO TĚ ČEKÁ (žák) ─────────────────────────────────────────── */}
+      {!isRodic && (
       <section className="max-w-4xl mx-auto px-6 py-14">
         <div className="text-center mb-10 scroll-reveal">
           <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>Co tě čeká</h2>
@@ -604,6 +661,7 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+      )}
 
       {/* ── ČÍSLA — count-up animace ─────────────────────────────────── */}
       <section className="bg-gray-50 border-y border-gray-200 scroll-reveal">
@@ -755,7 +813,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── PRO RODIČE ───────────────────────────────────────────────── */}
+      {/* ── PRO RODIČE (rodič) ───────────────────────────────────────── */}
+      {isRodic && (
       <section id="pro-rodice" className="py-20" style={{ background: "linear-gradient(180deg, #f0f7ff 0%, #fff 100%)" }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12 scroll-reveal">
@@ -827,6 +886,8 @@ export default function LandingPage() {
         </div>
       </section>
 
+      )}
+
       {/* ── TESTIMONIALS ─────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6">
@@ -868,7 +929,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── SROVNÁNÍ S ALTERNATIVAMI ──────────────────────────────────── */}
+      {/* ── SROVNÁNÍ S ALTERNATIVAMI (rodič) ──────────────────────────── */}
+      {isRodic && (
       <section className="py-16" style={{ background: "#f8fafc" }}>
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10 scroll-reveal">
@@ -911,6 +973,8 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      )}
 
       {/* ── CENÍK ────────────────────────────────────────────────────── */}
       <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
