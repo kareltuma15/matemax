@@ -184,10 +184,9 @@ function useParallax() {
   }, []);
 }
 
-function useScrollReveal() {
+function useScrollReveal(dep?: unknown) {
   useEffect(() => {
-    let raf1: number, raf2: number;
-    let fallbackId: ReturnType<typeof setTimeout>;
+    let raf1 = 0, raf2 = 0;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
         const els = Array.from(document.querySelectorAll<HTMLElement>(".scroll-reveal"));
@@ -201,18 +200,23 @@ function useScrollReveal() {
           { threshold: 0 }
         );
         els.filter(el => !el.classList.contains("is-visible")).forEach(el => io.observe(el));
-        // Safari fallback: force-reveal anything still hidden after 800ms
-        fallbackId = setTimeout(() => {
-          document.querySelectorAll<HTMLElement>(".scroll-reveal:not(.is-visible)").forEach(el => el.classList.add("is-visible"));
-        }, 800);
       });
     });
+    // Pojistka MIMO rAF řetěz: požadavek animačního snímku nevystřelí, dokud
+    // prohlížeč stránku nekomponuje (karta na pozadí, prerender) — a s ním by
+    // umřel i reveal. Timeout běží vždy, takže obsah nikdy nezůstane skrytý.
+    const fallbackId = setTimeout(() => {
+      document.querySelectorAll<HTMLElement>(".scroll-reveal:not(.is-visible)").forEach(el => el.classList.add("is-visible"));
+    }, 800);
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
       clearTimeout(fallbackId);
     };
-  }, []);
+    // Znovu při změně `dep` (přepínač žák/rodič): nově namountované sekce
+    // mají .scroll-reveal bez .is-visible — bez nového průchodu by zůstaly
+    // neviditelné a v layoutu by po nich zela díra.
+  }, [dep]);
 }
 
 // ─── KOMPONENTY ──────────────────────────────────────────────────────────────
@@ -360,7 +364,7 @@ export default function LandingPage() {
   // je žák, protože appku používá on.
   const [view, setView] = useState<"zak" | "rodic">("zak");
 
-  useScrollReveal();
+  useScrollReveal(view);
   useParallax();
 
   useEffect(() => {
