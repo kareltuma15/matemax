@@ -215,6 +215,40 @@ body {
 [data-theme="dark"] textarea,
 [data-theme="dark"] select               { background-color: var(--input-bg) !important; color: var(--text-primary) !important; border-color: var(--border-color) !important; }
 
+/* ── Dark mode: inline hex (style="…") ──────────────────────────
+   Velká část appky obarvuje inline (style={{color:"#0D1B3E"}}), což přepisy
+   tříd výše nezachytí. React serializuje kompaktně (color:#0D1B3E,
+   background:#fff), takže přesné substring selektory to přebijí !importantem.
+   Barevné prvky (gradientové hero, zelené/červené karty, bílý text) selektory
+   míjejí, takže zůstávají nedotčené. */
+
+/* Tmavě modrý text → světlý. Prohlížeč inline hex občas normalizuje na rgb(),
+   takže pokrýváme obě podoby (#0D1B3E i rgb(13, 27, 62)). */
+[data-theme="dark"] [style*="color:#0D1B3E"],
+[data-theme="dark"] [style*="rgb(13, 27, 62)"] { color: var(--text-primary) !important; }
+
+/* Matematika (KaTeX i vlastní zlomky MathText) dědí barvu z rodiče — na
+   tmavé kartě ji nutíme světlou napřímo, ať je vždy čitelná. */
+[data-theme="dark"] .katex,
+[data-theme="dark"] .katex * { color: var(--text-primary) !important; }
+
+/* Modrý akcentní text (#2E6DA4) je na tmavém pozadí málo kontrastní → světlejší */
+[data-theme="dark"] [style*="color:#2E6DA4"],
+[data-theme="dark"] [style*="rgb(46, 109, 164)"] { color: #7cb3e8 !important; }
+
+/* Bílé a světlé neutrální povrchy → tmavá karta */
+[data-theme="dark"] [style*="background:#fff"],
+[data-theme="dark"] [style*="background:#ffffff"],
+[data-theme="dark"] [style*="background:#f8fafc"],
+[data-theme="dark"] [style*="background:#f8faff"],
+[data-theme="dark"] [style*="background:#f1f5f9"],
+[data-theme="dark"] [style*="background:#eff6ff"],
+[data-theme="dark"] [style*="background:#eef2f7"],
+[data-theme="dark"] [style*="background:#e2e8f0"] { background-color: var(--surface-0) !important; }
+
+/* Světlé okraje a lišty → tmavé */
+[data-theme="dark"] [style*="#e2e8f0"] { border-color: var(--border-color) !important; }
+
 /* iOS Safari: 100vh includes browser chrome — use fill-available instead */
 @supports (-webkit-touch-callout: none) {
   .min-h-screen {

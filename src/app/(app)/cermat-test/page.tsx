@@ -312,7 +312,7 @@ export default function CermatTestPage() {
         {/* Wrong answers */}
         {wrong.length > 0 && (
           <div className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col gap-4">
-            <h2 className="text-sm font-bold" style={{ color: "#0D1B3E" }}>
+            <h2 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
               ❌ Chybné odpovědi ({wrong.length})
             </h2>
             {wrong.map(({ ex, userAnswer }, i) => (
@@ -436,7 +436,7 @@ export default function CermatTestPage() {
             <span className="text-[11px] text-slate-400">obtížnost {ex.obtiznost}</span>
           </div>
 
-          <p className="text-base font-semibold leading-snug" style={{ color: "#0D1B3E" }}>
+          <p className="text-base font-semibold leading-snug" style={{ color: "var(--text-primary)" }}>
             {ex.latex ? <MathDisplay tex={ex.zadani} displayMode /> : <MathText text={ex.zadani} large />}
           </p>
 

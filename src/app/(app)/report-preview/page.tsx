@@ -245,7 +245,7 @@ export default function ReportPreviewPage() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>
+          <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
             📧 Týdenní report — preview
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">

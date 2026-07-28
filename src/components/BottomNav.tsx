@@ -104,7 +104,7 @@ export default function BottomNav() {
               className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all rounded-xl py-1.5 press-scale"
               style={
                 active
-                  ? { background: "#fff", boxShadow: "0 1px 6px rgba(0,0,0,0.1)", color: "#0D1B3E" }
+                  ? { background: "#fff", boxShadow: "0 1px 6px rgba(0,0,0,0.1)", color: "var(--text-primary)" }
                   : { color: "#94a3b8" }
               }
             >

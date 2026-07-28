@@ -83,7 +83,7 @@ export default function ConstructionCard({ example, cardNumber, total, onResult,
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-4 fade-in-up">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="text-4xl">{madeMistake ? "📐" : "🎉"}</div>
-          <div className="text-lg font-black" style={{ color: "#0D1B3E" }}>
+          <div className="text-lg font-black" style={{ color: "var(--text-primary)" }}>
             {madeMistake ? "Konstrukce hotová" : "Perfektní konstrukce!"}
           </div>
           <div className="text-sm" style={{ color: "#64748b" }}>
@@ -156,7 +156,7 @@ export default function ConstructionCard({ example, cardNumber, total, onResult,
         <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#6366f1" }}>
           📐 Konstrukční úloha
         </div>
-        <div className="text-base font-bold" style={{ color: "#0D1B3E" }}>{example.zadani}</div>
+        <div className="text-base font-bold" style={{ color: "var(--text-primary)" }}>{example.zadani}</div>
         {example.kontext && (
           <div className="text-sm mt-1" style={{ color: "#475569" }}>{example.kontext}</div>
         )}
@@ -167,7 +167,7 @@ export default function ConstructionCard({ example, cardNumber, total, onResult,
         <div className="text-xs font-bold" style={{ color: "#94a3b8" }}>
           Krok {stepIdx + 1} z {steps.length}
         </div>
-        <div className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>{step.otazka}</div>
+        <div className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{step.otazka}</div>
       </div>
 
       {/* Volby */}

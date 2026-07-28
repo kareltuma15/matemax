@@ -123,7 +123,7 @@ export async function GET(request: NextRequest) {
                 justifyContent: "center",
                 fontSize: 24,
                 fontWeight: 900,
-                color: "#0D1B3E",
+                color: "var(--text-primary)",
                 letterSpacing: "-2px",
               }}
             >

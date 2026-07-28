@@ -36,7 +36,7 @@ export default function GlobalError({
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "system-ui, sans-serif",
-          color: "#0D1B3E",
+          color: "var(--text-primary)",
         }}
       >
         <div style={{ textAlign: "center", padding: "2rem" }}>

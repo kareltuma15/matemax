@@ -141,7 +141,7 @@ export default function RychlyMod() {
             ⚡
           </div>
           <div>
-            <h1 className="text-2xl font-black" style={{ color: "#0D1B3E" }}>Rychlý mód</h1>
+            <h1 className="text-2xl font-black" style={{ color: "var(--text-primary)" }}>Rychlý mód</h1>
             <p className="text-slate-500 mt-1 text-sm">10 příkladů · 60 sekund · žádné nápovědy</p>
           </div>
 
@@ -181,7 +181,7 @@ export default function RychlyMod() {
           <div className="text-5xl">{correct >= 9 ? "🏆" : correct >= 7 ? "🔥" : correct >= 5 ? "👍" : "💪"}</div>
 
           <div>
-            <h1 className="text-3xl font-black" style={{ color: "#0D1B3E" }}>
+            <h1 className="text-3xl font-black" style={{ color: "var(--text-primary)" }}>
               {correct}/{QUESTION_COUNT}
             </h1>
             <p className="text-slate-500 text-sm mt-1">{pct}% správně</p>
@@ -258,7 +258,7 @@ export default function RychlyMod() {
         </div>
 
         {/* Score */}
-        <span className="shrink-0 text-sm font-black" style={{ color: "#0D1B3E" }}>
+        <span className="shrink-0 text-sm font-black" style={{ color: "var(--text-primary)" }}>
           {correct}/{idx} ✓
         </span>
       </div>
@@ -269,7 +269,7 @@ export default function RychlyMod() {
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-2">
             {idx + 1} / {QUESTION_COUNT} · {TEMA_LABELS[q.tema] ?? q.tema}
           </p>
-          <p className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
+          <p className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
             <ExMath ex={q} text={q.zadani} large />
           </p>
         </div>

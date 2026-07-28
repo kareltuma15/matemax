@@ -113,7 +113,7 @@ export default function RodiceNastaveni() {
         <Link href="/rodice/dashboard" className="text-sm text-slate-400 hover:text-slate-600 flex items-center gap-1 mb-4">
           ← Dashboard
         </Link>
-        <h1 className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>Nastavení reportů</h1>
+        <h1 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>Nastavení reportů</h1>
         <p className="text-sm text-slate-500 mt-1">Přizpůsobte si, jak a kdy dostávat přehledy.</p>
       </div>
 
@@ -121,7 +121,7 @@ export default function RodiceNastaveni() {
 
         {/* Report frequency */}
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col gap-3">
-          <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Frekvence reportů</p>
+          <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Frekvence reportů</p>
           <div className="flex flex-col gap-2">
             {FREQUENCY_OPTIONS.map(({ value, label }) => (
               <label key={value} className="flex items-center gap-3 cursor-pointer py-1">
@@ -153,13 +153,13 @@ export default function RodiceNastaveni() {
 
         {/* Send day */}
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col gap-3">
-          <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Den odeslání</p>
+          <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Den odeslání</p>
           <div className="relative">
             <select
               value={settings.send_day}
               onChange={(e) => setSettings((s) => ({ ...s, send_day: e.target.value }))}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:border-blue-400 appearance-none bg-white pr-10"
-              style={{ color: "#0D1B3E" }}
+              style={{ color: "var(--text-primary)" }}
             >
               {DAY_OPTIONS.map(({ value, label }) => (
                 <option key={value} value={value}>{label}</option>
@@ -173,7 +173,7 @@ export default function RodiceNastaveni() {
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Upozornění na neaktivitu</p>
+              <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Upozornění na neaktivitu</p>
               <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
                 Upozornit mě, pokud dítě necvičí 2 dny v řadě
               </p>

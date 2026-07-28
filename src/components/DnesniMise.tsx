@@ -145,7 +145,7 @@ function Hero({
         <Link
           href={href}
           className="mt-1 lg:mt-0 block text-center font-black text-lg py-4 lg:py-5 lg:px-10 rounded-2xl press-scale transition-transform lg:shrink-0"
-          style={{ background: "#fff", color: "#0D1B3E", boxShadow: "0 8px 20px -8px rgba(0,0,0,0.5)" }}
+          style={{ background: "#fff", color: "var(--text-primary)", boxShadow: "0 8px 20px -8px rgba(0,0,0,0.5)" }}
         >
           {cta}
         </Link>

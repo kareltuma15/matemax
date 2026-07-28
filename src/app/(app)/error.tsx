@@ -29,7 +29,7 @@ export default function AppError({
   return (
     <div
       className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
-      style={{ color: "#0D1B3E" }}
+      style={{ color: "var(--text-primary)" }}
     >
       <div className="text-5xl mb-4">⚠️</div>
       <h2 className="text-xl font-bold mb-2">Něco se pokazilo</h2>

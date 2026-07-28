@@ -99,7 +99,7 @@ export default function RegistraceForm() {
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-7 flex flex-col gap-5 text-center">
         <div className="text-4xl">📬</div>
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>Zkontroluj email</h2>
+          <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>Zkontroluj email</h2>
           <p className="text-sm text-slate-500 mt-2">
             Poslali jsme ti potvrzovací link na <strong>{email}</strong>.
             Po kliknutí se přihlas a začni trénovat.
@@ -130,7 +130,7 @@ export default function RegistraceForm() {
         </div>
       )}
       <div>
-        <h1 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>Vytvořit účet</h1>
+        <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>Vytvořit účet</h1>
         <p className="text-sm text-slate-400 mt-0.5">Zadarmo, žádná karta nepotřebná</p>
       </div>
 

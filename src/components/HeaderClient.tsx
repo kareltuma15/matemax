@@ -110,7 +110,7 @@ export default function HeaderClient() {
             M²
           </div>
           <div className="min-w-0">
-            <p className="text-base font-bold leading-tight" style={{ color: "#0D1B3E" }}>MateMax</p>
+            <p className="text-base font-bold leading-tight" style={{ color: "var(--text-primary)" }}>MateMax</p>
             <p className="text-xs text-slate-400 leading-tight">CERMAT přijímačky</p>
           </div>
         </Link>

@@ -45,7 +45,7 @@ export default function RodicePrihlaseni() {
       <div className="flex flex-col gap-6 items-center text-center pt-6">
         <span className="text-6xl">📬</span>
         <div>
-          <h2 className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>Zkontrolujte email</h2>
+          <h2 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>Zkontrolujte email</h2>
           <p className="mt-2 text-slate-500 text-sm leading-relaxed max-w-sm">
             Odeslali jsme potvrzovací odkaz na <strong>{email}</strong>.
             Po kliknutí se budete moci přihlásit.
@@ -73,7 +73,7 @@ export default function RodicePrihlaseni() {
         >
           👨‍👩‍👧
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>
           Rodičovský portál
         </h1>
         <p className="mt-1 text-sm text-slate-500">

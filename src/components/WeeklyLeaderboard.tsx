@@ -63,7 +63,7 @@ export default function WeeklyLeaderboard({ refreshTrigger = 0, compact = false 
     <div className="flex flex-col gap-1">
       {!compact && (
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-bold" style={{ color: "#0D1B3E" }}>
+          <h3 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
             🏆 Žebříček
           </h3>
           <span className="text-xs text-slate-400">{weekRange}</span>
@@ -110,7 +110,7 @@ function EntryRow({ entry }: { entry: LeaderboardEntry }) {
         {entry.nickname}
         {entry.is_own && <span className="ml-1 text-xs font-normal text-blue-400">(ty)</span>}
       </span>
-      <span className="text-sm font-bold tabular-nums" style={{ color: "#0D1B3E" }}>
+      <span className="text-sm font-bold tabular-nums" style={{ color: "var(--text-primary)" }}>
         {entry.score}/{entry.total}
       </span>
       <span

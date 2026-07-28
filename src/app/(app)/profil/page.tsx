@@ -695,7 +695,7 @@ export default function ProfilPage() {
             className="flex-1 py-2 rounded-lg text-sm font-semibold transition-all"
             style={
               activeTab === t.id
-                ? { background: "#fff", color: "#0D1B3E", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }
+                ? { background: "#fff", color: "var(--text-primary)", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }
                 : { color: "#94a3b8" }
             }
           >
@@ -724,7 +724,7 @@ export default function ProfilPage() {
                 )}
               </div>
               <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center card-hover">
-                <p className="text-2xl font-black" style={{ color: "#0D1B3E" }}><CountUp end={totalSolved} /></p>
+                <p className="text-2xl font-black" style={{ color: "var(--text-primary)" }}><CountUp end={totalSolved} /></p>
                 <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">📚 Příkladů<br />celkem</p>
               </div>
               <div className="bg-white rounded-2xl border border-slate-200 p-3 text-center card-hover">
@@ -776,7 +776,7 @@ export default function ProfilPage() {
                         onClick={handleDownloadCertificate}
                         disabled={certState === "loading"}
                         className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg transition-all disabled:opacity-60"
-                        style={{ background: "#fbbf24", color: "#0D1B3E" }}
+                        style={{ background: "#fbbf24", color: "var(--text-primary)" }}
                       >
                         {certState === "loading" ? "…" : certState === "done" ? "✓" : "🎓"}
                       </button>
@@ -802,7 +802,7 @@ export default function ProfilPage() {
               >
                 <div>
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-0.5">Poslední CERMAT test</p>
-                  <p className="text-xl font-black" style={{ color: "#0D1B3E" }}>{cermatLast.pct} %</p>
+                  <p className="text-xl font-black" style={{ color: "var(--text-primary)" }}>{cermatLast.pct} %</p>
                   <p className="text-xs text-slate-500">{cermatLast.score}/{cermatLast.total} · {cermatLast.date}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2">
@@ -911,7 +911,7 @@ export default function ProfilPage() {
             >
               <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "#eff6ff" }}>🔓</div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-black" style={{ color: "#0D1B3E" }}>Zdarma plán</p>
+                <p className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Zdarma plán</p>
                 <p className="text-xs mt-0.5 text-slate-500">3 z 9 témat · 6 prémiových uzamčeno</p>
               </div>
               <Link href="/cenik" className="shrink-0 text-xs font-black px-3 py-2 rounded-xl text-white btn-shimmer" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>Upgradovat →</Link>

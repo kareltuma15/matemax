@@ -98,7 +98,7 @@ function CenikContent() {
             >
               M²
             </div>
-            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+            <span className="font-bold text-base" style={{ color: "var(--text-primary)" }}>MateMax</span>
           </Link>
           <Link
             href="/registrace"
@@ -138,7 +138,7 @@ function CenikContent() {
         <span className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
           Ceník
         </span>
-        <h1 className="text-3xl md:text-4xl font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>
+        <h1 className="text-3xl md:text-4xl font-extrabold leading-tight" style={{ color: "var(--text-primary)" }}>
           Začni zdarma.
           <br />
           Upgraduj kdykoliv.
@@ -155,9 +155,9 @@ function CenikContent() {
           {/* Free */}
           <div className="rounded-2xl border-2 border-slate-200 p-7 flex flex-col">
             <div>
-              <p className="text-lg font-bold" style={{ color: "#0D1B3E" }}>Zdarma</p>
+              <p className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>Zdarma</p>
               <div className="mt-2 flex items-end gap-1">
-                <span className="text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>0 Kč</span>
+                <span className="text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>0 Kč</span>
               </div>
               <p className="text-sm text-slate-500 mt-1">Navždy zdarma, bez závazku</p>
             </div>
@@ -197,9 +197,9 @@ function CenikContent() {
             </div>
 
             <div>
-              <p className="text-lg font-bold" style={{ color: "#0D1B3E" }}>Premium</p>
+              <p className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>Premium</p>
               <div className="mt-2 flex items-end gap-1">
-                <span className="text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>99 Kč</span>
+                <span className="text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>99 Kč</span>
                 <span className="text-slate-400 mb-1">/ měsíc</span>
               </div>
               <p className="text-sm text-slate-500 mt-1">Plná příprava na přijímačky</p>
@@ -272,7 +272,7 @@ function CenikContent() {
             ["Jak probíhá platba?", "Platba probíhá bezpečně přes Stripe — světový lídr v online platbách. Podporujeme všechny běžné karty (Visa, Mastercard)."],
           ].map(([q, a]) => (
             <div key={q} className="bg-slate-50 rounded-xl p-5">
-              <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>{q}</p>
+              <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>{q}</p>
               <p className="text-sm text-slate-500 mt-1 leading-relaxed">{a}</p>
             </div>
           ))}

@@ -10,7 +10,7 @@ export default function AuthError({
   unstable_retry: () => void;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center px-6" style={{ background: "#F8FAFF", color: "#0D1B3E" }}>
+    <div className="flex flex-col items-center justify-center min-h-screen text-center px-6" style={{ background: "#F8FAFF", color: "var(--text-primary)" }}>
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 max-w-sm w-full">
         <div className="text-4xl mb-3">⚠️</div>
         <h2 className="text-lg font-bold mb-2">Chyba přihlášení</h2>

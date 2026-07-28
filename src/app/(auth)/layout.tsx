@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <span className="text-3xl font-black tracking-tight" style={{ color: "#0D1B3E" }}>
+          <span className="text-3xl font-black tracking-tight" style={{ color: "var(--text-primary)" }}>
             Mate<span style={{ color: "#2E6DA4" }}>Max</span>
           </span>
           <p className="text-xs text-slate-400 mt-1">Příprava na přijímačky z matematiky</p>

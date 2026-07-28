@@ -147,7 +147,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
         {/* Rychlý mód */}
         <Link href="/rychly-mod" className="rounded-2xl p-4 flex flex-col gap-1 bg-white border border-slate-200 card-hover">
           <span className="text-2xl">⚡</span>
-          <span className="text-sm font-black" style={{ color: "#0D1B3E" }}>Rychlý mód</span>
+          <span className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Rychlý mód</span>
           <span className="text-[11px] text-slate-500">10 příkladů · 60 sekund</span>
         </Link>
 
@@ -165,7 +165,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
         ) : (
           <div className="rounded-2xl p-4 flex flex-col gap-1 bg-white border border-slate-200 opacity-60">
             <span className="text-2xl">🔄</span>
-            <span className="text-sm font-black" style={{ color: "#0D1B3E" }}>Zopakovat chyby</span>
+            <span className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Zopakovat chyby</span>
             <span className="text-[11px] text-slate-400">Zatím žádné chyby k opakování</span>
           </div>
         )}
@@ -176,7 +176,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
           className="text-left rounded-2xl p-4 flex flex-col gap-1 bg-white border border-slate-200 card-hover"
         >
           <span className="text-2xl">🎲</span>
-          <span className="text-sm font-black" style={{ color: "#0D1B3E" }}>Mix témat</span>
+          <span className="text-sm font-black" style={{ color: "var(--text-primary)" }}>Mix témat</span>
           <span className="text-[11px] text-slate-500">Náhodně z dostupných</span>
         </button>
       </div>
@@ -215,7 +215,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
               >
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{EMOJI[tema]}</span>
-                  <span className="text-sm font-bold truncate" style={{ color: "#0D1B3E" }}>{TEMA_LABELS[tema]}</span>
+                  <span className="text-sm font-bold truncate" style={{ color: "var(--text-primary)" }}>{TEMA_LABELS[tema]}</span>
                   <span className="ml-auto text-xs font-black shrink-0" style={{ color: score > 0 ? barColor(score) : "#94a3b8" }}>
                     {score > 0 ? `${score} %` : "—"}
                   </span>
@@ -235,7 +235,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
         {/* Tvůj týden */}
         <div className="rounded-2xl p-4 bg-white border border-slate-200 flex flex-col gap-2">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Tvůj týden</p>
-          <p className="text-2xl font-black leading-none" style={{ color: "#0D1B3E" }}>
+          <p className="text-2xl font-black leading-none" style={{ color: "var(--text-primary)" }}>
             {week.total} <span className="text-xs font-semibold text-slate-400">{week.total === 1 ? "příklad" : week.total <= 4 ? "příklady" : "příkladů"}</span>
           </p>
           <div className="flex items-end gap-1 h-10 mt-1">

@@ -40,7 +40,7 @@ export default function RodicePage() {
       <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center flex flex-col gap-4">
         <div className="text-5xl">📬</div>
         <div>
-          <h2 className="text-xl font-black" style={{ color: "#0D1B3E" }}>Přihlášení úspěšné!</h2>
+          <h2 className="text-xl font-black" style={{ color: "var(--text-primary)" }}>Přihlášení úspěšné!</h2>
           <p className="text-sm text-slate-500 mt-2 leading-relaxed">
             Každé pondělí vám pošleme přehled o pokroku na <strong>{parentEmail}</strong>.
           </p>
@@ -79,7 +79,7 @@ export default function RodicePage() {
 
       {/* What you get */}
       <div className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col gap-3">
-        <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Co dostanete každé pondělí</p>
+        <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Co dostanete každé pondělí</p>
         {[
           { icon: "📊", text: "Kolik příkladů dítě vyřešilo za týden" },
           { icon: "🎯", text: "Kde má mezery a co procvičovat dál" },
@@ -95,7 +95,7 @@ export default function RodicePage() {
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col gap-4">
-        <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Přihlásit se k odběru</p>
+        <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Přihlásit se k odběru</p>
 
         <div className="flex flex-col gap-1">
           <label className="text-xs font-medium text-slate-500">Váš email (rodič)</label>

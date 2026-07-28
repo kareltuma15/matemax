@@ -55,7 +55,7 @@ export default function GuidanceModal({ type, daysSince, onClose, firstName, str
                   style={{ background: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)", border: "1px solid #bfdbfe" }}
                 >
                   <p className="text-2xl mb-1">📚</p>
-                  <p className="text-lg font-black" style={{ color: "#0D1B3E" }}>{todayTopic.label}</p>
+                  <p className="text-lg font-black" style={{ color: "var(--text-primary)" }}>{todayTopic.label}</p>
                   <p className="text-xs mt-1" style={{ color: "#2E6DA4" }}>
                     Tvoje připravenost: <strong>{todayTopic.score} %</strong>
                   </p>

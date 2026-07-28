@@ -77,7 +77,7 @@ function PrihlaseniForm() {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-7 flex flex-col gap-5">
       <div>
-        <h1 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>Přihlásit se</h1>
+        <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>Přihlásit se</h1>
         <p className="text-sm text-slate-400 mt-0.5">Pokračuj ve svém tréninku</p>
       </div>
 

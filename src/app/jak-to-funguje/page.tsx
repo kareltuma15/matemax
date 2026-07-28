@@ -47,7 +47,7 @@ export default function JakToFungujePageStatic() {
             >
               M²
             </div>
-            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+            <span className="font-bold text-base" style={{ color: "var(--text-primary)" }}>MateMax</span>
           </Link>
           <Link
             href="/registrace"
@@ -96,7 +96,7 @@ export default function JakToFungujePageStatic() {
                 <span className="text-3xl">{s.icon}</span>
               </div>
               <div>
-                <h2 className="text-lg font-black mb-2" style={{ color: "#0D1B3E" }}>
+                <h2 className="text-lg font-black mb-2" style={{ color: "var(--text-primary)" }}>
                   {s.title}
                 </h2>
                 <p className="text-sm text-slate-600 leading-relaxed">{s.desc}</p>
@@ -109,14 +109,14 @@ export default function JakToFungujePageStatic() {
       {/* Why MateMax */}
       <section className="bg-slate-50 py-14 px-6">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-extrabold text-center mb-8" style={{ color: "#0D1B3E" }}>
+          <h2 className="text-2xl font-extrabold text-center mb-8" style={{ color: "var(--text-primary)" }}>
             Proč MateMax funguje
           </h2>
           <div className="grid sm:grid-cols-2 gap-5">
             {WHY_ITEMS.map(([icon, title, desc]) => (
               <div key={title} className="bg-white rounded-2xl border border-slate-200 p-5">
                 <p className="text-2xl mb-2">{icon}</p>
-                <p className="font-bold text-sm" style={{ color: "#0D1B3E" }}>{title}</p>
+                <p className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>{title}</p>
                 <p className="text-sm text-slate-500 mt-1 leading-relaxed">{desc}</p>
               </div>
             ))}

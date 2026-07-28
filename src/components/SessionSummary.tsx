@@ -303,7 +303,7 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
             <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: "#2E6DA4" }}>
               Příště tě čeká
             </p>
-            <p className="text-base font-black mt-0.5" style={{ color: "#0D1B3E" }}>{nextTopic.label}</p>
+            <p className="text-base font-black mt-0.5" style={{ color: "var(--text-primary)" }}>{nextTopic.label}</p>
             <p className="text-xs mt-0.5" style={{ color: "#5A6B8C" }}>
               Chybné příklady se ti vrátí samy — algoritmus je pohlídá.
             </p>

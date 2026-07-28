@@ -87,7 +87,7 @@ export default function VitejPage() {
             className="bg-white rounded-2xl p-6 w-full max-w-sm flex flex-col gap-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-black" style={{ color: "#0D1B3E" }}>
+            <h3 className="text-lg font-black" style={{ color: "var(--text-primary)" }}>
               Jak MateMax funguje?
             </h3>
             <ul className="flex flex-col gap-3">
@@ -155,7 +155,7 @@ export default function VitejPage() {
 
         {/* Heading */}
         <div className="text-center">
-          <h1 className="text-2xl font-black leading-tight" style={{ color: "#0D1B3E" }}>
+          <h1 className="text-2xl font-black leading-tight" style={{ color: "var(--text-primary)" }}>
             Vítej v MateMax{osloveni}! 🎉
           </h1>
           <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto">
@@ -175,7 +175,7 @@ export default function VitejPage() {
               className="bg-white rounded-xl border border-slate-200 p-3 text-center"
             >
               <p className="text-2xl mb-1">{icon}</p>
-              <p className="text-xs font-bold" style={{ color: "#0D1B3E" }}>{title}</p>
+              <p className="text-xs font-bold" style={{ color: "var(--text-primary)" }}>{title}</p>
               <p className="text-[10px] text-slate-400">{sub}</p>
             </div>
           ))}

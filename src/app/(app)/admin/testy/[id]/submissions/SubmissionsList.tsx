@@ -86,7 +86,7 @@ export default function SubmissionsList({ sessionId }: { sessionId: string }) {
               style={{ background: "#fff", border: "1px solid #e2e8f0" }}
             >
               <div className="min-w-0">
-                <div className="font-bold text-sm truncate" style={{ color: "#0D1B3E" }}>{r.email}</div>
+                <div className="font-bold text-sm truncate" style={{ color: "var(--text-primary)" }}>{r.email}</div>
                 <div className="text-xs" style={{ color: "#94a3b8" }}>
                   {r.submittedAt ? `Odevzdáno ${fmt(r.submittedAt)} · ${r.photoCount} fotek` : "Zatím neodevzdal/a"}
                 </div>

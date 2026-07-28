@@ -327,7 +327,7 @@ export default function VyzvaPage() {
                   <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: DIFFICULTY_COLOR[challenge.difficulty] }}>
                     {DIFFICULTY_LABEL[challenge.difficulty]} {difficultyStars(challenge.difficulty)}
                   </p>
-                  <h2 className="text-xl font-extrabold" style={{ color: "#0D1B3E" }}>
+                  <h2 className="text-xl font-extrabold" style={{ color: "var(--text-primary)" }}>
                     {challenge.title}
                   </h2>
                 </div>
@@ -499,7 +499,7 @@ export default function VyzvaPage() {
             <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: "#2E6DA4" }}>
               {TEMA_LABELS[ex?.tema ?? ""] ?? ex?.tema}
             </p>
-            <div className="text-xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
+            <div className="text-xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
               {ex?.latex
                 ? <MathDisplay tex={ex.zadani} displayMode />
                 : <MathText text={ex?.zadani ?? ""} large />}
@@ -532,7 +532,7 @@ export default function VyzvaPage() {
                 onKeyDown={handleKeyDown}
                 placeholder="Tvá odpověď…"
                 className="flex-1 rounded-xl border-2 px-4 py-3.5 text-lg font-bold outline-none transition-colors"
-                style={{ borderColor: "#2E6DA4", color: "#0D1B3E" }}
+                style={{ borderColor: "#2E6DA4", color: "var(--text-primary)" }}
               />
               <button
                 type="button"
@@ -573,7 +573,7 @@ export default function VyzvaPage() {
       <div className="min-h-screen pb-24 flex flex-col items-center justify-start" style={{ background: "#F8FAFF" }}>
         <div className="max-w-md mx-auto w-full px-5 pt-14 flex flex-col items-center gap-5">
           <div className="text-7xl animate-bounce">🏆</div>
-          <h1 className="text-3xl font-extrabold text-center" style={{ color: "#0D1B3E" }}>
+          <h1 className="text-3xl font-extrabold text-center" style={{ color: "var(--text-primary)" }}>
             Výzva splněna!
           </h1>
           <p className="text-slate-500 text-center text-base leading-relaxed">{successQuote}</p>
@@ -582,7 +582,7 @@ export default function VyzvaPage() {
           <div className="w-full bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>
+                <p className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>
                   {correctCount}/{examplesList.length}
                 </p>
                 <p className="text-xs text-slate-400 mt-1">správně</p>
@@ -646,7 +646,7 @@ export default function VyzvaPage() {
     <div className="min-h-screen pb-24 flex flex-col items-center justify-start" style={{ background: "#F8FAFF" }}>
       <div className="max-w-md mx-auto w-full px-5 pt-14 flex flex-col items-center gap-5">
         <div className="text-7xl">💪</div>
-        <h1 className="text-3xl font-extrabold text-center" style={{ color: "#0D1B3E" }}>
+        <h1 className="text-3xl font-extrabold text-center" style={{ color: "var(--text-primary)" }}>
           Tentokrát ne...
         </h1>
         <p className="text-slate-500 text-center text-base leading-relaxed">{failureQuote}</p>
@@ -655,7 +655,7 @@ export default function VyzvaPage() {
         <div className="w-full bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>
+              <p className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>
                 {correctCount}/{examplesList.length}
               </p>
               <p className="text-xs text-slate-400 mt-1">správně</p>

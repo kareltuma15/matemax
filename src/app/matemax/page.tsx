@@ -44,7 +44,7 @@ export default function MatemaxPage() {
             >
               M²
             </div>
-            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+            <span className="font-bold text-base" style={{ color: "var(--text-primary)" }}>MateMax</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/" className="text-sm text-gray-500 hover:text-gray-800 hidden sm:block transition-colors">
@@ -104,7 +104,7 @@ export default function MatemaxPage() {
           <span className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
             Jak to funguje
           </span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
+          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
             Tři kroky k lepším výsledkům
           </h2>
           <p className="mt-3 text-gray-500 max-w-xl mx-auto text-sm">
@@ -122,7 +122,7 @@ export default function MatemaxPage() {
                 {step.num}
               </div>
               <div className="text-4xl mb-4">{step.icon}</div>
-              <h3 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>
+              <h3 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
                 {step.title}
               </h3>
               <p className="text-sm font-semibold mt-1 mb-3" style={{ color: step.accent }}>
@@ -153,7 +153,7 @@ export default function MatemaxPage() {
             { value: "1×/týden", label: "report pro rodiče" },
           ].map((s) => (
             <div key={s.label}>
-              <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>{s.value}</div>
+              <div className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>{s.value}</div>
               <div className="text-sm text-gray-500 mt-1">{s.label}</div>
             </div>
           ))}

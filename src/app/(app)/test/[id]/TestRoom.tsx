@@ -34,7 +34,7 @@ function Countdown({ label, targetMs, nowMs }: { label: string; targetMs: number
       <div className="flex items-end gap-2">
         {parts.map(([v, u], i) => (
           <div key={i} className="flex flex-col items-center">
-            <span className="text-3xl font-black tabular-nums" style={{ color: "#0D1B3E" }}>
+            <span className="text-3xl font-black tabular-nums" style={{ color: "var(--text-primary)" }}>
               {String(v).padStart(2, "0")}
             </span>
             <span className="text-[10px] font-bold" style={{ color: "#94a3b8" }}>{u}</span>
@@ -227,7 +227,7 @@ export default function TestRoom({ sessionId }: { sessionId: string }) {
             <Countdown label="Test začne za" targetMs={startMs} nowMs={nowMs} />
           </div>
           <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-            <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>1️⃣ Priprav se</div>
+            <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>1️⃣ Priprav se</div>
             <p className="text-sm" style={{ color: "#64748b" }}>
               Vytiskni si záznamový arch a měj po ruce pero a pravítko. V čas startu se ti
               tady odemkne zadání.
@@ -244,7 +244,7 @@ export default function TestRoom({ sessionId }: { sessionId: string }) {
         <>
           <LiveTimer endMs={endMs} nowMs={nowMs} />
           <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-            <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>Test probíhá — hodně štěstí! ✏️</div>
+            <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>Test probíhá — hodně štěstí! ✏️</div>
             <p className="text-sm" style={{ color: "#64748b" }}>
               Počítej na papír přesně jako u CERMATu. Až budeš hotový/á (nebo vyprší čas),
               nahraješ tady fotky vyplněného archu.
@@ -284,7 +284,7 @@ export default function TestRoom({ sessionId }: { sessionId: string }) {
       {phase === "submitted" && (
         <div className="rounded-2xl p-8 text-center flex flex-col items-center gap-3" style={{ background: "#fff", border: "2px solid #16a34a" }}>
           <div className="text-4xl">✅</div>
-          <div className="font-black text-lg" style={{ color: "#0D1B3E" }}>Arch odevzdán!</div>
+          <div className="font-black text-lg" style={{ color: "var(--text-primary)" }}>Arch odevzdán!</div>
           <p className="text-sm" style={{ color: "#64748b" }}>
             Karel tvůj test opraví ručně a do <strong>48 hodin</strong> ti sem i emailem přijde
             osobní hodnocení — téma po tématu.
@@ -323,7 +323,7 @@ function UploadBox({
 }) {
   return (
     <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-      <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>
+      <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>
         📸 Nahrát fotky záznamového archu
       </div>
       {earlyHint && (
@@ -415,12 +415,12 @@ function Results({
       {/* Per téma */}
       {topicRows.length > 0 && (
         <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-          <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>Rozbor po tématech</div>
+          <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>Rozbor po tématech</div>
           <div className="flex flex-col gap-2">
             {topicRows.map((r) => (
               <div key={r.key} className="rounded-xl p-3" style={{ background: "#f8fafc" }}>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold" style={{ color: "#0D1B3E" }}>{TEST_TOPIC_LABELS[r.key]}</span>
+                  <span className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>{TEST_TOPIC_LABELS[r.key]}</span>
                   {r.points !== null && r.points !== undefined && (
                     <span className="text-sm font-black" style={{ color: "#2E6DA4" }}>{r.points} b</span>
                   )}
@@ -451,7 +451,7 @@ function Results({
       {/* Celkový komentář */}
       {submission.komentar_celkovy && (
         <div className="rounded-2xl p-5" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-          <div className="font-bold text-sm mb-1" style={{ color: "#0D1B3E" }}>Komentář od Karla</div>
+          <div className="font-bold text-sm mb-1" style={{ color: "var(--text-primary)" }}>Komentář od Karla</div>
           <div className="text-sm whitespace-pre-line" style={{ color: "#64748b" }}>{submission.komentar_celkovy}</div>
         </div>
       )}

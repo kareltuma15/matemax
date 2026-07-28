@@ -279,7 +279,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         {/* Question */}
         <div className="text-center py-2">
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Vypočítej</p>
-          <div className="text-2xl font-bold leading-snug" style={{ color: "#0D1B3E" }}>
+          <div className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
             <ExMath ex={example} text={example.zadani} large display={example.latex} />
           </div>
         </div>
@@ -494,7 +494,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold transition-colors"
               style={{
                 background: status === "wrong" ? "#eff6ff" : "#f8fafc",
-                color: "#0D1B3E",
+                color: "var(--text-primary)",
               }}
             >
               <span className="flex items-center gap-2">

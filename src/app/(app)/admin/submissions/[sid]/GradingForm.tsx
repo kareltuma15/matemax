@@ -178,7 +178,7 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
 
       {/* Fotky archu */}
       <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-        <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>
+        <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>
           📸 Záznamový arch ({detail.photoUrls.length} fotek)
         </div>
         {detail.photoUrls.length === 0 ? (
@@ -199,7 +199,7 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
       {/* Body per téma */}
       <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
         <div className="flex items-center justify-between">
-          <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>Body po tématech</div>
+          <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>Body po tématech</div>
           <div className="text-sm font-black" style={{ color: totalRounded > TEST_MAX_POINTS ? "#dc2626" : "#2E6DA4" }}>
             Celkem {totalRounded} / {TEST_MAX_POINTS}
           </div>
@@ -213,14 +213,14 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
           return (
             <div key={t} className="rounded-xl p-3 flex flex-col gap-2" style={{ background: "#f8fafc" }}>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-bold flex-1" style={{ color: "#0D1B3E" }}>{TEST_TOPIC_LABELS[t]}</span>
+                <span className="text-sm font-bold flex-1" style={{ color: "var(--text-primary)" }}>{TEST_TOPIC_LABELS[t]}</span>
                 <input
                   type="number" min={0} max={TEST_MAX_POINTS} step={0.5}
                   placeholder="—"
                   value={f.points}
                   onChange={(e) => setTopic(t, { points: e.target.value })}
                   className="rounded-lg px-2 py-1 text-sm border outline-none w-16 text-center"
-                  style={{ borderColor: "#cbd5e1", color: "#0D1B3E", background: "#fff" }}
+                  style={{ borderColor: "#cbd5e1", color: "var(--text-primary)", background: "#fff" }}
                 />
                 <span className="text-xs" style={{ color: "#94a3b8" }}>b</span>
                 <div className="flex gap-1">
@@ -246,7 +246,7 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
                 value={f.text}
                 onChange={(e) => setTopic(t, { text: e.target.value })}
                 className="rounded-lg px-2 py-1.5 text-sm border outline-none"
-                style={{ borderColor: "#e2e8f0", color: "#0D1B3E", background: "#fff" }}
+                style={{ borderColor: "#e2e8f0", color: "var(--text-primary)", background: "#fff" }}
               />
             </div>
           );
@@ -255,13 +255,13 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
 
       {/* Souhrn */}
       <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-        <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>Celkové hodnocení</div>
+        <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>Celkové hodnocení</div>
         <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
           💪 Silné stránky
           <textarea
             rows={2} value={silne} onChange={(e) => setSilne(e.target.value)}
             className="rounded-lg px-3 py-2 text-sm border outline-none resize-y"
-            style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+            style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
           />
         </label>
         <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -269,7 +269,7 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
           <textarea
             rows={2} value={doporuceni} onChange={(e) => setDoporuceni(e.target.value)}
             className="rounded-lg px-3 py-2 text-sm border outline-none resize-y"
-            style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+            style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
           />
         </label>
         <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -277,7 +277,7 @@ export default function GradingForm({ submissionId }: { submissionId: string }) 
           <textarea
             rows={3} value={celkovy} onChange={(e) => setCelkovy(e.target.value)}
             className="rounded-lg px-3 py-2 text-sm border outline-none resize-y"
-            style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+            style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
           />
         </label>
       </div>

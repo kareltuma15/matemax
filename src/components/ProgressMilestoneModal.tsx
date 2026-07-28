@@ -9,7 +9,7 @@ const MILESTONE_CONFIG: Record<number, { emoji: string; headline: string; color:
   50:  { emoji: "🔥", headline: "Půlstoovka příkladů!",    color: "#d97706", bg: "#fffbeb",  border: "#fde68a" },
   100: { emoji: "💎", headline: "100 příkladů — skvělé!",  color: "#dc2626", bg: "#fef2f2",  border: "#fecaca" },
   250: { emoji: "🚀", headline: "250 příkladů — šampion!", color: "#059669", bg: "#f0fdf4",  border: "#bbf7d0" },
-  500: { emoji: "🏆", headline: "500 příkladů — legenda!", color: "#0D1B3E", bg: "#f8faff",  border: "#bfdbfe" },
+  500: { emoji: "🏆", headline: "500 příkladů — legenda!", color: "var(--text-primary)", bg: "#f8faff",  border: "#bfdbfe" },
 };
 
 interface Props {

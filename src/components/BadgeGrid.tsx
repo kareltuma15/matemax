@@ -56,7 +56,7 @@ export default function BadgeGrid({ earnedBadgeIds }: BadgeGridProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Odznaky</h2>
+        <h2 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Odznaky</h2>
         <span className="text-xs text-slate-400 font-medium">
           {earned.length} / {all.length}
         </span>

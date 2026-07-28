@@ -243,7 +243,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span className="font-semibold pr-4 text-[15px]" style={{ color: "#0D1B3E" }}>
+        <span className="font-semibold pr-4 text-[15px]" style={{ color: "var(--text-primary)" }}>
           {q}
         </span>
         <span
@@ -467,7 +467,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm" style={{ background: "#0D1B3E" }}>
               M²
             </div>
-            <span className="font-bold text-base" style={{ color: "#0D1B3E" }}>MateMax</span>
+            <span className="font-bold text-base" style={{ color: "var(--text-primary)" }}>MateMax</span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <a href="#jak-to-funguje" className="text-sm text-gray-500 hover:text-gray-800 hidden md:block transition-colors">
@@ -531,7 +531,7 @@ export default function LandingPage() {
                   className="px-4 sm:px-5 py-2 rounded-full text-sm font-bold transition-colors"
                   style={
                     view === val
-                      ? { background: "#fff", color: "#0D1B3E" }
+                      ? { background: "#fff", color: "var(--text-primary)" }
                       : { background: "transparent", color: "rgba(219,234,254,0.85)" }
                   }
                 >
@@ -604,7 +604,7 @@ export default function LandingPage() {
             {/* Levý sloupec — text (jen desktop) */}
             <div className="hidden md:flex flex-col justify-center">
               <Badge>Vyzkoušej ihned</Badge>
-              <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>
+              <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "var(--text-primary)" }}>
                 Zkus si příklad hned.<br />
                 <span style={{ color: "#2E6DA4" }}>Bez registrace.</span>
               </h2>
@@ -645,7 +645,7 @@ export default function LandingPage() {
       {!isRodic && (
       <section className="max-w-4xl mx-auto px-6 py-14">
         <div className="text-center mb-10 scroll-reveal">
-          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>Co tě čeká</h2>
+          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>Co tě čeká</h2>
           <p className="text-gray-500 mt-2 text-sm">Tři nástroje, které tě naučí připravit se bez stresu.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
@@ -659,7 +659,7 @@ export default function LandingPage() {
               className={`bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col items-center text-center gap-3 card-hover scroll-reveal delay-${i + 1}`}
             >
               <span className="text-4xl">{icon}</span>
-              <p className="text-base font-extrabold" style={{ color: "#0D1B3E" }}>{title}</p>
+              <p className="text-base font-extrabold" style={{ color: "var(--text-primary)" }}>{title}</p>
               <p className="text-sm text-slate-500 leading-relaxed">{desc}</p>
             </div>
           ))}
@@ -671,25 +671,25 @@ export default function LandingPage() {
       <section className="bg-gray-50 border-y border-gray-200 scroll-reveal">
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <div className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               <CountUp end={EXAMPLES_ROUNDED} suffix="+" />
             </div>
             <div className="text-sm text-gray-500 mt-1">příkladů v databázi</div>
           </div>
           <div>
-            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <div className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               <CountUp end={9} />
             </div>
             <div className="text-sm text-gray-500 mt-1">témat CERMAT</div>
           </div>
           <div>
-            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <div className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               <CountUp end={10} suffix=" min" />
             </div>
             <div className="text-sm text-gray-500 mt-1">denně stačí</div>
           </div>
           <div>
-            <div className="text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>1×/týden</div>
+            <div className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>1×/týden</div>
             <div className="text-sm text-gray-500 mt-1">report pro rodiče</div>
           </div>
         </div>
@@ -699,7 +699,7 @@ export default function LandingPage() {
       <section id="jak-to-funguje" className="max-w-5xl mx-auto px-6 py-20">
         <div className="text-center mb-14 scroll-reveal">
           <Badge>Jak to funguje</Badge>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
+          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
             Tři kroky k lepším výsledkům
           </h2>
           <p className="mt-3 text-gray-500 max-w-xl mx-auto">
@@ -716,7 +716,7 @@ export default function LandingPage() {
                   {item.step}
                 </div>
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>{item.title}</h3>
+                <h3 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>{item.title}</h3>
                 <p className={`text-sm font-semibold mt-1 mb-3 ${item.accent}`}>{item.subtitle}</p>
                 <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
               </div>
@@ -739,7 +739,7 @@ export default function LandingPage() {
                 {item.step}
               </div>
               <div className="text-4xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>{item.title}</h3>
+              <h3 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>{item.title}</h3>
               <p className={`text-sm font-semibold mt-1 mb-3 ${item.accent}`}>{item.subtitle}</p>
               <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
             </div>
@@ -753,7 +753,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="scroll-reveal">
               <Badge>Ukázka aplikace</Badge>
-              <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>
+              <h2 className="mt-4 text-3xl font-extrabold leading-tight" style={{ color: "var(--text-primary)" }}>
                 Přehledné a jednoduché rozhraní
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
@@ -823,7 +823,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12 scroll-reveal">
             <Badge>Pro rodiče</Badge>
-            <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               Vidíte přesně, jak se dítě připravuje
             </h2>
             <p className="mt-3 text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -863,7 +863,7 @@ export default function LandingPage() {
                 >
                   {icon}
                 </div>
-                <p className="text-lg font-extrabold" style={{ color: "#0D1B3E" }}>{title}</p>
+                <p className="text-lg font-extrabold" style={{ color: "var(--text-primary)" }}>{title}</p>
                 <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
               </div>
             ))}
@@ -871,7 +871,7 @@ export default function LandingPage() {
 
           <div className="bg-white rounded-2xl shadow-md border border-blue-100 p-8 flex flex-col md:flex-row items-center gap-6 scroll-reveal">
             <div className="flex-1 text-center md:text-left">
-              <p className="text-xl font-extrabold mb-2" style={{ color: "#0D1B3E" }}>
+              <p className="text-xl font-extrabold mb-2" style={{ color: "var(--text-primary)" }}>
                 Propojte se s účtem svého dítěte
               </p>
               <p className="text-sm text-gray-600 leading-relaxed">
@@ -897,7 +897,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12 scroll-reveal">
             <Badge>Co říkají uživatelé</Badge>
-            <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               Příprava, která skutečně funguje
             </h2>
             <p className="mt-3 text-gray-500 max-w-xl mx-auto">
@@ -923,7 +923,7 @@ export default function LandingPage() {
                     {t.emoji}
                   </div>
                   <div>
-                    <p className="font-bold text-sm" style={{ color: "#0D1B3E" }}>{t.name}</p>
+                    <p className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>{t.name}</p>
                     <p className="text-xs text-gray-400">{t.role}</p>
                   </div>
                 </div>
@@ -939,7 +939,7 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10 scroll-reveal">
             <Badge>Srovnání</Badge>
-            <h2 className="mt-4 text-2xl md:text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <h2 className="mt-4 text-2xl md:text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               MateMax vs. alternativy
             </h2>
             <p className="mt-3 text-gray-500 text-sm">Rodiče to srovnávají sami — tady to říkáme rovnou.</p>
@@ -984,7 +984,7 @@ export default function LandingPage() {
       <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12 scroll-reveal">
           <Badge>Ceník</Badge>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>
+          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
             Začni zdarma, upgraduj kdykoliv
           </h2>
           <p className="mt-3 text-gray-500">Premium lze kdykoli zrušit. Žádné skryté poplatky.</p>
@@ -1004,9 +1004,9 @@ export default function LandingPage() {
                   </span>
                 </div>
               )}
-              <div className="text-lg font-bold" style={{ color: "#0D1B3E" }}>{plan.name}</div>
+              <div className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>{plan.name}</div>
               <div className="mt-2 flex items-end gap-1">
-                <span className="text-4xl font-extrabold" style={{ color: "#0D1B3E" }}>{plan.price}</span>
+                <span className="text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>{plan.price}</span>
                 {plan.period && <span className="text-gray-400 mb-1">{plan.period}</span>}
               </div>
               <p className="text-sm text-gray-500 mt-1">{plan.desc}</p>
@@ -1037,7 +1037,7 @@ export default function LandingPage() {
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-12 scroll-reveal">
             <Badge>FAQ</Badge>
-            <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "#0D1B3E" }}>
+            <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
               Nejčastější otázky
             </h2>
           </div>

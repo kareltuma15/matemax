@@ -66,7 +66,7 @@ export default function PremiumAktivovanPage() {
           <button
             onClick={() => setShowBenefits((v) => !v)}
             className="w-full flex items-center justify-between py-3 px-4 rounded-xl text-sm font-bold transition-colors"
-            style={{ background: "#f1f5f9", color: "#0D1B3E" }}
+            style={{ background: "#f1f5f9", color: "var(--text-primary)" }}
           >
             <span>Co teď máš k dispozici</span>
             <span className="text-lg" style={{ transition: "transform 0.3s", transform: showBenefits ? "rotate(180deg)" : "rotate(0deg)" }}>
@@ -80,7 +80,7 @@ export default function PremiumAktivovanPage() {
                 <div key={b.title} className="flex items-start gap-3 p-3 rounded-xl fade-in-up" style={{ background: "#f8fafc" }}>
                   <span className="text-2xl shrink-0">{b.icon}</span>
                   <div>
-                    <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>{b.title}</p>
+                    <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>{b.title}</p>
                     <p className="text-xs text-slate-500 mt-0.5">{b.desc}</p>
                   </div>
                 </div>

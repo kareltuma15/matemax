@@ -36,7 +36,7 @@ export default function ZapomneteHesloPage() {
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-7 flex flex-col gap-5 text-center">
         <div className="text-4xl">📬</div>
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>Email odeslán</h2>
+          <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>Email odeslán</h2>
           <p className="text-sm text-slate-500 mt-2">
             Zkontroluj svůj email <strong>{email}</strong> a klikni na odkaz pro reset hesla.
           </p>
@@ -55,7 +55,7 @@ export default function ZapomneteHesloPage() {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-7 flex flex-col gap-5">
       <div>
-        <h1 className="text-xl font-bold" style={{ color: "#0D1B3E" }}>Zapomenuté heslo</h1>
+        <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>Zapomenuté heslo</h1>
         <p className="text-sm text-slate-400 mt-0.5">
           Zadej svůj email a pošleme ti odkaz pro reset hesla.
         </p>

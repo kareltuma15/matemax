@@ -332,7 +332,7 @@ export default function DiagnostikaPage() {
         <div className="bg-white rounded-2xl border border-slate-200 p-6 text-center flex flex-col gap-4">
           <span className="text-4xl">✅</span>
           <div>
-            <h2 className="text-lg font-bold" style={{ color: "#0D1B3E" }}>
+            <h2 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
               Diagnostiku jsi již absolvoval
             </h2>
             <p className="text-sm text-slate-500 mt-1">
@@ -376,7 +376,7 @@ export default function DiagnostikaPage() {
     <div className="flex flex-col gap-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold mb-1" style={{ color: "#0D1B3E" }}>
+        <h2 className="text-xl font-bold mb-1" style={{ color: "var(--text-primary)" }}>
           Vstupní diagnostický test
         </h2>
         <p className="text-sm text-slate-500">Zjistíme, kde potřebuješ nejvíce procvičit.</p>
@@ -446,7 +446,7 @@ export default function DiagnostikaPage() {
               >
                 {globalIdx + 1}
               </span>
-              <p className="font-semibold text-base leading-snug" style={{ color: "#0D1B3E" }}>
+              <p className="font-semibold text-base leading-snug" style={{ color: "var(--text-primary)" }}>
                 {q.text}
               </p>
             </div>
@@ -653,7 +653,7 @@ function DiagResults({ onStart }: { onStart: () => void }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <h2 className="text-xl font-bold mb-1" style={{ color: "#0D1B3E" }}>Tvoje mapa mezer</h2>
+        <h2 className="text-xl font-bold mb-1" style={{ color: "var(--text-primary)" }}>Tvoje mapa mezer</h2>
         <p className="text-sm text-slate-500">Výsledky diagnostického testu</p>
       </div>
 

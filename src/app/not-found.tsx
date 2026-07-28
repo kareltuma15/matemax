@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
-      style={{ background: "#F8FAFF", color: "#0D1B3E" }}
+      style={{ background: "#F8FAFF", color: "var(--text-primary)" }}
     >
       <div
         className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl mb-6"
@@ -12,7 +12,7 @@ export default function NotFound() {
       >
         🔍
       </div>
-      <h1 className="text-5xl font-black mb-2" style={{ color: "#0D1B3E" }}>
+      <h1 className="text-5xl font-black mb-2" style={{ color: "var(--text-primary)" }}>
         404
       </h1>
       <h2 className="text-xl font-bold mb-3">Stránka nenalezena</h2>

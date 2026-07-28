@@ -37,7 +37,7 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
   return (
     <div className="rounded-2xl p-4 flex flex-col gap-1" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
       <div className="text-xs font-bold uppercase tracking-widest" style={{ color: "#94a3b8" }}>{label}</div>
-      <div className="text-3xl font-black" style={{ color: "#0D1B3E" }}>{value}</div>
+      <div className="text-3xl font-black" style={{ color: "var(--text-primary)" }}>{value}</div>
       {sub && <div className="text-xs" style={{ color: "#94a3b8" }}>{sub}</div>}
     </div>
   );
@@ -192,7 +192,7 @@ export default function AdminPage() {
       {/* User table */}
       <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid #e2e8f0" }}>
         <div className="px-4 py-3 flex items-center gap-3" style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
-          <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>
+          <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>
             Uživatelé ({filtered.length})
           </div>
           <input
@@ -201,7 +201,7 @@ export default function AdminPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="ml-auto rounded-lg px-3 py-1.5 text-sm border outline-none"
-            style={{ borderColor: "#cbd5e1", color: "#0D1B3E", background: "#fff", width: 180 }}
+            style={{ borderColor: "#cbd5e1", color: "var(--text-primary)", background: "#fff", width: 180 }}
           />
         </div>
 
@@ -228,14 +228,14 @@ export default function AdminPage() {
                   }}
                 >
                   <td className="px-4 py-3">
-                    <div className="font-medium" style={{ color: "#0D1B3E", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div className="font-medium" style={{ color: "var(--text-primary)", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                       {u.email}
                     </div>
                     <div className="text-xs" style={{ color: "#94a3b8" }}>
                       {u.lastSession ? `Naposledy: ${u.lastSession}` : `Reg: ${u.createdAt.slice(0, 10)}`}
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-center font-bold" style={{ color: "#0D1B3E" }}>{u.sessionCount}</td>
+                  <td className="px-3 py-3 text-center font-bold" style={{ color: "var(--text-primary)" }}>{u.sessionCount}</td>
                   <td className="px-3 py-3 text-center font-bold" style={{ color: u.streak >= 3 ? "#f97316" : "#64748b" }}>
                     {u.streak > 0 ? `🔥 ${u.streak}` : "—"}
                   </td>

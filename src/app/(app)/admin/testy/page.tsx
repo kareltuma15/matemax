@@ -232,14 +232,14 @@ export default function AdminTestyPage() {
           className="rounded-2xl p-5 flex flex-col gap-3"
           style={{ background: "#fff", border: "1px solid #e2e8f0" }}
         >
-          <div className="font-bold" style={{ color: "#0D1B3E" }}>Nový termín</div>
+          <div className="font-bold" style={{ color: "var(--text-primary)" }}>Nový termín</div>
           <input
             type="text"
             placeholder="Název — např. Test nanečisto #1 — září 2026"
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
             className="rounded-lg px-3 py-2 text-sm border outline-none"
-            style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+            style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
           />
           <div className="grid grid-cols-2 gap-3">
             <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -249,7 +249,7 @@ export default function AdminTestyPage() {
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
                 className="rounded-lg px-3 py-2 text-sm border outline-none"
-                style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+                style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
               />
             </label>
             <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -259,7 +259,7 @@ export default function AdminTestyPage() {
                 value={form.time}
                 onChange={(e) => setForm({ ...form, time: e.target.value })}
                 className="rounded-lg px-3 py-2 text-sm border outline-none"
-                style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+                style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
               />
             </label>
             <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -270,7 +270,7 @@ export default function AdminTestyPage() {
                 value={form.duration_minutes}
                 onChange={(e) => setForm({ ...form, duration_minutes: Number(e.target.value) })}
                 className="rounded-lg px-3 py-2 text-sm border outline-none"
-                style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+                style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
               />
             </label>
             <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -281,7 +281,7 @@ export default function AdminTestyPage() {
                 value={form.capacity}
                 onChange={(e) => setForm({ ...form, capacity: Number(e.target.value) })}
                 className="rounded-lg px-3 py-2 text-sm border outline-none"
-                style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+                style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
               />
             </label>
             <label className="flex flex-col gap-1 text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -292,7 +292,7 @@ export default function AdminTestyPage() {
                 value={form.price_czk}
                 onChange={(e) => setForm({ ...form, price_czk: Number(e.target.value) })}
                 className="rounded-lg px-3 py-2 text-sm border outline-none"
-                style={{ borderColor: "#cbd5e1", color: "#0D1B3E" }}
+                style={{ borderColor: "#cbd5e1", color: "var(--text-primary)" }}
               />
             </label>
           </div>
@@ -317,7 +317,7 @@ export default function AdminTestyPage() {
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="font-bold" style={{ color: "#0D1B3E" }}>{s.title}</div>
+                <div className="font-bold" style={{ color: "var(--text-primary)" }}>{s.title}</div>
                 <div className="text-xs" style={{ color: "#94a3b8" }}>
                   {formatDateTime(s.scheduled_at)} · {s.duration_minutes} min · {s.price_czk} Kč
                 </div>
@@ -361,7 +361,7 @@ export default function AdminTestyPage() {
                 <Link
                   href={`/admin/testy/${s.id}/submissions`}
                   className="rounded-lg px-3 py-1.5 text-xs font-bold"
-                  style={{ background: "#f1f5f9", color: "#0D1B3E" }}
+                  style={{ background: "#f1f5f9", color: "var(--text-primary)" }}
                 >
                   📥 Odevzdané
                 </Link>

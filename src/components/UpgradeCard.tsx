@@ -44,7 +44,7 @@ export default function UpgradeCard({ tema, cardNumber, total, onSkip }: Props) 
           🔒
         </div>
         <div>
-          <h3 className="text-xl font-black" style={{ color: "#0D1B3E" }}>
+          <h3 className="text-xl font-black" style={{ color: "var(--text-primary)" }}>
             Toto téma je v Premium
           </h3>
           <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto leading-relaxed">

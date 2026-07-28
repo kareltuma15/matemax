@@ -106,7 +106,7 @@ export default function DemoCard() {
 
           {/* Question */}
           <div className="text-center py-1">
-            <p className="text-xl font-black leading-snug" style={{ color: "#0D1B3E" }}>
+            <p className="text-xl font-black leading-snug" style={{ color: "var(--text-primary)" }}>
               <MathText text={ex.zadani} />
             </p>
             {phase === "idle" && (
@@ -129,7 +129,7 @@ export default function DemoCard() {
                 style={{
                   border: `2px solid ${focused ? "#2E6DA4" : "#e2e8f0"}`,
                   background: "#f8fafc",
-                  color: "#0D1B3E",
+                  color: "var(--text-primary)",
                 }}
                 autoComplete="off"
               />

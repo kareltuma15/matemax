@@ -127,7 +127,7 @@ export default function TestyNanecistoPage() {
 
       {/* Jak to funguje */}
       <div className="rounded-2xl p-5 flex flex-col gap-2" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
-        <div className="font-bold text-sm" style={{ color: "#0D1B3E" }}>Jak to probíhá</div>
+        <div className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>Jak to probíhá</div>
         <ol className="text-sm flex flex-col gap-1" style={{ color: "#64748b" }}>
           <li>1️⃣ Přihlásíš se na termín a vytiskneš si záznamový arch</li>
           <li>2️⃣ V čas startu se ti odemkne zadání (PDF)</li>
@@ -163,7 +163,7 @@ export default function TestyNanecistoPage() {
               style={{ background: "#fff", border: "2px solid #16a34a" }}
             >
               <div>
-                <div className="font-bold" style={{ color: "#0D1B3E" }}>{s.title}</div>
+                <div className="font-bold" style={{ color: "var(--text-primary)" }}>{s.title}</div>
                 <div className="text-sm capitalize" style={{ color: "#64748b" }}>
                   Proběhl {formatDate(s.scheduled_at)}
                 </div>
@@ -183,7 +183,7 @@ export default function TestyNanecistoPage() {
       {!loading && !error && upcoming.length === 0 && (
         <div className="rounded-2xl p-8 text-center" style={{ background: "#fff", border: "1px solid #e2e8f0" }}>
           <div className="text-3xl mb-2">📅</div>
-          <div className="font-bold mb-1" style={{ color: "#0D1B3E" }}>Žádné vypsané termíny</div>
+          <div className="font-bold mb-1" style={{ color: "var(--text-primary)" }}>Žádné vypsané termíny</div>
           <div className="text-sm" style={{ color: "#94a3b8" }}>
             Nové termíny vypisujeme průběžně — mrkni sem zase brzy.
           </div>
@@ -207,7 +207,7 @@ export default function TestyNanecistoPage() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="font-bold" style={{ color: "#0D1B3E" }}>{s.title}</div>
+                    <div className="font-bold" style={{ color: "var(--text-primary)" }}>{s.title}</div>
                     <div className="text-sm capitalize" style={{ color: "#64748b" }}>
                       {formatDate(s.scheduled_at)}
                     </div>
@@ -216,7 +216,7 @@ export default function TestyNanecistoPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xl font-black" style={{ color: "#0D1B3E" }}>{s.price_czk} Kč</div>
+                    <div className="text-xl font-black" style={{ color: "var(--text-primary)" }}>{s.price_czk} Kč</div>
                     <div className="text-xs font-bold" style={{ color: full ? "#dc2626" : "#16a34a" }}>
                       {full ? "Obsazeno" : `Zbývá ${s.remaining} míst`}
                     </div>

@@ -781,7 +781,7 @@ function TreningPageInner() {
             🔒
           </div>
           <div>
-            <h2 className="text-xl font-black" style={{ color: "#0D1B3E" }}>Téma zamčeno</h2>
+            <h2 className="text-xl font-black" style={{ color: "var(--text-primary)" }}>Téma zamčeno</h2>
             <p className="text-sm text-slate-500 mt-2 leading-relaxed">
               <strong>{TEMA_LABELS[temaFilter] ?? temaFilter}</strong> je dostupné jen po registraci.
               Registrace je zdarma a trvá 2 minuty.

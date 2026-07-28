@@ -4,9 +4,9 @@ const KEY = "matemax-theme";
 
 export function getTheme(): Theme {
   if (typeof window === "undefined") return "light";
-  const stored = localStorage.getItem(KEY);
-  if (stored === "dark" || stored === "light") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Dark je opt-in přes přepínač v profilu — nevnucujeme ho podle OS, dokud
+  // není doladěný. Kdo si ho zapne, dostane ho; ostatní zůstávají ve světlém.
+  return localStorage.getItem(KEY) === "dark" ? "dark" : "light";
 }
 
 export function applyTheme(theme: Theme) {
@@ -28,6 +28,6 @@ export function toggleTheme(): Theme {
   return next;
 }
 
-// Dark mode temporarily disabled — always enforce light
-// To re-enable: restore the original THEME_SCRIPT with dark branch
-export const THEME_SCRIPT = `(function(){try{localStorage.removeItem('matemax-theme');document.documentElement.removeAttribute('data-theme');}catch(e){}})();`;
+// Aplikuje uložené téma před prvním vykreslením (žádné bliknutí). Dark jen
+// když si ho žák výslovně zapnul; jinak světlé.
+export const THEME_SCRIPT = `(function(){try{if(localStorage.getItem('matemax-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`;

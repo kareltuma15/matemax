@@ -81,7 +81,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
         </span>
       </div>
 
-      <div className="text-sm font-semibold" style={{ color: "#0D1B3E" }}>
+      <div className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
         Které znaménko patří mezi čísla?
       </div>
 
@@ -90,7 +90,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
         className="rounded-xl px-4 py-6 flex items-center justify-center gap-4 sm:gap-6"
         style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}
       >
-        <div className="text-2xl font-bold" style={{ color: "#0D1B3E" }}>
+        <div className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
           <Strana ex={example} text={p.levy} />
         </div>
 
@@ -106,7 +106,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
           {picked ?? "?"}
         </div>
 
-        <div className="text-2xl font-bold" style={{ color: "#0D1B3E" }}>
+        <div className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
           <Strana ex={example} text={p.pravy} />
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
           const isPicked = picked === znak;
           const isCorrect = znak === p.znak;
           const revealed = picked !== null;
-          let style: React.CSSProperties = { background: "#fff", border: "2px solid #e2e8f0", color: "#0D1B3E" };
+          let style: React.CSSProperties = { background: "#fff", border: "2px solid #e2e8f0", color: "var(--text-primary)" };
           if (revealed && isCorrect) style = { background: "#f0fdf4", border: "2px solid #16a34a", color: "#166534" };
           else if (revealed && isPicked) style = { background: "#fef2f2", border: "2px solid #dc2626", color: "#991b1b" };
           else if (revealed) style = { ...style, opacity: 0.45 };

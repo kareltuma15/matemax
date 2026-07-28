@@ -66,7 +66,7 @@ export default function RodicePropojeni() {
       <div className="max-w-sm mx-auto flex flex-col gap-6 items-center text-center pt-8">
         <span className="text-6xl">🔗</span>
         <div>
-          <h2 className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>Propojení úspěšné!</h2>
+          <h2 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>Propojení úspěšné!</h2>
           <p className="mt-2 text-slate-500 text-sm leading-relaxed">
             Váš účet byl propojen s účtem dítěte <strong>{success}</strong>.
             Nyní můžete sledovat jeho pokrok v přípravě na přijímačky.
@@ -94,7 +94,7 @@ export default function RodicePropojeni() {
         >
           🔗
         </div>
-        <h1 className="text-2xl font-extrabold" style={{ color: "#0D1B3E" }}>
+        <h1 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>
           Propojit s dítětem
         </h1>
         <p className="mt-1 text-sm text-slate-500 leading-relaxed">
