@@ -6,6 +6,7 @@ import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import { checkAnswer, isDifferentForm } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
+import DiagramView from "./DiagramView";
 import MathDisplay from "./MathDisplay";
 import { playCorrect, playWrong } from "@/lib/sound";
 
@@ -279,6 +280,11 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
         {/* Question */}
         <div className="text-center py-2">
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Vypočítej</p>
+          {example.diagram && (
+            <div className="mb-3">
+              <DiagramView diagram={example.diagram} />
+            </div>
+          )}
           <div className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
             <ExMath ex={example} text={example.zadani} large display={example.latex} />
           </div>

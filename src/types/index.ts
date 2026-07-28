@@ -17,6 +17,44 @@ export interface Porovnani {
   znak: "<" | "=" | ">";     // správné znaménko
 }
 
+/**
+ * Parametrický diagram k úloze. CERMAT je z velké části obrázkový (úhly,
+ * geometrie, grafy) a appka obrázky neměla vůbec. Místo statických obrázků
+ * nese úloha jen POPIS (typ + parametry) a vykreslí se ostré, dark-mode-aware
+ * SVG (viz DiagramView). Škáluje, je zdarma a bez copyright rizika.
+ *
+ * Diskriminovaná unie podle `typ` — přidání nového typu = nová varianta zde
+ * + větev v DiagramView.
+ */
+export type Diagram =
+  | UhelPrickaDiagram
+  | TrojuhelnikDiagram
+  | ObdelnikDiagram;
+
+/** Dvě rovnoběžky p ∥ q proťaté příčkou; jeden úhel je zadaný, jeden hledaný. */
+export interface UhelPrickaDiagram {
+  typ: "uhel_pricka";
+  danyUhel: number;                                   // velikost vyznačeného úhlu (°)
+  hledany: "souhlasny" | "stridavy" | "vedlejsi" | "vrcholovy"; // který úhl se ptáme (vyznačí „?")
+}
+
+/** Trojúhelník ABC s možnými popisky úhlů a stran; volitelně vyznačený úhel „?". */
+export interface TrojuhelnikDiagram {
+  typ: "trojuhelnik";
+  alfa?: number;                 // úhel u A (°) — když je uveden, zobrazí se
+  beta?: number;                 // úhel u B
+  gama?: number;                 // úhel u C
+  strany?: { a?: string; b?: string; c?: string };  // popisky stran (a proti A…)
+  hledany?: "alfa" | "beta" | "gama";               // vyznačí „?" místo hodnoty
+}
+
+/** Obdélník/čtverec s popiskem šířky a výšky (obvod, obsah). */
+export interface ObdelnikDiagram {
+  typ: "obdelnik";
+  sirka: string;                 // popisek vodorovné strany (např. „6 cm")
+  vyska: string;                 // popisek svislé strany
+}
+
 export interface DBExample {
   id: string;
   tema: string;
@@ -27,6 +65,8 @@ export interface DBExample {
   reseni_kroky: string[];
   cas_sekund: number;
   sm2_interval: number;
+  /** Parametrický diagram (úhly, geometrie…) — vykreslí se nad zadáním. */
+  diagram?: Diagram;
   /** Pokud true, zadani a reseni_kroky používají LaTeX syntaxi — renderováno přes KaTeX */
   latex?: boolean;
   /** Výchozí situace („V rovině leží úsečka AB") — u konstrukčních úloh. */
