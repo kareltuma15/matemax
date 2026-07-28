@@ -35,53 +35,65 @@ function renderDiagram(d: Diagram) {
   }
 }
 
-// ── Malý oblouček úhlu + popisek ─────────────────────────────────────────────
-function AngleMark({ x, y, label, dir }: { x: number; y: number; label: string; dir: [number, number] }) {
-  // dir udává, do kterého kvadrantu oblouček a popisek jdou (±1, ±1)
-  const [dx, dy] = dir;
-  const r = 16;
-  const start = `${x + dx * r},${y}`;
-  const end = `${x},${y + dy * r}`;
+// ── Oblouk úhlu mezi dvěma rameny (úhly ve stupních) + popisek na ose ─────────
+function Oblouk({ cx, cy, a1, a2, label, r = 18 }: { cx: number; cy: number; a1: number; a2: number; label: string; r?: number }) {
+  const rad = (deg: number) => (deg * Math.PI) / 180;
+  // Nejkratší (menší) úhel mezi rameny — kreslíme právě ten.
+  let d = ((a2 - a1 + 540) % 360) - 180; // -180..180
+  const sweep = d > 0 ? 1 : 0;
+  const A = [cx + r * Math.cos(rad(a1)), cy + r * Math.sin(rad(a1))];
+  const B = [cx + r * Math.cos(rad(a2)), cy + r * Math.sin(rad(a2))];
+  const mid = a1 + d / 2;
+  const lr = r + 14;
+  const L = [cx + lr * Math.cos(rad(mid)), cy + lr * Math.sin(rad(mid))];
   return (
     <g>
-      <path d={`M ${start} A ${r} ${r} 0 0 ${dx * dy > 0 ? 0 : 1} ${end}`} fill="none" stroke={AKCENT} strokeWidth="2" />
-      <text x={x + dx * 24} y={y + dy * 24} fontSize="15" fontWeight="700" fill={AKCENT} textAnchor="middle" dominantBaseline="middle">
-        {label}
-      </text>
+      <path d={`M ${A[0].toFixed(1)} ${A[1].toFixed(1)} A ${r} ${r} 0 0 ${sweep} ${B[0].toFixed(1)} ${B[1].toFixed(1)}`} fill="none" stroke={AKCENT} strokeWidth="2.5" />
+      <text x={L[0].toFixed(1)} y={L[1].toFixed(1)} fontSize="14" fontWeight="800" fill={AKCENT} stroke="none" textAnchor="middle" dominantBaseline="middle">{label}</text>
     </g>
   );
 }
 
 // ── Rovnoběžky p ∥ q proťaté příčkou ─────────────────────────────────────────
 function UhelPricka({ d }: { d: Extract<Diagram, { typ: "uhel_pricka" }> }) {
-  // Pevná schematická geometrie (hodnota nese popisek, ne přesný úhel oblouku).
-  const P1: [number, number] = [189, 70];   // průsečík s p
-  const P2: [number, number] = [131, 150];  // průsečík s q
-  // Kde je „?" podle vztahu k danému úhlu (daný je vpravo nahoře u P1)
-  const hledanyDir: Record<string, { at: [number, number]; dir: [number, number] }> = {
-    souhlasny:  { at: P2, dir: [1, -1] },
-    stridavy:   { at: P2, dir: [-1, 1] },
-    vedlejsi:   { at: P1, dir: [-1, -1] },
-    vrcholovy:  { at: P1, dir: [-1, 1] },
-  };
-  const h = hledanyDir[d.hledany];
+  const pY = 70, qY = 150;
+  const Tbot: [number, number] = [120, 190];
+  const Ttop: [number, number] = [230, 30];
+  const xAt = (y: number) => Tbot[0] + ((y - Tbot[1]) / (Ttop[1] - Tbot[1])) * (Ttop[0] - Tbot[0]);
+  const P1: [number, number] = [xAt(pY), pY]; // průsečík s p
+  const P2: [number, number] = [xAt(qY), qY]; // průsečík s q
+  // Úhly ramen (ve stupních, obrazovkové souřadnice y dolů)
+  const ang = (V: [number, number], T: [number, number]) => (Math.atan2(T[1] - V[1], T[0] - V[0]) * 180) / Math.PI;
+  const upP1 = ang(P1, Ttop), downP1 = ang(P1, Tbot);
+  const upP2 = ang(P2, Ttop), downP2 = ang(P2, Tbot);
+  const RIGHT = 0, LEFT = 180;
+
+  // Daný úhel = ostrý vpravo nahoře u P1 (mezi p vpravo a příčkou vzhůru).
+  // Hledaný podle vztahu:
+  const hledany = {
+    souhlasny: { cx: P2[0], cy: P2[1], a1: RIGHT, a2: upP2 },   // stejná poloha u P2
+    stridavy:  { cx: P2[0], cy: P2[1], a1: LEFT, a2: downP2 },  // protilehlý roh u P2
+    vedlejsi:  { cx: P1[0], cy: P1[1], a1: LEFT, a2: upP1 },    // vedlejší (180−daný)
+    vrcholovy: { cx: P1[0], cy: P1[1], a1: LEFT, a2: downP1 },  // vrcholový u P1
+  }[d.hledany];
+
   return (
     <g stroke="currentColor" strokeWidth="2" fill="none">
       {/* rovnoběžky */}
-      <line x1="30" y1="70" x2="290" y2="70" />
-      <line x1="30" y1="150" x2="290" y2="150" />
-      {/* příčka */}
-      <line x1="110" y1="185" x2="210" y2="35" />
+      <line x1="30" y1={pY} x2="295" y2={pY} />
+      <line x1="30" y1={qY} x2="295" y2={qY} />
+      {/* příčka (přesah za průsečíky) */}
+      <line x1={Tbot[0]} y1={Tbot[1]} x2={Ttop[0]} y2={Ttop[1]} />
       {/* šipky rovnoběžnosti */}
-      <path d="M 250 66 l 8 4 l -8 4" />
-      <path d="M 250 146 l 8 4 l -8 4" />
+      <path d={`M 285 ${pY - 4} l 8 4 l -8 4`} />
+      <path d={`M 285 ${qY - 4} l 8 4 l -8 4`} />
       {/* popisky přímek */}
-      <text x="20" y="66" fontSize="14" fontWeight="700" fill="currentColor" stroke="none">p</text>
-      <text x="20" y="146" fontSize="14" fontWeight="700" fill="currentColor" stroke="none">q</text>
-      {/* daný úhel u P1 (vpravo nahoře) */}
-      <AngleMark x={P1[0]} y={P1[1]} label={`${d.danyUhel}°`} dir={[1, -1]} />
+      <text x="20" y={pY + 4} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">p</text>
+      <text x="20" y={qY + 4} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">q</text>
+      {/* daný úhel */}
+      <Oblouk cx={P1[0]} cy={P1[1]} a1={RIGHT} a2={upP1} label={`${d.danyUhel}°`} />
       {/* hledaný úhel */}
-      <AngleMark x={h.at[0]} y={h.at[1]} label="?" dir={h.dir} />
+      <Oblouk cx={hledany.cx} cy={hledany.cy} a1={hledany.a1} a2={hledany.a2} label="?" />
     </g>
   );
 }
