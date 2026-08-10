@@ -156,7 +156,8 @@ function Lichobeznik({ d }: { d: Extract<Diagram, { typ: "lichobeznik" }> }) {
       {d.vyska && (
         <>
           <line x1={topL} y1={yTop} x2={topL} y2={yBot} strokeWidth="1.3" strokeDasharray="4 3" stroke={AKCENT} />
-          <text x={topL - 6} y={(yTop + yBot) / 2} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end" dominantBaseline="middle">{d.vyska}</text>
+          {/* popisek dovnitř vpravo od čárkované čáry — mimo levé rameno */}
+          <text x={topL + 8} y={(yTop + yBot) / 2} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start" dominantBaseline="middle">{d.vyska}</text>
         </>
       )}
       {/* levé rameno d */}
