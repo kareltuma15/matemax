@@ -95,7 +95,9 @@ const existuje = new Set(data.examples.map((e) => e.id));
 let pridano = 0;
 for (const u of NOVE) {
   if (existuje.has(u.id)) continue;
-  data.examples.push({ ...u, cas_sekund: 60, sm2_interval: 1 });
+  // Hybridní model: parametrický diagram nese pole `image`.
+  const { diagram, ...zbytek } = u;
+  data.examples.push({ ...zbytek, image: { kind: "parametric", diagram }, cas_sekund: 60, sm2_interval: 1 });
   pridano++;
 }
 if (data.metadata && typeof data.metadata.total === "number") data.metadata.total = data.examples.length;

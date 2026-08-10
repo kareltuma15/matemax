@@ -29,7 +29,28 @@ export interface Porovnani {
 export type Diagram =
   | UhelPrickaDiagram
   | TrojuhelnikDiagram
-  | ObdelnikDiagram;
+  | ObdelnikDiagram
+  | LichobeznikDiagram
+  | KruhDiagram;
+
+/**
+ * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
+ * úhly, rovinné obrazce, grafy…) nese PARAMETRICKY jako popis a vykreslíme ostré,
+ * dark-mode-aware SVG. Nepravidelný „dlouhý ocas" (netypické figury, plánky) nese
+ * STATICKY jako soubor v public/obrazky/. Viz docs/OBRAZKOVE_ULOHY_STRATEGIE.md.
+ *
+ * Autoring: parametrickou úlohu přidáš jen pár čísly v JSON (bez kódu), pokud typ
+ * už existuje; statickou nakreslíš (nejlépe SVG) a jen odkážeš `url`.
+ */
+export type TaskImage =
+  | { kind: "parametric"; diagram: Diagram }
+  | {
+      kind: "static";
+      url: string;      // cesta v public/, např. „/obrazky/uhly/priklad-01.svg"
+      width: number;    // přirozená šířka (px) — proti CLS
+      height: number;   // přirozená výška (px)
+      alt: string;      // POVINNÝ popis pro čtečky/nevidomé
+    };
 
 /** Dvě rovnoběžky p ∥ q proťaté příčkou; jeden úhel je zadaný, jeden hledaný. */
 export interface UhelPrickaDiagram {
@@ -55,6 +76,26 @@ export interface ObdelnikDiagram {
   vyska: string;                 // popisek svislé strany
 }
 
+/**
+ * Lichoběžník se základnami a ∥ c a výškou v. Kreslí se rovnoramenný obrys;
+ * kóty se zobrazí jen tam, kde je popisek. Ramena b, d volitelně (obvod).
+ */
+export interface LichobeznikDiagram {
+  typ: "lichobeznik";
+  a?: string;                    // dolní (delší) základna
+  c?: string;                    // horní (kratší) základna
+  vyska?: string;                // výška v (svislá kóta)
+  b?: string;                    // pravé rameno
+  d?: string;                    // levé rameno
+}
+
+/** Kruh/kružnice s vyznačeným poloměrem nebo průměrem (obvod, obsah). */
+export interface KruhDiagram {
+  typ: "kruh";
+  polomer?: string;              // popisek poloměru (např. „5 cm") — nakreslí se r
+  prumer?: string;               // popisek průměru — nakreslí se d (místo r)
+}
+
 export interface DBExample {
   id: string;
   tema: string;
@@ -65,8 +106,11 @@ export interface DBExample {
   reseni_kroky: string[];
   cas_sekund: number;
   sm2_interval: number;
-  /** Parametrický diagram (úhly, geometrie…) — vykreslí se nad zadáním. */
-  diagram?: Diagram;
+  /**
+   * Obrázek k úloze (parametrický SVG nebo statický soubor) — vykreslí se nad
+   * zadáním. Hybridní model, viz {@link TaskImage}.
+   */
+  image?: TaskImage;
   /** Pokud true, zadani a reseni_kroky používají LaTeX syntaxi — renderováno přes KaTeX */
   latex?: boolean;
   /** Výchozí situace („V rovině leží úsečka AB") — u konstrukčních úloh. */

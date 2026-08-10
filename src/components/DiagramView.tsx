@@ -31,6 +31,8 @@ function renderDiagram(d: Diagram) {
     case "uhel_pricka": return <UhelPricka d={d} />;
     case "trojuhelnik": return <Trojuhelnik d={d} />;
     case "obdelnik":    return <Obdelnik d={d} />;
+    case "lichobeznik": return <Lichobeznik d={d} />;
+    case "kruh":        return <Kruh d={d} />;
     default:            return null;
   }
 }
@@ -39,7 +41,7 @@ function renderDiagram(d: Diagram) {
 function Oblouk({ cx, cy, a1, a2, label, r = 18 }: { cx: number; cy: number; a1: number; a2: number; label: string; r?: number }) {
   const rad = (deg: number) => (deg * Math.PI) / 180;
   // Nejkratší (menší) úhel mezi rameny — kreslíme právě ten.
-  let d = ((a2 - a1 + 540) % 360) - 180; // -180..180
+  const d = ((a2 - a1 + 540) % 360) - 180; // -180..180
   const sweep = d > 0 ? 1 : 0;
   const A = [cx + r * Math.cos(rad(a1)), cy + r * Math.sin(rad(a1))];
   const B = [cx + r * Math.cos(rad(a2)), cy + r * Math.sin(rad(a2))];
@@ -133,6 +135,58 @@ function Obdelnik({ d }: { d: Extract<Diagram, { typ: "obdelnik" }> }) {
       <text x="160" y="175" fontSize="14" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.sirka}</text>
       {/* kóta výšky */}
       <text x="52" y="110" fontSize="14" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle" transform="rotate(-90 52 110)">{d.vyska}</text>
+    </g>
+  );
+}
+
+// ── Lichoběžník se základnami a ∥ c a výškou v ───────────────────────────────
+function Lichobeznik({ d }: { d: Extract<Diagram, { typ: "lichobeznik" }> }) {
+  // Rovnoramenný obrys: dolní základna širší, horní vycentrovaná.
+  const yTop = 60, yBot = 160;
+  const botL = 45, botR = 275;
+  const topL = 95, topR = 225;
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      <polygon points={`${botL},${yBot} ${botR},${yBot} ${topR},${yTop} ${topL},${yTop}`} fill={`${AKCENT}14`} />
+      {/* horní základna c */}
+      {d.c && <text x={(topL + topR) / 2} y={yTop - 8} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.c}</text>}
+      {/* dolní základna a */}
+      {d.a && <text x={(botL + botR) / 2} y={yBot + 18} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.a}</text>}
+      {/* výška v — svislá čárkovaná kóta uvnitř */}
+      {d.vyska && (
+        <>
+          <line x1={topL} y1={yTop} x2={topL} y2={yBot} strokeWidth="1.3" strokeDasharray="4 3" stroke={AKCENT} />
+          <text x={topL - 6} y={(yTop + yBot) / 2} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end" dominantBaseline="middle">{d.vyska}</text>
+        </>
+      )}
+      {/* levé rameno d */}
+      {d.d && <text x={(botL + topL) / 2 - 8} y={(yTop + yBot) / 2} fontSize="12" fill="currentColor" stroke="none" textAnchor="end" dominantBaseline="middle">{d.d}</text>}
+      {/* pravé rameno b */}
+      {d.b && <text x={(botR + topR) / 2 + 8} y={(yTop + yBot) / 2} fontSize="12" fill="currentColor" stroke="none" dominantBaseline="middle">{d.b}</text>}
+    </g>
+  );
+}
+
+// ── Kruh s poloměrem nebo průměrem ───────────────────────────────────────────
+function Kruh({ d }: { d: Extract<Diagram, { typ: "kruh" }> }) {
+  const cx = 160, cy = 108, r = 72;
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      <circle cx={cx} cy={cy} r={r} fill={`${AKCENT}14`} />
+      <circle cx={cx} cy={cy} r={2.5} fill="currentColor" stroke="none" />
+      {d.prumer ? (
+        <>
+          {/* průměr — vodorovná úsečka přes střed */}
+          <line x1={cx - r} y1={cy} x2={cx + r} y2={cy} strokeWidth="1.6" stroke={AKCENT} />
+          <text x={cx} y={cy - 8} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.prumer}</text>
+        </>
+      ) : d.polomer ? (
+        <>
+          {/* poloměr — úsečka ze středu doprava */}
+          <line x1={cx} y1={cy} x2={cx + r} y2={cy} strokeWidth="1.6" stroke={AKCENT} />
+          <text x={cx + r / 2} y={cy - 8} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.polomer}</text>
+        </>
+      ) : null}
     </g>
   );
 }
