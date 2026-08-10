@@ -33,6 +33,7 @@ function renderDiagram(d: Diagram) {
     case "obdelnik":    return <Obdelnik d={d} />;
     case "lichobeznik": return <Lichobeznik d={d} />;
     case "kruh":        return <Kruh d={d} />;
+    case "graf":        return <Graf d={d} />;
     default:            return null;
   }
 }
@@ -188,6 +189,101 @@ function Kruh({ d }: { d: Extract<Diagram, { typ: "kruh" }> }) {
           <text x={cx + r / 2} y={cy - 8} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.polomer}</text>
         </>
       ) : null}
+    </g>
+  );
+}
+
+// ── Souřadnicová síť + graf ──────────────────────────────────────────────────
+// Ořízne (nekonečnou) přímku daNou dvěma body na obdélník rozsahu — vrátí krajní
+// body úsečky přes celou síť (Liang–Barsky).
+function clipToBox(
+  p: [number, number], q: [number, number],
+  box: { xMin: number; xMax: number; yMin: number; yMax: number },
+): [[number, number], [number, number]] | null {
+  const dx = q[0] - p[0], dy = q[1] - p[1];
+  let tmin = -Infinity, tmax = Infinity;
+  const edges: [number, number][] = [
+    [-dx, p[0] - box.xMin],  // x >= xMin
+    [dx, box.xMax - p[0]],   // x <= xMax
+    [-dy, p[1] - box.yMin],  // y >= yMin
+    [dy, box.yMax - p[1]],   // y <= yMax
+  ];
+  for (const [den, num] of edges) {
+    if (den === 0) { if (num < 0) return null; continue; }
+    const t = num / den;
+    if (den < 0) tmin = Math.max(tmin, t); else tmax = Math.min(tmax, t);
+  }
+  if (tmin > tmax) return null;
+  return [
+    [p[0] + tmin * dx, p[1] + tmin * dy],
+    [p[0] + tmax * dx, p[1] + tmax * dy],
+  ];
+}
+
+function Graf({ d }: { d: Extract<Diagram, { typ: "graf" }> }) {
+  const xMin = d.xMin ?? -5, xMax = d.xMax ?? 5;
+  const yMin = d.yMin ?? -5, yMax = d.yMax ?? 5;
+  const nx = xMax - xMin, ny = yMax - yMin;
+
+  // Plocha pro síť; čtvercové buňky (stejné px na jednotku v obou osách).
+  const ox = 26, oy = 12, availW = 288, availH = 176;
+  const cell = Math.min(availW / nx, availH / ny);
+  const gw = cell * nx, gh = cell * ny;
+  const gx0 = ox + (availW - gw) / 2;
+  const gy0 = oy + (availH - gh) / 2;
+  const mx = (x: number) => gx0 + (x - xMin) * cell;
+  const my = (y: number) => gy0 + (yMax - y) * cell;
+
+  const GRID = "#cbd5e1";
+  const xs: number[] = [], ys: number[] = [];
+  for (let i = Math.ceil(xMin); i <= xMax; i++) xs.push(i);
+  for (let j = Math.ceil(yMin); j <= yMax; j++) ys.push(j);
+
+  const hasX0 = yMin <= 0 && 0 <= yMax; // osa x uvnitř?
+  const hasY0 = xMin <= 0 && 0 <= xMax; // osa y uvnitř?
+  const axisY = hasX0 ? my(0) : gy0 + gh; // kam nakreslit osu x
+  const axisX = hasY0 ? mx(0) : gx0;      // kam nakreslit osu y
+
+  const primka = d.primka
+    ? (d.primka.prodlouzit
+        ? clipToBox([d.primka.x1, d.primka.y1], [d.primka.x2, d.primka.y2], { xMin, xMax, yMin, yMax })
+        : [[d.primka.x1, d.primka.y1], [d.primka.x2, d.primka.y2]] as [[number, number], [number, number]])
+    : null;
+
+  return (
+    <g fill="none">
+      {/* mřížka */}
+      {xs.map((i) => <line key={`vx${i}`} x1={mx(i)} y1={gy0} x2={mx(i)} y2={gy0 + gh} stroke={GRID} strokeWidth="1" />)}
+      {ys.map((j) => <line key={`hy${j}`} x1={gx0} y1={my(j)} x2={gx0 + gw} y2={my(j)} stroke={GRID} strokeWidth="1" />)}
+
+      {/* osy se šipkami */}
+      <line x1={gx0} y1={axisY} x2={gx0 + gw} y2={axisY} stroke="currentColor" strokeWidth="1.8" />
+      <line x1={axisX} y1={gy0 + gh} x2={axisX} y2={gy0} stroke="currentColor" strokeWidth="1.8" />
+      <path d={`M ${gx0 + gw - 6} ${axisY - 4} l 6 4 l -6 4`} stroke="currentColor" strokeWidth="1.8" />
+      <path d={`M ${axisX - 4} ${gy0 + 6} l 4 -6 l 4 6`} stroke="currentColor" strokeWidth="1.8" />
+      <text x={gx0 + gw + 2} y={axisY + 13} fontSize="12" fontWeight="700" fill="currentColor" stroke="none">x</text>
+      <text x={axisX - 12} y={gy0 + 2} fontSize="12" fontWeight="700" fill="currentColor" stroke="none">y</text>
+
+      {/* popisky dělení (celá čísla, ne 0) */}
+      {xs.filter((i) => i !== 0).map((i) => (
+        <text key={`lx${i}`} x={mx(i)} y={axisY + 13} fontSize="9.5" fill="currentColor" stroke="none" textAnchor="middle" opacity="0.75">{i}</text>
+      ))}
+      {ys.filter((j) => j !== 0).map((j) => (
+        <text key={`ly${j}`} x={axisX - 6} y={my(j) + 3.5} fontSize="9.5" fill="currentColor" stroke="none" textAnchor="end" opacity="0.75">{j}</text>
+      ))}
+
+      {/* přímka */}
+      {primka && (
+        <line x1={mx(primka[0][0])} y1={my(primka[0][1])} x2={mx(primka[1][0])} y2={my(primka[1][1])} stroke={AKCENT} strokeWidth="2.2" />
+      )}
+
+      {/* body */}
+      {d.body?.map((b, i) => (
+        <g key={`b${i}`}>
+          <circle cx={mx(b.x)} cy={my(b.y)} r="3.6" fill={AKCENT} stroke="none" />
+          {b.label && <text x={mx(b.x) + 7} y={my(b.y) - 6} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none">{b.label}</text>}
+        </g>
+      ))}
     </g>
   );
 }

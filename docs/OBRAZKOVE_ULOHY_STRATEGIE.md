@@ -31,14 +31,20 @@ pořadí typů: 1) rovinné obrazce → 2) souřadnicová síť/graf → 3) úhl
 
 > Poznámka: `/diagram-test` je **dočasná** stránka — smazat po schválení všech typů.
 
-### Fáze 2+ — další typy (⏳ čeká na zelenou po fázi 1)
-- [ ] #2 Souřadnicová síť + graf (body, přímka, čtení)
+### Fáze 2 — Typ #2: Souřadnicová síť + graf ✅ HOTOVO (čeká schválení Karla)
+- [x] `GrafDiagram` (rozsahy os, mřížka se čtvercovými buňkami, body s popisky, přímka dvěma body s volitelným prodloužením přes celou síť — ořez Liang–Barsky) + vykreslovač
+- [x] Nová podtémata `souradnice` („Souřadnice bodu"), `cteni_grafu` („Čtení z grafu")
+- [x] **Ověření autoringu:** 4 nové úlohy jen přes JSON (`scripts/add-graf-priklady.mjs`): čtení x/y souřadnic (i záporný kvadrant), čtení hodnoty z lineárního grafu, průsečík s osou y
+- [x] Vizuální/geometrické ověření na `/diagram-test`: body i oříznutá přímka sedí na milimetr, osy + mřížka + popisky, konzole bez chyb
+- [ ] **⏸ PAUZA — Karel schválí vzhled grafu**, pak pokračuje typ #3
+
+### Fáze 3+ — další typy (⏳ čeká na zelenou po fázi 2)
 - [ ] #3 Úhly — rozšíření (v mnohoúhelníku, obecně v trojúhelníku)
 - [ ] #4 Prostorová tělesa + sítě
 - [ ] #5 Sloupcový/koláčový graf + tabulka
 - [ ] #6 Číselná osa
 
-**Stav obrázkových úloh:** 7 → **12** (7 migrovaných + 5 nových rovinných). Nové typy engine: 3 → **5**.
+**Stav obrázkových úloh:** 7 → **16** (7 migrovaných + 5 rovinných + 4 grafové). Nové typy engine: 3 → **6**.
 
 ---
 
