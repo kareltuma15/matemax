@@ -10722,141 +10722,153 @@
       "sm2_interval": 1
     },
     {
-      "id": "GRAF_G1",
-      "tema": "grafy_logika",
-      "podtema": "souradnice",
-      "obtiznost": 1,
-      "image": {
-        "kind": "parametric",
-        "diagram": {
-          "typ": "graf",
-          "body": [
-            {
-              "x": 3,
-              "y": 2,
-              "label": "A"
-            }
-          ]
-        }
-      },
-      "zadani": "Jaká je první (x-ová) souřadnice bodu A na obrázku?",
-      "odpoved": "3",
-      "reseni_kroky": [
-        "První souřadnice se čte na vodorovné ose x.",
-        "Bod A leží nad číslem 3.",
-        "x-ová souřadnice je 3."
-      ],
-      "cas_sekund": 60,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GRAF_G2",
-      "tema": "grafy_logika",
-      "podtema": "souradnice",
-      "obtiznost": 1,
-      "image": {
-        "kind": "parametric",
-        "diagram": {
-          "typ": "graf",
-          "body": [
-            {
-              "x": -3,
-              "y": 2,
-              "label": "B"
-            }
-          ]
-        }
-      },
-      "zadani": "Jaká je druhá (y-ová) souřadnice bodu B na obrázku?",
-      "odpoved": "2",
-      "reseni_kroky": [
-        "Druhá souřadnice se čte na svislé ose y.",
-        "Bod B leží ve výšce 2.",
-        "y-ová souřadnice je 2."
-      ],
-      "cas_sekund": 60,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GRAF_G3",
+      "id": "KOL_1",
       "tema": "grafy_logika",
       "podtema": "cteni_grafu",
       "obtiznost": 2,
       "image": {
         "kind": "parametric",
         "diagram": {
-          "typ": "graf",
-          "xMin": -1,
-          "xMax": 5,
-          "yMin": -1,
-          "yMax": 5,
-          "body": [
+          "typ": "kolac",
+          "nazev": "Denní činnosti (24 h)",
+          "casti": [
             {
-              "x": 0,
-              "y": 1,
-              "label": "A"
+              "label": "zaměstnání",
+              "procenta": 25
             },
             {
-              "x": 2,
-              "y": 3,
-              "label": "B"
+              "label": "spánek",
+              "procenta": 35
+            },
+            {
+              "label": "denní povinnosti",
+              "procenta": 30
+            },
+            {
+              "label": "volný čas",
+              "procenta": 10
             }
-          ],
-          "primka": {
-            "x1": 0,
-            "y1": 1,
-            "x2": 2,
-            "y2": 3,
-            "prodlouzit": true
-          }
+          ]
         }
       },
-      "zadani": "Přímka prochází body A a B. Jakou hodnotu y má pro x = 4?",
-      "odpoved": "5",
+      "zadani": "Graf ukazuje rozdělení dne (24 hodin) paní Kratochvílové. Kolik hodin denně tráví v zaměstnání?",
+      "odpoved": "6 h",
       "reseni_kroky": [
-        "Z bodů A[0; 1] a B[2; 3] plyne, že s každým krokem o 1 doprava y stoupne o 1.",
-        "Přímka má předpis y = x + 1.",
-        "Pro x = 4 je y = 4 + 1 = 5."
+        "Zaměstnání zabírá 25 % z 24 hodin.",
+        "25 % = 1/4, tedy 24 · 0,25 = 24 / 4.",
+        "= 6 hodin."
       ],
       "cas_sekund": 60,
       "sm2_interval": 1
     },
     {
-      "id": "GRAF_G4",
+      "id": "KOL_2",
       "tema": "grafy_logika",
       "podtema": "cteni_grafu",
       "obtiznost": 2,
       "image": {
         "kind": "parametric",
         "diagram": {
-          "typ": "graf",
-          "body": [
+          "typ": "kolac",
+          "nazev": "Denní činnosti (24 h)",
+          "casti": [
             {
-              "x": -2,
-              "y": -1,
-              "label": "A"
+              "label": "zaměstnání",
+              "procenta": 25
             },
             {
-              "x": 2,
-              "y": 3,
-              "label": "B"
+              "label": "spánek",
+              "procenta": 35
+            },
+            {
+              "label": "denní povinnosti",
+              "procenta": 30
+            },
+            {
+              "label": "volný čas",
+              "procenta": 10
             }
-          ],
-          "primka": {
-            "x1": -2,
-            "y1": -1,
-            "x2": 2,
-            "y2": 3,
-            "prodlouzit": true
-          }
+          ]
         }
       },
-      "zadani": "V jakém bodě protíná přímka osu y? Napiš hodnotu y (pro x = 0).",
-      "odpoved": "1",
+      "zadani": "Graf ukazuje rozdělení dne (24 hodin). Kolik hodin denně spí? Výsledek zaokrouhli na jedno desetinné místo.",
+      "odpoved": "8,4 h",
       "reseni_kroky": [
-        "Přímka prochází body A[−2; −1] a B[2; 3] → předpis y = x + 1.",
-        "Osu y protíná tam, kde x = 0.",
-        "y = 0 + 1 = 1."
+        "Spánek zabírá 35 % z 24 hodin.",
+        "24 · 0,35 = 8,4.",
+        "= 8,4 hodiny."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOL_3",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Volný čas",
+          "casti": [
+            {
+              "label": "TV",
+              "procenta": 40
+            },
+            {
+              "label": "sport",
+              "procenta": 35
+            },
+            {
+              "label": "četba",
+              "procenta": 25
+            }
+          ]
+        }
+      },
+      "zadani": "Volný čas paní Kratochvílové trvá 144 minut. Kolik z nich připadá na sport? Výsledek zaokrouhli na celé minuty.",
+      "odpoved": "50 min",
+      "reseni_kroky": [
+        "Sport zabírá 35 % ze 144 minut.",
+        "144 · 0,35 = 50,4.",
+        "Po zaokrouhlení na celé minuty = 50 minut."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "KOL_4",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Oblíbený předmět (30 žáků)",
+          "casti": [
+            {
+              "label": "matematika",
+              "procenta": 40
+            },
+            {
+              "label": "čeština",
+              "procenta": 35
+            },
+            {
+              "label": "angličtina",
+              "procenta": 25
+            }
+          ]
+        }
+      },
+      "zadani": "Ve třídě je 30 žáků. Kolik z nich má nejraději matematiku?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Matematiku má nejraději 40 % z 30 žáků.",
+        "30 · 0,40 = 12.",
+        "= 12 žáků."
       ],
       "cas_sekund": 60,
       "sm2_interval": 1

@@ -32,7 +32,7 @@ export type Diagram =
   | ObdelnikDiagram
   | LichobeznikDiagram
   | KruhDiagram
-  | GrafDiagram;
+  | KolacovyGrafDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -97,30 +97,18 @@ export interface KruhDiagram {
   prumer?: string;               // popisek průměru — nakreslí se d (místo r)
 }
 
-/** Bod v souřadnicové síti s volitelným popiskem (např. „A"). */
-export interface GrafBod {
-  x: number;
-  y: number;
-  label?: string;                // popisek bodu (A, B…) — vpravo nad bodem
-}
-
 /**
- * Souřadnicová síť s osami a mřížkou (čtvercové buňky). Umí vyznačit body
- * a nakreslit přímku dvěma body (volitelně prodlouženou přes celou síť).
- * Základ pro čtení souřadnic, lineární funkce/grafy a posloupnosti.
+ * Koláčový graf ke slovní úloze — přesně formát CERMAT (rozdělení celku na
+ * procenta: denní činnosti z 24 h, volný čas, rozpočet…). Figura ukazuje jen
+ * procenta a legendu; absolutní celek (24 h, 30 žáků) nese text zadání.
  *
- * Rozsahy os mají výchozí hodnoty −5..5; autor je přepíše podle úlohy.
+ * NE kartézská soustava — CERMAT „grafy" jsou koláčové a sloupcové ke slovním
+ * úlohám. Viz docs/OBRAZKOVE_ULOHY_STRATEGIE.md.
  */
-export interface GrafDiagram {
-  typ: "graf";
-  xMin?: number; xMax?: number;  // rozsah osy x (default −5..5)
-  yMin?: number; yMax?: number;  // rozsah osy y (default −5..5)
-  body?: GrafBod[];              // vyznačené body
-  primka?: {
-    x1: number; y1: number;      // první bod přímky
-    x2: number; y2: number;      // druhý bod přímky
-    prodlouzit?: boolean;        // protáhnout přes celou síť (default jen úsečka)
-  };
+export interface KolacovyGrafDiagram {
+  typ: "kolac";
+  nazev?: string;                          // titulek nad grafem
+  casti: { label: string; procenta: number }[]; // výseče (součet ≈ 100)
 }
 
 export interface DBExample {
@@ -287,7 +275,6 @@ export const PODTEMA_LABELS: Record<string, string> = {
   ciselne_zakonitosti:     "Číselná zákonitost",
   ruzna_vzorec:            "Číselná zákonitost",
   logicka_dedukce:         "Logická dedukce",
-  souradnice:              "Souřadnice bodu",
   cteni_grafu:             "Čtení z grafu",
 
   // Úhly (kapitola 8 sešitu)

@@ -31,20 +31,26 @@ pořadí typů: 1) rovinné obrazce → 2) souřadnicová síť/graf → 3) úhl
 
 > Poznámka: `/diagram-test` je **dočasná** stránka — smazat po schválení všech typů.
 
-### Fáze 2 — Typ #2: Souřadnicová síť + graf ✅ HOTOVO (čeká schválení Karla)
-- [x] `GrafDiagram` (rozsahy os, mřížka se čtvercovými buňkami, body s popisky, přímka dvěma body s volitelným prodloužením přes celou síť — ořez Liang–Barsky) + vykreslovač
-- [x] Nová podtémata `souradnice` („Souřadnice bodu"), `cteni_grafu` („Čtení z grafu")
-- [x] **Ověření autoringu:** 4 nové úlohy jen přes JSON (`scripts/add-graf-priklady.mjs`): čtení x/y souřadnic (i záporný kvadrant), čtení hodnoty z lineárního grafu, průsečík s osou y
-- [x] Vizuální/geometrické ověření na `/diagram-test`: body i oříznutá přímka sedí na milimetr, osy + mřížka + popisky, konzole bez chyb
-- [ ] **⏸ PAUZA — Karel schválí vzhled grafu**, pak pokračuje typ #3
+### ⚠️ Oprava kurzu (Karel, 2026-08-10): „grafy" = koláč/sloupce, NE kartézská soustava
+Karel u reálné CERMAT úlohy upozornil, že „grafy" v CERMATu jsou **koláčové a sloupcové grafy
+ke slovním úlohám** (např. rozdělení dne z 24 h → kolik hodin v zaměstnání; volný čas → minuty
+sportu), **ne čtení souřadnic v kartézské soustavě**. Kartézský typ byl proto **zrušen** (kód,
+4 úlohy, ukázky, podtéma `souradnice` odstraněny). Typ #2 = **koláčový graf**.
+
+### Fáze 2 — Typ #2: Koláčový graf (formát CERMAT) ✅ HOTOVO (čeká schválení Karla)
+- [x] `KolacovyGrafDiagram` (`typ:"kolac"`, `nazev`, `casti:[{label,procenta}]`) + vykreslovač: výseče s bílým oddělením, **procenta uvnitř výsečí s automatickým kontrastem** (bílá/tmavá dle výplně), legenda vpravo, titulek
+- [x] Podtéma `cteni_grafu` („Čtení z grafu") — figura ukazuje jen %, absolutní celek (24 h, 30 žáků) nese text zadání
+- [x] **Ověření autoringu:** 4 nové úlohy jen přes JSON (`scripts/add-kolac-priklady.mjs`): hodiny v zaměstnání (25 % z 24 h = 6 h), hodiny spánku (8,4 h), minuty sportu se zaokrouhlením (50 min), počet žáků (12) — hodnocení odpovědí ověřeno
+- [x] Vizuální ověření na `/diagram-test`: 4 výseče, žádný přetok mimo rámeček, kontrast popisků OK, konzole bez chyb
+- [ ] **⏸ PAUZA — Karel schválí vzhled koláče**, pak pokračuje typ #3
 
 ### Fáze 3+ — další typy (⏳ čeká na zelenou po fázi 2)
 - [ ] #3 Úhly — rozšíření (v mnohoúhelníku, obecně v trojúhelníku)
 - [ ] #4 Prostorová tělesa + sítě
-- [ ] #5 Sloupcový/koláčový graf + tabulka
+- [ ] #5 **Sloupcový graf** + tabulka (koláč hotový v #2)
 - [ ] #6 Číselná osa
 
-**Stav obrázkových úloh:** 7 → **16** (7 migrovaných + 5 rovinných + 4 grafové). Nové typy engine: 3 → **6**.
+**Stav obrázkových úloh:** 7 → **16** (7 migrovaných + 5 rovinných + 4 koláčové). Nové typy engine: 3 → **6** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč).
 
 ---
 

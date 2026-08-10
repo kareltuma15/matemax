@@ -15,11 +15,9 @@ const UKAZKY: { nadpis: string; img: TaskImage }[] = [
   { nadpis: "Lichoběžník — obvod (základny + ramena)", img: { kind: "parametric", diagram: { typ: "lichobeznik", a: "10 cm", c: "6 cm", b: "4 cm", d: "4 cm" } } },
   { nadpis: "Kruh — poloměr", img: { kind: "parametric", diagram: { typ: "kruh", polomer: "r = 5 cm" } } },
   { nadpis: "Kruh — průměr", img: { kind: "parametric", diagram: { typ: "kruh", prumer: "d = 10 cm" } } },
-  // ── Souřadnicová síť + graf ──
-  { nadpis: "Graf — bod A (čtení souřadnic)", img: { kind: "parametric", diagram: { typ: "graf", body: [{ x: 3, y: 2, label: "A" }] } } },
-  { nadpis: "Graf — bod B v jiném kvadrantu", img: { kind: "parametric", diagram: { typ: "graf", body: [{ x: -3, y: 2, label: "B" }] } } },
-  { nadpis: "Graf — přímka dvěma body (prodloužená)", img: { kind: "parametric", diagram: { typ: "graf", xMin: -1, xMax: 5, yMin: -1, yMax: 5, body: [{ x: 0, y: 1, label: "A" }, { x: 2, y: 3, label: "B" }], primka: { x1: 0, y1: 1, x2: 2, y2: 3, prodlouzit: true } } } },
-  { nadpis: "Graf — přímka přes kvadranty", img: { kind: "parametric", diagram: { typ: "graf", body: [{ x: -2, y: -1, label: "A" }, { x: 2, y: 3, label: "B" }], primka: { x1: -2, y1: -1, x2: 2, y2: 3, prodlouzit: true } } } },
+  // ── Koláčový graf (formát CERMAT) ──
+  { nadpis: "Koláč — denní činnosti (4 výseče)", img: { kind: "parametric", diagram: { typ: "kolac", nazev: "Denní činnosti (24 h)", casti: [{ label: "zaměstnání", procenta: 25 }, { label: "spánek", procenta: 35 }, { label: "denní povinnosti", procenta: 30 }, { label: "volný čas", procenta: 10 }] } } },
+  { nadpis: "Koláč — volný čas (3 výseče)", img: { kind: "parametric", diagram: { typ: "kolac", nazev: "Volný čas", casti: [{ label: "TV", procenta: 40 }, { label: "sport", procenta: 35 }, { label: "četba", procenta: 25 }] } } },
   // ── Statické (dlouhý ocas) ──
   { nadpis: "Statický obrázek (SVG z public/)", img: { kind: "static", url: "/obrazky/ukazka/staticka-ukazka.svg", width: 320, height: 210, alt: "Trojúhelník s výškou v = 8 cm a základnou a = 10 cm" } },
 ];

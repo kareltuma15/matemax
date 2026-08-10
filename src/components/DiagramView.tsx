@@ -33,7 +33,7 @@ function renderDiagram(d: Diagram) {
     case "obdelnik":    return <Obdelnik d={d} />;
     case "lichobeznik": return <Lichobeznik d={d} />;
     case "kruh":        return <Kruh d={d} />;
-    case "graf":        return <Graf d={d} />;
+    case "kolac":       return <KolacovyGraf d={d} />;
     default:            return null;
   }
 }
@@ -193,97 +193,68 @@ function Kruh({ d }: { d: Extract<Diagram, { typ: "kruh" }> }) {
   );
 }
 
-// ── Souřadnicová síť + graf ──────────────────────────────────────────────────
-// Ořízne (nekonečnou) přímku daNou dvěma body na obdélník rozsahu — vrátí krajní
-// body úsečky přes celou síť (Liang–Barsky).
-function clipToBox(
-  p: [number, number], q: [number, number],
-  box: { xMin: number; xMax: number; yMin: number; yMax: number },
-): [[number, number], [number, number]] | null {
-  const dx = q[0] - p[0], dy = q[1] - p[1];
-  let tmin = -Infinity, tmax = Infinity;
-  const edges: [number, number][] = [
-    [-dx, p[0] - box.xMin],  // x >= xMin
-    [dx, box.xMax - p[0]],   // x <= xMax
-    [-dy, p[1] - box.yMin],  // y >= yMin
-    [dy, box.yMax - p[1]],   // y <= yMax
-  ];
-  for (const [den, num] of edges) {
-    if (den === 0) { if (num < 0) return null; continue; }
-    const t = num / den;
-    if (den < 0) tmin = Math.max(tmin, t); else tmax = Math.min(tmax, t);
-  }
-  if (tmin > tmax) return null;
-  return [
-    [p[0] + tmin * dx, p[1] + tmin * dy],
-    [p[0] + tmax * dx, p[1] + tmax * dy],
-  ];
+// ── Koláčový graf ke slovní úloze (formát CERMAT) ────────────────────────────
+const PIE = ["#2E6DA4", "#7cb3e8", "#f59e0b", "#10b981", "#ef4444", "#8b5cf6"];
+
+// Kontrastní barva textu na dané výplni (bílá na tmavé, tmavá na světlé).
+function textOn(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+  return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#0D1B3E" : "#fff";
 }
 
-function Graf({ d }: { d: Extract<Diagram, { typ: "graf" }> }) {
-  const xMin = d.xMin ?? -5, xMax = d.xMax ?? 5;
-  const yMin = d.yMin ?? -5, yMax = d.yMax ?? 5;
-  const nx = xMax - xMin, ny = yMax - yMin;
+function KolacovyGraf({ d }: { d: Extract<Diagram, { typ: "kolac" }> }) {
+  const cx = 92, cy = 116, r = 74;
+  const at = (deg: number, rad: number): [number, number] => {
+    const a = (deg * Math.PI) / 180;
+    return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)];
+  };
+  const casti = d.casti;
+  const jedna = casti.length === 1 || casti[0].procenta >= 99.9; // celý kruh
 
-  // Plocha pro síť; čtvercové buňky (stejné px na jednotku v obou osách).
-  const ox = 26, oy = 12, availW = 288, availH = 176;
-  const cell = Math.min(availW / nx, availH / ny);
-  const gw = cell * nx, gh = cell * ny;
-  const gx0 = ox + (availW - gw) / 2;
-  const gy0 = oy + (availH - gh) / 2;
-  const mx = (x: number) => gx0 + (x - xMin) * cell;
-  const my = (y: number) => gy0 + (yMax - y) * cell;
-
-  const GRID = "#cbd5e1";
-  const xs: number[] = [], ys: number[] = [];
-  for (let i = Math.ceil(xMin); i <= xMax; i++) xs.push(i);
-  for (let j = Math.ceil(yMin); j <= yMax; j++) ys.push(j);
-
-  const hasX0 = yMin <= 0 && 0 <= yMax; // osa x uvnitř?
-  const hasY0 = xMin <= 0 && 0 <= xMax; // osa y uvnitř?
-  const axisY = hasX0 ? my(0) : gy0 + gh; // kam nakreslit osu x
-  const axisX = hasY0 ? mx(0) : gx0;      // kam nakreslit osu y
-
-  const primka = d.primka
-    ? (d.primka.prodlouzit
-        ? clipToBox([d.primka.x1, d.primka.y1], [d.primka.x2, d.primka.y2], { xMin, xMax, yMin, yMax })
-        : [[d.primka.x1, d.primka.y1], [d.primka.x2, d.primka.y2]] as [[number, number], [number, number]])
-    : null;
+  // Počáteční úhly výsečí — bez mutace: prefixový součet předchozích procent.
+  const sweeps = casti.map((c) => (c.procenta / 100) * 360);
+  const starts = sweeps.map((_, i) => -90 + sweeps.slice(0, i).reduce((a, b) => a + b, 0));
+  const vysece = casti.map((c, i) => {
+    const start = starts[i], sweep = sweeps[i];
+    const end = start + sweep, mid = start + sweep / 2;
+    const p1 = at(start, r), p2 = at(end, r);
+    const large = sweep > 180 ? 1 : 0;
+    const lp = at(mid, r * 0.6);          // popisek % uvnitř výseče (nikdy se neořízne)
+    return { c, path: `M ${cx} ${cy} L ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} A ${r} ${r} 0 ${large} 1 ${p2[0].toFixed(1)} ${p2[1].toFixed(1)} Z`, lp };
+  });
 
   return (
-    <g fill="none">
-      {/* mřížka */}
-      {xs.map((i) => <line key={`vx${i}`} x1={mx(i)} y1={gy0} x2={mx(i)} y2={gy0 + gh} stroke={GRID} strokeWidth="1" />)}
-      {ys.map((j) => <line key={`hy${j}`} x1={gx0} y1={my(j)} x2={gx0 + gw} y2={my(j)} stroke={GRID} strokeWidth="1" />)}
-
-      {/* osy se šipkami */}
-      <line x1={gx0} y1={axisY} x2={gx0 + gw} y2={axisY} stroke="currentColor" strokeWidth="1.8" />
-      <line x1={axisX} y1={gy0 + gh} x2={axisX} y2={gy0} stroke="currentColor" strokeWidth="1.8" />
-      <path d={`M ${gx0 + gw - 6} ${axisY - 4} l 6 4 l -6 4`} stroke="currentColor" strokeWidth="1.8" />
-      <path d={`M ${axisX - 4} ${gy0 + 6} l 4 -6 l 4 6`} stroke="currentColor" strokeWidth="1.8" />
-      <text x={gx0 + gw + 2} y={axisY + 13} fontSize="12" fontWeight="700" fill="currentColor" stroke="none">x</text>
-      <text x={axisX - 12} y={gy0 + 2} fontSize="12" fontWeight="700" fill="currentColor" stroke="none">y</text>
-
-      {/* popisky dělení (celá čísla, ne 0) */}
-      {xs.filter((i) => i !== 0).map((i) => (
-        <text key={`lx${i}`} x={mx(i)} y={axisY + 13} fontSize="9.5" fill="currentColor" stroke="none" textAnchor="middle" opacity="0.75">{i}</text>
-      ))}
-      {ys.filter((j) => j !== 0).map((j) => (
-        <text key={`ly${j}`} x={axisX - 6} y={my(j) + 3.5} fontSize="9.5" fill="currentColor" stroke="none" textAnchor="end" opacity="0.75">{j}</text>
-      ))}
-
-      {/* přímka */}
-      {primka && (
-        <line x1={mx(primka[0][0])} y1={my(primka[0][1])} x2={mx(primka[1][0])} y2={my(primka[1][1])} stroke={AKCENT} strokeWidth="2.2" />
+    <g>
+      {d.nazev && (
+        <text x={cx} y={14} fontSize="12.5" fontWeight="800" fill="currentColor" textAnchor="middle">{d.nazev}</text>
       )}
 
-      {/* body */}
-      {d.body?.map((b, i) => (
-        <g key={`b${i}`}>
-          <circle cx={mx(b.x)} cy={my(b.y)} r="3.6" fill={AKCENT} stroke="none" />
-          {b.label && <text x={mx(b.x) + 7} y={my(b.y) - 6} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none">{b.label}</text>}
-        </g>
+      {/* výseče */}
+      {jedna ? (
+        <circle cx={cx} cy={cy} r={r} fill={PIE[0]} stroke="#fff" strokeWidth="2" />
+      ) : (
+        vysece.map((v, i) => (
+          <path key={`s${i}`} d={v.path} fill={PIE[i % PIE.length]} stroke="#fff" strokeWidth="2" />
+        ))
+      )}
+
+      {/* popisky procent uvnitř výsečí (kontrastní barva) */}
+      {!jedna && vysece.map((v, i) => (
+        <text key={`p${i}`} x={v.lp[0].toFixed(1)} y={(v.lp[1] + 3.5).toFixed(1)} fontSize="11" fontWeight="800" fill={textOn(PIE[i % PIE.length])} stroke="none" textAnchor="middle">
+          {v.c.procenta} %
+        </text>
       ))}
+
+      {/* legenda vpravo */}
+      {casti.map((c, i) => {
+        const ly = cy - (casti.length - 1) * 11 + i * 22;
+        return (
+          <g key={`l${i}`}>
+            <rect x={210} y={ly - 9} width={13} height={13} rx={2} fill={PIE[i % PIE.length]} />
+            <text x={228} y={ly + 1.5} fontSize="11.5" fill="currentColor" stroke="none" dominantBaseline="middle">{c.label}</text>
+          </g>
+        );
+      })}
     </g>
   );
 }
