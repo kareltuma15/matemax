@@ -34,6 +34,7 @@ function renderDiagram(d: Diagram) {
     case "lichobeznik": return <Lichobeznik d={d} />;
     case "kruh":        return <Kruh d={d} />;
     case "kolac":       return <KolacovyGraf d={d} />;
+    case "sloupce":     return <SloupcovyGraf d={d} />;
     default:            return null;
   }
 }
@@ -252,6 +253,66 @@ function KolacovyGraf({ d }: { d: Extract<Diagram, { typ: "kolac" }> }) {
           <g key={`l${i}`}>
             <rect x={210} y={ly - 9} width={13} height={13} rx={2} fill={PIE[i % PIE.length]} />
             <text x={228} y={ly + 1.5} fontSize="11.5" fill="currentColor" stroke="none" dominantBaseline="middle">{c.label}</text>
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+// ── Sloupcový graf ke slovní úloze (formát CERMAT) ───────────────────────────
+// Nejmenší „hezký" krok ≥ x (1, 2, 2.5, 5, 10 × mocnina 10) — pro dělení osy y.
+function niceStep(x: number): number {
+  if (x <= 0) return 1;
+  const pow = Math.pow(10, Math.floor(Math.log10(x)));
+  for (const m of [1, 2, 2.5, 5, 10]) if (pow * m >= x) return pow * m;
+  return pow * 10;
+}
+
+function SloupcovyGraf({ d }: { d: Extract<Diagram, { typ: "sloupce" }> }) {
+  const ox = 34, plotRight = 302, plotTop = 28, baseY = 170;
+  const plotW = plotRight - ox, plotH = baseY - plotTop;
+  const n = d.sloupce.length;
+  const maxV = Math.max(...d.sloupce.map((s) => s.hodnota), 1);
+  const step = niceStep(maxV / 4);
+  const axisMax = step * Math.ceil(maxV / step);
+  const slot = plotW / n;
+  const barW = Math.min(slot * 0.58, 46);
+  const my = (v: number) => baseY - (v / axisMax) * plotH;
+
+  const nTicks = Math.round(axisMax / step);
+  const ticks = Array.from({ length: nTicks + 1 }, (_, k) => k * step);
+  const fmt = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1).replace(".", ","));
+
+  return (
+    <g>
+      {d.nazev && (
+        <text x={(ox + plotRight) / 2} y={14} fontSize="12.5" fontWeight="800" fill="currentColor" textAnchor="middle">{d.nazev}</text>
+      )}
+
+      {/* vodorovné dělící čáry + popisky osy y */}
+      {ticks.map((t, i) => (
+        <g key={`t${i}`}>
+          <line x1={ox} y1={my(t)} x2={plotRight} y2={my(t)} stroke={i === 0 ? "currentColor" : "#cbd5e1"} strokeWidth={i === 0 ? 1.6 : 1} />
+          <text x={ox - 5} y={my(t) + 3.5} fontSize="9.5" fill="currentColor" stroke="none" textAnchor="end" opacity="0.75">{fmt(t)}</text>
+        </g>
+      ))}
+
+      {/* osa y + popisek jednotky */}
+      <line x1={ox} y1={plotTop - 4} x2={ox} y2={baseY} stroke="currentColor" strokeWidth="1.6" />
+      {d.jednotka && (
+        <text x={ox - 2} y={plotTop - 9} fontSize="9.5" fontWeight="600" fill="currentColor" stroke="none" textAnchor="start" opacity="0.85">{d.jednotka}</text>
+      )}
+
+      {/* sloupce s hodnotou a popiskem */}
+      {d.sloupce.map((s, i) => {
+        const cxb = ox + slot * (i + 0.5);
+        const y = my(s.hodnota);
+        return (
+          <g key={`b${i}`}>
+            <rect x={cxb - barW / 2} y={y} width={barW} height={baseY - y} rx={2} fill={PIE[i % PIE.length]} />
+            <text x={cxb} y={y - 4} fontSize="11" fontWeight="800" fill="currentColor" stroke="none" textAnchor="middle">{fmt(s.hodnota)}</text>
+            <text x={cxb} y={baseY + 13} fontSize="10.5" fill="currentColor" stroke="none" textAnchor="middle">{s.label}</text>
           </g>
         );
       })}

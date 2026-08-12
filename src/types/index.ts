@@ -32,7 +32,8 @@ export type Diagram =
   | ObdelnikDiagram
   | LichobeznikDiagram
   | KruhDiagram
-  | KolacovyGrafDiagram;
+  | KolacovyGrafDiagram
+  | SloupcovyGrafDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -109,6 +110,18 @@ export interface KolacovyGrafDiagram {
   typ: "kolac";
   nazev?: string;                          // titulek nad grafem
   casti: { label: string; procenta: number }[]; // výseče (součet ≈ 100)
+}
+
+/**
+ * Sloupcový graf ke slovní úloze (formát CERMAT) — čtení hodnot z osy y
+ * (počty, teploty, tržby po měsících…). Osa y se škáluje automaticky na
+ * „hezké" maximum; nad každým sloupcem je jeho hodnota.
+ */
+export interface SloupcovyGrafDiagram {
+  typ: "sloupce";
+  nazev?: string;                          // titulek nad grafem
+  jednotka?: string;                       // popisek osy y (např. „ks", „°C")
+  sloupce: { label: string; hodnota: number }[];
 }
 
 export interface DBExample {

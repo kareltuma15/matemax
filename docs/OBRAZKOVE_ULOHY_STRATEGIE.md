@@ -44,13 +44,22 @@ sportu), **ne čtení souřadnic v kartézské soustavě**. Kartézský typ byl 
 - [x] Vizuální ověření na `/diagram-test`: 4 výseče, žádný přetok mimo rámeček, kontrast popisků OK, konzole bez chyb
 - [ ] **⏸ PAUZA — Karel schválí vzhled koláče**, pak pokračuje typ #3
 
-### Fáze 3+ — další typy (⏳ čeká na zelenou po fázi 2)
-- [ ] #3 Úhly — rozšíření (v mnohoúhelníku, obecně v trojúhelníku)
-- [ ] #4 Prostorová tělesa + sítě
-- [ ] #5 **Sloupcový graf** + tabulka (koláč hotový v #2)
-- [ ] #6 Číselná osa
+### Fáze 3 — Typ #3: Sloupcový graf ✅ HOTOVO (čeká schválení Karla)
+- [x] `SloupcovyGrafDiagram` (`typ:"sloupce"`, `nazev`, `jednotka`, `sloupce:[{label,hodnota}]`) + vykreslovač: osa y s **automatickou „hezkou" škálou** (kroky 1/2/2,5/5/10), dělící čáry, hodnota nad každým sloupcem, barevné sloupce, popisky kategorií
+- [x] **Ověření autoringu:** 4 nové úlohy jen přes JSON (`scripts/add-sloupce-priklady.mjs`): přímé čtení, rozdíl dvou sloupců, součet, druhý graf (počet sourozenců) — hodnocení odpovědí ověřeno
+- [x] Vizuální ověření na `/diagram-test`: 5 sloupců, škála 0–40 po 10, výšky sedí, nic nepřetéká, konzole bez chyb
+- [ ] **⏸ PAUZA — Karel schválí vzhled sloupce**, pak pokračuje typ #4
 
-**Stav obrázkových úloh:** 7 → **16** (7 migrovaných + 5 rovinných + 4 koláčové). Nové typy engine: 3 → **6** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč).
+> **Cache hardening (2026-08-11):** `sw.js` navigace teď `cache:"no-store"` + `CACHE v4→v5` —
+> po deployi se stránka nebude držet ze staré cache (projeví se po první aktualizaci SW).
+
+### Fáze 4+ — další typy (⏳ čeká na zelenou po fázi 3)
+- [ ] #4 Úhly — rozšíření (v mnohoúhelníku, obecně v trojúhelníku)
+- [ ] #5 Prostorová tělesa + sítě
+- [ ] #6 Číselná osa
+- [ ] Tabulka dat (volitelně) + složené obrazce (odloženo z #1)
+
+**Stav obrázkových úloh:** 7 → **20** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové). Nové typy engine: 3 → **7** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce).
 
 ---
 

@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 731,
+    "total": 735,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -10869,6 +10869,182 @@
         "Matematiku má nejraději 40 % z 30 žáků.",
         "30 · 0,40 = 12.",
         "= 12 žáků."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_1",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "sloupce",
+          "nazev": "Prodej zmrzliny",
+          "jednotka": "ks",
+          "sloupce": [
+            {
+              "label": "Po",
+              "hodnota": 20
+            },
+            {
+              "label": "Út",
+              "hodnota": 35
+            },
+            {
+              "label": "St",
+              "hodnota": 15
+            },
+            {
+              "label": "Čt",
+              "hodnota": 40
+            },
+            {
+              "label": "Pá",
+              "hodnota": 30
+            }
+          ]
+        }
+      },
+      "zadani": "Graf ukazuje prodej zmrzliny v jednotlivých dnech. Kolik kusů se prodalo ve čtvrtek?",
+      "odpoved": "40 ks",
+      "reseni_kroky": [
+        "Najdi sloupec pro čtvrtek (Čt).",
+        "Jeho výška odpovídá hodnotě 40.",
+        "Ve čtvrtek se prodalo 40 kusů."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_2",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "sloupce",
+          "nazev": "Prodej zmrzliny",
+          "jednotka": "ks",
+          "sloupce": [
+            {
+              "label": "Po",
+              "hodnota": 20
+            },
+            {
+              "label": "Út",
+              "hodnota": 35
+            },
+            {
+              "label": "St",
+              "hodnota": 15
+            },
+            {
+              "label": "Čt",
+              "hodnota": 40
+            },
+            {
+              "label": "Pá",
+              "hodnota": 30
+            }
+          ]
+        }
+      },
+      "zadani": "O kolik více kusů zmrzliny se prodalo v pátek než ve středu?",
+      "odpoved": "15 ks",
+      "reseni_kroky": [
+        "Pátek: 30 kusů, středa: 15 kusů.",
+        "Rozdíl = 30 − 15.",
+        "= 15 kusů."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_3",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "sloupce",
+          "nazev": "Prodej zmrzliny",
+          "jednotka": "ks",
+          "sloupce": [
+            {
+              "label": "Po",
+              "hodnota": 20
+            },
+            {
+              "label": "Út",
+              "hodnota": 35
+            },
+            {
+              "label": "St",
+              "hodnota": 15
+            },
+            {
+              "label": "Čt",
+              "hodnota": 40
+            },
+            {
+              "label": "Pá",
+              "hodnota": 30
+            }
+          ]
+        }
+      },
+      "zadani": "Kolik kusů zmrzliny se prodalo celkem od pondělí do středy?",
+      "odpoved": "70 ks",
+      "reseni_kroky": [
+        "Pondělí 20 + úterý 35 + středa 15.",
+        "20 + 35 + 15 = 70.",
+        "Celkem 70 kusů."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO_4",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "sloupce",
+          "nazev": "Počet sourozenců ve třídě",
+          "jednotka": "žáků",
+          "sloupce": [
+            {
+              "label": "0",
+              "hodnota": 8
+            },
+            {
+              "label": "1",
+              "hodnota": 12
+            },
+            {
+              "label": "2",
+              "hodnota": 6
+            },
+            {
+              "label": "3",
+              "hodnota": 4
+            }
+          ]
+        }
+      },
+      "zadani": "Graf ukazuje, kolik sourozenců mají žáci třídy. Kolik žáků má právě 1 sourozence?",
+      "odpoved": "12 žáků",
+      "reseni_kroky": [
+        "Najdi sloupec nad hodnotou 1 (jeden sourozenec).",
+        "Jeho výška odpovídá 12.",
+        "Právě 1 sourozence má 12 žáků."
       ],
       "cas_sekund": 60,
       "sm2_interval": 1

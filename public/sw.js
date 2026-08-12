@@ -1,4 +1,4 @@
-const CACHE = "matemax-v4";
+const CACHE = "matemax-v5";
 const OFFLINE_PAGES = ["/", "/diagnostika", "/trenink"];
 
 self.addEventListener("install", (e) => {
@@ -31,7 +31,9 @@ self.addEventListener("fetch", (e) => {
 
   if (isNavigation) {
     e.respondWith(
-      fetch(e.request)
+      // no-store: síťový požadavek nesmí vrátit ani starou HTTP-cache HTML,
+      // jinak po deployi hrozí zastaralá stránka (viz opakovaný problém s cache).
+      fetch(e.request, { cache: "no-store" })
         .then((response) => {
           if (response.ok) {
             const clone = response.clone();
