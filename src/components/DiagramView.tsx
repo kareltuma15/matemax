@@ -274,7 +274,8 @@ function SloupcovyGraf({ d }: { d: Extract<Diagram, { typ: "sloupce" }> }) {
   const ox = 34, plotRight = 302, plotTop = 28, baseY = 170;
   const plotW = plotRight - ox, plotH = baseY - plotTop;
   const n = d.sloupce.length;
-  const maxV = Math.max(...d.sloupce.map((s) => s.hodnota), 1);
+  // Skryté sloupce NEovlivňují škálu (jinak by měřítko mohlo prozradit hodnotu).
+  const maxV = Math.max(...d.sloupce.filter((s) => !s.skryta).map((s) => s.hodnota), 1);
   const step = niceStep(maxV / 4);
   const axisMax = step * Math.ceil(maxV / step);
   const slot = plotW / n;
@@ -305,14 +306,24 @@ function SloupcovyGraf({ d }: { d: Extract<Diagram, { typ: "sloupce" }> }) {
         <text x={ox - 2} y={plotTop - 9} fontSize="9.5" fontWeight="600" fill="currentColor" stroke="none" textAnchor="start" opacity="0.85">{d.jednotka}</text>
       )}
 
-      {/* sloupce s hodnotou a popiskem */}
+      {/* sloupce s hodnotou a popiskem; skrytý → čárkovaný obrys přes celou
+          výšku + „?" uprostřed (nesmí napovědět velikost) */}
       {d.sloupce.map((s, i) => {
         const cxb = ox + slot * (i + 0.5);
+        if (s.skryta) {
+          return (
+            <g key={`b${i}`}>
+              <rect x={cxb - barW / 2} y={plotTop} width={barW} height={baseY - plotTop} rx={2} fill="none" stroke={AKCENT} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.55" />
+              <text x={cxb} y={(plotTop + baseY) / 2 + 5} fontSize="15" fontWeight="800" fill={AKCENT} stroke="none" textAnchor="middle">?</text>
+              <text x={cxb} y={baseY + 13} fontSize="10.5" fill="currentColor" stroke="none" textAnchor="middle">{s.label}</text>
+            </g>
+          );
+        }
         const y = my(s.hodnota);
         return (
           <g key={`b${i}`}>
             <rect x={cxb - barW / 2} y={y} width={barW} height={baseY - y} rx={2} fill={PIE[i % PIE.length]} />
-            <text x={cxb} y={y - 4} fontSize="11" fontWeight="800" fill="currentColor" stroke="none" textAnchor="middle">{s.skryta ? "?" : fmt(s.hodnota)}</text>
+            <text x={cxb} y={y - 4} fontSize="11" fontWeight="800" fill="currentColor" stroke="none" textAnchor="middle">{fmt(s.hodnota)}</text>
             <text x={cxb} y={baseY + 13} fontSize="10.5" fill="currentColor" stroke="none" textAnchor="middle">{s.label}</text>
           </g>
         );
