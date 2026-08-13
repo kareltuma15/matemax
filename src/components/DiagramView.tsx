@@ -36,6 +36,7 @@ function renderDiagram(d: Diagram) {
     case "kolac":       return <KolacovyGraf d={d} />;
     case "sloupce":     return <SloupcovyGraf d={d} />;
     case "mnohouhelnik": return <Mnohouhelnik d={d} />;
+    case "teleso":      return <Teleso d={d} />;
     default:            return null;
   }
 }
@@ -366,6 +367,74 @@ function Mnohouhelnik({ d }: { d: Extract<Diagram, { typ: "mnohouhelnik" }> }) {
           </text>
         );
       })}
+    </g>
+  );
+}
+
+// ── Prostorová tělesa (šikmá axonometrie) ────────────────────────────────────
+function Teleso({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
+  if (d.tvar === "valec") return <Valec d={d} />;
+  return <Kvadr d={d} />;
+}
+
+function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
+  const krychle = d.tvar === "krychle";
+  const aL = krychle ? d.a : d.a;              // šířka (krychle: hrana)
+  const bL = krychle ? d.a : d.b;              // hloubka
+  const cL = krychle ? d.a : d.c;              // výška
+  // Přední stěna + odsazení do hloubky (šikmá projekce).
+  const FTL: [number, number] = [66, 66], fw = 132, fh = 96;
+  const FTR: [number, number] = [FTL[0] + fw, FTL[1]];
+  const FBR: [number, number] = [FTL[0] + fw, FTL[1] + fh];
+  const FBL: [number, number] = [FTL[0], FTL[1] + fh];
+  const dep: [number, number] = [40, -28];
+  const BTL: [number, number] = [FTL[0] + dep[0], FTL[1] + dep[1]];
+  const BTR: [number, number] = [FTR[0] + dep[0], FTR[1] + dep[1]];
+  const BBR: [number, number] = [FBR[0] + dep[0], FBR[1] + dep[1]];
+  const BBL: [number, number] = [FBL[0] + dep[0], FBL[1] + dep[1]];
+  const pts = (arr: [number, number][]) => arr.map((p) => `${p[0]},${p[1]}`).join(" ");
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      {/* skryté hrany */}
+      <g strokeWidth="1.3" strokeDasharray="4 3" opacity="0.7">
+        <line x1={BBL[0]} y1={BBL[1]} x2={BTL[0]} y2={BTL[1]} />
+        <line x1={BBL[0]} y1={BBL[1]} x2={BBR[0]} y2={BBR[1]} />
+        <line x1={BBL[0]} y1={BBL[1]} x2={FBL[0]} y2={FBL[1]} />
+      </g>
+      {/* viditelné stěny */}
+      <polygon points={pts([FTL, FTR, BTR, BTL])} fill={`${AKCENT}10`} />
+      <polygon points={pts([FTR, FBR, BBR, BTR])} fill={`${AKCENT}18`} />
+      <polygon points={pts([FTL, FTR, FBR, FBL])} fill={`${AKCENT}0c`} />
+      {/* kóty */}
+      {aL && <text x={(FBL[0] + FBR[0]) / 2} y={FBL[1] + 17} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{aL}</text>}
+      {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
+      {bL && <text x={(FTR[0] + BTR[0]) / 2 + 7} y={(FTR[1] + BTR[1]) / 2 - 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
+    </g>
+  );
+}
+
+function Valec({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
+  const cx = 150, topY = 56, botY = 152, rx = 62, ry = 17;
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      {/* plášť */}
+      <line x1={cx - rx} y1={topY} x2={cx - rx} y2={botY} />
+      <line x1={cx + rx} y1={topY} x2={cx + rx} y2={botY} />
+      {/* dolní podstava: přední oblouk plně, zadní čárkovaně */}
+      <path d={`M ${cx - rx} ${botY} A ${rx} ${ry} 0 0 0 ${cx + rx} ${botY}`} />
+      <path d={`M ${cx - rx} ${botY} A ${rx} ${ry} 0 0 1 ${cx + rx} ${botY}`} strokeWidth="1.3" strokeDasharray="4 3" opacity="0.7" />
+      {/* horní podstava */}
+      <ellipse cx={cx} cy={topY} rx={rx} ry={ry} fill={`${AKCENT}14`} />
+      {/* poloměr */}
+      {d.r && (
+        <>
+          <line x1={cx} y1={topY} x2={cx + rx} y2={topY} strokeWidth="1.5" stroke={AKCENT} />
+          <circle cx={cx} cy={topY} r="2" fill="currentColor" stroke="none" />
+          <text x={cx + rx / 2} y={topY - 5} fontSize="12.5" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.r}</text>
+        </>
+      )}
+      {/* výška */}
+      {d.v && <text x={cx + rx + 8} y={(topY + botY) / 2 + 4} fontSize="12.5" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{d.v}</text>}
     </g>
   );
 }

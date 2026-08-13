@@ -65,12 +65,21 @@ sportu), **ne čtení souřadnic v kartézské soustavě**. Kartézský typ byl 
 - [x] Vizuální ověření na `/diagram-test`: čtyř/pěti/šestiúhelník, úhly uvnitř u správných vrcholů, nic nepřetéká, konzole bez chyb
 - [ ] **⏸ PAUZA — Karel schválí vzhled**, pak pokračuje typ #5
 
-### Fáze 5+ — další typy (⏳ čeká na zelenou po fázi 4)
-- [ ] #5 Prostorová tělesa + sítě
-- [ ] #6 Číselná osa
-- [ ] Tabulka dat (volitelně) + složené obrazce (odloženo z #1)
+> **Oprava skrytého sloupce (Karel):** skrytý sloupec se dřív kreslil do pravé výšky → žák
+> hodnotu odhadl z osy. Teď je to čárkovaný obrys přes celou výšku s „?" a skryté hodnoty
+> neovlivňují škálu → úloha „dopočítej z celku" zůstává skutečnou úlohou.
 
-**Stav obrázkových úloh:** 7 → **27** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové + 3 chybějící údaj + 4 úhly). Nové typy engine: 3 → **8** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce, mnohoúhelník).
+### Fáze 5 — Typ #5: Prostorová tělesa ✅ HOTOVO (čeká schválení Karla)
+- [x] `TelesoDiagram` (`tvar: kvadr|krychle|valec`) + vykreslovač: šikmá axonometrie, skryté hrany čárkovaně, kóty (a/b/c, r/v)
+- [x] **4 úlohy** (`scripts/add-telesa-priklady.mjs`): objem kvádru (60 cm³), objem krychle (27 cm³), povrch krychle (54 cm²), objem válce (62,8 cm³) — hodnocení ověřeno
+- [x] Vizuální ověření na `/diagram-test`: kvádr/krychle/válec, stěny + kóty, nic nepřetéká, konzole bez chyb
+- [ ] **⏸ PAUZA — Karel schválí vzhled**, pak poslední typ #6
+
+### Fáze 6+ — poslední typy (⏳ čeká na zelenou po fázi 5)
+- [ ] #6 Číselná osa
+- [ ] Sítě těles, tabulka dat, složené obrazce (volitelné rozšíření)
+
+**Stav obrázkových úloh:** 7 → **31** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové + 3 chybějící údaj + 4 úhly + 4 tělesa). Nové typy engine: 3 → **9** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce, mnohoúhelník, těleso).
 
 ---
 

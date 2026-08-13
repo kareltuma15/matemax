@@ -28,6 +28,10 @@ const UKAZKY: { nadpis: string; img: TaskImage }[] = [
   { nadpis: "Čtyřúhelník — chybějící úhel", img: { kind: "parametric", diagram: { typ: "mnohouhelnik", uhly: [110, 70, 95, null] } } },
   { nadpis: "Pětiúhelník — chybějící úhel", img: { kind: "parametric", diagram: { typ: "mnohouhelnik", uhly: [100, 110, 120, 100, null] } } },
   { nadpis: "Šestiúhelník (ukázka)", img: { kind: "parametric", diagram: { typ: "mnohouhelnik", uhly: [120, 120, 120, 120, 120, null] } } },
+  // ── Prostorová tělesa ──
+  { nadpis: "Kvádr (a, b, c)", img: { kind: "parametric", diagram: { typ: "teleso", tvar: "kvadr", a: "5 cm", b: "3 cm", c: "4 cm" } } },
+  { nadpis: "Krychle (hrana a)", img: { kind: "parametric", diagram: { typ: "teleso", tvar: "krychle", a: "3 cm" } } },
+  { nadpis: "Válec (r, v)", img: { kind: "parametric", diagram: { typ: "teleso", tvar: "valec", r: "r = 2 cm", v: "v = 5 cm" } } },
   // ── Statické (dlouhý ocas) ──
   { nadpis: "Statický obrázek (SVG z public/)", img: { kind: "static", url: "/obrazky/ukazka/staticka-ukazka.svg", width: 320, height: 210, alt: "Trojúhelník s výškou v = 8 cm a základnou a = 10 cm" } },
 ];

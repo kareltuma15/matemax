@@ -34,7 +34,8 @@ export type Diagram =
   | KruhDiagram
   | KolacovyGrafDiagram
   | SloupcovyGrafDiagram
-  | MnohouhelnikDiagram;
+  | MnohouhelnikDiagram
+  | TelesoDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -135,6 +136,20 @@ export interface SloupcovyGrafDiagram {
 export interface MnohouhelnikDiagram {
   typ: "mnohouhelnik";
   uhly: (number | null)[];       // vnitřní úhly po vrcholech; null = „?"
+}
+
+/**
+ * Prostorové těleso v šikmé axonometrii (kvádr, krychle, válec) s kótami —
+ * pro objem a povrch. Skryté hrany čárkovaně. Figura je schematická.
+ */
+export interface TelesoDiagram {
+  typ: "teleso";
+  tvar: "kvadr" | "krychle" | "valec";
+  a?: string;                    // kvádr: šířka; krychle: hrana
+  b?: string;                    // kvádr: hloubka
+  c?: string;                    // kvádr: výška
+  r?: string;                    // válec: poloměr podstavy
+  v?: string;                    // válec: výška
 }
 
 export interface DBExample {
