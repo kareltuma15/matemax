@@ -21,6 +21,9 @@ const UKAZKY: { nadpis: string; img: TaskImage }[] = [
   // ── Sloupcový graf (formát CERMAT) ──
   { nadpis: "Sloupce — prodej zmrzliny (5 dní)", img: { kind: "parametric", diagram: { typ: "sloupce", nazev: "Prodej zmrzliny", jednotka: "ks", sloupce: [{ label: "Po", hodnota: 20 }, { label: "Út", hodnota: 35 }, { label: "St", hodnota: 15 }, { label: "Čt", hodnota: 40 }, { label: "Pá", hodnota: 30 }] } } },
   { nadpis: "Sloupce — počet sourozenců (4 sloupce)", img: { kind: "parametric", diagram: { typ: "sloupce", nazev: "Počet sourozenců ve třídě", jednotka: "žáků", sloupce: [{ label: "0", hodnota: 8 }, { label: "1", hodnota: 12 }, { label: "2", hodnota: 6 }, { label: "3", hodnota: 4 }] } } },
+  // ── Chybějící údaj (?) — CERMAT trik ──
+  { nadpis: "Koláč s chybějícím údajem (?)", img: { kind: "parametric", diagram: { typ: "kolac", nazev: "Denní činnosti (24 h)", casti: [{ label: "zaměstnání", procenta: 25 }, { label: "spánek", procenta: 35 }, { label: "denní povinnosti", procenta: 30 }, { label: "volný čas", procenta: 10, skryta: true }] } } },
+  { nadpis: "Sloupce s chybějícím údajem (?)", img: { kind: "parametric", diagram: { typ: "sloupce", nazev: "Prodej zmrzliny", jednotka: "ks", sloupce: [{ label: "Po", hodnota: 20 }, { label: "Út", hodnota: 35, skryta: true }, { label: "St", hodnota: 15 }, { label: "Čt", hodnota: 40 }, { label: "Pá", hodnota: 30 }] } } },
   // ── Statické (dlouhý ocas) ──
   { nadpis: "Statický obrázek (SVG z public/)", img: { kind: "static", url: "/obrazky/ukazka/staticka-ukazka.svg", width: 320, height: 210, alt: "Trojúhelník s výškou v = 8 cm a základnou a = 10 cm" } },
 ];

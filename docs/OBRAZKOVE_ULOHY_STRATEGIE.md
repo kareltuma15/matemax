@@ -53,13 +53,17 @@ sportu), **ne čtení souřadnic v kartézské soustavě**. Kartézský typ byl 
 > **Cache hardening (2026-08-11):** `sw.js` navigace teď `cache:"no-store"` + `CACHE v4→v5` —
 > po deployi se stránka nebude držet ze staré cache (projeví se po první aktualizaci SW).
 
+### Chybějící údaj v grafu (?) ✅ HOTOVO — CERMAT trik
+- [x] Koláč i sloupce: příznak `skryta` → místo hodnoty se zobrazí „?" (výseč/sloupec se stále vykreslí)
+- [x] 3 úlohy (`scripts/add-chybejici-priklady.mjs`): koláč dopočet ze 100 % (10 %), koláč → koruny (3 000 Kč), sloupec dopočet z celku (35 ks) — ověřeno
+
 ### Fáze 4+ — další typy (⏳ čeká na zelenou po fázi 3)
 - [ ] #4 Úhly — rozšíření (v mnohoúhelníku, obecně v trojúhelníku)
 - [ ] #5 Prostorová tělesa + sítě
 - [ ] #6 Číselná osa
 - [ ] Tabulka dat (volitelně) + složené obrazce (odloženo z #1)
 
-**Stav obrázkových úloh:** 7 → **20** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové). Nové typy engine: 3 → **7** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce).
+**Stav obrázkových úloh:** 7 → **23** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové + 3 s chybějícím údajem). Nové typy engine: 3 → **7** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce).
 
 ---
 

@@ -239,10 +239,10 @@ function KolacovyGraf({ d }: { d: Extract<Diagram, { typ: "kolac" }> }) {
         ))
       )}
 
-      {/* popisky procent uvnitř výsečí (kontrastní barva) */}
+      {/* popisky procent uvnitř výsečí (kontrastní barva); skrytá → „?" */}
       {!jedna && vysece.map((v, i) => (
         <text key={`p${i}`} x={v.lp[0].toFixed(1)} y={(v.lp[1] + 3.5).toFixed(1)} fontSize="11" fontWeight="800" fill={textOn(PIE[i % PIE.length])} stroke="none" textAnchor="middle">
-          {v.c.procenta} %
+          {v.c.skryta ? "?" : `${v.c.procenta} %`}
         </text>
       ))}
 
@@ -311,7 +311,7 @@ function SloupcovyGraf({ d }: { d: Extract<Diagram, { typ: "sloupce" }> }) {
         return (
           <g key={`b${i}`}>
             <rect x={cxb - barW / 2} y={y} width={barW} height={baseY - y} rx={2} fill={PIE[i % PIE.length]} />
-            <text x={cxb} y={y - 4} fontSize="11" fontWeight="800" fill="currentColor" stroke="none" textAnchor="middle">{fmt(s.hodnota)}</text>
+            <text x={cxb} y={y - 4} fontSize="11" fontWeight="800" fill="currentColor" stroke="none" textAnchor="middle">{s.skryta ? "?" : fmt(s.hodnota)}</text>
             <text x={cxb} y={baseY + 13} fontSize="10.5" fill="currentColor" stroke="none" textAnchor="middle">{s.label}</text>
           </g>
         );

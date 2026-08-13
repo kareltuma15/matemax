@@ -109,7 +109,8 @@ export interface KruhDiagram {
 export interface KolacovyGrafDiagram {
   typ: "kolac";
   nazev?: string;                          // titulek nad grafem
-  casti: { label: string; procenta: number }[]; // výseče (součet ≈ 100)
+  // výseče (součet ≈ 100); `skryta` → místo procent se zobrazí „?" (žák dopočítá ze 100 %)
+  casti: { label: string; procenta: number; skryta?: boolean }[];
 }
 
 /**
@@ -121,7 +122,8 @@ export interface SloupcovyGrafDiagram {
   typ: "sloupce";
   nazev?: string;                          // titulek nad grafem
   jednotka?: string;                       // popisek osy y (např. „ks", „°C")
-  sloupce: { label: string; hodnota: number }[];
+  // `skryta` → sloupec se vykreslí, ale místo hodnoty se zobrazí „?" (žák dopočítá z celku / přečte z osy)
+  sloupce: { label: string; hodnota: number; skryta?: boolean }[];
 }
 
 export interface DBExample {
