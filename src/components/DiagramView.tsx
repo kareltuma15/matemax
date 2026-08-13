@@ -35,6 +35,7 @@ function renderDiagram(d: Diagram) {
     case "kruh":        return <Kruh d={d} />;
     case "kolac":       return <KolacovyGraf d={d} />;
     case "sloupce":     return <SloupcovyGraf d={d} />;
+    case "mnohouhelnik": return <Mnohouhelnik d={d} />;
     default:            return null;
   }
 }
@@ -314,6 +315,44 @@ function SloupcovyGraf({ d }: { d: Extract<Diagram, { typ: "sloupce" }> }) {
             <text x={cxb} y={y - 4} fontSize="11" fontWeight="800" fill="currentColor" stroke="none" textAnchor="middle">{s.skryta ? "?" : fmt(s.hodnota)}</text>
             <text x={cxb} y={baseY + 13} fontSize="10.5" fill="currentColor" stroke="none" textAnchor="middle">{s.label}</text>
           </g>
+        );
+      })}
+    </g>
+  );
+}
+
+// ── Mnohoúhelník s vnitřními úhly ────────────────────────────────────────────
+// Vrcholy z předlohy (schéma, ne k měřítku); úhly nese popisek, null = „?".
+const MNOHO_PRESETY: Record<number, [number, number][]> = {
+  3: [[160, 40], [280, 175], [40, 175]],
+  4: [[58, 64], [252, 48], [276, 168], [44, 178]],
+  5: [[160, 34], [286, 118], [236, 186], [84, 186], [34, 118]],
+  6: [[110, 40], [210, 40], [286, 108], [210, 176], [110, 176], [34, 108]],
+};
+
+function Mnohouhelnik({ d }: { d: Extract<Diagram, { typ: "mnohouhelnik" }> }) {
+  const n = d.uhly.length;
+  const V = MNOHO_PRESETY[n] ??
+    d.uhly.map((_, i) => {
+      const a = (-90 + (360 / n) * i) * (Math.PI / 180);
+      return [160 + 120 * Math.cos(a), 108 + 84 * Math.sin(a)] as [number, number];
+    });
+  const cx = V.reduce((s, p) => s + p[0], 0) / n;
+  const cy = V.reduce((s, p) => s + p[1], 0) / n;
+
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      <polygon points={V.map((p) => `${p[0]},${p[1]}`).join(" ")} fill={`${AKCENT}14`} />
+      {V.map((p, i) => {
+        // popisek úhlu posunutý od vrcholu ke středu
+        const dx = cx - p[0], dy = cy - p[1];
+        const len = Math.hypot(dx, dy) || 1;
+        const lx = p[0] + (dx / len) * 30, ly = p[1] + (dy / len) * 30;
+        const u = d.uhly[i];
+        return (
+          <text key={`u${i}`} x={lx.toFixed(1)} y={(ly + 4).toFixed(1)} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle">
+            {u === null ? "?" : `${u}°`}
+          </text>
         );
       })}
     </g>

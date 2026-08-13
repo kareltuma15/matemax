@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 738,
+    "total": 742,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -11169,6 +11169,109 @@
         "Sečti známé dny: 20 + 15 + 40 + 30 = 105.",
         "Úterý = celkem − známé = 140 − 105.",
         "= 35 kusů."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_M1",
+      "tema": "uhly",
+      "podtema": "ctyruhelnik",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "mnohouhelnik",
+          "uhly": [
+            110,
+            70,
+            95,
+            null
+          ]
+        }
+      },
+      "zadani": "Ve čtyřúhelníku na obrázku urči velikost chybějícího úhlu (?).",
+      "odpoved": "85°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů čtyřúhelníku je 360°.",
+        "? = 360° − 110° − 70° − 95°.",
+        "? = 85°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_M2",
+      "tema": "uhly",
+      "podtema": "mnohouhelnik",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "mnohouhelnik",
+          "uhly": [
+            100,
+            110,
+            120,
+            100,
+            null
+          ]
+        }
+      },
+      "zadani": "V pětiúhelníku na obrázku urči velikost chybějícího úhlu (?).",
+      "odpoved": "110°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů pětiúhelníku = (5 − 2) · 180° = 540°.",
+        "? = 540° − 100° − 110° − 120° − 100°.",
+        "? = 110°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_T1",
+      "tema": "uhly",
+      "podtema": "vnitrni_uhly",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "alfa": 40,
+          "beta": 60,
+          "hledany": "gama"
+        }
+      },
+      "zadani": "V trojúhelníku jsou dva úhly 40° a 60°. Urči velikost třetího úhlu (?).",
+      "odpoved": "80°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů trojúhelníku je 180°.",
+        "? = 180° − 40° − 60°.",
+        "? = 80°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_T2",
+      "tema": "uhly",
+      "podtema": "rovnoramenny_trojuhelnik",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "beta": 50,
+          "gama": 50,
+          "hledany": "alfa"
+        }
+      },
+      "zadani": "Rovnoramenný trojúhelník má oba úhly při základně 50°. Urči úhel u hlavního vrcholu (?).",
+      "odpoved": "80°",
+      "reseni_kroky": [
+        "Úhly při základně jsou shodné: 50° a 50°.",
+        "? = 180° − 50° − 50°.",
+        "? = 80°."
       ],
       "cas_sekund": 60,
       "sm2_interval": 1

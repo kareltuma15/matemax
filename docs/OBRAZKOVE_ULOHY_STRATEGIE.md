@@ -57,13 +57,20 @@ sportu), **ne čtení souřadnic v kartézské soustavě**. Kartézský typ byl 
 - [x] Koláč i sloupce: příznak `skryta` → místo hodnoty se zobrazí „?" (výseč/sloupec se stále vykreslí)
 - [x] 3 úlohy (`scripts/add-chybejici-priklady.mjs`): koláč dopočet ze 100 % (10 %), koláč → koruny (3 000 Kč), sloupec dopočet z celku (35 ks) — ověřeno
 
-### Fáze 4+ — další typy (⏳ čeká na zelenou po fázi 3)
-- [ ] #4 Úhly — rozšíření (v mnohoúhelníku, obecně v trojúhelníku)
+### Fáze 4 — Typ #4: Úhly rozšíření ✅ HOTOVO (čeká schválení Karla)
+- [x] `MnohouhelnikDiagram` (`typ:"mnohouhelnik"`, `uhly:(number|null)[]`) + vykreslovač: obrys z předlohy (3–6 vrcholů), úhly posunuté dovnitř k těžišti, `null` → „?"
+- [x] Obecný a rovnoramenný trojúhelník řešeny stávajícím `trojuhelnik` diagramem (pod tématem úhly)
+- [x] Podtémata `mnohouhelnik`, `vnitrni_uhly`
+- [x] **4 úlohy** (`scripts/add-uhly-priklady.mjs`): čtyřúhelník (85°), pětiúhelník (110°), obecný trojúhelník (80°), rovnoramenný (80°) — hodnocení ověřeno
+- [x] Vizuální ověření na `/diagram-test`: čtyř/pěti/šestiúhelník, úhly uvnitř u správných vrcholů, nic nepřetéká, konzole bez chyb
+- [ ] **⏸ PAUZA — Karel schválí vzhled**, pak pokračuje typ #5
+
+### Fáze 5+ — další typy (⏳ čeká na zelenou po fázi 4)
 - [ ] #5 Prostorová tělesa + sítě
 - [ ] #6 Číselná osa
 - [ ] Tabulka dat (volitelně) + složené obrazce (odloženo z #1)
 
-**Stav obrázkových úloh:** 7 → **23** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové + 3 s chybějícím údajem). Nové typy engine: 3 → **7** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce).
+**Stav obrázkových úloh:** 7 → **27** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové + 3 chybějící údaj + 4 úhly). Nové typy engine: 3 → **8** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce, mnohoúhelník).
 
 ---
 

@@ -33,7 +33,8 @@ export type Diagram =
   | LichobeznikDiagram
   | KruhDiagram
   | KolacovyGrafDiagram
-  | SloupcovyGrafDiagram;
+  | SloupcovyGrafDiagram
+  | MnohouhelnikDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -124,6 +125,16 @@ export interface SloupcovyGrafDiagram {
   jednotka?: string;                       // popisek osy y (např. „ks", „°C")
   // `skryta` → sloupec se vykreslí, ale místo hodnoty se zobrazí „?" (žák dopočítá z celku / přečte z osy)
   sloupce: { label: string; hodnota: number; skryta?: boolean }[];
+}
+
+/**
+ * Mnohoúhelník (čtyřúhelník, pětiúhelník…) s vnitřními úhly ve vrcholech.
+ * Figura je schematická (vrcholy z předlohy) — úhly nese popisek. `null`
+ * značí hledaný úhel „?" (žák dopočítá ze součtu vnitřních úhlů = (n−2)·180°).
+ */
+export interface MnohouhelnikDiagram {
+  typ: "mnohouhelnik";
+  uhly: (number | null)[];       // vnitřní úhly po vrcholech; null = „?"
 }
 
 export interface DBExample {
@@ -301,6 +312,8 @@ export const PODTEMA_LABELS: Record<string, string> = {
   rovnoramenny_trojuhelnik: "Rovnoramenný trojúhelník",
   lichobeznik:              "Lichoběžník",
   pravidelny_mnohouhelnik:  "Pravidelný mnohoúhelník",
+  mnohouhelnik:             "Mnohoúhelník",
+  vnitrni_uhly:             "Vnitřní úhly trojúhelníku",
   osa_uhlu_trojuhelnik:     "Osa úhlu v trojúhelníku",
 
   // Souhrnné
