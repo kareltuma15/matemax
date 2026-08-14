@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 210" width="320" height="210">
+  <!-- Pravoúhlý lichoběžník ABCD rozdělený úsečkou DP na čtverec PBCD a trojúhelník APD.
+       Ilustrační (neměřit) — hodnoty nese popisek. -->
+  <!-- šedý trojúhelník APD -->
+  <polygon points="40,175 120,175 120,55" fill="#e2e8f0" stroke="none"/>
+  <!-- obrys lichoběžníku -->
+  <polygon points="40,175 250,175 250,55 120,55" fill="none" stroke="#0D1B3E" stroke-width="2"/>
+  <!-- dělící úsečka DP -->
+  <line x1="120" y1="55" x2="120" y2="175" stroke="#2E6DA4" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- vrcholy -->
+  <text x="32" y="188" font-size="13" font-weight="700" fill="#0D1B3E">A</text>
+  <text x="248" y="190" font-size="13" font-weight="700" fill="#0D1B3E">B</text>
+  <text x="254" y="52" font-size="13" font-weight="700" fill="#0D1B3E">C</text>
+  <text x="110" y="50" font-size="13" font-weight="700" fill="#0D1B3E">D</text>
+  <text x="116" y="192" font-size="13" font-weight="700" fill="#0D1B3E">P</text>
+  <!-- kóty -->
+  <text x="80" y="192" font-size="12" font-weight="600" fill="#2E6DA4" text-anchor="middle">3 cm</text>
+  <text x="185" y="192" font-size="12" font-weight="600" fill="#2E6DA4" text-anchor="middle">6 cm</text>
+  <text x="128" y="118" font-size="12" font-weight="600" fill="#2E6DA4">6 cm</text>
+</svg>

@@ -7,6 +7,12 @@
 
 ---
 
+## ✅ Progress
+- **[A] Režim výběru A–E — HOTOVO** (`MoznostiCard`): `moznosti[]` + `spravna` na DBExample; napojeno v tréninku (má přednost před ostatními kartami). Vykreslí `image` (parametrický i **statický**) + zadání + tlačítka A–E; po kliku odhalí správnou (zeleně), kroky řešení, Pokračovat. Ověřeno na `/moznosti-test`: parametrický obrázek + výběr, statický SVG (`/obrazky/geometrie/lichobeznik-slozeny.svg`) + výběr, i text + výběr. 3 úlohy v DB (`scripts/add-moznosti-priklady.mjs`). *(dočasná stránka `/moznosti-test` — po schválení smazat)*
+- **[B] Tabulky** — další na řadě.
+
+---
+
 ## Klíčová myšlenka: rozdělit úlohu na DVĚ nezávislé osy
 
 Dosud jsme míchali „jak vypadá obrázek" a „jak se odpovídá". Perfektní koncept je

@@ -182,6 +182,14 @@ export interface DBExample {
    * vyplněno, trénink místo PracticeCard vykreslí ComparisonCard.
    */
   porovnani?: Porovnani;
+  /**
+   * Výběr z možností (A–E) — formát těžších CERMAT úloh. Když je vyplněno,
+   * trénink vykreslí MoznostiCard (klik místo psaní). Umožňuje libovolně těžké
+   * zadání (i se statickým obrázkem) bez problémů s parsováním odpovědi.
+   * Viz docs/KONCEPT-tezsi-ulohy.md. `spravna` = index správné možnosti (0-based).
+   */
+  moznosti?: string[];
+  spravna?: number;
 }
 
 export interface SM2Card {
