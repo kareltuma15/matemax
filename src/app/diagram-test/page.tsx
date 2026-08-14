@@ -32,6 +32,9 @@ const UKAZKY: { nadpis: string; img: TaskImage }[] = [
   { nadpis: "Kvádr (a, b, c)", img: { kind: "parametric", diagram: { typ: "teleso", tvar: "kvadr", a: "5 cm", b: "3 cm", c: "4 cm" } } },
   { nadpis: "Krychle (hrana a)", img: { kind: "parametric", diagram: { typ: "teleso", tvar: "krychle", a: "3 cm" } } },
   { nadpis: "Válec (r, v)", img: { kind: "parametric", diagram: { typ: "teleso", tvar: "valec", r: "r = 2 cm", v: "v = 5 cm" } } },
+  // ── Tabulky ──
+  { nadpis: "Tabulka s chybějící buňkou (?)", img: { kind: "tabulka", nazev: "Prodej zmrzliny za týden", hlavicka: ["Den", "Prodej (ks)"], radky: [["Po", 20], ["Út", null], ["St", 15], ["Čt", 40], ["Pá", 30], ["Celkem", 140]] } },
+  { nadpis: "Dvourozměrná tabulka", img: { kind: "tabulka", nazev: "Počet rodin podle počtu psů", hlavicka: ["Ulice", "0 psů", "1 pes", "2 psi", "3 psi"], radky: [["Jižní", 33, 8, 5, 2], ["Severní", 23, 12, 1, 4]] } },
   // ── Statické (dlouhý ocas) ──
   { nadpis: "Statický obrázek (SVG z public/)", img: { kind: "static", url: "/obrazky/ukazka/staticka-ukazka.svg", width: 320, height: 210, alt: "Trojúhelník s výškou v = 8 cm a základnou a = 10 cm" } },
 ];

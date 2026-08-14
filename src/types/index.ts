@@ -54,6 +54,14 @@ export type TaskImage =
       width: number;    // přirozená šířka (px) — proti CLS
       height: number;   // přirozená výška (px)
       alt: string;      // POVINNÝ popis pro čtečky/nevidomé
+    }
+  | {
+      // Datová tabulka ke slovní úloze (formát CERMAT) — vykreslí se jako HTML
+      // tabulka. `null` buňka = „?" (chybí, žák dopočítá z celku/řádku/sloupce).
+      kind: "tabulka";
+      nazev?: string;                          // titulek nad tabulkou
+      hlavicka: string[];                      // záhlaví sloupců (tučně)
+      radky: (string | number | null)[][];     // řádky; 1. buňka řádku = záhlaví řádku
     };
 
 /** Dvě rovnoběžky p ∥ q proťaté příčkou; jeden úhel je zadaný, jeden hledaný. */
@@ -325,6 +333,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   ruzna_vzorec:            "Číselná zákonitost",
   logicka_dedukce:         "Logická dedukce",
   cteni_grafu:             "Čtení z grafu",
+  tabulka:                 "Tabulka",
 
   // Úhly (kapitola 8 sešitu)
   vnejsi_uhel:              "Vnější úhel",
