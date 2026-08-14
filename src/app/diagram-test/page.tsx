@@ -39,6 +39,9 @@ const UKAZKY: { nadpis: string; img: TaskImage }[] = [
   { nadpis: "Paprsky — vedlejší úhel (°′)", img: { kind: "parametric", diagram: { typ: "paprsky", paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: -126.5, label: "r" }, { smer: 53.5 }], uhly: [{ mezi: [0, 2], popis: "126°30′", r: 26 }, { mezi: [2, 1], popis: "α", r: 36 }] } } },
   { nadpis: "Paprsky — vrcholové úhly", img: { kind: "parametric", diagram: { typ: "paprsky", paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: 62, label: "q" }, { smer: 242 }], uhly: [{ mezi: [0, 2], popis: "47°30′", r: 26 }, { mezi: [1, 3], popis: "α", r: 24 }] } } },
   { nadpis: "Paprsky — pravý úhel + na přímce", img: { kind: "parametric", diagram: { typ: "paprsky", paprsky: [{ smer: 0 }, { smer: 180 }, { smer: -90 }, { smer: -152 }], uhly: [{ mezi: [0, 2], popis: "", pravy: true }, { mezi: [2, 3], popis: "34°30′", r: 26 }, { mezi: [3, 1], popis: "α", r: 52 }] } } },
+  // ── Figurální posloupnosti ──
+  { nadpis: "Figurální — pyramida (1,3,5)", img: { kind: "parametric", diagram: { typ: "figuralni", rady: [1, 3, 5], popisek: "3. obrazec" } } },
+  { nadpis: "Figurální — schodiště (1,2,3,4)", img: { kind: "parametric", diagram: { typ: "figuralni", rady: [1, 2, 3, 4] } } },
   // ── Statické (dlouhý ocas) ──
   { nadpis: "Statický obrázek (SVG z public/)", img: { kind: "static", url: "/obrazky/ukazka/staticka-ukazka.svg", width: 320, height: 210, alt: "Trojúhelník s výškou v = 8 cm a základnou a = 10 cm" } },
 ];

@@ -36,7 +36,8 @@ export type Diagram =
   | SloupcovyGrafDiagram
   | MnohouhelnikDiagram
   | TelesoDiagram
-  | PaprskyDiagram;
+  | PaprskyDiagram
+  | FiguralniDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -157,6 +158,17 @@ export interface PaprskyDiagram {
   typ: "paprsky";
   paprsky: { smer: number; label?: string }[];   // směr ve stupních (0=vpravo, roste ve směru h. ručiček), popisek konce (p, r, s)
   uhly?: { mezi: [number, number]; popis: string; pravy?: boolean; r?: number }[]; // klín mezi paprsky[i] a paprsky[j]
+}
+
+/**
+ * Obrázková (figurální) posloupnost — obrazec z jednotkových čtverečků/krychliček
+ * po řadách (pyramidy, schodiště…). `rady[i]` = počet čtverečků v i-té řadě shora,
+ * kreslí se vycentrovaně. Pro logické úlohy „kolik dílů má n-tý obrazec".
+ */
+export interface FiguralniDiagram {
+  typ: "figuralni";
+  rady: number[];                // počty čtverečků v řadách shora dolů (např. [1,3,5])
+  popisek?: string;              // volitelný titulek (např. „3. obrazec")
 }
 
 /**
@@ -344,6 +356,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   ciselna_zakonitost:      "Číselná zákonitost",
   ciselne_zakonitosti:     "Číselná zákonitost",
   ruzna_vzorec:            "Číselná zákonitost",
+  figuralni:               "Obrázková posloupnost",
   logicka_dedukce:         "Logická dedukce",
   cteni_grafu:             "Čtení z grafu",
   tabulka:                 "Tabulka",

@@ -38,6 +38,7 @@ function renderDiagram(d: Diagram) {
     case "mnohouhelnik": return <Mnohouhelnik d={d} />;
     case "teleso":      return <Teleso d={d} />;
     case "paprsky":     return <Paprsky d={d} />;
+    case "figuralni":   return <Figuralni d={d} />;
     default:            return null;
   }
 }
@@ -414,6 +415,32 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
       {/* hloubka: vedle zadní hrany, mimo těleso (jinak se překrývá) */}
       {bL && <text x={BTR[0] + 6} y={(FTR[1] + BTR[1]) / 2 + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
+    </g>
+  );
+}
+
+// ── Figurální posloupnost (obrazec z jednotkových čtverečků) ─────────────────
+function Figuralni({ d }: { d: Extract<Diagram, { typ: "figuralni" }> }) {
+  const rows = d.rady.length;
+  const maxRow = Math.max(...d.rady, 1);
+  const availW = 300, availH = d.popisek ? 158 : 176, topY = d.popisek ? 30 : 16;
+  const s = Math.min(26, availW / maxRow, availH / rows); // strana čtverečku
+  const gridH = s * rows;
+  const y0 = topY + (availH - gridH) / 2;
+  return (
+    <g>
+      {d.popisek && (
+        <text x={160} y={16} fontSize="12.5" fontWeight="800" fill="currentColor" textAnchor="middle">{d.popisek}</text>
+      )}
+      {d.rady.map((n, ri) => {
+        const rowW = n * s;
+        const x0 = 160 - rowW / 2;
+        const y = y0 + ri * s;
+        return Array.from({ length: n }, (_, ci) => (
+          <rect key={`${ri}-${ci}`} x={(x0 + ci * s).toFixed(1)} y={y.toFixed(1)} width={s} height={s}
+            fill={`${AKCENT}1f`} stroke={AKCENT} strokeWidth="1.5" />
+        ));
+      })}
     </g>
   );
 }
