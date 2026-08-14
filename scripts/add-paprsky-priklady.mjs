@@ -14,8 +14,8 @@ const NOVE = [
         typ: "paprsky",
         paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: -126.5, label: "r" }, { smer: 53.5 }],
         uhly: [
-          { mezi: [0, 2], popis: "126°30′" },
-          { mezi: [2, 1], popis: "α", r: 30 },
+          { mezi: [0, 2], popis: "126°30′", r: 26 },
+          { mezi: [2, 1], popis: "α", r: 36 },
         ],
       },
     },
@@ -36,10 +36,10 @@ const NOVE = [
       kind: "parametric",
       diagram: {
         typ: "paprsky",
-        paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: 40, label: "q" }, { smer: 220 }],
+        paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: 62, label: "q" }, { smer: 242 }],
         uhly: [
-          { mezi: [0, 2], popis: "47°30′" },
-          { mezi: [1, 3], popis: "α" },
+          { mezi: [0, 2], popis: "47°30′", r: 26 },
+          { mezi: [1, 3], popis: "α", r: 24 },
         ],
       },
     },
@@ -60,11 +60,11 @@ const NOVE = [
       kind: "parametric",
       diagram: {
         typ: "paprsky",
-        paprsky: [{ smer: 0 }, { smer: 180 }, { smer: -90 }, { smer: -124.5 }],
+        paprsky: [{ smer: 0 }, { smer: 180 }, { smer: -90 }, { smer: -152 }],
         uhly: [
           { mezi: [0, 2], popis: "", pravy: true },
-          { mezi: [2, 3], popis: "34°30′" },
-          { mezi: [3, 1], popis: "α", r: 30 },
+          { mezi: [2, 3], popis: "34°30′", r: 26 },
+          { mezi: [3, 1], popis: "α", r: 52 },
         ],
       },
     },
@@ -81,10 +81,11 @@ const NOVE = [
 ];
 
 const data = JSON.parse(fs.readFileSync(FILE, "utf8"));
-const existuje = new Set(data.examples.map((e) => e.id));
+const noveIds = new Set(NOVE.map((u) => u.id));
+// upsert: přepiš existující se stejným id (kvůli ladění vzhledu figury)
+data.examples = data.examples.filter((e) => !noveIds.has(e.id));
 let pridano = 0;
 for (const u of NOVE) {
-  if (existuje.has(u.id)) continue;
   data.examples.push({ ...u, cas_sekund: 60, sm2_interval: 1 });
   pridano++;
 }

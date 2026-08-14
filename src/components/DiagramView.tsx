@@ -51,12 +51,15 @@ function Oblouk({ cx, cy, a1, a2, label, r = 18 }: { cx: number; cy: number; a1:
   const A = [cx + r * Math.cos(rad(a1)), cy + r * Math.sin(rad(a1))];
   const B = [cx + r * Math.cos(rad(a2)), cy + r * Math.sin(rad(a2))];
   const mid = a1 + d / 2;
-  const lr = r + 14;
+  // Delší popisky (např. „126°30′") posadíme výrazně dál od středu, ať se
+  // netlučou se šikmými rameny (široký popisek v úzkém klínu by je jinak křížil).
+  const dlouhy = label.length > 3;
+  const lr = r + (dlouhy ? 30 : 15);
   const L = [cx + lr * Math.cos(rad(mid)), cy + lr * Math.sin(rad(mid))];
   return (
     <g>
       <path d={`M ${A[0].toFixed(1)} ${A[1].toFixed(1)} A ${r} ${r} 0 0 ${sweep} ${B[0].toFixed(1)} ${B[1].toFixed(1)}`} fill="none" stroke={AKCENT} strokeWidth="2.5" />
-      <text x={L[0].toFixed(1)} y={L[1].toFixed(1)} fontSize="14" fontWeight="800" fill={AKCENT} stroke="none" textAnchor="middle" dominantBaseline="middle">{label}</text>
+      <text x={L[0].toFixed(1)} y={L[1].toFixed(1)} fontSize={dlouhy ? "11.5" : "13"} fontWeight="800" fill={AKCENT} stroke="none" textAnchor="middle" dominantBaseline="middle">{label}</text>
     </g>
   );
 }
