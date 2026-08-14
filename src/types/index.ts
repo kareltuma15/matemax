@@ -35,7 +35,8 @@ export type Diagram =
   | KolacovyGrafDiagram
   | SloupcovyGrafDiagram
   | MnohouhelnikDiagram
-  | TelesoDiagram;
+  | TelesoDiagram
+  | PaprskyDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -144,6 +145,18 @@ export interface SloupcovyGrafDiagram {
 export interface MnohouhelnikDiagram {
   typ: "mnohouhelnik";
   uhly: (number | null)[];       // vnitřní úhly po vrcholech; null = „?"
+}
+
+/**
+ * Několik přímek/paprsků procházejících jedním bodem (těžší úhlové úlohy,
+ * formát CERMAT — „přímky p, r, s se protínají v jednom bodě"). Figura je
+ * ILUSTRAČNÍ (neměřit) — úhly nese popisek (α, β, γ nebo „126°30′"). Obloučky
+ * `uhly` označí klín mezi dvěma paprsky, `pravy` vykreslí značku pravého úhlu.
+ */
+export interface PaprskyDiagram {
+  typ: "paprsky";
+  paprsky: { smer: number; label?: string }[];   // směr ve stupních (0=vpravo, roste ve směru h. ručiček), popisek konce (p, r, s)
+  uhly?: { mezi: [number, number]; popis: string; pravy?: boolean; r?: number }[]; // klín mezi paprsky[i] a paprsky[j]
 }
 
 /**
@@ -338,6 +351,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   // Úhly (kapitola 8 sešitu)
   vnejsi_uhel:              "Vnější úhel",
   vedlejsi_uhly:            "Vedlejší úhly",
+  vrcholove_uhly:           "Vrcholové úhly",
   rovnobezky:               "Úhly u rovnoběžek",
   rovnobezky_trojuhelnik:   "Úhly u rovnoběžek",
   ctyruhelnik:              "Čtyřúhelník",

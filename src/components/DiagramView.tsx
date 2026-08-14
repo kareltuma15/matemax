@@ -37,6 +37,7 @@ function renderDiagram(d: Diagram) {
     case "sloupce":     return <SloupcovyGraf d={d} />;
     case "mnohouhelnik": return <Mnohouhelnik d={d} />;
     case "teleso":      return <Teleso d={d} />;
+    case "paprsky":     return <Paprsky d={d} />;
     default:            return null;
   }
 }
@@ -410,6 +411,41 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
       {/* hloubka: vedle zadní hrany, mimo těleso (jinak se překrývá) */}
       {bL && <text x={BTR[0] + 6} y={(FTR[1] + BTR[1]) / 2 + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
+    </g>
+  );
+}
+
+// ── Přímky/paprsky jedním bodem (těžší úhly) ─────────────────────────────────
+function Paprsky({ d }: { d: Extract<Diagram, { typ: "paprsky" }> }) {
+  const cx = 160, cy = 106, R = 94;
+  const rad = (deg: number) => (deg * Math.PI) / 180;
+  const at = (deg: number, rr: number): [number, number] => [cx + rr * Math.cos(rad(deg)), cy + rr * Math.sin(rad(deg))];
+  return (
+    <g fill="none">
+      {/* paprsky */}
+      {d.paprsky.map((p, i) => {
+        const e = at(p.smer, R);
+        const l = at(p.smer, R + 12);
+        return (
+          <g key={`p${i}`}>
+            <line x1={cx} y1={cy} x2={e[0].toFixed(1)} y2={e[1].toFixed(1)} stroke="currentColor" strokeWidth="2" />
+            {p.label && <text x={l[0].toFixed(1)} y={(l[1] + 4).toFixed(1)} fontSize="13" fontWeight="700" fill="currentColor" stroke="none" textAnchor="middle">{p.label}</text>}
+          </g>
+        );
+      })}
+      {/* průsečík */}
+      <circle cx={cx} cy={cy} r="2.5" fill="currentColor" stroke="none" />
+      {/* označené úhly */}
+      {d.uhly?.map((u, i) => {
+        const a1 = d.paprsky[u.mezi[0]].smer, a2 = d.paprsky[u.mezi[1]].smer;
+        if (u.pravy) {
+          const s = 13;
+          const p1 = at(a1, s), p2 = at(a2, s);
+          const corner: [number, number] = [p1[0] + p2[0] - cx, p1[1] + p2[1] - cy];
+          return <path key={`u${i}`} d={`M ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} L ${corner[0].toFixed(1)} ${corner[1].toFixed(1)} L ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`} stroke={AKCENT} strokeWidth="1.6" />;
+        }
+        return <Oblouk key={`u${i}`} cx={cx} cy={cy} a1={a1} a2={a2} label={u.popis} r={u.r ?? 20} />;
+      })}
     </g>
   );
 }

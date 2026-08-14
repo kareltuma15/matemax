@@ -35,6 +35,10 @@ const UKAZKY: { nadpis: string; img: TaskImage }[] = [
   // ── Tabulky ──
   { nadpis: "Tabulka s chybějící buňkou (?)", img: { kind: "tabulka", nazev: "Prodej zmrzliny za týden", hlavicka: ["Den", "Prodej (ks)"], radky: [["Po", 20], ["Út", null], ["St", 15], ["Čt", 40], ["Pá", 30], ["Celkem", 140]] } },
   { nadpis: "Dvourozměrná tabulka", img: { kind: "tabulka", nazev: "Počet rodin podle počtu psů", hlavicka: ["Ulice", "0 psů", "1 pes", "2 psi", "3 psi"], radky: [["Jižní", 33, 8, 5, 2], ["Severní", 23, 12, 1, 4]] } },
+  // ── Těžké úhly (paprsky) ──
+  { nadpis: "Paprsky — vedlejší úhel (°′)", img: { kind: "parametric", diagram: { typ: "paprsky", paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: -126.5, label: "r" }, { smer: 53.5 }], uhly: [{ mezi: [0, 2], popis: "126°30′" }, { mezi: [2, 1], popis: "α", r: 30 }] } } },
+  { nadpis: "Paprsky — vrcholové úhly", img: { kind: "parametric", diagram: { typ: "paprsky", paprsky: [{ smer: 0, label: "p" }, { smer: 180 }, { smer: 40, label: "q" }, { smer: 220 }], uhly: [{ mezi: [0, 2], popis: "47°30′" }, { mezi: [1, 3], popis: "α" }] } } },
+  { nadpis: "Paprsky — pravý úhel + na přímce", img: { kind: "parametric", diagram: { typ: "paprsky", paprsky: [{ smer: 0 }, { smer: 180 }, { smer: -90 }, { smer: -124.5 }], uhly: [{ mezi: [0, 2], popis: "", pravy: true }, { mezi: [2, 3], popis: "34°30′" }, { mezi: [3, 1], popis: "α", r: 30 }] } } },
   // ── Statické (dlouhý ocas) ──
   { nadpis: "Statický obrázek (SVG z public/)", img: { kind: "static", url: "/obrazky/ukazka/staticka-ukazka.svg", width: 320, height: 210, alt: "Trojúhelník s výškou v = 8 cm a základnou a = 10 cm" } },
 ];
