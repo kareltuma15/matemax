@@ -408,7 +408,8 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {/* kóty */}
       {aL && <text x={(FBL[0] + FBR[0]) / 2} y={FBL[1] + 17} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{aL}</text>}
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
-      {bL && <text x={(FTR[0] + BTR[0]) / 2 + 7} y={(FTR[1] + BTR[1]) / 2 - 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
+      {/* hloubka: vedle zadní hrany, mimo těleso (jinak se překrývá) */}
+      {bL && <text x={BTR[0] + 6} y={(FTR[1] + BTR[1]) / 2 + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
     </g>
   );
 }
@@ -430,7 +431,8 @@ function Valec({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
         <>
           <line x1={cx} y1={topY} x2={cx + rx} y2={topY} strokeWidth="1.5" stroke={AKCENT} />
           <circle cx={cx} cy={topY} r="2" fill="currentColor" stroke="none" />
-          <text x={cx + rx / 2} y={topY - 5} fontSize="12.5" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.r}</text>
+          {/* poloměr: popisek nad horní podstavu, mimo elipsu (jinak se překrývá) */}
+          <text x={cx} y={topY - ry - 5} fontSize="12.5" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.r}</text>
         </>
       )}
       {/* výška */}

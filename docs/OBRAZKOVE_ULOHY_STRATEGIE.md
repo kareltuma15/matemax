@@ -75,9 +75,11 @@ sportu), **ne čtení souřadnic v kartézské soustavě**. Kartézský typ byl 
 - [x] Vizuální ověření na `/diagram-test`: kvádr/krychle/válec, stěny + kóty, nic nepřetéká, konzole bez chyb
 - [ ] **⏸ PAUZA — Karel schválí vzhled**, pak poslední typ #6
 
-### Fáze 6+ — poslední typy (⏳ čeká na zelenou po fázi 5)
-- [ ] #6 Číselná osa
-- [ ] Sítě těles, tabulka dat, složené obrazce (volitelné rozšíření)
+### Fáze 6 — pokračování → viz nový koncept
+- [x] Oprava kót u těles (hloubka i poloměr mimo obrys, už se nepřekrývají)
+- [ ] ~~#6 Číselná osa~~ **VYPUŠTĚNO** (Karel: není potřeba)
+- [ ] **Těžší/strukturované úlohy** → samostatný rámec: [KONCEPT-tezsi-ulohy.md](KONCEPT-tezsi-ulohy.md)
+      (tabulky, logické s obrázkem, těžké úhly °′, složená geometrie — a hlavně **režim výběru A–E**)
 
 **Stav obrázkových úloh:** 7 → **31** (7 migrovaných + 5 rovinných + 4 koláčové + 4 sloupcové + 3 chybějící údaj + 4 úhly + 4 tělesa). Nové typy engine: 3 → **9** (obdélník, trojúhelník, úhly-příčka, lichoběžník, kruh, koláč, sloupce, mnohoúhelník, těleso).
 
