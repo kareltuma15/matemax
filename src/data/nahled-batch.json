@@ -1,4 +1,69 @@
 {
-  "nazev": "Úhly — L1 (dávka 1, 8 úloh) — ZAPSÁNO",
-  "examples": []
+  "nazev": "Úhly — L2 (dávka 2, 8 úloh)",
+  "examples": [
+    {
+      "id": "UHL_L2_01", "tema": "uhly", "podtema": "vnejsi_uhel", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 50, "beta": 60 } },
+      "zadani": "V trojúhelníku je α = 50° a β = 60°. Jak velký je vnější úhel u vrcholu C?",
+      "odpoved": "110°",
+      "reseni_kroky": ["Vnitřní úhel γ = 180° − 50° − 60° = 70°.", "Vnější úhel je vedlejší k vnitřnímu: 180° − 70°.", "Vnější úhel = 110° (rovná se součtu α + β)."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_02", "tema": "uhly", "podtema": "vnejsi_uhel", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 40, "beta": 95 } },
+      "zadani": "V trojúhelníku je α = 40° a β = 95°. Jak velký je vnější úhel u vrcholu C?",
+      "odpoved": "135°",
+      "reseni_kroky": ["Vnější úhel u C = součet dvou nepřilehlých vnitřních úhlů.", "= α + β = 40° + 95°.", "= 135°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_03", "tema": "uhly", "podtema": "rovnoramenny_trojuhelnik", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 40, "hledany": "beta" } },
+      "zadani": "Rovnoramenný trojúhelník má úhel u hlavního vrcholu 40°. Jak velké jsou oba shodné úhly při základně?",
+      "odpoved": "70°",
+      "reseni_kroky": ["Zbývající dva úhly jsou shodné a v součtu mají 180° − 40° = 140°.", "Každý = 140° ÷ 2.", "= 70°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_04", "tema": "uhly", "podtema": "rovnoramenny_trojuhelnik", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "beta": 72, "gama": 72, "hledany": "alfa" } },
+      "zadani": "Rovnoramenný trojúhelník má oba úhly při základně 72°. Jak velký je úhel u hlavního vrcholu?",
+      "odpoved": "36°",
+      "reseni_kroky": ["Součet úhlů je 180°.", "Hlavní úhel = 180° − 72° − 72°.", "= 36°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_05", "tema": "uhly", "podtema": "ctyruhelnik", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "mnohouhelnik", "uhly": [100, 85, 95, null] } },
+      "zadani": "Ve čtyřúhelníku na obrázku urči velikost chybějícího úhlu (?).",
+      "odpoved": "80°",
+      "reseni_kroky": ["Součet vnitřních úhlů čtyřúhelníku je 360°.", "? = 360° − 100° − 85° − 95°.", "? = 80°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_06", "tema": "uhly", "podtema": "mnohouhelnik", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "mnohouhelnik", "uhly": [110, 100, 120, 105, null] } },
+      "zadani": "V pětiúhelníku na obrázku urči velikost chybějícího úhlu (?).",
+      "odpoved": "105°",
+      "reseni_kroky": ["Součet vnitřních úhlů pětiúhelníku = (5 − 2) · 180° = 540°.", "? = 540° − 110° − 100° − 120° − 105°.", "? = 105°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_07", "tema": "uhly", "podtema": "rovnobezky", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "uhel_pricka", "danyUhel": 65, "hledany": "vedlejsi" } },
+      "zadani": "Přímky p a q jsou rovnoběžné, protíná je příčka. Jeden úhel má 65°. Jak velký je vyznačený přilehlý úhel (?) na téže straně příčky?",
+      "odpoved": "115°",
+      "reseni_kroky": ["Vyznačený úhel je vedlejší k danému úhlu 65°.", "Vedlejší úhly mají v součtu 180°.", "? = 180° − 65° = 115°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_08", "tema": "uhly", "podtema": "vedlejsi_uhly", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "paprsky", "paprsky": [{ "smer": 0, "label": "p" }, { "smer": 180 }, { "smer": -130, "label": "q" }, { "smer": 50 }], "uhly": [{ "mezi": [0, 2], "popis": "130°", "r": 26 }, { "mezi": [2, 1], "popis": "α", "r": 30 }] } },
+      "zadani": "Dvě přímky se protínají a svírají tupý úhel 130°. Jak velký je ostrý úhel α, který také svírají?",
+      "odpoved": "50°",
+      "reseni_kroky": ["Ostrý a tupý úhel u průsečíku jsou vedlejší (v součtu 180°).", "α = 180° − 130°.", "α = 50°."],
+      "cas_sekund": 75, "sm2_interval": 1
+    }
+  ]
 }
