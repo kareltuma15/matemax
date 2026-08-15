@@ -447,7 +447,7 @@ function Figuralni({ d }: { d: Extract<Diagram, { typ: "figuralni" }> }) {
 
 // ── Přímky/paprsky jedním bodem (těžší úhly) ─────────────────────────────────
 function Paprsky({ d }: { d: Extract<Diagram, { typ: "paprsky" }> }) {
-  const cx = 160, cy = 106, R = 94;
+  const cx = 160, cy = 108, R = 88;
   const rad = (deg: number) => (deg * Math.PI) / 180;
   const at = (deg: number, rr: number): [number, number] => [cx + rr * Math.cos(rad(deg)), cy + rr * Math.sin(rad(deg))];
   return (
@@ -455,7 +455,7 @@ function Paprsky({ d }: { d: Extract<Diagram, { typ: "paprsky" }> }) {
       {/* paprsky */}
       {d.paprsky.map((p, i) => {
         const e = at(p.smer, R);
-        const l = at(p.smer, R + 12);
+        const l = at(p.smer, R + 10);
         return (
           <g key={`p${i}`}>
             <line x1={cx} y1={cy} x2={e[0].toFixed(1)} y2={e[1].toFixed(1)} stroke="currentColor" strokeWidth="2" />
