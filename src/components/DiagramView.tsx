@@ -451,7 +451,10 @@ function Thales({ d }: { d: Extract<Diagram, { typ: "thales" }> }) {
   const S: [number, number] = [160, 116], r = 78;
   const rad = (deg: number) => (deg * Math.PI) / 180;
   const A: [number, number] = [S[0] - r, S[1]], B: [number, number] = [S[0] + r, S[1]];
-  const C: [number, number] = [S[0] + r * Math.cos(rad(-d.stredCSB)), S[1] + r * Math.sin(rad(-d.stredCSB))];
+  // Vrchol C kreslíme na PEVNOU přehlednou pozici (obrázek je ilustrační) — jinak
+  // se pro velké středové úhly C přiblíží k A a popisky se překrývají.
+  const Cvis = 118;
+  const C: [number, number] = [S[0] + r * Math.cos(rad(-Cvis)), S[1] + r * Math.sin(rad(-Cvis))];
   const ang = (from: [number, number], to: [number, number]) => (Math.atan2(to[1] - from[1], to[0] - from[0]) * 180) / Math.PI;
   // značka pravého úhlu u C
   const s = 12;
@@ -469,8 +472,8 @@ function Thales({ d }: { d: Extract<Diagram, { typ: "thales" }> }) {
       {/* středový úhel CSB — oblouk u S, popisek ručně do volného místa vpravo dole */}
       {d.stredLabel && (
         <g>
-          <path d={`M ${(S[0] + 18).toFixed(1)} ${S[1]} A 18 18 0 0 0 ${(S[0] + 18 * Math.cos(rad(-d.stredCSB))).toFixed(1)} ${(S[1] + 18 * Math.sin(rad(-d.stredCSB))).toFixed(1)}`} stroke={AKCENT} strokeWidth="2" fill="none" />
-          <text x={S[0] + 24} y={S[1] - 7} fontSize="12" fontWeight="800" fill={AKCENT} stroke="none">{d.stredLabel}</text>
+          <path d={`M ${(S[0] + 18).toFixed(1)} ${S[1]} A 18 18 0 0 0 ${(S[0] + 18 * Math.cos(rad(-Cvis))).toFixed(1)} ${(S[1] + 18 * Math.sin(rad(-Cvis))).toFixed(1)}`} stroke={AKCENT} strokeWidth="2" fill="none" />
+          <text x={S[0] + 26} y={S[1] - 8} fontSize="12" fontWeight="800" fill={AKCENT} stroke="none">{d.stredLabel}</text>
         </g>
       )}
       {/* vrcholy */}
@@ -479,8 +482,8 @@ function Thales({ d }: { d: Extract<Diagram, { typ: "thales" }> }) {
       <text x={C[0] + (C[0] < S[0] ? -16 : 6)} y={C[1] - 4} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">C</text>
       <text x={S[0] - 3} y={S[1] + 16} fontSize="12" fontWeight="700" fill="currentColor" stroke="none">S</text>
       {/* úhly u A, B */}
-      {d.uhelA && <Oblouk cx={A[0]} cy={A[1]} a1={ang(A, B)} a2={ang(A, C)} label={d.uhelA} r={22} />}
-      {d.uhelB && <Oblouk cx={B[0]} cy={B[1]} a1={ang(B, A)} a2={ang(B, C)} label={d.uhelB} r={22} />}
+      {d.uhelA && <Oblouk cx={A[0]} cy={A[1]} a1={ang(A, B)} a2={ang(A, C)} label={d.uhelA} r={16} />}
+      {d.uhelB && <Oblouk cx={B[0]} cy={B[1]} a1={ang(B, A)} a2={ang(B, C)} label={d.uhelB} r={16} />}
     </g>
   );
 }
