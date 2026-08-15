@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 766,
+    "total": 774,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -12138,6 +12138,265 @@
         "Hledaný úhel má 70°."
       ],
       "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_01",
+      "tema": "uhly",
+      "podtema": "vnejsi_uhel",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "alfa": 55,
+          "hledany": "beta"
+        }
+      },
+      "zadani": "V trojúhelníku ABC je α = 55°. Vnější úhel u vrcholu C má 120°. Jak velký je úhel β?",
+      "odpoved": "65°",
+      "reseni_kroky": [
+        "Vnější úhel u C se rovná součtu dvou nepřilehlých vnitřních úhlů: α + β.",
+        "120° = 55° + β.",
+        "β = 120° − 55° = 65°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_02",
+      "tema": "uhly",
+      "podtema": "rovnoramenny_trojuhelnik",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "alfa": 40,
+          "hledany": "beta"
+        }
+      },
+      "zadani": "Rovnoramenný trojúhelník má úhel u hlavního vrcholu 40°. Jak velký je vnější úhel u jednoho z úhlů při základně?",
+      "odpoved": "110°",
+      "reseni_kroky": [
+        "Úhly při základně: (180° − 40°) ÷ 2 = 70°.",
+        "Vnější úhel je vedlejší k úhlu při základně: 180° − 70°.",
+        "= 110°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_03",
+      "tema": "uhly",
+      "podtema": "rovnoramenny_trojuhelnik",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "hledany": "beta",
+          "strany": {
+            "a": "a",
+            "c": "a"
+          }
+        }
+      },
+      "zadani": "Rovnoramenný trojúhelník má vnější úhel u hlavního vrcholu 100°. Jak velké jsou úhly při základně?",
+      "odpoved": "50°",
+      "reseni_kroky": [
+        "Vnitřní úhel u hlavního vrcholu = 180° − 100° = 80°.",
+        "Úhly při základně: (180° − 80°) ÷ 2.",
+        "= 50°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_04",
+      "tema": "uhly",
+      "podtema": "vedlejsi_uhly",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "paprsky",
+          "paprsky": [
+            {
+              "smer": 0,
+              "label": "p"
+            },
+            {
+              "smer": 180
+            },
+            {
+              "smer": -40,
+              "label": "q"
+            },
+            {
+              "smer": 140
+            }
+          ],
+          "uhly": [
+            {
+              "mezi": [
+                0,
+                2
+              ],
+              "popis": "α",
+              "r": 28
+            },
+            {
+              "mezi": [
+                2,
+                1
+              ],
+              "popis": "4α",
+              "r": 30
+            }
+          ]
+        }
+      },
+      "zadani": "Dvě přímky se protínají. Jeden úhel (4α) je čtyřikrát větší než jeho vedlejší úhel (α). Jak velký je větší z nich (4α)?",
+      "odpoved": "144°",
+      "reseni_kroky": [
+        "Vedlejší úhly: α + 4α = 180°.",
+        "5α = 180° → α = 36°.",
+        "4α = 4 · 36° = 144°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_05",
+      "tema": "uhly",
+      "podtema": "vedlejsi_uhly",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "paprsky",
+          "paprsky": [
+            {
+              "smer": 0,
+              "label": "p"
+            },
+            {
+              "smer": 180
+            },
+            {
+              "smer": -75,
+              "label": "q"
+            },
+            {
+              "smer": 105
+            }
+          ],
+          "uhly": [
+            {
+              "mezi": [
+                0,
+                2
+              ],
+              "popis": "α",
+              "r": 22
+            },
+            {
+              "mezi": [
+                2,
+                1
+              ],
+              "popis": "α+30°",
+              "r": 30
+            }
+          ]
+        }
+      },
+      "zadani": "Dva vedlejší úhly u průsečíku přímek se liší o 30°. Jak velký je ten větší?",
+      "odpoved": "105°",
+      "reseni_kroky": [
+        "Vedlejší úhly: α + (α + 30°) = 180°.",
+        "2α = 150° → α = 75°.",
+        "Větší úhel = 75° + 30° = 105°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_06",
+      "tema": "uhly",
+      "podtema": "ctyruhelnik",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "mnohouhelnik",
+          "uhly": [
+            85,
+            75,
+            null,
+            null
+          ]
+        }
+      },
+      "zadani": "Čtyřúhelník má úhly 85° a 75° a další dva úhly (?) jsou shodné. Jak velký je každý z nich?",
+      "odpoved": "100°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů čtyřúhelníku je 360°.",
+        "Zbývá 360° − 85° − 75° = 200° na dva shodné úhly.",
+        "Každý = 200° ÷ 2 = 100°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_07",
+      "tema": "uhly",
+      "podtema": "mnohouhelnik",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "mnohouhelnik",
+          "uhly": [
+            120,
+            110,
+            100,
+            null,
+            null
+          ]
+        }
+      },
+      "zadani": "Pětiúhelník má úhly 120°, 110°, 100° a dva shodné úhly (?). Jak velký je každý ze dvou shodných úhlů?",
+      "odpoved": "105°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů pětiúhelníku = (5 − 2) · 180° = 540°.",
+        "Zbývá 540° − 120° − 110° − 100° = 210° na dva shodné úhly.",
+        "Každý = 210° ÷ 2 = 105°."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L2_08",
+      "tema": "uhly",
+      "podtema": "vnitrni_uhly",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "hledany": "gama"
+        }
+      },
+      "zadani": "Vnitřní úhly trojúhelníku jsou v poměru α : β : γ = 2 : 3 : 4. Jak velký je největší úhel γ?",
+      "odpoved": "80°",
+      "reseni_kroky": [
+        "Poměr má 2 + 3 + 4 = 9 dílů, celkem 180°.",
+        "Jeden díl = 180° ÷ 9 = 20°.",
+        "γ = 4 díly = 4 · 20° = 80°."
+      ],
+      "cas_sekund": 90,
       "sm2_interval": 1
     }
   ]
