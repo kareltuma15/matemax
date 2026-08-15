@@ -38,7 +38,8 @@ export type Diagram =
   | TelesoDiagram
   | PaprskyDiagram
   | FiguralniDiagram
-  | RovnobeznikDiagram;
+  | RovnobeznikDiagram
+  | ThalesDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -181,6 +182,19 @@ export interface RovnobeznikDiagram {
   typ: "rovnobeznik";
   uhly?: { A?: string; B?: string; C?: string; D?: string };
   vnejsiA?: string;              // vnější úhel na prodloužené základně u A
+}
+
+/**
+ * Trojúhelník ABC vepsaný do kružnice opsané se středem S na straně AB — tedy
+ * AB je průměr a úhel u C je pravý (Thalés). Formát CERMAT (úloha s kružnicí
+ * opsanou). `stredCSB` udává polohu vrcholu C (středový úhel CSB ve stupních).
+ */
+export interface ThalesDiagram {
+  typ: "thales";
+  stredCSB: number;              // středový úhel CSB (poloha C na kružnici)
+  stredLabel?: string;           // popisek u středového úhlu CSB („100°" / „?")
+  uhelA?: string;                // popisek úhlu u vrcholu A
+  uhelB?: string;                // popisek úhlu u vrcholu B
 }
 
 /**

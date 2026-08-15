@@ -40,6 +40,7 @@ function renderDiagram(d: Diagram) {
     case "paprsky":     return <Paprsky d={d} />;
     case "figuralni":   return <Figuralni d={d} />;
     case "rovnobeznik": return <Rovnobeznik d={d} />;
+    case "thales":      return <Thales d={d} />;
     default:            return null;
   }
 }
@@ -441,6 +442,45 @@ function Rovnobeznik({ d }: { d: Extract<Diagram, { typ: "rovnobeznik" }> }) {
       {u.D && <Oblouk cx={D[0]} cy={D[1]} a1={ang(D, A)} a2={ang(D, C)} label={u.D} r={20} />}
       {/* vnější úhel u A (mezi prodlouženou základnou a AD) */}
       {d.vnejsiA && <Oblouk cx={A[0]} cy={A[1]} a1={180} a2={ang(A, D)} label={d.vnejsiA} r={26} />}
+    </g>
+  );
+}
+
+// ── Thalés: trojúhelník v kružnici opsané (AB průměr, pravý úhel u C) ─────────
+function Thales({ d }: { d: Extract<Diagram, { typ: "thales" }> }) {
+  const S: [number, number] = [160, 116], r = 78;
+  const rad = (deg: number) => (deg * Math.PI) / 180;
+  const A: [number, number] = [S[0] - r, S[1]], B: [number, number] = [S[0] + r, S[1]];
+  const C: [number, number] = [S[0] + r * Math.cos(rad(-d.stredCSB)), S[1] + r * Math.sin(rad(-d.stredCSB))];
+  const ang = (from: [number, number], to: [number, number]) => (Math.atan2(to[1] - from[1], to[0] - from[0]) * 180) / Math.PI;
+  // značka pravého úhlu u C
+  const s = 12;
+  const uC1: [number, number] = [C[0] + s * Math.cos(rad(ang(C, A))), C[1] + s * Math.sin(rad(ang(C, A)))];
+  const uC2: [number, number] = [C[0] + s * Math.cos(rad(ang(C, B))), C[1] + s * Math.sin(rad(ang(C, B)))];
+  const uCc: [number, number] = [uC1[0] + uC2[0] - C[0], uC1[1] + uC2[1] - C[1]];
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      <circle cx={S[0]} cy={S[1]} r={r} stroke="currentColor" strokeWidth="1.6" opacity="0.55" />
+      <polygon points={`${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0].toFixed(1)},${C[1].toFixed(1)}`} fill={`${AKCENT}12`} />
+      <line x1={S[0]} y1={S[1]} x2={C[0].toFixed(1)} y2={C[1].toFixed(1)} strokeWidth="1.4" strokeDasharray="4 3" stroke={AKCENT} />
+      <circle cx={S[0]} cy={S[1]} r="2.4" fill="currentColor" stroke="none" />
+      {/* pravý úhel u C */}
+      <path d={`M ${uC1[0].toFixed(1)} ${uC1[1].toFixed(1)} L ${uCc[0].toFixed(1)} ${uCc[1].toFixed(1)} L ${uC2[0].toFixed(1)} ${uC2[1].toFixed(1)}`} stroke={AKCENT} strokeWidth="1.5" />
+      {/* středový úhel CSB — oblouk u S, popisek ručně do volného místa vpravo dole */}
+      {d.stredLabel && (
+        <g>
+          <path d={`M ${(S[0] + 18).toFixed(1)} ${S[1]} A 18 18 0 0 0 ${(S[0] + 18 * Math.cos(rad(-d.stredCSB))).toFixed(1)} ${(S[1] + 18 * Math.sin(rad(-d.stredCSB))).toFixed(1)}`} stroke={AKCENT} strokeWidth="2" fill="none" />
+          <text x={S[0] + 24} y={S[1] - 7} fontSize="12" fontWeight="800" fill={AKCENT} stroke="none">{d.stredLabel}</text>
+        </g>
+      )}
+      {/* vrcholy */}
+      <text x={A[0] - 14} y={A[1] + 5} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">A</text>
+      <text x={B[0] + 6} y={B[1] + 5} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">B</text>
+      <text x={C[0] + (C[0] < S[0] ? -16 : 6)} y={C[1] - 4} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">C</text>
+      <text x={S[0] - 3} y={S[1] + 16} fontSize="12" fontWeight="700" fill="currentColor" stroke="none">S</text>
+      {/* úhly u A, B */}
+      {d.uhelA && <Oblouk cx={A[0]} cy={A[1]} a1={ang(A, B)} a2={ang(A, C)} label={d.uhelA} r={22} />}
+      {d.uhelB && <Oblouk cx={B[0]} cy={B[1]} a1={ang(B, A)} a2={ang(B, C)} label={d.uhelB} r={22} />}
     </g>
   );
 }
