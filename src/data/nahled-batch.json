@@ -1,4 +1,84 @@
 {
-  "nazev": "Úhly — L2 (dávka 2 — PŘEKALIBROVÁNO, 8 úloh) — ZAPSÁNO",
-  "examples": []
+  "nazev": "Úhly — L3 (dávka 3, CERMAT úroveň, 8 úloh, výběr A–E)",
+  "examples": [
+    {
+      "id": "UHL_L3_01", "tema": "uhly", "podtema": "rovnobeznik", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "rovnobeznik", "uhly": { "A": "α", "D": "δ" }, "vnejsiA": "4α" } },
+      "zadani": "Přímka AB je prodloužena za vrchol A. Rovnoběžník ABCD má u vrcholu A vnitřní úhel α a vnější úhel 4α. Jak velký je úhel δ u vrcholu D?",
+      "moznosti": ["menší než 108°", "108°", "135°", "144°", "větší než 144°"],
+      "spravna": 3,
+      "odpoved": "144°",
+      "reseni_kroky": ["Vnější a vnitřní úhel u A jsou vedlejší: α + 4α = 180° → 5α = 180° → α = 36°.", "V rovnoběžníku jsou sousední úhly (u A a u D) vedlejší: δ = 180° − α.", "δ = 180° − 36° = 144°. Správně D)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_02", "tema": "uhly", "podtema": "rovnobeznik", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "rovnobeznik", "uhly": { "A": "110°" } } },
+      "zadani": "Rovnoběžník ABCD má úhel u vrcholu A 110°. Úhlopříčka BD svírá se stranou AB úhel 30° (úhel ABD). Jak velký je úhel ADB v trojúhelníku ABD?",
+      "moznosti": ["30°", "40°", "50°", "70°"],
+      "spravna": 1,
+      "odpoved": "40°",
+      "reseni_kroky": ["V trojúhelníku ABD je úhel u A = 110° a úhel ABD = 30°.", "Součet úhlů trojúhelníku je 180°: ADB = 180° − 110° − 30°.", "ADB = 40°. Správně B)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_03", "tema": "uhly", "podtema": "rovnobeznik", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "rovnobeznik", "uhly": { "C": "?" } } },
+      "zadani": "V rovnoběžníku ABCD je vnější úhel u vrcholu C třikrát větší než vnitřní úhel u téhož vrcholu. Jak velký je vnitřní úhel u vrcholu C?",
+      "moznosti": ["36°", "45°", "60°", "135°"],
+      "spravna": 1,
+      "odpoved": "45°",
+      "reseni_kroky": ["Vnější a vnitřní úhel jsou vedlejší: vnitřní + vnější = 180°.", "Vnější = 3 · vnitřní, tedy vnitřní + 3·vnitřní = 4·vnitřní = 180°.", "Vnitřní úhel = 45°. Správně B)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_04", "tema": "uhly", "podtema": "pravidelny_mnohouhelnik", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "mnohouhelnik", "uhly": [108, 108, 108, 108, 108] } },
+      "zadani": "Pravidelný pětiúhelník ABCDE má všechny vnitřní úhly 108°. Úhlopříčka AC oddělí trojúhelník ABC. Jak velký je úhel BAC?",
+      "moznosti": ["30°", "36°", "54°", "72°"],
+      "spravna": 1,
+      "odpoved": "36°",
+      "reseni_kroky": ["Trojúhelník ABC je rovnoramenný (AB = BC) s úhlem u B = 108°.", "Zbylé dva úhly jsou shodné: (180° − 108°) ÷ 2.", "BAC = 36°. Správně B)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_05", "tema": "uhly", "podtema": "pravidelny_mnohouhelnik", "obtiznost": 3,
+      "zadani": "Pravidelný mnohoúhelník má vnitřní úhel 144°. Kolik má stran?",
+      "moznosti": ["8", "9", "10", "12"],
+      "spravna": 2,
+      "odpoved": "10",
+      "reseni_kroky": ["Vnitřní úhel = (n − 2) · 180° ÷ n = 144°.", "180n − 360 = 144n → 36n = 360.", "n = 10 stran. Správně C)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_06", "tema": "uhly", "podtema": "pravidelny_mnohouhelnik", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "mnohouhelnik", "uhly": [120, 120, 120, 120, 120, 120] } },
+      "zadani": "Pravidelný šestiúhelník má všechny vnitřní úhly 120°. Kratší úhlopříčka AC oddělí trojúhelník ABC. Jak velký je úhel BAC?",
+      "moznosti": ["24°", "30°", "36°", "60°"],
+      "spravna": 1,
+      "odpoved": "30°",
+      "reseni_kroky": ["Trojúhelník ABC je rovnoramenný (AB = BC) s úhlem u B = 120°.", "Zbylé dva úhly: (180° − 120°) ÷ 2.", "BAC = 30°. Správně B)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_07", "tema": "uhly", "podtema": "vedlejsi_uhly", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "paprsky", "paprsky": [{ "smer": 0, "label": "p" }, { "smer": 180 }, { "smer": -40 }, { "smer": 140 }, { "smer": -106.5 }, { "smer": 73.5 }], "uhly": [{ "mezi": [0, 2], "popis": "40°", "r": 44 }, { "mezi": [2, 4], "popis": "66°30′", "r": 40 }] } },
+      "zadani": "Tři přímky se protínají v jednom bodě. Úhel mezi první a druhou přímkou je 40°, mezi druhou a třetí 66°30′. Jak velký je úhel mezi první a třetí přímkou (na téže straně)?",
+      "moznosti": ["96°30′", "106°30′", "116°30′", "26°30′"],
+      "spravna": 1,
+      "odpoved": "106°30′",
+      "reseni_kroky": ["Oba úhly leží vedle sebe, takže se sčítají.", "40° + 66°30′.", "= 106°30′. Správně B)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "UHL_L3_08", "tema": "uhly", "podtema": "vedlejsi_uhly", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "paprsky", "paprsky": [{ "smer": 0 }, { "smer": 180 }, { "smer": -46.5 }, { "smer": 133.5 }, { "smer": -136.5 }, { "smer": 43.5 }], "uhly": [{ "mezi": [0, 2], "popis": "α", "r": 30 }, { "mezi": [2, 4], "popis": "", "pravy": true }, { "mezi": [4, 1], "popis": "43°30′", "r": 46 }] } },
+      "zadani": "Tři přímky se protínají v jednom bodě. Tři sousední úhly na jedné straně přímky jsou α, pravý úhel a 43°30′. Jak velký je úhel α?",
+      "moznosti": ["46°30′", "56°30′", "36°30′", "43°30′"],
+      "spravna": 0,
+      "odpoved": "46°30′",
+      "reseni_kroky": ["Tři úhly na přímce dávají dohromady 180°.", "α = 180° − 90° − 43°30′.", "α = 46°30′. Správně A)."],
+      "cas_sekund": 120, "sm2_interval": 1
+    }
+  ]
 }

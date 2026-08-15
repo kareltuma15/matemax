@@ -37,7 +37,8 @@ export type Diagram =
   | MnohouhelnikDiagram
   | TelesoDiagram
   | PaprskyDiagram
-  | FiguralniDiagram;
+  | FiguralniDiagram
+  | RovnobeznikDiagram;
 
 /**
  * Obrázek k úloze — hybridní model. Většinu obrázkových úloh (opakující se typy:
@@ -169,6 +170,17 @@ export interface FiguralniDiagram {
   typ: "figuralni";
   rady: number[];                // počty čtverečků v řadách shora dolů (např. [1,3,5])
   popisek?: string;              // volitelný titulek (např. „3. obrazec")
+}
+
+/**
+ * Rovnoběžník ABCD s popisky vnitřních úhlů u vrcholů. `vnejsiA` navíc prodlouží
+ * základnu za vrchol A a vyznačí vnější úhel (styl CERMAT: „4α" venku, „α" uvnitř).
+ * Popisky úhlů jsou řetězce (číslo°, „?", „α", „δ"…). Figura je ilustrační.
+ */
+export interface RovnobeznikDiagram {
+  typ: "rovnobeznik";
+  uhly?: { A?: string; B?: string; C?: string; D?: string };
+  vnejsiA?: string;              // vnější úhel na prodloužené základně u A
 }
 
 /**
@@ -370,6 +382,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   ctyruhelnik:              "Čtyřúhelník",
   rovnoramenny_trojuhelnik: "Rovnoramenný trojúhelník",
   lichobeznik:              "Lichoběžník",
+  rovnobeznik:              "Rovnoběžník",
   pravidelny_mnohouhelnik:  "Pravidelný mnohoúhelník",
   mnohouhelnik:             "Mnohoúhelník",
   vnitrni_uhly:             "Vnitřní úhly trojúhelníku",

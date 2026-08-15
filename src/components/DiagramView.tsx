@@ -39,6 +39,7 @@ function renderDiagram(d: Diagram) {
     case "teleso":      return <Teleso d={d} />;
     case "paprsky":     return <Paprsky d={d} />;
     case "figuralni":   return <Figuralni d={d} />;
+    case "rovnobeznik": return <Rovnobeznik d={d} />;
     default:            return null;
   }
 }
@@ -415,6 +416,31 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
       {/* hloubka: vedle zadní hrany, mimo těleso (jinak se překrývá) */}
       {bL && <text x={BTR[0] + 6} y={(FTR[1] + BTR[1]) / 2 + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
+    </g>
+  );
+}
+
+// ── Rovnoběžník ABCD s úhly (styl CERMAT, i vnější 4α) ───────────────────────
+function Rovnobeznik({ d }: { d: Extract<Diagram, { typ: "rovnobeznik" }> }) {
+  const A: [number, number] = [60, 150], B: [number, number] = [210, 150], C: [number, number] = [258, 66], D: [number, number] = [108, 66];
+  const ang = (from: [number, number], to: [number, number]) => (Math.atan2(to[1] - from[1], to[0] - from[0]) * 180) / Math.PI;
+  const u = d.uhly ?? {};
+  return (
+    <g stroke="currentColor" strokeWidth="2" fill="none">
+      {d.vnejsiA && <line x1={A[0]} y1={A[1]} x2={18} y2={A[1]} />}
+      <polygon points={`${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]} ${D[0]},${D[1]}`} fill={`${AKCENT}10`} />
+      {/* vrcholy */}
+      <text x={A[0] - 12} y={A[1] + 14} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">A</text>
+      <text x={B[0] + 5} y={B[1] + 14} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">B</text>
+      <text x={C[0] + 5} y={C[1] - 4} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">C</text>
+      <text x={D[0] - 14} y={D[1] - 4} fontSize="14" fontWeight="700" fill="currentColor" stroke="none">D</text>
+      {/* vnitřní úhly */}
+      {u.A && <Oblouk cx={A[0]} cy={A[1]} a1={ang(A, B)} a2={ang(A, D)} label={u.A} r={20} />}
+      {u.B && <Oblouk cx={B[0]} cy={B[1]} a1={ang(B, A)} a2={ang(B, C)} label={u.B} r={20} />}
+      {u.C && <Oblouk cx={C[0]} cy={C[1]} a1={ang(C, B)} a2={ang(C, D)} label={u.C} r={20} />}
+      {u.D && <Oblouk cx={D[0]} cy={D[1]} a1={ang(D, A)} a2={ang(D, C)} label={u.D} r={20} />}
+      {/* vnější úhel u A (mezi prodlouženou základnou a AD) */}
+      {d.vnejsiA && <Oblouk cx={A[0]} cy={A[1]} a1={180} a2={ang(A, D)} label={d.vnejsiA} r={26} />}
     </g>
   );
 }
