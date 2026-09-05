@@ -11,6 +11,12 @@
   <path d="M300,192 l6,4 M306,192 l6,4" stroke="#0D1B3E" stroke-width="1.4"/>
   <!-- kolmost s a t -->
   <path d="M268,196 L268,184 L280,184" fill="none" stroke="#0D1B3E" stroke-width="1.4"/>
+  <!-- obloučky úhlů -->
+  <path d="M178,66 A22,22 0 0,0 183.2,80.1" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <path d="M193.2,80.5 A16,16 0 0,0 216,66" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <path d="M177,85.3 A30,30 0 0,0 187.3,93.2" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <path d="M145.5,184.2 A13,13 0 0,1 153,196" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <path d="M55,187.6 A13,13 0 0,1 58,196" fill="none" stroke="#2E6DA4" stroke-width="2"/>
   <!-- bod R -->
   <circle cx="200" cy="66" r="2.6" fill="#0D1B3E"/>
   <text x="206" y="55" font-size="12" font-weight="700" fill="#0D1B3E">R</text>
