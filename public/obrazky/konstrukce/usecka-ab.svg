@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 68" width="240" height="68">
+  <circle cx="28" cy="38" r="5" fill="#0D1B3E"/>
+  <text x="28" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#0D1B3E">A</text>
+  <circle cx="212" cy="38" r="5" fill="#0D1B3E"/>
+  <text x="212" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#0D1B3E">B</text>
+  <line x1="33" y1="38" x2="207" y2="38" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="7,5"/>
+  <text x="120" y="62" text-anchor="middle" font-size="11" fill="#64748b">úsečka AB</text>
+</svg>

@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { examples } from "@/data/examples";
 import { createCard } from "@/lib/sm2";
-import { SM2Card } from "@/types";
+import { SM2Card, DBExample } from "@/types";
 import { supabase } from "@/lib/supabase";
 import { remoteSyncDiagResults } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
+import MoznostiCard from "@/components/MoznostiCard";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -46,14 +47,6 @@ function seedCardsFromDiag(results: Record<string, { correct: number; total: num
   }
 }
 
-interface DiagQuestion {
-  id: number;
-  text: string;
-  options: string[];
-  correct: number; // index
-  tema: string;
-}
-
 // 8 CERMAT témat — žádné "Různé", žádné nerovnice ani pravděpodobnost
 const STEPS: { label: string; tema: string }[] = [
   { label: "Zlomky",       tema: "zlomky" },
@@ -66,188 +59,219 @@ const STEPS: { label: string; tema: string }[] = [
   { label: "Úhly",         tema: "uhly" },
 ];
 
-// 16 otázek: 2 per téma, distribuce správných odpovědí A/B/C/D rovnoměrná (4× každá)
-const QUESTIONS: DiagQuestion[] = [
+const QUESTIONS_PER_STEP = 2;
+
+/**
+ * 16 diagnostických otázek (2 na téma) — napojené na stejnou kartu jako trénink
+ * (MoznostiCard), takže dostávají KaTeX i obrázky ZDARMA místo vlastního
+ * odděleného renderu. Viz docs/DIAGNOSTIKA_REVIZE.md pro historii nálezů:
+ * - Q1/Q2 (zlomky): přepsáno do KaTeX (dřív plochý text „5/12").
+ * - Q7/Q8/Q11: doplněn obrázek (pravoúhlý trojúhelník, kvádr, koláč se skrytým %).
+ * - Q15/Q16 (úhly): dřív čistě slovní/pojmové — nahrazeno obrázkovým diagramem
+ *   a u Q16 přepsáno z definiční otázky na výpočet z obrázku.
+ * - Q12: číselná posloupnost nahrazena reálným CERMAT grafem (sloupcový graf) —
+ *   CERMAT „grafy" jsou koláč/sloupce, ne číselné řady.
+ * Ostatní otázky (Q3–Q6, Q9–Q10, Q13–Q14) mají beze změny původní zadání/možnosti,
+ * jen zabalené do DBExample tvaru; Q13/Q14 mají obrázek přesunutý z inline JSX
+ * do public/obrazky/konstrukce/ (stejná ilustrace, jen jako soubor).
+ */
+const QUESTIONS: DBExample[] = [
   // ── Krok 1: Zlomky ──────────────────────────────────────────────────────────
   {
-    id: 1,
-    tema: "zlomky",
-    text: "Vypočti: ¾ − ⅓",
-    options: ["5/12", "4/12", "1/4", "7/12"],
-    correct: 0, // A: 9/12 − 4/12 = 5/12
+    id: "diag_1", tema: "zlomky", podtema: "scitani_odcitani", obtiznost: 1,
+    latex: true,
+    zadani: "Vypočítej: $\\frac{3}{4} - \\frac{1}{3}$",
+    moznosti: ["$\\frac{5}{12}$", "$\\frac{4}{12}$", "$\\frac{1}{4}$", "$\\frac{7}{12}$"],
+    spravna: 0, odpoved: "5/12",
+    reseni_kroky: [
+      "Společný jmenovatel je 12: $\\frac{3}{4} = \\frac{9}{12}$ a $\\frac{1}{3} = \\frac{4}{12}$.",
+      "Odečteme čitatele: $9 - 4 = 5$.",
+      "Výsledek: $\\frac{5}{12}$.",
+    ],
+    cas_sekund: 60, sm2_interval: 1,
   },
   {
-    id: 2,
-    tema: "zlomky",
-    text: "Vyjádři zlomek 18/24 v základním tvaru.",
-    options: ["9/12", "6/8", "3/4", "2/3"],
-    correct: 2, // C: GCD(18,24)=6 → 3/4
+    id: "diag_2", tema: "zlomky", podtema: "zkracovani", obtiznost: 1,
+    latex: true,
+    zadani: "Vyjádři zlomek $\\frac{18}{24}$ v základním tvaru.",
+    moznosti: ["$\\frac{9}{12}$", "$\\frac{6}{8}$", "$\\frac{3}{4}$", "$\\frac{2}{3}$"],
+    spravna: 2, odpoved: "3/4",
+    reseni_kroky: [
+      "Největší společný dělitel čísel 18 a 24 je 6.",
+      "Vydělíme čitatele i jmenovatele šesti: $18 \\div 6 = 3$, $24 \\div 6 = 4$.",
+      "Základní tvar: $\\frac{3}{4}$.",
+    ],
+    cas_sekund: 60, sm2_interval: 1,
   },
   // ── Krok 2: Výrazy ──────────────────────────────────────────────────────────
   {
-    id: 3,
-    tema: "vyrazy",
-    text: "Roznásob závorku: (x + 3)²",
-    options: ["x² + 9", "x² + 6x + 9", "x² + 3x + 9", "x² − 6x + 9"],
-    correct: 1, // B: (a+b)² = a²+2ab+b²
+    id: "diag_3", tema: "vyrazy", podtema: "roznasobeni", obtiznost: 2,
+    zadani: "Roznásob závorku: (x + 3)²",
+    moznosti: ["x² + 9", "x² + 6x + 9", "x² + 3x + 9", "x² − 6x + 9"],
+    spravna: 1, odpoved: "x² + 6x + 9",
+    reseni_kroky: ["Vzorec: (a+b)² = a² + 2ab + b².", "Dosadíme a=x, b=3: x² + 2·x·3 + 3².", "Výsledek: x² + 6x + 9."],
+    cas_sekund: 60, sm2_interval: 1,
   },
   {
-    id: 4,
-    tema: "vyrazy",
-    text: "Rozlož na součin: a² − 16",
-    options: ["(a − 4)²", "a(a − 16)", "(a + 4)²", "(a − 4)(a + 4)"],
-    correct: 3, // D: rozdíl čtverců a²−b²=(a−b)(a+b)
+    id: "diag_4", tema: "vyrazy", podtema: "roznasobeni", obtiznost: 2,
+    zadani: "Rozlož na součin: a² − 16",
+    moznosti: ["(a − 4)²", "a(a − 16)", "(a + 4)²", "(a − 4)(a + 4)"],
+    spravna: 3, odpoved: "(a − 4)(a + 4)",
+    reseni_kroky: ["Jde o rozdíl čtverců: a² − b² = (a−b)(a+b).", "Zde b² = 16, tedy b = 4.", "Výsledek: (a−4)(a+4)."],
+    cas_sekund: 60, sm2_interval: 1,
   },
   // ── Krok 3: Rovnice ─────────────────────────────────────────────────────────
   {
-    id: 5,
-    tema: "rovnice",
-    text: "Vyřeš: 4x − 6 = 2x + 8",
-    options: ["x = 7", "x = 4", "x = 3", "x = 1"],
-    correct: 0, // A: 2x=14 → x=7
+    id: "diag_5", tema: "rovnice", podtema: "linearni", obtiznost: 1,
+    zadani: "Vyřeš: 4x − 6 = 2x + 8",
+    moznosti: ["x = 7", "x = 4", "x = 3", "x = 1"],
+    spravna: 0, odpoved: "x = 7",
+    reseni_kroky: ["Převedeme neznámé na jednu stranu: 4x − 2x = 8 + 6.", "2x = 14.", "x = 7."],
+    cas_sekund: 60, sm2_interval: 1,
   },
   {
-    id: 6,
-    tema: "rovnice",
-    text: "Vyřeš soustavu rovnic: x + y = 10,  x − y = 4",
-    options: ["x = 3, y = 7", "x = 4, y = 6", "x = 7, y = 3", "x = 6, y = 4"],
-    correct: 2, // C: sečtením 2x=14→x=7, y=3
+    id: "diag_6", tema: "rovnice", podtema: "soustava", obtiznost: 2,
+    zadani: "Vyřeš soustavu rovnic: x + y = 10,  x − y = 4",
+    moznosti: ["x = 3, y = 7", "x = 4, y = 6", "x = 7, y = 3", "x = 6, y = 4"],
+    spravna: 2, odpoved: "x = 7, y = 3",
+    reseni_kroky: ["Sečteme obě rovnice: 2x = 14.", "x = 7.", "Dosadíme do první rovnice: 7 + y = 10 → y = 3."],
+    cas_sekund: 60, sm2_interval: 1,
   },
-  // ── Krok 4: Geometrie ───────────────────────────────────────────────────────
+  // ── Krok 4: Geometrie (s obrázkem) ──────────────────────────────────────────
   {
-    id: 7,
-    tema: "geometrie",
-    text: "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Jaká je délka přepony?",
-    options: ["7 cm", "10 cm", "12 cm", "14 cm"],
-    correct: 1, // B: √(36+64)=√100=10
+    id: "diag_7", tema: "geometrie", podtema: "pythagorova_veta", obtiznost: 1,
+    latex: true,
+    image: { kind: "parametric", diagram: { typ: "trojuhelnik", alfa: 90, strany: { b: "6 cm", c: "8 cm" } } },
+    zadani: "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Jaká je délka přepony?",
+    moznosti: ["7 cm", "10 cm", "12 cm", "14 cm"],
+    spravna: 1, odpoved: "10 cm",
+    reseni_kroky: [
+      "Pythagorova věta: $c^2 = a^2 + b^2$.",
+      "$c^2 = 6^2 + 8^2 = 36 + 64 = 100$.",
+      "$c = \\sqrt{100} = 10$ cm.",
+    ],
+    cas_sekund: 75, sm2_interval: 1,
   },
   {
-    id: 8,
-    tema: "geometrie",
-    text: "Objem kvádru o rozměrech 4 cm × 3 cm × 5 cm:",
-    options: ["24 cm³", "47 cm³", "94 cm³", "60 cm³"],
-    correct: 3, // D: 4×3×5=60
+    id: "diag_8", tema: "geometrie", podtema: "prostorova", obtiznost: 1,
+    image: { kind: "parametric", diagram: { typ: "teleso", tvar: "kvadr", a: "4 cm", b: "3 cm", c: "5 cm" } },
+    zadani: "Objem kvádru o rozměrech 4 cm × 3 cm × 5 cm:",
+    moznosti: ["24 cm³", "47 cm³", "94 cm³", "60 cm³"],
+    spravna: 3, odpoved: "60 cm³",
+    reseni_kroky: ["Objem kvádru = a · b · c.", "V = 4 · 3 · 5.", "V = 60 cm³."],
+    cas_sekund: 75, sm2_interval: 1,
   },
   // ── Krok 5: Slovní úlohy ────────────────────────────────────────────────────
   {
-    id: 9,
-    tema: "slovni_ulohy",
-    text: "Vlak jede rychlostí 90 km/h. Za jak dlouho ujede 270 km?",
-    options: ["2 hod", "2,5 hod", "3 hod", "4 hod"],
-    correct: 2, // C: t = 270/90 = 3
+    id: "diag_9", tema: "slovni_ulohy", podtema: "pohyb", obtiznost: 1,
+    zadani: "Vlak jede rychlostí 90 km/h. Za jak dlouho ujede 270 km?",
+    moznosti: ["2 hod", "2,5 hod", "3 hod", "4 hod"],
+    spravna: 2, odpoved: "3 hod",
+    reseni_kroky: ["t = dráha ÷ rychlost.", "t = 270 ÷ 90.", "t = 3 hodiny."],
+    cas_sekund: 60, sm2_interval: 1,
   },
   {
-    id: 10,
-    tema: "slovni_ulohy",
-    text: "Pracovník A zvládne práci za 6 hod, pracovník B za 4 hod. Za jak dlouho ji zvládnou společně?",
-    options: ["2,4 hod", "5 hod", "3 hod", "2 hod"],
-    correct: 0, // A: 1/(1/6+1/4)=12/5=2,4
+    id: "diag_10", tema: "slovni_ulohy", podtema: "spolecna_prace", obtiznost: 2,
+    zadani: "Pracovník A zvládne práci za 6 hod, pracovník B za 4 hod. Za jak dlouho ji zvládnou společně?",
+    moznosti: ["2,4 hod", "5 hod", "3 hod", "2 hod"],
+    spravna: 0, odpoved: "2,4 hod",
+    reseni_kroky: ["Za hodinu udělají 1/6 + 1/4 práce.", "1/6 + 1/4 = 2/12 + 3/12 = 5/12.", "Celou práci zvládnou za 12/5 = 2,4 hodiny."],
+    cas_sekund: 75, sm2_interval: 1,
   },
-  // ── Krok 6: Grafy a logika ──────────────────────────────────────────────────
+  // ── Krok 6: Grafy a logika (s obrázkem, reálné CERMAT grafy) ────────────────
   {
-    id: 11,
-    tema: "grafy_logika",
-    text: "V koláčovém grafu jedno pole zaujímá 72°. Kolik procent celku představuje?",
-    options: ["25 %", "33 %", "15 %", "20 %"],
-    correct: 3, // D: 72/360=0,2=20 %
+    id: "diag_11", tema: "grafy_logika", podtema: "cteni_grafu", obtiznost: 1,
+    image: {
+      kind: "parametric",
+      diagram: { typ: "kolac", nazev: "Rozdělení grafu", casti: [
+        { label: "hledaná část", procenta: 20, skryta: true },
+        { label: "ostatní", procenta: 80 },
+      ] },
+    },
+    zadani: "V koláčovém grafu jedno pole zaujímá 72°. Kolik procent celku představuje?",
+    moznosti: ["25 %", "33 %", "15 %", "20 %"],
+    spravna: 3, odpoved: "20 %",
+    reseni_kroky: ["Celý kruh má 360°.", "Podíl = 72° ÷ 360°.", "= 0,2 = 20 %."],
+    cas_sekund: 75, sm2_interval: 1,
   },
   {
-    id: 12,
-    tema: "grafy_logika",
-    text: "Posloupnost: 1, 3, 7, 13, 21, … Jaké je následující číslo?",
-    options: ["27", "31", "28", "33"],
-    correct: 1, // B: rozdíly +2,+4,+6,+8 → +10 → 31
+    // Q12 nahrazeno: dřív číselná posloupnost (Karel: CERMAT „grafy" = koláč/sloupce,
+    // ne číselné řady). Teď sloupcový graf — druhý reálný formát vedle koláče v Q11.
+    id: "diag_12", tema: "grafy_logika", podtema: "cteni_grafu", obtiznost: 1,
+    image: {
+      kind: "parametric",
+      diagram: {
+        typ: "sloupce", nazev: "Prodej zmrzliny", jednotka: "ks",
+        sloupce: [
+          { label: "Po", hodnota: 20 }, { label: "Út", hodnota: 35 }, { label: "St", hodnota: 15 },
+          { label: "Čt", hodnota: 40 }, { label: "Pá", hodnota: 30 },
+        ],
+      },
+    },
+    zadani: "Graf ukazuje prodej zmrzliny v jednotlivých dnech. Kolik kusů se prodalo ve čtvrtek?",
+    moznosti: ["20 ks", "30 ks", "35 ks", "40 ks"],
+    spravna: 3, odpoved: "40 ks",
+    reseni_kroky: ["Najdi sloupec pro čtvrtek (Čt).", "Jeho výška odpovídá hodnotě 40.", "Ve čtvrtek se prodalo 40 kusů."],
+    cas_sekund: 75, sm2_interval: 1,
   },
   // ── Krok 7: Konstrukční úlohy (s obrázkem) ──────────────────────────────────
   {
-    id: 13,
-    tema: "konstrukce",
-    text: "Chceš sestrojit osu úsečky AB. Jaký je PRVNÍ krok?",
-    options: [
+    id: "diag_13", tema: "konstrukce", podtema: "osa_usecky", obtiznost: 1,
+    image: { kind: "static", url: "/obrazky/konstrukce/usecka-ab.svg", width: 240, height: 68, alt: "Úsečka AB s krajními body A a B" },
+    zadani: "Chceš sestrojit osu úsečky AB. Jaký je PRVNÍ krok?",
+    moznosti: [
       "Narýsuj kružnici se středem A procházející bodem B",
       "Přilož pravítko a nakresli přímku AB",
       "Naměř délku AB a vyznač její střed pravítkem",
       "Narýsuj kolmici v bodě A na úsečku AB",
     ],
-    correct: 0, // A: kružnice ze dvou středů → průsečíky dají osu
+    spravna: 0, odpoved: "Narýsuj kružnici se středem A procházející bodem B",
+    reseni_kroky: ["Osu úsečky sestrojíme jako množinu bodů stejně vzdálených od A i B.", "Nejdřív narýsujeme kružnici se středem A procházející B.", "Pak kružnici se středem B procházející A — jejich průsečíky určují osu."],
+    cas_sekund: 60, sm2_interval: 1,
   },
   {
-    id: 14,
-    tema: "konstrukce",
-    text: "Lze sestrojit trojúhelník se stranami 4 cm, 6 cm a 11 cm?",
-    options: [
+    id: "diag_14", tema: "konstrukce", podtema: "trojuhelnik_sss", obtiznost: 2,
+    image: { kind: "static", url: "/obrazky/konstrukce/tri-strany.svg", width: 260, height: 96, alt: "Tři úsečky délek 4 cm, 6 cm a 11 cm" },
+    zadani: "Lze sestrojit trojúhelník se stranami 4 cm, 6 cm a 11 cm?",
+    moznosti: [
       "Ano, vždy lze",
       "Ano, ale pouze jako tupouhlý",
       "Ne, trojúhelník nelze sestrojit",
       "Záleží na pořadí zadaných stran",
     ],
-    correct: 2, // C: 4+6=10 < 11 — trojúhelníková nerovnost nesplněna
+    spravna: 2, odpoved: "Ne, trojúhelník nelze sestrojit",
+    reseni_kroky: ["Trojúhelníková nerovnost: součet dvou stran musí být větší než třetí strana.", "4 + 6 = 10, což je méně než 11.", "Nerovnost není splněna → trojúhelník nelze sestrojit."],
+    cas_sekund: 75, sm2_interval: 1,
   },
-  // ── Krok 8: Úhly ────────────────────────────────────────────────────────────
+  // ── Krok 8: Úhly (s obrázkem) ────────────────────────────────────────────────
   {
-    id: 15,
-    tema: "uhly",
-    text: "V trojúhelníku jsou dva vnitřní úhly 55° a 75°. Jak velký je třetí vnitřní úhel?",
-    options: ["40°", "60°", "45°", "50°"],
-    correct: 3, // D: 180−55−75=50°
+    id: "diag_15", tema: "uhly", podtema: "vnitrni_uhly", obtiznost: 1,
+    image: { kind: "parametric", diagram: { typ: "trojuhelnik", alfa: 55, beta: 75, hledany: "gama" } },
+    zadani: "V trojúhelníku jsou dva vnitřní úhly 55° a 75°. Jak velký je třetí vnitřní úhel?",
+    moznosti: ["40°", "60°", "45°", "50°"],
+    spravna: 3, odpoved: "50°",
+    reseni_kroky: ["Součet vnitřních úhlů trojúhelníku je 180°.", "Třetí úhel = 180° − 55° − 75°.", "= 50°."],
+    cas_sekund: 60, sm2_interval: 1,
   },
   {
-    id: 16,
-    tema: "uhly",
-    text: "Přímky p a q jsou rovnoběžné, příčka je protíná. Střídavé vnitřní úhly jsou:",
-    options: [
-      "Doplňkové — jejich součet je 90°",
-      "Shodné — jsou si rovny",
-      "Vedlejší — jejich součet je 180°",
-      "Různé — záleží na sklonu příčky",
-    ],
-    correct: 1, // B: střídavé úhly u rovnoběžek jsou shodné
+    // Q16 přepsáno: dřív čistě pojmová/definiční otázka bez obrázku (nešlo ji
+    // vůbec zobrazit). Teď výpočet ze skutečného diagramu — stejná znalost
+    // (střídavé úhly jsou shodné), ale ověřená na konkrétním čísle.
+    id: "diag_16", tema: "uhly", podtema: "rovnobezky", obtiznost: 1,
+    image: { kind: "parametric", diagram: { typ: "uhel_pricka", danyUhel: 70, hledany: "stridavy" } },
+    zadani: "Přímky p a q jsou rovnoběžné a protíná je příčka. Urči velikost vyznačeného úhlu (?).",
+    moznosti: ["70°", "110°", "20°", "160°"],
+    spravna: 0, odpoved: "70°",
+    reseni_kroky: ["Vyznačený úhel je střídavý k danému úhlu 70°.", "Střídavé úhly u rovnoběžek proťatých příčkou jsou shodné.", "Hledaný úhel má 70°."],
+    cas_sekund: 60, sm2_interval: 1,
   },
 ];
-
-const QUESTIONS_PER_STEP = 2;
-
-// SVG ilustrace ke konstrukčním otázkám
-const QUESTION_IMAGES: Record<number, React.ReactNode> = {
-  // Q13 — osa úsečky AB
-  13: (
-    <div className="my-1 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
-      <svg viewBox="0 0 240 68" className="w-full" style={{ maxHeight: 68 }} aria-hidden="true">
-        <circle cx="28" cy="38" r="5" fill="#0D1B3E" />
-        <text x="28" y="22" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0D1B3E">A</text>
-        <circle cx="212" cy="38" r="5" fill="#0D1B3E" />
-        <text x="212" y="22" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0D1B3E">B</text>
-        <line x1="33" y1="38" x2="207" y2="38" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="7,5" />
-        <text x="120" y="62" textAnchor="middle" fontSize="11" fill="#64748b">úsečka AB</text>
-      </svg>
-    </div>
-  ),
-  // Q14 — tři délky stran
-  14: (
-    <div className="my-1 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
-      <svg viewBox="0 0 260 96" className="w-full" style={{ maxHeight: 96 }} aria-hidden="true">
-        <line x1="10" y1="22" x2="90" y2="22" stroke="#334155" strokeWidth="3" strokeLinecap="round" />
-        <text x="50" y="15" textAnchor="middle" fontSize="11" fill="#64748b">4 cm</text>
-        <line x1="10" y1="52" x2="130" y2="52" stroke="#334155" strokeWidth="3" strokeLinecap="round" />
-        <text x="70" y="45" textAnchor="middle" fontSize="11" fill="#64748b">6 cm</text>
-        <line x1="10" y1="82" x2="230" y2="82" stroke="#2E6DA4" strokeWidth="3.5" strokeLinecap="round" />
-        <text x="120" y="75" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#2E6DA4">11 cm</text>
-      </svg>
-    </div>
-  ),
-};
-
-function getStepQuestions(stepIdx: number): DiagQuestion[] {
-  return QUESTIONS.slice(stepIdx * QUESTIONS_PER_STEP, (stepIdx + 1) * QUESTIONS_PER_STEP);
-}
 
 export default function DiagnostikaPage() {
   const router = useRouter();
   const [alreadyDone, setAlreadyDone] = useState(false);
-  const [stepIdx, setStepIdx] = useState(0);
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(QUESTIONS.length).fill(null));
-  const [selected, setSelected] = useState<(number | null)[]>(Array(QUESTIONS_PER_STEP).fill(null));
-  const [confirmed, setConfirmed] = useState(false);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [results, setResults] = useState<Record<string, { correct: number; total: number }>>({});
   const [finished, setFinished] = useState(false);
   const [showPlanModal, setShowPlanModal] = useState(false);
 
@@ -255,74 +279,50 @@ export default function DiagnostikaPage() {
     if (localStorage.getItem("matemax-diag-done") === "1") setAlreadyDone(true);
   }, []);
 
-  const stepQuestions = getStepQuestions(stepIdx);
-  const allSelected = selected.every((s) => s !== null);
+  const stepIdx = Math.floor(currentIdx / QUESTIONS_PER_STEP);
+  const current = QUESTIONS[currentIdx];
 
-  function handleSelect(qInStep: number, optIdx: number) {
-    if (confirmed) return;
-    const next = [...selected];
-    next[qInStep] = optIdx;
-    setSelected(next);
+  function finalize(finalResults: Record<string, { correct: number; total: number }>) {
+    localStorage.setItem("matemax-diag-results", JSON.stringify(finalResults));
+    localStorage.setItem("matemax-diag-done", "1");
+
+    // Sync to Supabase + Loops if logged in (fire-and-forget)
+    if (supabase) {
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) {
+          const uid = data.session.user.id;
+          const token = data.session.access_token;
+          remoteSyncDiagResults(uid, finalResults).catch(() => {});
+          const weakCount = Object.values(finalResults).filter(v => v.total > 0 && v.correct / v.total < 0.67).length;
+          trackEvent(uid, "diagnostika_dokoncena", { weak_topics: weakCount }).catch(() => {});
+          // Notify Loops so D+1/D+3/D+7 automations can branch on diagDone
+          fetch("/api/loops-event", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ event: "diag_completed" }),
+          }).catch(() => {});
+        }
+      });
+    }
+
+    // Seed SM-2 karty: pro slabá témata (< 67 %) vytvoř karty s okamžitou prioritou
+    seedCardsFromDiag(finalResults);
+
+    setFinished(true);
+    setShowPlanModal(true);
+    setTimeout(() => import("canvas-confetti").then(({ default: c }) => c({ particleCount: 100, spread: 70, origin: { y: 0.5 } })), 150);
   }
 
-  function handleConfirm() {
-    // Save answers
-    const base = stepIdx * QUESTIONS_PER_STEP;
-    const nextAnswers = [...answers];
-    selected.forEach((s, i) => { nextAnswers[base + i] = s; });
-    setAnswers(nextAnswers);
-    setConfirmed(true);
-  }
+  function handleResult(correct: boolean) {
+    const tema = current.tema;
+    const prev = results[tema] ?? { correct: 0, total: 0 };
+    const nextResults = { ...results, [tema]: { correct: prev.correct + (correct ? 1 : 0), total: prev.total + 1 } };
+    setResults(nextResults);
 
-  function handleNext() {
-    if (stepIdx + 1 >= STEPS.length) {
-      // Save to localStorage and finish
-      const base = stepIdx * QUESTIONS_PER_STEP;
-      const finalAnswers = [...answers];
-      selected.forEach((s, i) => { finalAnswers[base + i] = s; });
-
-      const results: Record<string, { correct: number; total: number }> = {};
-      // Initialize per-question tema (supports mixed-topic steps)
-      QUESTIONS.forEach((q) => {
-        if (!results[q.tema]) results[q.tema] = { correct: 0, total: 0 };
-        results[q.tema].total++;
-      });
-      QUESTIONS.forEach((q, i) => {
-        if (finalAnswers[i] === q.correct) results[q.tema].correct++;
-      });
-
-      localStorage.setItem("matemax-diag-results", JSON.stringify(results));
-      localStorage.setItem("matemax-diag-done", "1");
-
-      // Sync to Supabase + Loops if logged in (fire-and-forget)
-      if (supabase) {
-        supabase.auth.getSession().then(({ data }) => {
-          if (data.session) {
-            const uid = data.session.user.id;
-            const token = data.session.access_token;
-            remoteSyncDiagResults(uid, results).catch(() => {});
-            const weakCount = Object.values(results).filter(v => v.total > 0 && v.correct / v.total < 0.67).length;
-            trackEvent(uid, "diagnostika_dokoncena", { weak_topics: weakCount }).catch(() => {});
-            // Notify Loops so D+1/D+3/D+7 automations can branch on diagDone
-            fetch("/api/loops-event", {
-              method: "POST",
-              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-              body: JSON.stringify({ event: "diag_completed" }),
-            }).catch(() => {});
-          }
-        });
-      }
-
-      // Seed SM-2 karty: pro slabá témata (< 67 %) vytvoř karty s okamžitou prioritou
-      seedCardsFromDiag(results);
-
-      setFinished(true);
-      setShowPlanModal(true);
-      setTimeout(() => import("canvas-confetti").then(({ default: c }) => c({ particleCount: 100, spread: 70, origin: { y: 0.5 } })), 150);
+    if (currentIdx + 1 >= QUESTIONS.length) {
+      finalize(nextResults);
     } else {
-      setStepIdx((s) => s + 1);
-      setSelected(Array(QUESTIONS_PER_STEP).fill(null));
-      setConfirmed(false);
+      setCurrentIdx((i) => i + 1);
     }
   }
 
@@ -382,7 +382,7 @@ export default function DiagnostikaPage() {
         <p className="text-sm text-slate-500">Zjistíme, kde potřebuješ nejvíce procvičit.</p>
       </div>
 
-      {/* Step indicator — viditelný progress bar */}
+      {/* Step indicator — viditelný progress bar (8 kroků po 2 otázkách) */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-1.5">
           {STEPS.map((_, i) => (
@@ -422,96 +422,14 @@ export default function DiagnostikaPage() {
         </div>
       </div>
 
-      {/* Questions */}
-      {stepQuestions.map((q, qInStep) => {
-        const globalIdx = stepIdx * QUESTIONS_PER_STEP + qInStep;
-        const sel = selected[qInStep];
-
-        function getOptionStyle(optIdx: number): React.CSSProperties {
-          if (confirmed) {
-            if (optIdx === q.correct) return { border: "2px solid #22c55e", background: "#f0fdf4", color: "#15803d", fontWeight: 600 };
-            if (sel === optIdx) return { border: "2px solid #f87171", background: "#fff1f2", color: "#dc2626", textDecoration: "line-through" };
-            return { border: "2px solid #e2e8f0", background: "#fff", color: "#94a3b8" };
-          }
-          if (sel === optIdx) return { border: "3px solid #2563eb", background: "#dbeafe", color: "#1d4ed8", fontWeight: 700, boxShadow: "0 0 0 4px rgba(37,99,235,0.25)", transform: "translateX(3px)" };
-          return { border: "2px solid #e2e8f0", background: "#fff", color: "#374151" };
-        }
-
-        return (
-          <div key={q.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col gap-3">
-            <div className="flex items-start gap-2">
-              <span
-                className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
-                style={{ background: "#2E6DA4" }}
-              >
-                {globalIdx + 1}
-              </span>
-              <p className="font-semibold text-base leading-snug" style={{ color: "var(--text-primary)" }}>
-                {q.text}
-              </p>
-            </div>
-            {QUESTION_IMAGES[q.id]}
-            <div className="flex flex-col gap-2">
-              {q.options.map((opt, optIdx) => (
-                <button
-                  key={optIdx}
-                  onClick={() => handleSelect(qInStep, optIdx)}
-                  disabled={confirmed}
-                  className="text-left px-4 py-3 rounded-xl transition-all text-sm cursor-pointer disabled:cursor-default"
-                  style={getOptionStyle(optIdx)}
-                >
-                  <span
-                    className="inline-block w-6 h-6 rounded-full text-xs font-bold text-center leading-6 mr-2 shrink-0"
-                    style={{
-                      background: sel === optIdx && !confirmed ? "#1d4ed8" : "#f1f5f9",
-                      color: sel === optIdx && !confirmed ? "#fff" : "#64748b",
-                    }}
-                  >
-                    {String.fromCharCode(65 + optIdx)}
-                  </span>
-                  {opt}
-                </button>
-              ))}
-            </div>
-            {/* Per-question feedback */}
-            {confirmed && (
-              <p className="text-xs font-medium" style={{ color: sel === q.correct ? "#16a34a" : "#dc2626" }}>
-                {sel === q.correct ? "✓ Správně!" : `✗ Správná odpověď: ${q.options[q.correct]}`}
-              </p>
-            )}
-          </div>
-        );
-      })}
-
-      {/* Action buttons */}
-      {!confirmed ? (
-        <div className="flex flex-col gap-2">
-          <button
-            onClick={handleConfirm}
-            disabled={!allSelected}
-            className="w-full py-3.5 text-white font-bold rounded-xl text-base transition-all"
-            style={{
-              background: allSelected ? "#0D1B3E" : "#e2e8f0",
-              color: allSelected ? "#fff" : "#94a3b8",
-              cursor: allSelected ? "pointer" : "not-allowed",
-              boxShadow: allSelected ? "0 4px 14px rgba(13,27,62,0.25)" : "none",
-            }}
-          >
-            {allSelected ? "Zkontrolovat odpovědi ✓" : `Vyber odpovědi (${selected.filter(s => s !== null).length}/${QUESTIONS_PER_STEP})`}
-          </button>
-          {!allSelected && (
-            <p className="text-center text-xs text-slate-400">Musíš odpovědět na všechny otázky</p>
-          )}
-        </div>
-      ) : (
-        <button
-          onClick={handleNext}
-          className="w-full py-3.5 text-white font-bold rounded-xl text-base"
-          style={{ background: "#2E6DA4", boxShadow: "0 4px 14px rgba(46,109,164,0.3)" }}
-        >
-          {stepIdx + 1 >= STEPS.length ? "Zobrazit výsledky →" : "Další krok →"}
-        </button>
-      )}
+      {/* Otázka — stejná karta jako v tréninku (KaTeX + obrázky zdarma) */}
+      <MoznostiCard
+        key={current.id}
+        example={current}
+        cardNumber={currentIdx + 1}
+        total={QUESTIONS.length}
+        onResult={handleResult}
+      />
     </div>
   );
 }
