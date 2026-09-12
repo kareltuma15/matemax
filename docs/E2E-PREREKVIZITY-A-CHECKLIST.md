@@ -17,15 +17,23 @@
 | Stripe webhook | ✅ zaregistrovaný na `https://matemax.matematika-snadno.cz/api/stripe/webhook`, stav `enabled`, poslouchá `checkout.session.completed` |
 | `RESEND_API_KEY` | ✅ platný klíč (ověřeno voláním Resend API) |
 
-## B) 🔴 MUSÍŠ opravit PŘED sobotou — jinak ti tiše nepůjdou e-maily
+## B) Stav k 12.9. dopoledne — fallback nasazen, DNS pořád čeká na tebe
 
-**Doména `matematika-snadno.cz` v Resendu nemá ani nastartovanou verifikaci.**
-Všechny 4 e-maily (potvrzení přihlášky, připomínka 24h/1h, „arch přijat", výsledky)
-se posílají z `noreply@matematika-snadno.cz` — bez ověřené domény Resend odesílání
-odmítne a appka to **potichu spolkne** (jen log na serveru, nikde se to neukáže).
+**Update:** ověřil jsem přes veřejné DNS, že záznamy ještě nikdo nepřidal (doména
+běží na **Wix DNS** — `ns4/ns5.wixdns.net`). Aby tě to neblokovalo právě dnes,
+nasadil jsem **dočasný fallback**: e-maily teď jdou z `onboarding@resend.dev`
+místo `noreply@matematika-snadno.cz` (commit `cf65896`, live na produkci).
 
-**Oprava (do DNS správy domény matematika-snadno.cz, kde ji spravuješ — Wedos/
-Forpsi/Cloudflare/…), přidej tyto 3 záznamy:**
+⚠️ **Omezení fallbacku:** `onboarding@resend.dev` doručí **jen na e-mail, kterým
+je založený Resend účet** — tj. `karel.tuma15@gmail.com`. **Dnešní test proto
+dělej pod účtem s tímhle e-mailem** (přihlas se do appky tímto e-mailem, ne jiným
+testovacím). Na jiný e-mail by dnes zpráva nedošla.
+
+### Trvalá oprava (Wix DNS) — udělej, až budeš mít chvíli, není to dnes blokující
+Doména `matematika-snadno.cz` je na **Wix**. Postup:
+1. Přihlas se na `wix.com` → **Domains** (buď v Wix účtu nahoře, nebo v nastavení webu).
+2. Klikni na `matematika-snadno.cz` → **DNS Records** (může být i pod „Advanced" nebo „Manage DNS").
+3. Přidej 3 nové záznamy:
 
 | Typ | Název (host) | Hodnota |
 |---|---|---|
@@ -33,15 +41,9 @@ Forpsi/Cloudflare/…), přidej tyto 3 záznamy:**
 | MX | `send` | `feedback-smtp.eu-west-1.amazonses.com` (priorita 10) |
 | TXT | `send` | `v=spf1 include:amazonses.com ~all` |
 
-Po přidání jdi do Resend dashboardu (Domains → matematika-snadno.cz) → **Verify**.
-DNS propagace může trvat od pár minut po několik hodin — **udělej to dnes večer**,
-ať má čas se to projevit do soboty.
-
-**Pokud v pátek večer verifikace ještě neproběhne**, mám nachystanou 2minutovou
-záchrannou variantu: dočasně přepnu odesílací adresu na Resend's `onboarding@
-resend.dev` (funguje bez verifikace domény, doručí se kamkoliv), jen pro sobotní
-test, a po doverifikování domény vrátím zpět. Napiš mi ve čtvrtek/pátek, jestli
-DNS proběhla, ať vím, jestli mám tenhle fallback nasadit.
+4. Ulož. Jdi do Resend dashboardu (Domains → matematika-snadno.cz) → **Verify**.
+5. Až tam uvidíš stav **„Verified"**, napiš mi — vrátím `FROM` zpět na
+   `noreply@matematika-snadno.cz` a smažu dočasný fallback (jedna řádka, 2 minuty).
 
 ### ⚠️ Vedlejší nález (netýká se soboty, ale stojí za pozornost)
 `STRIPE_PRICE_ID` (používá se pro **předplatné** appky, ne pro online testy) ukazuje
