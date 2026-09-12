@@ -1,7 +1,14 @@
-# Diagnostika — revize (audit, NEOPRAVENO)
+# Diagnostika — revize (audit)
 
-> Seznam problémů diagnostiky a souvisejících dat. **Nic zatím neopravuju** — Karel
-> rozhodne co a v jakém pořadí. Vytvořeno 2026-09-08.
+> Seznam problémů diagnostiky a souvisejících dat. Vytvořeno 2026-09-08.
+>
+> **Update 2026-09-12: body 1–3 OPRAVENY** (commit `52b92c5`). Diagnostika
+> refaktorována na sdílené karty (`MoznostiCard`, stejné jako trénink) — KaTeX
+> i obrázky teď fungují automaticky. Q15/Q16 (úhly→obrázek), Q1/Q2
+> (zlomky→KaTeX), Q7/Q8/Q11 (geometrie/koláč→obrázek) hotovo. Q12 nahrazeno
+> sloupcovým grafem (reálný CERMAT formát) místo číselné posloupnosti.
+> **Bod 4 (obtížnost seedování + širší DB geometrie 131/145) zůstává
+> NEZAČATO** — samostatně, později, dle rozhodnutí Karla.
 
 ## Jak diagnostika funguje (kontext)
 Diagnostika (`src/app/(app)/diagnostika/page.tsx`) má **16 napevno napsaných otázek**
