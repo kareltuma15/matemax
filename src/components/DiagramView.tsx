@@ -113,14 +113,23 @@ function UhelPricka({ d }: { d: Extract<Diagram, { typ: "uhel_pricka" }> }) {
 
 // ── Trojúhelník ABC ──────────────────────────────────────────────────────────
 function Trojuhelnik({ d }: { d: Extract<Diagram, { typ: "trojuhelnik" }> }) {
-  const A: [number, number] = [40, 175];
-  const B: [number, number] = [280, 175];
-  const C: [number, number] = [150, 40];
+  // Když je u vrcholu A zadaný SKUTEČNÝ pravý úhel (ne ten hledaný — ten je
+  // neznámý a nemůžeme podle něj kreslit), vykresli ho tak, aby vrchol A
+  // OPRAVDU svíral 90°, ne jen s textovým „90°" nalepeným na obecný trojúhelník.
+  // (Rozšíření na pravý úhel u B/C lze doplnit stejným způsobem, až bude potřeba.)
+  const pravyUhelA = d.alfa === 90 && d.hledany !== "alfa";
+  const A: [number, number] = pravyUhelA ? [60, 175] : [40, 175];
+  const B: [number, number] = pravyUhelA ? [260, 175] : [280, 175];
+  const C: [number, number] = pravyUhelA ? [60, 45] : [150, 40];
   const uhelLabel = (which: "alfa" | "beta" | "gama", val?: number) =>
     d.hledany === which ? "?" : val !== undefined ? `${val}°` : null;
   return (
     <g stroke="currentColor" strokeWidth="2" fill="none">
       <polygon points={`${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}`} fill={`${AKCENT}14`} />
+      {/* značka pravého úhlu u A — malý čtvereček v rohu, standardní konvence */}
+      {pravyUhelA && (
+        <path d={`M ${A[0] + 14},${A[1]} L ${A[0] + 14},${A[1] - 14} L ${A[0]},${A[1] - 14}`} stroke={AKCENT} strokeWidth="1.5" />
+      )}
       {/* vrcholy */}
       <text x={A[0] - 14} y={A[1] + 6} fontSize="15" fontWeight="700" fill="currentColor" stroke="none">A</text>
       <text x={B[0] + 6} y={B[1] + 6} fontSize="15" fontWeight="700" fill="currentColor" stroke="none">B</text>
@@ -137,15 +146,37 @@ function Trojuhelnik({ d }: { d: Extract<Diagram, { typ: "trojuhelnik" }> }) {
   );
 }
 
+// Vytáhne první číslo z popisku kóty ("6 cm" → 6, "3,5 m" → 3.5). Null, když
+// popisek číslo neobsahuje (pak se použije neutrální čtvercový poměr).
+function parseKotaNumber(s?: string): number | null {
+  if (!s) return null;
+  const m = s.match(/-?\d+(?:[.,]\d+)?/);
+  if (!m) return null;
+  return parseFloat(m[0].replace(",", "."));
+}
+
 // ── Obdélník s kótami ────────────────────────────────────────────────────────
+// Poměr stran ODPOVÍDÁ zadaným číslům — čtverec (6×6) se tak i skutečně
+// vykreslí jako čtverec, ne jako obdélník s dosazenými popisky.
 function Obdelnik({ d }: { d: Extract<Diagram, { typ: "obdelnik" }> }) {
+  const wNum = parseKotaNumber(d.sirka);
+  const hNum = parseKotaNumber(d.vyska);
+  const maxW = 200, maxH = 130;
+  let rw = 180, rh = 100; // fallback, když popisek nemá číslo
+  if (wNum && hNum) {
+    const scale = Math.min(maxW / wNum, maxH / hNum);
+    rw = wNum * scale;
+    rh = hNum * scale;
+  }
+  const cx = 160, cy = 108;
+  const x0 = cx - rw / 2, y0 = cy - rh / 2;
   return (
     <g stroke="currentColor" strokeWidth="2" fill="none">
-      <rect x="70" y="55" width="180" height="100" fill={`${AKCENT}14`} />
+      <rect x={x0} y={y0} width={rw} height={rh} fill={`${AKCENT}14`} />
       {/* kóta šířky */}
-      <text x="160" y="175" fontSize="14" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.sirka}</text>
+      <text x={cx} y={y0 + rh + 20} fontSize="14" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{d.sirka}</text>
       {/* kóta výšky */}
-      <text x="52" y="110" fontSize="14" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle" transform="rotate(-90 52 110)">{d.vyska}</text>
+      <text x={x0 - 12} y={cy} fontSize="14" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle" transform={`rotate(-90 ${x0 - 12} ${cy})`}>{d.vyska}</text>
     </g>
   );
 }
@@ -415,8 +446,20 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {/* kóty */}
       {aL && <text x={(FBL[0] + FBR[0]) / 2} y={FBL[1] + 17} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{aL}</text>}
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
-      {/* hloubka: vedle zadní hrany, mimo těleso (jinak se překrývá) */}
-      {bL && <text x={BTR[0] + 6} y={(FTR[1] + BTR[1]) / 2 + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>}
+      {/* hloubka: tečka přímo na hraně FTR–BTR + krátká spojnice k popisku,
+          ať je jednoznačné, KTERÁ hrana se měří (dřív popisek jen "plaval"
+          vedle BTR bez vazby na konkrétní hranu). */}
+      {bL && (() => {
+        const mid: [number, number] = [(FTR[0] + BTR[0]) / 2, (FTR[1] + BTR[1]) / 2];
+        const lp: [number, number] = [mid[0] + 18, mid[1] - 12];
+        return (
+          <g>
+            <circle cx={mid[0]} cy={mid[1]} r="2" fill={AKCENT} stroke="none" />
+            <line x1={mid[0]} y1={mid[1]} x2={lp[0]} y2={lp[1]} strokeWidth="1" stroke={AKCENT} strokeDasharray="2 2" />
+            <text x={lp[0] + 4} y={lp[1] + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>
+          </g>
+        );
+      })()}
     </g>
   );
 }
