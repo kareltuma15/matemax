@@ -93,12 +93,15 @@ ${cleanStack ? `<h3 style="color:#f97316;margin:20px 0 8px;">Stack trace</h3><pr
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(resendKey);
-    await resend.emails.send({
+    // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error };
+    // aspoň zalogovat, ať selhání alertu není úplně neviditelné.
+    const { error: sendErr } = await resend.emails.send({
       from: "MateMax Errors <onboarding@resend.dev>",
       to: alertEmail,
       subject: `⚠️ Client error [${type}]: ${cleanMessage.slice(0, 55)}`,
       html,
     });
+    if (sendErr) console.error("[error-report] Resend odmítl odeslání:", sendErr);
   } catch {
     // Never crash the app because of error reporting
   }

@@ -281,12 +281,15 @@ async function handler() {
 
       const html = buildHtml({ parentName, childName, weekTotal, streak, accuracy, weakTopics, weekDate });
 
-      await resend.emails.send({
+      // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error }.
+      // Přehodíme do existujícího catch, ať se to počítá jako selhání.
+      const { error: sendErr } = await resend.emails.send({
         from: "MateMax <noreply@matematika-snadno.cz>",
         to: parentEmail,
         subject: `Týdenní zpráva: ${childName} procvičil/a ${weekTotal} příkladů 📊`,
         html,
       });
+      if (sendErr) throw sendErr;
 
       sent++;
     } catch (err) {

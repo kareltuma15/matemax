@@ -192,12 +192,18 @@ export async function POST(
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    await resend.emails.send({
+    // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error }.
+    // Bez kontroly by se odmítnutý email tvářil jako úspěšně odeslaný.
+    const { error: sendErr } = await resend.emails.send({
       from: FROM,
       to: email,
       subject: `Výsledek testu nanečisto — ${total} z ${TEST_MAX_POINTS} bodů`,
       html,
     });
+    if (sendErr) {
+      console.error("send-email: Resend odmítl odeslání", sendErr);
+      return NextResponse.json({ error: "Odeslání emailu selhalo" }, { status: 500 });
+    }
   } catch (err) {
     console.error("send-email: Resend error", err);
     return NextResponse.json({ error: "Odeslání emailu selhalo" }, { status: 500 });

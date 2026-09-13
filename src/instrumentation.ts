@@ -60,12 +60,15 @@ export const onRequestError: Instrumentation.onRequestError = async (
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(resendKey);
-    await resend.emails.send({
+    // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error };
+    // aspoň zalogovat, ať selhání alertu není úplně neviditelné.
+    const { error: sendErr } = await resend.emails.send({
       from: "MateMax Errors <onboarding@resend.dev>",
       to: alertEmail,
       subject: `🚨 Server error [${context.routeType}]: ${error.message?.slice(0, 60) ?? "Unknown"}`,
       html,
     });
+    if (sendErr) console.error("[instrumentation] Resend odmítl odeslání:", sendErr);
   } catch {
     // Never crash because of error reporting
   }

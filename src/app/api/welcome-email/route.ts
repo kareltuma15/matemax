@@ -152,12 +152,17 @@ export async function POST(req: NextRequest) {
 </html>`.trim();
 
   try {
-    await resend.emails.send({
+    // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error }.
+    const { error: sendErr } = await resend.emails.send({
       from: "MateMax <onboarding@resend.dev>",
       to: email,
       subject: "Vítej v MateMax! Tvůj trénink začíná 🚀",
       html,
     });
+    if (sendErr) {
+      console.error("[welcome-email] Resend odmítl odeslání:", sendErr);
+      return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+    }
     console.log("[welcome-email] Resend sent:", email);
     return NextResponse.json({ ok: true, provider: "resend" });
   } catch (err) {

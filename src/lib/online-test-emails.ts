@@ -77,8 +77,16 @@ async function send(to: string, subject: string, html: string): Promise<boolean>
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({ from: FROM, to, subject, html });
-    return true;
+    // Resend SDK NEVYHAZUJE výjimku při API chybě (validace, odmítnutý
+    // odesílatel…) — vrací { data, error }. Bez kontroly error by se odmítnutý
+    // email tvářil jako úspěšně odeslaný (zjištěno 13.9. při E2E testu —
+    // confirm_sent_at se nastavilo, i když email nikam nedorazil).
+    const { data, error } = await resend.emails.send({ from: FROM, to, subject, html });
+    if (error) {
+      console.error("[online-test-emails] Resend odmítl odeslání:", subject, error);
+      return false;
+    }
+    return !!data;
   } catch (err) {
     console.error("[online-test-emails] odeslání selhalo:", subject, err);
     return false;
