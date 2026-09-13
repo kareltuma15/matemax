@@ -5,36 +5,28 @@
 
 ---
 
-Hi, I need help getting our domain fully verified — we've hit a platform
-limitation that your own dashboard already flagged, but I can't get past it.
+Hi, I need help getting our domain fully verified — I understand exactly
+what's wrong (your bot support already diagnosed it), but it needs a human
+to fix on your end.
 
 **Domain:** matematika-snadno.cz (id: 85973d0b-981f-4e55-be84-afb4ba4e6eee)
 
 **Situation:**
 - Our DNS is hosted on Wix, which does not support adding a custom MX record
-  on a subdomain (only a single "connect one email provider" wizard for the
-  root domain — confirmed by your own dashboard message: *"Wix doesn't
-  support subdomains for MX records... Delete this domain and add it again
-  to get new CNAME records instead, which would work on Wix."*)
-- I followed that exact suggestion: deleted the domain and re-added it,
-  received the new CNAME record (`rsend` → `send.forge.rmta.net`), added it
-  to our Wix DNS, and it verified successfully.
-- Current record status:
-  - DKIM (TXT `resend._domainkey`) → **verified**
-  - SPF (CNAME `rsend`) → **verified**
-  - SPF (MX `send`) → pending (can't be added on Wix — see above)
-  - SPF (TXT `send`) → pending
-- Overall domain status is stuck at **`partially_verified`** and stays there.
-- I confirmed via the API that `partially_verified` is not enough to send —
-  attempting to send from `noreply@matematika-snadno.cz` returns:
-  `403 "The matematika-snadno.cz domain is not verified. Please, add and
-  verify your domain..."`
+  on a subdomain — only a pure-CNAME SPF setup (`spfType: cname`) works for
+  us, with no MX/TXT on `send` at all.
+- I deleted the domain and re-added it (following your own dashboard's
+  suggestion for Wix-hosted domains), expecting the pure CNAME configuration.
+  Instead it came back as **`spfType: migrated`**, which adds the CNAME
+  (`rsend` → `send.forge.rmta.net`) *on top of* the legacy MX + TXT
+  requirement on `send`, instead of replacing it.
+- I added the CNAME record on Wix and it verified successfully. DKIM is also
+  verified. But because this domain is `migrated`, the pending legacy MX +
+  TXT (which Wix cannot support) keep the domain stuck at
+  **`partially_verified`** — confirmed via the API that this status is not
+  enough to send (`403 domain is not verified`).
 
-**Question:** Since DKIM and the CNAME-based SPF path are both verified, and
-the only remaining pending records (MX + TXT on `send`) are structurally
-impossible to add on Wix, is there a way to get this domain to a fully
-`verified` / sendable state without those two records? Or is there an
-alternative path (e.g. removing the legacy MX/TXT requirement now that the
-CNAME satisfies the same purpose)?
-
-Happy to provide any additional info needed. Thanks!
+**Ask:** Could someone please reset domain `85973d0b-981f-4e55-be84-afb4ba4e6eee`
+(matematika-snadno.cz) from `spfType: migrated` to the pure `spfType: cname`
+configuration? I understand this isn't something I can flip from the
+dashboard myself. Happy to provide any additional info needed. Thanks!
