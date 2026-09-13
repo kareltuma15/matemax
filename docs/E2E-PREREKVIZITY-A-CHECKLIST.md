@@ -45,6 +45,29 @@ Doména `matematika-snadno.cz` je na **Wix**. Postup:
 5. Až tam uvidíš stav **„Verified"**, napiš mi — vrátím `FROM` zpět na
    `noreply@matematika-snadno.cz` a smažu dočasný fallback (jedna řádka, 2 minuty).
 
+### Update 13.9. — kořenová příčina nalezena, čeká se na Resend
+
+Domain byl smazán a znovu přidán (dle rady Resend dashboardu), CNAME (`rsend` →
+`send.forge.rmta.net`) přidán do Wixu a **ověřen**. DKIM taky **verified**. Ale
+doména se vytvořila jako **`spfType: migrated`** (CNAME navíc k starému MX+TXT),
+místo **`spfType: cname`** (čistě CNAME, bez MX — jediná varianta, kterou Wix
+zvládne). Proto zůstává trvale na **`partially_verified`** — a to (ověřeno
+empiricky přes API) **nestačí k odesílání** ze skutečné domény (403 „domain is
+not verified").
+
+**Řešeno přes Resend support** (`docs/RESEND-SUPPORT-ZPRAVA.md`) — jejich tým
+potvrdil přesnou diagnózu a **eskaloval interně přepnutí `migrated → cname`**.
+Řekli: *„No additional action is needed on your side in the meantime."*
+
+**Až se ozvou, že je to přepnuté:**
+1. Zkontrolovat stav domény (má dojít na plné `verified`).
+2. Vrátit `FROM` v `src/lib/online-test-emails.ts` zpět na
+   `MateMax <noreply@matematika-snadno.cz>` (dnes tam je dočasný fallback
+   `onboarding@resend.dev` — ten umí poslat JEN na vlastníka Resend účtu,
+   `karel.tuma@matematika-snadno.cz`, ne na běžné studenty).
+3. Ověřit reálným odesláním na libovolný e-mail (ne jen účet vlastníka).
+4. Commit + deploy.
+
 ### ⚠️ Vedlejší nález (netýká se soboty, ale stojí za pozornost)
 `STRIPE_PRICE_ID` (používá se pro **předplatné** appky, ne pro online testy) ukazuje
 na cenu **0 Kč / měsíc**. Buď je to záměrný testovací produkt, nebo omylem zůstala
