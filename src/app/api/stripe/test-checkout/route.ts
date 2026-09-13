@@ -120,6 +120,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: checkout.url });
   } catch (err) {
     console.error("test-checkout error:", err);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    // Stripe vrací bezpečné, uživatelsky čitelné chybové zprávy (např. „Amount
+    // must be at least..."). Zobrazit je místo obecného „Internal error" ušetří
+    // hádání při diagnostice (viz E2E test 13.9. — amount_too_small).
+    const message = err instanceof Error ? err.message : "Internal error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
