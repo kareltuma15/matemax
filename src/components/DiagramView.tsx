@@ -420,12 +420,31 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
   const aL = krychle ? d.a : d.a;              // šířka (krychle: hrana)
   const bL = krychle ? d.a : d.b;              // hloubka
   const cL = krychle ? d.a : d.c;              // výška
-  // Přední stěna + odsazení do hloubky (šikmá projekce).
-  const FTL: [number, number] = [66, 66], fw = 132, fh = 96;
+
+  // Rozměry stěn ODPOVÍDAJÍ zadaným číslům — krychle (a=a=a) tak i vizuálně
+  // vypadá jako krychle (čtvercová přední stěna), ne jako obecný kvádr se
+  // stejnými popisky nalepenými na fixní tvar (stejná třída chyby jako dřív
+  // u Obdelnik — viz parseKotaNumber výše).
+  const aNum = parseKotaNumber(aL), bNum = parseKotaNumber(bL), cNum = parseKotaNumber(cL);
+  const maxFW = 150, maxFH = 95;
+  let fw = 132, fh = 96, depLen = 48.8; // fallback = původní fixní proporce
+  if (aNum && cNum) {
+    const scale = Math.min(maxFW / aNum, maxFH / cNum);
+    fw = aNum * scale;
+    fh = cNum * scale;
+    // Hloubka: stejné měřítko jako přední stěna, ale mírně omezené, ať
+    // šikmá projekce zůstane čitelná i pro hodně "hluboké" kvádry.
+    if (bNum) depLen = Math.min(Math.max(bNum * scale, 28), 68);
+  }
+  const depAngleRad = Math.atan2(-28, 40); // původní úhel odsazení (~35° nahoru-vpravo)
+  const dep: [number, number] = [depLen * Math.cos(depAngleRad), depLen * Math.sin(depAngleRad)];
+
+  // Vycentrovat celý tvar (přední stěna + odsazení) do plátna.
+  const totalW = fw + dep[0], totalH = fh - dep[1];
+  const FTL: [number, number] = [160 - totalW / 2, 100 - totalH / 2 - dep[1]];
   const FTR: [number, number] = [FTL[0] + fw, FTL[1]];
   const FBR: [number, number] = [FTL[0] + fw, FTL[1] + fh];
   const FBL: [number, number] = [FTL[0], FTL[1] + fh];
-  const dep: [number, number] = [40, -28];
   const BTL: [number, number] = [FTL[0] + dep[0], FTL[1] + dep[1]];
   const BTR: [number, number] = [FTR[0] + dep[0], FTR[1] + dep[1]];
   const BBR: [number, number] = [FBR[0] + dep[0], FBR[1] + dep[1]];
@@ -443,21 +462,18 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       <polygon points={pts([FTL, FTR, BTR, BTL])} fill={`${AKCENT}10`} />
       <polygon points={pts([FTR, FBR, BBR, BTR])} fill={`${AKCENT}18`} />
       <polygon points={pts([FTL, FTR, FBR, FBL])} fill={`${AKCENT}0c`} />
+      {/* hrana hloubky přetažená stejnou modrou jako její popisek — barva
+          jednoznačně spojí popisek s konkrétní hranou (viz text níž). */}
+      {bL && <line x1={FTR[0]} y1={FTR[1]} x2={BTR[0]} y2={BTR[1]} stroke={AKCENT} strokeWidth="2.5" />}
       {/* kóty */}
       {aL && <text x={(FBL[0] + FBR[0]) / 2} y={FBL[1] + 17} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{aL}</text>}
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
-      {/* hloubka: tečka přímo na hraně FTR–BTR + krátká spojnice k popisku,
-          ať je jednoznačné, KTERÁ hrana se měří (dřív popisek jen "plaval"
-          vedle BTR bez vazby na konkrétní hranu). */}
+      {/* hloubka: popisek TĚSNĚ u zvýrazněné hrany (ne daleko s tenkou
+          spojnicí, jak tomu bylo dřív — Karel to i tak nerozeznal). */}
       {bL && (() => {
         const mid: [number, number] = [(FTR[0] + BTR[0]) / 2, (FTR[1] + BTR[1]) / 2];
-        const lp: [number, number] = [mid[0] + 18, mid[1] - 12];
         return (
-          <g>
-            <circle cx={mid[0]} cy={mid[1]} r="2" fill={AKCENT} stroke="none" />
-            <line x1={mid[0]} y1={mid[1]} x2={lp[0]} y2={lp[1]} strokeWidth="1" stroke={AKCENT} strokeDasharray="2 2" />
-            <text x={lp[0] + 4} y={lp[1] + 3} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>
-          </g>
+          <text x={mid[0] + 6} y={mid[1] - 4} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>
         );
       })()}
     </g>
