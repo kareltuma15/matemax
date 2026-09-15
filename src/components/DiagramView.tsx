@@ -474,11 +474,13 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {bL && (() => {
         const angleDeg = (Math.atan2(dep[1], dep[0]) * 180) / Math.PI;
         const mid: [number, number] = [(FTR[0] + BTR[0]) / 2, (FTR[1] + BTR[1]) / 2];
-        // kolmý posun "ven" z tělesa, ať text nesedí přímo na čáře, ale hned vedle ní
-        const eLen = Math.hypot(dep[0], dep[1]) || 1;
-        const ux = dep[0] / eLen, uy = dep[1] / eLen;
-        const perp: [number, number] = [uy, -ux]; // kolmo "nahoru" od hrany, nad těleso
-        const lx = mid[0] + perp[0] * 19, ly = mid[1] + perp[1] * 19;
+        // kolmý posun "ven" z tělesa — směr od středu kvádru k hraně, prodloužený
+        // (ne kolmice na hranu samotnou, ta mířila špatnou stranou do stěny)
+        const center: [number, number] = [160, 100];
+        const ox = mid[0] - center[0], oy = mid[1] - center[1];
+        const oLen = Math.hypot(ox, oy) || 1;
+        const perp: [number, number] = [ox / oLen, oy / oLen];
+        const lx = mid[0] + perp[0] * 16, ly = mid[1] + perp[1] * 16;
         return (
           <text x={lx} y={ly} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle" transform={`rotate(${angleDeg.toFixed(1)} ${lx} ${ly})`}>{bL}</text>
         );
