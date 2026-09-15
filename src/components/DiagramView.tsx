@@ -462,18 +462,45 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       <polygon points={pts([FTL, FTR, BTR, BTL])} fill={`${AKCENT}10`} />
       <polygon points={pts([FTR, FBR, BBR, BTR])} fill={`${AKCENT}18`} />
       <polygon points={pts([FTL, FTR, FBR, FBL])} fill={`${AKCENT}0c`} />
-      {/* hrana hloubky přetažená stejnou modrou jako její popisek — barva
-          jednoznačně spojí popisek s konkrétní hranou (viz text níž). */}
-      {bL && <line x1={FTR[0]} y1={FTR[1]} x2={BTR[0]} y2={BTR[1]} stroke={AKCENT} strokeWidth="2.5" />}
-      {/* kóty */}
+      {/* kóty šířky a výšky — přímo pod/vedle hrany, jednoznačné samy o sobě */}
       {aL && <text x={(FBL[0] + FBR[0]) / 2} y={FBL[1] + 17} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{aL}</text>}
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
-      {/* hloubka: popisek TĚSNĚ u zvýrazněné hrany (ne daleko s tenkou
-          spojnicí, jak tomu bylo dřív — Karel to i tak nerozeznal). */}
+      {/* hloubka: SKUTEČNÁ kótovací čára mimo těleso (technický výkres) —
+          dvě tenké vynášecí čáry vedou z obou konců hrany FTR–BTR ven ze
+          siluety tělesa k rovnoběžné kótovací čáře s číslem uprostřed.
+          Barevná hrana + blízký text (předchozí pokusy) nestačily — popisek
+          sedí u rohu, kde se sbíhá víc hran, takže je pořád nejasné, ke
+          které patří. Vynášecí čáry tuhle nejednoznačnost úplně odstraní. */}
       {bL && (() => {
+        const ex = BTR[0] - FTR[0], ey = BTR[1] - FTR[1]; // směr hrany
+        const eLen = Math.hypot(ex, ey) || 1;
+        const ux = ex / eLen, uy = ey / eLen;
+        // kolmice na hranu — vybereme stranu SMĚREM VEN z tělesa (pryč od jeho středu)
+        const centroid: [number, number] = [
+          (FTL[0] + FTR[0] + FBR[0] + FBL[0] + BTL[0] + BTR[0] + BBR[0] + BBL[0]) / 8,
+          (FTL[1] + FTR[1] + FBR[1] + FBL[1] + BTL[1] + BTR[1] + BBR[1] + BBL[1]) / 8,
+        ];
         const mid: [number, number] = [(FTR[0] + BTR[0]) / 2, (FTR[1] + BTR[1]) / 2];
+        const perpA: [number, number] = [-uy, ux];
+        const toMid: [number, number] = [mid[0] - centroid[0], mid[1] - centroid[1]];
+        const sign = perpA[0] * toMid[0] + perpA[1] * toMid[1] >= 0 ? 1 : -1;
+        const perp: [number, number] = [perpA[0] * sign, perpA[1] * sign];
+        const off = 22; // vzdálenost kótovací čáry od skutečné hrany
+        const d1: [number, number] = [FTR[0] + perp[0] * off, FTR[1] + perp[1] * off];
+        const d2: [number, number] = [BTR[0] + perp[0] * off, BTR[1] + perp[1] * off];
+        const dm: [number, number] = [(d1[0] + d2[0]) / 2, (d1[1] + d2[1]) / 2];
+        const tickA: [number, number] = [ux * 4, uy * 4]; // krátké kolmé zakončení kótovací čáry
         return (
-          <text x={mid[0] + 6} y={mid[1] - 4} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="start">{bL}</text>
+          <g>
+            {/* vynášecí čáry od skutečných rohů tělesa ke kótovací čáře */}
+            <line x1={FTR[0]} y1={FTR[1]} x2={d1[0]} y2={d1[1]} strokeWidth="0.8" stroke={AKCENT} opacity="0.6" />
+            <line x1={BTR[0]} y1={BTR[1]} x2={d2[0]} y2={d2[1]} strokeWidth="0.8" stroke={AKCENT} opacity="0.6" />
+            {/* samotná kótovací čára se zakončeními */}
+            <line x1={d1[0]} y1={d1[1]} x2={d2[0]} y2={d2[1]} strokeWidth="1.3" stroke={AKCENT} />
+            <line x1={d1[0] - tickA[0]} y1={d1[1] - tickA[1]} x2={d1[0] + tickA[0]} y2={d1[1] + tickA[1]} strokeWidth="1.3" stroke={AKCENT} />
+            <line x1={d2[0] - tickA[0]} y1={d2[1] - tickA[1]} x2={d2[0] + tickA[0]} y2={d2[1] + tickA[1]} strokeWidth="1.3" stroke={AKCENT} />
+            <text x={dm[0] + perp[0] * 12} y={dm[1] + perp[1] * 12 + 4} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle">{bL}</text>
+          </g>
         );
       })()}
     </g>
