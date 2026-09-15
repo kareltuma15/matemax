@@ -473,14 +473,13 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
           jednoznačné, ke které patří, i bez dalších pomocných prvků. */}
       {bL && (() => {
         const angleDeg = (Math.atan2(dep[1], dep[0]) * 180) / Math.PI;
-        const mid: [number, number] = [(FTR[0] + BTR[0]) / 2, (FTR[1] + BTR[1]) / 2];
-        // kolmý posun "ven" z tělesa — směr od středu kvádru k hraně, prodloužený
-        // (ne kolmice na hranu samotnou, ta mířila špatnou stranou do stěny)
-        const center: [number, number] = [160, 100];
-        const ox = mid[0] - center[0], oy = mid[1] - center[1];
-        const oLen = Math.hypot(ox, oy) || 1;
-        const perp: [number, number] = [ox / oLen, oy / oLen];
-        const lx = mid[0] + perp[0] * 16, ly = mid[1] + perp[1] * 16;
+        // levá hloubková hrana (FTL–BTL) místo pravé — vlevo nahoře je v obrázku
+        // volné místo, vpravo nahoře to koliduje s rohem karty/rámečkem
+        const mid: [number, number] = [(FTL[0] + BTL[0]) / 2, (FTL[1] + BTL[1]) / 2];
+        const eLen = Math.hypot(dep[0], dep[1]) || 1;
+        const ux = dep[0] / eLen, uy = dep[1] / eLen;
+        const perp: [number, number] = [uy, -ux]; // kolmo vlevo-nahoru, pryč od tělesa
+        const lx = mid[0] + perp[0] * 20, ly = mid[1] + perp[1] * 20;
         return (
           <text x={lx} y={ly} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle" transform={`rotate(${angleDeg.toFixed(1)} ${lx} ${ly})`}>{bL}</text>
         );
