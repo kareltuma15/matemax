@@ -465,42 +465,22 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
       {/* kóty šířky a výšky — přímo pod/vedle hrany, jednoznačné samy o sobě */}
       {aL && <text x={(FBL[0] + FBR[0]) / 2} y={FBL[1] + 17} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="middle">{aL}</text>}
       {cL && <text x={FBL[0] - 7} y={(FTL[1] + FBL[1]) / 2 + 4} fontSize="13" fontWeight="600" fill={AKCENT} stroke="none" textAnchor="end">{cL}</text>}
-      {/* hloubka: SKUTEČNÁ kótovací čára mimo těleso (technický výkres) —
-          dvě tenké vynášecí čáry vedou z obou konců hrany FTR–BTR ven ze
-          siluety tělesa k rovnoběžné kótovací čáře s číslem uprostřed.
-          Barevná hrana + blízký text (předchozí pokusy) nestačily — popisek
-          sedí u rohu, kde se sbíhá víc hran, takže je pořád nejasné, ke
-          které patří. Vynášecí čáry tuhle nejednoznačnost úplně odstraní. */}
+      {/* hloubka: popisek OTOČENÝ podél směru hrany FTR–BTR — stejná konvence
+          jako u výšky Obdelnik (otočený text = "jede" po hraně, kterou
+          popisuje). Barevná hrana i kótovací čára s vynášecími čarami
+          (předchozí pokusy) na malém mobilním displeji nestačily. Otočený
+          text vizuálně kopíruje přesně tu jednu šikmou čáru, takže je
+          jednoznačné, ke které patří, i bez dalších pomocných prvků. */}
       {bL && (() => {
-        const ex = BTR[0] - FTR[0], ey = BTR[1] - FTR[1]; // směr hrany
-        const eLen = Math.hypot(ex, ey) || 1;
-        const ux = ex / eLen, uy = ey / eLen;
-        // kolmice na hranu — vybereme stranu SMĚREM VEN z tělesa (pryč od jeho středu)
-        const centroid: [number, number] = [
-          (FTL[0] + FTR[0] + FBR[0] + FBL[0] + BTL[0] + BTR[0] + BBR[0] + BBL[0]) / 8,
-          (FTL[1] + FTR[1] + FBR[1] + FBL[1] + BTL[1] + BTR[1] + BBR[1] + BBL[1]) / 8,
-        ];
+        const angleDeg = (Math.atan2(dep[1], dep[0]) * 180) / Math.PI;
         const mid: [number, number] = [(FTR[0] + BTR[0]) / 2, (FTR[1] + BTR[1]) / 2];
-        const perpA: [number, number] = [-uy, ux];
-        const toMid: [number, number] = [mid[0] - centroid[0], mid[1] - centroid[1]];
-        const sign = perpA[0] * toMid[0] + perpA[1] * toMid[1] >= 0 ? 1 : -1;
-        const perp: [number, number] = [perpA[0] * sign, perpA[1] * sign];
-        const off = 22; // vzdálenost kótovací čáry od skutečné hrany
-        const d1: [number, number] = [FTR[0] + perp[0] * off, FTR[1] + perp[1] * off];
-        const d2: [number, number] = [BTR[0] + perp[0] * off, BTR[1] + perp[1] * off];
-        const dm: [number, number] = [(d1[0] + d2[0]) / 2, (d1[1] + d2[1]) / 2];
-        const tickA: [number, number] = [ux * 4, uy * 4]; // krátké kolmé zakončení kótovací čáry
+        // kolmý posun "ven" z tělesa, ať text nesedí přímo na čáře, ale hned vedle ní
+        const eLen = Math.hypot(dep[0], dep[1]) || 1;
+        const ux = dep[0] / eLen, uy = dep[1] / eLen;
+        const perp: [number, number] = [uy, -ux]; // kolmo "nahoru" od hrany, nad těleso
+        const lx = mid[0] + perp[0] * 12, ly = mid[1] + perp[1] * 12;
         return (
-          <g>
-            {/* vynášecí čáry od skutečných rohů tělesa ke kótovací čáře */}
-            <line x1={FTR[0]} y1={FTR[1]} x2={d1[0]} y2={d1[1]} strokeWidth="0.8" stroke={AKCENT} opacity="0.6" />
-            <line x1={BTR[0]} y1={BTR[1]} x2={d2[0]} y2={d2[1]} strokeWidth="0.8" stroke={AKCENT} opacity="0.6" />
-            {/* samotná kótovací čára se zakončeními */}
-            <line x1={d1[0]} y1={d1[1]} x2={d2[0]} y2={d2[1]} strokeWidth="1.3" stroke={AKCENT} />
-            <line x1={d1[0] - tickA[0]} y1={d1[1] - tickA[1]} x2={d1[0] + tickA[0]} y2={d1[1] + tickA[1]} strokeWidth="1.3" stroke={AKCENT} />
-            <line x1={d2[0] - tickA[0]} y1={d2[1] - tickA[1]} x2={d2[0] + tickA[0]} y2={d2[1] + tickA[1]} strokeWidth="1.3" stroke={AKCENT} />
-            <text x={dm[0] + perp[0] * 12} y={dm[1] + perp[1] * 12 + 4} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle">{bL}</text>
-          </g>
+          <text x={lx} y={ly} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle" transform={`rotate(${angleDeg.toFixed(1)} ${lx} ${ly})`}>{bL}</text>
         );
       })()}
     </g>
