@@ -478,7 +478,7 @@ function Kvadr({ d }: { d: Extract<Diagram, { typ: "teleso" }> }) {
         const eLen = Math.hypot(dep[0], dep[1]) || 1;
         const ux = dep[0] / eLen, uy = dep[1] / eLen;
         const perp: [number, number] = [uy, -ux]; // kolmo "nahoru" od hrany, nad těleso
-        const lx = mid[0] + perp[0] * 12, ly = mid[1] + perp[1] * 12;
+        const lx = mid[0] + perp[0] * 19, ly = mid[1] + perp[1] * 19;
         return (
           <text x={lx} y={ly} fontSize="13" fontWeight="700" fill={AKCENT} stroke="none" textAnchor="middle" transform={`rotate(${angleDeg.toFixed(1)} ${lx} ${ly})`}>{bL}</text>
         );
