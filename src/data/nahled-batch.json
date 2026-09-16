@@ -1,4 +1,85 @@
 {
-  "nazev": "Geometrie — L1 (dávka 1, 8 úloh, obrázkové — všechny základní tvary) — ZAPSÁNO",
-  "examples": []
+  "nazev": "Geometrie — L2 (dávka 1, 10 úloh, obrázkové — povrchy, Pythagorova věta, slovní úlohy)",
+  "examples": [
+    {
+      "id": "GEOB2_01", "tema": "geometrie", "podtema": "rovinne", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "kruh", "polomer": "r = 5 cm" } },
+      "zadani": "Kruh má poloměr 5 cm. Urči jeho obsah. Počítej s π ≈ 3,14.",
+      "odpoved": "78,5 cm²",
+      "reseni_kroky": ["Obsah kruhu = π · r².", "S = 3,14 · 5².", "S = 3,14 · 25 = 78,5 cm²."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_02", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "krychle", "a": "4 cm" } },
+      "zadani": "Krychle má hranu 4 cm. Urči její povrch.",
+      "odpoved": "96 cm²",
+      "reseni_kroky": ["Povrch krychle = 6 · a².", "S = 6 · 4².", "S = 6 · 16 = 96 cm²."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_03", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "kvadr", "a": "5 cm", "b": "3 cm", "c": "2 cm" } },
+      "zadani": "Kvádr má rozměry 5 cm, 3 cm a 2 cm. Urči jeho povrch.",
+      "odpoved": "62 cm²",
+      "reseni_kroky": ["Povrch kvádru = 2 · (a·b + b·c + a·c).", "S = 2 · (5·3 + 3·2 + 5·2) = 2 · (15 + 6 + 10).", "S = 2 · 31 = 62 cm²."],
+      "cas_sekund": 90, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_04", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "valec", "r": "r = 2 cm", "v": "v = 5 cm" } },
+      "zadani": "Válec má poloměr podstavy 2 cm a výšku 5 cm. Urči jeho povrch. Počítej s π ≈ 3,14.",
+      "odpoved": "87,92 cm²",
+      "reseni_kroky": ["Povrch válce = 2 · π · r² + 2 · π · r · v (dvě podstavy + plášť).", "S = 2 · 3,14 · 2² + 2 · 3,14 · 2 · 5 = 25,12 + 62,8.", "S = 87,92 cm²."],
+      "cas_sekund": 90, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_05", "tema": "geometrie", "podtema": "pythagorova_veta", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 90, "strany": { "b": "6 cm", "c": "8 cm" } } },
+      "zadani": "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Urči délku přepony.",
+      "odpoved": "10 cm",
+      "reseni_kroky": ["Podle Pythagorovy věty: a² = b² + c² (a = přepona, b, c = odvěsny).", "a² = 6² + 8² = 36 + 64 = 100.", "a = √100 = 10 cm."],
+      "cas_sekund": 90, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_06", "tema": "geometrie", "podtema": "pythagorova_veta", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 90, "strany": { "a": "13 cm", "b": "5 cm" } } },
+      "zadani": "Pravoúhlý trojúhelník má přeponu 13 cm a jednu odvěsnu 5 cm. Urči délku druhé odvěsny.",
+      "odpoved": "12 cm",
+      "reseni_kroky": ["Podle Pythagorovy věty: a² = b² + c² (a = přepona).", "c² = a² − b² = 13² − 5² = 169 − 25 = 144.", "c = √144 = 12 cm."],
+      "cas_sekund": 90, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_07", "tema": "geometrie", "podtema": "rovinne", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "strany": { "a": "7 cm", "b": "9 cm", "c": "11 cm" } } },
+      "zadani": "Trojúhelník má strany 7 cm, 9 cm a 11 cm. Urči jeho obvod.",
+      "odpoved": "27 cm",
+      "reseni_kroky": ["Obvod trojúhelníku = a + b + c.", "o = 7 + 9 + 11.", "o = 27 cm."],
+      "cas_sekund": 60, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_08", "tema": "geometrie", "podtema": "rovinne", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "lichobeznik", "a": "10 cm", "c": "6 cm", "b": "5 cm", "d": "5 cm" } },
+      "zadani": "Rovnoramenný lichoběžník má základny 10 cm a 6 cm, ramena mají každé 5 cm. Urči jeho obvod.",
+      "odpoved": "26 cm",
+      "reseni_kroky": ["Obvod lichoběžníku = a + b + c + d (součet všech stran).", "o = 10 + 5 + 6 + 5.", "o = 26 cm."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_09", "tema": "geometrie", "podtema": "rovinne", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "obdelnik", "sirka": "12 m", "vyska": "8 m" } },
+      "zadani": "Zahrada tvaru obdélníku má rozměry 12 m a 8 m. Kolik metrů pletiva je potřeba na oplocení celé zahrady?",
+      "odpoved": "40 m",
+      "reseni_kroky": ["Obvod obdélníku = 2 · (a + b).", "o = 2 · (12 + 8) = 2 · 20.", "o = 40 m."],
+      "cas_sekund": 75, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB2_10", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 2,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "kvadr", "a": "50 cm", "b": "40 cm", "c": "30 cm" } },
+      "zadani": "Akvárium tvaru kvádru má rozměry 50 cm, 40 cm a 30 cm. Kolik litrů vody se do něj vejde? (1 l = 1000 cm³)",
+      "odpoved": "60 l",
+      "reseni_kroky": ["Objem kvádru = a · b · c.", "V = 50 · 40 · 30 = 60 000 cm³.", "1 l = 1000 cm³, takže V = 60 000 : 1000 = 60 l."],
+      "cas_sekund": 90, "sm2_interval": 1
+    }
+  ]
 }
