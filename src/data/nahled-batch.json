@@ -1,4 +1,69 @@
 {
-  "nazev": "Geometrie — L2 (dávka 1, 10 úloh, obrázkové — vícekrokové úlohy blízké CERMAT) — ZAPSÁNO",
-  "examples": []
+  "nazev": "Geometrie — L3 (dávka 1, 8 úloh, obrázkové — nejtěžší, blízké CERMAT přijímačkám)",
+  "examples": [
+    {
+      "id": "GEOB3_01", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "kvadr", "a": "5 m", "b": "4 m", "c": "3 m" } },
+      "zadani": "Bazén tvaru kvádru má dno o rozměrech 5 m a 4 m a má se naplnit do hloubky 3 m. Kolik m³ vody je potřeba, a kolik bude stát napuštění, když 1 m³ vody stojí 45 Kč?",
+      "odpoved": "2 700 Kč",
+      "reseni_kroky": ["Objem vody: V = a · b · c = 5 · 4 · 3 = 60 m³.", "Cena: 60 · 45 Kč za m³.", "Naplnění bude stát 2 700 Kč."],
+      "cas_sekund": 130, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_02", "tema": "geometrie", "podtema": "pythagorova_veta", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "kvadr", "a": "3 m", "b": "4 m", "c": "12 m" } },
+      "zadani": "Krabice má rozměry 3 m, 4 m a 12 m. Jak dlouhá je její tělesová úhlopříčka (nejdelší úsečka spojující dva protilehlé rohy krabice)?",
+      "odpoved": "13 m",
+      "reseni_kroky": ["Nejdřív úhlopříčka dna (obdélník 3 × 4 m): d² = 3² + 4² = 9 + 16 = 25, d = 5 m.", "Tělesová úhlopříčka spojuje tuto úhlopříčku dna se svislou hranou 12 m: u² = d² + 12² = 5² + 12² = 25 + 144 = 169.", "u = √169 = 13 m."],
+      "cas_sekund": 150, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_03", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "krychle", "a": "6 cm" } },
+      "zadani": "Dvě krychle mají hrany 2 cm a 6 cm. Kolikrát je objem větší krychle větší než objem menší krychle?",
+      "odpoved": "27krát",
+      "reseni_kroky": ["Objem menší krychle: V₁ = 2³ = 8 cm³.", "Objem větší krychle: V₂ = 6³ = 216 cm³.", "Poměr: V₂ : V₁ = 216 : 8 = 27 — větší krychle má 27krát větší objem."],
+      "cas_sekund": 130, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_04", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "valec", "r": "r = 5 dm", "v": "v = 8 dm" } },
+      "zadani": "Nádrž tvaru válce má poloměr podstavy 5 dm a výšku 8 dm. Čerpadlo do ní pouští vodu rychlostí 62,8 litru za minutu. Za kolik minut bude nádrž plná? Počítej s π ≈ 3,14. (1 dm³ = 1 l)",
+      "odpoved": "10 minut",
+      "reseni_kroky": ["Objem nádrže: V = π · r² · v = 3,14 · 5² · 8 = 3,14 · 25 · 8 = 628 dm³ = 628 l.", "Čas = objem : rychlost = 628 : 62,8.", "Nádrž bude plná za 10 minut."],
+      "cas_sekund": 140, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_05", "tema": "geometrie", "podtema": "rovinne", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 90, "strany": { "b": "9 m", "c": "12 m" } } },
+      "zadani": "Zahradní záhon má tvar pravoúhlého trojúhelníku s odvěsnami 9 m a 12 m. Uprostřed záhonu je čtvercový skleník o straně 3 m. Kolik m² záhonu zbyde na zeleninu?",
+      "odpoved": "45 m²",
+      "reseni_kroky": ["Obsah trojúhelníkového záhonu: S = (9 · 12) / 2 = 108 / 2 = 54 m².", "Obsah skleníku: 3² = 9 m².", "Na zeleninu zbyde 54 − 9 = 45 m²."],
+      "cas_sekund": 140, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_06", "tema": "geometrie", "podtema": "prostorova", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "teleso", "tvar": "kvadr", "a": "8 cm", "b": "6 cm" } },
+      "zadani": "Krabice tvaru kvádru má objem 240 cm³. Její dno má rozměry 8 cm a 6 cm. Urči povrch krabice.",
+      "odpoved": "236 cm²",
+      "reseni_kroky": ["Výška: V = a · b · c, takže c = V : (a · b) = 240 : (8 · 6) = 240 : 48 = 5 cm.", "Povrch: S = 2 · (a·b + b·c + a·c) = 2 · (48 + 30 + 40) = 2 · 118.", "S = 236 cm²."],
+      "cas_sekund": 150, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_07", "tema": "geometrie", "podtema": "rovinne", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "kruh", "polomer": "r = 8 m" } },
+      "zadani": "Kruhový bazén s poloměrem 6 m je po celém obvodu obklopený betonovým chodníkem širokým 2 m (vnější poloměr celého kruhu je tedy 8 m). Kolik m² zabírá samotný chodník (bez bazénu)? Počítej s π ≈ 3,14.",
+      "odpoved": "87,92 m²",
+      "reseni_kroky": ["Obsah velkého kruhu (bazén + chodník): S₁ = π · 8² = 3,14 · 64 = 200,96 m².", "Obsah samotného bazénu: S₂ = π · 6² = 3,14 · 36 = 113,04 m².", "Chodník: S₁ − S₂ = 200,96 − 113,04 = 87,92 m²."],
+      "cas_sekund": 150, "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_08", "tema": "geometrie", "podtema": "pythagorova_veta", "obtiznost": 3,
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 90, "strany": { "b": "90 m", "c": "120 m" } } },
+      "zadani": "Fotbalové hřiště je obdélníkové, rozměry 90 m a 120 m. O kolik metrů je kratší cesta po úhlopříčce hřiště než cesta podél dvou stran?",
+      "odpoved": "60 m",
+      "reseni_kroky": ["Cesta podél dvou stran: 90 + 120 = 210 m.", "Úhlopříčka: u² = 90² + 120² = 8 100 + 14 400 = 22 500, u = √22 500 = 150 m.", "Rozdíl: 210 − 150 = 60 m."],
+      "cas_sekund": 140, "sm2_interval": 1
+    }
+  ]
 }
