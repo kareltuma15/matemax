@@ -5,14 +5,7 @@
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://matemax.matematika-snadno.cz";
 
-// ⚠️ DOČASNÝ FALLBACK (2026-09-12): matematika-snadno.cz ještě není ověřená
-// doména v Resendu (DNS záznamy se právě přidávají, viz
-// docs/E2E-PREREKVIZITY-A-CHECKLIST.md). Do doverifikování posíláme z
-// onboarding@resend.dev, což ale doručí JEN na e-mail, kterým je založený
-// Resend účet (karel.tuma15@gmail.com) — jiný příjemce dostane chybu.
-// AŽ DOMÉNA ZVERIFIKUJE (Resend dashboard → Domains → status "verified"),
-// vrať zpět na: "MateMax <noreply@matematika-snadno.cz>".
-const FROM = "MateMax <onboarding@resend.dev>";
+const FROM = "MateMax <noreply@matematika-snadno.cz>";
 
 export function esc(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
