@@ -43,7 +43,7 @@
     },
     {
       "id": "GEOB2_06", "tema": "geometrie", "podtema": "pythagorova_veta", "obtiznost": 2,
-      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 90, "strany": { "a": "13 m", "b": "5 m" } } },
+      "image": { "kind": "parametric", "diagram": { "typ": "trojuhelnik", "alfa": 90, "strany": { "a": "13 m", "c": "5 m" } } },
       "zadani": "Žebřík dlouhý 13 m je opřený o svislou zeď tak, že jeho pata je 5 m od paty zdi. Do jaké výšky na zdi žebřík sahá?",
       "odpoved": "12 m",
       "reseni_kroky": ["Žebřík, zeď a zem tvoří pravoúhlý trojúhelník — žebřík (13 m) je přepona, vzdálenost paty od zdi (5 m) jedna odvěsna.", "Podle Pythagorovy věty: výška² = 13² − 5² = 169 − 25 = 144.", "výška = √144 = 12 m."],
