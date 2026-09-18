@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     try {
       // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error }.
       const { error: sendErr } = await resend.emails.send({
-        from: "MateMax <onboarding@resend.dev>",
+        from: "MateMax <noreply@matematika-snadno.cz>",
         to: parentEmail,
         subject: "✅ Přihlášení k týdennímu reportu MateMax",
         html,
