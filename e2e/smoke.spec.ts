@@ -33,6 +33,21 @@ test.describe("chráněné trasy přesměrují nepřihlášeného", () => {
   });
 });
 
+// Admin není kryté proxy — stránka se přesměruje na klientu a data chrání API (Bearer token).
+test.describe("admin není dostupný bez přihlášení", () => {
+  test("/admin → /prihlaseni", async ({ page }) => {
+    await page.goto("/admin");
+    await expect(page).toHaveURL(/\/prihlaseni/);
+  });
+
+  for (const endpoint of ["/api/admin/users", "/api/admin/stats", "/api/admin/testy"]) {
+    test(`${endpoint} bez tokenu vrací 401`, async ({ request }) => {
+      const res = await request.get(endpoint);
+      expect(res.status()).toBe(401);
+    });
+  }
+});
+
 test("bezpečnostní hlavičky jsou nastavené", async ({ request }) => {
   const res = await request.get("/");
   const h = res.headers();
