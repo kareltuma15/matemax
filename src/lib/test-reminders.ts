@@ -121,8 +121,9 @@ export async function runTestReminders(): Promise<ReminderResult> {
           sessionId: s.id, archUrl: await archUrl(s),
         });
         if (ok) {
-          await supabaseAdmin.from("online_test_enrollments")
+          const { error: flagErr } = await supabaseAdmin.from("online_test_enrollments")
             .update({ reminder_24h_sent_at: new Date().toISOString() }).eq("id", e.id);
+          if (flagErr) console.error("[test-reminders] příznak reminder_24h_sent_at se neuložil (hrozí opakovaný e-mail):", e.id, flagErr);
           sent24h++;
         } else failed++;
       }
@@ -132,8 +133,9 @@ export async function runTestReminders(): Promise<ReminderResult> {
           to, jmeno, title: s.title, scheduledAt: s.scheduled_at, sessionId: s.id,
         });
         if (ok) {
-          await supabaseAdmin.from("online_test_enrollments")
+          const { error: flagErr } = await supabaseAdmin.from("online_test_enrollments")
             .update({ reminder_1h_sent_at: new Date().toISOString() }).eq("id", e.id);
+          if (flagErr) console.error("[test-reminders] příznak reminder_1h_sent_at se neuložil (hrozí opakovaný e-mail):", e.id, flagErr);
           sent1h++;
         } else failed++;
       }

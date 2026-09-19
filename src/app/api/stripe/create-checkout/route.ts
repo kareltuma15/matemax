@@ -42,10 +42,13 @@ export async function POST(req: Request) {
       customerId = customer.id;
 
       // Upsert so the customer ID is stored even before payment
-      await supabaseAdmin.from("user_premium").upsert(
+      const { error: saveErr } = await supabaseAdmin.from("user_premium").upsert(
         { user_id: user.id, stripe_customer_id: customerId, is_premium: false },
         { onConflict: "user_id" }
       );
+      // Platbu kvůli tomu nerušíme (webhook páruje i přes metadata.supabase_user_id), ale
+      // bez uloženého customer id by příští nákup založil dalšího zákazníka ve Stripe.
+      if (saveErr) console.error("[create-checkout] uložení stripe_customer_id selhalo:", saveErr);
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://matemax.matematika-snadno.cz";

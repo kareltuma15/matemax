@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { reportDbError } from "@/lib/db-error";
 import { PENDING_REF_KEY } from "@/lib/referral";
 
 export default function RegistraceForm() {
@@ -86,7 +87,7 @@ export default function RegistraceForm() {
           { user_id: data.session.user.id, current_state: "registered" },
           { onConflict: "user_id" }
         )
-        .then(() => {});
+        .then(({ error }) => reportDbError("user_onboarding.registered", error));
 
       router.push("/vitej");
     } else {

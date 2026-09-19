@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { reportDbError } from "@/lib/db-error";
 import { PENDING_REF_KEY } from "@/lib/referral";
 import { DIAGNOSTIC_MINUTES } from "@/lib/site-stats";
 import { vokativ } from "@/lib/vokativ";
@@ -50,7 +51,7 @@ export default function VitejPage() {
           { user_id: uid, current_state: "welcome_shown" },
           { onConflict: "user_id" }
         )
-        .then(() => {});
+        .then(({ error }) => reportDbError("user_onboarding.welcome_shown", error));
 
       // Process pending referral
       const pendingRef = localStorage.getItem(PENDING_REF_KEY);

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { reportDbError } from "@/lib/db-error";
 
 export function usePremium() {
   const [isPremium, setIsPremium] = useState(false);
@@ -32,10 +33,10 @@ export function usePremium() {
             } else {
               // Trial expired — revoke
               setIsPremium(false);
-              supabase!.from("user_premium").upsert(
-                { user_id: uid, is_premium: false },
-                { onConflict: "user_id" }
-              ).then(() => {});
+              supabase!.from("user_premium")
+                .update({ is_premium: false })
+                .eq("user_id", uid)
+                .then(({ error }) => reportDbError("user_premium.revoke", error));
             }
           } else {
             setIsPremium(false);

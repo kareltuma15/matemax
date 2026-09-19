@@ -1,5 +1,6 @@
 // Storage facade — localStorage now, Supabase once a user is logged in
 import { supabase } from "./supabase";
+import { reportDbError } from "./db-error";
 import { SM2Card, UserProgress } from "@/types";
 import { loadGamification, saveGamification, GamificationState } from "./gamification";
 
@@ -67,24 +68,27 @@ export function localLoadProgress(): UserProgress {
 
 export async function remoteLogSession(data: SessionRow): Promise<void> {
   if (!supabase) return;
-  await supabase.from("sessions").insert(data);
+  const { error } = await supabase.from("sessions").insert(data);
+  reportDbError("sessions.insert", error);
 }
 
 export async function remoteSaveSM2Card(data: SM2Row): Promise<void> {
   if (!supabase) return;
-  await supabase
+  const { error } = await supabase
     .from("sm2_cards")
     .upsert(data, { onConflict: "user_id,example_id" });
+  reportDbError("sm2_cards.upsert", error);
 }
 
 export async function remoteSyncXP(userId: string, totalXp: number, levelKey: string, freezeCount = 0, streak = 0): Promise<void> {
   if (!supabase) return;
-  await supabase
+  const { error } = await supabase
     .from("user_xp")
     .upsert(
       { user_id: userId, total_xp: totalXp, current_level: levelKey, freeze_count: freezeCount, streak, updated_at: new Date().toISOString() },
       { onConflict: "user_id" }
     );
+  reportDbError("user_xp.upsert", error);
 }
 
 export async function remoteSyncDiagResults(
@@ -100,7 +104,8 @@ export async function remoteSyncDiagResults(
     updated_at: new Date().toISOString(),
   }));
   if (rows.length === 0) return;
-  await supabase.from("diagnostic_results").upsert(rows, { onConflict: "user_id,tema" });
+  const { error } = await supabase.from("diagnostic_results").upsert(rows, { onConflict: "user_id,tema" });
+  reportDbError("diagnostic_results.upsert", error);
 }
 
 // ── Session history (local) ───────────────────────────────────────────────────
@@ -132,7 +137,8 @@ export async function remoteSyncBadges(userId: string, badgeIds: string[]): Prom
     earned_at: new Date().toISOString(),
     seen: false,
   }));
-  await supabase.from("user_badges").upsert(rows, { onConflict: "user_id,badge_id" });
+  const { error } = await supabase.from("user_badges").upsert(rows, { onConflict: "user_id,badge_id" });
+  reportDbError("user_badges.upsert", error);
 }
 
 // ── Záloha gamifikace ────────────────────────────────────────────────────────
@@ -144,10 +150,11 @@ export async function remoteSyncGamification(
   state: GamificationState
 ): Promise<void> {
   if (!supabase) return;
-  await supabase.from("user_gamification").upsert(
+  const { error } = await supabase.from("user_gamification").upsert(
     { user_id: userId, state, updated_at: new Date().toISOString() },
     { onConflict: "user_id" }
   );
+  reportDbError("user_gamification.upsert", error);
 }
 
 // ── Obnovení postupu po přihlášení ───────────────────────────────────────────

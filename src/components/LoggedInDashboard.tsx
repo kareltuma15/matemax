@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { reportDbError } from "@/lib/db-error";
 import XPProgressBar from "@/components/XPProgressBar";
 import BottomNav from "@/components/BottomNav";
 import { TEMA_LABELS, temaLabel } from "@/types";
@@ -396,10 +397,11 @@ export default function LoggedInDashboard({
 
   async function markMessageRead() {
     if (!supabase || !parentMessageId) return;
-    await supabase
+    const { error } = await supabase
       .from("parent_messages")
       .update({ read_at: new Date().toISOString() })
       .eq("id", parentMessageId);
+    reportDbError("parent_messages.mark_read", error);
     setParentMessage(null);
     setParentMessageId(null);
   }

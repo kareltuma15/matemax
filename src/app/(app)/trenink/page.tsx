@@ -9,6 +9,7 @@ import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
 import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, remoteSyncGamification, localSaveSession } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
+import { reportDbError } from "@/lib/db-error";
 import {
   loadGamification,
   saveGamification,
@@ -481,7 +482,7 @@ function TreningPageInner() {
 
         // Onboarding: první session dokončena
         if (isFirstSession && supabase) {
-          await supabase
+          const { error: onbErr } = await supabase
             .from("user_onboarding")
             .upsert(
               {
@@ -491,6 +492,7 @@ function TreningPageInner() {
               },
               { onConflict: "user_id" }
             );
+          reportDbError("user_onboarding.first_session", onbErr);
         }
       } catch {
         // Sync failure is non-critical — data is already saved locally
