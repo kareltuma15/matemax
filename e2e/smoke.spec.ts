@@ -48,6 +48,26 @@ test.describe("admin není dostupný bez přihlášení", () => {
   }
 });
 
+// Trasy, které zapisují do databáze, musí odmítnout nepřihlášeného ještě před jakýmkoli zápisem.
+test.describe("zapisující trasy odmítnou nepřihlášeného", () => {
+  test("/api/referral bez tokenu → 401", async ({ request }) => {
+    const res = await request.post("/api/referral", { data: { referralCode: "ABCD1234" } });
+    expect(res.status()).toBe(401);
+  });
+
+  test("/api/push-subscribe bez session → 401 (userId z těla se nebere v potaz)", async ({ request }) => {
+    const res = await request.post("/api/push-subscribe", {
+      data: { subscription: { endpoint: "https://example.com/push/test" }, userId: "00000000-0000-0000-0000-000000000000" },
+    });
+    expect(res.status()).toBe(401);
+  });
+
+  test("/api/push-subscribe s neplatným odběrem → 400", async ({ request }) => {
+    const res = await request.post("/api/push-subscribe", { data: { subscription: { endpoint: "http://nezabezpecene" } } });
+    expect(res.status()).toBe(400);
+  });
+});
+
 test("bezpečnostní hlavičky jsou nastavené", async ({ request }) => {
   const res = await request.get("/");
   const h = res.headers();

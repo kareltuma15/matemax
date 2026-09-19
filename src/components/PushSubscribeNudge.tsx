@@ -34,11 +34,12 @@ export default function PushSubscribeNudge({ streak, userId }: Props) {
         userVisibleOnly: true,
         applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
       });
-      await fetch("/api/push-subscribe", {
+      const res = await fetch("/api/push-subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ subscription: sub.toJSON(), userId }),
       });
+      if (!res.ok) throw new Error(`push-subscribe ${res.status}`);
       setDone(true);
       setTimeout(() => setVisible(false), 2000);
     } catch {

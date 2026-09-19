@@ -388,11 +388,12 @@ export default function ProfilPage() {
           applicationServerKey: vapidKey,
         });
         const userId = (await supabase?.auth.getSession())?.data.session?.user.id;
-        await fetch("/api/push-subscribe", {
+        const res = await fetch("/api/push-subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ subscription: sub.toJSON(), userId }),
         });
+        if (!res.ok) throw new Error(`push-subscribe ${res.status}`);
       } else {
         await reg.showNotification("MateMax", {
           body: "Připomenutí jsou aktivní! Každý den ti připomeneme trénink.",
