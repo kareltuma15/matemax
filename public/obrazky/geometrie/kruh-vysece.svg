@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 244" width="300" height="244" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Kruh o poloměru 12 cm rozdělený na dvě bílé výseče o úhlu 120° a čtyři šedé shodné výseče</title>
+  <path d="M150 122 L246 122 A96 96 0 0 1 102 205.14 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M150 122 L102 205.14 A96 96 0 0 1 66.86 170 Z" fill="#c9ced6" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M150 122 L66.86 170 A96 96 0 0 1 54 122 Z" fill="#c9ced6" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M150 122 L54 122 A96 96 0 0 1 198 38.86 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M150 122 L198 38.86 A96 96 0 0 1 233.14 74 Z" fill="#c9ced6" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M150 122 L233.14 74 A96 96 0 0 1 246 122 Z" fill="#c9ced6" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M180 122 A30 30 0 0 1 135 147.98" fill="none" stroke="#2E6DA4" stroke-width="1.6"/>
+  <text x="175" y="170.3" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle">120°</text>
+  <text x="198" y="115" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle">12 cm</text>
+</svg>

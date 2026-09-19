@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 246" width="350" height="246" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélníková zahrada 25 m krát 16 m, uprostřed bazén 15 m krát 6 m obklopený chodníkem širokým 1,5 m</title>
+  <rect x="52" y="28" width="250" height="160" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <rect x="87" y="63" width="180" height="90" fill="#e5e7eb" stroke="#6b7280" stroke-width="1.4"/>
+  <rect x="102" y="78" width="150" height="60" fill="#bfdbfe" stroke="#2E6DA4" stroke-width="1.8"/>
+  <text x="177" y="105" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">bazén</text>
+  <text x="177" y="121" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">15 m × 6 m</text>
+  <text x="177" y="74.5" font-size="11" font-weight="600" fill="#374151" text-anchor="middle">chodník 1,5 m</text>
+  <text x="177" y="169.5" font-size="11" font-weight="600" fill="#374151" text-anchor="middle">chodník 1,5 m</text>
+  <line x1="52" y1="192" x2="52" y2="215" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="302" y1="192" x2="302" y2="215" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="52" y1="210" x2="302" y2="210" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="52" y1="206" x2="52" y2="214" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="302" y1="206" x2="302" y2="214" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="177" y="226" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle">25 m</text>
+  <line x1="48" y1="28" x2="26" y2="28" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="48" y1="188" x2="26" y2="188" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="30" y1="28" x2="30" y2="188" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="26" y1="28" x2="34" y2="28" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="26" y1="188" x2="34" y2="188" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="24" y="112" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle" transform="rotate(-90 24 112)">16 m</text>
+</svg>

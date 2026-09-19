@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 205" width="330" height="205" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Dva pravidelné čtyřboké hranoly se stejnou podstavou, rozdíl jejich výšek je označen otazníkem</title>
+  <g transform="translate(62 66)">
+<polygon points="13.5,3 23.5,3 28,0 18,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="23.5,3 33.5,3 38,0 28,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="33.5,3 43.5,3 48,0 38,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="53.5,103 58,100 58,90 53.5,93" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,93 58,90 58,80 53.5,83" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,83 58,80 58,70 53.5,73" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,73 58,70 58,60 53.5,63" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,63 58,60 58,50 53.5,53" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,53 58,50 58,40 53.5,43" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,43 58,40 58,30 53.5,33" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,33 58,30 58,20 53.5,23" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,23 58,20 58,10 53.5,13" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,13 58,10 58,0 53.5,3" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="43.5,3 53.5,3 58,0 48,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="9,6 19,6 23.5,3 13.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="19,6 29,6 33.5,3 23.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="29,6 39,6 43.5,3 33.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="49,106 53.5,103 53.5,93 49,96" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,96 53.5,93 53.5,83 49,86" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,86 53.5,83 53.5,73 49,76" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,76 53.5,73 53.5,63 49,66" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,66 53.5,63 53.5,53 49,56" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,56 53.5,53 53.5,43 49,46" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,46 53.5,43 53.5,33 49,36" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,36 53.5,33 53.5,23 49,26" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,26 53.5,23 53.5,13 49,16" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,16 53.5,13 53.5,3 49,6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="39,6 49,6 53.5,3 43.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="4.5,9 14.5,9 19,6 9,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="14.5,9 24.5,9 29,6 19,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="24.5,9 34.5,9 39,6 29,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="44.5,109 49,106 49,96 44.5,99" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,99 49,96 49,86 44.5,89" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,89 49,86 49,76 44.5,79" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,79 49,76 49,66 44.5,69" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,69 49,66 49,56 44.5,59" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,59 49,56 49,46 44.5,49" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,49 49,46 49,36 44.5,39" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,39 49,36 49,26 44.5,29" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,29 49,26 49,16 44.5,19" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,19 49,16 49,6 44.5,9" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="34.5,9 44.5,9 49,6 39,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,112 10,112 10,102 0,102" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,102 10,102 10,92 0,92" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,92 10,92 10,82 0,82" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,82 10,82 10,72 0,72" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,72 10,72 10,62 0,62" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,62 10,62 10,52 0,52" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,52 10,52 10,42 0,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,42 10,42 10,32 0,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,32 10,32 10,22 0,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,22 10,22 10,12 0,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,12 10,12 14.5,9 4.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="10,112 20,112 20,102 10,102" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,102 20,102 20,92 10,92" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,92 20,92 20,82 10,82" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,82 20,82 20,72 10,72" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,72 20,72 20,62 10,62" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,62 20,62 20,52 10,52" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,52 20,52 20,42 10,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,42 20,42 20,32 10,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,32 20,32 20,22 10,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,22 20,22 20,12 10,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,12 20,12 24.5,9 14.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="20,112 30,112 30,102 20,102" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,102 30,102 30,92 20,92" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,92 30,92 30,82 20,82" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,82 30,82 30,72 20,72" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,72 30,72 30,62 20,62" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,62 30,62 30,52 20,52" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,52 30,52 30,42 20,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,42 30,42 30,32 20,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,32 30,32 30,22 20,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,22 30,22 30,12 20,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,12 30,12 34.5,9 24.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="30,112 40,112 40,102 30,102" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,112 44.5,109 44.5,99 40,102" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,102 40,102 40,92 30,92" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,102 44.5,99 44.5,89 40,92" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,92 40,92 40,82 30,82" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,92 44.5,89 44.5,79 40,82" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,82 40,82 40,72 30,72" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,82 44.5,79 44.5,69 40,72" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,72 40,72 40,62 30,62" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,72 44.5,69 44.5,59 40,62" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,62 40,62 40,52 30,52" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,62 44.5,59 44.5,49 40,52" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,52 40,52 40,42 30,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,52 44.5,49 44.5,39 40,42" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,42 40,42 40,32 30,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,42 44.5,39 44.5,29 40,32" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,32 40,32 40,22 30,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,32 44.5,29 44.5,19 40,22" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,22 40,22 40,12 30,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,22 44.5,19 44.5,9 40,12" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,12 40,12 44.5,9 34.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M28 0L18 0M18 0L13.5 3M38 0L28 0M48 0L38 0M53.5 103L58 100M58 100L58 90M58 90L58 80M58 80L58 70M58 70L58 60M58 60L58 50M58 50L58 40M58 40L58 30M58 30L58 20M58 20L58 10M58 10L58 0M58 0L53.5 3M53.5 3L58 0M58 0L48 0M13.5 3L9 6M49 106L53.5 103M53.5 3L49 6M49 6L53.5 3M9 6L4.5 9M44.5 109L49 106M49 6L44.5 9M44.5 9L49 6M0 112L10 112M0 102L0 112M0 92L0 102M0 82L0 92M0 72L0 82M0 62L0 72M0 52L0 62M0 42L0 52M0 32L0 42M0 22L0 32M10 12L0 12M0 12L0 22M0 12L10 12M4.5 9L0 12M10 112L20 112M20 12L10 12M10 12L20 12M20 112L30 112M30 12L20 12M20 12L30 12M30 112L40 112M40 112L40 102M40 112L44.5 109M40 102L40 112M40 102L40 92M40 92L40 102M40 92L40 82M40 82L40 92M40 82L40 72M40 72L40 82M40 72L40 62M40 62L40 72M40 62L40 52M40 52L40 62M40 52L40 42M40 42L40 52M40 42L40 32M40 32L40 42M40 32L40 22M40 22L40 32M40 22L40 12M40 12L30 12M44.5 9L40 12M40 12L40 22M30 12L40 12M40 12L44.5 9" fill="none" stroke="#0D1B3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(210 126)">
+<polygon points="13.5,3 23.5,3 28,0 18,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="23.5,3 33.5,3 38,0 28,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="33.5,3 43.5,3 48,0 38,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="53.5,43 58,40 58,30 53.5,33" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,33 58,30 58,20 53.5,23" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,23 58,20 58,10 53.5,13" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="53.5,13 58,10 58,0 53.5,3" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="43.5,3 53.5,3 58,0 48,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="9,6 19,6 23.5,3 13.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="19,6 29,6 33.5,3 23.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="29,6 39,6 43.5,3 33.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="49,46 53.5,43 53.5,33 49,36" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,36 53.5,33 53.5,23 49,26" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,26 53.5,23 53.5,13 49,16" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="49,16 53.5,13 53.5,3 49,6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="39,6 49,6 53.5,3 43.5,3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="4.5,9 14.5,9 19,6 9,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="14.5,9 24.5,9 29,6 19,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="24.5,9 34.5,9 39,6 29,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="44.5,49 49,46 49,36 44.5,39" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,39 49,36 49,26 44.5,29" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,29 49,26 49,16 44.5,19" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="44.5,19 49,16 49,6 44.5,9" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="34.5,9 44.5,9 49,6 39,6" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,52 10,52 10,42 0,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,42 10,42 10,32 0,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,32 10,32 10,22 0,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,22 10,22 10,12 0,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,12 10,12 14.5,9 4.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="10,52 20,52 20,42 10,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,42 20,42 20,32 10,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,32 20,32 20,22 10,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,22 20,22 20,12 10,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="10,12 20,12 24.5,9 14.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="20,52 30,52 30,42 20,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,42 30,42 30,32 20,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,32 30,32 30,22 20,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,22 30,22 30,12 20,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="20,12 30,12 34.5,9 24.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="30,52 40,52 40,42 30,42" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,52 44.5,49 44.5,39 40,42" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,42 40,42 40,32 30,32" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,42 44.5,39 44.5,29 40,32" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,32 40,32 40,22 30,22" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,32 44.5,29 44.5,19 40,22" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,22 40,22 40,12 30,12" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="40,22 44.5,19 44.5,9 40,12" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,12 40,12 44.5,9 34.5,9" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M28 0L18 0M18 0L13.5 3M38 0L28 0M48 0L38 0M53.5 43L58 40M58 40L58 30M58 30L58 20M58 20L58 10M58 10L58 0M58 0L53.5 3M53.5 3L58 0M58 0L48 0M13.5 3L9 6M49 46L53.5 43M53.5 3L49 6M49 6L53.5 3M9 6L4.5 9M44.5 49L49 46M49 6L44.5 9M44.5 9L49 6M0 52L10 52M0 42L0 52M0 32L0 42M0 22L0 32M10 12L0 12M0 12L0 22M0 12L10 12M4.5 9L0 12M10 52L20 52M20 12L10 12M10 12L20 12M20 52L30 52M30 12L20 12M20 12L30 12M30 52L40 52M40 52L40 42M40 52L44.5 49M40 42L40 52M40 42L40 32M40 32L40 42M40 32L40 22M40 22L40 32M40 22L40 12M40 12L30 12M44.5 9L40 12M40 12L40 22M30 12L40 12M40 12L44.5 9" fill="none" stroke="#0D1B3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <line x1="102" y1="138" x2="210" y2="138" stroke="#64748b" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="102" y1="78" x2="172" y2="78" stroke="#64748b" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="158" y1="79" x2="158" y2="137" stroke="#2E6DA4" stroke-width="1.6"/>
+  <polygon points="158,78 154,87 162,87" fill="#2E6DA4"/>
+  <polygon points="158,138 154,129 162,129" fill="#2E6DA4"/>
+  <text x="170" y="114" font-size="20" font-weight="800" fill="#2E6DA4" text-anchor="middle">?</text>
+  <text x="82" y="195" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle" font-style="italic">a</text>
+  <text x="230" y="195" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle" font-style="italic">a</text>
+  <text x="88" y="56" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">1. hranol</text>
+  <text x="236" y="116" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">2. hranol</text>
+</svg>

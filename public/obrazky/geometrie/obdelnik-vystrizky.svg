@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 226" width="320" height="226" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélník 14 cm krát 9 cm s čtvercovým výřezem 3 cm v rohu a čtvercovým výřezem 3 cm uprostřed delší strany</title>
+  <path d="M46 34 L134 34 L134 82 L182 82 L182 34 L270 34 L270 130 L222 130 L222 178 L46 178 Z" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <line x1="270" y1="134" x2="270" y2="207" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="46" y1="182" x2="46" y2="207" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="46" y1="202" x2="270" y2="202" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="46" y1="198" x2="46" y2="206" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="270" y1="198" x2="270" y2="206" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="158" y="196" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle">14 cm</text>
+  <line x1="42" y1="34" x2="20" y2="34" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="42" y1="178" x2="20" y2="178" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="24" y1="34" x2="24" y2="178" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="20" y1="34" x2="28" y2="34" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="20" y1="178" x2="28" y2="178" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="18" y="110" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle" transform="rotate(-90 18 110)">9 cm</text>
+  <text x="158" y="65.2" font-size="12" font-weight="600" fill="#2E6DA4" text-anchor="middle">3 cm</text>
+  <text x="246" y="158" font-size="12" font-weight="600" fill="#2E6DA4" text-anchor="middle">3 cm</text>
+</svg>

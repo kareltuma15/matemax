@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 246" width="300" height="246" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Čtverec o straně 20 m se čtyřmi shodnými kruhy, které se dotýkají stran čtverce i sebe navzájem</title>
+  <rect x="60" y="16" width="180" height="180" fill="#f1f5f9" stroke="#0D1B3E" stroke-width="2"/>
+  <circle cx="105" cy="61" r="45" fill="#bfdbfe" stroke="#2E6DA4" stroke-width="1.8"/>
+  <circle cx="195" cy="61" r="45" fill="#bfdbfe" stroke="#2E6DA4" stroke-width="1.8"/>
+  <circle cx="105" cy="151" r="45" fill="#bfdbfe" stroke="#2E6DA4" stroke-width="1.8"/>
+  <circle cx="195" cy="151" r="45" fill="#bfdbfe" stroke="#2E6DA4" stroke-width="1.8"/>
+  <line x1="60" y1="200" x2="60" y2="223" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="240" y1="200" x2="240" y2="223" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="60" y1="218" x2="240" y2="218" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="60" y1="214" x2="60" y2="222" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="240" y1="214" x2="240" y2="222" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="150" y="234" font-size="13" font-weight="600" fill="#2E6DA4" text-anchor="middle">20 m</text>
+</svg>
