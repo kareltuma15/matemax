@@ -1,17 +1,56 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { EXAMPLES_LABEL } from "@/lib/site-stats";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Uvítací e-mail smí dostat jen účet založený před chvílí (registrace volá trasu hned po signUp).
+const FRESH_MS = 30 * 60 * 1000;
 
 export async function POST(req: NextRequest) {
   if (!rateLimit(`welcome-email:${clientIp(req)}`, 5, 60_000)) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  const { email, firstName = "" } = (await req.json()) as { email?: string; firstName?: string };
+  const body = (await req.json().catch(() => null)) as { email?: string; firstName?: string; userId?: string } | null;
+  const email = body?.email?.trim();
+  const firstName = (body?.firstName ?? "").slice(0, 60);
+  const userId = body?.userId;
 
-  if (!email) {
-    return NextResponse.json({ error: "Missing email" }, { status: 400 });
+  if (!email || !userId || email.length > 254 || !EMAIL_RE.test(email)) {
+    return NextResponse.json({ error: "Missing or invalid email/userId" }, { status: 400 });
   }
+  if (!supabaseAdmin) {
+    return NextResponse.json({ error: "No DB" }, { status: 503 });
+  }
+
+  // Trasa je veřejná (registrace ji volá ještě před přihlášením), proto bez ověření nesmí
+  // poslat e-mail ani založit kontakt v Loops na libovolnou adresu — jinak jde zneužít
+  // k rozesílání spamu z naší domény. Ověřujeme: účet existuje, e-mail k němu sedí,
+  // je čerstvý a uvítání ještě nedostal.
+  const { data: found, error: userErr } = await supabaseAdmin.auth.admin.getUserById(userId);
+  const account = found?.user;
+  if (userErr || !account || account.email?.toLowerCase() !== email.toLowerCase()) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  if (Date.now() - new Date(account.created_at).getTime() > FRESH_MS) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  if (account.app_metadata?.welcome_sent_at) {
+    return NextResponse.json({ ok: true, skipped: "already_sent" });
+  }
+  const { error: claimErr } = await supabaseAdmin.auth.admin.updateUserById(account.id, {
+    app_metadata: { ...account.app_metadata, welcome_sent_at: new Date().toISOString() },
+  });
+  if (claimErr) {
+    console.error("[welcome-email] uložení welcome_sent_at selhalo:", claimErr);
+    return NextResponse.json({ error: "DB error" }, { status: 500 });
+  }
+  // Když se e-mail nepodaří odeslat vůbec nikudy, značku vrátíme, ať jde zkusit znovu.
+  const release = () =>
+    supabaseAdmin!.auth.admin
+      .updateUserById(account.id, { app_metadata: { ...account.app_metadata, welcome_sent_at: null } })
+      .catch(() => {});
 
   const loopsKey = process.env.LOOPS_API_KEY;
   const loopsEmailId = process.env.LOOPS_WELCOME_EMAIL_ID;
@@ -86,6 +125,7 @@ export async function POST(req: NextRequest) {
   // ── Resend (fallback) ───────────────────────────────────────────────────────
   if (!process.env.RESEND_API_KEY) {
     console.warn("[welcome-email] RESEND_API_KEY not set — no email sent to", email);
+    await release();
     return NextResponse.json({ ok: true, skipped: true });
   }
 
@@ -161,12 +201,14 @@ export async function POST(req: NextRequest) {
     });
     if (sendErr) {
       console.error("[welcome-email] Resend odmítl odeslání:", sendErr);
+      await release();
       return NextResponse.json({ error: "Failed to send" }, { status: 500 });
     }
     console.log("[welcome-email] Resend sent:", email);
     return NextResponse.json({ ok: true, provider: "resend" });
   } catch (err) {
     console.error("[welcome-email] Resend error:", err);
+    await release();
     return NextResponse.json({ error: "Failed to send" }, { status: 500 });
   }
 }

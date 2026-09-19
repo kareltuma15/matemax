@@ -62,6 +62,19 @@ test.describe("zapisující trasy odmítnou nepřihlášeného", () => {
     expect(res.status()).toBe(401);
   });
 
+  // Veřejná trasa nesmí poslat e-mail ani založit kontakt v Loops na libovolnou adresu.
+  test("/api/welcome-email bez userId → 400 (nic se neodešle)", async ({ request }) => {
+    const res = await request.post("/api/welcome-email", { data: { email: "nekdo@example.com" } });
+    expect(res.status()).toBe(400);
+  });
+
+  test("/api/welcome-email s neexistujícím účtem → 403 (nic se neodešle)", async ({ request }) => {
+    const res = await request.post("/api/welcome-email", {
+      data: { email: "nekdo@example.com", userId: "00000000-0000-0000-0000-000000000000" },
+    });
+    expect(res.status()).toBe(403);
+  });
+
   // Dřív veřejný endpoint bral userId z těla bez ověření a komukoli přidělil prémium.
   test("/api/trial už neexistuje (nesmí přidělovat prémium)", async ({ request }) => {
     const res = await request.post("/api/trial", { data: { userId: "00000000-0000-0000-0000-000000000000" } });

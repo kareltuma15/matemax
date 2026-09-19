@@ -76,7 +76,7 @@ export default function RegistraceForm() {
       fetch("/api/welcome-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, firstName }),
+        body: JSON.stringify({ email, firstName, userId: data.user.id }),
       }).catch(() => {});
     }
 
