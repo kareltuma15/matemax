@@ -62,6 +62,12 @@ test.describe("zapisující trasy odmítnou nepřihlášeného", () => {
     expect(res.status()).toBe(401);
   });
 
+  // Dřív veřejný endpoint bral userId z těla bez ověření a komukoli přidělil prémium.
+  test("/api/trial už neexistuje (nesmí přidělovat prémium)", async ({ request }) => {
+    const res = await request.post("/api/trial", { data: { userId: "00000000-0000-0000-0000-000000000000" } });
+    expect(res.status()).toBe(404);
+  });
+
   test("/api/push-subscribe s neplatným odběrem → 400", async ({ request }) => {
     const res = await request.post("/api/push-subscribe", { data: { subscription: { endpoint: "http://nezabezpecene" } } });
     expect(res.status()).toBe(400);
