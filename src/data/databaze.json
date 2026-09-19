@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 800,
+    "total": 813,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -13124,6 +13124,342 @@
         "Do akvária natečou 48 l vody."
       ],
       "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_01",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/rovnoramenny-trojuhelnik.svg",
+        "width": 320,
+        "height": 230,
+        "alt": "Rovnoramenný trojúhelník ABC se základnou AB; obě ramena jsou označena stejnou značkou"
+      },
+      "zadani": "Rovnoramenný trojúhelník ABC má základnu AB. Každé jeho rameno je o 3 cm delší než základna a obvod trojúhelníku je 36 cm. Jaký je obsah trojúhelníku ABC?",
+      "moznosti": [
+        "48 cm²",
+        "60 cm²",
+        "65 cm²",
+        "78 cm²",
+        "jiný obsah"
+      ],
+      "spravna": 1,
+      "odpoved": "60 cm²",
+      "reseni_kroky": [
+        "Základnu označíme z, rameno je z + 3. Obvod: z + 2 · (z + 3) = 36, tedy 3z + 6 = 36 a z = 10 cm. Ramena mají 13 cm.",
+        "Výška na základnu rozdělí trojúhelník na dva pravoúhlé s odvěsnou 5 cm (polovina základny) a přeponou 13 cm: v² = 13² − 5² = 169 − 25 = 144, takže v = 12 cm.",
+        "Obsah = (10 · 12) / 2 = 60 cm². Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_02",
+      "tema": "geometrie",
+      "podtema": "prostorova",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/dva-hranoly.svg",
+        "width": 330,
+        "height": 205,
+        "alt": "Dva pravidelné čtyřboké hranoly se stejnou podstavou o straně a; rozdíl jejich výšek je vyznačen šipkou s otazníkem"
+      },
+      "zadani": "Dva pravidelné čtyřboké hranoly mají čtvercovou podstavu o straně a = 4 cm. Povrch prvního hranolu je o 96 cm² větší než povrch druhého hranolu. O kolik cm je první hranol vyšší než druhý?",
+      "moznosti": [
+        "o 3 cm",
+        "o 4 cm",
+        "o 6 cm",
+        "o 8 cm",
+        "o 12 cm"
+      ],
+      "spravna": 2,
+      "odpoved": "o 6 cm",
+      "reseni_kroky": [
+        "Oba hranoly mají stejné podstavy, takže se jejich povrchy liší jen obsahem pláště.",
+        "Plášť tvoří 4 obdélníky o stranách 4 cm a v, tedy S = 4 · 4 · v = 16 · v. Rozdíl výšek proto násobíme 16.",
+        "16 · (rozdíl výšek) = 96, takže rozdíl výšek je 96 : 16 = 6 cm. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_03",
+      "tema": "geometrie",
+      "podtema": "prostorova",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/krychle-vyrezy.svg",
+        "width": 300,
+        "height": 232,
+        "alt": "Krychle o hraně 10 cm, ze které byly vyříznuty dvě krychličky: jedna z vrcholu a jedna z prostředku hrany"
+      },
+      "zadani": "Z krychle o hraně 10 cm byly vyříznuty dvě shodné krychličky o hraně 2 cm: jedna z jednoho vrcholu krychle a druhá z prostředku jedné hrany (viz obrázek). Jaký je povrch vzniklého tělesa?",
+      "moznosti": [
+        "592 cm²",
+        "600 cm²",
+        "604 cm²",
+        "608 cm²",
+        "jiný povrch"
+      ],
+      "spravna": 3,
+      "odpoved": "608 cm²",
+      "reseni_kroky": [
+        "Původní krychle má povrch 6 · 10² = 600 cm². Jedna stěna vyříznuté krychličky má obsah 2 · 2 = 4 cm².",
+        "Krychlička z vrcholu: zmizí 3 vnější stěny a odkryjí se 3 nové vnitřní — povrch se nezmění.",
+        "Krychlička z prostředku hrany: zmizí 2 vnější stěny, ale odkryjí se 4 nové — povrch vzroste o 2 stěny, tedy o 2 · 4 = 8 cm².",
+        "Povrch = 600 + 0 + 8 = 608 cm². Správně je D)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_04",
+      "tema": "geometrie",
+      "podtema": "prostorova",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/teles-schody.svg",
+        "width": 370,
+        "height": 206,
+        "alt": "Tři plná tělesa A, B, C složená ze shodných krychliček ve tvaru schodů"
+      },
+      "zadani": "Tělesa A, B a C jsou plná a skládají se ze shodných krychliček (viz obrázek). O kolik procent je objem tělesa B větší než objem tělesa A?",
+      "moznosti": [
+        "o 20 %",
+        "o 25 %",
+        "o 30 %",
+        "o 33 %",
+        "o 50 %"
+      ],
+      "spravna": 1,
+      "odpoved": "o 25 %",
+      "reseni_kroky": [
+        "Spočítáme krychličky ve schodech: A = 2 · (1 + 2 + 3) = 12, B = 1 + 2 + 3 + 4 + 5 = 15, C = 2 · (1 + 2 + 3 + 4) = 20.",
+        "B má o 15 − 12 = 3 krychličky víc než A. Porovnáváme s A, proto počítáme z 12: 3 : 12 = 0,25.",
+        "Objem B je o 25 % větší než objem A. Správně je B)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_05",
+      "tema": "geometrie",
+      "podtema": "prostorova",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/teles-schody.svg",
+        "width": 370,
+        "height": 206,
+        "alt": "Tři plná tělesa A, B, C složená ze shodných krychliček ve tvaru schodů"
+      },
+      "zadani": "Tělesa A, B a C jsou plná a skládají se ze shodných krychliček (viz obrázek). O kolik procent je objem tělesa A menší než objem tělesa C?",
+      "moznosti": [
+        "o 20 %",
+        "o 33 %",
+        "o 40 %",
+        "o 60 %",
+        "o 67 %"
+      ],
+      "spravna": 2,
+      "odpoved": "o 40 %",
+      "reseni_kroky": [
+        "Spočítáme krychličky ve schodech: A = 2 · (1 + 2 + 3) = 12, C = 2 · (1 + 2 + 3 + 4) = 20.",
+        "A je menší než C o 20 − 12 = 8 krychliček. Porovnáváme s C, proto počítáme z 20: 8 : 20 = 0,4.",
+        "Objem A je o 40 % menší než objem C. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_06",
+      "tema": "geometrie",
+      "podtema": "prostorova",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/krychle-hranol-slepeny.svg",
+        "width": 320,
+        "height": 156,
+        "alt": "Šedá krychle slepená s bílým hranolem tvoří jeden kvádr; bílý hranol je delší než hrana krychle"
+      },
+      "zadani": "Slepením šedé krychle o objemu 64 cm³ a bílého hranolu vznikne kvádr (viz obrázek). Podstava bílého hranolu je shodná se stěnou krychle a nejdelší hrana hranolu je o polovinu delší než hrana krychle. Jaký je povrch celého kvádru?",
+      "odpoved": "192 cm²",
+      "reseni_kroky": [
+        "Hrana krychle: a³ = 64, tedy a = 4 cm.",
+        "Nejdelší hrana hranolu je o polovinu delší: 4 + 2 = 6 cm. Vzniklý kvádr má délku 6 + 4 = 10 cm a rozměry 10 · 4 · 4 cm.",
+        "Povrch kvádru: S = 2 · (10 · 4 + 10 · 4 + 4 · 4) = 2 · 96 = 192 cm²."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_07",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/kruh-vysece.svg",
+        "width": 300,
+        "height": 244,
+        "alt": "Kruh o poloměru 12 cm rozdělený na dvě bílé výseče o úhlu 120° a čtyři šedé shodné výseče"
+      },
+      "zadani": "Kruh o poloměru 12 cm je rozdělen na dvě shodné bílé části a čtyři shodné šedé části (viz obrázek). Úhel jedné bílé části je 120°. Kolikrát je obsah jedné bílé části větší než obsah jedné šedé části?",
+      "odpoved": "4krát",
+      "reseni_kroky": [
+        "Dvě bílé části zaberou 2 · 120° = 240°, na čtyři šedé zbývá 360° − 240° = 120°.",
+        "Jedna šedá část má úhel 120° : 4 = 30°.",
+        "Obsah výseče je přímo úměrný jejímu úhlu, proto 120° : 30° = 4. Bílá část je 4krát větší než šedá."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_08",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/kruh-vysece.svg",
+        "width": 300,
+        "height": 244,
+        "alt": "Kruh o poloměru 12 cm rozdělený na dvě bílé výseče o úhlu 120° a čtyři šedé shodné výseče"
+      },
+      "zadani": "Kruh o poloměru 12 cm je rozdělen na dvě shodné bílé části a čtyři shodné šedé části (viz obrázek). Úhel jedné bílé části je 120°. Vypočtěte v cm obvod jedné šedé části. Počítejte s π ≈ 3,14 a výsledek zaokrouhlete na desetiny centimetru.",
+      "odpoved": "30,3 cm",
+      "reseni_kroky": [
+        "Šedá část je výseč s úhlem 30° (dvě bílé po 120°, zbylých 120° je rozděleno na čtyři šedé).",
+        "Obvod výseče = dva poloměry + délka oblouku: o = 2 · 12 + (30/360) · 2 · π · 12.",
+        "o = 24 + (1/12) · 75,36 = 24 + 6,28 = 30,28 ≈ 30,3 cm."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_09",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/trojuhelnik-nerovnost.svg",
+        "width": 350,
+        "height": 200,
+        "alt": "Trojúhelník ABC se stranami a = 9 cm, b = 20 cm a neznámou stranou c"
+      },
+      "zadani": "Délky dvou stran trojúhelníku ABC jsou a = 9 cm a b = 20 cm. Délka třetí strany c je celé číslo centimetrů. Kolik cm nejméně může strana c měřit? (Obrázek je ilustrační.)",
+      "odpoved": "12 cm",
+      "reseni_kroky": [
+        "V trojúhelníku je součet každých dvou stran větší než strana třetí (trojúhelníková nerovnost).",
+        "Z nerovnosti b < a + c plyne c > b − a = 20 − 9 = 11 cm.",
+        "Nejmenší celé číslo větší než 11 je 12 cm."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_10",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/trojuhelnik-nerovnost.svg",
+        "width": 350,
+        "height": 200,
+        "alt": "Trojúhelník ABC se stranami a = 9 cm, b = 20 cm a neznámou stranou c"
+      },
+      "zadani": "Délky dvou stran trojúhelníku ABC jsou a = 9 cm a b = 20 cm. Délka třetí strany c je celé číslo centimetrů. Kolik cm nejvýše může strana c měřit? (Obrázek je ilustrační.)",
+      "odpoved": "28 cm",
+      "reseni_kroky": [
+        "V trojúhelníku je součet každých dvou stran větší než strana třetí (trojúhelníková nerovnost).",
+        "Z nerovnosti c < a + b plyne c < 9 + 20 = 29 cm.",
+        "Největší celé číslo menší než 29 je 28 cm."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_11",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/obdelnik-vystrizky.svg",
+        "width": 320,
+        "height": 226,
+        "alt": "Obdélník 14 cm krát 9 cm se čtvercovým výřezem 3 cm v rohu a čtvercovým výřezem 3 cm uprostřed delší strany"
+      },
+      "zadani": "Z obdélníku o rozměrech 14 cm a 9 cm byly vystřiženy dva shodné čtverce o straně 3 cm: jeden z rohu obdélníku a druhý z prostředku jedné delší strany (viz obrázek). Jaký je obvod vzniklého obrazce?",
+      "moznosti": [
+        "40 cm",
+        "46 cm",
+        "49 cm",
+        "52 cm",
+        "58 cm"
+      ],
+      "spravna": 3,
+      "odpoved": "52 cm",
+      "reseni_kroky": [
+        "Obvod původního obdélníku: 2 · (14 + 9) = 46 cm.",
+        "Čtverec vystřižený z rohu: ubyde 3 cm + 3 cm původního obvodu, ale přibudou dvě strany výřezu (3 + 3) — obvod se nezmění.",
+        "Čtverec vystřižený z prostředku strany: ubyde 3 cm, ale přibudou tři strany výřezu (3 + 3 + 3 = 9 cm) — obvod vzroste o 6 cm.",
+        "Obvod = 46 + 0 + 6 = 52 cm. Správně je D)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_12",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/zahrada-bazen.svg",
+        "width": 350,
+        "height": 246,
+        "alt": "Obdélníková zahrada 25 m krát 16 m, uprostřed bazén 15 m krát 6 m obklopený chodníkem širokým 1,5 m"
+      },
+      "zadani": "Obdélníková zahrada má rozměry 25 m a 16 m. Uprostřed je bazén o rozměrech 15 m a 6 m, který je ze všech stran obklopen dlážděným chodníkem širokým 1,5 m (viz obrázek). Zbytek zahrady tvoří trávník. Kolik m² má trávník?",
+      "odpoved": "238 m²",
+      "reseni_kroky": [
+        "Obsah zahrady: 25 · 16 = 400 m².",
+        "Bazén s chodníkem tvoří obdélník, který je z každé strany o 1,5 m větší než bazén: (15 + 2 · 1,5) · (6 + 2 · 1,5) = 18 · 9 = 162 m².",
+        "Trávník: 400 − 162 = 238 m²."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GEOB3_13",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/ctverec-ctyri-kruhy.svg",
+        "width": 300,
+        "height": 246,
+        "alt": "Čtverec o straně 20 m se čtyřmi shodnými kruhy, které se dotýkají stran čtverce i sebe navzájem"
+      },
+      "zadani": "Čtvercový dvůr o straně 20 m je vydlážděn s výjimkou čtyř shodných kruhových záhonů, které se dotýkají stran dvora i sebe navzájem (viz obrázek). Kolik m² dvora zabírá dlažba? Počítejte s π ≈ 3,14.",
+      "odpoved": "86 m²",
+      "reseni_kroky": [
+        "Kruhy se dotýkají stran čtverce i sebe, proto dva kruhy vedle sebe zabírají celou stranu: průměr je 20 : 2 = 10 m, poloměr 5 m.",
+        "Obsah čtyř záhonů: 4 · π · 5² = 4 · 3,14 · 25 = 314 m².",
+        "Dlažba: 20 · 20 − 314 = 400 − 314 = 86 m²."
+      ],
+      "cas_sekund": 150,
       "sm2_interval": 1
     }
   ]
