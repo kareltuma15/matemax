@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" width="260" height="260" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Čtverec, do něj vepsaný čtverec ze středů stran a do něj další čtverec ze středů stran; rohy a nejmenší čtverec jsou šedé</title>
+  <polygon points="20,20 240,20 240,240 20,240" fill="#c9ced6" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <polygon points="130,20 240,130 130,240 20,130" fill="#ffffff" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <polygon points="185,75 185,185 75,185 75,75" fill="#c9ced6" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+</svg>

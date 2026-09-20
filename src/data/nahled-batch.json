@@ -1,4 +1,145 @@
 {
-  "nazev": "Geometrie — L3 (přepracováno podle CERMAT: 13 úloh s vlastními obrázky, úvahy, výběr A–E) — ZAPSÁNO",
-  "examples": []
+  "nazev": "Zlomky — L3 (CERMAT styl: 10 úloh na úvahu, 4 s obrázkem, výběr A–E)",
+  "examples": [
+    {
+      "id": "ZLO3_01", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "zadani": "Petra četla knihu tři dny. První den přečetla dvě pětiny knihy, druhý den tři osminy toho, co jí po prvním dni zbývalo. Třetí den jí zbývalo přečíst 45 stran. Kolik stran má celá kniha?",
+      "moznosti": ["75 stran", "90 stran", "120 stran", "135 stran", "150 stran"],
+      "spravna": 2,
+      "odpoved": "120 stran",
+      "reseni_kroky": [
+        "Po prvním dni zbývá 1 − 2/5 = 3/5 knihy.",
+        "Druhý den přečetla 3/8 ze zbývajících 3/5, tedy 3/8 · 3/5 = 9/40 knihy.",
+        "Po druhém dni zbývá 3/5 − 9/40 = 24/40 − 9/40 = 15/40 = 3/8 knihy.",
+        "3/8 knihy je 45 stran, takže 1/8 je 15 stran a celá kniha má 8 · 15 = 120 stran. Správně je C)."
+      ],
+      "cas_sekund": 180, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_02", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "image": { "kind": "static", "url": "/obrazky/zlomky/nadrz.svg", "width": 320, "height": 214, "alt": "Nádrž s vyznačenými hladinami 3/5 a 1/4; rozdíl hladin odpovídá 35 litrům vody" },
+      "zadani": "Nádrž byla naplněna do tří pětin svého objemu. Po odčerpání 35 litrů vody byla naplněna jen do jedné čtvrtiny objemu (viz obrázek). Kolik litrů vody se vejde do celé nádrže?",
+      "moznosti": ["60 l", "80 l", "125 l", "100 l", "140 l"],
+      "spravna": 3,
+      "odpoved": "100 l",
+      "reseni_kroky": [
+        "Odčerpaná voda je rozdíl hladin: 3/5 − 1/4 = 12/20 − 5/20 = 7/20 objemu nádrže.",
+        "7/20 objemu je 35 l, takže 1/20 je 5 l.",
+        "Celá nádrž: 20 · 5 = 100 l. Správně je D)."
+      ],
+      "cas_sekund": 150, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_03", "tema": "zlomky", "podtema": "kombinovane", "obtiznost": 3,
+      "image": { "kind": "static", "url": "/obrazky/zlomky/ctverce-vnorene.svg", "width": 260, "height": 260, "alt": "Čtverec, do něj vepsaný čtverec ze středů stran a do něj další čtverec ze středů stran; rohy a nejmenší čtverec jsou šedé" },
+      "zadani": "Do čtverce je vepsán čtverec, jehož vrcholy jsou středy stran původního čtverce, a do něj znovu čtverec ze středů jeho stran. Rohy původního čtverce a nejmenší čtverec jsou vybarveny šedě (viz obrázek). Jakou část obsahu největšího čtverce tvoří šedá plocha?",
+      "moznosti": ["1/2", "5/8", "2/3", "7/8", "3/4"],
+      "spravna": 4,
+      "odpoved": "3/4",
+      "reseni_kroky": [
+        "Čtverec ze středů stran má poloviční obsah než původní čtverec. Šedé rohy kolem něj tvoří zbylou polovinu: 1/2.",
+        "Stejně má další čtverec ze středů stran poloviční obsah než prostřední: 1/2 · 1/2 = 1/4 obsahu největšího čtverce. To je nejmenší šedý čtverec.",
+        "Šedá plocha: 1/2 + 1/4 = 3/4. Správně je E)."
+      ],
+      "cas_sekund": 150, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_04", "tema": "zlomky", "podtema": "kombinovane", "obtiznost": 3,
+      "image": { "kind": "static", "url": "/obrazky/zlomky/ciselna-osa.svg", "width": 380, "height": 106, "alt": "Číselná osa s vyznačenými čísly 0 a 2/3 a bodem K; dílky jsou stejně dlouhé" },
+      "zadani": "Na číselné ose jsou vyznačena čísla 0 a 2/3 a bod K. Vzdálenosti mezi sousedními značkami jsou stejné (viz obrázek). Které číslo odpovídá bodu K?",
+      "moznosti": ["1", "5/4", "3/2", "4/3", "5/3"],
+      "spravna": 2,
+      "odpoved": "3/2",
+      "reseni_kroky": [
+        "Od 0 do 2/3 jsou 4 dílky, jeden dílek tedy odpovídá (2/3) : 4 = 2/12 = 1/6.",
+        "Bod K je 9 dílků od nuly: 9 · 1/6 = 9/6 = 3/2. Správně je C)."
+      ],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_05", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "zadani": "Ve třídě jsou dvě pětiny žáků chlapci. Kdyby do třídy přišli další tři chlapci, tvořili by chlapci přesně polovinu třídy. Kolik žáků je ve třídě nyní?",
+      "moznosti": ["10", "15", "20", "25", "30"],
+      "spravna": 1,
+      "odpoved": "15",
+      "reseni_kroky": [
+        "Počet žáků označíme n, chlapců je 2n/5.",
+        "Po příchodu tří chlapců je ve třídě n + 3 žáků a chlapci tvoří polovinu: 2n/5 + 3 = (n + 3)/2.",
+        "Vynásobíme dvěma: 4n/5 + 6 = n + 3, tedy 3 = n/5 a n = 15.",
+        "Kontrola: chlapců je 6, po příchodu 9 z 18 žáků, což je 1/2. Správně je B)."
+      ],
+      "cas_sekund": 180, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_06", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "image": { "kind": "static", "url": "/obrazky/zlomky/kolac-zlomky.svg", "width": 350, "height": 232, "alt": "Kruhový diagram tříd: sportovní kroužek 1/3, hudební 1/4, výtvarný 1/9 a část žáků bez kroužku označená otazníkem" },
+      "zadani": "Do třídy chodí 36 žáků. Do sportovního kroužku chodí třetina žáků, do hudebního čtvrtina a do výtvarného devítina; žádný žák nechodí do dvou kroužků (viz obrázek). Kolik žáků nechodí do žádného z těchto kroužků?",
+      "odpoved": "11",
+      "reseni_kroky": [
+        "Sportovní kroužek: 36 : 3 = 12 žáků, hudební: 36 : 4 = 9 žáků, výtvarný: 36 : 9 = 4 žáci.",
+        "Do kroužků chodí 12 + 9 + 4 = 25 žáků.",
+        "Do žádného nechodí 36 − 25 = 11 žáků (1 − 1/3 − 1/4 − 1/9 = 11/36 třídy)."
+      ],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_07", "tema": "zlomky", "podtema": "porovnavani", "obtiznost": 3,
+      "zadani": "O kolik je třeba zvětšit jmenovatele zlomku 3/4, aby se jeho hodnota zmenšila na polovinu?",
+      "moznosti": ["o 1", "o 2", "o 3", "o 4", "o 6"],
+      "spravna": 3,
+      "odpoved": "o 4",
+      "reseni_kroky": [
+        "Původní hodnota je 3/4, její polovina je 3/8.",
+        "Čitatel zůstává 3, aby měl zlomek hodnotu 3/8, musí být jmenovatel 8.",
+        "Jmenovatel se zvětšil ze 4 na 8, tedy o 4. (Zdvojnásobením jmenovatele se hodnota zlomku zmenší na polovinu.) Správně je D)."
+      ],
+      "cas_sekund": 100, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_08", "tema": "zlomky", "podtema": "porovnavani", "obtiznost": 3,
+      "zadani": "Které z následujících řad seřazuje čísla 3/5, 0,58, 4/7 a 7/12 od nejmenšího po největší?",
+      "moznosti": [
+        "0,58; 4/7; 7/12; 3/5",
+        "4/7; 0,58; 7/12; 3/5",
+        "4/7; 7/12; 0,58; 3/5",
+        "0,58; 7/12; 4/7; 3/5",
+        "4/7; 0,58; 3/5; 7/12"
+      ],
+      "spravna": 1,
+      "odpoved": "4/7; 0,58; 7/12; 3/5",
+      "reseni_kroky": [
+        "Převedeme na desetinná čísla: 3/5 = 0,6; 4/7 = 0,5714…; 7/12 = 0,5833….",
+        "Seřadíme: 0,5714 < 0,58 < 0,5833 < 0,6, tedy 4/7 < 0,58 < 7/12 < 3/5. Správně je B)."
+      ],
+      "cas_sekund": 120, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_09", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "zadani": "Šest sedmin určitého čísla je o 12 větší než dvě třetiny téhož čísla. Které je to číslo?",
+      "moznosti": ["42", "63", "54", "72", "84"],
+      "spravna": 1,
+      "odpoved": "63",
+      "reseni_kroky": [
+        "Číslo označíme x: 6x/7 − 2x/3 = 12.",
+        "Společný jmenovatel 21: 18x/21 − 14x/21 = 4x/21 = 12.",
+        "x = 12 · 21 : 4 = 63.",
+        "Kontrola: 6/7 · 63 = 54, 2/3 · 63 = 42 a 54 − 42 = 12. Správně je B)."
+      ],
+      "cas_sekund": 150, "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_10", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "zadani": "Lucie by referát dokončila sama za 3 hodiny, Jan by ho sám dokončil za 6 hodin. Lucie začala pracovat sama, po hodině se k ní přidal Jan a referát dokončili společně. Za jak dlouho od Luciina začátku byl referát hotový?",
+      "moznosti": ["2 hodiny", "2 hodiny 10 minut", "2 hodiny 20 minut", "2 hodiny 30 minut", "3 hodiny"],
+      "spravna": 2,
+      "odpoved": "2 hodiny 20 minut",
+      "reseni_kroky": [
+        "Lucie udělá za hodinu 1/3 referátu, Jan 1/6.",
+        "Za první hodinu Lucie sama udělala 1/3, zbývají 2/3 referátu.",
+        "Společně udělají za hodinu 1/3 + 1/6 = 1/2 referátu, zbylé 2/3 tedy za (2/3) : (1/2) = 4/3 h = 1 h 20 min.",
+        "Celkem 1 h + 1 h 20 min = 2 h 20 min. Správně je C)."
+      ],
+      "cas_sekund": 180, "sm2_interval": 1
+    }
+  ]
 }

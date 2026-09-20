@@ -253,9 +253,15 @@ function buildSession(
   const workingPool = gated.length >= Math.min(SESSION_SIZE, due.length) ? gated : due;
 
   // Výběr řídí slabina tématu (diagnostika); obtížnost řeší gating + ramp výše.
+  // Odemčená úroveň má přednost: dřív se vybíralo náhodně napříč všemi odemčenými úrovněmi, takže
+  // žák s odemčeným L3 dostával z většiny lehké (u zlomků 72 % L1+L2) a těžké se ještě řadily na konec.
+  // Bonus je malý oproti rozdílu mezi tématy (diagScore), jen posouvá výběr uvnitř tématu k těžší úrovni:
+  // vyjde zhruba polovina z nejvyšší odemčené úrovně, zbytek z té pod ní.
   const scored = workingPool.map((ex) => {
     const diagScore = diagScores[ex.tema] ?? 1;
-    const jitter = Math.random() * 0.1;
+    const top = maxLevel(ex.tema);
+    const levelBonus = ex.obtiznost === top ? 0.015 : ex.obtiznost === top - 1 ? 0.007 : 0;
+    const jitter = Math.random() * 0.1 - levelBonus;
     return { ex, sort: diagScore + jitter };
   });
   scored.sort((a, b) => a.sort - b.sort);

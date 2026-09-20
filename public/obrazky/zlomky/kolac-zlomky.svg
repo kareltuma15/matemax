@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 232" width="350" height="232" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Kruhový diagram tříd: sportovní kroužek 1/3, hudební 1/4, výtvarný 1/9 a část žáků bez kroužku označená otazníkem</title>
+  <path d="M112 116 L112 24 A92 92 0 0 1 191.67 162 Z" fill="#93c5fd" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M112 116 L191.67 162 A92 92 0 0 1 66 195.67 Z" fill="#fcd34d" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M112 116 L66 195.67 A92 92 0 0 1 25.55 147.47 Z" fill="#86efac" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M112 116 L25.55 147.47 A92 92 0 0 1 112 24 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8" stroke-linejoin="round"/>
+  <text x="161.4" y="93.48" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">1/3</text>
+  <text x="126.76" y="177.1" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">1/4</text>
+  <text x="68.3" y="158.66" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">1/9</text>
+  <text x="65.28" y="89.28" font-size="22" font-weight="800" fill="#0D1B3E" text-anchor="middle">?</text>
+  <rect x="222" y="50" width="16" height="16" rx="3" fill="#93c5fd" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="244" y="63" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="start">sportovní</text>
+  <rect x="222" y="80" width="16" height="16" rx="3" fill="#fcd34d" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="244" y="93" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="start">hudební</text>
+  <rect x="222" y="110" width="16" height="16" rx="3" fill="#86efac" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="244" y="123" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="start">výtvarný</text>
+  <rect x="222" y="140" width="16" height="16" rx="3" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="244" y="153" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="start">žádný kroužek</text>
+</svg>

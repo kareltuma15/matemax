@@ -1,36 +1,9 @@
 // Generátor vlastních SVG obrázků pro těžké (CERMAT-styl) úlohy z geometrie.
 // Spuštění: node scripts/gen-geometrie-svg.mjs  → zapíše do public/obrazky/geometrie/
 // Obrázky jsou ILUSTRAČNÍ; hodnoty nese popisek/zadání. Nekopírují žádný CERMAT obrázek.
-import fs from "node:fs";
-import path from "node:path";
+import { NAVY, BLUE, f, text, line, makeWriter } from "./lib/svg.mjs";
 
-const OUT = path.join(process.cwd(), "public", "obrazky", "geometrie");
-fs.mkdirSync(OUT, { recursive: true });
-
-const NAVY = "#0D1B3E";
-const BLUE = "#2E6DA4";
-const FONT = "system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
-
-const f = (n) => Math.round(n * 100) / 100;
-
-function svgWrap(w, h, body, title) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" font-family="${FONT}">
-  <title>${title}</title>
-${body}
-</svg>
-`;
-}
-
-function text(x, y, s, o = {}) {
-  const { size = 13, weight = 600, anchor = "middle", fill = BLUE, rotate, italic } = o;
-  const tr = rotate !== undefined ? ` transform="rotate(${rotate} ${f(x)} ${f(y)})"` : "";
-  return `  <text x="${f(x)}" y="${f(y)}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}"${italic ? ' font-style="italic"' : ""}${tr}>${s}</text>`;
-}
-
-function line(x1, y1, x2, y2, o = {}) {
-  const { stroke = NAVY, w = 1.5, dash } = o;
-  return `  <line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="${stroke}" stroke-width="${w}"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`;
-}
+const { write, written } = makeWriter("geometrie");
 
 // ── Voxelový renderer (kabinetní promítání: vpředu čelo, nahoře a vpravo boky) ──
 // buňka [i,j,k,skupina]: i = doprava, j = do hloubky (od diváka), k = nahoru.
@@ -187,12 +160,6 @@ function surfaceFaces(cells) {
     }
   }
   return n;
-}
-
-const written = [];
-function write(name, w, h, body, title) {
-  fs.writeFileSync(path.join(OUT, name), svgWrap(w, h, body, title), "utf8");
-  written.push({ name, w, h });
 }
 
 // ── 1) Rovnoramenný trojúhelník (ramena o 3 cm delší než základna; 10 | 13 | 13) ──
