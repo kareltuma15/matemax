@@ -179,8 +179,8 @@
       "tema": "slovni_ulohy",
       "podtema": "pomer_meritko",
       "obtiznost": 2,
-      "zadani": "Na mapě 1 : 25 000 jsou dvě vesnice vzdáleny 8,4 cm. Turista jde průměrnou rychlostí 5 km/h. Za jak dlouho dojde z jedné vesnice do druhé?",
-      "odpoved": "2 hodiny a 6 minut",
+      "zadani": "Na mapě 1 : 25 000 jsou dvě vesnice vzdáleny 8,4 cm. Turista jde průměrnou rychlostí 5 km/h. Za jak dlouho dojde z jedné vesnice do druhé? Výsledek zaokrouhli na celé minuty.",
+      "odpoved": "25 minut",
       "reseni_kroky": [
         "Skutečná vzdálenost: 8,4 × 25 000 = 210 000 cm = 2 100 m = 2,1 km",
         "Čas = vzdálenost ÷ rychlost = 2,1 ÷ 5 = 0,42 h",
@@ -289,7 +289,7 @@
       "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Na plánu v měřítku 1 : 500 má zahrada tvar obdélníku o rozměrech 6 cm × 4 cm. Jaká je skutečná plocha zahrady?",
-      "odpoved": "6 000 m²",
+      "odpoved": "600 m²",
       "reseni_kroky": [
         "Skutečná délka: 6 × 500 = 3 000 cm = 30 m",
         "Skutečná šířka: 4 × 500 = 2 000 cm = 20 m",
@@ -597,13 +597,11 @@
       "podtema": "komplexni_vypocet",
       "obtiznost": 3,
       "zadani": "Vypočítejte: $(\\frac{2}{3} + \\frac{1}{2}) \\div (\\frac{5}{6} − \\frac{1}{4}) \\times \\frac{3}{7}$",
-      "odpoved": "9/14",
+      "odpoved": "6/7",
       "reseni_kroky": [
         "\\frac{2}{3} + \\frac{1}{2} = \\frac{4}{6} + \\frac{3}{6} = \\frac{7}{6}",
-        "\\frac{5}{6} − \\frac{1}{4} = \\frac{10}{12} − \\frac{3}{12} = \\frac{7}{12}",
-        "\\frac{7}{6} \\div \\frac{7}{12} = \\frac{7}{6} \\times \\frac{12}{7} = \\frac{12}{6} = 2",
-        "2 \\times \\frac{3}{7} = \\frac{6}{7}... oprava: ",
-        "(\\frac{7}{6}) \\div (\\frac{7}{12}) = \\frac{7}{6} \\times \\frac{12}{7} = \\frac{84}{42} = 2",
+        "\\frac{5}{6} - \\frac{1}{4} = \\frac{10}{12} - \\frac{3}{12} = \\frac{7}{12}",
+        "\\frac{7}{6} \\div \\frac{7}{12} = \\frac{7}{6} \\times \\frac{12}{7} = 2",
         "2 \\times \\frac{3}{7} = \\frac{6}{7}"
       ],
       "cas_sekund": 90,
@@ -893,7 +891,7 @@
       "podtema": "procenta",
       "obtiznost": 3,
       "zadani": "Auto ztrácí každý rok 15 % hodnoty. Auto stálo nové 400 000 Kč. Kolik bude stát po 3 letech?",
-      "odpoved": "245 050 Kč",
+      "odpoved": "245 650 Kč",
       "reseni_kroky": [
         "Po 1. roce: 400 000 × 0,85 = 340 000 Kč",
         "Po 2. roce: 340 000 × 0,85 = 289 000 Kč",
@@ -1140,14 +1138,14 @@
       "tema": "vyrazy",
       "podtema": "zakony_mocnin",
       "obtiznost": 2,
-      "zadani": "Vypočítejte: $4^{2} + 3^{3} − \\sqrt{49} + 2⁰$",
-      "odpoved": "60",
+      "zadani": "Vypočítejte: $4^{2} + 3^{3} - \\sqrt{49} + 2^{0}$",
+      "odpoved": "37",
       "reseni_kroky": [
         "4^{2} = 16",
         "3^{3} = 27",
         "\\sqrt{49} = 7",
-        "2⁰ = 1",
-        "16 + 27 − 7 + 1 = 37... oprava: 16+27=43, 43−7=36, 36+1=37"
+        "2^{0} = 1",
+        "16 + 27 - 7 + 1 = 37"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
@@ -1461,19 +1459,13 @@
       "tema": "rovnice",
       "podtema": "soustava_rovnic",
       "obtiznost": 2,
-      "zadani": "Za 3 kávičky a 2 čaje zaplatíme 190 Kč. Za 2 kávičky a 5 čajů zaplatíme 210 Kč. Jaká je cena jednoho čaje?",
+      "zadani": "Za 3 kávičky a 2 čaje zaplatíme 180 Kč. Za 2 kávičky a 5 čajů zaplatíme 230 Kč. Jaká je cena jednoho čaje?",
       "odpoved": "30 Kč",
       "reseni_kroky": [
-        "3k + 2č = 190 … (I)",
-        "2k + 5č = 210 … (II)",
-        "(I)×2: 6k + 4č = 380",
-        "(II)×3: 6k + 15č = 630",
-        "Odečtení: 11č = 250... oprava:",
-        "(I)×5: 15k+10č=950, (II)×2: 4k+10č=420",
-        "Odečtení: 11k=530 → k=530/11... Jiný postup:",
-        "Z (I): k=(190−2č)/3, dosad do (II): 2(190−2č)/3+5č=210",
-        "(380−4č)/3+5č=210 | ×3: 380−4č+15č=630 | 11č=250 | č=250/11≈22,7",
-        "Přesná CERMAT data: č=30: 3k+60=190→k=130/3... Výsledek: čaj 30 Kč."
+        "Cenu kávičky označíme k, cenu čaje č: 3k + 2č = 180 (I) a 2k + 5č = 230 (II).",
+        "(I) · 2: 6k + 4č = 360. (II) · 3: 6k + 15č = 690.",
+        "Odečtením rovnic: 11č = 330, tedy č = 30 Kč.",
+        "Zkouška: k = (180 - 60) : 3 = 40 Kč a 2 · 40 + 5 · 30 = 80 + 150 = 230 Kč."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -1484,12 +1476,12 @@
       "podtema": "linearni_rovnice_se_zavorkami",
       "obtiznost": 2,
       "zadani": "Řešte: 3(2x − 4) − 2(x + 1) = 20",
-      "odpoved": "x = 5,5",
+      "odpoved": "x = 8,5",
       "reseni_kroky": [
-        "6x − 12 − 2x − 2 = 20",
-        "4x − 14 = 20",
+        "Roznásobíme závorky: 6x - 12 - 2x - 2 = 20",
+        "Sečteme: 4x - 14 = 20",
         "4x = 34",
-        "x = 8,5... oprava: 4x=34, x=8,5"
+        "x = 8,5"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -1517,13 +1509,12 @@
       "podtema": "linearni_rovnice_komplexni",
       "obtiznost": 3,
       "zadani": "Řešte: (3x−1)/4 − (x+2)/3 = 1",
-      "odpoved": "x = 5",
+      "odpoved": "x = 4,6",
       "reseni_kroky": [
-        "Vynásobit 12: 3(3x−1) − 4(x+2) = 12",
-        "9x − 3 − 4x − 8 = 12",
-        "5x − 11 = 12",
-        "5x = 23... oprava zkusme x=5: (15−1)/4−(7)/3=14/4−7/3=3,5−2,33=1,17≠1",
-        "Ověření: x=5: 14/4−7/3=3,5−2,333=1,167 ≠ 1. Přesně: 5x=23, x=23/5=4,6"
+        "Vynásobíme celou rovnici číslem 12: 3(3x - 1) - 4(x + 2) = 12",
+        "Roznásobíme: 9x - 3 - 4x - 8 = 12",
+        "Sečteme: 5x - 11 = 12",
+        "5x = 23, tedy x = 4,6"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -1766,11 +1757,11 @@
       "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Tvar se skládá z obdélníku 10 cm × 4 cm a půlkruhu na kratší straně (průměr 4 cm). Vypočítejte celkový obvod (π ≈ 3,14).",
-      "odpoved": "34,28 cm",
+      "odpoved": "30,28 cm",
       "reseni_kroky": [
-        "Obvod obdélníku bez kratší strany: 10+4+10=24 cm",
-        "Půlkruh: πr = 3,14×2 = 6,28 cm",
-        "Celkem: 24 + 6,28 = 30,28 cm... oprava: 2×10+1×4+πr=20+4+6,28=30,28 cm"
+        "Obvod tvoří dvě delší strany (2 · 10 = 20 cm) a jedna kratší strana (4 cm) — druhá kratší strana je nahrazena půlkruhem.",
+        "Oblouk půlkruhu: π · r = 3,14 · 2 = 6,28 cm.",
+        "Obvod: 20 + 4 + 6,28 = 30,28 cm."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -1829,7 +1820,7 @@
       "podtema": "rovinne",
       "obtiznost": 3,
       "zadani": "Velký kruh má poloměr 8 cm, malý kruh uvnitř poloměr 5 cm. Jaká je plocha mezikruží? (π ≈ 3,14)",
-      "odpoved": "121,9 cm² (přibližně 122 cm²)",
+      "odpoved": "122,46 cm²",
       "reseni_kroky": [
         "Velký kruh: 3,14 × 64 = 200,96 cm²",
         "Malý kruh: 3,14 × 25 = 78,5 cm²",
@@ -2032,14 +2023,13 @@
       "tema": "geometrie",
       "podtema": "prostorova",
       "obtiznost": 2,
-      "zadani": "Válcová nádoba má průměr 20 cm a výšku 30 cm. Kolik kg barvy spotřebujeme na nátěr vnějšího pláště a dna (1 kg barvy pokryje 5 m²)? π ≈ 3,14",
-      "odpoved": "≈ 0,252 kg",
+      "zadani": "Válcová nádoba má průměr 20 cm a výšku 30 cm. Kolik kg barvy spotřebujeme na nátěr vnějšího pláště a dna (1 kg barvy pokryje 5 m²)? π ≈ 3,14. Výsledek zaokrouhlete na tisíciny kg.",
+      "odpoved": "0,044 kg",
       "reseni_kroky": [
-        "Plášť: 2π×10×30 = 1 884 cm²",
-        "Dno: π×100 = 314 cm²",
-        "Celkem: 2 198 cm² = 0,2198 m²",
-        "Barva: 0,2198/5 ≈ 0,044 kg... oprava: 1 m²=10000 cm²",
-        "0,2198 m²/5 = 0,04396 kg ≈ 0,044 kg"
+        "Plášť: 2 · π · r · v = 2 · 3,14 · 10 · 30 = 1 884 cm².",
+        "Dno: π · r² = 3,14 · 100 = 314 cm².",
+        "Celkem: 1 884 + 314 = 2 198 cm² = 0,2198 m² (1 m² = 10 000 cm²).",
+        "Barva: 0,2198 : 5 ≈ 0,044 kg."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2080,12 +2070,11 @@
       "podtema": "prostorova",
       "obtiznost": 2,
       "zadani": "Kulička o poloměru 3 cm je zcela ponořena do válce s vodou (r = 6 cm). O kolik cm stoupne hladina? (π ≈ 3,14)",
-      "odpoved": "0,5 cm",
+      "odpoved": "1 cm",
       "reseni_kroky": [
-        "Objem kuličky: (4/3)π×27 = 113,04 cm³",
-        "Válec: π×36×h = 113,04",
-        "h = 113,04/(3,14×36) = 113,04/113,04 = 1 cm... oprava:",
-        "h = 113,04/113,04 = 1 cm"
+        "Objem kuličky: V = (4/3) · π · r³ = (4/3) · 3,14 · 27 = 113,04 cm³.",
+        "Objem vytlačené vody se rovná objemu kuličky: π · 6² · h = 113,04, tedy 113,04 · h = 113,04.",
+        "h = 113,04 : 113,04 = 1 cm."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2423,7 +2412,7 @@
       "podtema": "spolecna_prace",
       "obtiznost": 3,
       "zadani": "Pumpa A naplní nádrž za 8 h, B za 12 h. Nejprve pracuje A 2 h sám, pak pracují obě dohromady. Za jak dlouho se nádrž naplní celkem?",
-      "odpoved": "Za 6 hodin celkem",
+      "odpoved": "5,6 hodiny",
       "reseni_kroky": [
         "A za 2 h: 2/8 = 1/4 nádrže",
         "Zbývá: 3/4",
@@ -2440,17 +2429,23 @@
       "podtema": "pohyb",
       "obtiznost": 3,
       "zadani": "Auto vyjede v 9:00 rychlostí 90 km/h. V 10:30 vyjede stejnou trasou motocykl rychlostí 120 km/h. V kolik hodin motorka dohání auto a jak daleko od startu?",
-      "odpoved": "Ve 13:30, 360 km od startu",
+      "odpoved": "V 15:00, 540 km od startu",
       "reseni_kroky": [
-        "Náskok auta v 10:30: 1,5 × 90 = 135 km",
-        "Relativní rychlost: 120−90 = 30 km/h",
-        "Čas dohoně: 135/30 = 4,5 h po 10:30 = 15:00... oprava:",
-        "10:30 + 4:30 = 15:00, vzdálenost: 120×4,5=540 km... ",
-        "Ale: auto urazí: 90×(1,5+4,5)=90×6=540 km ✓",
-        "Odpověď: 15:00, 540 km"
+        "Náskok auta v 10:30 (auto jelo od 9:00 1,5 h): 1,5 · 90 = 135 km.",
+        "Motocykl se k autu přibližuje rychlostí 120 - 90 = 30 km/h.",
+        "Dohoní ho za 135 : 30 = 4,5 h po 10:30, tedy v 15:00.",
+        "Vzdálenost od startu: 120 · 4,5 = 540 km (kontrola: auto ujelo 90 · 6 = 540 km). Správně je C)."
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "moznosti": [
+        "Ve 14:00, 480 km od startu",
+        "Ve 14:30, 510 km od startu",
+        "V 15:00, 540 km od startu",
+        "V 15:30, 570 km od startu",
+        "V 16:00, 600 km od startu"
+      ],
+      "spravna": 2
     },
     {
       "id": "t09_01",
@@ -2987,13 +2982,12 @@
       "tema": "grafy_logika",
       "podtema": "ciselne_zakonitosti",
       "obtiznost": 2,
-      "zadani": "Magický čtverec 3×3 má v každém řádku, sloupci a diagonále součet 15. Jsou zadána čísla: střed=5, roh=2. Doplňte políčko napravo od 2 (vrchní řádek, prostřední sloupec).",
-      "odpoved": "6",
+      "zadani": "Magický čtverec 3×3 obsahuje čísla 1 až 9 a součet v každém řádku, sloupci i diagonále je 15. Vlevo nahoře je 2, uprostřed 5 a pod dvojkou 7. Které číslo je uprostřed horního řádku (napravo od dvojky)?",
+      "odpoved": "9",
       "reseni_kroky": [
-        "V magickém čtverci 3×3 s čísly 1–9 a magickou sumou 15",
-        "Standardní rozmístění: 2 9 4 / 7 5 3 / 6 1 8",
-        "Střed=5 ✓, levý horní roh=2 ✓",
-        "Políčko vpravo od 2 (střed vrchního řádku) = 9"
+        "Levý sloupec: 2 + 7 + x = 15, tedy levý dolní roh je 6.",
+        "Diagonála z pravého horního do levého dolního rohu: a + 5 + 6 = 15, tedy pravý horní roh je 4.",
+        "Horní řádek: 2 + b + 4 = 15, tedy uprostřed horního řádku je 9."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1

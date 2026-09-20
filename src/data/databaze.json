@@ -511,7 +511,7 @@
       "zadani": "Vypočítej: $5\\frac{1}{3} - 2\\frac{2}{3}$",
       "odpoved": "2 2/3",
       "reseni_kroky": [
-        "\\frac{16}{3}\\frac{-8}{3}=\\frac{8}{3}=2\\frac{2}{3}"
+        "\\frac{16}{3}-\\frac{8}{3}=\\frac{8}{3}=2\\frac{2}{3}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -669,7 +669,7 @@
       "odpoved": "13/24",
       "reseni_kroky": [
         "NSN=24",
-        "\\frac{22}{24}\\frac{-9}{24}=\\frac{13}{24}"
+        "\\frac{22}{24}-\\frac{9}{24}=\\frac{13}{24}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -697,7 +697,7 @@
       "zadani": "Vypočítej: $3\\frac{1}{3} - 1\\frac{2}{3}$",
       "odpoved": "1 2/3",
       "reseni_kroky": [
-        "\\frac{10}{3}\\frac{-5}{3}=\\frac{5}{3}=1\\frac{2}{3}"
+        "\\frac{10}{3}-\\frac{5}{3}=\\frac{5}{3}=1\\frac{2}{3}"
       ],
       "cas_sekund": 105,
       "sm2_interval": 1,
@@ -755,7 +755,7 @@
       "odpoved": "1/2",
       "reseni_kroky": [
         "NSN=10",
-        "\\frac{8}{10}\\frac{-3}{10}=\\frac{5}{10}=\\frac{1}{2}"
+        "\\frac{8}{10}-\\frac{3}{10}=\\frac{5}{10}=\\frac{1}{2}"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
@@ -796,10 +796,10 @@
       "podtema": "kombinovane",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(\\frac{3}{4} + \\frac{1}{3}) \\times (2 - \\frac{1}{2})$",
-      "odpoved": "19/8",
+      "odpoved": "13/8",
       "reseni_kroky": [
         "\\frac{3}{4}+\\frac{1}{3}=\\frac{13}{12}",
-        "2\\frac{-1}{2}=\\frac{3}{2}",
+        "2-\\frac{1}{2}=\\frac{3}{2}",
         "\\frac{13}{12}\\times\\frac{3}{2}=\\frac{39}{24}=\\frac{13}{8}"
       ],
       "cas_sekund": 150,
@@ -812,12 +812,11 @@
       "podtema": "kombinovane",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(\\frac{5}{6} - \\frac{1}{4}) \\div (\\frac{1}{3} + \\frac{1}{4})$",
-      "odpoved": "14/7",
+      "odpoved": "1",
       "reseni_kroky": [
-        "\\frac{5}{6}\\frac{-1}{4}=\\frac{7}{12}",
-        "\\frac{1}{3}+\\frac{1}{4}=\\frac{7}{12}",
-        "\\frac{7}{12}\\div\\frac{7}{12}=1",
-        "Pozor: výsledek je 1"
+        "\\frac{5}{6}-\\frac{1}{4}=\\frac{10}{12}-\\frac{3}{12}=\\frac{7}{12}",
+        "\\frac{1}{3}+\\frac{1}{4}=\\frac{4}{12}+\\frac{3}{12}=\\frac{7}{12}",
+        "\\frac{7}{12}\\div\\frac{7}{12}=1"
       ],
       "cas_sekund": 150,
       "sm2_interval": 2,
@@ -911,9 +910,11 @@
       "podtema": "kombinovane",
       "obtiznost": 3,
       "zadani": "Vypočítej: $(\\frac{1}{2} + \\frac{1}{3}) \\times (\\frac{1}{4} + \\frac{1}{6})$",
-      "odpoved": "5/12",
+      "odpoved": "25/72",
       "reseni_kroky": [
-        "\\frac{5}{6} \\times \\frac{5}{12} = \\frac{25}{72} — PŘEPOČTI: (\\frac{5}{6})\\times(\\frac{5}{12})=\\frac{25}{72}"
+        "\\frac{1}{2}+\\frac{1}{3}=\\frac{5}{6}",
+        "\\frac{1}{4}+\\frac{1}{6}=\\frac{3}{12}+\\frac{2}{12}=\\frac{5}{12}",
+        "\\frac{5}{6}\\times\\frac{5}{12}=\\frac{25}{72}"
       ],
       "cas_sekund": 180,
       "sm2_interval": 2,
@@ -955,10 +956,10 @@
       "podtema": "kombinovane",
       "obtiznost": 3,
       "zadani": "Vypočítej: $\\frac{2}{3} - \\frac{1}{4} + \\frac{5}{6} - \\frac{3}{8}$",
-      "odpoved": "3/4 = 18/24",
+      "odpoved": "7/8",
       "reseni_kroky": [
         "NSN=24",
-        "\\frac{16}{24}\\frac{-6}{24}+\\frac{20}{24}\\frac{-9}{24}=\\frac{21}{24}=\\frac{7}{8}"
+        "\\frac{16}{24}-\\frac{6}{24}+\\frac{20}{24}-\\frac{9}{24}=\\frac{21}{24}=\\frac{7}{8}"
       ],
       "cas_sekund": 180,
       "sm2_interval": 2,
@@ -972,7 +973,7 @@
       "zadani": "Součet dvou čísel je $\\frac{5}{3}$. Jedno číslo je $\\frac{7}{12}$. Jaké je druhé?",
       "odpoved": "13/12",
       "reseni_kroky": [
-        "\\frac{5}{3}\\frac{-7}{12}=\\frac{20}{12}\\frac{-7}{12}=\\frac{13}{12}"
+        "\\frac{5}{3}-\\frac{7}{12}=\\frac{20}{12}-\\frac{7}{12}=\\frac{13}{12}"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -1002,7 +1003,7 @@
       "odpoved": "3/8",
       "reseni_kroky": [
         "\\frac{3}{8}+\\frac{1}{4}=\\frac{3}{8}+\\frac{2}{8}=\\frac{5}{8}",
-        "1\\frac{-5}{8}=\\frac{3}{8}"
+        "1-\\frac{5}{8}=\\frac{3}{8}"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -1927,10 +1928,11 @@
       "podtema": "procenta",
       "obtiznost": 2,
       "zadani": "Tři slevy: 10 %, 5 %, 2 %. Výsledná sleva z 1 000 Kč?",
-      "odpoved": "167,36 Kč",
+      "odpoved": "162,10 Kč",
       "reseni_kroky": [
-        "1000×0,90×0,95×0,98=838,44",
-        "sleva=161,56 Kč — přibližně"
+        "Po slevách zůstane 90 % · 95 % · 98 % původní ceny.",
+        "1 000 × 0,90 × 0,95 × 0,98 = 837,90 Kč.",
+        "Výsledná sleva: 1 000 − 837,90 = 162,10 Kč."
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -2990,7 +2992,9 @@
       "zadani": "Vyřeš: 2x+y=11; x+2y=10",
       "odpoved": "x=4, y=3",
       "reseni_kroky": [
-        "odečtu: x-y=1, a x+2y=10, řeším"
+        "Z první rovnice vyjádříme y = 11 − 2x.",
+        "Dosadíme do druhé: x + 2(11 − 2x) = 10, tedy x + 22 − 4x = 10 a −3x = −12, x = 4.",
+        "y = 11 − 2 · 4 = 3. Řešení: x = 4, y = 3."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3015,12 +3019,12 @@
       "podtema": "linearni",
       "obtiznost": 2,
       "zadani": "Vyřeš: 7(x-3) = 2(x+4) - 1",
-      "odpoved": "x = 4",
+      "odpoved": "x = 5,6",
       "reseni_kroky": [
-        "7x-21 = 2x+7",
-        "5x = 28... přepočítej: 7x-21=2x+8-1=2x+7",
-        "5x=28, x=5,6 — přepočítej zadání: 7(x-3)=2(x+1)",
-        "7x-21=2x+2, 5x=23"
+        "Roznásobíme závorky: 7x - 21 = 2x + 8 - 1",
+        "Zjednodušíme pravou stranu: 7x - 21 = 2x + 7",
+        "Neznámé na jednu stranu: 5x = 28",
+        "x = 5,6"
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -3277,12 +3281,11 @@
       "podtema": "spolecna_prace",
       "obtiznost": 2,
       "zadani": "A pracuje 3× rychleji než B. Spolu dokončí práci za 3 hodiny. Jak dlouho by ji sám dokončil B?",
-      "odpoved": "16 hodin",
+      "odpoved": "12 hodin",
       "reseni_kroky": [
-        "A=3B: 3/t_A + 1/t_B = 1/3",
-        "t_B=4t_A: 3/t_A+3/(4t_A)... přepočítej",
-        "1/t_A+1/t_B=1/3, t_A=t_B/3",
-        "4/t_B=1/3, t_B=12"
+        "Rychlost práce B označíme b (část práce za hodinu). A pracuje 3× rychleji, tedy 3b.",
+        "Spolu za hodinu udělají 3b + b = 4b. Celou práci dokončí za 3 hodiny, tedy 4b = 1/3.",
+        "b = 1/12, takže B by práci dokončil sám za 12 hodin."
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -3476,11 +3479,12 @@
       "tema": "slovni_ulohy",
       "podtema": "spolecna_prace",
       "obtiznost": 2,
-      "zadani": "Zahradník dokáže pokosit louku za 4 hodiny. Po 1 hodině mu přijde pomoc. Spolu dokončí za další hodinu. Jak rychle pracuje pomocník?",
-      "odpoved": "za 1,5 hodiny sám",
+      "zadani": "Zahradník dokáže pokosit louku za 4 hodiny. Po 1 hodině mu přijde pomoc a spolu dokončí zbytek za další hodinu. Jak dlouho by pokosil celou louku sám pomocník?",
+      "odpoved": "2 hodiny",
       "reseni_kroky": [
-        "zahradník udělal 1/4 + (1/4+výkon_p)=1",
-        "výkon_p=1/4: za 4 h"
+        "Zahradník pokosí za hodinu 1/4 louky. Za první hodinu tedy pokosil 1/4, zbývá 3/4.",
+        "Zbylé 3/4 pokosí spolu za 1 hodinu: 1/4 + p = 3/4, kde p je část louky, kterou pomocník pokosí za hodinu.",
+        "p = 1/2, takže pomocník by celou louku pokosil sám za 2 hodiny."
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -3505,11 +3509,11 @@
       "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Skupina turistů má dojít 60 km za 3 dny. 1. den ujdou 2/5, 2. den 1/3 zbytku. Kolik zbývá 3. den?",
-      "odpoved": "22 km",
+      "odpoved": "24 km",
       "reseni_kroky": [
-        "1. den: 24 km, zbývá 36",
-        "2. den: 1/3×36=12 km, zbývá 24",
-        "správně: 60×2/5=24, zbytek=36, 36×1/3=12, 3.den=24"
+        "1. den: 2/5 · 60 = 24 km, zbývá 60 − 24 = 36 km.",
+        "2. den: 1/3 · 36 = 12 km, zbývá 36 − 12 = 24 km.",
+        "Třetí den zbývá ujít 24 km."
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -3563,9 +3567,9 @@
       "zadani": "10 l vody a 5 l sirupu. Kolik procent sirupu?",
       "odpoved": "33,3 %",
       "reseni_kroky": [
-        "Celkový objem: 10 l vody + 5 l sirupu = 15 l směsi",
-        "Procentuální podíl sirupu: 5 ÷ 15 × 100 = 33,33 %",
-        "Pozor: voda NENÍ procento sirupu — dělíme sirupem z CELKU (10+5), ne jen z vody!"
+        "Celkový objem: 10 l vody + 5 l sirupu = 15 l směsi.",
+        "Podíl sirupu: 5 : 15 · 100 ≈ 33,3 %.",
+        "Pozor: dělíme celkovým objemem směsi (15 l), ne jen objemem vody."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -3591,7 +3595,7 @@
       "podtema": "finance",
       "obtiznost": 2,
       "zadani": "V obchodě jsou 3 druhy jablek za 25, 30 a 40 Kč/kg. Koupíme 2 kg prvního, 3 kg druhého, 1 kg třetího. Celkem?",
-      "odpoved": "200 Kč",
+      "odpoved": "180 Kč",
       "reseni_kroky": [
         "1. druh: 2 kg × 25 Kč = 50 Kč",
         "2. druh: 3 kg × 30 Kč = 90 Kč",
@@ -4822,7 +4826,7 @@
       "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Z plechu 50×30 cm vystřihneme 4 kruhy s průměrem 10 cm. Zbývající plocha (π≈3,14)?",
-      "odpoved": "1185,6 cm²",
+      "odpoved": "1186 cm²",
       "reseni_kroky": [
         "1500-4×78,5=1500-314=1186 cm²"
       ],
@@ -5411,7 +5415,10 @@
       "zadani": "Ze 4 karet (1/2, 1/3, 1/4, 1/5) vytáhneme dvě. P(součet > 1/2)?",
       "odpoved": "5/6",
       "reseni_kroky": [
-        "součet ≤ 1/2 jen: (1/3,1/5)=8/15<1/2, (1/4,1/5)=9/20<1/2, (1/4,1/5) atd — přepočítej"
+        "Z 4 karet lze vybrat 6 dvojic.",
+        "Součty: 1/2 + 1/3 = 5/6, 1/2 + 1/4 = 3/4, 1/2 + 1/5 = 7/10, 1/3 + 1/4 = 7/12, 1/3 + 1/5 = 8/15 a 1/4 + 1/5 = 9/20.",
+        "Větší než 1/2 (což je 10/20) je pět z nich; jen 9/20 je menší.",
+        "Pravděpodobnost je 5/6."
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -5421,15 +5428,23 @@
       "tema": "souhrnne",
       "podtema": "geometrie_soustava",
       "obtiznost": 2,
-      "zadani": "Perimetr obdélníku je 26 cm. Úhlopříčka je 10 cm. Rozměry?",
-      "odpoved": "6×7 cm",
+      "zadani": "Obvod obdélníku je 34 cm a jeho úhlopříčka měří 13 cm. Jaké jsou rozměry obdélníku?",
+      "odpoved": "5 × 12 cm",
       "reseni_kroky": [
-        "2(a+b)=26, a+b=13",
-        "a²+b²=100",
-        "(13)²-2ab=100, ab=42,5 — přepočítej: a=6, b=7: 36+49=85≠100, zkontroluj"
+        "Obvod 34 cm znamená a + b = 17 cm.",
+        "Z Pythagorovy věty pro úhlopříčku: a² + b² = 13² = 169.",
+        "Z (a + b)² = a² + 2ab + b² plyne 289 = 169 + 2ab, tedy ab = 60.",
+        "Čísla se součtem 17 a součinem 60 jsou 5 a 12. Rozměry jsou 5 × 12 cm. Správně je B)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "moznosti": [
+        "6 × 11 cm",
+        "5 × 12 cm",
+        "7 × 10 cm",
+        "8 × 9 cm"
+      ],
+      "spravna": 1
     },
     {
       "id": "KOM_041",
@@ -5584,10 +5599,12 @@
       "tema": "souhrnne",
       "podtema": "procenta_slovni",
       "obtiznost": 1,
-      "zadani": "Slevy 10 %: cena 180 Kč. Ušetříš?",
+      "zadani": "Po slevě 10 % stojí zboží 180 Kč. Kolik korun ušetříš oproti původní ceně?",
       "odpoved": "20 Kč",
       "reseni_kroky": [
-        "200×0,1=20 — přepočítej: 180 je po slevě, původní=200"
+        "180 Kč je 90 % původní ceny.",
+        "Původní cena: 180 : 0,9 = 200 Kč.",
+        "Ušetříš 200 − 180 = 20 Kč."
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -9334,8 +9351,8 @@
       "podtema": "smisena_cisla",
       "obtiznost": 3,
       "latex": true,
-      "zadani": "\\frac{2$\\frac{1}{3}$ - $\\frac{5}{6}$}{$\\frac{7}{9}$} + $\\frac{3}{14}$ = ?",
-      "odpoved": "67/28",
+      "zadani": "Vypočítej: $\\dfrac{2\\frac{1}{3} - \\frac{5}{6}}{\\frac{7}{9}} + \\frac{3}{14}$",
+      "odpoved": "15/7",
       "reseni_kroky": [
         "Čitatel zlomku: 2\\frac{1}{3} = \\frac{7}{3} = \\frac{14}{6}; \\quad \\frac{14}{6} - \\frac{5}{6} = \\frac{9}{6} = \\frac{3}{2}",
         "Část se zlomkem: \\frac{3}{2} \\div \\frac{7}{9} = \\frac{3}{2} \\cdot \\frac{9}{7} = \\frac{27}{14}",
@@ -9521,7 +9538,7 @@
       "obtiznost": 2,
       "latex": true,
       "zadani": "Vyřeš: $\\frac{x+3}{4} + \\frac{x-1}{2} = 5$",
-      "odpoved": "x = 3",
+      "odpoved": "x = 19/3",
       "reseni_kroky": [
         "LSJ = 4; násobíme celou rovnici 4:",
         "(x+3) + 2(x-1) = 20",
@@ -9536,7 +9553,7 @@
       "podtema": "linearni_se_zavorkou",
       "obtiznost": 2,
       "zadani": "Vyřeš: 6(x − 2) + 3 = 2(2x + 1)",
-      "odpoved": "x = 4",
+      "odpoved": "x = 5,5",
       "reseni_kroky": [
         "6x − 12 + 3 = 4x + 2",
         "6x − 9 = 4x + 2",
@@ -9553,7 +9570,7 @@
       "obtiznost": 2,
       "latex": true,
       "zadani": "Vyřeš: $\\frac{3x+1}{5} - \\frac{x-2}{2} = 1$",
-      "odpoved": "x = 4",
+      "odpoved": "x = -2",
       "reseni_kroky": [
         "LSJ = 10; násobíme celou rovnici 10:",
         "2(3x+1) - 5(x-2) = 10",
@@ -9569,7 +9586,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "Vyřeš: $\\frac{2x-3}{4} + \\frac{x+5}{6} = 1$",
-      "odpoved": "x = 1/2",
+      "odpoved": "x = 11/8",
       "reseni_kroky": [
         "LSJ(4,6) = 12; násobíme 12:",
         "3(2x-3) + 2(x+5) = 12",
@@ -9601,7 +9618,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "Vyřeš: $\\frac{5x-2}{3} - \\frac{x+4}{2} = \\frac{x-1}{6}$",
-      "odpoved": "x = 3",
+      "odpoved": "x = 5/2",
       "reseni_kroky": [
         "LSJ = 6; násobíme 6:",
         "2(5x-2) - 3(x+4) = (x-1)",
@@ -9632,7 +9649,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "Vyřeš: $2(x-3) - \\frac{x+1}{2} = \\frac{x-5}{3}$",
-      "odpoved": "x = 2",
+      "odpoved": "x = 29/7",
       "reseni_kroky": [
         "LSJ = 6; násobíme 6:",
         "12(x-3) - 3(x+1) = 2(x-5)",
@@ -9648,7 +9665,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "Vyřeš: $\\frac{7-2x}{5} + \\frac{x+4}{3} = \\frac{2x+1}{6}$",
-      "odpoved": "x = 4",
+      "odpoved": "x = 77/12",
       "reseni_kroky": [
         "LSJ(5,3,6) = 30; násobíme 30:",
         "6(7-2x) + 10(x+4) = 5(2x+1)",
