@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { pragueDateStr } from "@/lib/date";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
@@ -83,7 +84,7 @@ export async function GET(req: NextRequest) {
     for (let i = 0; i < 365; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() - i);
-      const ds = d.toISOString().slice(0, 10);
+      const ds = pragueDateStr(d);
       if (dateSet.has(ds)) streak++;
       else if (i > 0) break;
     }

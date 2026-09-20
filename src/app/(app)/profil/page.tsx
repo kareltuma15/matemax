@@ -13,7 +13,7 @@ import { TEMA_LABELS, TEMATA_ORDER, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
-import { computeTrainingState, type Level } from "@/lib/levels";
+import { computeTrainingState, computeTopicProgress, LEVEL_DONE_RATIO, type Level, type LevelProgress } from "@/lib/levels";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
@@ -208,6 +208,7 @@ export default function ProfilPage() {
   const [totalSolved, setTotalSolved]    = useState(0);
   const [topicScores, setTopicScores]    = useState<TopicScore[]>([]);
   const [levels, setLevels]              = useState<Record<string, Level>>({});
+  const [progress, setProgress]          = useState<Record<string, Record<Level, LevelProgress>>>({});
   const [earnedBadges, setEarnedBadges]  = useState<string[]>([]);
   const [perfectSessions, setPerfectSessions] = useState(0);
   const [dailyGoalsCompleted, setDailyGoalsCompleted] = useState(0);
@@ -329,7 +330,7 @@ export default function ProfilPage() {
     } catch { /* ignore */ }
 
     // Odemčené úrovně L1–L3 pro „Mistrovství témat".
-    try { setLevels(computeTrainingState().levels); } catch { /* ignore */ }
+    try { setLevels(computeTrainingState().levels); setProgress(computeTopicProgress()); } catch { /* ignore */ }
 
     // Fetch diag results from Supabase for cross-device sync
     if (supabase) {
@@ -827,9 +828,14 @@ export default function ProfilPage() {
                 {TEMATA_ORDER.map((tema) => {
                   const locked = !isPremium && PREMIUM_TOPICS.has(tema);
                   const sc = topicScores.find((t) => t.tema === tema);
-                  const pct = sc ? Math.round(sc.score * 100) : 0;
+                  const diagPct = sc ? Math.round(sc.score * 100) : null;
                   const lvl = levels[tema] ?? 1;
-                  const barCol = pct >= 70 ? "#16a34a" : pct >= 40 ? "#d97706" : "#dc2626";
+                  // Mistrovství = kolik příkladů tématu (L1–L3) má žák prokazatelně zvládnuto v tréninku.
+                  const tp = progress[tema];
+                  const doneAll = tp ? tp[1].done + tp[2].done + tp[3].done : 0;
+                  const totalAll = tp ? tp[1].total + tp[2].total + tp[3].total : 0;
+                  const pct = totalAll > 0 ? Math.round((doneAll / totalAll) * 100) : 0;
+                  const barCol = pct >= 70 ? "#16a34a" : "#2E6DA4";
                   return (
                     <div key={tema} className="bg-white rounded-2xl border border-slate-200 p-3.5 flex flex-col gap-2" style={{ opacity: locked ? 0.7 : 1 }}>
                       <div className="flex items-center gap-2">
@@ -844,17 +850,26 @@ export default function ProfilPage() {
                           <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f7" }}>
                             <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: barCol }} />
                           </div>
-                          <div className="flex gap-1">
+                          <div className="flex flex-wrap gap-1">
                             {([1, 2, 3] as const).map((l) => {
-                              const on = l <= lvl;
+                              const unlocked = l <= lvl;
+                              const lp = tp?.[l];
+                              const finished = !!lp && lp.total > 0 && lp.done / lp.total >= LEVEL_DONE_RATIO;
+                              const style = finished
+                                ? { background: "#f0fdf4", borderColor: "#bbf7d0", color: "#166534" }
+                                : unlocked
+                                ? { background: "#eff6ff", borderColor: "#bfdbfe", color: "#2E6DA4" }
+                                : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#cbd5e1" };
                               return (
-                                <span key={l} className="text-[9px] font-black px-1.5 py-0.5 rounded-full border"
-                                  style={on ? { background: "#f0fdf4", borderColor: "#bbf7d0", color: "#166534" } : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#cbd5e1" }}>
-                                  L{l}{on ? " ✓" : ""}
+                                <span key={l} className="text-[9px] font-black px-1.5 py-0.5 rounded-full border" style={style}>
+                                  {finished ? `L${l} ✓` : unlocked && lp ? `L${l} · ${lp.done}/${lp.total}` : `L${l} 🔒`}
                                 </span>
                               );
                             })}
                           </div>
+                          {diagPct !== null && (
+                            <p className="text-[10px] text-slate-400">Výsledek diagnostiky: {diagPct} %</p>
+                          )}
                         </>
                       )}
                     </div>
@@ -864,6 +879,7 @@ export default function ProfilPage() {
             ) : (
               <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center text-slate-400 text-sm">
                 Nejdřív projdi diagnostický test — uvidíš mistrovství svých témat.
+                {" "}(Procenta ukazují, kolik příkladů tématu už máš zvládnuto v tréninku; úroveň je splněná od 70 % jejích příkladů.)
               </div>
             )}
           </div>
@@ -1230,6 +1246,22 @@ export default function ProfilPage() {
               {notifState === "granted" && <span className="text-xs font-bold text-green-600">Aktivní ✓</span>}
               {notifState === "default" && <span className="text-slate-300 text-lg">→</span>}
             </button>
+          )}
+
+          {/* Notifikace nejsou v tomhle prohlížeči dostupné — řekni proč, ať to není jen „chybějící tlačítko".
+              iPhone: web push funguje jen z aplikace přidané na plochu (iOS 16.4+), ne v běžné záložce Safari. */}
+          {notifState === "unsupported" && (
+            <div className="w-full flex items-start gap-3 px-4 py-3.5 text-left">
+              <span className="text-xl">🔕</span>
+              <div>
+                <p className="text-sm font-semibold text-slate-800">Připomenutí tréninku</p>
+                <p className="text-xs text-slate-500 leading-snug mt-0.5">
+                  {typeof navigator !== "undefined" && /iPhone|iPad|iPod/.test(navigator.userAgent)
+                    ? "Na iPhonu fungují připomenutí jen z aplikace na ploše: v Safari klepni na Sdílet → Přidat na plochu, otevři MateMax z plochy a tady si připomenutí zapni."
+                    : "Tenhle prohlížeč připomenutí nepodporuje. Zkus Chrome, Edge nebo Firefox, případně MateMax přidej na plochu."}
+                </p>
+              </div>
+            </div>
           )}
 
           {/* Změna hesla */}

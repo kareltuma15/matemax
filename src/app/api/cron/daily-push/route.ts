@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { pragueDateStr } from "@/lib/date";
 import webpush from "web-push";
 import { supabase } from "@/lib/supabase";
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -136,7 +137,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch who already trained today — skip them
-  const today = new Date().toISOString().slice(0, 10);
+  const today = pragueDateStr();
   const trainedTodaySet = new Set<string>();
   if (userIds.length > 0) {
     const { data: sessionRows } = await supabase

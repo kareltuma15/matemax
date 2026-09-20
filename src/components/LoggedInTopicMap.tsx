@@ -8,6 +8,7 @@ import { pickMission } from "@/lib/mise";
 import { computeTrainingState, type Level } from "@/lib/levels";
 import { localLoadSessions } from "@/lib/storage";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
+import { localDateStr, localDateDaysAgo } from "@/lib/date";
 
 interface Props {
   isPremium: boolean;
@@ -88,8 +89,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
       today.setHours(0, 0, 0, 0);
       const dny: string[] = [];
       for (let i = 6; i >= 0; i--) {
-        const d = new Date(today.getTime() - i * 86400000);
-        dny.push(d.toISOString().slice(0, 10));
+        dny.push(localDateStr(localDateDaysAgo(i)));
       }
       const byDate: Record<string, number> = {};
       for (const s of localLoadSessions()) byDate[s.date] = (byDate[s.date] ?? 0) + (s.total ?? 0);

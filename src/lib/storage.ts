@@ -1,6 +1,7 @@
 // Storage facade — localStorage now, Supabase once a user is logged in
 import { supabase } from "./supabase";
 import { reportDbError } from "./db-error";
+import { localDateStr } from "./date";
 import { SM2Card, UserProgress } from "@/types";
 import { loadGamification, saveGamification, GamificationState } from "./gamification";
 
@@ -279,9 +280,8 @@ export async function hydrateFromRemote(userId: string): Promise<HydrateResult |
     // Žije jen v localStorage, který odhlášení maže. Bez obnovy ukazoval domov
     // „Dnešní cíl 0/10" a mise „Začít trénink", i když žák ten den už trénoval.
     try {
-      // Stejný formát data jako zapisovatelé (trénink, localSaveSession) — UTC.
-      // Lokální datum by se s nimi po půlnoci rozešlo a počet by zmizel.
-      const todayStr = new Date().toISOString().slice(0, 10);
+      // Datum = kalendářní den uživatele (viz lib/date.ts), stejně jako u zapisovatelů.
+      const todayStr = localDateStr();
       const { data: todayRows } = await supabase
         .from("sessions")
         .select("total")

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { pragueDateStr } from "@/lib/date";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { examples } from "@/data/examples";
@@ -61,8 +62,8 @@ export async function GET(req: NextRequest) {
   const childName = childEmail.split("@")[0];
 
   // Sessions last 14 days (7 this week + 7 last week for trend)
-  const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const twoWeeksAgo = pragueDateStr(new Date(Date.now() - 14 * 24 * 60 * 60 * 1000));
+  const weekAgo = pragueDateStr(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
   const { data: sessions } = await supabaseAdmin
     .from("sessions")
     .select("date, correct, total, xp_earned")
@@ -88,7 +89,7 @@ export async function GET(req: NextRequest) {
   for (let i = 6; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
-    const ds = d.toISOString().slice(0, 10);
+    const ds = pragueDateStr(d);
     weeklyActivity.push({ date: ds, count: dailyMap[ds] ?? 0 });
   }
 
@@ -107,7 +108,7 @@ export async function GET(req: NextRequest) {
     for (let i = 0; i < 365; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() - i);
-      const ds = d.toISOString().slice(0, 10);
+      const ds = pragueDateStr(d);
       if (dates.has(ds)) streak++;
       else if (i > 0) break;
     }

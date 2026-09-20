@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { pragueDateStr } from "@/lib/date";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
   if (!supabaseAdmin) return NextResponse.json({ error: "Admin client not configured" }, { status: 503 });
 
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = pragueDateStr();
 
   const [
     { data: authData },

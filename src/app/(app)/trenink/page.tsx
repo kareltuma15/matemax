@@ -10,6 +10,7 @@ import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, re
 import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
 import { reportDbError } from "@/lib/db-error";
+import { localDateStr } from "@/lib/date";
 import {
   loadGamification,
   saveGamification,
@@ -67,10 +68,6 @@ const CARDS_KEY = "matemax-cards";
 const DIAG_KEY  = "matemax-diag-results";
 const SESSION_SIZE = 7;
 const SESSION_DRAFT_KEY = "matemax-session-draft";
-
-function localDateStr(d = new Date()): string {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
 
 type SessionDraft = {
   sessionIds: string[];
@@ -398,7 +395,7 @@ function TreningPageInner() {
       sessionIds.map((id) => examples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
     )];
     localSaveSession({
-      date: new Date().toISOString().slice(0, 10),
+      date: localDateStr(),
       temas: practiceTopics,
       correct,
       total: answered,
@@ -547,7 +544,7 @@ function TreningPageInner() {
       }
 
       // Daily count tracking
-      const todayStr = new Date().toISOString().slice(0, 10);
+      const todayStr = localDateStr();
       try {
         const rawD = localStorage.getItem("matemax-today");
         const daily = rawD ? JSON.parse(rawD) as { date: string; count: number } : { date: "", count: 0 };

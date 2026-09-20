@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { localLoadSessions } from "@/lib/storage";
+import { localDateStr } from "@/lib/date";
 
 const DAY_LABELS = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
 
@@ -19,7 +20,7 @@ export default function ActivityHeatmap() {
   // Build grid: 8 columns (weeks) × 7 rows (Mon–Sun)
   const todayDate = new Date();
   todayDate.setHours(0, 0, 0, 0);
-  const todayStr = todayDate.toISOString().slice(0, 10);
+  const todayStr = localDateStr(todayDate);
 
   // Start from Monday 8 weeks ago
   const startDate = new Date(todayDate);
@@ -35,7 +36,7 @@ export default function ActivityHeatmap() {
     for (let day = 0; day < 7; day++) {
       const d = new Date(startDate);
       d.setDate(d.getDate() + week * 7 + day);
-      const dateStr = d.toISOString().slice(0, 10);
+      const dateStr = localDateStr(d);
       const isFuture = d > todayDate;
       grid[day].push({
         date: dateStr,
@@ -50,7 +51,7 @@ export default function ActivityHeatmap() {
   let streak = 0;
   const checkDate = new Date(todayDate);
   while (true) {
-    const s = checkDate.toISOString().slice(0, 10);
+    const s = localDateStr(checkDate);
     if (practiceSet.has(s)) {
       streak++;
       checkDate.setDate(checkDate.getDate() - 1);

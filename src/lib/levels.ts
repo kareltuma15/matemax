@@ -60,3 +60,31 @@ export function computeTrainingState(): { levels: Record<string, Level>; mistake
   }
   return { levels, mistakes };
 }
+
+/** Kolik příkladů dané úrovně má žák prokazatelně zvládnuto (SM-2 lastQuality ≥ 3) z kolika je celkem. */
+export type LevelProgress = { done: number; total: number };
+
+/** Úroveň se považuje za splněnou, když je zvládnutá aspoň tato část jejích příkladů. */
+export const LEVEL_DONE_RATIO = 0.7;
+
+/**
+ * Skutečný postup v tématu — z tréninku, ne z diagnostiky. Dřív „Mistrovství témat" ukazovalo
+ * výsledek diagnostiky (pár otázek → snadno 100 %) a zelené „✓" u každé odemčené úrovně,
+ * takže žák měl „100 %" u tématu, kde neudělal ani jeden příklad z L3.
+ */
+export function computeTopicProgress(): Record<string, Record<Level, LevelProgress>> {
+  const out: Record<string, Record<Level, LevelProgress>> = {};
+  if (typeof window === "undefined") return out;
+
+  const mastered = new Set<string>();
+  for (const c of localLoadCards()) {
+    if (c.repetitions > 0 && c.lastQuality >= 3) mastered.add(c.exampleId);
+  }
+  for (const ex of examples) {
+    const t = (out[ex.tema] ??= { 1: { done: 0, total: 0 }, 2: { done: 0, total: 0 }, 3: { done: 0, total: 0 } });
+    const lv = t[ex.obtiznost as Level];
+    lv.total++;
+    if (mastered.has(ex.id)) lv.done++;
+  }
+  return out;
+}

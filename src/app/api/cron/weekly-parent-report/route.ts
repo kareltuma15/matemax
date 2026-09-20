@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { pragueDateStr } from "@/lib/date";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
 // Runs every Monday 06:00 UTC (≈ 08:00 CET) via Vercel Cron.
@@ -206,7 +207,7 @@ async function handler() {
   if (linksError) return NextResponse.json({ error: linksError.message }, { status: 500 });
   if (!links || links.length === 0) return NextResponse.json({ ok: true, sent: 0 });
 
-  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const weekAgo = pragueDateStr(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
   const weekDate = new Date().toLocaleDateString("cs-CZ", { day: "numeric", month: "long", year: "numeric" });
 
   let sent = 0;
@@ -260,7 +261,7 @@ async function handler() {
         for (let i = 0; i < 365; i++) {
           const d = new Date(today);
           d.setDate(today.getDate() - i);
-          if (dateSet.has(d.toISOString().slice(0, 10))) streak++;
+          if (dateSet.has(pragueDateStr(d))) streak++;
           else if (i > 0) break;
         }
       }

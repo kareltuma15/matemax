@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { EXAMPLES_LABEL } from "@/lib/site-stats";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { pragueDateStr } from "@/lib/date";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Uvítací e-mail smí dostat jen účet založený před chvílí (registrace volá trasu hned po signUp).
@@ -71,7 +72,7 @@ export async function POST(req: NextRequest) {
           source: "MateMax registrace",
           userGroup: "students",
           // Initial properties for D+1/D+3/D+7 automation targeting
-          registeredAt: new Date().toISOString().slice(0, 10),
+          registeredAt: pragueDateStr(),
           diagDone: false,
           firstSessionDone: false,
           sessionCount: 0,

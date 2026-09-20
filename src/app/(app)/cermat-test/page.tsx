@@ -9,6 +9,7 @@ import MathDisplay from "@/components/MathDisplay";
 import { TEMA_LABELS } from "@/types";
 import { supabase } from "@/lib/supabase";
 import { trackEvent } from "@/lib/analytics";
+import { localDateStr } from "@/lib/date";
 
 const TEST_SIZE = 15;
 const TEST_SECONDS = 25 * 60; // 25 minutes
@@ -68,7 +69,7 @@ export default function CermatTestPage() {
     if (timerRef.current) clearInterval(timerRef.current);
 
     const result: CermatTestResult = {
-      date: new Date().toISOString().slice(0, 10),
+      date: localDateStr(),
       score: testExamples.filter((ex, i) => checkAnswer(userAnswers[i] ?? "", ex.odpoved)).length,
       total: TEST_SIZE,
       pct: 0,

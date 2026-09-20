@@ -14,6 +14,7 @@ import { getLevelFromXP } from "@/lib/gamification";
 import { supabase } from "@/lib/supabase";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import ShareButton from "@/components/ShareButton";
+import { localDateStr } from "@/lib/date";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -91,7 +92,7 @@ function getTodayChallenge(): DailyChallenge {
 }
 
 function getTodayKey(): string {
-  return DONE_KEY_PREFIX + new Date().toISOString().slice(0, 10);
+  return DONE_KEY_PREFIX + localDateStr();
 }
 
 function pickExamples(challenge: DailyChallenge): DBExample[] {
@@ -182,7 +183,7 @@ export default function VyzvaPage() {
             supabase.auth.getSession().then(({ data }) => {
               if (data.session) {
                 const uid = data.session.user.id;
-                const today = new Date().toISOString().slice(0, 10);
+                const today = localDateStr();
                 remoteLogSession({ user_id: uid, date: today, xp_earned: challenge.xp_reward, correct, total });
                 remoteSyncXP(uid, newXP, levelKey, progress.freezeCount ?? 0, progress.streak ?? 0);
               }

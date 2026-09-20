@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { upsertLoopsContact, sendLoopsEvent } from "@/lib/loops";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { pragueDateStr } from "@/lib/date";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -41,23 +42,23 @@ export async function POST(req: NextRequest) {
   if (event === "diag_completed") {
     await upsertLoopsContact(email, {
       diagDone: true,
-      diagCompletedAt: new Date().toISOString().slice(0, 10),
+      diagCompletedAt: pragueDateStr(),
     });
   } else if (event === "first_session_completed") {
     await upsertLoopsContact(email, {
       firstSessionDone: true,
-      firstSessionAt: new Date().toISOString().slice(0, 10),
+      firstSessionAt: pragueDateStr(),
     });
   } else if (event === "session_completed") {
     const count = (props?.sessionCount as number | undefined) ?? 1;
     await upsertLoopsContact(email, {
       sessionCount: count,
-      lastSessionAt: new Date().toISOString().slice(0, 10),
+      lastSessionAt: pragueDateStr(),
     });
   } else if (event === "cermat_completed") {
     await upsertLoopsContact(email, {
       cermatDone: true,
-      lastCermatAt: new Date().toISOString().slice(0, 10),
+      lastCermatAt: pragueDateStr(),
     });
   }
 

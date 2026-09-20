@@ -20,6 +20,7 @@ import TopicPicker from "@/components/TopicPicker";
 import DnesniMise from "@/components/DnesniMise";
 import { vokativ } from "@/lib/vokativ";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
+import { localDateStr, localDateDaysAgo } from "@/lib/date";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -89,8 +90,8 @@ function computeWeeklyStats(): WeeklyStats | null {
 
     const days: { date: string; count: number; label: string }[] = [];
     for (let i = 6; i >= 0; i--) {
-      const d = new Date(today.getTime() - i * 86400000);
-      days.push({ date: d.toISOString().slice(0, 10), count: 0, label: DAY_LABELS_CS[d.getDay()] });
+      const d = localDateDaysAgo(i);
+      days.push({ date: localDateStr(d), count: 0, label: DAY_LABELS_CS[d.getDay()] });
     }
 
     let totalCorrect = 0, totalExamples = 0, totalXP = 0;
@@ -301,7 +302,7 @@ export default function LoggedInDashboard({
       if (cancelled) return;
       setDiagReady(effectiveDiagDone);
 
-      const todayStr = new Date().toISOString().slice(0, 10);
+      const todayStr = localDateStr();
       const shownKey = `matemax-modal-shown-${todayStr}`;
       if (localStorage.getItem(shownKey)) return;
 
@@ -344,7 +345,7 @@ export default function LoggedInDashboard({
     setHasWrongCards(cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2));
     setWeeklyStats(computeWeeklyStats());
 
-    const todayStr = new Date().toISOString().slice(0, 10);
+    const todayStr = localDateStr();
     function readToday() {
       try {
         const raw = localStorage.getItem("matemax-today");
@@ -682,7 +683,7 @@ export default function LoggedInDashboard({
             ? Math.round((weeklyStats.totalCorrect / weeklyStats.totalExamples) * 100)
             : 0;
           const maxCount = Math.max(...weeklyStats.days.map((d) => d.count), 1);
-          const todayStr = new Date().toISOString().slice(0, 10);
+          const todayStr = localDateStr();
           return (
             <div className="bg-white rounded-2xl border border-slate-200 p-5 card-hover">
               <div className="flex items-center justify-between mb-3">
