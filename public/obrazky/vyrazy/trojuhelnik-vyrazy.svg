@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 206" width="320" height="206" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Trojúhelník ABC se stranami x + 2, x a 2x − 1 (obrázek není v měřítku)</title>
+  <polygon points="40,168 260,168 156,46" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <text x="76" y="101" font-size="15" font-weight="600" fill="#2E6DA4" text-anchor="end">x + 2</text>
+  <text x="230" y="101" font-size="15" font-weight="600" fill="#2E6DA4" text-anchor="start" font-style="italic">x</text>
+  <text x="150" y="190" font-size="15" font-weight="600" fill="#2E6DA4" text-anchor="middle">2x − 1</text>
+  <text x="30" y="182" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="272" y="182" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="156" y="38" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+</svg>

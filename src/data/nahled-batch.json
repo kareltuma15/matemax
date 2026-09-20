@@ -1,10 +1,19 @@
 {
-  "nazev": "Zlomky — L3 (CERMAT styl: 10 úloh na úvahu, 4 s obrázkem, výběr A–E)",
+  "nazev": "L3 ve stylu CERMAT — Zlomky (10), Výrazy (10), Rovnice (10): úlohy na úvahu, 8 s obrázkem, výběr A–E",
   "examples": [
     {
-      "id": "ZLO3_01", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "id": "ZLO3_01",
+      "tema": "zlomky",
+      "podtema": "slovni_uloha",
+      "obtiznost": 3,
       "zadani": "Petra četla knihu tři dny. První den přečetla dvě pětiny knihy, druhý den tři osminy toho, co jí po prvním dni zbývalo. Třetí den jí zbývalo přečíst 45 stran. Kolik stran má celá kniha?",
-      "moznosti": ["75 stran", "90 stran", "120 stran", "135 stran", "150 stran"],
+      "moznosti": [
+        "75 stran",
+        "90 stran",
+        "120 stran",
+        "135 stran",
+        "150 stran"
+      ],
       "spravna": 2,
       "odpoved": "120 stran",
       "reseni_kroky": [
@@ -13,13 +22,29 @@
         "Po druhém dni zbývá 3/5 − 9/40 = 24/40 − 9/40 = 15/40 = 3/8 knihy.",
         "3/8 knihy je 45 stran, takže 1/8 je 15 stran a celá kniha má 8 · 15 = 120 stran. Správně je C)."
       ],
-      "cas_sekund": 180, "sm2_interval": 1
+      "cas_sekund": 180,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_02", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
-      "image": { "kind": "static", "url": "/obrazky/zlomky/nadrz.svg", "width": 320, "height": 214, "alt": "Nádrž s vyznačenými hladinami 3/5 a 1/4; rozdíl hladin odpovídá 35 litrům vody" },
+      "id": "ZLO3_02",
+      "tema": "zlomky",
+      "podtema": "slovni_uloha",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/nadrz.svg",
+        "width": 320,
+        "height": 214,
+        "alt": "Nádrž s vyznačenými hladinami 3/5 a 1/4; rozdíl hladin odpovídá 35 litrům vody"
+      },
       "zadani": "Nádrž byla naplněna do tří pětin svého objemu. Po odčerpání 35 litrů vody byla naplněna jen do jedné čtvrtiny objemu (viz obrázek). Kolik litrů vody se vejde do celé nádrže?",
-      "moznosti": ["60 l", "80 l", "125 l", "100 l", "140 l"],
+      "moznosti": [
+        "60 l",
+        "80 l",
+        "125 l",
+        "100 l",
+        "140 l"
+      ],
       "spravna": 3,
       "odpoved": "100 l",
       "reseni_kroky": [
@@ -27,13 +52,29 @@
         "7/20 objemu je 35 l, takže 1/20 je 5 l.",
         "Celá nádrž: 20 · 5 = 100 l. Správně je D)."
       ],
-      "cas_sekund": 150, "sm2_interval": 1
+      "cas_sekund": 150,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_03", "tema": "zlomky", "podtema": "kombinovane", "obtiznost": 3,
-      "image": { "kind": "static", "url": "/obrazky/zlomky/ctverce-vnorene.svg", "width": 260, "height": 260, "alt": "Čtverec, do něj vepsaný čtverec ze středů stran a do něj další čtverec ze středů stran; rohy a nejmenší čtverec jsou šedé" },
+      "id": "ZLO3_03",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/ctverce-vnorene.svg",
+        "width": 260,
+        "height": 260,
+        "alt": "Čtverec, do něj vepsaný čtverec ze středů stran a do něj další čtverec ze středů stran; rohy a nejmenší čtverec jsou šedé"
+      },
       "zadani": "Do čtverce je vepsán čtverec, jehož vrcholy jsou středy stran původního čtverce, a do něj znovu čtverec ze středů jeho stran. Rohy původního čtverce a nejmenší čtverec jsou vybarveny šedě (viz obrázek). Jakou část obsahu největšího čtverce tvoří šedá plocha?",
-      "moznosti": ["1/2", "5/8", "2/3", "7/8", "3/4"],
+      "moznosti": [
+        "1/2",
+        "5/8",
+        "2/3",
+        "7/8",
+        "3/4"
+      ],
       "spravna": 4,
       "odpoved": "3/4",
       "reseni_kroky": [
@@ -41,25 +82,51 @@
         "Stejně má další čtverec ze středů stran poloviční obsah než prostřední: 1/2 · 1/2 = 1/4 obsahu největšího čtverce. To je nejmenší šedý čtverec.",
         "Šedá plocha: 1/2 + 1/4 = 3/4. Správně je E)."
       ],
-      "cas_sekund": 150, "sm2_interval": 1
+      "cas_sekund": 150,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_04", "tema": "zlomky", "podtema": "kombinovane", "obtiznost": 3,
-      "image": { "kind": "static", "url": "/obrazky/zlomky/ciselna-osa.svg", "width": 380, "height": 106, "alt": "Číselná osa s vyznačenými čísly 0 a 2/3 a bodem K; dílky jsou stejně dlouhé" },
+      "id": "ZLO3_04",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/ciselna-osa.svg",
+        "width": 380,
+        "height": 106,
+        "alt": "Číselná osa s vyznačenými čísly 0 a 2/3 a bodem K; dílky jsou stejně dlouhé"
+      },
       "zadani": "Na číselné ose jsou vyznačena čísla 0 a 2/3 a bod K. Vzdálenosti mezi sousedními značkami jsou stejné (viz obrázek). Které číslo odpovídá bodu K?",
-      "moznosti": ["1", "5/4", "3/2", "4/3", "5/3"],
+      "moznosti": [
+        "1",
+        "5/4",
+        "3/2",
+        "4/3",
+        "5/3"
+      ],
       "spravna": 2,
       "odpoved": "3/2",
       "reseni_kroky": [
         "Od 0 do 2/3 jsou 4 dílky, jeden dílek tedy odpovídá (2/3) : 4 = 2/12 = 1/6.",
         "Bod K je 9 dílků od nuly: 9 · 1/6 = 9/6 = 3/2. Správně je C)."
       ],
-      "cas_sekund": 120, "sm2_interval": 1
+      "cas_sekund": 120,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_05", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "id": "ZLO3_05",
+      "tema": "zlomky",
+      "podtema": "slovni_uloha",
+      "obtiznost": 3,
       "zadani": "Ve třídě jsou dvě pětiny žáků chlapci. Kdyby do třídy přišli další tři chlapci, tvořili by chlapci přesně polovinu třídy. Kolik žáků je ve třídě nyní?",
-      "moznosti": ["10", "15", "20", "25", "30"],
+      "moznosti": [
+        "10",
+        "15",
+        "20",
+        "25",
+        "30"
+      ],
       "spravna": 1,
       "odpoved": "15",
       "reseni_kroky": [
@@ -68,11 +135,21 @@
         "Vynásobíme dvěma: 4n/5 + 6 = n + 3, tedy 3 = n/5 a n = 15.",
         "Kontrola: chlapců je 6, po příchodu 9 z 18 žáků, což je 1/2. Správně je B)."
       ],
-      "cas_sekund": 180, "sm2_interval": 1
+      "cas_sekund": 180,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_06", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
-      "image": { "kind": "static", "url": "/obrazky/zlomky/kolac-zlomky.svg", "width": 350, "height": 232, "alt": "Kruhový diagram tříd: sportovní kroužek 1/3, hudební 1/4, výtvarný 1/9 a část žáků bez kroužku označená otazníkem" },
+      "id": "ZLO3_06",
+      "tema": "zlomky",
+      "podtema": "slovni_uloha",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/kolac-zlomky.svg",
+        "width": 350,
+        "height": 232,
+        "alt": "Kruhový diagram tříd: sportovní kroužek 1/3, hudební 1/4, výtvarný 1/9 a část žáků bez kroužku označená otazníkem"
+      },
       "zadani": "Do třídy chodí 36 žáků. Do sportovního kroužku chodí třetina žáků, do hudebního čtvrtina a do výtvarného devítina; žádný žák nechodí do dvou kroužků (viz obrázek). Kolik žáků nechodí do žádného z těchto kroužků?",
       "odpoved": "11",
       "reseni_kroky": [
@@ -80,12 +157,22 @@
         "Do kroužků chodí 12 + 9 + 4 = 25 žáků.",
         "Do žádného nechodí 36 − 25 = 11 žáků (1 − 1/3 − 1/4 − 1/9 = 11/36 třídy)."
       ],
-      "cas_sekund": 120, "sm2_interval": 1
+      "cas_sekund": 120,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_07", "tema": "zlomky", "podtema": "porovnavani", "obtiznost": 3,
+      "id": "ZLO3_07",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 3,
       "zadani": "O kolik je třeba zvětšit jmenovatele zlomku 3/4, aby se jeho hodnota zmenšila na polovinu?",
-      "moznosti": ["o 1", "o 2", "o 3", "o 4", "o 6"],
+      "moznosti": [
+        "o 1",
+        "o 2",
+        "o 3",
+        "o 4",
+        "o 6"
+      ],
       "spravna": 3,
       "odpoved": "o 4",
       "reseni_kroky": [
@@ -93,10 +180,14 @@
         "Čitatel zůstává 3, aby měl zlomek hodnotu 3/8, musí být jmenovatel 8.",
         "Jmenovatel se zvětšil ze 4 na 8, tedy o 4. (Zdvojnásobením jmenovatele se hodnota zlomku zmenší na polovinu.) Správně je D)."
       ],
-      "cas_sekund": 100, "sm2_interval": 1
+      "cas_sekund": 100,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_08", "tema": "zlomky", "podtema": "porovnavani", "obtiznost": 3,
+      "id": "ZLO3_08",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 3,
       "zadani": "Které z následujících řad seřazuje čísla 3/5, 0,58, 4/7 a 7/12 od nejmenšího po největší?",
       "moznosti": [
         "0,58; 4/7; 7/12; 3/5",
@@ -111,12 +202,22 @@
         "Převedeme na desetinná čísla: 3/5 = 0,6; 4/7 = 0,5714…; 7/12 = 0,5833….",
         "Seřadíme: 0,5714 < 0,58 < 0,5833 < 0,6, tedy 4/7 < 0,58 < 7/12 < 3/5. Správně je B)."
       ],
-      "cas_sekund": 120, "sm2_interval": 1
+      "cas_sekund": 120,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_09", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "id": "ZLO3_09",
+      "tema": "zlomky",
+      "podtema": "slovni_uloha",
+      "obtiznost": 3,
       "zadani": "Šest sedmin určitého čísla je o 12 větší než dvě třetiny téhož čísla. Které je to číslo?",
-      "moznosti": ["42", "63", "54", "72", "84"],
+      "moznosti": [
+        "42",
+        "63",
+        "54",
+        "72",
+        "84"
+      ],
       "spravna": 1,
       "odpoved": "63",
       "reseni_kroky": [
@@ -125,12 +226,22 @@
         "x = 12 · 21 : 4 = 63.",
         "Kontrola: 6/7 · 63 = 54, 2/3 · 63 = 42 a 54 − 42 = 12. Správně je B)."
       ],
-      "cas_sekund": 150, "sm2_interval": 1
+      "cas_sekund": 150,
+      "sm2_interval": 1
     },
     {
-      "id": "ZLO3_10", "tema": "zlomky", "podtema": "slovni_uloha", "obtiznost": 3,
+      "id": "ZLO3_10",
+      "tema": "zlomky",
+      "podtema": "slovni_uloha",
+      "obtiznost": 3,
       "zadani": "Lucie by referát dokončila sama za 3 hodiny, Jan by ho sám dokončil za 6 hodin. Lucie začala pracovat sama, po hodině se k ní přidal Jan a referát dokončili společně. Za jak dlouho od Luciina začátku byl referát hotový?",
-      "moznosti": ["2 hodiny", "2 hodiny 10 minut", "2 hodiny 20 minut", "2 hodiny 30 minut", "3 hodiny"],
+      "moznosti": [
+        "2 hodiny",
+        "2 hodiny 10 minut",
+        "2 hodiny 20 minut",
+        "2 hodiny 30 minut",
+        "3 hodiny"
+      ],
       "spravna": 2,
       "odpoved": "2 hodiny 20 minut",
       "reseni_kroky": [
@@ -139,7 +250,493 @@
         "Společně udělají za hodinu 1/3 + 1/6 = 1/2 referátu, zbylé 2/3 tedy za (2/3) : (1/2) = 4/3 h = 1 h 20 min.",
         "Celkem 1 h + 1 h 20 min = 2 h 20 min. Správně je C)."
       ],
-      "cas_sekund": 180, "sm2_interval": 1
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_01",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/vyrazy/obdelnik-zvetseni.svg",
+        "width": 320,
+        "height": 230,
+        "alt": "Obdélník se stranami x + 4 a x − 1, ke každé straně se přidají 2 cm (přidané části jsou čárkovaně)"
+      },
+      "zadani": "Obdélník má strany x + 4 a x − 1 (v cm). Ke každé jeho straně přidáme 2 cm (viz obrázek). O kolik cm² se tím zvětší obsah obdélníku?",
+      "moznosti": [
+        "(4x + 2) cm²",
+        "(4x + 10) cm²",
+        "(2x + 10) cm²",
+        "(3x + 8) cm²",
+        "(x² + 10) cm²"
+      ],
+      "spravna": 1,
+      "odpoved": "(4x + 10) cm²",
+      "reseni_kroky": [
+        "Původní obsah: (x + 4)(x − 1) = x² + 3x − 4.",
+        "Nový obdélník má strany x + 6 a x + 1, jeho obsah je (x + 6)(x + 1) = x² + 7x + 6.",
+        "Rozdíl: (x² + 7x + 6) − (x² + 3x − 4) = 4x + 10. Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_02",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "zadani": "Který z následujících výrazů je roven výrazu (2x − 3)² − (2x + 3)(2x − 3)?",
+      "moznosti": [
+        "12x − 18",
+        "−12x − 18",
+        "−12x + 18",
+        "8x² − 12x + 18",
+        "18"
+      ],
+      "spravna": 2,
+      "odpoved": "−12x + 18",
+      "reseni_kroky": [
+        "(2x − 3)² = 4x² − 12x + 9.",
+        "(2x + 3)(2x − 3) = 4x² − 9.",
+        "Rozdíl: 4x² − 12x + 9 − 4x² + 9 = −12x + 18. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_03",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Jakou hodnotu má výraz −x² + 3x − 2 pro x = −2?",
+      "moznosti": [
+        "−12",
+        "−4",
+        "0",
+        "4",
+        "8"
+      ],
+      "spravna": 0,
+      "odpoved": "−12",
+      "reseni_kroky": [
+        "Dosadíme x = −2: −(−2)² + 3 · (−2) − 2.",
+        "(−2)² = 4, takže −(−2)² = −4 (minus před mocninou zůstává).",
+        "−4 − 6 − 2 = −12. Správně je A)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_04",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "zadani": "Jaká je hodnota výrazu 2025² − 2024² (bez kalkulačky)?",
+      "moznosti": [
+        "1",
+        "2025",
+        "4049",
+        "4050",
+        "8098"
+      ],
+      "spravna": 2,
+      "odpoved": "4049",
+      "reseni_kroky": [
+        "Použijeme vzorec a² − b² = (a − b)(a + b).",
+        "(2025 − 2024)(2025 + 2024) = 1 · 4049 = 4049. Správně je C)."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_05",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "zadani": "Obsah čtverce o straně a + 3 je o 39 větší než obsah čtverce o straně a. Kolik je a?",
+      "moznosti": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "spravna": 3,
+      "odpoved": "5",
+      "reseni_kroky": [
+        "(a + 3)² − a² = 39.",
+        "a² + 6a + 9 − a² = 39, tedy 6a + 9 = 39.",
+        "6a = 30, a = 5. Kontrola: 8² − 5² = 64 − 25 = 39. Správně je D)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_06",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Číslo n zvětšíme o 3, výsledek vynásobíme dvěma a od součinu odečteme trojnásobek čísla n. Pro které n je výsledek roven 2?",
+      "moznosti": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "8"
+      ],
+      "spravna": 2,
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Postup zapíšeme výrazem 2(n + 3) − 3n.",
+        "2n + 6 − 3n = 6 − n.",
+        "6 − n = 2, tedy n = 4. Kontrola: 2 · (4 + 3) − 3 · 4 = 14 − 12 = 2. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_07",
+      "tema": "vyrazy",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Jaká je hodnota výrazu $\\dfrac{3^{10} \\cdot 9^{4}}{27^{6}}$?",
+      "moznosti": [
+        "1",
+        "3",
+        "9",
+        "27",
+        "81"
+      ],
+      "spravna": 0,
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Vše zapíšeme jako mocniny trojky: $9^{4} = (3^{2})^{4} = 3^{8}$ a $27^{6} = (3^{3})^{6} = 3^{18}$.",
+        "Čitatel: $3^{10} \\cdot 3^{8} = 3^{18}$.",
+        "$\\dfrac{3^{18}}{3^{18}} = 1$. Správně je A)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_08",
+      "tema": "vyrazy",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Mezi kterými dvěma po sobě jdoucími celými čísly leží číslo √300?",
+      "moznosti": [
+        "16 a 17",
+        "17 a 18",
+        "18 a 19",
+        "19 a 20",
+        "20 a 21"
+      ],
+      "spravna": 1,
+      "odpoved": "17 a 18",
+      "reseni_kroky": [
+        "17² = 289 a 18² = 324.",
+        "289 < 300 < 324, tedy 17 < √300 < 18. Správně je B)."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_09",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/vyrazy/trojuhelnik-vyrazy.svg",
+        "width": 320,
+        "height": 206,
+        "alt": "Trojúhelník ABC se stranami x + 2, x a 2x − 1 (obrázek není v měřítku)"
+      },
+      "zadani": "Strany trojúhelníku ABC mají délky x, x + 2 a 2x − 1 (v cm) a obvod trojúhelníku je 25 cm (obrázek není v měřítku). Jaká je délka nejdelší strany?",
+      "moznosti": [
+        "6 cm",
+        "8 cm",
+        "9 cm",
+        "10 cm",
+        "11 cm"
+      ],
+      "spravna": 4,
+      "odpoved": "11 cm",
+      "reseni_kroky": [
+        "Obvod: x + (x + 2) + (2x − 1) = 4x + 1.",
+        "4x + 1 = 25, tedy x = 6.",
+        "Strany mají 6 cm, 8 cm a 2 · 6 − 1 = 11 cm. Nejdelší strana měří 11 cm. Správně je E)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_10",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "zadani": "Jaký je aritmetický průměr čtyř čísel x − 2, x, x + 5 a x + 9?",
+      "moznosti": [
+        "x + 4",
+        "x + 3",
+        "4x + 12",
+        "x + 2,5",
+        "x"
+      ],
+      "spravna": 1,
+      "odpoved": "x + 3",
+      "reseni_kroky": [
+        "Součet: (x − 2) + x + (x + 5) + (x + 9) = 4x + 12.",
+        "Průměr: (4x + 12) : 4 = x + 3. Správně je B)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_01",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/rovnice/vahy.svg",
+        "width": 360,
+        "height": 200,
+        "alt": "Rovnoramenné váhy v rovnováze: vlevo tři stejné krabice a závaží 2 kg, vpravo jedna krabice a závaží 12 kg"
+      },
+      "zadani": "Váhy jsou v rovnováze. Na levé misce jsou tři stejně těžké krabice a závaží 2 kg, na pravé misce jedna taková krabice a závaží 12 kg (viz obrázek). Kolik kilogramů váží jedna krabice?",
+      "moznosti": [
+        "4 kg",
+        "5 kg",
+        "6 kg",
+        "7 kg",
+        "10 kg"
+      ],
+      "spravna": 1,
+      "odpoved": "5 kg",
+      "reseni_kroky": [
+        "Hmotnost krabice označíme x: 3x + 2 = x + 12.",
+        "Odečteme x a 2 od obou stran: 2x = 10.",
+        "x = 5, jedna krabice váží 5 kg. Kontrola: 3 · 5 + 2 = 17 = 5 + 12. Správně je B)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_02",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Matka je o 26 let starší než dcera. Za 4 roky bude matka třikrát starší než dcera. Kolik let je dceři dnes?",
+      "moznosti": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "12"
+      ],
+      "spravna": 2,
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Věk dcery označíme d, matce je d + 26 let.",
+        "Za 4 roky: d + 26 + 4 = 3 · (d + 4).",
+        "d + 30 = 3d + 12, tedy 18 = 2d a d = 9. Kontrola: matce je 35, za 4 roky 39 = 3 · 13. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_03",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Součet tří po sobě jdoucích sudých čísel je o 30 větší než nejmenší z nich. Které číslo je nejmenší?",
+      "moznosti": [
+        "10",
+        "12",
+        "14",
+        "16",
+        "18"
+      ],
+      "spravna": 1,
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Nejmenší číslo označíme n, další dvě jsou n + 2 a n + 4.",
+        "n + (n + 2) + (n + 4) = n + 30, tedy 3n + 6 = n + 30.",
+        "2n = 24, n = 12. Kontrola: 12 + 14 + 16 = 42 = 12 + 30. Správně je B)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_04",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/rovnice/obdelnik-obvod.svg",
+        "width": 320,
+        "height": 206,
+        "alt": "Obdélník se stranami x + 3 a 2x − 1 (obrázek není v měřítku)"
+      },
+      "zadani": "Obdélník má strany x + 3 a 2x − 1 (v cm) a jeho obvod je 34 cm (obrázek není v měřítku). Jaký je jeho obsah?",
+      "moznosti": [
+        "56 cm²",
+        "63 cm²",
+        "64 cm²",
+        "72 cm²",
+        "81 cm²"
+      ],
+      "spravna": 3,
+      "odpoved": "72 cm²",
+      "reseni_kroky": [
+        "Obvod: 2 · ((x + 3) + (2x − 1)) = 2 · (3x + 2) = 34.",
+        "3x + 2 = 17, tedy x = 5.",
+        "Strany jsou 8 cm a 9 cm, obsah je 8 · 9 = 72 cm². Správně je D)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_05",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "zadani": "Dva nanuky a tři zmrzliny stojí 96 Kč, tři nanuky a dvě zmrzliny stojí 84 Kč. Kolik korun stojí jedna zmrzlina?",
+      "moznosti": [
+        "12 Kč",
+        "18 Kč",
+        "20 Kč",
+        "24 Kč",
+        "30 Kč"
+      ],
+      "spravna": 3,
+      "odpoved": "24 Kč",
+      "reseni_kroky": [
+        "Cenu nanuku označíme n, cenu zmrzliny z: 2n + 3z = 96 a 3n + 2z = 84.",
+        "První rovnici vynásobíme třemi, druhou dvěma: 6n + 9z = 288 a 6n + 4z = 168.",
+        "Odečteme: 5z = 120, tedy z = 24. Potom n = (96 − 72) : 2 = 12. Zmrzlina stojí 24 Kč. Správně je D)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_06",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Nákladní vlak vyjel z města A rychlostí 60 km/h. O půl hodiny později vyjel za ním po stejné trati rychlík rychlostí 100 km/h. Za jak dlouho po svém výjezdu rychlík nákladní vlak dohoní?",
+      "moznosti": [
+        "30 minut",
+        "45 minut",
+        "1 hodinu",
+        "1 hodinu 15 minut",
+        "1,5 hodiny"
+      ],
+      "spravna": 1,
+      "odpoved": "45 minut",
+      "reseni_kroky": [
+        "Za půl hodiny nákladní vlak ujede 60 · 0,5 = 30 km (to je jeho náskok).",
+        "Rychlík se k němu přibližuje rychlostí 100 − 60 = 40 km/h.",
+        "Náskok dožene za 30 : 40 = 0,75 h = 45 minut. Správně je B)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_07",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 3,
+      "zadani": "Jaké číslo je třeba přičíst k čitateli i ke jmenovateli zlomku 3/8, aby se jeho hodnota rovnala 1/2?",
+      "moznosti": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "spravna": 1,
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Hledané číslo označíme x. Má platit (3 + x) : (8 + x) = 1 : 2, tedy 2 · (3 + x) = 8 + x.",
+        "6 + 2x = 8 + x, tedy x = 2.",
+        "Kontrola: 5/10 = 1/2. Správně je B)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_08",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Kolo se zdražilo o 20 % a potom zlevnilo o 10 %. Nyní stojí 5 400 Kč. Kolik korun stálo původně?",
+      "moznosti": [
+        "4 500 Kč",
+        "4 800 Kč",
+        "5 000 Kč",
+        "5 400 Kč",
+        "6 000 Kč"
+      ],
+      "spravna": 2,
+      "odpoved": "5 000 Kč",
+      "reseni_kroky": [
+        "Původní cenu označíme p. Po zdražení o 20 % je cena 1,2 · p a po slevě 10 % je 0,9 · 1,2 · p = 1,08 · p.",
+        "1,08 · p = 5 400, tedy p = 5 400 : 1,08 = 5 000 Kč. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_09",
+      "tema": "rovnice",
+      "podtema": "slovni",
+      "obtiznost": 3,
+      "zadani": "Kolik litrů 30% roztoku je třeba přilít k 10 litrům 60% roztoku, aby vznikl 40% roztok?",
+      "moznosti": [
+        "15 l",
+        "18 l",
+        "20 l",
+        "24 l",
+        "30 l"
+      ],
+      "spravna": 2,
+      "odpoved": "20 l",
+      "reseni_kroky": [
+        "Přilijeme x litrů 30% roztoku. Čisté látky bude ve směsi 0,3x + 0,6 · 10 = 0,3x + 6 litrů a směs bude mít x + 10 litrů.",
+        "Má to být 40 % směsi: 0,3x + 6 = 0,4 · (x + 10).",
+        "0,3x + 6 = 0,4x + 4, tedy 2 = 0,1x a x = 20. Správně je C)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_10",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 3,
+      "zadani": "Kolik celých čísel x vyhovuje nerovnici −3 < 2x − 1 ≤ 9?",
+      "moznosti": [
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "spravna": 2,
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Ke všem třem částem přičteme 1: −2 < 2x ≤ 10.",
+        "Vydělíme dvěma: −1 < x ≤ 5.",
+        "Celá čísla jsou 0, 1, 2, 3, 4, 5, tedy 6 čísel. Správně je C)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
     }
   ]
 }

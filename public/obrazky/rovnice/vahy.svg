@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Rovnoramenné váhy v rovnováze: vlevo tři stejné krabice a závaží 2 kg, vpravo jedna krabice a závaží 12 kg</title>
+  <line x1="180" y1="62" x2="180" y2="176" stroke="#0D1B3E" stroke-width="4"/>
+  <line x1="120" y1="178" x2="240" y2="178" stroke="#0D1B3E" stroke-width="6"/>
+  <line x1="70" y1="62" x2="290" y2="62" stroke="#0D1B3E" stroke-width="4.5"/>
+  <circle cx="180" cy="62" r="7" fill="#0D1B3E"/>
+  <line x1="70" y1="62" x2="10" y2="132" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="70" y1="62" x2="130" y2="132" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="290" y1="62" x2="230" y2="132" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="290" y1="62" x2="350" y2="132" stroke="#64748b" stroke-width="1.4"/>
+  <line x1="8" y1="132" x2="132" y2="132" stroke="#0D1B3E" stroke-width="4"/>
+  <line x1="228" y1="132" x2="352" y2="132" stroke="#0D1B3E" stroke-width="4"/>
+  <rect x="14" y="106" width="26" height="26" rx="3" fill="#fde68a" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="27" y="124" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle" font-style="italic">x</text>
+  <rect x="42" y="106" width="26" height="26" rx="3" fill="#fde68a" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="55" y="124" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle" font-style="italic">x</text>
+  <rect x="70" y="106" width="26" height="26" rx="3" fill="#fde68a" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="83" y="124" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle" font-style="italic">x</text>
+  <rect x="98" y="110" width="32" height="22" rx="4" fill="#64748b" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="114" y="125" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2 kg</text>
+  <rect x="246" y="106" width="26" height="26" rx="3" fill="#fde68a" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="259" y="124" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle" font-style="italic">x</text>
+  <rect x="278" y="110" width="56" height="22" rx="4" fill="#64748b" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="306" y="125" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">12 kg</text>
+</svg>
