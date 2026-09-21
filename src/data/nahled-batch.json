@@ -1,4 +1,452 @@
 {
-  "nazev": "L3 ve stylu CERMAT — Zlomky (10), Výrazy (10), Rovnice (10): klasické těžké příklady jako v přijímačkách — ZAPSÁNO",
-  "examples": []
+  "nazev": "Slovní úlohy — L3 ve stylu CERMAT (18 úloh: procenta, poměr a měřítko, pohyb, společná práce, úměra, finance)",
+  "examples": [
+    {
+      "id": "SLO3_01",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "moznosti": [
+        "12",
+        "18",
+        "24",
+        "30",
+        "36"
+      ],
+      "spravna": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Jak žáci 9. A jezdí do školy",
+          "casti": [
+            {
+              "label": "pěšky",
+              "procenta": 30
+            },
+            {
+              "label": "autobusem",
+              "procenta": 30,
+              "skryta": true
+            },
+            {
+              "label": "na kole",
+              "procenta": 25
+            },
+            {
+              "label": "autem",
+              "procenta": 15
+            }
+          ]
+        }
+      },
+      "zadani": "Graf ukazuje, jak do školy jezdí žáci 9. A. Autem jezdí do školy 6 žáků. Kolik žáků jezdí do školy autobusem nebo pěšky?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Autobusem jezdí 100 % − 30 % − 25 % − 15 % = 30 % žáků (údaj v grafu je zakrytý).",
+        "Autem jezdí 15 % třídy, tedy 6 žáků. Z toho 1 % je 6 : 15 = 0,4 žáka a celá třída (100 %) má 40 žáků.",
+        "Autobusem nebo pěšky jezdí 30 % + 30 % = 60 % třídy: 0,6 · 40 = 24 žáků. Správně je C)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_02",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "sloupce",
+          "nazev": "Prodej kol v prvních třech čtvrtletích",
+          "jednotka": "ks",
+          "sloupce": [
+            {
+              "label": "1. čtvrtletí",
+              "hodnota": 120
+            },
+            {
+              "label": "2. čtvrtletí",
+              "hodnota": 180
+            },
+            {
+              "label": "3. čtvrtletí",
+              "hodnota": 150
+            }
+          ]
+        }
+      },
+      "zadani": "Sloupcový graf ukazuje, kolik kol prodal obchod v prvních třech čtvrtletích roku. Ve 4. čtvrtletí se prodalo o 20 % více kol, než je průměr prvních tří čtvrtletí. Kolik kol se prodalo za celý rok?",
+      "odpoved": "630 kol",
+      "reseni_kroky": [
+        "Z grafu: 1. čtvrtletí 120 kol, 2. čtvrtletí 180 kol, 3. čtvrtletí 150 kol; dohromady 120 + 180 + 150 = 450 kol.",
+        "Průměr prvních tří čtvrtletí je 450 : 3 = 150 kol.",
+        "Ve 4. čtvrtletí se prodalo o 20 % více: 150 · 1,2 = 180 kol.",
+        "Za celý rok: 450 + 180 = 630 kol."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_03",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "zadani": "Cena bundy byla nejdřív zvýšena o 25 %, potom snížena o 20 % a nakonec ještě o 50 Kč. Konečná cena je 1 150 Kč. Jaká byla původní cena bundy?",
+      "odpoved": "1200 Kč",
+      "reseni_kroky": [
+        "Zvýšení o 25 % znamená násobení číslem 1,25, snížení o 20 % násobení číslem 0,8.",
+        "Obě změny dohromady: 1,25 · 0,8 = 1. Po nich je cena stejná jako na začátku (pozor, není to o 5 % víc ani míň).",
+        "Zbývá snížení o 50 Kč: původní cena − 50 = 1 150, tedy původní cena je 1 150 + 50 = 1 200 Kč.",
+        "Zkouška: 1 200 · 1,25 = 1 500; 1 500 · 0,8 = 1 200; 1 200 − 50 = 1 150."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_04",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 3,
+      "moznosti": [
+        "15 minut",
+        "20 minut",
+        "30 minut",
+        "45 minut",
+        "60 minut"
+      ],
+      "spravna": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/slovni/mapa-obce.svg",
+        "width": 360,
+        "height": 220,
+        "alt": "Mapa v měřítku 1 : 25 000: obce Lipová a Dubnice ve vzdálenosti 12 cm na mapě"
+      },
+      "zadani": "Vzdálenost obcí Lipová a Dubnice měří na mapě 12 cm, měřítko mapy je na obrázku. Za kolik minut dojde chodec obě obce po přímé spojnici, když jde stálou rychlostí 6 km/h?",
+      "odpoved": "30 minut",
+      "reseni_kroky": [
+        "Skutečná vzdálenost: 12 cm · 25 000 = 300 000 cm = 3 000 m = 3 km.",
+        "Čas chodce: 3 km : 6 km/h = 0,5 h.",
+        "0,5 hodiny je 30 minut. Správně je C)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_05",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 3,
+      "zadani": "Strany obdélníku jsou v poměru 3 : 5 a jeho obvod je 64 cm. Jaký je obsah obdélníku?",
+      "odpoved": "240 cm²",
+      "reseni_kroky": [
+        "Strany označíme 3k a 5k. Obvod: 2 · (3k + 5k) = 16k = 64, takže k = 4.",
+        "Strany měří 3 · 4 = 12 cm a 5 · 4 = 20 cm.",
+        "Obsah: 12 · 20 = 240 cm²."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_06",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 3,
+      "moznosti": [
+        "0,6 a",
+        "6 a",
+        "12 a",
+        "60 a",
+        "600 a"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "obdelnik",
+          "sirka": "6 cm",
+          "vyska": "4 cm"
+        }
+      },
+      "zadani": "Pozemek má na plánu tvar obdélníku o rozměrech 6 cm a 4 cm. Měřítko plánu je 1 : 500. Kolik arů měří skutečný pozemek? (1 a = 100 m²)",
+      "odpoved": "6 a",
+      "reseni_kroky": [
+        "Skutečné rozměry: 6 cm · 500 = 3 000 cm = 30 m a 4 cm · 500 = 2 000 cm = 20 m.",
+        "Skutečný obsah: 30 · 20 = 600 m².",
+        "Protože 1 a = 100 m², pozemek má 600 : 100 = 6 a. Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_07",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 3,
+      "moznosti": [
+        "9:30",
+        "9:48",
+        "10:00",
+        "10:06",
+        "10:30"
+      ],
+      "spravna": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/slovni/setkani-vozidel.svg",
+        "width": 360,
+        "height": 200,
+        "alt": "Města A a B ve vzdálenosti 270 km; z A vyjíždí auto rychlostí 60 km/h v 8:00, z B motorka rychlostí 90 km/h v 8:30"
+      },
+      "zadani": "Ve 8:00 vyjelo z města A auto rychlostí 60 km/h směrem k městu B. V 8:30 vyjela z města B proti němu motorka rychlostí 90 km/h (viz obrázek). Města jsou od sebe vzdálena 270 km. V kolik hodin se vozidla potkají?",
+      "odpoved": "10:06",
+      "reseni_kroky": [
+        "Do 8:30 ujelo auto 60 · 0,5 = 30 km, zbývá mezi vozidly 270 − 30 = 240 km.",
+        "Vozidla se sbližují rychlostí 60 + 90 = 150 km/h.",
+        "Potkají se za 240 : 150 = 1,6 h = 1 h 36 min po 8:30, tedy v 10:06. Správně je D)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_08",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 3,
+      "moznosti": [
+        "100 km/h",
+        "105 km/h",
+        "108 km/h",
+        "110 km/h",
+        "115 km/h"
+      ],
+      "spravna": 2,
+      "zadani": "Vlak jel první třetinu trasy rychlostí 90 km/h a zbývající dvě třetiny trasy rychlostí 120 km/h. Jaká byla jeho průměrná rychlost na celé trase?",
+      "odpoved": "108 km/h",
+      "reseni_kroky": [
+        "Zvolíme délku trasy 360 km (číslo vyjde na celé hodiny): první třetina má 120 km, zbytek 240 km.",
+        "Časy: 120 : 90 = 4/3 h a 240 : 120 = 2 h, dohromady 10/3 h.",
+        "Průměrná rychlost = celá dráha : celý čas = 360 : 10/3 = 108 km/h. Správně je C); průměr 105 km/h z rychlostí 90 a 120 by byl chybný, protože se jelo různě dlouho."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_09",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 3,
+      "zadani": "Chodec vyšel z chaty v 8:00 rychlostí 5 km/h. V 9:30 vyjel za ním po téže cestě cyklista rychlostí 20 km/h. Jak daleko od chaty cyklista chodce dohoní?",
+      "odpoved": "10 km",
+      "reseni_kroky": [
+        "Do 9:30 ušel chodec 5 · 1,5 = 7,5 km.",
+        "Cyklista se k chodci přibližuje rychlostí 20 − 5 = 15 km/h, takže ho dohoní za 7,5 : 15 = 0,5 h.",
+        "Za tu dobu ujede cyklista 20 · 0,5 = 10 km. Od chaty je to 10 km (chodec tam je také: 7,5 + 5 · 0,5 = 10 km)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_10",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "moznosti": [
+        "4 hodiny",
+        "6 hodin",
+        "8 hodin",
+        "12 hodin",
+        "24 hodin"
+      ],
+      "spravna": 2,
+      "zadani": "Prázdný bazén se první přítokovou trubkou naplní za 6 hodin, druhou za 12 hodin. Odtokem se plný bazén vypustí za 8 hodin. Za jak dlouho se prázdný bazén naplní, když otevřeme obě přítokové trubky i odtok současně?",
+      "odpoved": "8 hodin",
+      "reseni_kroky": [
+        "Za 1 hodinu přiteče první trubkou 1/6 bazénu, druhou 1/12 a odtokem odteče 1/8.",
+        "Za hodinu přibude 1/6 + 1/12 − 1/8 = 4/24 + 2/24 − 3/24 = 3/24 = 1/8 bazénu.",
+        "Bazén se naplní za 8 hodin. Správně je C)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_11",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "zadani": "Truhlář by zakázku udělal sám za 12 dní, jeho pomocník za 20 dní. Pracovali spolu 5 dní, pak pomocník onemocněl. Kolik dalších dní musel truhlář dodělat zbytek zakázky sám?",
+      "odpoved": "4 dny",
+      "reseni_kroky": [
+        "Za 1 den udělá truhlář 1/12 zakázky, pomocník 1/20; spolu 1/12 + 1/20 = 5/60 + 3/60 = 8/60 = 2/15.",
+        "Za 5 dní společné práce hotovo 5 · 2/15 = 2/3 zakázky, zbývá 1/3.",
+        "Truhlář sám zbytek dodělá za (1/3) : (1/12) = 4 dny."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_12",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "zadani": "Šest pracovníků by celou práci dokončilo za 15 dní. Po pěti dnech práce dva pracovníci odešli. Za kolik dní od začátku práce bude celá práce hotová?",
+      "odpoved": "20 dní",
+      "reseni_kroky": [
+        "Celá práce je 6 · 15 = 90 pracovníkodnů.",
+        "Za prvních 5 dní se udělalo 6 · 5 = 30 pracovníkodnů, zbývá 90 − 30 = 60.",
+        "Zbylí 4 pracovníci potřebují 60 : 4 = 15 dní.",
+        "Od začátku práce uplyne 5 + 15 = 20 dní."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_13",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Zásoba krmiva",
+        "hlavicka": [
+          "Počet koní",
+          "Zásoba vystačí na (dní)"
+        ],
+        "radky": [
+          [
+            6,
+            20
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            10,
+            12
+          ],
+          [
+            12,
+            10
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje, na kolik dní vystačí stejná zásoba krmiva různému počtu koní. Na farmě bylo 6 koní. Po 8 dnech se 2 koně prodali. Na kolik dalších dní vystačí zbylá zásoba čtyřem zbývajícím koním?",
+      "odpoved": "18 dní",
+      "reseni_kroky": [
+        "Krmivo a počet dní jsou nepřímo úměrné. Z tabulky: 6 koní · 20 dní = 120 koníodnů zásoby (platí i 8 · 15, 10 · 12, 12 · 10).",
+        "Za prvních 8 dní 6 koní spotřebovalo 6 · 8 = 48 koníodnů, zbývá 120 − 48 = 72.",
+        "Čtyři koně s ní vystačí 72 : 4 = 18 dní."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_14",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "zadani": "Na táboře spotřebuje 15 dětí za 3 dny 45 kg chleba. Kolik kilogramů chleba spotřebuje 20 dětí za 6 dní?",
+      "odpoved": "120 kg",
+      "reseni_kroky": [
+        "Jedno dítě spotřebuje za 1 den 45 : (15 · 3) = 45 : 45 = 1 kg chleba.",
+        "Dvacet dětí za 6 dní: 20 · 6 · 1 = 120 kg.",
+        "Kontrola úměrami: dětí je 20/15 = 4/3 krát víc, dnů 6/3 = 2krát víc, spotřeba je 45 · 4/3 · 2 = 120 kg."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_15",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "moznosti": [
+        "12",
+        "14",
+        "15",
+        "16",
+        "20"
+      ],
+      "spravna": 2,
+      "zadani": "Deset dělníků vykope příkop za 12 dní. Kolik dělníků je třeba, aby stejný příkop vykopali o 4 dny dříve? (Všichni pracují stejně rychle.)",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "Práce a počet dní jsou nepřímo úměrné: celá práce je 10 · 12 = 120 dělníkodnů.",
+        "Práce má být hotová za 12 − 4 = 8 dní, potřebujeme tedy 120 : 8 = 15 dělníků.",
+        "Správně je C). Odpověď 14 (=10 + 4) by byla chybná, protože počet dělníků se zvyšuje nepřímo úměrně."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_16",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Tarify",
+        "hlavicka": [
+          "Tarif",
+          "Měsíční poplatek (Kč)",
+          "Cena za 1 minutu (Kč)"
+        ],
+        "radky": [
+          [
+            "A",
+            200,
+            "1,50"
+          ],
+          [
+            "B",
+            350,
+            "0,50"
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje dva tarify pro volání z mobilního telefonu. Při kolika minutách volání za měsíc jsou oba tarify stejně drahé?",
+      "odpoved": "150 minut",
+      "reseni_kroky": [
+        "Cena tarifu A při x minutách: 200 + 1,5x. Cena tarifu B: 350 + 0,5x.",
+        "Rovnice 200 + 1,5x = 350 + 0,5x dává x = 150.",
+        "Zkouška: A: 200 + 1,5 · 150 = 425 Kč, B: 350 + 0,5 · 150 = 425 Kč."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_17",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "zadani": "Kolo stálo 12 000 Kč. Obchod ho nejdřív zlevnil o 15 %, později ještě o dalších 10 % z aktuální ceny. Petr navíc uplatnil slevový kupón na 500 Kč. Kolik korun celkem ušetřil oproti původní ceně?",
+      "odpoved": "3320 Kč",
+      "reseni_kroky": [
+        "Po první slevě: 12 000 · 0,85 = 10 200 Kč.",
+        "Po druhé slevě (10 % z 10 200 Kč): 10 200 · 0,9 = 9 180 Kč.",
+        "Po kupónu Petr zaplatil 9 180 − 500 = 8 680 Kč.",
+        "Ušetřil 12 000 − 8 680 = 3 320 Kč (ne 25 % ani 3 000 Kč, protože druhá sleva je z už zlevněné ceny)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_18",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "zadani": "Karel zaplatil za zboží zálohu 30 % ceny a doplatek 14 700 Kč. Kolik korun by činila záloha 30 %, kdyby bylo stejné zboží o 10 % levnější?",
+      "odpoved": "5670 Kč",
+      "reseni_kroky": [
+        "Doplatek je 100 % − 30 % = 70 % ceny: 70 % … 14 700 Kč, takže 1 % je 210 Kč a celá cena zboží je 21 000 Kč.",
+        "O 10 % levnější zboží stojí 21 000 · 0,9 = 18 900 Kč.",
+        "Záloha 30 % z nové ceny: 18 900 · 0,3 = 5 670 Kč."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    }
+  ]
 }

@@ -297,7 +297,10 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <FitMath tex={promptSplit.expression} />
             </>
           ) : (
-            <div className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
+            <div
+              className={`${example.zadani.length > 140 ? "text-lg leading-relaxed" : example.zadani.length > 70 ? "text-xl leading-snug" : "text-2xl leading-snug"} font-bold`}
+              style={{ color: "var(--text-primary)" }}
+            >
               <ExMath ex={example} text={example.zadani} large display={example.latex} />
             </div>
           )}

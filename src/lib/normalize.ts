@@ -57,6 +57,9 @@ export function toValue(raw: string): number | null {
   const unit = s.match(/^([-\d\s./]+?)\s*[a-záčďéěíňóřšťúůýž%°²³]+(?:\/[a-záčďéěíňóřšťúůýž]+)?$/);
   if (unit) s = unit[1].trim();
 
+  // Oddělovač tisíců mezerou: „1 200" → „1200" (žák i databáze píšou „12 000 Kč" i „12000 Kč")
+  if (/^-?\d{1,3}(?: \d{3})+(?:\.\d+)?$/.test(s)) s = s.replace(/ /g, "");
+
   // Smíšené číslo: „3 1/2" i „3 a 1/2". Oddělovač (mezera nebo „a") je POVINNÝ,
   // jinak by se „47/12" rozpadlo na 4 + 7/12.
   const mixed = s.match(/^(-?\d+)(?:\s+|\s*a\s*)(\d+)\s*\/\s*(\d+)$/);

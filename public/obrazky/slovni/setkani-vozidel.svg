@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Města A a B ve vzdálenosti 270 km; z A vyjíždí auto rychlostí 60 km/h v 8:00, z B motorka rychlostí 90 km/h v 8:30</title>
+  <rect x="44" y="97" width="272" height="14" rx="7" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2"/>
+  <line x1="54" y1="104" x2="306" y2="104" stroke="#ffffff" stroke-width="2" stroke-dasharray="10 8"/>
+  <circle cx="44" cy="104" r="9" fill="#0D1B3E"/>
+  <circle cx="316" cy="104" r="9" fill="#0D1B3E"/>
+  <text x="44" y="136" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="316" y="136" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">B</text>
+  <line x1="44" y1="44" x2="316" y2="44" stroke="#2E6DA4" stroke-width="1.6"/>
+  <line x1="44" y1="38" x2="44" y2="50" stroke="#2E6DA4" stroke-width="1.6"/>
+  <line x1="316" y1="38" x2="316" y2="50" stroke="#2E6DA4" stroke-width="1.6"/>
+  <text x="180" y="34" font-size="15" font-weight="800" fill="#0D1B3E" text-anchor="middle">270 km</text>
+  <line x1="60" y1="80" x2="140" y2="80" stroke="#2E6DA4" stroke-width="3"/>
+  <polygon points="140,80 130,74 130,86" fill="#2E6DA4"/>
+  <line x1="300" y1="80" x2="220" y2="80" stroke="#c2410c" stroke-width="3"/>
+  <polygon points="220,80 230,74 230,86" fill="#c2410c"/>
+  <text x="44" y="160" font-size="13" font-weight="700" fill="#2E6DA4" text-anchor="start">auto: 60 km/h</text>
+  <text x="44" y="178" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="start">výjezd v 8:00</text>
+  <text x="316" y="160" font-size="13" font-weight="700" fill="#c2410c" text-anchor="end">motorka: 90 km/h</text>
+  <text x="316" y="178" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="end">výjezd v 8:30</text>
+</svg>
