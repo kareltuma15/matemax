@@ -6,7 +6,7 @@
 
 ## TL;DR
 1. **Obsah:** Úhly L1–L3 a **Geometrie L1–L3 jsou hotové v produkci** (první dvě kompletní témata). Karel ale vyslovil zásadní kvalitativní požadavek: **všechny L3 (a část L2) musí být na úrovni skutečných CERMAT úloh** — úvaha, vnořené obrazce, vlastní obrázky, výběr A–E, ne dosazování do vzorce. Podle toho se předělává zbytek témat.
-2. **Právě čeká na Karla:** `/nahled` obsahuje **32 nových úloh L3 ve stylu CERMAT (Zlomky 12, Výrazy 10, Rovnice 10)** — Karel řekl, že zlomky a rovnice mají být *klasické těžké příklady jako v přijímačkách* (ne slovní úlohy) → přepsáno 21. 9.; potřebuji „schvaluji" (nebo připomínky), pak zápis do ostré DB.
+2. **Právě čeká na Karla:** `/nahled` obsahuje **30 nových úloh L3 ve stylu CERMAT (Zlomky 10, Výrazy 10, Rovnice 10)** — Karel 21. 9.: všude *jen klasické těžké příklady jako v přijímačkách* (rozklad, roznásobení, složené zlomky, rovnice, soustavy), **žádné slovní úlohy ani obrázky** → přepsáno; potřebuji „schvaluji" (nebo připomínky), pak zápis do ostré DB.
 3. **Infrastruktura:** Resend doména ověřena (e-maily fungují), **Supabase audit → nalezeny a opraveny tiché chyby zápisů** (sessions / SM-2 karty se neukládaly), zabezpečení API, upgrade Next.js, Playwright testy.
 4. **Kvalita dat:** audit odpovědí našel a opravil **32 úloh se špatnou odpovědí**; od teď je povinný `npm run audit:odpovedi` před každým zápisem obsahu.
 
@@ -21,8 +21,8 @@ domluva (téma + počet) → Claude přečte předlohu (CERMAT/sešit) → posta
 |---|---|---|---|---|
 | Úhly | ✅ | ✅ | ✅ | první kompletní téma (L3 zapsáno) |
 | Geometrie | ✅ 8 obr. úloh | ✅ 10 vícekrokových | ✅ 13 v CERMAT stylu | 136 úloh (L1 30 / L2 76 / L3 30), 45 s obrázkem; 10 vlastních SVG (kvádr/krychle/těleso — vokselový renderer) |
-| Zlomky | (starší) | (starší) | ⏳ **12 v náhledu** | klasické: složené zlomky, smíšená čísla, mocniny, řetězový zlomek, porovnání + 2 s vlastním SVG (vnořené čtverce, číselná osa) |
-| Výrazy | (starší) | (starší) | ⏳ **10 v náhledu** | 2 vlastní SVG + 1 úloha s KaTeX |
+| Zlomky | (starší) | (starší) | ⏳ **10 v náhledu** | jen klasické výpočty: složené zlomky, smíšená čísla, mocniny, řetězový zlomek, desetinná čísla |
+| Výrazy | (starší) | (starší) | ⏳ **10 v náhledu** | rozklad na součin, roznásobení, úprava, dosazení, mocniny, odmocniny (bez slovních úloh) |
 | Rovnice | (starší) | (starší) | ⏳ **10 v náhledu** | klasické: rovnice se zlomky a závorkami, vzorce, soustavy (A–E), rovnice bez řešení |
 | Slovní úlohy | — | — | ❌ | 150 úloh, L3 jen 38 → **další na řadě** |
 | Grafy a logika | — | — | ❌ | pozor: CERMAT „grafy" = koláčové/sloupcové grafy, ne kartézská soustava |
@@ -72,7 +72,7 @@ Celkem v DB: **1 013 úloh**.
 ## 5) Otevřené úkoly
 
 ### Karel (K)
-- [ ] **Projít `/nahled` a napsat „schvaluji"** (32 úloh Zlomky/Výrazy/Rovnice L3) — případně co změnit.
+- [ ] **Projít `/nahled` a napsat „schvaluji"** (30 úloh Zlomky/Výrazy/Rovnice L3) — případně co změnit.
 - [ ] Zapnout notifikace z ikony na ploše iPhonu (jinak `push_subscriptions` zůstane 0) — pak ověřím, že se řádek zapsal.
 - [ ] Otestovat referral end-to-end (odkaz `?ref=`).
 - [ ] Loops dashboard: zkontrolovat automatizace D+1 / D+3 / D+7 (přes API nejdou ověřit); vytvořit vlastnosti `cermatDone`, `lastCermatAt` (před napojením CERMAT testu).

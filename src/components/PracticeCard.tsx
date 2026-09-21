@@ -8,17 +8,13 @@ import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
 import TaskImageView from "./TaskImageView";
 import MathDisplay from "./MathDisplay";
+import FitMath, { splitPrompt } from "./FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
 
 /** Renderuje text nebo LaTeX podle typu příkladu */
 function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
   if (ex.latex) return <MathDisplay tex={text} displayMode={display} />;
   return <MathText text={text} large={large} />;
-}
-
-function splitPrompt(zadani: string): { instruction: string; expression: string } | null {
-  const m = zadani.match(/^([^$]{12,}?):\s*\$([^$]+)\$\s*$/);
-  return m ? { instruction: `${m[1]}:`, expression: m[2] } : null;
 }
 
 interface Props {
@@ -298,12 +294,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <p className="text-base font-semibold leading-snug mb-1" style={{ color: "var(--text-primary)" }}>
                 {promptSplit.instruction}
               </p>
-              <div
-                className={`${promptSplit.expression.length > 62 ? "text-[13px]" : promptSplit.expression.length > 44 ? "text-sm" : "text-[17px]"} sm:text-2xl font-bold leading-snug overflow-x-auto`}
-                style={{ color: "var(--text-primary)" }}
-              >
-                <ExMath ex={example} text={promptSplit.expression} large display />
-              </div>
+              <FitMath tex={promptSplit.expression} />
             </>
           ) : (
             <div className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>

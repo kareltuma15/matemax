@@ -5,6 +5,7 @@ import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import MathDisplay from "@/components/MathDisplay";
 import MathText from "@/components/MathText";
 import TaskImageView from "@/components/TaskImageView";
+import FitMath, { splitPrompt } from "@/components/FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
 
 /**
@@ -54,6 +55,7 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
   }
 
   const badge = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
+  const promptSplit = example.latex ? splitPrompt(example.zadani) : null;
 
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-4 fade-in-up">
@@ -83,9 +85,18 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
       {example.image && <TaskImageView image={example.image} />}
 
       {/* Zadání */}
-      <div className="text-base font-semibold leading-snug" style={{ color: "var(--text-primary)" }}>
-        <Text ex={example} text={example.zadani} />
-      </div>
+      {promptSplit ? (
+        <div className="flex flex-col gap-1">
+          <p className="text-base font-semibold leading-snug text-center" style={{ color: "var(--text-primary)" }}>
+            {promptSplit.instruction}
+          </p>
+          <FitMath tex={promptSplit.expression} base={22} />
+        </div>
+      ) : (
+        <div className="text-base font-semibold leading-snug" style={{ color: "var(--text-primary)" }}>
+          <Text ex={example} text={example.zadani} />
+        </div>
+      )}
 
       {/* Možnosti A–E */}
       <div className="flex flex-col gap-2">

@@ -1,5 +1,5 @@
 {
-  "nazev": "L3 ve stylu CERMAT — Zlomky (12), Výrazy (10), Rovnice (10): klasické těžké příklady jako v přijímačkách, část s obrázkem nebo výběrem A–E",
+  "nazev": "L3 ve stylu CERMAT — Zlomky (10), Výrazy (10), Rovnice (10): klasické těžké příklady jako v přijímačkách",
   "examples": [
     {
       "id": "ZLO3_01",
@@ -133,107 +133,33 @@
     {
       "id": "ZLO3_09",
       "tema": "zlomky",
-      "podtema": "porovnavani",
+      "podtema": "nasobeni_deleni",
       "obtiznost": 3,
       "latex": true,
-      "zadani": "Které z následujících čísel je největší?",
-      "odpoved": "$0{,}79$",
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru nebo celým číslem: $\\dfrac{3}{4} - \\dfrac{5}{6} : \\left(-\\dfrac{10}{9}\\right)$",
+      "odpoved": "3/2",
       "reseni_kroky": [
-        "Všechna čísla převedeme na desetinná: $\\dfrac{7}{9} = 0{,}777\\ldots$; $\\dfrac{11}{14} = 0{,}7857\\ldots$; $0{,}79$; $\\dfrac{15}{19} = 0{,}7894\\ldots$; $0{,}7 + \\dfrac{1}{12} = 0{,}7833\\ldots$.",
-        "Nejblíž k 0,8 je číslo $0{,}79$, protože $0{,}79 > 0{,}7894\\ldots$. Správně je C)."
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 1,
-      "moznosti": [
-        "$\\dfrac{7}{9}$",
-        "$\\dfrac{11}{14}$",
-        "$0{,}79$",
-        "$\\dfrac{15}{19}$",
-        "$0{,}7 + \\dfrac{1}{12}$"
-      ],
-      "spravna": 2
-    },
-    {
-      "id": "ZLO3_10",
-      "tema": "zlomky",
-      "podtema": "porovnavani",
-      "obtiznost": 3,
-      "latex": true,
-      "zadani": "Kolik přirozených čísel $n$ splňuje nerovnost $\\dfrac{2}{3} < \\dfrac{n}{15} < \\dfrac{9}{10}$?",
-      "odpoved": "3",
-      "reseni_kroky": [
-        "Zlomky převedeme na jmenovatel 30: $\\dfrac{20}{30} < \\dfrac{2n}{30} < \\dfrac{27}{30}$, tedy $20 < 2n < 27$.",
-        "Po vydělení dvěma: $10 < n < 13{,}5$.",
-        "Vyhovují čísla 11, 12 a 13, celkem 3. Správně je B)."
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 1,
-      "moznosti": [
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
-      "spravna": 1
-    },
-    {
-      "id": "ZLO3_11",
-      "tema": "zlomky",
-      "podtema": "kombinovane",
-      "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/zlomky/ctverce-vnorene.svg",
-        "width": 260,
-        "height": 260,
-        "alt": "Čtverec, do něj vepsaný čtverec ze středů stran a do něj další čtverec ze středů stran; rohy a nejmenší čtverec jsou šedé"
-      },
-      "zadani": "Do čtverce je vepsán čtverec, jehož vrcholy jsou středy stran původního čtverce, a do něj znovu čtverec ze středů jeho stran. Rohy původního čtverce a nejmenší čtverec jsou vybarveny šedě (viz obrázek). Jakou část obsahu největšího čtverce tvoří šedá plocha?",
-      "moznosti": [
-        "1/2",
-        "5/8",
-        "2/3",
-        "7/8",
-        "3/4"
-      ],
-      "spravna": 4,
-      "odpoved": "3/4",
-      "reseni_kroky": [
-        "Čtverec ze středů stran má poloviční obsah než původní čtverec. Šedé rohy kolem něj tvoří zbylou polovinu: 1/2.",
-        "Stejně má další čtverec ze středů stran poloviční obsah než prostřední: 1/2 · 1/2 = 1/4 obsahu největšího čtverce. To je nejmenší šedý čtverec.",
-        "Šedá plocha: 1/2 + 1/4 = 3/4. Správně je E)."
+        "Dělení převedeme na násobení převráceným zlomkem: $\\dfrac{5}{6} : \\left(-\\dfrac{10}{9}\\right) = -\\dfrac{5}{6} \\cdot \\dfrac{9}{10} = -\\dfrac{45}{60} = -\\dfrac{3}{4}$.",
+        "Odečítáme záporné číslo, tedy přičítáme: $\\dfrac{3}{4} - \\left(-\\dfrac{3}{4}\\right) = \\dfrac{3}{4} + \\dfrac{3}{4} = \\dfrac{6}{4} = \\dfrac{3}{2}$."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
-      "id": "ZLO3_12",
+      "id": "ZLO3_10",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/zlomky/ciselna-osa.svg",
-        "width": 380,
-        "height": 106,
-        "alt": "Číselná osa s vyznačenými čísly 0 a 2/3 a bodem K; dílky jsou stejně dlouhé"
-      },
-      "zadani": "Na číselné ose jsou vyznačena čísla 0 a 2/3 a bod K. Vzdálenosti mezi sousedními značkami jsou stejné (viz obrázek). Které číslo odpovídá bodu K?",
-      "moznosti": [
-        "1",
-        "5/4",
-        "3/2",
-        "4/3",
-        "5/3"
-      ],
-      "spravna": 2,
-      "odpoved": "3/2",
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\left(0{,}25 + \\dfrac{1}{3}\\right) \\cdot 1{,}2 - \\dfrac{2}{5}$",
+      "odpoved": "3/10",
       "reseni_kroky": [
-        "Od 0 do 2/3 jsou 4 dílky, jeden dílek tedy odpovídá (2/3) : 4 = 2/12 = 1/6.",
-        "Bod K je 9 dílků od nuly: 9 · 1/6 = 9/6 = 3/2. Správně je C)."
+        "Desetinná čísla převedeme na zlomky: $0{,}25 = \\dfrac{1}{4}$ a $1{,}2 = \\dfrac{6}{5}$.",
+        "Závorka: $\\dfrac{1}{4} + \\dfrac{1}{3} = \\dfrac{3}{12} + \\dfrac{4}{12} = \\dfrac{7}{12}$.",
+        "Součin: $\\dfrac{7}{12} \\cdot \\dfrac{6}{5} = \\dfrac{42}{60} = \\dfrac{7}{10}$.",
+        "Rozdíl: $\\dfrac{7}{10} - \\dfrac{2}{5} = \\dfrac{7}{10} - \\dfrac{4}{10} = \\dfrac{3}{10}$."
       ],
-      "cas_sekund": 120,
+      "cas_sekund": 180,
       "sm2_interval": 1
     },
     {
@@ -241,30 +167,23 @@
       "tema": "vyrazy",
       "podtema": "uprava_vyrazu",
       "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/vyrazy/obdelnik-zvetseni.svg",
-        "width": 320,
-        "height": 230,
-        "alt": "Obdélník se stranami x + 4 a x − 1, ke každé straně se přidají 2 cm (přidané části jsou čárkovaně)"
-      },
-      "zadani": "Obdélník má strany x + 4 a x − 1 (v cm). Ke každé jeho straně přidáme 2 cm (viz obrázek). O kolik cm² se tím zvětší obsah obdélníku?",
-      "moznosti": [
-        "(4x + 2) cm²",
-        "(4x + 10) cm²",
-        "(2x + 10) cm²",
-        "(3x + 8) cm²",
-        "(x² + 10) cm²"
-      ],
-      "spravna": 1,
-      "odpoved": "(4x + 10) cm²",
+      "latex": true,
+      "zadani": "Rozložte na součin užitím vzorce: $4 \\cdot 9 - 121a^{2}$",
+      "odpoved": "$(6 - 11a)(6 + 11a)$",
       "reseni_kroky": [
-        "Původní obsah: (x + 4)(x − 1) = x² + 3x − 4.",
-        "Nový obdélník má strany x + 6 a x + 1, jeho obsah je (x + 6)(x + 1) = x² + 7x + 6.",
-        "Rozdíl: (x² + 7x + 6) − (x² + 3x − 4) = 4x + 10. Správně je B)."
+        "Nejdřív vypočteme $4 \\cdot 9 = 36 = 6^{2}$ a zapíšeme $121a^{2} = (11a)^{2}$.",
+        "Použijeme vzorec $A^{2} - B^{2} = (A - B)(A + B)$: $6^{2} - (11a)^{2} = (6 - 11a)(6 + 11a)$. Správně je C)."
       ],
-      "cas_sekund": 180,
-      "sm2_interval": 1
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$(6 - 11a)^{2}$",
+        "$(6 + 11a)^{2}$",
+        "$(6 - 11a)(6 + 11a)$",
+        "$(36 - 11a)(36 + 11a)$",
+        "$(6 - 121a)(6 + a)$"
+      ],
+      "spravna": 2
     },
     {
       "id": "VYR3_02",
@@ -339,46 +258,47 @@
       "tema": "vyrazy",
       "podtema": "uprava_vyrazu",
       "obtiznost": 3,
-      "zadani": "Obsah čtverce o straně a + 3 je o 39 větší než obsah čtverce o straně a. Kolik je a?",
-      "moznosti": [
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
-      "spravna": 3,
-      "odpoved": "5",
+      "latex": true,
+      "zadani": "Roznásobte a upravte (výsledný výraz nesmí obsahovat závorky): $3 \\cdot \\left(2n - \\dfrac{1}{3}\\right)^{2}$",
+      "odpoved": "$12n^{2} - 4n + \\dfrac{1}{3}$",
       "reseni_kroky": [
-        "(a + 3)² − a² = 39.",
-        "a² + 6a + 9 − a² = 39, tedy 6a + 9 = 39.",
-        "6a = 30, a = 5. Kontrola: 8² − 5² = 64 − 25 = 39. Správně je D)."
+        "Závorku umocníme podle vzorce $(A - B)^{2} = A^{2} - 2AB + B^{2}$: $\\left(2n - \\dfrac{1}{3}\\right)^{2} = 4n^{2} - \\dfrac{4}{3}n + \\dfrac{1}{9}$.",
+        "Vynásobíme třemi: $12n^{2} - 4n + \\dfrac{3}{9} = 12n^{2} - 4n + \\dfrac{1}{3}$. Správně je B)."
       ],
-      "cas_sekund": 150,
-      "sm2_interval": 1
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$12n^{2} - 4n + \\dfrac{1}{9}$",
+        "$12n^{2} - 4n + \\dfrac{1}{3}$",
+        "$6n^{2} - 2n + \\dfrac{1}{3}$",
+        "$12n^{2} - 2n + \\dfrac{1}{3}$",
+        "$12n^{2} + \\dfrac{1}{3}$"
+      ],
+      "spravna": 1
     },
     {
       "id": "VYR3_06",
       "tema": "vyrazy",
-      "podtema": "dosazovani",
+      "podtema": "uprava_vyrazu",
       "obtiznost": 3,
-      "zadani": "Číslo n zvětšíme o 3, výsledek vynásobíme dvěma a od součinu odečteme trojnásobek čísla n. Pro které n je výsledek roven 2?",
-      "moznosti": [
-        "2",
-        "3",
-        "4",
-        "5",
-        "8"
-      ],
-      "spravna": 2,
-      "odpoved": "4",
+      "latex": true,
+      "zadani": "Upravte na co nejjednodušší tvar bez závorek: $(2 - x)(2 + x) + 3(x^{2} + 1) - 2x(x - 1)$",
+      "odpoved": "$2x + 7$",
       "reseni_kroky": [
-        "Postup zapíšeme výrazem 2(n + 3) − 3n.",
-        "2n + 6 − 3n = 6 − n.",
-        "6 − n = 2, tedy n = 4. Kontrola: 2 · (4 + 3) − 3 · 4 = 14 − 12 = 2. Správně je C)."
+        "Roznásobíme jednotlivé části: $(2 - x)(2 + x) = 4 - x^{2}$, $3(x^{2} + 1) = 3x^{2} + 3$ a $2x(x - 1) = 2x^{2} - 2x$.",
+        "Sečteme (pozor na znaménko před poslední částí): $4 - x^{2} + 3x^{2} + 3 - 2x^{2} + 2x$.",
+        "Členy s $x^{2}$ se vyruší ($-1 + 3 - 2 = 0$) a zbývá $2x + 7$. Správně je D)."
       ],
-      "cas_sekund": 150,
-      "sm2_interval": 1
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$7 - 2x$",
+        "$4x^{2} + 2x + 7$",
+        "$2x + 1$",
+        "$2x + 7$",
+        "$-2x^{2} + 2x + 7$"
+      ],
+      "spravna": 3
     },
     {
       "id": "VYR3_07",
@@ -429,31 +349,17 @@
     {
       "id": "VYR3_09",
       "tema": "vyrazy",
-      "podtema": "uprava_vyrazu",
+      "podtema": "dosazovani",
       "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/vyrazy/trojuhelnik-vyrazy.svg",
-        "width": 320,
-        "height": 206,
-        "alt": "Trojúhelník ABC se stranami x + 2, x a 2x − 1 (obrázek není v měřítku)"
-      },
-      "zadani": "Strany trojúhelníku ABC mají délky x, x + 2 a 2x − 1 (v cm) a obvod trojúhelníku je 25 cm (obrázek není v měřítku). Jaká je délka nejdelší strany?",
-      "moznosti": [
-        "6 cm",
-        "8 cm",
-        "9 cm",
-        "10 cm",
-        "11 cm"
-      ],
-      "spravna": 4,
-      "odpoved": "11 cm",
+      "latex": true,
+      "zadani": "Vypočtěte pro x = 3 hodnotu výrazu: $25x^{2} - 10x + 1$",
+      "odpoved": "196",
       "reseni_kroky": [
-        "Obvod: x + (x + 2) + (2x − 1) = 4x + 1.",
-        "4x + 1 = 25, tedy x = 6.",
-        "Strany mají 6 cm, 8 cm a 2 · 6 − 1 = 11 cm. Nejdelší strana měří 11 cm. Správně je E)."
+        "Výraz je druhá mocnina dvojčlenu: $25x^{2} - 10x + 1 = (5x - 1)^{2}$.",
+        "Dosadíme $x = 3$: $(5 \\cdot 3 - 1)^{2} = 14^{2} = 196$.",
+        "Kontrola přímým dosazením: $25 \\cdot 9 - 30 + 1 = 225 - 30 + 1 = 196$."
       ],
-      "cas_sekund": 150,
+      "cas_sekund": 120,
       "sm2_interval": 1
     },
     {
@@ -461,22 +367,23 @@
       "tema": "vyrazy",
       "podtema": "uprava_vyrazu",
       "obtiznost": 3,
-      "zadani": "Jaký je aritmetický průměr čtyř čísel x − 2, x, x + 5 a x + 9?",
-      "moznosti": [
-        "x + 4",
-        "x + 3",
-        "4x + 12",
-        "x + 2,5",
-        "x"
-      ],
-      "spravna": 1,
-      "odpoved": "x + 3",
+      "latex": true,
+      "zadani": "Rozložte na součin užitím vzorce: $(x + 2)^{2} - 9$",
+      "odpoved": "$(x - 1)(x + 5)$",
       "reseni_kroky": [
-        "Součet: (x − 2) + x + (x + 5) + (x + 9) = 4x + 12.",
-        "Průměr: (4x + 12) : 4 = x + 3. Správně je B)."
+        "Číslo 9 zapíšeme jako $3^{2}$, takže jde o rozdíl druhých mocnin $(x + 2)^{2} - 3^{2}$.",
+        "Podle vzorce $A^{2} - B^{2} = (A - B)(A + B)$ s $A = x + 2$ a $B = 3$: $(x + 2 - 3)(x + 2 + 3) = (x - 1)(x + 5)$. Správně je E)."
       ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$(x - 7)(x + 11)$",
+        "$(x - 1)^{2}$",
+        "$(x + 5)^{2}$",
+        "$(x - 1)(x + 1)$",
+        "$(x - 1)(x + 5)$"
+      ],
+      "spravna": 4
     },
     {
       "id": "ROV3_01",
