@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 813,
+    "total": 843,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -13478,6 +13478,589 @@
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_01",
+      "tema": "zlomky",
+      "podtema": "nasobeni_deleni",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru nebo celým číslem: $\\dfrac{8}{9} : \\dfrac{16}{15} - \\dfrac{5}{6} \\cdot \\dfrac{4}{5}$",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "Dělení převedeme na násobení převráceným zlomkem: $\\dfrac{8}{9} \\cdot \\dfrac{15}{16} = \\dfrac{120}{144} = \\dfrac{5}{6}$.",
+        "Součin: $\\dfrac{5}{6} \\cdot \\dfrac{4}{5} = \\dfrac{20}{30} = \\dfrac{2}{3}$.",
+        "Rozdíl: $\\dfrac{5}{6} - \\dfrac{2}{3} = \\dfrac{5}{6} - \\dfrac{4}{6} = \\dfrac{1}{6}$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_02",
+      "tema": "zlomky",
+      "podtema": "nasobeni_deleni",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\dfrac{9}{35} \\cdot (-2{,}5) + \\dfrac{1}{2}$",
+      "odpoved": "-1/7",
+      "reseni_kroky": [
+        "Desetinné číslo převedeme na zlomek: $-2{,}5 = -\\dfrac{5}{2}$.",
+        "Součin: $\\dfrac{9}{35} \\cdot \\left(-\\dfrac{5}{2}\\right) = -\\dfrac{45}{70} = -\\dfrac{9}{14}$.",
+        "Součet: $-\\dfrac{9}{14} + \\dfrac{1}{2} = -\\dfrac{9}{14} + \\dfrac{7}{14} = -\\dfrac{2}{14} = -\\dfrac{1}{7}$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_03",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\dfrac{\\dfrac{3}{8} + \\dfrac{5}{12}}{\\dfrac{7}{6} - \\dfrac{3}{4}}$",
+      "odpoved": "19/10",
+      "reseni_kroky": [
+        "Čitatel složeného zlomku: $\\dfrac{3}{8} + \\dfrac{5}{12} = \\dfrac{9}{24} + \\dfrac{10}{24} = \\dfrac{19}{24}$.",
+        "Jmenovatel: $\\dfrac{7}{6} - \\dfrac{3}{4} = \\dfrac{14}{12} - \\dfrac{9}{12} = \\dfrac{5}{12}$.",
+        "Podíl: $\\dfrac{19}{24} : \\dfrac{5}{12} = \\dfrac{19}{24} \\cdot \\dfrac{12}{5} = \\dfrac{19}{10}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_04",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $2\\dfrac{1}{4} : \\left(1\\dfrac{1}{2} - \\dfrac{5}{6}\\right)$",
+      "odpoved": "27/8",
+      "reseni_kroky": [
+        "Smíšená čísla převedeme na zlomky: $2\\dfrac{1}{4} = \\dfrac{9}{4}$ a $1\\dfrac{1}{2} = \\dfrac{3}{2}$.",
+        "Závorka: $\\dfrac{3}{2} - \\dfrac{5}{6} = \\dfrac{9}{6} - \\dfrac{5}{6} = \\dfrac{4}{6} = \\dfrac{2}{3}$.",
+        "Podíl: $\\dfrac{9}{4} : \\dfrac{2}{3} = \\dfrac{9}{4} \\cdot \\dfrac{3}{2} = \\dfrac{27}{8}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_05",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Pro čísla $A$ a $B$ platí $A = \\dfrac{5}{6} - \\dfrac{1}{4}$ a $B = \\dfrac{5}{6} : \\dfrac{1}{4}$. Číslo $C$ je aritmetický průměr čísel $A$ a $B$. Zapište zlomkem v základním tvaru číslo $C$.",
+      "odpoved": "47/24",
+      "reseni_kroky": [
+        "$A = \\dfrac{10}{12} - \\dfrac{3}{12} = \\dfrac{7}{12}$.",
+        "$B = \\dfrac{5}{6} \\cdot 4 = \\dfrac{20}{6} = \\dfrac{10}{3} = \\dfrac{40}{12}$.",
+        "$C = \\left(\\dfrac{7}{12} + \\dfrac{40}{12}\\right) : 2 = \\dfrac{47}{12} \\cdot \\dfrac{1}{2} = \\dfrac{47}{24}$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_06",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\left(\\dfrac{2}{3} - \\dfrac{3}{4}\\right)^{2} : \\dfrac{5}{24}$",
+      "odpoved": "1/30",
+      "reseni_kroky": [
+        "Závorka: $\\dfrac{2}{3} - \\dfrac{3}{4} = \\dfrac{8}{12} - \\dfrac{9}{12} = -\\dfrac{1}{12}$.",
+        "Druhá mocnina: $\\left(-\\dfrac{1}{12}\\right)^{2} = \\dfrac{1}{144}$.",
+        "Podíl: $\\dfrac{1}{144} : \\dfrac{5}{24} = \\dfrac{1}{144} \\cdot \\dfrac{24}{5} = \\dfrac{24}{720} = \\dfrac{1}{30}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_07",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte: $\\dfrac{1 - \\dfrac{2}{5}}{1 + \\dfrac{3}{10}} \\cdot \\dfrac{13}{6}$",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Čitatel složeného zlomku: $1 - \\dfrac{2}{5} = \\dfrac{3}{5}$.",
+        "Jmenovatel: $1 + \\dfrac{3}{10} = \\dfrac{13}{10}$.",
+        "Složený zlomek: $\\dfrac{3}{5} : \\dfrac{13}{10} = \\dfrac{3}{5} \\cdot \\dfrac{10}{13} = \\dfrac{6}{13}$.",
+        "Výsledek: $\\dfrac{6}{13} \\cdot \\dfrac{13}{6} = 1$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_08",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\dfrac{1}{2} + \\dfrac{1}{2 + \\dfrac{1}{3}}$",
+      "odpoved": "13/14",
+      "reseni_kroky": [
+        "Nejdřív vypočteme jmenovatel vnitřního zlomku: $2 + \\dfrac{1}{3} = \\dfrac{7}{3}$.",
+        "Vnitřní zlomek: $\\dfrac{1}{\\dfrac{7}{3}} = 1 : \\dfrac{7}{3} = \\dfrac{3}{7}$.",
+        "Součet: $\\dfrac{1}{2} + \\dfrac{3}{7} = \\dfrac{7}{14} + \\dfrac{6}{14} = \\dfrac{13}{14}$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_09",
+      "tema": "zlomky",
+      "podtema": "nasobeni_deleni",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru nebo celým číslem: $\\dfrac{3}{4} - \\dfrac{5}{6} : \\left(-\\dfrac{10}{9}\\right)$",
+      "odpoved": "3/2",
+      "reseni_kroky": [
+        "Dělení převedeme na násobení převráceným zlomkem: $\\dfrac{5}{6} : \\left(-\\dfrac{10}{9}\\right) = -\\dfrac{5}{6} \\cdot \\dfrac{9}{10} = -\\dfrac{45}{60} = -\\dfrac{3}{4}$.",
+        "Odečítáme záporné číslo, tedy přičítáme: $\\dfrac{3}{4} - \\left(-\\dfrac{3}{4}\\right) = \\dfrac{3}{4} + \\dfrac{3}{4} = \\dfrac{6}{4} = \\dfrac{3}{2}$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_10",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\left(0{,}25 + \\dfrac{1}{3}\\right) \\cdot 1{,}2 - \\dfrac{2}{5}$",
+      "odpoved": "3/10",
+      "reseni_kroky": [
+        "Desetinná čísla převedeme na zlomky: $0{,}25 = \\dfrac{1}{4}$ a $1{,}2 = \\dfrac{6}{5}$.",
+        "Závorka: $\\dfrac{1}{4} + \\dfrac{1}{3} = \\dfrac{3}{12} + \\dfrac{4}{12} = \\dfrac{7}{12}$.",
+        "Součin: $\\dfrac{7}{12} \\cdot \\dfrac{6}{5} = \\dfrac{42}{60} = \\dfrac{7}{10}$.",
+        "Rozdíl: $\\dfrac{7}{10} - \\dfrac{2}{5} = \\dfrac{7}{10} - \\dfrac{4}{10} = \\dfrac{3}{10}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_01",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Rozložte na součin užitím vzorce: $4 \\cdot 9 - 121a^{2}$",
+      "odpoved": "$(6 - 11a)(6 + 11a)$",
+      "reseni_kroky": [
+        "Nejdřív vypočteme $4 \\cdot 9 = 36 = 6^{2}$ a zapíšeme $121a^{2} = (11a)^{2}$.",
+        "Použijeme vzorec $A^{2} - B^{2} = (A - B)(A + B)$: $6^{2} - (11a)^{2} = (6 - 11a)(6 + 11a)$. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$(6 - 11a)^{2}$",
+        "$(6 + 11a)^{2}$",
+        "$(6 - 11a)(6 + 11a)$",
+        "$(36 - 11a)(36 + 11a)$",
+        "$(6 - 121a)(6 + a)$"
+      ],
+      "spravna": 2
+    },
+    {
+      "id": "VYR3_02",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "zadani": "Který z následujících výrazů je roven výrazu (2x − 3)² − (2x + 3)(2x − 3)?",
+      "moznosti": [
+        "12x − 18",
+        "−12x − 18",
+        "−12x + 18",
+        "8x² − 12x + 18",
+        "18"
+      ],
+      "spravna": 2,
+      "odpoved": "−12x + 18",
+      "reseni_kroky": [
+        "(2x − 3)² = 4x² − 12x + 9.",
+        "(2x + 3)(2x − 3) = 4x² − 9.",
+        "Rozdíl: 4x² − 12x + 9 − 4x² + 9 = −12x + 18. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_03",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "zadani": "Jakou hodnotu má výraz −x² + 3x − 2 pro x = −2?",
+      "moznosti": [
+        "−12",
+        "−4",
+        "0",
+        "4",
+        "8"
+      ],
+      "spravna": 0,
+      "odpoved": "−12",
+      "reseni_kroky": [
+        "Dosadíme x = −2: −(−2)² + 3 · (−2) − 2.",
+        "(−2)² = 4, takže −(−2)² = −4 (minus před mocninou zůstává).",
+        "−4 − 6 − 2 = −12. Správně je A)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_04",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "zadani": "Jaká je hodnota výrazu 2025² − 2024² (bez kalkulačky)?",
+      "moznosti": [
+        "1",
+        "2025",
+        "4049",
+        "4050",
+        "8098"
+      ],
+      "spravna": 2,
+      "odpoved": "4049",
+      "reseni_kroky": [
+        "Použijeme vzorec a² − b² = (a − b)(a + b).",
+        "(2025 − 2024)(2025 + 2024) = 1 · 4049 = 4049. Správně je C)."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_05",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Roznásobte a upravte (výsledný výraz nesmí obsahovat závorky): $3 \\cdot \\left(2n - \\dfrac{1}{3}\\right)^{2}$",
+      "odpoved": "$12n^{2} - 4n + \\dfrac{1}{3}$",
+      "reseni_kroky": [
+        "Závorku umocníme podle vzorce $(A - B)^{2} = A^{2} - 2AB + B^{2}$: $\\left(2n - \\dfrac{1}{3}\\right)^{2} = 4n^{2} - \\dfrac{4}{3}n + \\dfrac{1}{9}$.",
+        "Vynásobíme třemi: $12n^{2} - 4n + \\dfrac{3}{9} = 12n^{2} - 4n + \\dfrac{1}{3}$. Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$12n^{2} - 4n + \\dfrac{1}{9}$",
+        "$12n^{2} - 4n + \\dfrac{1}{3}$",
+        "$6n^{2} - 2n + \\dfrac{1}{3}$",
+        "$12n^{2} - 2n + \\dfrac{1}{3}$",
+        "$12n^{2} + \\dfrac{1}{3}$"
+      ],
+      "spravna": 1
+    },
+    {
+      "id": "VYR3_06",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Upravte na co nejjednodušší tvar bez závorek: $(2 - x)(2 + x) + 3(x^{2} + 1) - 2x(x - 1)$",
+      "odpoved": "$2x + 7$",
+      "reseni_kroky": [
+        "Roznásobíme jednotlivé části: $(2 - x)(2 + x) = 4 - x^{2}$, $3(x^{2} + 1) = 3x^{2} + 3$ a $2x(x - 1) = 2x^{2} - 2x$.",
+        "Sečteme (pozor na znaménko před poslední částí): $4 - x^{2} + 3x^{2} + 3 - 2x^{2} + 2x$.",
+        "Členy s $x^{2}$ se vyruší ($-1 + 3 - 2 = 0$) a zbývá $2x + 7$. Správně je D)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$7 - 2x$",
+        "$4x^{2} + 2x + 7$",
+        "$2x + 1$",
+        "$2x + 7$",
+        "$-2x^{2} + 2x + 7$"
+      ],
+      "spravna": 3
+    },
+    {
+      "id": "VYR3_07",
+      "tema": "vyrazy",
+      "podtema": "zakony_mocnin",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Jaká je hodnota výrazu $\\dfrac{3^{10} \\cdot 9^{4}}{27^{6}}$?",
+      "moznosti": [
+        "1",
+        "3",
+        "9",
+        "27",
+        "81"
+      ],
+      "spravna": 0,
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Vše zapíšeme jako mocniny trojky: $9^{4} = (3^{2})^{4} = 3^{8}$ a $27^{6} = (3^{3})^{6} = 3^{18}$.",
+        "Čitatel: $3^{10} \\cdot 3^{8} = 3^{18}$.",
+        "$\\dfrac{3^{18}}{3^{18}} = 1$. Správně je A)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_08",
+      "tema": "vyrazy",
+      "podtema": "odmocniny",
+      "obtiznost": 3,
+      "zadani": "Mezi kterými dvěma po sobě jdoucími celými čísly leží číslo √300?",
+      "moznosti": [
+        "16 a 17",
+        "17 a 18",
+        "18 a 19",
+        "19 a 20",
+        "20 a 21"
+      ],
+      "spravna": 1,
+      "odpoved": "17 a 18",
+      "reseni_kroky": [
+        "17² = 289 a 18² = 324.",
+        "289 < 300 < 324, tedy 17 < √300 < 18. Správně je B)."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_09",
+      "tema": "vyrazy",
+      "podtema": "dosazovani",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte pro x = 3 hodnotu výrazu: $25x^{2} - 10x + 1$",
+      "odpoved": "196",
+      "reseni_kroky": [
+        "Výraz je druhá mocnina dvojčlenu: $25x^{2} - 10x + 1 = (5x - 1)^{2}$.",
+        "Dosadíme $x = 3$: $(5 \\cdot 3 - 1)^{2} = 14^{2} = 196$.",
+        "Kontrola přímým dosazením: $25 \\cdot 9 - 30 + 1 = 225 - 30 + 1 = 196$."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "VYR3_10",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Rozložte na součin užitím vzorce: $(x + 2)^{2} - 9$",
+      "odpoved": "$(x - 1)(x + 5)$",
+      "reseni_kroky": [
+        "Číslo 9 zapíšeme jako $3^{2}$, takže jde o rozdíl druhých mocnin $(x + 2)^{2} - 3^{2}$.",
+        "Podle vzorce $A^{2} - B^{2} = (A - B)(A + B)$ s $A = x + 2$ a $B = 3$: $(x + 2 - 3)(x + 2 + 3) = (x - 1)(x + 5)$. Správně je E)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$(x - 7)(x + 11)$",
+        "$(x - 1)^{2}$",
+        "$(x + 5)^{2}$",
+        "$(x - 1)(x + 1)$",
+        "$(x - 1)(x + 5)$"
+      ],
+      "spravna": 4
+    },
+    {
+      "id": "ROV3_01",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{x+3}{4} - \\dfrac{2x-1}{6} = \\dfrac{x}{3} - 2$",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Rovnici vynásobíme nejmenším společným násobkem jmenovatelů 12: $3(x+3) - 2(2x-1) = 4x - 24$.",
+        "Roznásobíme závorky: $3x + 9 - 4x + 2 = 4x - 24$, tedy $-x + 11 = 4x - 24$.",
+        "Neznámé na jednu stranu: $35 = 5x$, takže $x = 7$.",
+        "Zkouška: $L = \\dfrac{10}{4} - \\dfrac{13}{6} = \\dfrac{1}{3}$, $P = \\dfrac{7}{3} - 2 = \\dfrac{1}{3}$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_02",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zavorkou",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici: $0{,}5 \\cdot (x - 4) - 0{,}2 \\cdot (3x + 1) = 1 - 0{,}3x$",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Roznásobíme: $0{,}5x - 2 - 0{,}6x - 0{,}2 = 1 - 0{,}3x$.",
+        "Zjednodušíme levou stranu: $-0{,}1x - 2{,}2 = 1 - 0{,}3x$.",
+        "Neznámé na jednu stranu: $0{,}2x = 3{,}2$, tedy $x = 16$.",
+        "Zkouška: $L = 0{,}5 \\cdot 12 - 0{,}2 \\cdot 49 = 6 - 9{,}8 = -3{,}8$ a $P = 1 - 0{,}3 \\cdot 16 = 1 - 4{,}8 = -3{,}8$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_03",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{3x-1}{2} - \\left(x - \\dfrac{x-2}{3}\\right) = 3$",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "Rovnici vynásobíme číslem 6: $3(3x-1) - 6x + 2(x-2) = 18$.",
+        "Roznásobíme a zjednodušíme: $9x - 3 - 6x + 2x - 4 = 18$, tedy $5x - 7 = 18$.",
+        "$5x = 25$, takže $x = 5$.",
+        "Zkouška: $L = \\dfrac{14}{2} - \\left(5 - \\dfrac{3}{3}\\right) = 7 - 4 = 3 = P$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_04",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zavorkou",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici: $(x+3)(x-3) - (x-2)^{2} = 3x + 1$",
+      "odpoved": "14",
+      "reseni_kroky": [
+        "Použijeme vzorce: $(x+3)(x-3) = x^{2} - 9$ a $(x-2)^{2} = x^{2} - 4x + 4$.",
+        "Levá strana: $x^{2} - 9 - x^{2} + 4x - 4 = 4x - 13$.",
+        "Rovnice: $4x - 13 = 3x + 1$, tedy $x = 14$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_05",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici $\\dfrac{2x}{3} - \\dfrac{x-4}{6} = \\dfrac{x+1}{2} - \\dfrac{5}{3}$. Které tvrzení je pravdivé?",
+      "odpoved": "rovnice nemá řešení",
+      "reseni_kroky": [
+        "Rovnici vynásobíme číslem 6: $4x - (x-4) = 3(x+1) - 10$.",
+        "Roznásobíme: $4x - x + 4 = 3x + 3 - 10$, tedy $3x + 4 = 3x - 7$.",
+        "Po odečtení $3x$ dostaneme $4 = -7$, což nikdy neplatí. Rovnice nemá řešení. Správně je C)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "moznosti": [
+        "rovnice má řešení $x = 0$",
+        "rovnice má řešení $x = 4$",
+        "rovnice nemá řešení",
+        "rovnice má nekonečně mnoho řešení",
+        "rovnice má řešení $x = -3$"
+      ],
+      "spravna": 2
+    },
+    {
+      "id": "ROV3_06",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte soustavu rovnic: $3x + 2y = 7$ a $5x - 4y = -3$. Které dvojice $x$, $y$ je řešením?",
+      "odpoved": "$x = 1$, $y = 2$",
+      "reseni_kroky": [
+        "První rovnici vynásobíme dvěma: $6x + 4y = 14$.",
+        "Rovnice sečteme, $y$ se vyruší: $11x = 11$, tedy $x = 1$.",
+        "Dosadíme do první rovnice: $3 + 2y = 7$, tedy $y = 2$.",
+        "Zkouška ve druhé rovnici: $5 \\cdot 1 - 4 \\cdot 2 = -3$. Správně je A)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$x = 1$, $y = 2$",
+        "$x = 2$, $y = 1$",
+        "$x = 1$, $y = -2$",
+        "$x = -1$, $y = 5$",
+        "$x = 3$, $y = -1$"
+      ],
+      "spravna": 0
+    },
+    {
+      "id": "ROV3_07",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte soustavu rovnic: $\\dfrac{x}{2} + \\dfrac{y}{3} = 4$ a $x - y = -2$. Které dvojice $x$, $y$ je řešením?",
+      "odpoved": "$x = 4$, $y = 6$",
+      "reseni_kroky": [
+        "První rovnici vynásobíme číslem 6: $3x + 2y = 24$.",
+        "Ze druhé rovnice vyjádříme $y = x + 2$ a dosadíme: $3x + 2(x+2) = 24$.",
+        "$5x + 4 = 24$, tedy $x = 4$ a $y = 6$.",
+        "Zkouška: $\\dfrac{4}{2} + \\dfrac{6}{3} = 4$ a $4 - 6 = -2$. Správně je A)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$x = 4$, $y = 6$",
+        "$x = 6$, $y = 4$",
+        "$x = 2$, $y = 4$",
+        "$x = 3$, $y = 5$",
+        "$x = 8$, $y = 0$"
+      ],
+      "spravna": 0
+    },
+    {
+      "id": "ROV3_08",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{5x-2}{4} - \\dfrac{x+1}{3} = \\dfrac{x}{2}$",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Rovnici vynásobíme číslem 12: $3(5x-2) - 4(x+1) = 6x$.",
+        "Roznásobíme: $15x - 6 - 4x - 4 = 6x$, tedy $11x - 10 = 6x$.",
+        "$5x = 10$, takže $x = 2$.",
+        "Zkouška: $L = \\dfrac{8}{4} - \\dfrac{3}{3} = 1 = P$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_09",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{4-x}{3} - \\dfrac{2x+1}{2} = \\dfrac{x}{6} - \\dfrac{11}{3}$",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Rovnici vynásobíme číslem 6: $2(4-x) - 3(2x+1) = x - 22$.",
+        "Roznásobíme: $8 - 2x - 6x - 3 = x - 22$, tedy $5 - 8x = x - 22$.",
+        "$27 = 9x$, takže $x = 3$.",
+        "Zkouška: $L = \\dfrac{1}{3} - \\dfrac{7}{2} = -\\dfrac{19}{6}$ a $P = \\dfrac{1}{2} - \\dfrac{11}{3} = -\\dfrac{19}{6}$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ROV3_10",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Pro které číslo $k$ má soustava rovnic $2x + y = 5$ a $6x + 3y = k$ nekonečně mnoho řešení?",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "Druhá rovnice musí být násobkem první. První rovnici vynásobíme třemi: $6x + 3y = 15$.",
+        "Pak obě rovnice popisují tutéž přímku, a proto má soustava nekonečně mnoho řešení.",
+        "Pro $k \\neq 15$ jsou přímky rovnoběžné a soustava nemá řešení. Správně je C), $k = 15$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "5",
+        "10",
+        "15",
+        "20",
+        "30"
+      ],
+      "spravna": 2
     }
   ]
 }
