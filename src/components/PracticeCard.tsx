@@ -16,6 +16,11 @@ function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; lar
   return <MathText text={text} large={large} />;
 }
 
+function splitPrompt(zadani: string): { instruction: string; expression: string } | null {
+  const m = zadani.match(/^([^$]{12,}?):\s*\$([^$]+)\$\s*$/);
+  return m ? { instruction: `${m[1]}:`, expression: m[2] } : null;
+}
+
 interface Props {
   example: DBExample;
   cardNumber: number;
@@ -188,6 +193,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     "border-slate-200 focus-within:border-indigo-400";
 
   const diff = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
+  // „Řešte rovnici: $…$" → pokyn malým písmem a výraz vlastním řádkem (jinak se dlouhý zlomkový výraz
+  // láme uprostřed věty). Krátké „Vypočítej:" / „Vyřeš:" zůstává beze změny.
+  const promptSplit = example.latex ? splitPrompt(example.zadani) : null;
   const progressPct = (cardNumber / total) * 100;
   const topicLabel = TEMA_LABELS[example.tema] ?? example.tema;
   const tips = getTips(example.tema);
@@ -285,9 +293,23 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <TaskImageView image={example.image} />
             </div>
           )}
-          <div className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
-            <ExMath ex={example} text={example.zadani} large display={example.latex} />
-          </div>
+          {promptSplit ? (
+            <>
+              <p className="text-base font-semibold leading-snug mb-1" style={{ color: "var(--text-primary)" }}>
+                {promptSplit.instruction}
+              </p>
+              <div
+                className={`${promptSplit.expression.length > 62 ? "text-[13px]" : promptSplit.expression.length > 44 ? "text-sm" : "text-[17px]"} sm:text-2xl font-bold leading-snug overflow-x-auto`}
+                style={{ color: "var(--text-primary)" }}
+              >
+                <ExMath ex={example} text={promptSplit.expression} large display />
+              </div>
+            </>
+          ) : (
+            <div className="text-2xl font-bold leading-snug" style={{ color: "var(--text-primary)" }}>
+              <ExMath ex={example} text={example.zadani} large display={example.latex} />
+            </div>
+          )}
         </div>
 
         {/* Static tip (idle only) */}

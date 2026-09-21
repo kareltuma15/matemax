@@ -1,62 +1,184 @@
 {
-  "nazev": "L3 ve stylu CERMAT — Zlomky (10), Výrazy (10), Rovnice (10): úlohy na úvahu, 8 s obrázkem, výběr A–E",
+  "nazev": "L3 ve stylu CERMAT — Zlomky (12), Výrazy (10), Rovnice (10): klasické těžké příklady jako v přijímačkách, část s obrázkem nebo výběrem A–E",
   "examples": [
     {
       "id": "ZLO3_01",
       "tema": "zlomky",
-      "podtema": "slovni_uloha",
+      "podtema": "nasobeni_deleni",
       "obtiznost": 3,
-      "zadani": "Petra četla knihu tři dny. První den přečetla dvě pětiny knihy, druhý den tři osminy toho, co jí po prvním dni zbývalo. Třetí den jí zbývalo přečíst 45 stran. Kolik stran má celá kniha?",
-      "moznosti": [
-        "75 stran",
-        "90 stran",
-        "120 stran",
-        "135 stran",
-        "150 stran"
-      ],
-      "spravna": 2,
-      "odpoved": "120 stran",
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru nebo celým číslem: $\\dfrac{8}{9} : \\dfrac{16}{15} - \\dfrac{5}{6} \\cdot \\dfrac{4}{5}$",
+      "odpoved": "1/6",
       "reseni_kroky": [
-        "Po prvním dni zbývá 1 − 2/5 = 3/5 knihy.",
-        "Druhý den přečetla 3/8 ze zbývajících 3/5, tedy 3/8 · 3/5 = 9/40 knihy.",
-        "Po druhém dni zbývá 3/5 − 9/40 = 24/40 − 9/40 = 15/40 = 3/8 knihy.",
-        "3/8 knihy je 45 stran, takže 1/8 je 15 stran a celá kniha má 8 · 15 = 120 stran. Správně je C)."
+        "Dělení převedeme na násobení převráceným zlomkem: $\\dfrac{8}{9} \\cdot \\dfrac{15}{16} = \\dfrac{120}{144} = \\dfrac{5}{6}$.",
+        "Součin: $\\dfrac{5}{6} \\cdot \\dfrac{4}{5} = \\dfrac{20}{30} = \\dfrac{2}{3}$.",
+        "Rozdíl: $\\dfrac{5}{6} - \\dfrac{2}{3} = \\dfrac{5}{6} - \\dfrac{4}{6} = \\dfrac{1}{6}$."
       ],
-      "cas_sekund": 180,
+      "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
       "id": "ZLO3_02",
       "tema": "zlomky",
-      "podtema": "slovni_uloha",
+      "podtema": "nasobeni_deleni",
       "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/zlomky/nadrz.svg",
-        "width": 320,
-        "height": 214,
-        "alt": "Nádrž s vyznačenými hladinami 3/5 a 1/4; rozdíl hladin odpovídá 35 litrům vody"
-      },
-      "zadani": "Nádrž byla naplněna do tří pětin svého objemu. Po odčerpání 35 litrů vody byla naplněna jen do jedné čtvrtiny objemu (viz obrázek). Kolik litrů vody se vejde do celé nádrže?",
-      "moznosti": [
-        "60 l",
-        "80 l",
-        "125 l",
-        "100 l",
-        "140 l"
-      ],
-      "spravna": 3,
-      "odpoved": "100 l",
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\dfrac{9}{35} \\cdot (-2{,}5) + \\dfrac{1}{2}$",
+      "odpoved": "-1/7",
       "reseni_kroky": [
-        "Odčerpaná voda je rozdíl hladin: 3/5 − 1/4 = 12/20 − 5/20 = 7/20 objemu nádrže.",
-        "7/20 objemu je 35 l, takže 1/20 je 5 l.",
-        "Celá nádrž: 20 · 5 = 100 l. Správně je D)."
+        "Desetinné číslo převedeme na zlomek: $-2{,}5 = -\\dfrac{5}{2}$.",
+        "Součin: $\\dfrac{9}{35} \\cdot \\left(-\\dfrac{5}{2}\\right) = -\\dfrac{45}{70} = -\\dfrac{9}{14}$.",
+        "Součet: $-\\dfrac{9}{14} + \\dfrac{1}{2} = -\\dfrac{9}{14} + \\dfrac{7}{14} = -\\dfrac{2}{14} = -\\dfrac{1}{7}$."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
       "id": "ZLO3_03",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\dfrac{\\dfrac{3}{8} + \\dfrac{5}{12}}{\\dfrac{7}{6} - \\dfrac{3}{4}}$",
+      "odpoved": "19/10",
+      "reseni_kroky": [
+        "Čitatel složeného zlomku: $\\dfrac{3}{8} + \\dfrac{5}{12} = \\dfrac{9}{24} + \\dfrac{10}{24} = \\dfrac{19}{24}$.",
+        "Jmenovatel: $\\dfrac{7}{6} - \\dfrac{3}{4} = \\dfrac{14}{12} - \\dfrac{9}{12} = \\dfrac{5}{12}$.",
+        "Podíl: $\\dfrac{19}{24} : \\dfrac{5}{12} = \\dfrac{19}{24} \\cdot \\dfrac{12}{5} = \\dfrac{19}{10}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_04",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $2\\dfrac{1}{4} : \\left(1\\dfrac{1}{2} - \\dfrac{5}{6}\\right)$",
+      "odpoved": "27/8",
+      "reseni_kroky": [
+        "Smíšená čísla převedeme na zlomky: $2\\dfrac{1}{4} = \\dfrac{9}{4}$ a $1\\dfrac{1}{2} = \\dfrac{3}{2}$.",
+        "Závorka: $\\dfrac{3}{2} - \\dfrac{5}{6} = \\dfrac{9}{6} - \\dfrac{5}{6} = \\dfrac{4}{6} = \\dfrac{2}{3}$.",
+        "Podíl: $\\dfrac{9}{4} : \\dfrac{2}{3} = \\dfrac{9}{4} \\cdot \\dfrac{3}{2} = \\dfrac{27}{8}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_05",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Pro čísla $A$ a $B$ platí $A = \\dfrac{5}{6} - \\dfrac{1}{4}$ a $B = \\dfrac{5}{6} : \\dfrac{1}{4}$. Číslo $C$ je aritmetický průměr čísel $A$ a $B$. Zapište zlomkem v základním tvaru číslo $C$.",
+      "odpoved": "47/24",
+      "reseni_kroky": [
+        "$A = \\dfrac{10}{12} - \\dfrac{3}{12} = \\dfrac{7}{12}$.",
+        "$B = \\dfrac{5}{6} \\cdot 4 = \\dfrac{20}{6} = \\dfrac{10}{3} = \\dfrac{40}{12}$.",
+        "$C = \\left(\\dfrac{7}{12} + \\dfrac{40}{12}\\right) : 2 = \\dfrac{47}{12} \\cdot \\dfrac{1}{2} = \\dfrac{47}{24}$."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_06",
+      "tema": "zlomky",
+      "podtema": "kombinovane",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\left(\\dfrac{2}{3} - \\dfrac{3}{4}\\right)^{2} : \\dfrac{5}{24}$",
+      "odpoved": "1/30",
+      "reseni_kroky": [
+        "Závorka: $\\dfrac{2}{3} - \\dfrac{3}{4} = \\dfrac{8}{12} - \\dfrac{9}{12} = -\\dfrac{1}{12}$.",
+        "Druhá mocnina: $\\left(-\\dfrac{1}{12}\\right)^{2} = \\dfrac{1}{144}$.",
+        "Podíl: $\\dfrac{1}{144} : \\dfrac{5}{24} = \\dfrac{1}{144} \\cdot \\dfrac{24}{5} = \\dfrac{24}{720} = \\dfrac{1}{30}$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_07",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte: $\\dfrac{1 - \\dfrac{2}{5}}{1 + \\dfrac{3}{10}} \\cdot \\dfrac{13}{6}$",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Čitatel složeného zlomku: $1 - \\dfrac{2}{5} = \\dfrac{3}{5}$.",
+        "Jmenovatel: $1 + \\dfrac{3}{10} = \\dfrac{13}{10}$.",
+        "Složený zlomek: $\\dfrac{3}{5} : \\dfrac{13}{10} = \\dfrac{3}{5} \\cdot \\dfrac{10}{13} = \\dfrac{6}{13}$.",
+        "Výsledek: $\\dfrac{6}{13} \\cdot \\dfrac{13}{6} = 1$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_08",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočtěte a výsledek zapište zlomkem v základním tvaru: $\\dfrac{1}{2} + \\dfrac{1}{2 + \\dfrac{1}{3}}$",
+      "odpoved": "13/14",
+      "reseni_kroky": [
+        "Nejdřív vypočteme jmenovatel vnitřního zlomku: $2 + \\dfrac{1}{3} = \\dfrac{7}{3}$.",
+        "Vnitřní zlomek: $\\dfrac{1}{\\dfrac{7}{3}} = 1 : \\dfrac{7}{3} = \\dfrac{3}{7}$.",
+        "Součet: $\\dfrac{1}{2} + \\dfrac{3}{7} = \\dfrac{7}{14} + \\dfrac{6}{14} = \\dfrac{13}{14}$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLO3_09",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Které z následujících čísel je největší?",
+      "odpoved": "$0{,}79$",
+      "reseni_kroky": [
+        "Všechna čísla převedeme na desetinná: $\\dfrac{7}{9} = 0{,}777\\ldots$; $\\dfrac{11}{14} = 0{,}7857\\ldots$; $0{,}79$; $\\dfrac{15}{19} = 0{,}7894\\ldots$; $0{,}7 + \\dfrac{1}{12} = 0{,}7833\\ldots$.",
+        "Nejblíž k 0,8 je číslo $0{,}79$, protože $0{,}79 > 0{,}7894\\ldots$. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$\\dfrac{7}{9}$",
+        "$\\dfrac{11}{14}$",
+        "$0{,}79$",
+        "$\\dfrac{15}{19}$",
+        "$0{,}7 + \\dfrac{1}{12}$"
+      ],
+      "spravna": 2
+    },
+    {
+      "id": "ZLO3_10",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Kolik přirozených čísel $n$ splňuje nerovnost $\\dfrac{2}{3} < \\dfrac{n}{15} < \\dfrac{9}{10}$?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Zlomky převedeme na jmenovatel 30: $\\dfrac{20}{30} < \\dfrac{2n}{30} < \\dfrac{27}{30}$, tedy $20 < 2n < 27$.",
+        "Po vydělení dvěma: $10 < n < 13{,}5$.",
+        "Vyhovují čísla 11, 12 a 13, celkem 3. Správně je B)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "spravna": 1
+    },
+    {
+      "id": "ZLO3_11",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
@@ -86,7 +208,7 @@
       "sm2_interval": 1
     },
     {
-      "id": "ZLO3_04",
+      "id": "ZLO3_12",
       "tema": "zlomky",
       "podtema": "kombinovane",
       "obtiznost": 3,
@@ -112,145 +234,6 @@
         "Bod K je 9 dílků od nuly: 9 · 1/6 = 9/6 = 3/2. Správně je C)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ZLO3_05",
-      "tema": "zlomky",
-      "podtema": "slovni_uloha",
-      "obtiznost": 3,
-      "zadani": "Ve třídě jsou dvě pětiny žáků chlapci. Kdyby do třídy přišli další tři chlapci, tvořili by chlapci přesně polovinu třídy. Kolik žáků je ve třídě nyní?",
-      "moznosti": [
-        "10",
-        "15",
-        "20",
-        "25",
-        "30"
-      ],
-      "spravna": 1,
-      "odpoved": "15",
-      "reseni_kroky": [
-        "Počet žáků označíme n, chlapců je 2n/5.",
-        "Po příchodu tří chlapců je ve třídě n + 3 žáků a chlapci tvoří polovinu: 2n/5 + 3 = (n + 3)/2.",
-        "Vynásobíme dvěma: 4n/5 + 6 = n + 3, tedy 3 = n/5 a n = 15.",
-        "Kontrola: chlapců je 6, po příchodu 9 z 18 žáků, což je 1/2. Správně je B)."
-      ],
-      "cas_sekund": 180,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ZLO3_06",
-      "tema": "zlomky",
-      "podtema": "slovni_uloha",
-      "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/zlomky/kolac-zlomky.svg",
-        "width": 350,
-        "height": 232,
-        "alt": "Kruhový diagram tříd: sportovní kroužek 1/3, hudební 1/4, výtvarný 1/9 a část žáků bez kroužku označená otazníkem"
-      },
-      "zadani": "Do třídy chodí 36 žáků. Do sportovního kroužku chodí třetina žáků, do hudebního čtvrtina a do výtvarného devítina; žádný žák nechodí do dvou kroužků (viz obrázek). Kolik žáků nechodí do žádného z těchto kroužků?",
-      "odpoved": "11",
-      "reseni_kroky": [
-        "Sportovní kroužek: 36 : 3 = 12 žáků, hudební: 36 : 4 = 9 žáků, výtvarný: 36 : 9 = 4 žáci.",
-        "Do kroužků chodí 12 + 9 + 4 = 25 žáků.",
-        "Do žádného nechodí 36 − 25 = 11 žáků (1 − 1/3 − 1/4 − 1/9 = 11/36 třídy)."
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ZLO3_07",
-      "tema": "zlomky",
-      "podtema": "porovnavani",
-      "obtiznost": 3,
-      "zadani": "O kolik je třeba zvětšit jmenovatele zlomku 3/4, aby se jeho hodnota zmenšila na polovinu?",
-      "moznosti": [
-        "o 1",
-        "o 2",
-        "o 3",
-        "o 4",
-        "o 6"
-      ],
-      "spravna": 3,
-      "odpoved": "o 4",
-      "reseni_kroky": [
-        "Původní hodnota je 3/4, její polovina je 3/8.",
-        "Čitatel zůstává 3, aby měl zlomek hodnotu 3/8, musí být jmenovatel 8.",
-        "Jmenovatel se zvětšil ze 4 na 8, tedy o 4. (Zdvojnásobením jmenovatele se hodnota zlomku zmenší na polovinu.) Správně je D)."
-      ],
-      "cas_sekund": 100,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ZLO3_08",
-      "tema": "zlomky",
-      "podtema": "porovnavani",
-      "obtiznost": 3,
-      "zadani": "Které z následujících řad seřazuje čísla 3/5, 0,58, 4/7 a 7/12 od nejmenšího po největší?",
-      "moznosti": [
-        "0,58; 4/7; 7/12; 3/5",
-        "4/7; 0,58; 7/12; 3/5",
-        "4/7; 7/12; 0,58; 3/5",
-        "0,58; 7/12; 4/7; 3/5",
-        "4/7; 0,58; 3/5; 7/12"
-      ],
-      "spravna": 1,
-      "odpoved": "4/7; 0,58; 7/12; 3/5",
-      "reseni_kroky": [
-        "Převedeme na desetinná čísla: 3/5 = 0,6; 4/7 = 0,5714…; 7/12 = 0,5833….",
-        "Seřadíme: 0,5714 < 0,58 < 0,5833 < 0,6, tedy 4/7 < 0,58 < 7/12 < 3/5. Správně je B)."
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ZLO3_09",
-      "tema": "zlomky",
-      "podtema": "slovni_uloha",
-      "obtiznost": 3,
-      "zadani": "Šest sedmin určitého čísla je o 12 větší než dvě třetiny téhož čísla. Které je to číslo?",
-      "moznosti": [
-        "42",
-        "63",
-        "54",
-        "72",
-        "84"
-      ],
-      "spravna": 1,
-      "odpoved": "63",
-      "reseni_kroky": [
-        "Číslo označíme x: 6x/7 − 2x/3 = 12.",
-        "Společný jmenovatel 21: 18x/21 − 14x/21 = 4x/21 = 12.",
-        "x = 12 · 21 : 4 = 63.",
-        "Kontrola: 6/7 · 63 = 54, 2/3 · 63 = 42 a 54 − 42 = 12. Správně je B)."
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ZLO3_10",
-      "tema": "zlomky",
-      "podtema": "slovni_uloha",
-      "obtiznost": 3,
-      "zadani": "Lucie by referát dokončila sama za 3 hodiny, Jan by ho sám dokončil za 6 hodin. Lucie začala pracovat sama, po hodině se k ní přidal Jan a referát dokončili společně. Za jak dlouho od Luciina začátku byl referát hotový?",
-      "moznosti": [
-        "2 hodiny",
-        "2 hodiny 10 minut",
-        "2 hodiny 20 minut",
-        "2 hodiny 30 minut",
-        "3 hodiny"
-      ],
-      "spravna": 2,
-      "odpoved": "2 hodiny 20 minut",
-      "reseni_kroky": [
-        "Lucie udělá za hodinu 1/3 referátu, Jan 1/6.",
-        "Za první hodinu Lucie sama udělala 1/3, zbývají 2/3 referátu.",
-        "Společně udělají za hodinu 1/3 + 1/6 = 1/2 referátu, zbylé 2/3 tedy za (2/3) : (1/2) = 4/3 h = 1 h 20 min.",
-        "Celkem 1 h + 1 h 20 min = 2 h 20 min. Správně je C)."
-      ],
-      "cas_sekund": 180,
       "sm2_interval": 1
     },
     {
@@ -498,245 +481,201 @@
     {
       "id": "ROV3_01",
       "tema": "rovnice",
-      "podtema": "linearni",
+      "podtema": "linearni_se_zlomky",
       "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/rovnice/vahy.svg",
-        "width": 360,
-        "height": 200,
-        "alt": "Rovnoramenné váhy v rovnováze: vlevo tři stejné krabice a závaží 2 kg, vpravo jedna krabice a závaží 12 kg"
-      },
-      "zadani": "Váhy jsou v rovnováze. Na levé misce jsou tři stejně těžké krabice a závaží 2 kg, na pravé misce jedna taková krabice a závaží 12 kg (viz obrázek). Kolik kilogramů váží jedna krabice?",
-      "moznosti": [
-        "4 kg",
-        "5 kg",
-        "6 kg",
-        "7 kg",
-        "10 kg"
-      ],
-      "spravna": 1,
-      "odpoved": "5 kg",
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{x+3}{4} - \\dfrac{2x-1}{6} = \\dfrac{x}{3} - 2$",
+      "odpoved": "7",
       "reseni_kroky": [
-        "Hmotnost krabice označíme x: 3x + 2 = x + 12.",
-        "Odečteme x a 2 od obou stran: 2x = 10.",
-        "x = 5, jedna krabice váží 5 kg. Kontrola: 3 · 5 + 2 = 17 = 5 + 12. Správně je B)."
+        "Rovnici vynásobíme nejmenším společným násobkem jmenovatelů 12: $3(x+3) - 2(2x-1) = 4x - 24$.",
+        "Roznásobíme závorky: $3x + 9 - 4x + 2 = 4x - 24$, tedy $-x + 11 = 4x - 24$.",
+        "Neznámé na jednu stranu: $35 = 5x$, takže $x = 7$.",
+        "Zkouška: $L = \\dfrac{10}{4} - \\dfrac{13}{6} = \\dfrac{1}{3}$, $P = \\dfrac{7}{3} - 2 = \\dfrac{1}{3}$."
       ],
-      "cas_sekund": 120,
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
       "id": "ROV3_02",
       "tema": "rovnice",
-      "podtema": "slovni",
+      "podtema": "linearni_se_zavorkou",
       "obtiznost": 3,
-      "zadani": "Matka je o 26 let starší než dcera. Za 4 roky bude matka třikrát starší než dcera. Kolik let je dceři dnes?",
-      "moznosti": [
-        "7",
-        "8",
-        "9",
-        "10",
-        "12"
-      ],
-      "spravna": 2,
-      "odpoved": "9",
+      "latex": true,
+      "zadani": "Řešte rovnici: $0{,}5 \\cdot (x - 4) - 0{,}2 \\cdot (3x + 1) = 1 - 0{,}3x$",
+      "odpoved": "16",
       "reseni_kroky": [
-        "Věk dcery označíme d, matce je d + 26 let.",
-        "Za 4 roky: d + 26 + 4 = 3 · (d + 4).",
-        "d + 30 = 3d + 12, tedy 18 = 2d a d = 9. Kontrola: matce je 35, za 4 roky 39 = 3 · 13. Správně je C)."
+        "Roznásobíme: $0{,}5x - 2 - 0{,}6x - 0{,}2 = 1 - 0{,}3x$.",
+        "Zjednodušíme levou stranu: $-0{,}1x - 2{,}2 = 1 - 0{,}3x$.",
+        "Neznámé na jednu stranu: $0{,}2x = 3{,}2$, tedy $x = 16$.",
+        "Zkouška: $L = 0{,}5 \\cdot 12 - 0{,}2 \\cdot 49 = 6 - 9{,}8 = -3{,}8$ a $P = 1 - 0{,}3 \\cdot 16 = 1 - 4{,}8 = -3{,}8$."
       ],
-      "cas_sekund": 150,
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
       "id": "ROV3_03",
       "tema": "rovnice",
-      "podtema": "slovni",
+      "podtema": "linearni_se_zlomky",
       "obtiznost": 3,
-      "zadani": "Součet tří po sobě jdoucích sudých čísel je o 30 větší než nejmenší z nich. Které číslo je nejmenší?",
-      "moznosti": [
-        "10",
-        "12",
-        "14",
-        "16",
-        "18"
-      ],
-      "spravna": 1,
-      "odpoved": "12",
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{3x-1}{2} - \\left(x - \\dfrac{x-2}{3}\\right) = 3$",
+      "odpoved": "5",
       "reseni_kroky": [
-        "Nejmenší číslo označíme n, další dvě jsou n + 2 a n + 4.",
-        "n + (n + 2) + (n + 4) = n + 30, tedy 3n + 6 = n + 30.",
-        "2n = 24, n = 12. Kontrola: 12 + 14 + 16 = 42 = 12 + 30. Správně je B)."
+        "Rovnici vynásobíme číslem 6: $3(3x-1) - 6x + 2(x-2) = 18$.",
+        "Roznásobíme a zjednodušíme: $9x - 3 - 6x + 2x - 4 = 18$, tedy $5x - 7 = 18$.",
+        "$5x = 25$, takže $x = 5$.",
+        "Zkouška: $L = \\dfrac{14}{2} - \\left(5 - \\dfrac{3}{3}\\right) = 7 - 4 = 3 = P$."
       ],
-      "cas_sekund": 150,
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
       "id": "ROV3_04",
       "tema": "rovnice",
-      "podtema": "linearni",
+      "podtema": "linearni_se_zavorkou",
       "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/rovnice/obdelnik-obvod.svg",
-        "width": 320,
-        "height": 206,
-        "alt": "Obdélník se stranami x + 3 a 2x − 1 (obrázek není v měřítku)"
-      },
-      "zadani": "Obdélník má strany x + 3 a 2x − 1 (v cm) a jeho obvod je 34 cm (obrázek není v měřítku). Jaký je jeho obsah?",
-      "moznosti": [
-        "56 cm²",
-        "63 cm²",
-        "64 cm²",
-        "72 cm²",
-        "81 cm²"
-      ],
-      "spravna": 3,
-      "odpoved": "72 cm²",
+      "latex": true,
+      "zadani": "Řešte rovnici: $(x+3)(x-3) - (x-2)^{2} = 3x + 1$",
+      "odpoved": "14",
       "reseni_kroky": [
-        "Obvod: 2 · ((x + 3) + (2x − 1)) = 2 · (3x + 2) = 34.",
-        "3x + 2 = 17, tedy x = 5.",
-        "Strany jsou 8 cm a 9 cm, obsah je 8 · 9 = 72 cm². Správně je D)."
+        "Použijeme vzorce: $(x+3)(x-3) = x^{2} - 9$ a $(x-2)^{2} = x^{2} - 4x + 4$.",
+        "Levá strana: $x^{2} - 9 - x^{2} + 4x - 4 = 4x - 13$.",
+        "Rovnice: $4x - 13 = 3x + 1$, tedy $x = 14$."
       ],
-      "cas_sekund": 150,
+      "cas_sekund": 180,
       "sm2_interval": 1
     },
     {
       "id": "ROV3_05",
       "tema": "rovnice",
-      "podtema": "soustava",
+      "podtema": "linearni_se_zlomky",
       "obtiznost": 3,
-      "zadani": "Dva nanuky a tři zmrzliny stojí 96 Kč, tři nanuky a dvě zmrzliny stojí 84 Kč. Kolik korun stojí jedna zmrzlina?",
-      "moznosti": [
-        "12 Kč",
-        "18 Kč",
-        "20 Kč",
-        "24 Kč",
-        "30 Kč"
-      ],
-      "spravna": 3,
-      "odpoved": "24 Kč",
+      "latex": true,
+      "zadani": "Řešte rovnici $\\dfrac{2x}{3} - \\dfrac{x-4}{6} = \\dfrac{x+1}{2} - \\dfrac{5}{3}$. Které tvrzení je pravdivé?",
+      "odpoved": "rovnice nemá řešení",
       "reseni_kroky": [
-        "Cenu nanuku označíme n, cenu zmrzliny z: 2n + 3z = 96 a 3n + 2z = 84.",
-        "První rovnici vynásobíme třemi, druhou dvěma: 6n + 9z = 288 a 6n + 4z = 168.",
-        "Odečteme: 5z = 120, tedy z = 24. Potom n = (96 − 72) : 2 = 12. Zmrzlina stojí 24 Kč. Správně je D)."
+        "Rovnici vynásobíme číslem 6: $4x - (x-4) = 3(x+1) - 10$.",
+        "Roznásobíme: $4x - x + 4 = 3x + 3 - 10$, tedy $3x + 4 = 3x - 7$.",
+        "Po odečtení $3x$ dostaneme $4 = -7$, což nikdy neplatí. Rovnice nemá řešení. Správně je C)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "moznosti": [
+        "rovnice má řešení $x = 0$",
+        "rovnice má řešení $x = 4$",
+        "rovnice nemá řešení",
+        "rovnice má nekonečně mnoho řešení",
+        "rovnice má řešení $x = -3$"
+      ],
+      "spravna": 2
     },
     {
       "id": "ROV3_06",
       "tema": "rovnice",
-      "podtema": "slovni",
+      "podtema": "soustava",
       "obtiznost": 3,
-      "zadani": "Nákladní vlak vyjel z města A rychlostí 60 km/h. O půl hodiny později vyjel za ním po stejné trati rychlík rychlostí 100 km/h. Za jak dlouho po svém výjezdu rychlík nákladní vlak dohoní?",
-      "moznosti": [
-        "30 minut",
-        "45 minut",
-        "1 hodinu",
-        "1 hodinu 15 minut",
-        "1,5 hodiny"
-      ],
-      "spravna": 1,
-      "odpoved": "45 minut",
+      "latex": true,
+      "zadani": "Řešte soustavu rovnic: $3x + 2y = 7$ a $5x - 4y = -3$. Které dvojice $x$, $y$ je řešením?",
+      "odpoved": "$x = 1$, $y = 2$",
       "reseni_kroky": [
-        "Za půl hodiny nákladní vlak ujede 60 · 0,5 = 30 km (to je jeho náskok).",
-        "Rychlík se k němu přibližuje rychlostí 100 − 60 = 40 km/h.",
-        "Náskok dožene za 30 : 40 = 0,75 h = 45 minut. Správně je B)."
+        "První rovnici vynásobíme dvěma: $6x + 4y = 14$.",
+        "Rovnice sečteme, $y$ se vyruší: $11x = 11$, tedy $x = 1$.",
+        "Dosadíme do první rovnice: $3 + 2y = 7$, tedy $y = 2$.",
+        "Zkouška ve druhé rovnici: $5 \\cdot 1 - 4 \\cdot 2 = -3$. Správně je A)."
       ],
-      "cas_sekund": 150,
-      "sm2_interval": 1
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$x = 1$, $y = 2$",
+        "$x = 2$, $y = 1$",
+        "$x = 1$, $y = -2$",
+        "$x = -1$, $y = 5$",
+        "$x = 3$, $y = -1$"
+      ],
+      "spravna": 0
     },
     {
       "id": "ROV3_07",
       "tema": "rovnice",
-      "podtema": "linearni_se_zlomky",
+      "podtema": "soustava",
       "obtiznost": 3,
-      "zadani": "Jaké číslo je třeba přičíst k čitateli i ke jmenovateli zlomku 3/8, aby se jeho hodnota rovnala 1/2?",
-      "moznosti": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
-      "spravna": 1,
-      "odpoved": "2",
+      "latex": true,
+      "zadani": "Řešte soustavu rovnic: $\\dfrac{x}{2} + \\dfrac{y}{3} = 4$ a $x - y = -2$. Které dvojice $x$, $y$ je řešením?",
+      "odpoved": "$x = 4$, $y = 6$",
       "reseni_kroky": [
-        "Hledané číslo označíme x. Má platit (3 + x) : (8 + x) = 1 : 2, tedy 2 · (3 + x) = 8 + x.",
-        "6 + 2x = 8 + x, tedy x = 2.",
-        "Kontrola: 5/10 = 1/2. Správně je B)."
+        "První rovnici vynásobíme číslem 6: $3x + 2y = 24$.",
+        "Ze druhé rovnice vyjádříme $y = x + 2$ a dosadíme: $3x + 2(x+2) = 24$.",
+        "$5x + 4 = 24$, tedy $x = 4$ a $y = 6$.",
+        "Zkouška: $\\dfrac{4}{2} + \\dfrac{6}{3} = 4$ a $4 - 6 = -2$. Správně je A)."
       ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$x = 4$, $y = 6$",
+        "$x = 6$, $y = 4$",
+        "$x = 2$, $y = 4$",
+        "$x = 3$, $y = 5$",
+        "$x = 8$, $y = 0$"
+      ],
+      "spravna": 0
     },
     {
       "id": "ROV3_08",
       "tema": "rovnice",
-      "podtema": "slovni",
+      "podtema": "linearni_se_zlomky",
       "obtiznost": 3,
-      "zadani": "Kolo se zdražilo o 20 % a potom zlevnilo o 10 %. Nyní stojí 5 400 Kč. Kolik korun stálo původně?",
-      "moznosti": [
-        "4 500 Kč",
-        "4 800 Kč",
-        "5 000 Kč",
-        "5 400 Kč",
-        "6 000 Kč"
-      ],
-      "spravna": 2,
-      "odpoved": "5 000 Kč",
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{5x-2}{4} - \\dfrac{x+1}{3} = \\dfrac{x}{2}$",
+      "odpoved": "2",
       "reseni_kroky": [
-        "Původní cenu označíme p. Po zdražení o 20 % je cena 1,2 · p a po slevě 10 % je 0,9 · 1,2 · p = 1,08 · p.",
-        "1,08 · p = 5 400, tedy p = 5 400 : 1,08 = 5 000 Kč. Správně je C)."
+        "Rovnici vynásobíme číslem 12: $3(5x-2) - 4(x+1) = 6x$.",
+        "Roznásobíme: $15x - 6 - 4x - 4 = 6x$, tedy $11x - 10 = 6x$.",
+        "$5x = 10$, takže $x = 2$.",
+        "Zkouška: $L = \\dfrac{8}{4} - \\dfrac{3}{3} = 1 = P$."
       ],
-      "cas_sekund": 150,
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
       "id": "ROV3_09",
       "tema": "rovnice",
-      "podtema": "slovni",
+      "podtema": "linearni_se_zlomky",
       "obtiznost": 3,
-      "zadani": "Kolik litrů 30% roztoku je třeba přilít k 10 litrům 60% roztoku, aby vznikl 40% roztok?",
-      "moznosti": [
-        "15 l",
-        "18 l",
-        "20 l",
-        "24 l",
-        "30 l"
-      ],
-      "spravna": 2,
-      "odpoved": "20 l",
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{4-x}{3} - \\dfrac{2x+1}{2} = \\dfrac{x}{6} - \\dfrac{11}{3}$",
+      "odpoved": "3",
       "reseni_kroky": [
-        "Přilijeme x litrů 30% roztoku. Čisté látky bude ve směsi 0,3x + 0,6 · 10 = 0,3x + 6 litrů a směs bude mít x + 10 litrů.",
-        "Má to být 40 % směsi: 0,3x + 6 = 0,4 · (x + 10).",
-        "0,3x + 6 = 0,4x + 4, tedy 2 = 0,1x a x = 20. Správně je C)."
+        "Rovnici vynásobíme číslem 6: $2(4-x) - 3(2x+1) = x - 22$.",
+        "Roznásobíme: $8 - 2x - 6x - 3 = x - 22$, tedy $5 - 8x = x - 22$.",
+        "$27 = 9x$, takže $x = 3$.",
+        "Zkouška: $L = \\dfrac{1}{3} - \\dfrac{7}{2} = -\\dfrac{19}{6}$ a $P = \\dfrac{1}{2} - \\dfrac{11}{3} = -\\dfrac{19}{6}$."
       ],
-      "cas_sekund": 180,
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
       "id": "ROV3_10",
       "tema": "rovnice",
-      "podtema": "linearni",
+      "podtema": "soustava",
       "obtiznost": 3,
-      "zadani": "Kolik celých čísel x vyhovuje nerovnici −3 < 2x − 1 ≤ 9?",
-      "moznosti": [
-        "4",
-        "5",
-        "6",
-        "7",
-        "8"
-      ],
-      "spravna": 2,
-      "odpoved": "6",
+      "latex": true,
+      "zadani": "Pro které číslo $k$ má soustava rovnic $2x + y = 5$ a $6x + 3y = k$ nekonečně mnoho řešení?",
+      "odpoved": "15",
       "reseni_kroky": [
-        "Ke všem třem částem přičteme 1: −2 < 2x ≤ 10.",
-        "Vydělíme dvěma: −1 < x ≤ 5.",
-        "Celá čísla jsou 0, 1, 2, 3, 4, 5, tedy 6 čísel. Správně je C)."
+        "Druhá rovnice musí být násobkem první. První rovnici vynásobíme třemi: $6x + 3y = 15$.",
+        "Pak obě rovnice popisují tutéž přímku, a proto má soustava nekonečně mnoho řešení.",
+        "Pro $k \\neq 15$ jsou přímky rovnoběžné a soustava nemá řešení. Správně je C), $k = 15$."
       ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "5",
+        "10",
+        "15",
+        "20",
+        "30"
+      ],
+      "spravna": 2
     }
   ]
 }
