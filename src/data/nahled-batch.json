@@ -1,5 +1,5 @@
 {
-  "nazev": "Slovní úlohy — L3 ve stylu CERMAT (18 úloh: procenta, poměr a měřítko, pohyb, společná práce, úměra, finance)",
+  "nazev": "Slovní úlohy — L3 ve stylu CERMAT (27 úloh: procenta, poměr a měřítko, pohyb, společná práce, úměra, finance)",
   "examples": [
     {
       "id": "SLO3_01",
@@ -135,21 +135,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "SLO3_05",
-      "tema": "slovni_ulohy",
-      "podtema": "pomer_meritko",
-      "obtiznost": 3,
-      "zadani": "Strany obdélníku jsou v poměru 3 : 5 a jeho obvod je 64 cm. Jaký je obsah obdélníku?",
-      "odpoved": "240 cm²",
-      "reseni_kroky": [
-        "Strany označíme 3k a 5k. Obvod: 2 · (3k + 5k) = 16k = 64, takže k = 4.",
-        "Strany měří 3 · 4 = 12 cm a 5 · 4 = 20 cm.",
-        "Obsah: 12 · 20 = 240 cm²."
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 1
-    },
-    {
       "id": "SLO3_06",
       "tema": "slovni_ulohy",
       "podtema": "pomer_meritko",
@@ -234,21 +219,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "SLO3_09",
-      "tema": "slovni_ulohy",
-      "podtema": "pohyb",
-      "obtiznost": 3,
-      "zadani": "Chodec vyšel z chaty v 8:00 rychlostí 5 km/h. V 9:30 vyjel za ním po téže cestě cyklista rychlostí 20 km/h. Jak daleko od chaty cyklista chodce dohoní?",
-      "odpoved": "10 km",
-      "reseni_kroky": [
-        "Do 9:30 ušel chodec 5 · 1,5 = 7,5 km.",
-        "Cyklista se k chodci přibližuje rychlostí 20 − 5 = 15 km/h, takže ho dohoní za 7,5 : 15 = 0,5 h.",
-        "Za tu dobu ujede cyklista 20 · 0,5 = 10 km. Od chaty je to 10 km (chodec tam je také: 7,5 + 5 · 0,5 = 10 km)."
-      ],
-      "cas_sekund": 210,
-      "sm2_interval": 1
-    },
-    {
       "id": "SLO3_10",
       "tema": "slovni_ulohy",
       "podtema": "spolecna_prace",
@@ -282,22 +252,6 @@
         "Za 1 den udělá truhlář 1/12 zakázky, pomocník 1/20; spolu 1/12 + 1/20 = 5/60 + 3/60 = 8/60 = 2/15.",
         "Za 5 dní společné práce hotovo 5 · 2/15 = 2/3 zakázky, zbývá 1/3.",
         "Truhlář sám zbytek dodělá za (1/3) : (1/12) = 4 dny."
-      ],
-      "cas_sekund": 210,
-      "sm2_interval": 1
-    },
-    {
-      "id": "SLO3_12",
-      "tema": "slovni_ulohy",
-      "podtema": "spolecna_prace",
-      "obtiznost": 3,
-      "zadani": "Šest pracovníků by celou práci dokončilo za 15 dní. Po pěti dnech práce dva pracovníci odešli. Za kolik dní od začátku práce bude celá práce hotová?",
-      "odpoved": "20 dní",
-      "reseni_kroky": [
-        "Celá práce je 6 · 15 = 90 pracovníkodnů.",
-        "Za prvních 5 dní se udělalo 6 · 5 = 30 pracovníkodnů, zbývá 90 − 30 = 60.",
-        "Zbylí 4 pracovníci potřebují 60 : 4 = 15 dní.",
-        "Od začátku práce uplyne 5 + 15 = 20 dní."
       ],
       "cas_sekund": 210,
       "sm2_interval": 1
@@ -446,6 +400,308 @@
         "Záloha 30 % z nové ceny: 18 900 · 0,3 = 5 670 Kč."
       ],
       "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_19",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "moznosti": [
+        "o 96 míst",
+        "o 192 míst",
+        "o 288 míst",
+        "o 480 míst",
+        "o jiný počet míst"
+      ],
+      "spravna": 2,
+      "zadani": "Ve sportovní hale je 24 míst vyhrazeno pro trenéry. Loni tato místa představovala jednu osminu celkové kapacity haly. Letos díky přístavbě představují tato místa pouze 5 % celkové kapacity haly. O kolik míst se díky přístavbě zvětšila celková kapacita haly?",
+      "odpoved": "o 288 míst",
+      "reseni_kroky": [
+        "Loňská celková kapacita: 24 míst je 1/8 kapacity, takže kapacita = 24 · 8 = 192 míst.",
+        "Letošní celková kapacita: 24 míst je 5 % kapacity, takže kapacita = 24 : 0,05 = 480 míst.",
+        "Počet vyhrazených míst (24) se nezměnil, jen kapacita haly kolem nich vzrostla. Nárůst: 480 − 192 = 288 míst. Správně je C)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_20",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Sklad obilí",
+          "casti": [
+            {
+              "label": "pšenice",
+              "procenta": 40
+            },
+            {
+              "label": "žito",
+              "procenta": 20
+            },
+            {
+              "label": "oves",
+              "procenta": 21.33,
+              "skryta": true
+            },
+            {
+              "label": "ječmen",
+              "procenta": 18.67,
+              "skryta": true
+            }
+          ]
+        }
+      },
+      "zadani": "Sklad obsahuje pouze čtyři druhy obilí — pšenici, žito, oves a ječmen. Sklad má 48 tun ovsa a 42 tun ječmene. Diagram udává, jaký podíl na celkové hmotnosti obilí mají jednotlivé druhy; podíl ovsa a ječmene v diagramu není vyznačen (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Oves a ječmen tvoří dohromady dvě pětiny celkové hmotnosti nákladu.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Pšenice a žito dohromady tvoří 40 % + 20 % = 60 % nákladu, takže oves a ječmen tvoří zbylých 40 %.",
+        "Zkouška součtem hmotností: oves a ječmen váží dohromady 48 + 42 = 90 tun; to je 40 % z celkové hmotnosti 225 tun (viz další tvrzení).",
+        "40 % je přesně dvě pětiny. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_21",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Sklad obilí",
+          "casti": [
+            {
+              "label": "pšenice",
+              "procenta": 40
+            },
+            {
+              "label": "žito",
+              "procenta": 20
+            },
+            {
+              "label": "oves",
+              "procenta": 21.33,
+              "skryta": true
+            },
+            {
+              "label": "ječmen",
+              "procenta": 18.67,
+              "skryta": true
+            }
+          ]
+        }
+      },
+      "zadani": "Sklad obsahuje pouze čtyři druhy obilí — pšenici, žito, oves a ječmen. Sklad má 48 tun ovsa a 42 tun ječmene. Diagram udává, jaký podíl na celkové hmotnosti obilí mají jednotlivé druhy; podíl ovsa a ječmene v diagramu není vyznačen (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Poměr hmotnosti žita k pšenici je 1 : 2.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Nejdřív najdeme celkovou hmotnost: oves a ječmen váží 48 + 42 = 90 tun, což je 40 % nákladu, takže celkem je 90 : 0,4 = 225 tun.",
+        "Pšenice: 40 % z 225 t = 90 t. Žito: 20 % z 225 t = 45 t.",
+        "Poměr žito : pšenice = 45 : 90 = 1 : 2. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_22",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Sklad obilí",
+          "casti": [
+            {
+              "label": "pšenice",
+              "procenta": 40
+            },
+            {
+              "label": "žito",
+              "procenta": 20
+            },
+            {
+              "label": "oves",
+              "procenta": 21.33,
+              "skryta": true
+            },
+            {
+              "label": "ječmen",
+              "procenta": 18.67,
+              "skryta": true
+            }
+          ]
+        }
+      },
+      "zadani": "Sklad obsahuje pouze čtyři druhy obilí — pšenici, žito, oves a ječmen. Sklad má 48 tun ovsa a 42 tun ječmene. Diagram udává, jaký podíl na celkové hmotnosti obilí mají jednotlivé druhy; podíl ovsa a ječmene v diagramu není vyznačen (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Sklad obsahuje celkem 210 tun obilí.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Oves a ječmen váží dohromady 48 + 42 = 90 tun a tvoří 40 % celkové hmotnosti.",
+        "Celková hmotnost: 90 : 0,4 = 225 tun, ne 210 tun.",
+        "Tvrzení je nepravdivé — Ne."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_23",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 3,
+      "zadani": "Poměr počtu chlapců a dívek ve třídě je 2 : 3. Kdyby do třídy přestoupili ještě 3 noví chlapci a zároveň 2 dívky odešly na jinou školu, bylo by chlapců a dívek ve třídě stejně. Kolik žáků je nyní ve třídě celkem?",
+      "odpoved": "25",
+      "reseni_kroky": [
+        "Počty chlapců a dívek zapíšeme jako 2k a 3k.",
+        "Po změně: chlapců 2k + 3, dívek 3k − 2. Mají si být rovny: 2k + 3 = 3k − 2, tedy k = 5.",
+        "Nyní je ve třídě 2 · 5 = 10 chlapců a 3 · 5 = 15 dívek, celkem 25 žáků.",
+        "Zkouška: po změně 10 + 3 = 13 chlapců a 15 − 2 = 13 dívek — souhlasí."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_24",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 3,
+      "zadani": "Petr jel na kole po 12kilometrové trase stálou rychlostí a dojel do cíle za 60 minut. Jana jela jinou, 13,5kilometrovou trasou, také stálou rychlostí (jinou než Petr). Oba vyjeli ve stejnou chvíli a po 30 minutách jízdy jim oběma zbývalo do cíle stejně kilometrů. Za kolik minut dojela Jana do cíle?",
+      "odpoved": "54 minut",
+      "reseni_kroky": [
+        "Petrova rychlost: 12 km za 60 min = 0,2 km/min. Za 30 minut ujel 0,2 · 30 = 6 km, do cíle mu zbývalo 12 − 6 = 6 km.",
+        "Janě po 30 minutách zbývalo do cíle stejných 6 km, takže za 30 minut ujela 13,5 − 6 = 7,5 km.",
+        "Janina rychlost: 7,5 km za 30 min = 0,25 km/min.",
+        "Celou trasu 13,5 km ujede za 13,5 : 0,25 = 54 minut."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_25",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 3,
+      "moznosti": [
+        "x/6",
+        "5x/6",
+        "x/5",
+        "5x/24",
+        "x/4"
+      ],
+      "spravna": 0,
+      "zadani": "Turistická stezka vede od parkoviště k rozhledně; její délku označíme x. Eva vyšla od parkoviště po stezce, ušla pět šestin její délky a zastavila se u studánky na odpočinek. Který výraz s proměnnou x vyjadřuje délku úseku stezky mezi studánkou a rozhlednou?",
+      "odpoved": "x/6",
+      "reseni_kroky": [
+        "Od parkoviště ke studánce Eva ušla 5/6 x.",
+        "Zbývající úsek ke rozhledně je celá délka mínus tento úsek: x − 5/6 x = 1/6 x. Správně je A)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_26",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 3,
+      "zadani": "Turistická stezka vede od parkoviště k rozhledně. Eva vyšla od parkoviště po stezce, ušla pět šestin její délky a zastavila se u studánky na odpočinek. Tam zjistila, že ztratila klíče od auta. Vrátila se po stezce zpět o čtvrtinu vzdálenosti, kterou už ušla od parkoviště ke studánce, a tam klíče našla. Pak se znovu vydala směrem k rozhledně a došla až na ni. Ve chvíli, kdy se otočila zpátky k rozhledně (v místě, kde klíče našla), jí do rozhledny zbývalo ještě 9 km. Vypočítejte, kolik kilometrů Eva ujela celkem, než dorazila na rozhlednu.",
+      "odpoved": "34 km",
+      "reseni_kroky": [
+        "Označme celou délku stezky x. Ke studánce Eva ušla 5/6 x, zpět se vrátila o 1/4 · 5/6 x = 5/24 x.",
+        "V místě, kde klíče našla, jí do rozhledny zbývalo x − (5/6 x − 5/24 x) = x − 15/24 x = 3/8 x. To se rovná 9 km, takže x = 24 km.",
+        "Eva ušla: k studánce 5/6 · 24 = 20 km, pak zpět 5/24 · 24 = 5 km, a nakonec znovu dopředu až na rozhlednu, tedy zbylých 9 km.",
+        "Celkem: 20 + 5 + 9 = 34 km."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_27",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "zadani": "Do prázdné nádoby na kuličky začaly ve stejném okamžiku pracovat dva stroje a jeden vydávací mechanismus. Robot A přidává do nádoby v každé sekundě 2 kuličky. Robot B přidává do nádoby v každé třetí sekundě 6 kuliček najednou. Robot C v každé čtvrté sekundě z nádoby 8 kuliček najednou odebere. (Nastanou-li v jedné sekundě dvě akce zároveň, provedou se obě.) Určete počet kuliček v nádobě na konci 12. sekundy po spuštění.",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Za každou sekundu přibudou 2 kuličky od robota A; navíc ve 3., 6., 9., 12. sekundě přibude 6 od robota B a ve 4., 8., 12. sekundě ubude 8 od robota C.",
+        "Postupný součet po sekundách: 2, 4, 12, 6, 8, 16, 18, 12, 20, 22, 24, 24.",
+        "Na konci 12. sekundy (kdy nastanou akce robotů A, B i C současně: +2 +6 −8 = 0 oproti 11. sekundě) je v nádobě 24 kuliček."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_28",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "zadani": "Do prázdné nádoby na kuličky začaly ve stejném okamžiku pracovat dva stroje a jeden vydávací mechanismus. Robot A přidává do nádoby v každé sekundě 2 kuličky. Robot B přidává do nádoby v každé třetí sekundě 6 kuliček najednou. Robot C v každé čtvrté sekundě z nádoby 8 kuliček najednou odebere. (Nastanou-li v jedné sekundě dvě akce zároveň, provedou se obě.) Určete, v kolikáté sekundě počet kuliček v nádobě poprvé přesáhl 30.",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "Počty kuliček po jednotlivých sekundách: 2, 4, 12, 6, 8, 16, 18, 12, 20, 22, 24, 24, 26, 28, 36, …",
+        "Do 14. sekundy hodnota nepřekročí 30 (na konci 14. sekundy je jen 28).",
+        "V 15. sekundě nastanou akce robotů A i B zároveň (15 je dělitelné 3): +2 +6 = +8, takže hodnota vzroste z 28 na 36 — poprvé přes 30. Robot C v 15. sekundě nezasahuje (15 není dělitelné 4)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_29",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "moznosti": [
+        "90x",
+        "800 + 90x",
+        "800x + 90",
+        "890x",
+        "800 + 150x"
+      ],
+      "spravna": 1,
+      "zadani": "Do plavecké haly mají přístup členové klubu i běžní návštěvníci. Člen klubu zaplatí hale na začátku každého roku jednorázový poplatek 800 Kč a za každý vstup platí 90 Kč. Běžný návštěvník platí hale za každý vstup 150 Kč (žádný roční poplatek). Tomáš je členem klubu. Počet Tomášových letošních vstupů do haly označíme x. Který výraz vyjadřuje, kolik korun Tomáš letos hale celkem zaplatí?",
+      "odpoved": "800 + 90x",
+      "reseni_kroky": [
+        "Tomáš zaplatí jednorázový poplatek 800 Kč a k tomu 90 Kč za každý ze svých x vstupů.",
+        "Celková částka je 800 + 90x. Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLO3_30",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "zadani": "Do plavecké haly mají přístup členové klubu i běžní návštěvníci. Člen klubu zaplatí hale na začátku roku jednorázový poplatek 800 Kč a za každý vstup platí 90 Kč, běžný návštěvník platí za každý vstup 150 Kč (bez ročního poplatku). Tomáš je členem klubu, Lucie členem není a platí běžné vstupné. Tomáš a Lucie navštěvují halu vždy společně, letos tedy mají stejný počet vstupů. Lucie letos zaplatila za své vstupy dohromady o 700 Kč více, než hale letos celkem zaplatil Tomáš (poplatek i vstupy). Kolik vstupů letos mají za sebou?",
+      "odpoved": "25",
+      "reseni_kroky": [
+        "Počet společných vstupů označíme x. Tomáš zaplatil 800 + 90x Kč, Lucie zaplatila 150x Kč.",
+        "Lucie zaplatila o 700 Kč více: 150x = 800 + 90x + 700.",
+        "60x = 1 500, takže x = 25.",
+        "Zkouška: Tomáš 800 + 90 · 25 = 3 050 Kč, Lucie 150 · 25 = 3 750 Kč, rozdíl 700 Kč."
+      ],
+      "cas_sekund": 240,
       "sm2_interval": 1
     }
   ]

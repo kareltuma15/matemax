@@ -24,7 +24,7 @@ domluva (téma + počet) → Claude přečte předlohu (CERMAT/sešit) → posta
 | Zlomky | (starší) | (starší) | ⏳ **10 v náhledu** | jen klasické výpočty: složené zlomky, smíšená čísla, mocniny, řetězový zlomek, desetinná čísla |
 | Výrazy | (starší) | (starší) | ⏳ **10 v náhledu** | rozklad na součin, roznásobení, úprava, dosazení, mocniny, odmocniny (bez slovních úloh) |
 | Rovnice | (starší) | (starší) | ⏳ **10 v náhledu** | klasické: rovnice se zlomky a závorkami, vzorce, soustavy (A–E), rovnice bez řešení |
-| Slovní úlohy | — | — | ❌ | 150 úloh, L3 jen 38 → **další na řadě** |
+| Slovní úlohy | — | — | ⏳ **27 v náhledu** | Karel 22. 9.: první verze byla na úrovni L2 → přidány skutečné CERMAT mechaniky (vyjádření výrazem s proměnnou x, stejná zbývající vzdálenost místo stejného podílu trasy, ano/ne baterie k diagramu s kombinací abs. hodnot a %, procenta ze dvou různých celků, posloupnost po sekundách) |
 | Grafy a logika | — | — | ❌ | pozor: CERMAT „grafy" = koláčové/sloupcové grafy, ne kartézská soustava |
 | Konstrukce | — | — | ❌ | 20 úloh, zatím teorie místo rýsování (viz audit 07/2026) |
 | Souhrnné | — | — | ❌ | 60 úloh, mezery v L1–L3 |
