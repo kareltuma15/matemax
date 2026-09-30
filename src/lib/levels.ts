@@ -13,6 +13,9 @@ import { localLoadCards } from "@/lib/storage";
 const UNLOCK_CORRECT = 4;
 const DIAG_UNLOCK_L2 = 0.6;
 
+/** Výsledek diagnostiky pod tímto podílem = slabé téma (nemá odemčené ani střední úlohy, dostane naseedované základy). */
+export const DIAG_WEAK_BELOW = DIAG_UNLOCK_L2;
+
 export type Level = 1 | 2 | 3;
 
 function diagScoresFromStorage(): Record<string, number> {

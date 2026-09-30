@@ -11,6 +11,7 @@ import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
 import { reportDbError } from "@/lib/db-error";
 import { localDateStr } from "@/lib/date";
+import { DIAG_WEAK_BELOW } from "@/lib/levels";
 import {
   loadGamification,
   saveGamification,
@@ -950,7 +951,7 @@ function TreningPageInner() {
 
   const currentExample = examples.find((ex) => ex.id === sessionIds[currentIdx]);
   if (!currentExample) return null;
-  const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < 0.67;
+  const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < DIAG_WEAK_BELOW;
 
   function handleSkip() {
     const isLast = currentIdx + 1 >= sessionIds.length;

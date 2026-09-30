@@ -1,0 +1,724 @@
+{
+  "version": 2,
+  "questions": [
+    {
+      "id": "diag_zlomky_1",
+      "tema": "zlomky",
+      "podtema": "scitani_odcitani",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $\\frac{3}{4} - \\frac{1}{3}$",
+      "moznosti": [
+        "$\\frac{4}{12}$",
+        "$\\frac{5}{12}$",
+        "$\\frac{1}{4}$",
+        "$\\frac{7}{12}$"
+      ],
+      "spravna": 1,
+      "odpoved": "$\\frac{5}{12}$",
+      "reseni_kroky": [
+        "Společný jmenovatel je 12: $\\frac{3}{4} = \\frac{9}{12}$ a $\\frac{1}{3} = \\frac{4}{12}$.",
+        "Odečteme čitatele: $9 - 4 = 5$.",
+        "Výsledek: $\\frac{5}{12}$."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "diag_1"
+    },
+    {
+      "id": "diag_zlomky_2",
+      "tema": "zlomky",
+      "podtema": "nasobeni_deleni",
+      "obtiznost": 2,
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "latex": true,
+      "zadani": "Vypočtěte: $\\left(\\dfrac{2}{3}+\\dfrac{1}{4}\\right):\\dfrac{5}{6}$",
+      "moznosti": [
+        "$\\dfrac{55}{72}$",
+        "$\\dfrac{11}{10}$",
+        "$\\dfrac{11}{12}$",
+        "$\\dfrac{13}{10}$",
+        "$\\dfrac{9}{10}$"
+      ],
+      "spravna": 1,
+      "odpoved": "$\\dfrac{11}{10}$",
+      "reseni_kroky": [
+        "Závorka: $\\dfrac{2}{3}+\\dfrac{1}{4}=\\dfrac{8}{12}+\\dfrac{3}{12}=\\dfrac{11}{12}$.",
+        "Dělení převedeme na násobení převráceným zlomkem: $\\dfrac{11}{12}\\cdot\\dfrac{6}{5}=\\dfrac{66}{60}=\\dfrac{11}{10}$."
+      ]
+    },
+    {
+      "id": "diag_zlomky_3",
+      "tema": "zlomky",
+      "podtema": "slozeny_zlomek",
+      "obtiznost": 3,
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "latex": true,
+      "zadani": "Vypočtěte: $\\dfrac{\\dfrac{3}{8}+\\dfrac{5}{12}}{\\dfrac{7}{6}-\\dfrac{3}{4}}$",
+      "moznosti": [
+        "$\\dfrac{19}{5}$",
+        "$\\dfrac{57}{40}$",
+        "$\\dfrac{19}{10}$",
+        "$\\dfrac{3}{2}$",
+        "$\\dfrac{7}{10}$"
+      ],
+      "spravna": 2,
+      "odpoved": "$\\dfrac{19}{10}$",
+      "reseni_kroky": [
+        "Čitatel: $\\dfrac{3}{8}+\\dfrac{5}{12}=\\dfrac{9}{24}+\\dfrac{10}{24}=\\dfrac{19}{24}$.",
+        "Jmenovatel: $\\dfrac{7}{6}-\\dfrac{3}{4}=\\dfrac{14}{12}-\\dfrac{9}{12}=\\dfrac{5}{12}$.",
+        "Podíl: $\\dfrac{19}{24}:\\dfrac{5}{12}=\\dfrac{19}{24}\\cdot\\dfrac{12}{5}=\\dfrac{19}{10}$."
+      ]
+    },
+    {
+      "id": "diag_vyrazy_1",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 1,
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "zadani": "Zjednodušte výraz: 3(x + 2) − 2x",
+      "moznosti": [
+        "5x + 6",
+        "x − 6",
+        "x + 6",
+        "x + 2",
+        "5x − 6"
+      ],
+      "spravna": 2,
+      "odpoved": "x + 6",
+      "reseni_kroky": [
+        "Roznásobíme závorku: 3(x + 2) = 3x + 6.",
+        "Odečteme 2x: 3x + 6 − 2x = x + 6."
+      ]
+    },
+    {
+      "id": "diag_vyrazy_2",
+      "tema": "vyrazy",
+      "podtema": "roznasobeni",
+      "obtiznost": 2,
+      "zadani": "Roznásob závorku: (x + 3)²",
+      "moznosti": [
+        "x² + 6x + 9",
+        "x² + 9",
+        "x² + 3x + 9",
+        "x² − 6x + 9"
+      ],
+      "spravna": 0,
+      "odpoved": "x² + 6x + 9",
+      "reseni_kroky": [
+        "Vzorec: (a+b)² = a² + 2ab + b².",
+        "Dosadíme a=x, b=3: x² + 2·x·3 + 3².",
+        "Výsledek: x² + 6x + 9."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "diag_3"
+    },
+    {
+      "id": "diag_vyrazy_3",
+      "tema": "vyrazy",
+      "podtema": "uprava_vyrazu",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Rozložte na součin užitím vzorce: $4 \\cdot 9 - 121a^{2}$",
+      "odpoved": "$(6 - 11a)(6 + 11a)$",
+      "reseni_kroky": [
+        "Nejdřív vypočteme $4 \\cdot 9 = 36 = 6^{2}$ a zapíšeme $121a^{2} = (11a)^{2}$.",
+        "Použijeme vzorec $A^{2} - B^{2} = (A - B)(A + B)$: $6^{2} - (11a)^{2} = (6 - 11a)(6 + 11a)$. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$(6 - 11a)^{2}$",
+        "$(6 + 11a)^{2}$",
+        "$(36 - 11a)(36 + 11a)$",
+        "$(6 - 11a)(6 + 11a)$",
+        "$(6 - 121a)(6 + a)$"
+      ],
+      "spravna": 3,
+      "provenance": "VYR3_01"
+    },
+    {
+      "id": "diag_rovnice_1",
+      "tema": "rovnice",
+      "podtema": "linearni",
+      "obtiznost": 1,
+      "zadani": "Vyřeš: 4x − 6 = 2x + 8",
+      "moznosti": [
+        "x = 4",
+        "x = 7",
+        "x = 3",
+        "x = 1"
+      ],
+      "spravna": 1,
+      "odpoved": "x = 7",
+      "reseni_kroky": [
+        "Převedeme neznámé na jednu stranu: 4x − 2x = 8 + 6.",
+        "2x = 14.",
+        "x = 7."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "diag_5"
+    },
+    {
+      "id": "diag_rovnice_2",
+      "tema": "rovnice",
+      "podtema": "linearni_se_zlomky",
+      "obtiznost": 2,
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "latex": true,
+      "zadani": "Řešte rovnici: $\\dfrac{x+1}{2}-\\dfrac{x-2}{3}=2$",
+      "moznosti": [
+        "x = 13",
+        "x = 7",
+        "x = 5",
+        "x = −5",
+        "x = 1"
+      ],
+      "spravna": 2,
+      "odpoved": "x = 5",
+      "reseni_kroky": [
+        "Rovnici vynásobíme číslem 6: $3(x+1)-2(x-2)=12$.",
+        "Roznásobíme: $3x+3-2x+4=12$, tedy $x+7=12$.",
+        "$x=5$. Zkouška: $\\dfrac{6}{2}-\\dfrac{3}{3}=3-1=2$."
+      ]
+    },
+    {
+      "id": "diag_rovnice_3",
+      "tema": "rovnice",
+      "podtema": "soustava",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Řešte soustavu rovnic: $3x + 2y = 7$ a $5x - 4y = -3$. Které dvojice $x$, $y$ je řešením?",
+      "odpoved": "$x = 1$, $y = 2$",
+      "reseni_kroky": [
+        "První rovnici vynásobíme dvěma: $6x + 4y = 14$.",
+        "Rovnice sečteme, $y$ se vyruší: $11x = 11$, tedy $x = 1$.",
+        "Dosadíme do první rovnice: $3 + 2y = 7$, tedy $y = 2$.",
+        "Zkouška ve druhé rovnici: $5 \\cdot 1 - 4 \\cdot 2 = -3$. Správně je A)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "moznosti": [
+        "$x = 1$, $y = 2$",
+        "$x = 2$, $y = 1$",
+        "$x = 1$, $y = -2$",
+        "$x = -1$, $y = 5$",
+        "$x = 3$, $y = -1$"
+      ],
+      "spravna": 0,
+      "provenance": "ROV3_06"
+    },
+    {
+      "id": "diag_geometrie_1",
+      "tema": "geometrie",
+      "podtema": "pythagorova_veta",
+      "obtiznost": 1,
+      "latex": true,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "alfa": 90,
+          "strany": {
+            "b": "6 cm",
+            "c": "8 cm"
+          }
+        }
+      },
+      "zadani": "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Jaká je délka přepony?",
+      "moznosti": [
+        "10 cm",
+        "7 cm",
+        "12 cm",
+        "14 cm"
+      ],
+      "spravna": 0,
+      "odpoved": "10 cm",
+      "reseni_kroky": [
+        "Pythagorova věta: $c^2 = a^2 + b^2$.",
+        "$c^2 = 6^2 + 8^2 = 36 + 64 = 100$.",
+        "$c = \\sqrt{100} = 10$ cm."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1,
+      "provenance": "diag_7"
+    },
+    {
+      "id": "diag_geometrie_2",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 2,
+      "zadani": "Obdélník má obvod 24 cm a jednu stranu dlouhou 5 cm. Jaký je jeho obsah?",
+      "moznosti": [
+        "30 cm²",
+        "40 cm²",
+        "45 cm²",
+        "35 cm²"
+      ],
+      "spravna": 3,
+      "odpoved": "35 cm²",
+      "reseni_kroky": [
+        "Polovina obvodu = 24 / 2 = 12 cm = součet dvou sousedních stran.",
+        "Druhá strana = 12 − 5 = 7 cm.",
+        "Obsah = 5 · 7 = 35 cm². Správně je B)."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "MOZ_3"
+    },
+    {
+      "id": "diag_geometrie_3",
+      "tema": "geometrie",
+      "podtema": "rovinne",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/geometrie/rovnoramenny-trojuhelnik.svg",
+        "width": 320,
+        "height": 230,
+        "alt": "Rovnoramenný trojúhelník ABC se základnou AB; obě ramena jsou označena stejnou značkou"
+      },
+      "zadani": "Rovnoramenný trojúhelník ABC má základnu AB. Každé jeho rameno je o 3 cm delší než základna a obvod trojúhelníku je 36 cm. Jaký je obsah trojúhelníku ABC?",
+      "moznosti": [
+        "48 cm²",
+        "60 cm²",
+        "65 cm²",
+        "78 cm²",
+        "jiný obsah"
+      ],
+      "spravna": 1,
+      "odpoved": "60 cm²",
+      "reseni_kroky": [
+        "Základnu označíme z, rameno je z + 3. Obvod: z + 2 · (z + 3) = 36, tedy 3z + 6 = 36 a z = 10 cm. Ramena mají 13 cm.",
+        "Výška na základnu rozdělí trojúhelník na dva pravoúhlé s odvěsnou 5 cm (polovina základny) a přeponou 13 cm: v² = 13² − 5² = 169 − 25 = 144, takže v = 12 cm.",
+        "Obsah = (10 · 12) / 2 = 60 cm². Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "provenance": "GEOB3_01"
+    },
+    {
+      "id": "diag_slovni_1",
+      "tema": "slovni_ulohy",
+      "podtema": "pohyb",
+      "obtiznost": 1,
+      "zadani": "Vlak jede rychlostí 90 km/h. Za jak dlouho ujede 270 km?",
+      "moznosti": [
+        "3 hod",
+        "2 hod",
+        "2,5 hod",
+        "4 hod"
+      ],
+      "spravna": 0,
+      "odpoved": "3 hod",
+      "reseni_kroky": [
+        "t = dráha ÷ rychlost.",
+        "t = 270 ÷ 90.",
+        "t = 3 hodiny."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "diag_9"
+    },
+    {
+      "id": "diag_slovni_2",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 2,
+      "zadani": "Pracovník A zvládne práci za 6 hod, pracovník B za 4 hod. Za jak dlouho ji zvládnou společně?",
+      "moznosti": [
+        "5 hod",
+        "2,4 hod",
+        "3 hod",
+        "2 hod"
+      ],
+      "spravna": 1,
+      "odpoved": "2,4 hod",
+      "reseni_kroky": [
+        "Za hodinu udělají 1/6 + 1/4 práce.",
+        "1/6 + 1/4 = 2/12 + 3/12 = 5/12.",
+        "Celou práci zvládnou za 12/5 = 2,4 hodiny."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1,
+      "provenance": "diag_10"
+    },
+    {
+      "id": "diag_slovni_3",
+      "tema": "slovni_ulohy",
+      "podtema": "procenta",
+      "obtiznost": 3,
+      "moznosti": [
+        "o 96 míst",
+        "o 192 míst",
+        "o 480 míst",
+        "o 288 míst",
+        "o jiný počet míst"
+      ],
+      "spravna": 3,
+      "zadani": "Ve sportovní hale je 24 míst vyhrazeno pro trenéry. Loni tato místa představovala jednu osminu celkové kapacity haly. Letos díky přístavbě představují tato místa pouze 5 % celkové kapacity haly. O kolik míst se díky přístavbě zvětšila celková kapacita haly?",
+      "odpoved": "o 288 míst",
+      "reseni_kroky": [
+        "Loňská celková kapacita: 24 míst je 1/8 kapacity, takže kapacita = 24 · 8 = 192 míst.",
+        "Letošní celková kapacita: 24 míst je 5 % kapacity, takže kapacita = 24 : 0,05 = 480 míst.",
+        "Počet vyhrazených míst (24) se nezměnil, jen kapacita haly kolem nich vzrostla. Nárůst: 480 − 192 = 288 míst. Správně je C)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "provenance": "SLO3_19"
+    },
+    {
+      "id": "diag_grafy_1",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "sloupce",
+          "nazev": "Prodej zmrzliny",
+          "jednotka": "ks",
+          "sloupce": [
+            {
+              "label": "Po",
+              "hodnota": 20
+            },
+            {
+              "label": "Út",
+              "hodnota": 35
+            },
+            {
+              "label": "St",
+              "hodnota": 15
+            },
+            {
+              "label": "Čt",
+              "hodnota": 40
+            },
+            {
+              "label": "Pá",
+              "hodnota": 30
+            }
+          ]
+        }
+      },
+      "zadani": "Graf ukazuje prodej zmrzliny v jednotlivých dnech. Kolik kusů se prodalo ve čtvrtek?",
+      "moznosti": [
+        "20 ks",
+        "30 ks",
+        "40 ks",
+        "35 ks"
+      ],
+      "spravna": 2,
+      "odpoved": "40 ks",
+      "reseni_kroky": [
+        "Najdi sloupec pro čtvrtek (Čt).",
+        "Jeho výška odpovídá hodnotě 40.",
+        "Ve čtvrtek se prodalo 40 kusů."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1,
+      "provenance": "diag_12"
+    },
+    {
+      "id": "diag_grafy_2",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "kolac",
+          "nazev": "Denní činnosti (24 h)",
+          "casti": [
+            {
+              "label": "zaměstnání",
+              "procenta": 25
+            },
+            {
+              "label": "spánek",
+              "procenta": 35
+            },
+            {
+              "label": "denní povinnosti",
+              "procenta": 30
+            },
+            {
+              "label": "volný čas",
+              "procenta": 10
+            }
+          ]
+        }
+      },
+      "zadani": "Kolik hodin denně tvoří spánek?",
+      "moznosti": [
+        "6 hodin",
+        "8,4 hodiny",
+        "7,5 hodiny",
+        "9,6 hodiny"
+      ],
+      "spravna": 1,
+      "odpoved": "8,4 hodiny",
+      "reseni_kroky": [
+        "Spánek = 35 % z 24 hodin.",
+        "24 · 0,35 = 8,4.",
+        "Správně je C) 8,4 hodiny."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "MOZ_1"
+    },
+    {
+      "id": "diag_grafy_3",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "3 : 8",
+        "3 : 5",
+        "3 : 4",
+        "1 : 2",
+        "2 : 3"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/oddily-chybi-udaj.svg",
+        "width": 400,
+        "height": 250,
+        "alt": "Skupinový sloupcový graf: počty žáků 6. a 7. tříd ve třech sportovních oddílech, osa bez čísel, jeden údaj chybí (čárkovaný sloupec)"
+      },
+      "zadani": "Pro žáky 6. a 7. tříd byly otevřeny tři sportovní oddíly — fotbalový, volejbalový a atletický. Každý žák může chodit jen do jednoho z nich. Graf znázorňuje počty žáků v jednotlivých oddílech; jeden údaj a čísla na svislé ose chybí (jeden dílek osy odpovídá vždy stejnému počtu žáků). Ve fotbalovém oddílu je celkem o 5 žáků více než ve volejbalovém. Ve všech třech oddílech dohromady je poměr počtu žáků 6. tříd ku počtu žáků 7. tříd 2 : 3. Jaký je v atletickém oddílu poměr počtu žáků 6. tříd ku počtu žáků 7. tříd?",
+      "odpoved": "3 : 8",
+      "reseni_kroky": [
+        "Žáků 6. tříd je v oddílech dohromady 6 + 3 + 3 = 12 dílků.",
+        "Poměr 2 : 3 znamená, že žáků 7. tříd je dohromady 12 : 2 · 3 = 18 dílků.",
+        "Ve fotbalovém a volejbalovém oddílu je žáků 7. tříd 4 + 6 = 10 dílků, takže v atletickém 18 − 10 = 8 dílků.",
+        "V atletickém oddílu je poměr 3 : 8. Správně je B)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1,
+      "provenance": "GRA3_06"
+    },
+    {
+      "id": "diag_konstrukce_1",
+      "tema": "konstrukce",
+      "podtema": "osa_usecky",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/konstrukce/usecka-ab.svg",
+        "width": 240,
+        "height": 68,
+        "alt": "Úsečka AB s krajními body A a B"
+      },
+      "zadani": "Chceš sestrojit osu úsečky AB. Jaký je PRVNÍ krok?",
+      "moznosti": [
+        "Přilož pravítko a nakresli přímku AB",
+        "Naměř délku AB a vyznač její střed pravítkem",
+        "Narýsuj kružnici se středem A procházející bodem B",
+        "Narýsuj kolmici v bodě A na úsečku AB"
+      ],
+      "spravna": 2,
+      "odpoved": "Narýsuj kružnici se středem A procházející bodem B",
+      "reseni_kroky": [
+        "Osu úsečky sestrojíme jako množinu bodů stejně vzdálených od A i B.",
+        "Nejdřív narýsujeme kružnici se středem A procházející B.",
+        "Pak kružnici se středem B procházející A — jejich průsečíky určují osu."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "diag_13"
+    },
+    {
+      "id": "diag_konstrukce_2",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik_sss",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/konstrukce/tri-strany.svg",
+        "width": 260,
+        "height": 96,
+        "alt": "Tři úsečky délek 4 cm, 6 cm a 11 cm"
+      },
+      "zadani": "Lze sestrojit trojúhelník se stranami 4 cm, 6 cm a 11 cm?",
+      "moznosti": [
+        "Ne, trojúhelník nelze sestrojit",
+        "Ano, vždy lze",
+        "Ano, ale pouze jako tupouhlý",
+        "Záleží na pořadí zadaných stran"
+      ],
+      "spravna": 0,
+      "odpoved": "Ne, trojúhelník nelze sestrojit",
+      "reseni_kroky": [
+        "Trojúhelníková nerovnost: součet dvou stran musí být větší než třetí strana.",
+        "4 + 6 = 10, což je méně než 11.",
+        "Nerovnost není splněna → trojúhelník nelze sestrojit."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1,
+      "provenance": "diag_14"
+    },
+    {
+      "id": "diag_konstrukce_3",
+      "tema": "konstrukce",
+      "podtema": "mnoziny_bodu",
+      "obtiznost": 3,
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "zadani": "Bod A leží ve vzdálenosti 4 cm od přímky p. Kolik bodů má od přímky p vzdálenost 2 cm a zároveň od bodu A vzdálenost 3 cm?",
+      "moznosti": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "spravna": 2,
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Body ve vzdálenosti 2 cm od přímky p leží na dvou rovnoběžkách s p, každá po jedné straně přímky.",
+        "Bod A je od přímky p vzdálen 4 cm, takže od bližší rovnoběžky je vzdálen 2 cm a od vzdálenější 6 cm.",
+        "Kružnice se středem A a poloměrem 3 cm protne bližší rovnoběžku (2 < 3) ve dvou bodech a vzdálenější rovnoběžku (6 > 3) vůbec.",
+        "Hledaných bodů jsou tedy 2."
+      ]
+    },
+    {
+      "id": "diag_uhly_1",
+      "tema": "uhly",
+      "podtema": "vnitrni_uhly",
+      "obtiznost": 1,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "trojuhelnik",
+          "alfa": 55,
+          "beta": 75,
+          "hledany": "gama"
+        }
+      },
+      "zadani": "V trojúhelníku jsou dva vnitřní úhly 55° a 75°. Jak velký je třetí vnitřní úhel?",
+      "moznosti": [
+        "50°",
+        "40°",
+        "60°",
+        "45°"
+      ],
+      "spravna": 0,
+      "odpoved": "50°",
+      "reseni_kroky": [
+        "Součet vnitřních úhlů trojúhelníku je 180°.",
+        "Třetí úhel = 180° − 55° − 75°.",
+        "= 50°."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "diag_15"
+    },
+    {
+      "id": "diag_uhly_2",
+      "tema": "uhly",
+      "podtema": "vrcholove_uhly",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "paprsky",
+          "paprsky": [
+            {
+              "smer": 0,
+              "label": "p"
+            },
+            {
+              "smer": 180
+            },
+            {
+              "smer": 62,
+              "label": "q"
+            },
+            {
+              "smer": 242
+            }
+          ],
+          "uhly": [
+            {
+              "mezi": [
+                0,
+                2
+              ],
+              "popis": "47°30′",
+              "r": 26
+            },
+            {
+              "mezi": [
+                1,
+                3
+              ],
+              "popis": "α",
+              "r": 24
+            }
+          ]
+        }
+      },
+      "zadani": "Přímky p a q se protínají. Jaká je velikost vrcholového úhlu α k úhlu 47°30′? (Obrázek je ilustrační.)",
+      "moznosti": [
+        "132°30′",
+        "42°30′",
+        "47°30′",
+        "94°30′"
+      ],
+      "spravna": 2,
+      "odpoved": "47°30′",
+      "reseni_kroky": [
+        "Vrcholové úhly jsou shodné.",
+        "α má stejnou velikost jako daný úhel.",
+        "α = 47°30′. Správně A)."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1,
+      "provenance": "PAP_2"
+    },
+    {
+      "id": "diag_uhly_3",
+      "tema": "uhly",
+      "podtema": "rovnobeznik",
+      "obtiznost": 3,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "rovnobeznik",
+          "uhly": {
+            "A": "α",
+            "D": "δ"
+          },
+          "vnejsiA": "4α"
+        }
+      },
+      "zadani": "Přímka AB je prodloužena za vrchol A. Rovnoběžník ABCD má u vrcholu A vnitřní úhel α a vnější úhel 4α. Jak velký je úhel δ u vrcholu D?",
+      "moznosti": [
+        "menší než 108°",
+        "144°",
+        "108°",
+        "135°",
+        "větší než 144°"
+      ],
+      "spravna": 1,
+      "odpoved": "144°",
+      "reseni_kroky": [
+        "Vnější a vnitřní úhel u A jsou vedlejší: α + 4α = 180° → 5α = 180° → α = 36°.",
+        "Sousední úhly rovnoběžníku (u A a u D) jsou vedlejší: δ = 180° − α.",
+        "δ = 180° − 36° = 144°. Správně D)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "provenance": "UHL_L3_01"
+    }
+  ]
+}
