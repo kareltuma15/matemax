@@ -1,4 +1,367 @@
 {
-  "nazev": "Slovní úlohy — 15 úloh L2 + 12 úloh L3 ve stylu CERMAT — ZAPSÁNO",
-  "examples": []
+  "nazev": "Grafy a logika — L3 ve stylu CERMAT (15 úloh: obrázkové posloupnosti, sloupcové a koláčové grafy, ano/ne tvrzení)",
+  "examples": [
+    {
+      "id": "GRA3_01",
+      "tema": "grafy_logika",
+      "podtema": "figuralni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/ctverce-frakt.svg",
+        "width": 392,
+        "height": 148,
+        "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
+      },
+      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Kolik bílých čtverců obsahuje pátý obrazec?",
+      "odpoved": "4096",
+      "reseni_kroky": [
+        "Každý bílý čtverec se rozdělí na 9 čtverců, z nichž 8 zůstane bílých a jeden se obarví šedě. Bílých čtverců je tedy v každém dalším obrazci 8krát víc.",
+        "Počty bílých čtverců: 1. obrazec 1, 2. obrazec 8, 3. obrazec 64, 4. obrazec 512, 5. obrazec 8 · 512 = 4096."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_02",
+      "tema": "grafy_logika",
+      "podtema": "figuralni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/ctverce-frakt.svg",
+        "width": 392,
+        "height": 148,
+        "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
+      },
+      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Pátý obrazec obsahuje 585 šedých čtverců. Určete, kolik šedých čtverců obsahuje šestý obrazec.",
+      "odpoved": "4681",
+      "reseni_kroky": [
+        "Při přechodu z 5. na 6. obrazec se šedě obarví prostřední čtverec z každého bílého čtverce 5. obrazce; dosavadní šedé čtverce zůstanou.",
+        "Bílých čtverců je v 5. obrazci 1, 8, 64, 512, 4096, tedy 4096. Přibude tedy 4096 šedých čtverců.",
+        "Šedých čtverců v 6. obrazci: 585 + 4096 = 4681."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_03",
+      "tema": "grafy_logika",
+      "podtema": "figuralni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/ctverce-frakt.svg",
+        "width": 392,
+        "height": 148,
+        "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
+      },
+      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Počet šedých čtverců v posledním a v předposledním obrazci se liší o 32768. Určete, kolik bílých čtverců obsahuje poslední obrazec.",
+      "odpoved": "262144",
+      "reseni_kroky": [
+        "Rozdíl počtu šedých čtverců dvou po sobě jdoucích obrazců je počet bílých čtverců v tom předchozím (každý bílý čtverec přidá jeden šedý).",
+        "Počty bílých čtverců po řadě: 1, 8, 64, 512, 4096, 32768. Číslo 32768 má šestý obrazec, takže předposlední je 6. a poslední je 7. obrazec.",
+        "Bílých čtverců v posledním (7.) obrazci: 8 · 32768 = 262144."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_04",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/oddily-chybi-udaj.svg",
+        "width": 400,
+        "height": 250,
+        "alt": "Skupinový sloupcový graf: počty žáků 6. a 7. tříd ve třech sportovních oddílech, osa bez čísel, jeden údaj chybí (čárkovaný sloupec)"
+      },
+      "zadani": "Pro žáky 6. a 7. tříd byly otevřeny tři sportovní oddíly — fotbalový, volejbalový a atletický. Každý žák může chodit jen do jednoho z nich. Graf znázorňuje počty žáků v jednotlivých oddílech; jeden údaj a čísla na svislé ose chybí (jeden dílek osy odpovídá vždy stejnému počtu žáků). Ve fotbalovém oddílu je celkem o 5 žáků více než ve volejbalovém. Ve všech třech oddílech dohromady je poměr počtu žáků 6. tříd ku počtu žáků 7. tříd 2 : 3. O kolik procent více je ve fotbalovém oddílu žáků 6. tříd než žáků 7. tříd?",
+      "odpoved": "50 %",
+      "reseni_kroky": [
+        "Z grafu: ve fotbalovém oddílu je žáků 6. tříd 6 dílků a žáků 7. tříd 4 dílky.",
+        "Rozdíl je 6 − 4 = 2 dílky. Vztaženo k 7. třídám (základ 4 dílky): 2 : 4 = 0,5, což je 50 %."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_05",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/oddily-chybi-udaj.svg",
+        "width": 400,
+        "height": 250,
+        "alt": "Skupinový sloupcový graf: počty žáků 6. a 7. tříd ve třech sportovních oddílech, osa bez čísel, jeden údaj chybí (čárkovaný sloupec)"
+      },
+      "zadani": "Pro žáky 6. a 7. tříd byly otevřeny tři sportovní oddíly — fotbalový, volejbalový a atletický. Každý žák může chodit jen do jednoho z nich. Graf znázorňuje počty žáků v jednotlivých oddílech; jeden údaj a čísla na svislé ose chybí (jeden dílek osy odpovídá vždy stejnému počtu žáků). Ve fotbalovém oddílu je celkem o 5 žáků více než ve volejbalovém. Ve všech třech oddílech dohromady je poměr počtu žáků 6. tříd ku počtu žáků 7. tříd 2 : 3. Určete, kolik žáků 7. tříd chodí do volejbalového oddílu.",
+      "odpoved": "30 žáků",
+      "reseni_kroky": [
+        "Z grafu: ve fotbalovém oddílu je 6 + 4 = 10 dílků, ve volejbalovém 3 + 6 = 9 dílků.",
+        "Rozdíl 1 dílek odpovídá 5 žákům, takže jeden dílek jsou 5 žáci.",
+        "Žáků 7. tříd ve volejbalovém oddílu je 6 dílků, tedy 6 · 5 = 30 žáků."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_06",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "3 : 5",
+        "3 : 8",
+        "3 : 4",
+        "1 : 2",
+        "2 : 3"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/oddily-chybi-udaj.svg",
+        "width": 400,
+        "height": 250,
+        "alt": "Skupinový sloupcový graf: počty žáků 6. a 7. tříd ve třech sportovních oddílech, osa bez čísel, jeden údaj chybí (čárkovaný sloupec)"
+      },
+      "zadani": "Pro žáky 6. a 7. tříd byly otevřeny tři sportovní oddíly — fotbalový, volejbalový a atletický. Každý žák může chodit jen do jednoho z nich. Graf znázorňuje počty žáků v jednotlivých oddílech; jeden údaj a čísla na svislé ose chybí (jeden dílek osy odpovídá vždy stejnému počtu žáků). Ve fotbalovém oddílu je celkem o 5 žáků více než ve volejbalovém. Ve všech třech oddílech dohromady je poměr počtu žáků 6. tříd ku počtu žáků 7. tříd 2 : 3. Jaký je v atletickém oddílu poměr počtu žáků 6. tříd ku počtu žáků 7. tříd?",
+      "odpoved": "3 : 8",
+      "reseni_kroky": [
+        "Žáků 6. tříd je v oddílech dohromady 6 + 3 + 3 = 12 dílků.",
+        "Poměr 2 : 3 znamená, že žáků 7. tříd je dohromady 12 : 2 · 3 = 18 dílků.",
+        "Ve fotbalovém a volejbalovém oddílu je žáků 7. tříd 4 + 6 = 10 dílků, takže v atletickém 18 − 10 = 8 dílků.",
+        "V atletickém oddílu je poměr 3 : 8. Správně je B)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_07",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/dva-kolace-vylet.svg",
+        "width": 430,
+        "height": 244,
+        "alt": "Dva koláčové grafy: kam chtějí jet žáci na výlet (hory 50 %, aquapark 12 žáků, muzeum 20 %) a hory podle programu (lyžování 5 žáků, snowboarding 3 žáci, ostatní turistika)"
+      },
+      "zadani": "Všichni žáci 8. A a 8. B odpověděli, kam by chtěli jet na třídní výlet: do aquaparku, do muzea, nebo do hor. Ti, kteří chtějí do hor, uvedli také program: turistiku, lyžování, nebo snowboarding. Výsledky jsou zaznamenány v grafech. Do aquaparku chce jet 12 žáků, do muzea 20 % žáků a do hor 50 % žáků. Na lyžování se hlásí 5 žáků, na snowboarding 3 žáci, všichni ostatní zájemci o hory by si vybrali horskou turistiku. Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Na snowboarding se chce hlásit 7,5 % všech žáků.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Do aquaparku chce jet 12 žáků, což je 100 % − 50 % − 20 % = 30 % všech žáků. Celkem je tedy 12 : 0,3 = 40 žáků.",
+        "Na snowboarding se hlásí 3 žáci (údaj z grafu a ze zadání).",
+        "3 z 40 žáků je 3 : 40 = 0,075, tedy 7,5 %. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_08",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/dva-kolace-vylet.svg",
+        "width": 430,
+        "height": 244,
+        "alt": "Dva koláčové grafy: kam chtějí jet žáci na výlet (hory 50 %, aquapark 12 žáků, muzeum 20 %) a hory podle programu (lyžování 5 žáků, snowboarding 3 žáci, ostatní turistika)"
+      },
+      "zadani": "Všichni žáci 8. A a 8. B odpověděli, kam by chtěli jet na třídní výlet: do aquaparku, do muzea, nebo do hor. Ti, kteří chtějí do hor, uvedli také program: turistiku, lyžování, nebo snowboarding. Výsledky jsou zaznamenány v grafech. Do aquaparku chce jet 12 žáků, do muzea 20 % žáků a do hor 50 % žáků. Na lyžování se hlásí 5 žáků, na snowboarding 3 žáci, všichni ostatní zájemci o hory by si vybrali horskou turistiku. Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „V 8. A a 8. B je dohromady více než 40 žáků.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Do aquaparku chce jet 12 žáků, což je 100 % − 50 % − 20 % = 30 % všech žáků.",
+        "Všech žáků je 12 : 0,3 = 40. Přesně 40, ne více než 40. Tvrzení je nepravdivé — Ne."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_09",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/dva-kolace-vylet.svg",
+        "width": 430,
+        "height": 244,
+        "alt": "Dva koláčové grafy: kam chtějí jet žáci na výlet (hory 50 %, aquapark 12 žáků, muzeum 20 %) a hory podle programu (lyžování 5 žáků, snowboarding 3 žáci, ostatní turistika)"
+      },
+      "zadani": "Všichni žáci 8. A a 8. B odpověděli, kam by chtěli jet na třídní výlet: do aquaparku, do muzea, nebo do hor. Ti, kteří chtějí do hor, uvedli také program: turistiku, lyžování, nebo snowboarding. Výsledky jsou zaznamenány v grafech. Do aquaparku chce jet 12 žáků, do muzea 20 % žáků a do hor 50 % žáků. Na lyžování se hlásí 5 žáků, na snowboarding 3 žáci, všichni ostatní zájemci o hory by si vybrali horskou turistiku. Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Do aquaparku a na horskou turistiku se chce hlásit stejný počet žáků.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Do aquaparku se hlásí 12 žáků, což je 30 % všech žáků (100 % − 50 % − 20 %), takže všech žáků je 12 : 0,3 = 40.",
+        "Do hor chce jet 50 % ze 40 žáků, tedy 20 žáků. Na lyžování se hlásí 5 a na snowboarding 3, na horskou turistiku tedy 20 − 5 − 3 = 12 žáků.",
+        "Do aquaparku i na turistiku se hlásí 12 žáků — stejný počet. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_10",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/sporty-chlapci-divky.svg",
+        "width": 500,
+        "height": 250,
+        "alt": "Sloupcový graf nejoblíbenějších sportů žáků 9. ročníku: počty chlapců a dívek u fotbalu, plavání, tenisu, atletiky a gymnastiky"
+      },
+      "zadani": "Žáci 9. ročníku mezi sebou provedli průzkum. Každý žák zvolil svůj nejoblíbenější sport, přičemž každý si zvolil právě jeden. Výsledky jsou zaznamenány v grafu. Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „V 9. ročníku je stejný počet dívek jako chlapců.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Chlapci: 8 + 4 + 4 + 6 + 2 = 24.",
+        "Dívky: 2 + 7 + 8 + 4 + 3 = 24. Počty jsou stejné. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_11",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/sporty-chlapci-divky.svg",
+        "width": 500,
+        "height": 250,
+        "alt": "Sloupcový graf nejoblíbenějších sportů žáků 9. ročníku: počty chlapců a dívek u fotbalu, plavání, tenisu, atletiky a gymnastiky"
+      },
+      "zadani": "Žáci 9. ročníku mezi sebou provedli průzkum. Každý žák zvolil svůj nejoblíbenější sport, přičemž každý si zvolil právě jeden. Výsledky jsou zaznamenány v grafu. Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Tenis zvolila více než čtvrtina všech žáků 9. ročníku.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Všech žáků je 24 + 24 = 48 (chlapci 8 + 4 + 4 + 6 + 2, dívky 2 + 7 + 8 + 4 + 3).",
+        "Tenis zvolilo 4 + 8 = 12 žáků. Čtvrtina z 48 je 12, takže tenis zvolila právě čtvrtina, ne více než čtvrtina.",
+        "Tvrzení je nepravdivé — Ne."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_12",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/sporty-chlapci-divky.svg",
+        "width": 500,
+        "height": 250,
+        "alt": "Sloupcový graf nejoblíbenějších sportů žáků 9. ročníku: počty chlapců a dívek u fotbalu, plavání, tenisu, atletiky a gymnastiky"
+      },
+      "zadani": "Žáci 9. ročníku mezi sebou provedli průzkum. Každý žák zvolil svůj nejoblíbenější sport, přičemž každý si zvolil právě jeden. Výsledky jsou zaznamenány v grafu. Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Počet chlapců, kteří zvolili fotbal, je o 300 % větší než počet dívek, které zvolily fotbal.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Fotbal zvolilo 8 chlapců a 2 dívky.",
+        "Chlapců je o 8 − 2 = 6 víc, vztaženo k dívkám (základ 2): 6 : 2 = 3, tedy o 300 % více. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_13",
+      "tema": "grafy_logika",
+      "podtema": "figuralni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/trojuhelnik-kruhy.svg",
+        "width": 462,
+        "height": 139,
+        "alt": "Obrazce 1 až 4: bílé kruhy uspořádané do trojúhelníku a malý tmavý kruh v každé mezeře mezi třemi sousedními bílými kruhy"
+      },
+      "zadani": "Obrazce jsou tvořeny bílými kruhy a malými tmavými kruhy. První obrazec tvoří jeden bílý kruh. Druhý obrazec tvoří tři bílé kruhy, které se navzájem dotýkají, a jeden tmavý kruh uprostřed mezi nimi. Každý další obrazec vznikne přidáním další řady bílých kruhů; do každé mezery mezi třemi navzájem se dotýkajícími bílými kruhy se vloží jeden tmavý kruh (viz obrázek). Kolik bílých kruhů obsahuje desátý obrazec?",
+      "odpoved": "55",
+      "reseni_kroky": [
+        "Obrazec s n řadami má bílých kruhů 1 + 2 + … + n; první řada má 1, druhá 2, třetí 3 kruhy a tak dále.",
+        "Desátý obrazec má 10 řad: 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55 bílých kruhů."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_14",
+      "tema": "grafy_logika",
+      "podtema": "figuralni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/trojuhelnik-kruhy.svg",
+        "width": 462,
+        "height": 139,
+        "alt": "Obrazce 1 až 4: bílé kruhy uspořádané do trojúhelníku a malý tmavý kruh v každé mezeře mezi třemi sousedními bílými kruhy"
+      },
+      "zadani": "Obrazce jsou tvořeny bílými kruhy a malými tmavými kruhy. První obrazec tvoří jeden bílý kruh. Druhý obrazec tvoří tři bílé kruhy, které se navzájem dotýkají, a jeden tmavý kruh uprostřed mezi nimi. Každý další obrazec vznikne přidáním další řady bílých kruhů; do každé mezery mezi třemi navzájem se dotýkajícími bílými kruhy se vloží jeden tmavý kruh (viz obrázek). Kolikátý obrazec obsahuje 225 tmavých kruhů?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Tmavých kruhů je v 1., 2., 3., 4. obrazci 0, 1, 4, 9 — vždy druhá mocnina o jedna menšího čísla obrazce: (n − 1) · (n − 1).",
+        "Hledáme (n − 1) · (n − 1) = 225, tedy n − 1 = 15 a n = 16."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "GRA3_15",
+      "tema": "grafy_logika",
+      "podtema": "figuralni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/trojuhelnik-kruhy.svg",
+        "width": 462,
+        "height": 139,
+        "alt": "Obrazce 1 až 4: bílé kruhy uspořádané do trojúhelníku a malý tmavý kruh v každé mezeře mezi třemi sousedními bílými kruhy"
+      },
+      "zadani": "Obrazce jsou tvořeny bílými kruhy a malými tmavými kruhy. První obrazec tvoří jeden bílý kruh. Druhý obrazec tvoří tři bílé kruhy, které se navzájem dotýkají, a jeden tmavý kruh uprostřed mezi nimi. Každý další obrazec vznikne přidáním další řady bílých kruhů; do každé mezery mezi třemi navzájem se dotýkajícími bílými kruhy se vloží jeden tmavý kruh (viz obrázek). Počet bílých kruhů v posledním a v předposledním obrazci se liší o 17. Určete, kolik tmavých kruhů obsahuje poslední obrazec.",
+      "odpoved": "256",
+      "reseni_kroky": [
+        "Každý další obrazec má o jednu řadu víc; n-tý obrazec má o n bílých kruhů víc než předchozí (přibude řada s n kruhy).",
+        "Rozdíl 17 znamená, že poslední obrazec je 17. a má 17 řad.",
+        "Tmavých kruhů má (17 − 1) · (17 − 1) = 16 · 16 = 256."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    }
+  ]
 }

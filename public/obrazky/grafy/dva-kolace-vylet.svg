@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 244" width="430" height="244" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Dva koláčové grafy: kam chtějí jet žáci na výlet (hory 50 %, aquapark 12 žáků, muzeum 20 %) a hory podle programu (lyžování 5 žáků, snowboarding 3 žáci, ostatní turistika)</title>
+  <text x="108" y="30" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">Kam chtějí jet na výlet</text>
+  <path d="M108 148 L108 74 A74 74 0 0 1 108 222 Z" fill="#c3cad5" stroke="#0D1B3E" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="152.4" y="146" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">hory</text>
+  <text x="152.4" y="161" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">50 %</text>
+  <path d="M108 148 L108 222 A74 74 0 0 1 37.62 125.13 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="72.08" y="172.1" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">aquapark</text>
+  <text x="72.08" y="187.1" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">12 žáků</text>
+  <path d="M108 148 L37.62 125.13 A74 74 0 0 1 108 74 Z" fill="#e6eaf0" stroke="#0D1B3E" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="81.9" y="110.08" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">muzeum</text>
+  <text x="81.9" y="125.08" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">20 %</text>
+  <text x="322" y="30" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">Hory podle programu</text>
+  <path d="M322 148 L322 74 A74 74 0 1 1 278.5 207.87 Z" fill="#c3cad5" stroke="#0D1B3E" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="364.23" y="159.72" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">turistika</text>
+  <path d="M322 148 L278.5 207.87 A74 74 0 0 1 262.13 104.5 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="278.15" y="152.95" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">lyžování</text>
+  <text x="278.15" y="167.95" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">5 žáků</text>
+  <path d="M322 148 L262.13 104.5 A74 74 0 0 1 322 74 Z" fill="#e6eaf0" stroke="#0D1B3E" stroke-width="1.6" stroke-linejoin="round"/>
+  <line x1="293.11" y1="91.3" x2="281.01" y2="67.56" stroke="#0D1B3E" stroke-width="1.2"/>
+  <text x="277.01" y="51.56" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="end">snowboarding</text>
+  <text x="277.01" y="64.56" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="end">3 žáci</text>
+</svg>

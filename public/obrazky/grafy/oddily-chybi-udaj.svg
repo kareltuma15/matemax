@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Skupinový sloupcový graf: počty žáků 6. a 7. tříd ve třech sportovních oddílech, osa bez čísel, jeden údaj chybí (čárkovaný sloupec)</title>
+  <line x1="50" y1="212" x2="272" y2="212" stroke="#0D1B3E" stroke-width="1.6"/>
+  <line x1="45" y1="212" x2="50" y2="212" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="190.89" x2="272" y2="190.89" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="190.89" x2="50" y2="190.89" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="169.78" x2="272" y2="169.78" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="169.78" x2="50" y2="169.78" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="148.67" x2="272" y2="148.67" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="148.67" x2="50" y2="148.67" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="127.56" x2="272" y2="127.56" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="127.56" x2="50" y2="127.56" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="106.44" x2="272" y2="106.44" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="106.44" x2="50" y2="106.44" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="85.33" x2="272" y2="85.33" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="85.33" x2="50" y2="85.33" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="64.22" x2="272" y2="64.22" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="64.22" x2="50" y2="64.22" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="43.11" x2="272" y2="43.11" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="43.11" x2="50" y2="43.11" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="22" x2="272" y2="22" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="45" y1="22" x2="50" y2="22" stroke="#0D1B3E" stroke-width="1.2"/>
+  <line x1="50" y1="22" x2="50" y2="212" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="14" y="117" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle" transform="rotate(-90 14 117)">Počet žáků</text>
+  <rect x="64.8" y="85.33" width="22.2" height="126.67" fill="#5b6472" stroke="#0D1B3E" stroke-width="1.2"/>
+  <rect x="87" y="127.56" width="22.2" height="84.44" fill="#d9dee6" stroke="#0D1B3E" stroke-width="1.2"/>
+  <text x="87" y="230" font-size="11" font-weight="700" fill="#0D1B3E" text-anchor="middle">fotbalový</text>
+  <rect x="138.8" y="148.67" width="22.2" height="63.33" fill="#5b6472" stroke="#0D1B3E" stroke-width="1.2"/>
+  <rect x="161" y="85.33" width="22.2" height="126.67" fill="#d9dee6" stroke="#0D1B3E" stroke-width="1.2"/>
+  <text x="161" y="230" font-size="11" font-weight="700" fill="#0D1B3E" text-anchor="middle">volejbalový</text>
+  <rect x="212.8" y="148.67" width="22.2" height="63.33" fill="#5b6472" stroke="#0D1B3E" stroke-width="1.2"/>
+  <rect x="235" y="22" width="22.2" height="190" fill="none" stroke="#0D1B3E" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="246.1" y="40" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">?</text>
+  <text x="235" y="230" font-size="11" font-weight="700" fill="#0D1B3E" text-anchor="middle">atletický</text>
+  <rect x="290" y="36" width="14" height="14" fill="#5b6472" stroke="#0D1B3E" stroke-width="1.1"/>
+  <text x="310" y="48" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="start">6. třídy</text>
+  <rect x="290" y="60" width="14" height="14" fill="#d9dee6" stroke="#0D1B3E" stroke-width="1.1"/>
+  <text x="310" y="72" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="start">7. třídy</text>
+</svg>
