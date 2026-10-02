@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { DBExample, SceneElement, TEMA_LABELS, podtemaLabel } from "@/types";
 import {
-  Pt, Shape, allIntersections, nearest, clipLine, matchMarkers, dist,
+  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, dist,
 } from "@/lib/construct-geom";
 import { playCorrect, playWrong } from "@/lib/sound";
 import MathText from "@/components/MathText";
@@ -11,7 +11,11 @@ import MathText from "@/components/MathText";
 /**
  * Rýsování (CERMAT „Sestrojte…"): žák má v obrázku pravítko a kružítko, klepnutí se přichytává
  * k průsečíkům a nakonec nástrojem „Bod" označí hledaný bod (nebo všechny hledané body).
+ *
+ * Výsledný bod se smí označit JEN v průsečíku čar (nebo v zadaném bodě) — ne odhadem od oka.
  * Výsledek se ověřuje výpočtem, postup se po kontrole ukáže krok za krokem.
+ * Lupa přiblíží obrázek (hustá konstrukce se na mobilu špatně klepe). Kružítko umí pevný poloměr
+ * (např. „3 cm") i „stejný poloměr jako naposledy" (kružítko zůstane rozevřené).
  * Data: `example.konstrukce_scena` (viz ConstructionScene v types).
  */
 
@@ -28,6 +32,8 @@ const BLUE = "#2E6DA4";
 const ORANGE = "#f59e0b";
 const GREEN = "#16a34a";
 const RED = "#dc2626";
+const SNAP_PX = 18;       // dosah přichycení v pixelech na obrazovce
+const MAX_ZOOM = 4;
 
 const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
   1: { label: "Lehká ⭐", bg: "#f0fdf4", color: "#166534" },
@@ -66,44 +72,46 @@ function arcPath(cx: number, cy: number, r: number, a1: number, a2: number) {
   return `M${x1.toFixed(2)} ${y1.toFixed(2)} A${r} ${r} 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
 }
 
-function Element({ el, w, h, color, sw, dashed }: { el: SceneElement; w: number; h: number; color: string; sw: number; dashed?: boolean }) {
+/** Prvek scény. `u` = jednotek scény na 1 px obrazovky (při přiblížení menší) — body a písmo mají stálou velikost. */
+function Element({ el, w, h, color, sw, dashed, u }: { el: SceneElement; w: number; h: number; color: string; sw: number; dashed?: boolean; u: number }) {
   const dash = dashed ? "5 4" : undefined;
+  const ns = { vectorEffect: "non-scaling-stroke" as const };
   switch (el.t) {
     case "point":
       return (
         <g>
-          <circle cx={el.x} cy={el.y} r={3.6} fill={color} />
+          <circle cx={el.x} cy={el.y} r={3.6 * u} fill={color} />
           {el.label && (
-            <text x={el.x + (el.dx ?? 7)} y={el.y + (el.dy ?? -7)} fontSize={14} fontWeight={700} fill={color} style={{ fontFamily: "system-ui, sans-serif" }}>
+            <text x={el.x + (el.dx ?? 7) * u} y={el.y + (el.dy ?? -7) * u} fontSize={14 * u} fontWeight={700} fill={color} style={{ fontFamily: "system-ui, sans-serif" }}>
               {el.label}
             </text>
           )}
         </g>
       );
     case "segment":
-      return <line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke={color} strokeWidth={sw} strokeDasharray={el.dashed ? "5 4" : dash} strokeLinecap="round" />;
+      return <line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke={color} strokeWidth={sw} strokeDasharray={el.dashed ? "5 4" : dash} strokeLinecap="round" {...ns} />;
     case "line":
     case "ray": {
       const c = clipLine({ x: el.x1, y: el.y1 }, { x: el.x2, y: el.y2 }, w, h, el.t === "ray");
       if (!c) return null;
-      return <line x1={c[0].x} y1={c[0].y} x2={c[1].x} y2={c[1].y} stroke={color} strokeWidth={sw} strokeDasharray={el.dashed ? "5 4" : dash} strokeLinecap="round" />;
+      return <line x1={c[0].x} y1={c[0].y} x2={c[1].x} y2={c[1].y} stroke={color} strokeWidth={sw} strokeDasharray={el.dashed ? "5 4" : dash} strokeLinecap="round" {...ns} />;
     }
     case "circle":
-      return <circle cx={el.cx} cy={el.cy} r={el.r} fill="none" stroke={color} strokeWidth={sw} strokeDasharray={el.dashed ? "5 4" : dash} />;
+      return <circle cx={el.cx} cy={el.cy} r={el.r} fill="none" stroke={color} strokeWidth={sw} strokeDasharray={el.dashed ? "5 4" : dash} {...ns} />;
     case "arc":
-      return <path d={arcPath(el.cx, el.cy, el.r, el.a1, el.a2)} fill="none" stroke={color} strokeWidth={sw} />;
+      return <path d={arcPath(el.cx, el.cy, el.r, el.a1, el.a2)} fill="none" stroke={color} strokeWidth={sw} {...ns} />;
     case "polygon":
-      return <polygon points={el.pts.map((p) => p.join(",")).join(" ")} fill={el.fill ?? "none"} stroke={color} strokeWidth={sw} strokeLinejoin="round" />;
+      return <polygon points={el.pts.map((p) => p.join(",")).join(" ")} fill={el.fill ?? "none"} stroke={color} strokeWidth={sw} strokeLinejoin="round" {...ns} />;
     case "text":
       return (
-        <text x={el.x} y={el.y} fontSize={el.size ?? 14} fontWeight={700} fill={color} textAnchor={el.anchor ?? "start"} style={{ fontFamily: "system-ui, sans-serif" }}>
+        <text x={el.x} y={el.y} fontSize={(el.size ?? 14) * u} fontWeight={700} fill={color} textAnchor={el.anchor ?? "start"} style={{ fontFamily: "system-ui, sans-serif" }}>
           {el.text}
         </text>
       );
     case "right": {
-      const s = 9;
+      const s = 9 * u;
       const d = `M${el.x + el.ux * s} ${el.y + el.uy * s} L${el.x + (el.ux + el.vx) * s} ${el.y + (el.uy + el.vy) * s} L${el.x + el.vx * s} ${el.y + el.vy * s}`;
-      return <path d={d} fill="none" stroke={color} strokeWidth={1.4} />;
+      return <path d={d} fill="none" stroke={color} strokeWidth={1.4} {...ns} />;
     }
   }
 }
@@ -112,16 +120,28 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   const scene = example.konstrukce_scena!;
   const svgRef = useRef<SVGSVGElement>(null);
   const idRef = useRef(1);
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [tool, setTool] = useState<string>("bod");
+  const [tool, setTool] = useState<string>("pravitko");
   const [pending, setPending] = useState<Pt | null>(null);
   const [items, setItems] = useState<Item[]>([]);
+  const [lastR, setLastR] = useState<number | null>(null);
   const [result, setResult] = useState<ReturnType<typeof matchMarkers> | null>(null);
   const [stepShown, setStepShown] = useState(0);
+  const [zoom, setZoom] = useState(1);
+  const [center, setCenter] = useState<Pt>({ x: scene.width / 2, y: scene.height / 2 });
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    setTool("bod"); setPending(null); setItems([]); setResult(null); setStepShown(0);
-  }, [example.id]);
+    setTool("pravitko"); setPending(null); setItems([]); setLastR(null); setResult(null); setStepShown(0);
+    setZoom(1); setCenter({ x: scene.width / 2, y: scene.height / 2 }); setNotice(null);
+  }, [example.id, scene.width, scene.height]);
+
+  const W = scene.width, H = scene.height;
+  const vw = W / zoom, vh = H / zoom;
+  const vx = Math.min(Math.max(center.x - vw / 2, 0), W - vw);
+  const vy = Math.min(Math.max(center.y - vh / 2, 0), H - vh);
+  const u = 1 / zoom;
 
   const givenShapes = useMemo(() => shapesOf(scene.given), [scene]);
   const givenPoints = useMemo(() => scene.given.filter((e) => e.t === "point").map((e) => ({ x: (e as { x: number }).x, y: (e as { y: number }).y })), [scene]);
@@ -132,52 +152,85 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   );
   const markers = useMemo(() => items.filter((it): it is Extract<Item, { kind: "marker" }> => it.kind === "marker"), [items]);
 
-  // Body, ke kterým se klepnutí přichytává: zadané body + všechny průsečíky zadaných i vlastních čar
+  // Body, ke kterým se klepnutí přichytává: zadané body + všechny průsečíky zadaných i vlastních čar.
+  // Zobrazují se jen průsečíky, na nichž se podílí aspoň jedna vlastní čára (méně čmouhy).
   const candidates = useMemo(() => {
-    const inter = allIntersections([...givenShapes, ...helperShapes]).filter(
-      (p) => p.x > -2 && p.x < scene.width + 2 && p.y > -2 && p.y < scene.height + 2,
-    );
-    const extra = inter.filter((p) => !givenPoints.some((g) => dist(g, p) < 1));
-    return { snap: [...givenPoints, ...extra], visible: extra.slice(0, 90) };
-  }, [givenShapes, helperShapes, givenPoints, scene]);
+    const inScene = (p: Pt) => p.x > -2 && p.x < W + 2 && p.y > -2 && p.y < H + 2;
+    const all = allIntersections([...givenShapes, ...helperShapes]).filter(inScene);
+    const withHelper: Pt[] = [];
+    helperShapes.forEach((h, i) => {
+      for (const s of [...givenShapes, ...helperShapes.slice(0, i)]) {
+        for (const p of intersections(h, s)) {
+          if (inScene(p) && !withHelper.some((q) => dist(p, q) < 0.75) && !givenPoints.some((g) => dist(g, p) < 1)) withHelper.push(p);
+        }
+      }
+    });
+    const extra = all.filter((p) => !givenPoints.some((g) => dist(g, p) < 1));
+    return { snap: [...givenPoints, ...extra], visible: withHelper.slice(0, 120) };
+  }, [givenShapes, helperShapes, givenPoints, W, H]);
 
   const checked = result !== null;
   const badge = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
 
   function toScene(e: React.MouseEvent<SVGSVGElement>) {
     const r = svgRef.current!.getBoundingClientRect();
-    const k = scene.width / r.width;
-    return { p: { x: (e.clientX - r.left) * k, y: (e.clientY - r.top) * k }, k };
+    const k = vw / r.width; // jednotek scény na 1 px obrazovky
+    return { p: { x: vx + (e.clientX - r.left) * k, y: vy + (e.clientY - r.top) * (vh / r.height) }, k };
   }
 
   function add(it: NewItem) {
     setItems((cur) => [...cur, { ...it, id: idRef.current++ }]);
   }
 
+  function say(msg: string) {
+    setNotice(msg);
+    if (noticeTimer.current) clearTimeout(noticeTimer.current);
+    noticeTimer.current = setTimeout(() => setNotice(null), 3500);
+  }
+  useEffect(() => () => { if (noticeTimer.current) clearTimeout(noticeTimer.current); }, []);
+
+  function addCircle(c: Pt, r: number) {
+    add({ kind: "circ", c, r });
+    setLastR(r);
+  }
+
   function onClick(e: React.MouseEvent<SVGSVGElement>) {
     if (checked) return;
     const { p, k } = toScene(e);
-    const s = nearest(candidates.snap, p, 18 * k) ?? p;
+    const snapped = nearest(candidates.snap, p, SNAP_PX * k);
+    const s = snapped ?? p;
 
+    if (tool === "lupa") {
+      const nz = zoom >= MAX_ZOOM ? MAX_ZOOM : zoom * 2;
+      setZoom(nz); setCenter(p);
+      return;
+    }
     if (tool === "bod") {
       const hit = markers.find((m) => dist(m.p, p) < 14 * k);
       if (hit) { setItems((cur) => cur.filter((it) => it.id !== hit.id)); return; }
+      // hledaný bod musí být sestrojený (průsečík čar / zadaný bod) — odhad od oka se neuznává.
+      // Test (e2e) smí označovat volně, protože nekonstruuje celý postup.
+      const free = typeof window !== "undefined" && (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS === true;
+      if (!snapped && !free) { say("Bod musí ležet v průsečíku čar. Nejdřív ho sestroj pravítkem a kružítkem, pak ho označ."); return; }
       add({ kind: "marker", p: s });
     } else if (tool === "pravitko") {
       if (!pending) setPending(s);
       else if (dist(pending, s) > 2) { add({ kind: "line", a: pending, b: s }); setPending(null); }
     } else if (tool === "kruzitko") {
       if (!pending) setPending(s);
-      else if (dist(pending, s) > 2) { add({ kind: "circ", c: pending, r: dist(pending, s) }); setPending(null); }
+      else if (dist(pending, s) > 2) { addCircle(pending, dist(pending, s)); setPending(null); }
+    } else if (tool === "stejny") {
+      if (lastR) addCircle(s, lastR);
     } else if (tool.startsWith("r:")) {
       const rr = scene.radii?.[Number(tool.slice(2))];
-      if (rr) add({ kind: "circ", c: s, r: rr.r });
+      if (rr) addCircle(s, rr.r);
     }
   }
 
-  function chooseTool(t: string) { setTool(t); setPending(null); }
+  function chooseTool(t: string) { setTool(t); setPending(null); setNotice(null); }
   function undo() { setItems((cur) => cur.slice(0, -1)); setPending(null); }
-  function clearAll() { setItems([]); setPending(null); }
+  function clearAll() { setItems([]); setPending(null); setLastR(null); }
+  function resetZoom() { setZoom(1); setCenter({ x: W / 2, y: H / 2 }); }
 
   function check() {
     const r = matchMarkers(markers.map((m) => m.p), scene.targets, scene.tolerance);
@@ -186,9 +239,11 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   }
 
   const hint =
-    tool === "bod" ? "Klepnutím označ výsledek; klepnutím na značku ji zrušíš."
-    : tool === "pravitko" ? (pending ? "Klepni na druhý bod, kterým přímka prochází." : "Klepni na první bod přímky.")
+    tool === "bod" ? "Klepnutím označ výsledek (jen v průsečíku čar); klepnutím na značku ji zrušíš."
+    : tool === "pravitko" ? (pending ? "Klepni na druhý bod, kterým přímka prochází." : "Klepni na první bod přímky. Body se přichytávají k průsečíkům.")
     : tool === "kruzitko" ? (pending ? "Klepni na bod, kterým kružnice prochází (určí poloměr)." : "Klepni na střed kružnice.")
+    : tool === "stejny" ? "Klepni na střed kružnice — poloměr zůstane stejný jako u poslední kružnice."
+    : tool === "lupa" ? "Klepni do místa, které chceš přiblížit (až 4×)."
     : "Klepni na střed kružnice (poloměr je pevný).";
 
   const toolBtn = (id: string, label: string) => (
@@ -205,6 +260,11 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
         opacity: checked ? 0.5 : 1,
       }}
     >
+      {label}
+    </button>
+  );
+  const smallBtn = (label: string, onClick: () => void, disabled: boolean) => (
+    <button type="button" onClick={onClick} disabled={disabled} className="rounded-lg px-2.5 py-1.5 text-xs font-bold" style={{ background: "#f1f5f9", color: "#334155", border: "1px solid #e2e8f0", opacity: disabled ? 0.4 : 1 }}>
       {label}
     </button>
   );
@@ -238,71 +298,73 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
 
       {/* Nástroje */}
       <div className="flex flex-wrap items-center gap-1.5">
-        {toolBtn("bod", "📍 Bod")}
         {toolBtn("pravitko", "📏 Pravítko")}
         {toolBtn("kruzitko", "⭕ Kružítko")}
+        {lastR !== null && toolBtn("stejny", "⭕ Stejný poloměr")}
         {(scene.radii ?? []).map((r, i) => toolBtn(`r:${i}`, `⭕ ${r.label}`))}
+        {toolBtn("bod", "📍 Označit bod")}
+        {toolBtn("lupa", "🔍 Lupa")}
         <span className="ml-auto flex gap-1.5">
-          <button type="button" onClick={undo} disabled={checked || items.length === 0} className="rounded-lg px-2.5 py-1.5 text-xs font-bold" style={{ background: "#f1f5f9", color: "#334155", border: "1px solid #e2e8f0", opacity: checked || items.length === 0 ? 0.4 : 1 }}>
-            ↶ Zpět
-          </button>
-          <button type="button" onClick={clearAll} disabled={checked || items.length === 0} className="rounded-lg px-2.5 py-1.5 text-xs font-bold" style={{ background: "#f1f5f9", color: "#334155", border: "1px solid #e2e8f0", opacity: checked || items.length === 0 ? 0.4 : 1 }}>
-            Smazat
-          </button>
+          {zoom > 1 && smallBtn("Celý obrázek", resetZoom, checked)}
+          {smallBtn("↶ Zpět", undo, checked || items.length === 0)}
+          {smallBtn("Smazat", clearAll, checked || items.length === 0)}
         </span>
       </div>
       {!checked && <div className="text-xs" style={{ color: "#64748b" }}>{hint}</div>}
+      {notice && <div className="text-xs font-semibold rounded-lg px-3 py-2" style={{ background: "#fef2f2", color: "#991b1b", border: "1px solid #fecaca" }}>{notice}</div>}
 
       {/* Scéna */}
       <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
         <svg
           ref={svgRef}
-          viewBox={`0 0 ${scene.width} ${scene.height}`}
+          viewBox={`${vx} ${vy} ${vw} ${vh}`}
           role="img"
           aria-label={example.zadani}
           onClick={onClick}
-          style={{ width: "100%", height: "auto", display: "block", touchAction: "manipulation", cursor: checked ? "default" : "crosshair", userSelect: "none" }}
+          style={{ width: "100%", height: "auto", display: "block", touchAction: "manipulation", cursor: checked ? "default" : tool === "lupa" ? "zoom-in" : "crosshair", userSelect: "none" }}
         >
           {/* zadání */}
-          {scene.given.map((el, i) => <Element key={`g${i}`} el={el} w={scene.width} h={scene.height} color={NAVY} sw={2} />)}
+          {scene.given.map((el, i) => <Element key={`g${i}`} el={el} w={W} h={H} color={NAVY} sw={2} u={u} />)}
 
           {/* postup řešení (po kontrole) */}
           {shownSteps.flatMap((s, si) => s.draw.map((el, i) => (
-            <Element key={`s${si}-${i}`} el={el} w={scene.width} h={scene.height} color={BLUE} sw={1.5} dashed={el.t === "circle" || el.t === "line"} />
+            <Element key={`s${si}-${i}`} el={el} w={W} h={H} color={BLUE} sw={1.5} u={u} dashed={el.t === "circle" || el.t === "line"} />
           )))}
 
-          {/* vlastní pomocné čáry */}
-          {items.map((it) => it.kind === "line"
-            ? <Element key={it.id} el={{ t: "line", x1: it.a.x, y1: it.a.y, x2: it.b.x, y2: it.b.y }} w={scene.width} h={scene.height} color={BLUE} sw={1.4} />
-            : it.kind === "circ"
-              ? <circle key={it.id} cx={it.c.x} cy={it.c.y} r={it.r} fill="none" stroke={BLUE} strokeWidth={1.4} />
-              : null)}
+          {/* vlastní pomocné čáry — jemné, ať nezakrývají obrázek */}
+          <g opacity={0.6}>
+            {items.map((it) => it.kind === "line"
+              ? <Element key={it.id} el={{ t: "line", x1: it.a.x, y1: it.a.y, x2: it.b.x, y2: it.b.y }} w={W} h={H} color={BLUE} sw={1} u={u} />
+              : it.kind === "circ"
+                ? <circle key={it.id} cx={it.c.x} cy={it.c.y} r={it.r} fill="none" stroke={BLUE} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+                : null)}
+          </g>
 
           {/* body, ke kterým se klepnutí přichytí */}
-          {!checked && candidates.visible.map((p, i) => <circle key={`c${i}`} cx={p.x} cy={p.y} r={3} fill="#94a3b8" fillOpacity={0.7} />)}
+          {!checked && candidates.visible.map((p, i) => <circle key={`c${i}`} cx={p.x} cy={p.y} r={2.4 * u} fill="#475569" fillOpacity={0.55} />)}
 
           {/* rozpracovaný první bod pravítka/kružítka */}
-          {pending && <circle cx={pending.x} cy={pending.y} r={7} fill="none" stroke={ORANGE} strokeWidth={2} />}
+          {pending && <circle cx={pending.x} cy={pending.y} r={7 * u} fill="none" stroke={ORANGE} strokeWidth={2} vectorEffect="non-scaling-stroke" />}
 
           {/* správné body po kontrole */}
           {checked && scene.targets.map((t, i) => (
             <g key={`t${i}`}>
-              <circle cx={t.x} cy={t.y} r={11} fill="none" stroke={GREEN} strokeWidth={2.2} strokeDasharray={result!.matchedTarget[i] ? undefined : "4 3"} />
-              <circle cx={t.x} cy={t.y} r={2.2} fill={GREEN} />
+              <circle cx={t.x} cy={t.y} r={11 * u} fill="none" stroke={GREEN} strokeWidth={2.2} strokeDasharray={result!.matchedTarget[i] ? undefined : "4 3"} vectorEffect="non-scaling-stroke" />
+              <circle cx={t.x} cy={t.y} r={2.2 * u} fill={GREEN} />
             </g>
           ))}
 
           {/* moje značky */}
           {markers.map((m, i) => (
-            <circle key={m.id} cx={m.p.x} cy={m.p.y} r={5.5} fill={markerColor(i)} stroke="#fff" strokeWidth={1.6} />
+            <circle key={m.id} cx={m.p.x} cy={m.p.y} r={5.5 * u} fill={markerColor(i)} stroke="#fff" strokeWidth={1.6} vectorEffect="non-scaling-stroke" />
           ))}
 
           {/* měřítko */}
           <g>
-            <line x1={scene.width - 10 - scene.cm} y1={scene.height - 10} x2={scene.width - 10} y2={scene.height - 10} stroke="#64748b" strokeWidth={1.6} />
-            <line x1={scene.width - 10 - scene.cm} y1={scene.height - 14} x2={scene.width - 10 - scene.cm} y2={scene.height - 6} stroke="#64748b" strokeWidth={1.2} />
-            <line x1={scene.width - 10} y1={scene.height - 14} x2={scene.width - 10} y2={scene.height - 6} stroke="#64748b" strokeWidth={1.2} />
-            <text x={scene.width - 10 - scene.cm / 2} y={scene.height - 17} fontSize={10} fill="#64748b" textAnchor="middle" style={{ fontFamily: "system-ui, sans-serif" }}>1 cm</text>
+            <line x1={W - 10 - scene.cm} y1={H - 10} x2={W - 10} y2={H - 10} stroke="#64748b" strokeWidth={1.6} vectorEffect="non-scaling-stroke" />
+            <line x1={W - 10 - scene.cm} y1={H - 14} x2={W - 10 - scene.cm} y2={H - 6} stroke="#64748b" strokeWidth={1.2} vectorEffect="non-scaling-stroke" />
+            <line x1={W - 10} y1={H - 14} x2={W - 10} y2={H - 6} stroke="#64748b" strokeWidth={1.2} vectorEffect="non-scaling-stroke" />
+            <text x={W - 10 - scene.cm / 2} y={H - 17} fontSize={10 * u} fill="#64748b" textAnchor="middle" style={{ fontFamily: "system-ui, sans-serif" }}>1 cm</text>
           </g>
         </svg>
       </div>
@@ -360,7 +422,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           {stepShown < scene.steps.length && (
             <button
               type="button"
-              onClick={() => setStepShown((n) => n + 1)}
+              onClick={() => { if (zoom > 1) resetZoom(); setStepShown((n) => n + 1); }}
               className="rounded-xl px-4 py-2.5 text-sm font-bold"
               style={{ background: "#eef2ff", color: "#4338ca", border: "1px solid #c7d2fe" }}
             >

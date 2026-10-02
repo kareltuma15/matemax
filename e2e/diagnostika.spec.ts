@@ -41,6 +41,7 @@ async function answerScene(page: Page, question: Q, correct: boolean) {
   const scene = question.konstrukce_scena!;
   // správně = klepnout na všechny hledané body, špatně = jediný bod v rohu obrázku (mimo všechny hledané body)
   const pts = correct ? scene.targets : [{ x: 12, y: 12 }];
+  await page.getByRole("button", { name: /^📍 Označit bod/ }).click(); // výchozí nástroj je pravítko
   for (const t of pts) await tapScene(page, scene.width, t.x, t.y);
   await page.getByRole("button", { name: /Zkontrolovat/ }).click();
   await page.getByRole("button", { name: /Pokračovat/ }).last().click();
@@ -56,6 +57,8 @@ async function answer(page: Page, question: Q, correct: boolean) {
 
 async function runDiagnostic(page: Page, decide: (tema: string, phase: 1 | 2) => boolean) {
   test.setTimeout(120_000); // 16 otázek s animacemi karet, při paralelním běhu déle než výchozích 30 s
+  // Karta „Rýsování" jinak uznává jen body sestrojené v průsečíku čar; tenhle test neprochází celé konstrukce.
+  await page.addInitScript(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = true; });
   await page.goto("/diagnostika");
   for (const tema of TEMA) {
     const firstOk = decide(tema, 1);
@@ -89,12 +92,14 @@ test("rýsování: střed úsečky se dá sestrojit kružítkem a pravítkem", a
   const sc = pool.find((e) => e.id === "diag_konstrukce_1")!;
   expect(sc.konstrukce_scena).toBeTruthy();
   // skupina témat před konstrukcemi se proklikne správně, ať se k úloze dostaneme
+  await page.addInitScript(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = true; });
   await page.goto("/diagnostika");
   for (const tema of TEMA.slice(0, 6)) {
     await answer(page, q(tema, 2), true);
     await answer(page, q(tema, 3), true);
   }
   await answer(page, q("konstrukce", 2), false); // 1. otázka konstrukcí je L2 → (špatně) → pak L1 = střed úsečky
+  await page.evaluate(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = false; }); // dál už žádné volné značky
   // teď je zobrazena úloha „střed úsečky" (L1)
   const W = (sc.konstrukce_scena as unknown as { width: number }).width;
   const tap = (x: number, y: number) => tapScene(page, W, x, y);
@@ -104,12 +109,17 @@ test("rýsování: střed úsečky se dá sestrojit kružítkem a pravítkem", a
   const S = { x: (A.x! + B.x!) / 2, y: (A.y! + B.y!) / 2 };
   const ux = (B.x! - A.x!) / r, uy = (B.y! - A.y!) / r, h = (Math.sqrt(3) / 2) * r;
   const P1 = { x: S.x - h * uy, y: S.y + h * ux }, P2 = { x: S.x + h * uy, y: S.y - h * ux };
+  // odhad od oka se neuznává: klepnutí na střed bez sestrojených čar nevytvoří značku
+  await page.getByRole("button", { name: /^📍 Označit bod/ }).click();
+  await tap(S.x, S.y);
+  await expect(page.getByText("Bod musí ležet v průsečíku čar")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Zkontrolovat/ })).toBeDisabled();
   await page.getByRole("button", { name: /Kružítko/ }).first().click();
   await tap(A.x!, A.y!); await tap(B.x!, B.y!);
   await tap(B.x!, B.y!); await tap(A.x!, A.y!);
   await page.getByRole("button", { name: /Pravítko/ }).click();
   await tap(P1.x + 3, P1.y - 3); await tap(P2.x - 3, P2.y + 3);
-  await page.getByRole("button", { name: /^📍 Bod/ }).click();
+  await page.getByRole("button", { name: /^📍 Označit bod/ }).click();
   await tap(S.x + 4, S.y + 4);
   await page.getByRole("button", { name: /Zkontrolovat/ }).click();
   await expect(page.getByText("✅ Správně")).toBeVisible();

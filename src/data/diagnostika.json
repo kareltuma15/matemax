@@ -533,7 +533,7 @@
             "y": 125
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Narýsuj kružnice o poloměru |AB| se středy A a B. Protnou se ve dvou bodech.",
@@ -653,7 +653,7 @@
             "y": 155.988
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Střed kružnice opsané je stejně vzdálený od všech vrcholů — leží na osách stran. Sestroj osu strany AB.",
@@ -801,7 +801,7 @@
             "y": 145.865
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Střed kružnice vepsané je stejně vzdálený od všech tří stran — leží na osách vnitřních úhlů. Sestroj osu úhlu při vrcholu A.",

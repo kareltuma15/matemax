@@ -8,7 +8,7 @@ import { createRequire } from "node:module";
 const G = await import("../src/lib/construct-geom.ts");
 const { dist, intersections, allIntersections, arcThrough } = G;
 
-const W = 330, H = 250, CM = 30, TOL = 16;
+const W = 330, H = 250, CM = 30, TOL = 4;
 const P = (x, y) => ({ x, y });
 const add = (a, b) => P(a.x + b.x, a.y + b.y);
 const sub = (a, b) => P(a.x - b.x, a.y - b.y);
@@ -421,7 +421,7 @@ for (const t of tasks) {
   // v obrázku a dost daleko od sebe
   targets.forEach((p, i) => {
     ok(t.id + ` cíl ${i} v obrázku`, p.x >= 12 && p.x <= W - 12 && p.y >= 12 && p.y <= H - 12, JSON.stringify(p));
-    targets.forEach((q, j) => { if (j > i) ok(t.id + ` cíle ${i}/${j} odděleny`, dist(p, q) >= 2 * TOL + 24, dist(p, q).toFixed(1)); });
+    targets.forEach((q, j) => { if (j > i) ok(t.id + ` cíle ${i}/${j} odděleny`, dist(p, q) >= 40, dist(p, q).toFixed(1)); });
   });
   // postup: všechny nakreslené body uvnitř obrázku
   for (const s of t.steps) for (const e of s.draw) if (e.t === "point") ok(t.id + " bod postupu v obrázku", e.x >= 6 && e.x <= W - 6 && e.y >= 6 && e.y <= H - 6, `${e.label} ${e.x},${e.y}`);

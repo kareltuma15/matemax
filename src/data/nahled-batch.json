@@ -2,10 +2,10 @@
   "nazev": "Grafy a logika (15 úloh) + Konstrukce — rýsování v aplikaci (17 úloh)",
   "examples": [
     {
-      "id": "GRA3_01",
+      "id": "GRA2_01",
       "tema": "grafy_logika",
       "podtema": "figuralni",
-      "obtiznost": 3,
+      "obtiznost": 2,
       "image": {
         "kind": "static",
         "url": "/obrazky/grafy/ctverce-frakt.svg",
@@ -13,20 +13,20 @@
         "height": 148,
         "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
       },
-      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Kolik bílých čtverců obsahuje pátý obrazec?",
-      "odpoved": "4096",
+      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Kolik bílých čtverců obsahuje čtvrtý obrazec?",
+      "odpoved": "512",
       "reseni_kroky": [
         "Každý bílý čtverec se rozdělí na 9 čtverců, z nichž 8 zůstane bílých a jeden se obarví šedě. Bílých čtverců je tedy v každém dalším obrazci 8krát víc.",
-        "Počty bílých čtverců: 1. obrazec 1, 2. obrazec 8, 3. obrazec 64, 4. obrazec 512, 5. obrazec 8 · 512 = 4096."
+        "Počty bílých čtverců: 1. obrazec 1, 2. obrazec 8, 3. obrazec 64, 4. obrazec 8 · 64 = 512."
       ],
-      "cas_sekund": 180,
+      "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
-      "id": "GRA3_02",
+      "id": "GRA2_02",
       "tema": "grafy_logika",
       "podtema": "figuralni",
-      "obtiznost": 3,
+      "obtiznost": 2,
       "image": {
         "kind": "static",
         "url": "/obrazky/grafy/ctverce-frakt.svg",
@@ -34,14 +34,14 @@
         "height": 148,
         "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
       },
-      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Pátý obrazec obsahuje 585 šedých čtverců. Určete, kolik šedých čtverců obsahuje šestý obrazec.",
-      "odpoved": "4681",
+      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Třetí obrazec obsahuje 9 šedých čtverců. Kolik šedých čtverců obsahuje čtvrtý obrazec?",
+      "odpoved": "73",
       "reseni_kroky": [
-        "Při přechodu z 5. na 6. obrazec se šedě obarví prostřední čtverec z každého bílého čtverce 5. obrazce; dosavadní šedé čtverce zůstanou.",
-        "Bílých čtverců je v 5. obrazci 1, 8, 64, 512, 4096, tedy 4096. Přibude tedy 4096 šedých čtverců.",
-        "Šedých čtverců v 6. obrazci: 585 + 4096 = 4681."
+        "Při přechodu ze 3. na 4. obrazec se šedě obarví prostřední čtverec z každého bílého čtverce 3. obrazce; dosavadní šedé čtverce zůstanou.",
+        "Bílých čtverců je ve 3. obrazci 64 (1, 8, 64), takže přibude 64 šedých čtverců.",
+        "Šedých čtverců ve 4. obrazci: 9 + 64 = 73."
       ],
-      "cas_sekund": 210,
+      "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
@@ -56,14 +56,14 @@
         "height": 148,
         "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
       },
-      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Počet šedých čtverců v posledním a v předposledním obrazci se liší o 32768. Určete, kolik bílých čtverců obsahuje poslední obrazec.",
-      "odpoved": "262144",
+      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Počet šedých čtverců v posledním a v předposledním obrazci se liší o 64. Určete, kolik šedých čtverců obsahuje poslední obrazec.",
+      "odpoved": "73",
       "reseni_kroky": [
         "Rozdíl počtu šedých čtverců dvou po sobě jdoucích obrazců je počet bílých čtverců v tom předchozím (každý bílý čtverec přidá jeden šedý).",
-        "Počty bílých čtverců po řadě: 1, 8, 64, 512, 4096, 32768. Číslo 32768 má šestý obrazec, takže předposlední je 6. a poslední je 7. obrazec.",
-        "Bílých čtverců v posledním (7.) obrazci: 8 · 32768 = 262144."
+        "Bílých čtverců je v obrazcích po řadě 1, 8, 64, 512, …; číslo 64 má 3. obrazec, takže předposlední je 3. a poslední je 4. obrazec.",
+        "Šedých čtverců v 1.–4. obrazci: 0, 1, 9, 73. Poslední (4.) obrazec má 73 šedých čtverců."
       ],
-      "cas_sekund": 240,
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
@@ -410,7 +410,7 @@
             "y": 160.38
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Kružnice se středem P, která protne přímku p ve dvou bodech K a L.",
@@ -543,7 +543,7 @@
             "y": 125
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Narýsuj kružnice o poloměru |AB| se středy A a B. Protnou se ve dvou bodech.",
@@ -651,7 +651,7 @@
             "y": 143.036
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Body vzdálené 3 cm od A leží na kružnici se středem A a poloměrem 3 cm.",
@@ -750,7 +750,7 @@
             "y": 53
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Body vzdálené 3 cm od A leží na kružnici k(A; 3 cm), body vzdálené 4 cm od B na kružnici l(B; 4 cm).",
@@ -879,7 +879,7 @@
             "y": 118
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "V rovnoběžníku jsou protější strany shodné: |AD| = |BC| = 3 cm a |CD| = |AB| = 4 cm.",
@@ -1008,7 +1008,7 @@
             "y": 155.988
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Střed kružnice opsané je stejně vzdálený od všech vrcholů — leží na osách stran. Sestroj osu strany AB.",
@@ -1142,7 +1142,7 @@
             "y": 72.973
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Body stejně vzdálené od A a B leží na ose úsečky AB. Sestroj ji dvěma stejnými kružnicemi se středy A a B.",
@@ -1244,7 +1244,7 @@
             "y": 130
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Střed kružnice je stejně vzdálený od K a L — leží na ose tětivy KL. Sestroj ji.",
@@ -1380,7 +1380,7 @@
             "y": 30.784
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Bod C leží 4 cm od A a 5 cm od B: je to průsečík kružnic k(A; 4 cm) a l(B; 5 cm).",
@@ -1480,7 +1480,7 @@
             "y": 35
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Úhlopříčky čtverce jsou shodné, kolmé a půlí se. Sestroj osu úsečky AC — její průsečík s AC je střed S.",
@@ -1607,7 +1607,7 @@
             "y": 155.02
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Body stejně vzdálené od ramen leží na ose úhlu. Kružnice se středem V protne obě ramena v bodech K a L.",
@@ -1755,7 +1755,7 @@
             "y": 145.865
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Střed kružnice vepsané je stejně vzdálený od všech tří stran — leží na osách vnitřních úhlů. Sestroj osu úhlu při vrcholu A.",
@@ -1906,7 +1906,7 @@
             "y": 97.5
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji.",
@@ -2053,7 +2053,7 @@
             "y": 80.854
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Úhel ABC je pravý, takže B leží na Thaletově kružnici nad průměrem AC. Najdi střed S úsečky AC (osa úsečky).",
@@ -2219,7 +2219,7 @@
             "y": 34.735
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Bod C leží na polopřímce AX a zároveň 6 cm od B — na kružnici k(B; 6 cm).",
@@ -2336,7 +2336,7 @@
             "y": 38.067
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Body stejně vzdálené od dvou protínajících se přímek leží na osách úhlů, které přímky svírají. Jsou to dvě navzájem kolmé přímky.",
@@ -2478,7 +2478,7 @@
             "y": 100
           }
         ],
-        "tolerance": 16,
+        "tolerance": 4,
         "steps": [
           {
             "text": "Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Sestroj kolmici k AB v bodě A…",
