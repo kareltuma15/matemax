@@ -381,59 +381,6 @@
       "image": {
         "kind": "parametric",
         "diagram": {
-          "typ": "sloupce",
-          "nazev": "Prodej zmrzliny",
-          "jednotka": "ks",
-          "sloupce": [
-            {
-              "label": "Po",
-              "hodnota": 20
-            },
-            {
-              "label": "Út",
-              "hodnota": 35
-            },
-            {
-              "label": "St",
-              "hodnota": 15
-            },
-            {
-              "label": "Čt",
-              "hodnota": 40
-            },
-            {
-              "label": "Pá",
-              "hodnota": 30
-            }
-          ]
-        }
-      },
-      "zadani": "Graf ukazuje prodej zmrzliny v jednotlivých dnech. Kolik kusů se prodalo ve čtvrtek?",
-      "moznosti": [
-        "20 ks",
-        "30 ks",
-        "40 ks",
-        "35 ks"
-      ],
-      "spravna": 2,
-      "odpoved": "40 ks",
-      "reseni_kroky": [
-        "Najdi sloupec pro čtvrtek (Čt).",
-        "Jeho výška odpovídá hodnotě 40.",
-        "Ve čtvrtek se prodalo 40 kusů."
-      ],
-      "cas_sekund": 75,
-      "sm2_interval": 1,
-      "provenance": "diag_12"
-    },
-    {
-      "id": "diag_grafy_2",
-      "tema": "grafy_logika",
-      "podtema": "cteni_grafu",
-      "obtiznost": 2,
-      "image": {
-        "kind": "parametric",
-        "diagram": {
           "typ": "kolac",
           "nazev": "Denní činnosti (24 h)",
           "casti": [
@@ -475,6 +422,37 @@
       "provenance": "MOZ_1"
     },
     {
+      "id": "diag_grafy_2",
+      "tema": "grafy_logika",
+      "podtema": "cteni_grafu",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/grafy/sporty-chlapci-divky.svg",
+        "width": 380,
+        "height": 260,
+        "alt": "Sloupcový graf nejoblíbenějších sportů žáků 9. ročníku: počty chlapců a dívek u fotbalu, plavání, tenisu, atletiky a gymnastiky"
+      },
+      "zadani": "Každý žák 9. ročníku zvolil právě jeden nejoblíbenější sport. Výsledky jsou v grafu. Kolik procent všech žáků 9. ročníku zvolilo tenis?",
+      "moznosti": [
+        "12 %",
+        "20 %",
+        "30 %",
+        "25 %",
+        "50 %"
+      ],
+      "spravna": 3,
+      "odpoved": "25 %",
+      "reseni_kroky": [
+        "Všech žáků je součet všech sloupců: chlapci 8 + 4 + 4 + 6 + 2 = 24, dívky 2 + 7 + 8 + 4 + 3 = 24, dohromady 48.",
+        "Tenis zvolilo 4 chlapci a 8 dívek, tedy 12 žáků.",
+        "Podíl: 12 : 48 = 0,25, tedy 25 %. (Odpověď 12 % by vznikla zaměněním počtu žáků za procenta.)"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "provenance": "nový"
+    },
+    {
       "id": "diag_grafy_3",
       "tema": "grafy_logika",
       "podtema": "cteni_grafu",
@@ -511,84 +489,414 @@
       "tema": "konstrukce",
       "podtema": "osa_usecky",
       "obtiznost": 1,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/konstrukce/usecka-ab.svg",
-        "width": 240,
-        "height": 68,
-        "alt": "Úsečka AB s krajními body A a B"
-      },
-      "zadani": "Chceš sestrojit osu úsečky AB. Jaký je PRVNÍ krok?",
-      "moznosti": [
-        "Přilož pravítko a nakresli přímku AB",
-        "Naměř délku AB a vyznač její střed pravítkem",
-        "Narýsuj kružnici se středem A procházející bodem B",
-        "Narýsuj kolmici v bodě A na úsečku AB"
-      ],
-      "spravna": 2,
-      "odpoved": "Narýsuj kružnici se středem A procházející bodem B",
+      "zadani": "Označ střed úsečky AB.",
+      "odpoved": "Střed úsečky AB.",
       "reseni_kroky": [
-        "Osu úsečky sestrojíme jako množinu bodů stejně vzdálených od A i B.",
-        "Nejdřív narýsujeme kružnici se středem A procházející B.",
-        "Pak kružnici se středem B procházející A — jejich průsečíky určují osu."
+        "1. Narýsuj kružnice o poloměru |AB| se středy A a B. Protnou se ve dvou bodech.",
+        "2. Spoj průsečíky — vznikne osa úsečky AB.",
+        "3. Osa protne úsečku AB v jejím středu."
       ],
-      "cas_sekund": 60,
+      "cas_sekund": 120,
       "sm2_interval": 1,
-      "provenance": "diag_13"
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "segment",
+            "x1": 75,
+            "y1": 150,
+            "x2": 195,
+            "y2": 100
+          },
+          {
+            "t": "point",
+            "x": 75,
+            "y": 150,
+            "label": "A",
+            "dx": -14,
+            "dy": 18
+          },
+          {
+            "t": "point",
+            "x": 195,
+            "y": 100,
+            "label": "B",
+            "dx": 8,
+            "dy": -8
+          }
+        ],
+        "targets": [
+          {
+            "x": 135,
+            "y": 125
+          }
+        ],
+        "tolerance": 16,
+        "steps": [
+          {
+            "text": "Narýsuj kružnice o poloměru |AB| se středy A a B. Protnou se ve dvou bodech.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 75,
+                "cy": 150,
+                "r": 130,
+                "a1": 251.4,
+                "a2": 423.4
+              },
+              {
+                "t": "arc",
+                "cx": 195,
+                "cy": 100,
+                "r": 130,
+                "a1": 71.4,
+                "a2": 243.4
+              },
+              {
+                "t": "point",
+                "x": 178.3,
+                "y": 228.92
+              },
+              {
+                "t": "point",
+                "x": 91.7,
+                "y": 21.08
+              }
+            ]
+          },
+          {
+            "text": "Spoj průsečíky — vznikne osa úsečky AB.",
+            "draw": [
+              {
+                "t": "line",
+                "x1": 178.3,
+                "y1": 228.92,
+                "x2": 91.7,
+                "y2": 21.08
+              }
+            ]
+          },
+          {
+            "text": "Osa protne úsečku AB v jejím středu.",
+            "draw": []
+          }
+        ]
+      },
+      "provenance": "KONS1_02"
     },
     {
       "id": "diag_konstrukce_2",
       "tema": "konstrukce",
-      "podtema": "trojuhelnik_sss",
+      "podtema": "kruznice_opsana",
       "obtiznost": 2,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/konstrukce/tri-strany.svg",
-        "width": 260,
-        "height": 96,
-        "alt": "Tři úsečky délek 4 cm, 6 cm a 11 cm"
-      },
-      "zadani": "Lze sestrojit trojúhelník se stranami 4 cm, 6 cm a 11 cm?",
-      "moznosti": [
-        "Ne, trojúhelník nelze sestrojit",
-        "Ano, vždy lze",
-        "Ano, ale pouze jako tupouhlý",
-        "Záleží na pořadí zadaných stran"
-      ],
-      "spravna": 0,
-      "odpoved": "Ne, trojúhelník nelze sestrojit",
+      "zadani": "Označ střed kružnice opsané trojúhelníku ABC.",
+      "odpoved": "Průsečík os stran trojúhelníku ABC.",
       "reseni_kroky": [
-        "Trojúhelníková nerovnost: součet dvou stran musí být větší než třetí strana.",
-        "4 + 6 = 10, což je méně než 11.",
-        "Nerovnost není splněna → trojúhelník nelze sestrojit."
+        "1. Střed kružnice opsané je stejně vzdálený od všech vrcholů — leží na osách stran. Sestroj osu strany AB.",
+        "2. Sestroj osu strany BC.",
+        "3. Průsečík os je střed S kružnice opsané; poloměr je |SA|."
       ],
-      "cas_sekund": 75,
+      "cas_sekund": 180,
       "sm2_interval": 1,
-      "provenance": "diag_14"
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "polygon",
+            "pts": [
+              [
+                55,
+                190
+              ],
+              [
+                270,
+                175
+              ],
+              [
+                160,
+                45
+              ]
+            ]
+          },
+          {
+            "t": "point",
+            "x": 55,
+            "y": 190,
+            "label": "A",
+            "dx": -14,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 270,
+            "y": 175,
+            "label": "B",
+            "dx": 6,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 160,
+            "y": 45,
+            "label": "C",
+            "dx": 8,
+            "dy": -6
+          }
+        ],
+        "targets": [
+          {
+            "x": 160.65,
+            "y": 155.988
+          }
+        ],
+        "tolerance": 16,
+        "steps": [
+          {
+            "text": "Střed kružnice opsané je stejně vzdálený od všech vrcholů — leží na osách stran. Sestroj osu strany AB.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 55,
+                "cy": 190,
+                "r": 170,
+                "a1": 275.3,
+                "a2": 436.7
+              },
+              {
+                "t": "arc",
+                "cx": 270,
+                "cy": 175,
+                "r": 170,
+                "a1": 95.3,
+                "a2": 256.7
+              },
+              {
+                "t": "line",
+                "x1": 171.65,
+                "y1": 313.66,
+                "x2": 153.35,
+                "y2": 51.34
+              }
+            ]
+          },
+          {
+            "text": "Sestroj osu strany BC.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 270,
+                "cy": 175,
+                "r": 150,
+                "a1": 144.3,
+                "a2": 315.2
+              },
+              {
+                "t": "arc",
+                "cx": 160,
+                "cy": 45,
+                "r": 150,
+                "a1": 324.3,
+                "a2": 495.2
+              },
+              {
+                "t": "line",
+                "x1": 309.27,
+                "y1": 30.23,
+                "x2": 120.73,
+                "y2": 189.77
+              }
+            ]
+          },
+          {
+            "text": "Průsečík os je střed S kružnice opsané; poloměr je |SA|.",
+            "draw": [
+              {
+                "t": "point",
+                "x": 160.65,
+                "y": 155.99,
+                "label": "S",
+                "dx": 8,
+                "dy": 14
+              },
+              {
+                "t": "circle",
+                "cx": 160.65,
+                "cy": 155.99,
+                "r": 110.99
+              }
+            ]
+          }
+        ]
+      },
+      "provenance": "KONS2_02"
     },
     {
       "id": "diag_konstrukce_3",
       "tema": "konstrukce",
-      "podtema": "mnoziny_bodu",
+      "podtema": "kruznice_vepsana",
       "obtiznost": 3,
-      "cas_sekund": 120,
-      "sm2_interval": 1,
-      "zadani": "Bod A leží ve vzdálenosti 4 cm od přímky p. Kolik bodů má od přímky p vzdálenost 2 cm a zároveň od bodu A vzdálenost 3 cm?",
-      "moznosti": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
-      "spravna": 2,
-      "odpoved": "2",
+      "zadani": "Označ střed kružnice vepsané trojúhelníku ABC.",
+      "odpoved": "Průsečík os vnitřních úhlů trojúhelníku ABC.",
       "reseni_kroky": [
-        "Body ve vzdálenosti 2 cm od přímky p leží na dvou rovnoběžkách s p, každá po jedné straně přímky.",
-        "Bod A je od přímky p vzdálen 4 cm, takže od bližší rovnoběžky je vzdálen 2 cm a od vzdálenější 6 cm.",
-        "Kružnice se středem A a poloměrem 3 cm protne bližší rovnoběžku (2 < 3) ve dvou bodech a vzdálenější rovnoběžku (6 > 3) vůbec.",
-        "Hledaných bodů jsou tedy 2."
-      ]
+        "1. Střed kružnice vepsané je stejně vzdálený od všech tří stran — leží na osách vnitřních úhlů. Sestroj osu úhlu při vrcholu A.",
+        "2. Sestroj osu úhlu při vrcholu B.",
+        "3. Průsečík os je střed I kružnice vepsané; její poloměr je vzdálenost I od libovolné strany."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1,
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "polygon",
+            "pts": [
+              [
+                45,
+                205
+              ],
+              [
+                285,
+                210
+              ],
+              [
+                170,
+                40
+              ]
+            ]
+          },
+          {
+            "t": "point",
+            "x": 45,
+            "y": 205,
+            "label": "A",
+            "dx": -14,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 285,
+            "y": 210,
+            "label": "B",
+            "dx": 6,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 170,
+            "y": 40,
+            "label": "C",
+            "dx": 8,
+            "dy": -6
+          }
+        ],
+        "targets": [
+          {
+            "x": 167.164,
+            "y": 145.865
+          }
+        ],
+        "tolerance": 16,
+        "steps": [
+          {
+            "text": "Střed kružnice vepsané je stejně vzdálený od všech tří stran — leží na osách vnitřních úhlů. Sestroj osu úhlu při vrcholu A.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 45,
+                "cy": 205,
+                "r": 70,
+                "a1": 291.1,
+                "a2": 377.2
+              },
+              {
+                "t": "arc",
+                "cx": 114.98,
+                "cy": 206.46,
+                "r": 70,
+                "a1": 283.1,
+                "a2": 331.1
+              },
+              {
+                "t": "arc",
+                "cx": 87.27,
+                "cy": 149.2,
+                "r": 70,
+                "a1": -22.8,
+                "a2": 25.2
+              },
+              {
+                "t": "line",
+                "x1": 45,
+                "y1": 205,
+                "x2": 157.25,
+                "y2": 150.66
+              }
+            ]
+          },
+          {
+            "text": "Sestroj osu úhlu při vrcholu B.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 285,
+                "cy": 210,
+                "r": 70,
+                "a1": 165.2,
+                "a2": 251.9
+              },
+              {
+                "t": "arc",
+                "cx": 215.02,
+                "cy": 208.54,
+                "r": 70,
+                "a1": 211.9,
+                "a2": 259.9
+              },
+              {
+                "t": "arc",
+                "cx": 245.78,
+                "cy": 152.02,
+                "r": 70,
+                "a1": 157.2,
+                "a2": 205.2
+              },
+              {
+                "t": "line",
+                "x1": 285,
+                "y1": 210,
+                "x2": 175.79,
+                "y2": 150.56
+              }
+            ]
+          },
+          {
+            "text": "Průsečík os je střed I kružnice vepsané; její poloměr je vzdálenost I od libovolné strany.",
+            "draw": [
+              {
+                "t": "point",
+                "x": 167.16,
+                "y": 145.87,
+                "label": "I",
+                "dx": 8,
+                "dy": 14
+              },
+              {
+                "t": "circle",
+                "cx": 167.16,
+                "cy": 145.87,
+                "r": 61.67
+              }
+            ]
+          }
+        ]
+      },
+      "provenance": "KONS3_01"
     },
     {
       "id": "diag_uhly_1",

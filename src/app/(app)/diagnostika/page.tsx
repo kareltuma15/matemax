@@ -10,6 +10,7 @@ import { supabase } from "@/lib/supabase";
 import { remoteSyncDiagResults } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
 import MoznostiCard from "@/components/MoznostiCard";
+import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import pool from "@/data/diagnostika.json";
 import { DIAG_WEAK_BELOW } from "@/lib/levels";
 
@@ -258,13 +259,23 @@ export default function DiagnostikaPage() {
       </div>
 
       {/* Otázka — stejná karta jako v tréninku (KaTeX + obrázky zdarma) */}
-      <MoznostiCard
-        key={current.id}
-        example={current}
-        cardNumber={currentIdx + 1}
-        total={TOTAL_QUESTIONS}
-        onResult={handleResult}
-      />
+      {current.konstrukce_scena ? (
+        <ConstructionMarkCard
+          key={current.id}
+          example={current}
+          cardNumber={currentIdx + 1}
+          total={TOTAL_QUESTIONS}
+          onResult={handleResult}
+        />
+      ) : (
+        <MoznostiCard
+          key={current.id}
+          example={current}
+          cardNumber={currentIdx + 1}
+          total={TOTAL_QUESTIONS}
+          onResult={handleResult}
+        />
+      )}
     </div>
   );
 }

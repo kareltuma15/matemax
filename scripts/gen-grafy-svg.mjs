@@ -28,8 +28,8 @@ const GRAY = "#c3cad5", LIGHT = "#e6eaf0", DARKBAR = "#5b6472", LIGHTBAR = "#d9d
 }
 
 // ── 2) Skupinový sloupcový graf (obecná funkce) ──
-function groupedBars({ name, W, H, groups, maxUnits, axisNumbers, legend, missing, yLabel, title, alt }) {
-  const x0 = 50, x1 = W - 128, yTop = title ? 36 : 22, yBase = H - 38;
+function groupedBars({ name, W, H, groups, maxUnits, axisNumbers, legend, missing, yLabel, title, alt, legendTop }) {
+  const x0 = 50, x1 = legendTop ? W - 14 : W - 128, yTop = legendTop ? 62 : title ? 36 : 22, yBase = H - 38;
   const unit = (yBase - yTop) / maxUnits;
   const gw = (x1 - x0) / groups.length, bw = Math.min(30, gw * 0.3);
   const parts = [];
@@ -57,9 +57,9 @@ function groupedBars({ name, W, H, groups, maxUnits, axisNumbers, legend, missin
     parts.push(text(cx, yBase + 18, g.label, { size: 11, weight: 700, fill: NAVY }));
   });
   legend.forEach((l, i) => {
-    const ly = yTop + 24 + i * 24;
-    parts.push(`  <rect x="${x1 + 18}" y="${ly - 10}" width="14" height="14" fill="${i === 0 ? DARKBAR : LIGHTBAR}" stroke="${NAVY}" stroke-width="1.1"/>`);
-    parts.push(text(x1 + 38, ly + 2, l, { size: 12, weight: 600, fill: NAVY, anchor: "start" }));
+    const lx = legendTop ? x0 + i * 100 : x1 + 18, ly = legendTop ? 40 : yTop + 24 + i * 24;
+    parts.push(`  <rect x="${lx}" y="${ly - 10}" width="14" height="14" fill="${i === 0 ? DARKBAR : LIGHTBAR}" stroke="${NAVY}" stroke-width="1.1"/>`);
+    parts.push(text(lx + 20, ly + 2, l, { size: 12, weight: 600, fill: NAVY, anchor: "start" }));
   });
   write(name, W, H, parts.join("\n"), alt);
 }
@@ -71,7 +71,7 @@ groupedBars({
   alt: "Skupinový sloupcový graf: počty žáků 6. a 7. tříd ve třech sportovních oddílech, osa bez čísel, jeden údaj chybí (čárkovaný sloupec)",
 });
 groupedBars({
-  name: "sporty-chlapci-divky.svg", W: 500, H: 250, maxUnits: 9, axisNumbers: true, title: "Nejoblíbenější sporty",
+  name: "sporty-chlapci-divky.svg", W: 380, H: 260, maxUnits: 9, axisNumbers: true, title: "Nejoblíbenější sporty", legendTop: true,
   legend: ["chlapci", "dívky"],
   groups: [{ label: "fotbal", values: [8, 2] }, { label: "plavání", values: [4, 7] }, { label: "tenis", values: [4, 8] }, { label: "atletika", values: [6, 4] }, { label: "gymnastika", values: [2, 3] }],
   alt: "Sloupcový graf nejoblíbenějších sportů žáků 9. ročníku: počty chlapců a dívek u fotbalu, plavání, tenisu, atletiky a gymnastiky",

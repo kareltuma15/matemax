@@ -249,6 +249,40 @@ export interface DBExample {
    */
   moznosti?: string[];
   spravna?: number;
+  /**
+   * Rýsování: interaktivní scéna s pravítkem a kružítkem, žák označí výsledek (viz {@link ConstructionScene}).
+   * Když je vyplněno, trénink vykreslí ConstructionMarkCard.
+   */
+  konstrukce_scena?: ConstructionScene;
+}
+
+/** Prvek scény rýsování (souřadnice v px scény, y dolů). */
+export type SceneElement =
+  | { t: "point"; x: number; y: number; label?: string; dx?: number; dy?: number }
+  | { t: "segment"; x1: number; y1: number; x2: number; y2: number; dashed?: boolean }
+  | { t: "line"; x1: number; y1: number; x2: number; y2: number; dashed?: boolean }
+  | { t: "ray"; x1: number; y1: number; x2: number; y2: number; dashed?: boolean }
+  | { t: "circle"; cx: number; cy: number; r: number; dashed?: boolean }
+  | { t: "arc"; cx: number; cy: number; r: number; a1: number; a2: number }
+  | { t: "polygon"; pts: [number, number][]; fill?: string }
+  | { t: "text"; x: number; y: number; text: string; anchor?: "start" | "middle" | "end"; size?: number }
+  | { t: "right"; x: number; y: number; ux: number; uy: number; vx: number; vy: number };
+
+/**
+ * Konstrukční úloha „Rýsování": žák v obrázku používá pravítko a kružítko (přichytávají se
+ * k průsečíkům) a nakonec označí hledaný bod nebo body. Výsledek se ověřuje výpočtem
+ * (`targets` ± `tolerance`), postup se po kontrole ukáže krok za krokem (`steps`).
+ * Obrázek je ve skutečném měřítku: `cm` pixelů = 1 cm (pevné poloměry kružítka `radii`).
+ */
+export interface ConstructionScene {
+  width: number;
+  height: number;
+  cm: number;
+  given: SceneElement[];
+  radii?: { label: string; r: number }[];
+  targets: { x: number; y: number }[];
+  tolerance: number;
+  steps: { text: string; draw: SceneElement[] }[];
 }
 
 export interface SM2Card {
@@ -328,6 +362,12 @@ export const PODTEMA_LABELS: Record<string, string> = {
   kruznice_opsana:    "Kružnice opsaná",
   kruznice_vepsana:   "Kružnice vepsaná",
   obdelnik_thales:    "Obdélník (Thales)",
+  mnoziny_bodu:       "Množiny bodů",
+  ctverec:            "Čtverec",
+  stred_kruznice:     "Střed kružnice",
+  kruznice_dotyk:     "Kružnice a tečna",
+  trojuhelnik_ssu:    "Trojúhelník (ssu)",
+  trojuhelnik_vyska:  "Trojúhelník s výškou",
 
   // Zlomky — některé slugy znamenají totéž, proto sdílí popisek
   scitani:              "Sčítání",

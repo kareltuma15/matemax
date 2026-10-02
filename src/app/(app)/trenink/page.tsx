@@ -31,6 +31,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import PracticeCard from "@/components/PracticeCard";
 import ConstructionCard from "@/components/ConstructionCard";
+import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import ComparisonCard from "@/components/ComparisonCard";
 import MoznostiCard from "@/components/MoznostiCard";
 import BossBattleCard from "@/components/BossBattleCard";
@@ -1070,7 +1071,15 @@ function TreningPageInner() {
         </div>
       )}
 
-      {currentExample.moznosti && currentExample.moznosti.length > 0 ? (
+      {currentExample.konstrukce_scena ? (
+        <ConstructionMarkCard
+          example={currentExample}
+          cardNumber={currentIdx + 1}
+          total={sessionIds.length}
+          onResult={handleResult}
+          onSkip={handleSkip}
+        />
+      ) : currentExample.moznosti && currentExample.moznosti.length > 0 ? (
         <MoznostiCard
           example={currentExample}
           cardNumber={currentIdx + 1}

@@ -8,6 +8,7 @@ import type { DBExample } from "@/types";
 import PracticeCard from "@/components/PracticeCard";
 import ComparisonCard from "@/components/ComparisonCard";
 import ConstructionCard from "@/components/ConstructionCard";
+import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import MoznostiCard from "@/components/MoznostiCard";
 import batch from "@/data/nahled-batch.json";
 
@@ -16,6 +17,7 @@ const examples = (batch.examples as unknown as DBExample[]);
 function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
   const noop = () => {};
   const common = { example: ex, cardNumber: i + 1, total, onResult: noop, onSkip: noop };
+  if (ex.konstrukce_scena) return <ConstructionMarkCard {...common} />;
   if (ex.moznosti && ex.moznosti.length > 0) return <MoznostiCard {...common} />;
   if (ex.porovnani) return <ComparisonCard {...common} />;
   if (ex.kroky_volby && ex.kroky_volby.length > 0) return <ConstructionCard {...common} />;
