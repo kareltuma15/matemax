@@ -27,6 +27,25 @@ const GRAY = "#c3cad5", LIGHT = "#e6eaf0", DARKBAR = "#5b6472", LIGHTBAR = "#d9d
   write("ctverce-frakt.svg", x0 * 2 + 3 * S + 2 * gap, y0 + S + 34, parts.join("\n"), "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý");
 }
 
+// ── 1b) Rámečky: n-tý obrazec je čtverec (n+2)×(n+2), šedé čtverečky tvoří rámeček, uvnitř bílé ──
+{
+  const cell = 22, gap = 36, x0 = 20, y0 = 14;
+  const sides = [3, 4, 5];
+  const maxH = Math.max(...sides) * cell;
+  const parts = [];
+  let x = x0;
+  sides.forEach((n, i) => {
+    const y = y0 + (maxH - n * cell);
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+      const border = r === 0 || c === 0 || r === n - 1 || c === n - 1;
+      parts.push(`  <rect x="${f(x + c * cell)}" y="${f(y + r * cell)}" width="${cell}" height="${cell}" fill="${border ? GRAY : "#ffffff"}" stroke="${NAVY}" stroke-width="1.2"/>`);
+    }
+    parts.push(text(x + (n * cell) / 2, y0 + maxH + 22, `${i + 1}. obrazec`, { size: 13, weight: 700, fill: NAVY }));
+    x += n * cell + gap;
+  });
+  write("ramecky-posloupnost.svg", x - gap + x0, y0 + maxH + 34, parts.join("\n"), "Obrazce 1 až 3: čtverce 3×3, 4×4 a 5×5 čtverečků; šedé čtverečky tvoří rámeček, uvnitř jsou bílé");
+}
+
 // ── 2) Skupinový sloupcový graf (obecná funkce) ──
 function groupedBars({ name, W, H, groups, maxUnits, axisNumbers, legend, missing, yLabel, title, alt, legendTop }) {
   const x0 = 50, x1 = legendTop ? W - 14 : W - 128, yTop = legendTop ? 62 : title ? 36 : 22, yBase = H - 38;

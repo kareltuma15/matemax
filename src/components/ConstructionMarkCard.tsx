@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { DBExample, SceneElement, TEMA_LABELS, podtemaLabel } from "@/types";
 import {
-  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, dist,
+  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, dist, distToShape, perpendicularThrough,
 } from "@/lib/construct-geom";
 import { playCorrect, playWrong } from "@/lib/sound";
 import MathText from "@/components/MathText";
@@ -11,6 +11,9 @@ import MathText from "@/components/MathText";
 /**
  * Rýsování (CERMAT „Sestrojte…"): žák má v obrázku pravítko a kružítko, klepnutí se přichytává
  * k průsečíkům a nakonec nástrojem „Bod" označí hledaný bod (nebo všechny hledané body).
+ *
+ * Pravítko s pravým úhlem („⟂ Kolmice"): žák klepne na přímku/úsečku a pak na bod, kterým má kolmice vést
+ * (jako když posouvá trojúhelník s ryskou po přímce až k bodu).
  *
  * Výsledný bod se smí označit JEN v průsečíku čar (nebo v zadaném bodě) — ne odhadem od oka.
  * Výsledek se ověřuje výpočtem, postup se po kontrole ukáže krok za krokem.
@@ -124,6 +127,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
 
   const [tool, setTool] = useState<string>("pravitko");
   const [pending, setPending] = useState<Pt | null>(null);
+  const [refLine, setRefLine] = useState<Shape | null>(null); // přímka vybraná pro kolmici
   const [items, setItems] = useState<Item[]>([]);
   const [lastR, setLastR] = useState<number | null>(null);
   const [result, setResult] = useState<ReturnType<typeof matchMarkers> | null>(null);
@@ -133,7 +137,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    setTool("pravitko"); setPending(null); setItems([]); setLastR(null); setResult(null); setStepShown(0);
+    setTool("pravitko"); setPending(null); setRefLine(null); setItems([]); setLastR(null); setResult(null); setStepShown(0);
     setZoom(1); setCenter({ x: scene.width / 2, y: scene.height / 2 }); setNotice(null);
   }, [example.id, scene.width, scene.height]);
 
@@ -216,6 +220,21 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     } else if (tool === "pravitko") {
       if (!pending) setPending(s);
       else if (dist(pending, s) > 2) { add({ kind: "line", a: pending, b: s }); setPending(null); }
+    } else if (tool === "kolmice") {
+      if (!refLine) {
+        // krok 1: vyber přímku / úsečku, ke které bude kolmice kolmá
+        let best: Shape | null = null, bd = 16 * k;
+        for (const sh of [...givenShapes, ...helperShapes]) {
+          const d = distToShape(p, sh);
+          if (d <= bd) { bd = d; best = sh; }
+        }
+        if (best) setRefLine(best); else say("Klepni přímo na přímku nebo úsečku, ke které chceš vést kolmici.");
+      } else {
+        // krok 2: bod, kterým kolmice prochází
+        const l = perpendicularThrough(refLine, s);
+        if (l) add({ kind: "line", a: l.a, b: l.b });
+        setRefLine(null);
+      }
     } else if (tool === "kruzitko") {
       if (!pending) setPending(s);
       else if (dist(pending, s) > 2) { addCircle(pending, dist(pending, s)); setPending(null); }
@@ -227,9 +246,9 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     }
   }
 
-  function chooseTool(t: string) { setTool(t); setPending(null); setNotice(null); }
-  function undo() { setItems((cur) => cur.slice(0, -1)); setPending(null); }
-  function clearAll() { setItems([]); setPending(null); setLastR(null); }
+  function chooseTool(t: string) { setTool(t); setPending(null); setRefLine(null); setNotice(null); }
+  function undo() { setItems((cur) => cur.slice(0, -1)); setPending(null); setRefLine(null); }
+  function clearAll() { setItems([]); setPending(null); setRefLine(null); setLastR(null); }
   function resetZoom() { setZoom(1); setCenter({ x: W / 2, y: H / 2 }); }
 
   function check() {
@@ -241,6 +260,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   const hint =
     tool === "bod" ? "Klepnutím označ výsledek (jen v průsečíku čar); klepnutím na značku ji zrušíš."
     : tool === "pravitko" ? (pending ? "Klepni na druhý bod, kterým přímka prochází." : "Klepni na první bod přímky. Body se přichytávají k průsečíkům.")
+    : tool === "kolmice" ? (refLine ? "Teď klepni na bod, kterým má kolmice procházet." : "Pravý úhel: klepni na přímku nebo úsečku, ke které chceš vést kolmici.")
     : tool === "kruzitko" ? (pending ? "Klepni na bod, kterým kružnice prochází (určí poloměr)." : "Klepni na střed kružnice.")
     : tool === "stejny" ? "Klepni na střed kružnice — poloměr zůstane stejný jako u poslední kružnice."
     : tool === "lupa" ? "Klepni do místa, které chceš přiblížit (až 4×)."
@@ -281,7 +301,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
         {podtemaLabel(example.podtema) && (
-          <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[90px]">{podtemaLabel(example.podtema)}</span>
+          <span className="text-slate-300 text-[10px] min-w-0 truncate">{podtemaLabel(example.podtema)}</span>
         )}
         <span className="ml-auto font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0" style={{ background: badge.bg, color: badge.color }}>
           {badge.label}
@@ -299,6 +319,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
       {/* Nástroje */}
       <div className="flex flex-wrap items-center gap-1.5">
         {toolBtn("pravitko", "📏 Pravítko")}
+        {toolBtn("kolmice", "⟂ Pravý úhel")}
         {toolBtn("kruzitko", "⭕ Kružítko")}
         {lastR !== null && toolBtn("stejny", "⭕ Stejný poloměr")}
         {(scene.radii ?? []).map((r, i) => toolBtn(`r:${i}`, `⭕ ${r.label}`))}
@@ -342,6 +363,13 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
 
           {/* body, ke kterým se klepnutí přichytí */}
           {!checked && candidates.visible.map((p, i) => <circle key={`c${i}`} cx={p.x} cy={p.y} r={2.4 * u} fill="#475569" fillOpacity={0.55} />)}
+
+          {/* přímka vybraná pro kolmici */}
+          {refLine && refLine.k !== "circ" && (() => {
+            const c = clipLine(refLine.a, refLine.b, W, H, refLine.k === "ray");
+            const a = refLine.k === "seg" ? refLine.a : c?.[0], b = refLine.k === "seg" ? refLine.b : c?.[1];
+            return a && b ? <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={ORANGE} strokeWidth={3} strokeLinecap="round" opacity={0.85} vectorEffect="non-scaling-stroke" /> : null;
+          })()}
 
           {/* rozpracovaný první bod pravítka/kružítka */}
           {pending && <circle cx={pending.x} cy={pending.y} r={7 * u} fill="none" stroke={ORANGE} strokeWidth={2} vectorEffect="non-scaling-stroke" />}

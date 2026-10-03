@@ -48,12 +48,13 @@ const T = (o) => tasks.push(o);
     given: [line(A0, B0), txt(300, 145, "p"), pt(Pp, "P", 8, -6)],
     targets: [F],
     steps: [
-      { text: "Kružnice se středem P, která protne přímku p ve dvou bodech K a L.", draw: [arcAt(Pp, r1, [K, L]), pt(K, "K", -4, 18), pt(L, "L", 4, 18)] },
-      { text: "Ze stejně velkých kružnic se středy K a L (poloměr větší než polovina |KL|) najdi průsečík Q na druhé straně přímky p.", draw: [arcAt(K, r2, [Q]), arcAt(L, r2, [Q]), pt(Q, "Q", 8, 14)] },
-      { text: "Přímka PQ je kolmá k p a protne ji v hledané patě kolmice.", draw: [line(Pp, Q), rightMark(F, unit(sub(B0, A0)), unit(sub(Pp, F)))] },
+      { text: "Pravítko s pravým úhlem přilož jednou odvěsnou k přímce p a posouvej ho po ní, až druhá odvěsna projde bodem P. V aplikaci: nástroj „Pravý úhel“ → klepni na přímku p a pak na bod P.", draw: [line(Pp, F)] },
+      { text: "Narýsovaná kolmice protne přímku p v hledané patě kolmice (pravý úhel je vyznačen).", draw: [rightMark(F, unit(sub(B0, A0)), unit(sub(Pp, F)))] },
+      { text: "Jiný postup jen kružítkem: kružnice se středem P protne p v bodech K a L, z nich stejně velkými kružnicemi najdeš bod Q na druhé straně p a přímka PQ je tatáž kolmice.", draw: [arcAt(Pp, r1, [K, L]), pt(K, "K", -4, 18), pt(L, "L", 4, 18), arcAt(K, r2, [Q]), arcAt(L, r2, [Q]), pt(Q, "Q", 8, 14)] },
     ],
     odpoved: "Pata kolmice z bodu P na přímku p.",
     check: (t) => Math.abs(dot(sub(Pp, t[0]), sub(B0, A0))) < 1e-6 && dist(t[0], foot(t[0], A0, B0)) < 1e-6,
+    _ops: [line(Pp, F)],
   });
 }
 // 2) střed úsečky
@@ -301,7 +302,7 @@ const T = (o) => tasks.push(o);
     given: [line(p1, p2), txt(300, 190, "p"), pt(Tp, "T", -6, 18), pt(A, "A", 8, -6)],
     targets: [S],
     steps: [
-      { text: "Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji.", draw: [arcAt(Tp, 60, [U, Wp], 12), arcAt(U, 90, [Q], 24), arcAt(Wp, 90, [Q], 24), line(Tp, Q)] },
+      { text: "Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji (pravítkem s pravým úhlem nebo kružítkem).", draw: [arcAt(Tp, 60, [U, Wp], 12), arcAt(U, 90, [Q], 24), arcAt(Wp, 90, [Q], 24), line(Tp, Q)] },
       { text: "Střed je také stejně vzdálený od T a A (obě leží na kružnici) — leží na ose úsečky AT. Sestroj ji.", draw: [arcAt(A, 100, Ms, 30), arcAt(Tp, 100, Ms, 30), line(Ms[0], Ms[1])] },
       { text: "Průsečík kolmice a osy je střed S; kružnice k má poloměr |ST|.", draw: [pt(S, "S", 8, -6), circ(S, dist(S, Tp))] },
     ],
@@ -335,7 +336,7 @@ const T = (o) => tasks.push(o);
 {
   const A = P(40, 200), B = P(250, 200), ang = 50;
   const dirv = P(Math.cos((ang * Math.PI) / 180), -Math.sin((ang * Math.PI) / 180));
-  const X = add(A, mul(dirv, 220));
+  const X = add(A, mul(dirv, 150));
   const Cs = intersections({ k: "circ", c: B, r: 180 }, { k: "ray", a: A, b: X });
   T({
     id: "KONS3_04", podtema: "trojuhelnik_ssu", obtiznost: 3, radii: [{ label: "6 cm", r: 180 }],
@@ -386,10 +387,10 @@ const T = (o) => tasks.push(o);
   T({
     id: "KONS3_06", podtema: "trojuhelnik_vyska", obtiznost: 3, radii: [{ label: "3,5 cm", r: 105 }, { label: "4,5 cm", r: 135 }],
     zadani: "Úsečka AB má délku 6 cm. Označ všechny body C ležící nad přímkou AB, pro které je |AC| = 4,5 cm a vzdálenost bodu C od přímky AB je 3,5 cm.",
-    given: [line(P(0, 205), P(330, 205)), pt(A, "A", -14, 18), pt(B, "B", 6, -8), txt(318, 197, "AB", "end")],
+    given: [line(P(0, 205), P(330, 205)), pt(A, "A", -14, 18), pt(B, "B", 6, -8), txt(8, 197, "AB")],
     targets: Cs,
     steps: [
-      { text: "Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Sestroj kolmici k AB v bodě A…", draw: [arcAt(A, 60, [U, Wp], 14), arcAt(U, 90, [Q], 22), arcAt(Wp, 90, [Q], 22), line(A, Q)] },
+      { text: "Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Pravítkem s pravým úhlem (nebo kružítkem) sestroj kolmici k AB v bodě A…", draw: [arcAt(A, 60, [U, Wp], 14), arcAt(U, 90, [Q], 22), arcAt(Wp, 90, [Q], 22), line(A, Q)] },
       { text: "…a na ní vyznač bod E ve vzdálenosti 3,5 cm od A. Rovnoběžka s AB bodem E je množina bodů s výškou 3,5 cm.", draw: [circ(A, 105), pt(E, "E", 6, -8), line(P(0, 100), P(330, 100))] },
       { text: "Bod C je navíc 4,5 cm od A — průsečík rovnoběžky s kružnicí k(A; 4,5 cm). Průsečíky jsou dva, oba vyhovují.", draw: [circ(A, 135), pt(Cs[0], "C₁", 8, -8), pt(Cs[1], "C₂", -22, -8)] },
     ],
@@ -414,8 +415,23 @@ const toShape = (e) => {
 const givenShapes = (given) => given.flatMap((e) => e.t === "polygon" ? e.pts.map((p, i) => ({ k: "seg", a: P(p[0], p[1]), b: P(e.pts[(i + 1) % e.pts.length][0], e.pts[(i + 1) % e.pts.length][1]) })) : [toShape(e)].filter(Boolean));
 const givenPts = (given) => given.filter((e) => e.t === "point").map((e) => P(e.x, e.y));
 
+// popisky (bodů i textů) se nesmí překrývat navzájem ani s bodem — odhad rámečku z délky textu
+const labelBoxes = (els) => els.flatMap((e) => {
+  if (e.t === "point" && e.label) { const w = 9 * e.label.length, x = e.x + (e.dx ?? 7); return [{ n: e.label, x0: x, x1: x + w, y0: e.y + (e.dy ?? -7) - 11, y1: e.y + (e.dy ?? -7) + 3 }]; }
+  if (e.t === "text") { const w = 9 * e.text.length, x = e.anchor === "end" ? e.x - w : e.anchor === "middle" ? e.x - w / 2 : e.x; return [{ n: e.text, x0: x, x1: x + w, y0: e.y - 11, y1: e.y + 3 }]; }
+  return [];
+});
+const overlap = (a, b) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+
 const out = [];
 for (const t of tasks) {
+  // překryv popisků: zadání + všechny kroky postupu najednou (nejhorší případ)
+  const boxes = labelBoxes([...t.given, ...t.steps.flatMap((s) => s.draw)]);
+  const dots = [...t.given, ...t.steps.flatMap((s) => s.draw)].filter((e) => e.t === "point");
+  boxes.forEach((a, i) => {
+    boxes.forEach((b, j) => { if (j > i) ok(t.id + ` překryv popisků ${a.n}/${b.n}`, !overlap(a, b)); });
+    dots.forEach((d) => ok(t.id + ` popisek ${a.n} zakrývá bod`, !overlap(a, { x0: d.x - 4, x1: d.x + 4, y0: d.y - 4, y1: d.y + 4 })));
+  });
   const targets = t.targets.map((p) => P(+p.x.toFixed(3), +p.y.toFixed(3)));
   ok(t.id + " vzorec", t.check(t.targets), "nezávislý výpočet nesedí");
   // v obrázku a dost daleko od sebe

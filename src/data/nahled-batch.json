@@ -8,16 +8,17 @@
       "obtiznost": 2,
       "image": {
         "kind": "static",
-        "url": "/obrazky/grafy/ctverce-frakt.svg",
-        "width": 392,
-        "height": 148,
-        "alt": "Obrazce 1 až 3: bílý čtverec se dělí na devět shodných čtverců a prostřední z nich je šedý"
+        "url": "/obrazky/grafy/ramecky-posloupnost.svg",
+        "width": 376,
+        "height": 158,
+        "alt": "Obrazce 1 až 3: čtverce 3×3, 4×4 a 5×5 čtverečků; šedé čtverečky tvoří rámeček, uvnitř jsou bílé"
       },
-      "zadani": "Prvním obrazcem je jeden bílý čtverec. Každý další obrazec vznikne z předchozího podle pravidel: 1. Každý bílý čtverec rozdělíme na 9 shodných čtverců. 2. Prostřední z těchto devíti čtverců obarvíme šedě (viz obrázek). Kolik bílých čtverců obsahuje čtvrtý obrazec?",
-      "odpoved": "512",
+      "zadani": "Obrazce jsou složeny ze čtverečků. Šedé čtverečky tvoří vždy rámeček kolem bílých čtverečků uvnitř (viz obrázek). První obrazec má 3 × 3 čtverečky, druhý 4 × 4 čtverečky, třetí 5 × 5 čtverečků a stejným způsobem pokračují další obrazce. Kolik šedých čtverečků má šestý obrazec?",
+      "odpoved": "28",
       "reseni_kroky": [
-        "Každý bílý čtverec se rozdělí na 9 čtverců, z nichž 8 zůstane bílých a jeden se obarví šedě. Bílých čtverců je tedy v každém dalším obrazci 8krát víc.",
-        "Počty bílých čtverců: 1. obrazec 1, 2. obrazec 8, 3. obrazec 64, 4. obrazec 8 · 64 = 512."
+        "Spočítáme šedé čtverečky v prvních obrazcích: 1. obrazec 8, 2. obrazec 12, 3. obrazec 16. Každý další obrazec má o 4 šedé čtverečky víc (rámeček se prodlouží o jeden čtvereček na každé ze čtyř stran).",
+        "Pokračujeme: 4. obrazec 20, 5. obrazec 24, 6. obrazec 28.",
+        "Kontrola: 6. obrazec je čtverec 8 × 8, tedy 64 čtverečků, z toho bílých uvnitř je 6 × 6 = 36. Šedých je 64 − 36 = 28."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -371,9 +372,9 @@
       "zadani": "Označ patu kolmice vedené bodem P k přímce p (bod, v němž kolmice protne přímku).",
       "odpoved": "Pata kolmice z bodu P na přímku p.",
       "reseni_kroky": [
-        "1. Kružnice se středem P, která protne přímku p ve dvou bodech K a L.",
-        "2. Ze stejně velkých kružnic se středy K a L (poloměr větší než polovina |KL|) najdi průsečík Q na druhé straně přímky p.",
-        "3. Přímka PQ je kolmá k p a protne ji v hledané patě kolmice."
+        "1. Pravítko s pravým úhlem přilož jednou odvěsnou k přímce p a posouvej ho po ní, až druhá odvěsna projde bodem P. V aplikaci: nástroj „Pravý úhel“ → klepni na přímku p a pak na bod P.",
+        "2. Narýsovaná kolmice protne přímku p v hledané patě kolmice (pravý úhel je vyznačen).",
+        "3. Jiný postup jen kružítkem: kružnice se středem P protne p v bodech K a L, z nich stejně velkými kružnicemi najdeš bod Q na druhé straně p a přímka PQ je tatáž kolmice."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1,
@@ -413,7 +414,33 @@
         "tolerance": 4,
         "steps": [
           {
-            "text": "Kružnice se středem P, která protne přímku p ve dvou bodech K a L.",
+            "text": "Pravítko s pravým úhlem přilož jednou odvěsnou k přímce p a posouvej ho po ní, až druhá odvěsna projde bodem P. V aplikaci: nástroj „Pravý úhel“ → klepni na přímku p a pak na bod P.",
+            "draw": [
+              {
+                "t": "line",
+                "x1": 150,
+                "y1": 45,
+                "x2": 153.98,
+                "y2": 160.38
+              }
+            ]
+          },
+          {
+            "text": "Narýsovaná kolmice protne přímku p v hledané patě kolmice (pravý úhel je vyznačen).",
+            "draw": [
+              {
+                "t": "right",
+                "x": 153.97862232779096,
+                "y": 160.38004750593825,
+                "ux": 0.9994059993535875,
+                "uy": -0.034462275839778886,
+                "vx": -0.03446227583977875,
+                "vy": -0.9994059993535875
+              }
+            ]
+          },
+          {
+            "text": "Jiný postup jen kružítkem: kružnice se středem P protne p v bodech K a L, z nich stejně velkými kružnicemi najdeš bod Q na druhé straně p a přímka PQ je tatáž kolmice.",
             "draw": [
               {
                 "t": "arc",
@@ -438,12 +465,7 @@
                 "label": "L",
                 "dx": 4,
                 "dy": 18
-              }
-            ]
-          },
-          {
-            "text": "Ze stejně velkých kružnic se středy K a L (poloměr větší než polovina |KL|) najdi průsečík Q na druhé straně přímky p.",
-            "draw": [
+              },
               {
                 "t": "arc",
                 "cx": 58.27,
@@ -467,27 +489,6 @@
                 "label": "Q",
                 "dx": 8,
                 "dy": 14
-              }
-            ]
-          },
-          {
-            "text": "Přímka PQ je kolmá k p a protne ji v hledané patě kolmice.",
-            "draw": [
-              {
-                "t": "line",
-                "x1": 150,
-                "y1": 45,
-                "x2": 156.47,
-                "y2": 232.64
-              },
-              {
-                "t": "right",
-                "x": 153.97862232779096,
-                "y": 160.38004750593825,
-                "ux": 0.9994059993535875,
-                "uy": -0.034462275839778886,
-                "vx": -0.03446227583977875,
-                "vy": -0.9994059993535875
               }
             ]
           }
@@ -1859,7 +1860,7 @@
       "zadani": "Kružnice k se dotýká přímky p v bodě T a prochází bodem A. Označ střed kružnice k.",
       "odpoved": "Průsečík kolmice k p v bodě T s osou úsečky AT.",
       "reseni_kroky": [
-        "1. Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji.",
+        "1. Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji (pravítkem s pravým úhlem nebo kružítkem).",
         "2. Střed je také stejně vzdálený od T a A (obě leží na kružnici) — leží na ose úsečky AT. Sestroj ji.",
         "3. Průsečík kolmice a osy je střed S; kružnice k má poloměr |ST|."
       ],
@@ -1909,7 +1910,7 @@
         "tolerance": 4,
         "steps": [
           {
-            "text": "Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji.",
+            "text": "Poloměr kružnice vedený do bodu dotyku je kolmý na tečnu — střed leží na kolmici k p v bodě T. Sestroj ji (pravítkem s pravým úhlem nebo kružítkem).",
             "draw": [
               {
                 "t": "arc",
@@ -2161,8 +2162,8 @@
             "t": "ray",
             "x1": 40,
             "y1": 200,
-            "x2": 181.41327413103866,
-            "y2": 31.470222513824837
+            "x2": 136.4181414529809,
+            "y2": 85.0933335321533
           },
           {
             "t": "arc",
@@ -2196,8 +2197,8 @@
           },
           {
             "t": "point",
-            "x": 181.41,
-            "y": 31.47,
+            "x": 136.42,
+            "y": 85.09,
             "label": "X",
             "dx": 8,
             "dy": 4
@@ -2416,7 +2417,7 @@
       "zadani": "Úsečka AB má délku 6 cm. Označ všechny body C ležící nad přímkou AB, pro které je |AC| = 4,5 cm a vzdálenost bodu C od přímky AB je 3,5 cm.",
       "odpoved": "Dva body — průsečíky rovnoběžky s AB (3,5 cm nad ní) a kružnice k(A; 4,5 cm).",
       "reseni_kroky": [
-        "1. Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Sestroj kolmici k AB v bodě A…",
+        "1. Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Pravítkem s pravým úhlem (nebo kružítkem) sestroj kolmici k AB v bodě A…",
         "2. …a na ní vyznač bod E ve vzdálenosti 3,5 cm od A. Rovnoběžka s AB bodem E je množina bodů s výškou 3,5 cm.",
         "3. Bod C je navíc 4,5 cm od A — průsečík rovnoběžky s kružnicí k(A; 4,5 cm). Průsečíky jsou dva, oba vyhovují."
       ],
@@ -2452,10 +2453,9 @@
           },
           {
             "t": "text",
-            "x": 318,
+            "x": 8,
             "y": 197,
-            "text": "AB",
-            "anchor": "end"
+            "text": "AB"
           }
         ],
         "radii": [
@@ -2481,7 +2481,7 @@
         "tolerance": 4,
         "steps": [
           {
-            "text": "Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Sestroj kolmici k AB v bodě A…",
+            "text": "Body ve vzdálenosti 3,5 cm od přímky AB leží na rovnoběžce s AB. Pravítkem s pravým úhlem (nebo kružítkem) sestroj kolmici k AB v bodě A…",
             "draw": [
               {
                 "t": "arc",

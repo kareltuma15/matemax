@@ -90,6 +90,30 @@ export function nearest(pts: Pt[], p: Pt, maxDist: number): Pt | null {
   return best;
 }
 
+/** Vzdálenost bodu od přímky / polopřímky / úsečky (kružnice se nepočítá — vrací Infinity). */
+export function distToShape(p: Pt, s: Shape): number {
+  if (s.k === "circ") return Infinity;
+  const dx = s.b.x - s.a.x, dy = s.b.y - s.a.y;
+  const len2 = dx * dx + dy * dy;
+  if (len2 < EPS) return dist(p, s.a);
+  let t = ((p.x - s.a.x) * dx + (p.y - s.a.y) * dy) / len2;
+  if (s.k === "seg") t = Math.min(1, Math.max(0, t));
+  else if (s.k === "ray") t = Math.max(0, t);
+  return dist(p, { x: s.a.x + t * dx, y: s.a.y + t * dy });
+}
+
+/**
+ * Pravítko s pravým úhlem (trojúhelník s ryskou): přímka procházející bodem `through` kolmo k přímce/úsečce `ref`.
+ * Vrací dva body výsledné přímky (`through` a bod o 100 jednotek dál); null, pokud `ref` je kružnice.
+ */
+export function perpendicularThrough(ref: Shape, through: Pt): { a: Pt; b: Pt } | null {
+  if (ref.k === "circ") return null;
+  const dx = ref.b.x - ref.a.x, dy = ref.b.y - ref.a.y;
+  const len = Math.hypot(dx, dy);
+  if (len < EPS) return null;
+  return { a: through, b: { x: through.x - (100 * dy) / len, y: through.y + (100 * dx) / len } };
+}
+
 /** Přímka (a,b) oříznutá obdélníkem 0..w × 0..h — pro vykreslení. */
 export function clipLine(a: Pt, b: Pt, w: number, h: number, onlyForward = false): [Pt, Pt] | null {
   const dx = b.x - a.x, dy = b.y - a.y;
