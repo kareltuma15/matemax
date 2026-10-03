@@ -114,6 +114,15 @@ export function perpendicularThrough(ref: Shape, through: Pt): { a: Pt; b: Pt } 
   return { a: through, b: { x: through.x - (100 * dy) / len, y: through.y + (100 * dx) / len } };
 }
 
+/** Přímka procházející bodem `through` rovnoběžně s přímkou/úsečkou `ref` (pravítko s ryskou). */
+export function parallelThrough(ref: Shape, through: Pt): { a: Pt; b: Pt } | null {
+  if (ref.k === "circ") return null;
+  const dx = ref.b.x - ref.a.x, dy = ref.b.y - ref.a.y;
+  const len = Math.hypot(dx, dy);
+  if (len < EPS) return null;
+  return { a: through, b: { x: through.x + (100 * dx) / len, y: through.y + (100 * dy) / len } };
+}
+
 /** Přímka (a,b) oříznutá obdélníkem 0..w × 0..h — pro vykreslení. */
 export function clipLine(a: Pt, b: Pt, w: number, h: number, onlyForward = false): [Pt, Pt] | null {
   const dx = b.x - a.x, dy = b.y - a.y;

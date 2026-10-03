@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { DBExample, SceneElement, TEMA_LABELS, podtemaLabel } from "@/types";
 import {
-  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, dist, distToShape, perpendicularThrough,
+  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, dist, distToShape, perpendicularThrough, parallelThrough,
 } from "@/lib/construct-geom";
 import { playCorrect, playWrong } from "@/lib/sound";
 import MathText from "@/components/MathText";
@@ -37,6 +37,7 @@ const GREEN = "#16a34a";
 const RED = "#dc2626";
 const SNAP_PX = 18;       // dosah přichycení v pixelech na obrazovce
 const MAX_ZOOM = 4;
+const RSNAP_PX = 8;       // dosah „zastavení" poloměru kružnice na dříve použitém poloměru
 
 const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
   1: { label: "Lehká ⭐", bg: "#f0fdf4", color: "#166534" },
@@ -135,10 +136,12 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   const [zoom, setZoom] = useState(1);
   const [center, setCenter] = useState<Pt>({ x: scene.width / 2, y: scene.height / 2 });
   const [notice, setNotice] = useState<string | null>(null);
+  // Živý náhled: myš (hover) nebo prst během podržení. `mouse` = skutečný ukazatel (skryje systémový kurzor).
+  const [hover, setHover] = useState<{ p: Pt; k: number; mouse: boolean } | null>(null);
 
   useEffect(() => {
     setTool("pravitko"); setPending(null); setRefLine(null); setItems([]); setLastR(null); setResult(null); setStepShown(0);
-    setZoom(1); setCenter({ x: scene.width / 2, y: scene.height / 2 }); setNotice(null);
+    setZoom(1); setCenter({ x: scene.width / 2, y: scene.height / 2 }); setNotice(null); setHover(null);
   }, [example.id, scene.width, scene.height]);
 
   const W = scene.width, H = scene.height;
@@ -182,6 +185,35 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     return { p: { x: vx + (e.clientX - r.left) * k, y: vy + (e.clientY - r.top) * (vh / r.height) }, k };
   }
 
+  // Poloměry, na kterých se kružítko „zastaví": dosud nakreslené kružnice (vlastní i zadané) a pevné poloměry úlohy.
+  const radiusPool = useMemo(() => {
+    const rs: number[] = [];
+    for (const sh of [...givenShapes, ...helperShapes]) if (sh.k === "circ") rs.push(sh.r);
+    for (const r of scene.radii ?? []) rs.push(r.r);
+    return rs;
+  }, [givenShapes, helperShapes, scene.radii]);
+
+  /** Kam míří ukazatel v bodě `p` (k = jednotek scény na pixel): přichycení k bodu, u kružítka i k poloměru. */
+  function aimAt(p: Pt, k: number): { pt: Pt; snapped: boolean; r?: number; note?: string } {
+    const sn = nearest(candidates.snap, p, SNAP_PX * k);
+    let pt = sn ?? p;
+    if (tool === "kruzitko" && pending) {
+      let r = dist(pending, pt);
+      let note: string | undefined = sn ? "prochází bodem" : undefined;
+      if (!sn) {
+        const raw = dist(pending, p);
+        let best: number | null = null, bd = RSNAP_PX * k;
+        for (const rr of radiusPool) { const d = Math.abs(rr - raw); if (d <= bd) { bd = d; best = rr; } }
+        if (best !== null && raw > 0) {
+          r = best; note = "stejný poloměr";
+          pt = { x: pending.x + ((p.x - pending.x) / raw) * best, y: pending.y + ((p.y - pending.y) / raw) * best };
+        }
+      }
+      return { pt, snapped: !!sn, r, note };
+    }
+    return { pt, snapped: !!sn };
+  }
+
   function add(it: NewItem) {
     setItems((cur) => [...cur, { ...it, id: idRef.current++ }]);
   }
@@ -201,8 +233,9 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   function onClick(e: React.MouseEvent<SVGSVGElement>) {
     if (checked) return;
     const { p, k } = toScene(e);
-    const snapped = nearest(candidates.snap, p, SNAP_PX * k);
-    const s = snapped ?? p;
+    const aim = aimAt(p, k);
+    const snapped = aim.snapped ? aim.pt : null;
+    const s = aim.pt;
 
     if (tool === "lupa") {
       const nz = zoom >= MAX_ZOOM ? MAX_ZOOM : zoom * 2;
@@ -220,7 +253,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     } else if (tool === "pravitko") {
       if (!pending) setPending(s);
       else if (dist(pending, s) > 2) { add({ kind: "line", a: pending, b: s }); setPending(null); }
-    } else if (tool === "kolmice") {
+    } else if (tool === "kolmice" || tool === "rovnobezka") {
       if (!refLine) {
         // krok 1: vyber přímku / úsečku, ke které bude kolmice kolmá
         let best: Shape | null = null, bd = 16 * k;
@@ -228,16 +261,16 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           const d = distToShape(p, sh);
           if (d <= bd) { bd = d; best = sh; }
         }
-        if (best) setRefLine(best); else say("Klepni přímo na přímku nebo úsečku, ke které chceš vést kolmici.");
+        if (best) setRefLine(best); else say("Klepni přímo na přímku nebo úsečku, ke které chceš vést kolmici nebo rovnoběžku.");
       } else {
         // krok 2: bod, kterým kolmice prochází
-        const l = perpendicularThrough(refLine, s);
+        const l = (tool === "kolmice" ? perpendicularThrough : parallelThrough)(refLine, s);
         if (l) add({ kind: "line", a: l.a, b: l.b });
         setRefLine(null);
       }
     } else if (tool === "kruzitko") {
       if (!pending) setPending(s);
-      else if (dist(pending, s) > 2) { addCircle(pending, dist(pending, s)); setPending(null); }
+      else if (dist(pending, s) > 2) { addCircle(pending, aim.r ?? dist(pending, s)); setPending(null); }
     } else if (tool === "stejny") {
       if (lastR) addCircle(s, lastR);
     } else if (tool.startsWith("r:")) {
@@ -258,10 +291,11 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   }
 
   const hint =
-    tool === "bod" ? "Klepnutím označ výsledek (jen v průsečíku čar); klepnutím na značku ji zrušíš."
+    tool === "bod" ? "Klepnutím označ výsledek (jen v průsečíku čar, ukazatel se k němu přichytí); klepnutím na značku ji zrušíš."
     : tool === "pravitko" ? (pending ? "Klepni na druhý bod, kterým přímka prochází." : "Klepni na první bod přímky. Body se přichytávají k průsečíkům.")
     : tool === "kolmice" ? (refLine ? "Teď klepni na bod, kterým má kolmice procházet." : "Pravý úhel: klepni na přímku nebo úsečku, ke které chceš vést kolmici.")
-    : tool === "kruzitko" ? (pending ? "Klepni na bod, kterým kružnice prochází (určí poloměr)." : "Klepni na střed kružnice.")
+    : tool === "rovnobezka" ? (refLine ? "Teď klepni na bod, kterým má rovnoběžka procházet." : "Rovnoběžka: klepni na přímku nebo úsečku, se kterou má být rovnoběžná.")
+    : tool === "kruzitko" ? (pending ? "Táhni ukazatel: kružnice se zvětšuje. U bodu nebo u poloměru jiné kružnice se zastaví — klepnutím ji nakreslíš." : "Klepni na střed kružnice.")
     : tool === "stejny" ? "Klepni na střed kružnice — poloměr zůstane stejný jako u poslední kružnice."
     : tool === "lupa" ? "Klepni do místa, které chceš přiblížit (až 4×)."
     : "Klepni na střed kružnice (poloměr je pevný).";
@@ -320,6 +354,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
       <div className="flex flex-wrap items-center gap-1.5">
         {toolBtn("pravitko", "📏 Pravítko")}
         {toolBtn("kolmice", "⟂ Pravý úhel")}
+        {toolBtn("rovnobezka", "∥ Rovnoběžka")}
         {toolBtn("kruzitko", "⭕ Kružítko")}
         {lastR !== null && toolBtn("stejny", "⭕ Stejný poloměr")}
         {(scene.radii ?? []).map((r, i) => toolBtn(`r:${i}`, `⭕ ${r.label}`))}
@@ -342,7 +377,22 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           role="img"
           aria-label={example.zadani}
           onClick={onClick}
-          style={{ width: "100%", height: "auto", display: "block", touchAction: "manipulation", cursor: checked ? "default" : tool === "lupa" ? "zoom-in" : "crosshair", userSelect: "none" }}
+          onPointerMove={(e) => {
+            if (checked) return;
+            const touch = e.pointerType === "touch";
+            if (touch && e.buttons === 0) return;
+            const { p, k } = toScene(e);
+            setHover({ p, k, mouse: !touch });
+          }}
+          onPointerDown={(e) => {
+            if (checked || e.pointerType !== "touch") return;
+            const { p, k } = toScene(e);
+            setHover({ p, k, mouse: false });
+          }}
+          onPointerUp={(e) => { if (e.pointerType === "touch") setHover(null); }}
+          onPointerCancel={() => setHover(null)}
+          onPointerLeave={() => setHover(null)}
+          style={{ width: "100%", height: "auto", display: "block", touchAction: "manipulation", cursor: checked ? "default" : tool === "lupa" ? "zoom-in" : hover?.mouse ? "none" : "default", userSelect: "none" }}
         >
           {/* zadání */}
           {scene.given.map((el, i) => <Element key={`g${i}`} el={el} w={W} h={H} color={NAVY} sw={2} u={u} />)}
@@ -363,6 +413,44 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
 
           {/* body, ke kterým se klepnutí přichytí */}
           {!checked && candidates.visible.map((p, i) => <circle key={`c${i}`} cx={p.x} cy={p.y} r={2.4 * u} fill="#475569" fillOpacity={0.55} />)}
+
+          {/* živý náhled (šedě): čára / kružnice / kolmice podle zvoleného nástroje */}
+          {!checked && hover && (() => {
+            const a = aimAt(hover.p, hover.k);
+            const gray = "#64748b";
+            const els: React.ReactNode[] = [];
+            const circle = (c: Pt, r: number, key: string) => <circle key={key} cx={c.x} cy={c.y} r={r} fill="none" stroke={gray} strokeWidth={1.4} strokeDasharray="5 4" opacity={0.75} vectorEffect="non-scaling-stroke" />;
+            const cm = (r: number) => `${(r / scene.cm).toFixed(1).replace(".", ",")} cm`;
+            if (tool === "pravitko" && pending) els.push(<Element key="pl" el={{ t: "line", x1: pending.x, y1: pending.y, x2: a.pt.x, y2: a.pt.y }} w={W} h={H} color={gray} sw={1.4} dashed u={u} />);
+            if (tool === "kruzitko" && pending && a.r) {
+              els.push(circle(pending, a.r, "kc"));
+              els.push(<line key="kr" x1={pending.x} y1={pending.y} x2={a.pt.x} y2={a.pt.y} stroke={gray} strokeWidth={1} opacity={0.6} vectorEffect="non-scaling-stroke" />);
+              const label = `${cm(a.r)}${a.note ? ` · ${a.note}` : ""}`;
+              const flipX = a.pt.x + (label.length * 6.8 + 18) * u > vx + vw, flipY = a.pt.y < vy + 24 * u;
+              els.push(<text key="kl" x={a.pt.x + (flipX ? -12 : 12) * u} y={a.pt.y + (flipY ? 20 : -12) * u} textAnchor={flipX ? "end" : "start"} fontSize={12 * u} fontWeight={700} fill={a.note ? GREEN : "#334155"} stroke="#fff" strokeWidth={3} paintOrder="stroke" style={{ fontFamily: "system-ui, sans-serif" }}>{label}</text>);
+            }
+            if (tool === "stejny" && lastR) els.push(circle(a.pt, lastR, "sc"));
+            if (tool.startsWith("r:")) { const rr = scene.radii?.[Number(tool.slice(2))]; if (rr) els.push(circle(a.pt, rr.r, "fc")); }
+            if (tool === "kolmice" || tool === "rovnobezka") {
+              if (!refLine) {
+                let best: Shape | null = null, bd = 16 * hover.k;
+                for (const sh of [...givenShapes, ...helperShapes]) { const d = distToShape(hover.p, sh); if (d <= bd) { bd = d; best = sh; } }
+                if (best && best.k !== "circ") {
+                  const c = clipLine(best.a, best.b, W, H, best.k === "ray");
+                  const x1 = best.k === "seg" ? best.a : c?.[0], x2 = best.k === "seg" ? best.b : c?.[1];
+                  if (x1 && x2) els.push(<line key="kh" x1={x1.x} y1={x1.y} x2={x2.x} y2={x2.y} stroke={ORANGE} strokeWidth={3} strokeLinecap="round" opacity={0.45} vectorEffect="non-scaling-stroke" />);
+                }
+              } else {
+                const l = (tool === "kolmice" ? perpendicularThrough : parallelThrough)(refLine, a.pt);
+                if (l) els.push(<Element key="kp" el={{ t: "line", x1: l.a.x, y1: l.a.y, x2: l.b.x, y2: l.b.y }} w={W} h={H} color={gray} sw={1.4} dashed u={u} />);
+              }
+            }
+            // kurzor: malý kroužek; přichycený k bodu → oranžový terč
+            els.push(a.snapped
+              ? <g key="cur"><circle cx={a.pt.x} cy={a.pt.y} r={9 * u} fill="none" stroke={ORANGE} strokeWidth={2} vectorEffect="non-scaling-stroke" /><circle cx={a.pt.x} cy={a.pt.y} r={3.2 * u} fill={ORANGE} /></g>
+              : hover.mouse ? <circle key="cur" cx={a.pt.x} cy={a.pt.y} r={4 * u} fill="none" stroke={tool === "bod" ? "#94a3b8" : gray} strokeWidth={1.4} vectorEffect="non-scaling-stroke" /> : null);
+            return <g pointerEvents="none">{els}</g>;
+          })()}
 
           {/* přímka vybraná pro kolmici */}
           {refLine && refLine.k !== "circ" && (() => {

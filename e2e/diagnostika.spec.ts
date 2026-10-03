@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import fs from "node:fs";
+import { perpendicularThrough, parallelThrough, distToShape, matchMarkers } from "../src/lib/construct-geom";
 
 // Adaptivní diagnostika: 8 témat × 2 otázky. 1. otázka = L2; správně → 3. úroveň (L3), špatně → 1. úroveň (L1).
 // Skóre tématu se ukládá jako correct z 3: L2✓+L3✓ = 3, L2✓+L3✗ = 2, L2✗+L1✓ = 1, L2✗+L1✗ = 0.
@@ -121,6 +122,71 @@ test("rýsování: střed úsečky se dá sestrojit kružítkem a pravítkem", a
   await tap(P1.x + 3, P1.y - 3); await tap(P2.x - 3, P2.y + 3);
   await page.getByRole("button", { name: /^📍 Označit bod/ }).click();
   await tap(S.x + 4, S.y + 4);
+  await page.getByRole("button", { name: /Zkontrolovat/ }).click();
+  await expect(page.getByText("✅ Správně")).toBeVisible();
+});
+
+// ── Geometrie nástrojů (čisté funkce) ──
+test("geometrie: pravý úhel je kolmý, rovnoběžka rovnoběžná a obě procházejí zadaným bodem", () => {
+  const ref = { k: "line" as const, a: { x: 20, y: 165 }, b: { x: 310, y: 155 } };
+  const P = { x: 150, y: 45 };
+  const dir = { x: ref.b.x - ref.a.x, y: ref.b.y - ref.a.y };
+  const perp = perpendicularThrough(ref, P)!, par = parallelThrough(ref, P)!;
+  expect(perp.a).toEqual(P);
+  expect(par.a).toEqual(P);
+  expect(Math.abs((perp.b.x - perp.a.x) * dir.x + (perp.b.y - perp.a.y) * dir.y)).toBeLessThan(1e-9);               // kolmá
+  expect(Math.abs((par.b.x - par.a.x) * dir.y - (par.b.y - par.a.y) * dir.x)).toBeLessThan(1e-9);                   // rovnoběžná
+  expect(perpendicularThrough({ k: "circ", c: P, r: 5 }, P)).toBeNull();
+  expect(distToShape({ x: 0, y: 5 }, { k: "seg", a: { x: 0, y: 0 }, b: { x: 10, y: 0 } })).toBeCloseTo(5);
+  expect(distToShape({ x: 20, y: 0 }, { k: "seg", a: { x: 0, y: 0 }, b: { x: 10, y: 0 } })).toBeCloseTo(10);        // úsečka končí
+  expect(distToShape({ x: 20, y: 0 }, { k: "line", a: { x: 0, y: 0 }, b: { x: 10, y: 0 } })).toBeCloseTo(0);        // přímka pokračuje
+});
+
+test("geometrie: odhad od oka (10 jednotek vedle) při toleranci 4 neprojde", () => {
+  expect(matchMarkers([{ x: 10, y: 0 }], [{ x: 0, y: 0 }], 4).ok).toBe(false);
+  expect(matchMarkers([{ x: 3, y: 0 }], [{ x: 0, y: 0 }], 4).ok).toBe(true);
+  expect(matchMarkers([{ x: 0, y: 0 }, { x: 50, y: 50 }], [{ x: 0, y: 0 }], 4).ok).toBe(false); // značka navíc
+});
+
+// ── Živý náhled: kružítko se při tažení zastaví na poloměru předchozí kružnice (stejné kružnice → přesná osa) ──
+test("rýsování: kružítko se zastaví na stejném poloměru a střed úsečky vyjde přesně", async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.addInitScript(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = true; });
+  await page.goto("/diagnostika");
+  for (const tema of TEMA.slice(0, 6)) { await answer(page, q(tema, 2), true); await answer(page, q(tema, 3), true); }
+  await answer(page, q("konstrukce", 2), false);
+  await page.evaluate(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = false; });
+
+  const sc = pool.find((e) => e.id === "diag_konstrukce_1")!.konstrukce_scena as unknown as { width: number; given: { label?: string; x?: number; y?: number }[] };
+  const A = sc.given.find((e) => e.label === "A")!, B = sc.given.find((e) => e.label === "B")!;
+  const svg = page.locator("svg[role=img]").first();
+  const move = async (x: number, y: number) => {
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!, k = box.width / sc.width;
+    await page.mouse.move(box.x + x * k, box.y + y * k, { steps: 4 });
+  };
+  const tap = (x: number, y: number) => tapScene(page, sc.width, x, y);
+
+  await page.getByRole("button", { name: /^⭕ Kružítko/ }).click();
+  await tap(A.x!, A.y!);
+  await move(A.x! + 100, A.y!);
+  await expect(svg.locator("circle[stroke-dasharray='5 4']")).toHaveCount(1);   // šedý náhled kružnice se táhne za myší
+  await tap(A.x! + 100, A.y!);                                                   // 1. kružnice, volný poloměr ≈ 100
+  await tap(B.x!, B.y!);
+  await move(B.x! + 2, B.y! + 103);                                              // 103 → má se zastavit na 100
+  await expect(page.getByText(/· stejný poloměr/)).toBeVisible();
+  await tap(B.x! + 2, B.y! + 103);
+  const radii = await svg.locator("circle[stroke='#2E6DA4']").evaluateAll((els) => els.map((e) => Number(e.getAttribute("r"))));
+  expect(radii).toHaveLength(2);
+  expect(Math.abs(radii[0] - radii[1])).toBeLessThan(1e-6);
+
+  const r = radii[0], d = Math.hypot(B.x! - A.x!, B.y! - A.y!);
+  const S = { x: (A.x! + B.x!) / 2, y: (A.y! + B.y!) / 2 };
+  const h = Math.sqrt(r * r - (d / 2) ** 2), n = { x: -(B.y! - A.y!) / d, y: (B.x! - A.x!) / d };
+  await page.getByRole("button", { name: /Pravítko/ }).click();
+  await tap(S.x + n.x * h, S.y + n.y * h); await tap(S.x - n.x * h, S.y - n.y * h);
+  await page.getByRole("button", { name: /^📍 Označit bod/ }).click();
+  await tap(S.x + 3, S.y + 3);
   await page.getByRole("button", { name: /Zkontrolovat/ }).click();
   await expect(page.getByText("✅ Správně")).toBeVisible();
 });
