@@ -13,6 +13,17 @@ export const examples: DBExample[] = [
   ...db.examples, ...cermat.examples, ...konstrukce.examples, ...doplnky.examples,
 ];
 
+/**
+ * Úloha, kterou lze zobrazit jako zadání + políčko pro odpověď. Úlohy s obrázkem, výběrem A–E, krokovou nebo rýsovací
+ * konstrukcí a porovnáním potřebují vlastní kartu (PracticeCard/MoznostiCard/…) — stránky, které mají jen text + políčko
+ * (denní výzva, boss battle, rychlý mód, CERMAT test), z nich proto nesmí losovat.
+ */
+export function isPlainTyped(e: DBExample): boolean {
+  return !e.image && !(e.moznosti && e.moznosti.length > 0) && !(e.kroky_volby && e.kroky_volby.length > 0) && !e.porovnani && !e.konstrukce_scena;
+}
+
+export const plainExamples: DBExample[] = examples.filter(isPlainTyped);
+
 export function getExampleById(id: string): DBExample | undefined {
   return examples.find((e) => e.id === id);
 }

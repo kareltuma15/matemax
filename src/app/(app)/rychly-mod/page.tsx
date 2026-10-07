@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { examples } from "@/data/examples";
+import { plainExamples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import { TEMA_LABELS, DBExample } from "@/types";
 import MathText from "@/components/MathText";
@@ -30,7 +30,7 @@ function savePersonalBest(score: number) {
 }
 
 function pickQuestions(): DBExample[] {
-  const shuffled = [...examples].sort(() => Math.random() - 0.5);
+  const shuffled = [...plainExamples].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, QUESTION_COUNT);
 }
 

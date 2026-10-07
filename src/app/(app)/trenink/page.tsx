@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { examples } from "@/data/examples";
+import { examples, plainExamples } from "@/data/examples";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
@@ -56,7 +56,7 @@ import { pickMission, snapshotReadiness } from "@/lib/mise";
 import { getReadiness } from "@/lib/readiness";
 
 function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
-  const hard = examples.filter(
+  const hard = plainExamples.filter(
     (ex) => ex.tema === tema && ex.obtiznost === 3 && !usedIds.has(ex.id)
   );
   if (hard.length === 0) return null;
@@ -89,7 +89,13 @@ function saveSessionDraft(draft: SessionDraft) {
 function loadSessionDraft(): SessionDraft | null {
   try {
     const raw = localStorage.getItem(SESSION_DRAFT_KEY);
-    if (raw) return JSON.parse(raw) as SessionDraft;
+    if (raw) {
+      const d = JSON.parse(raw) as SessionDraft;
+      // úlohy mezitím mohly být vyřazeny z databáze — rozpracovaná session s neexistující úlohou se zahodí
+      const known = new Set(examples.map((e) => e.id));
+      if (!d.sessionIds.every((id) => known.has(id))) { localStorage.removeItem(SESSION_DRAFT_KEY); return null; }
+      return d;
+    }
   } catch { /* ignore */ }
   return null;
 }

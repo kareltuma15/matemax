@@ -50,7 +50,7 @@ const T = (o) => tasks.push(o);
     steps: [
       { text: "Pravítko s pravým úhlem přilož jednou odvěsnou k přímce p a posouvej ho po ní, až druhá odvěsna projde bodem P. V aplikaci: nástroj „Pravý úhel“ → klepni na přímku p a pak na bod P.", draw: [line(Pp, F)] },
       { text: "Narýsovaná kolmice protne přímku p v hledané patě kolmice (pravý úhel je vyznačen).", draw: [rightMark(F, unit(sub(B0, A0)), unit(sub(Pp, F)))] },
-      { text: "Jiný postup jen kružítkem: kružnice se středem P protne p v bodech K a L, z nich stejně velkými kružnicemi najdeš bod Q na druhé straně p a přímka PQ je tatáž kolmice.", draw: [arcAt(Pp, r1, [K, L]), pt(K, "K", -4, 18), pt(L, "L", 4, 18), arcAt(K, r2, [Q]), arcAt(L, r2, [Q]), pt(Q, "Q", 8, 14)] },
+      { text: "Alternativně jen kružítkem: kružnice se středem P protne p v bodech K a L, z nich stejně velkými kružnicemi najdeš bod Q na druhé straně p a přímka PQ je tatáž kolmice.", draw: [arcAt(Pp, r1, [K, L]), pt(K, "K", -4, 18), pt(L, "L", 4, 18), arcAt(K, r2, [Q]), arcAt(L, r2, [Q]), pt(Q, "Q", 8, 14)] },
     ],
     odpoved: "Pata kolmice z bodu P na přímku p.",
     check: (t) => Math.abs(dot(sub(Pp, t[0]), sub(B0, A0))) < 1e-6 && dist(t[0], foot(t[0], A0, B0)) < 1e-6,

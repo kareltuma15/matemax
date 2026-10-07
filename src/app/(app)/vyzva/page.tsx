@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { examples } from "@/data/examples";
+import { plainExamples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "@/components/MathText";
 import MathDisplay from "@/components/MathDisplay";
@@ -98,8 +98,8 @@ function getTodayKey(): string {
 function pickExamples(challenge: DailyChallenge): DBExample[] {
   const pool =
     challenge.topic === "mix"
-      ? examples
-      : examples.filter((e) => e.tema === challenge.topic);
+      ? plainExamples
+      : plainExamples.filter((e) => e.tema === challenge.topic);
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, Math.min(challenge.count, pool.length));
 }

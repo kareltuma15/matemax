@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { examples } from "@/data/examples";
+import { plainExamples } from "@/data/examples";
 import { checkAnswer } from "@/lib/normalize";
 import MathText from "@/components/MathText";
 import MathDisplay from "@/components/MathDisplay";
@@ -31,7 +31,7 @@ function saveCermatResult(result: CermatTestResult) {
 }
 
 function pickRandom(count: number) {
-  const shuffled = [...examples].sort(() => Math.random() - 0.5);
+  const shuffled = [...plainExamples].sort(() => Math.random() - 0.5);
   // Aim for balanced difficulty distribution
   const easy = shuffled.filter(e => e.obtiznost === 1).slice(0, 7);
   const medium = shuffled.filter(e => e.obtiznost === 2).slice(0, 5);
