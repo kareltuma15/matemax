@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import fs from "node:fs";
-import { perpendicularThrough, parallelThrough, distToShape, matchMarkers } from "../src/lib/construct-geom";
+import { perpendicularThrough, parallelThrough, distToShape, matchMarkers, matchLocus, projectOnShape } from "../src/lib/construct-geom";
 
 // Adaptivní diagnostika: 8 témat × 2 otázky. 1. otázka = L2; správně → 3. úroveň (L3), špatně → 1. úroveň (L1).
 // Skóre tématu se ukládá jako correct z 3: L2✓+L3✓ = 3, L2✓+L3✗ = 2, L2✗+L1✓ = 1, L2✗+L1✗ = 0.
@@ -189,4 +189,19 @@ test("rýsování: kružítko se zastaví na stejném poloměru a střed úsečk
   await tap(S.x + 3, S.y + 3);
   await page.getByRole("button", { name: /Zkontrolovat/ }).click();
   await expect(page.getByText("✅ Správně")).toBeVisible();
+});
+
+test("geometrie: průmět na čáru a ověření množiny bodů (libovolné body na čáře)", () => {
+  const line = { k: "line" as const, a: { x: 130, y: 0 }, b: { x: 130, y: 250 } };
+  const circ = { k: "circ" as const, c: { x: 0, y: 0 }, r: 10 };
+  expect(projectOnShape({ x: 140, y: 77 }, line)).toEqual({ x: 130, y: 77 });
+  const pc = projectOnShape({ x: 30, y: 0 }, circ)!;
+  expect(pc.x).toBeCloseTo(10); expect(pc.y).toBeCloseTo(0);
+  expect(projectOnShape({ x: 0, y: 0 }, circ)).toBeNull();                                    // střed kružnice nemá průmět
+  const L = [line];
+  expect(matchLocus([{ x: 130, y: 60 }, { x: 130, y: 180 }], L, 2, 4, 40).ok).toBe(true);     // dva různé body na čáře
+  expect(matchLocus([{ x: 130, y: 60 }, { x: 130, y: 70 }], L, 2, 4, 40).ok).toBe(false);     // příliš blízko u sebe
+  expect(matchLocus([{ x: 130, y: 60 }, { x: 200, y: 180 }], L, 2, 4, 40).ok).toBe(false);    // druhý bod mimo čáru
+  expect(matchLocus([{ x: 130, y: 60 }], L, 2, 4, 40).ok).toBe(false);                         // chybí bod
+  expect(matchLocus([{ x: 130, y: 60 }, { x: 130, y: 120 }, { x: 130, y: 200 }], L, 2, 4, 40).ok).toBe(false); // bod navíc
 });

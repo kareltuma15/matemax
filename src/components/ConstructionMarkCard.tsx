@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { DBExample, SceneElement, TEMA_LABELS, podtemaLabel } from "@/types";
 import {
-  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, dist, distToShape, perpendicularThrough, parallelThrough,
+  Pt, Shape, allIntersections, intersections, nearest, clipLine, matchMarkers, matchLocus, projectOnShape, dist, distToShape, perpendicularThrough, parallelThrough,
 } from "@/lib/construct-geom";
 import { playCorrect, playWrong } from "@/lib/sound";
 import MathText from "@/components/MathText";
@@ -194,9 +194,15 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   }, [givenShapes, helperShapes, scene.radii]);
 
   /** Kam míří ukazatel v bodě `p` (k = jednotek scény na pixel): přichycení k bodu, u kružítka i k poloměru. */
-  function aimAt(p: Pt, k: number): { pt: Pt; snapped: boolean; r?: number; note?: string } {
+  function aimAt(p: Pt, k: number): { pt: Pt; snapped: boolean; r?: number; note?: string; onLine?: boolean } {
     const sn = nearest(candidates.snap, p, SNAP_PX * k);
     let pt = sn ?? p;
+    // Úloha „libovolné body na čáře": značku lze položit kamkoli na vlastní sestrojenou čáru (průmět klepnutí).
+    if (tool === "bod" && scene.locus && !sn) {
+      let best: Pt | null = null, bd = SNAP_PX * k;
+      for (const sh of helperShapes) { const pr = projectOnShape(p, sh); if (pr) { const d = dist(pr, p); if (d <= bd) { bd = d; best = pr; } } }
+      if (best) return { pt: best, snapped: false, onLine: true };
+    }
     if (tool === "kruzitko" && pending) {
       let r = dist(pending, pt);
       let note: string | undefined = sn ? "prochází bodem" : undefined;
@@ -248,7 +254,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
       // hledaný bod musí být sestrojený (průsečík čar / zadaný bod) — odhad od oka se neuznává.
       // Test (e2e) smí označovat volně, protože nekonstruuje celý postup.
       const free = typeof window !== "undefined" && (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS === true;
-      if (!snapped && !free) { say("Bod musí ležet v průsečíku čar. Nejdřív ho sestroj pravítkem a kružítkem, pak ho označ."); return; }
+      if (!snapped && !aim.onLine && !free) { say(scene.locus ? "Bod musí ležet na čáře, kterou jsi sestrojil. Nejdřív čáru sestroj, pak na ni body označ." : "Bod musí ležet v průsečíku čar. Nejdřív ho sestroj pravítkem a kružítkem, pak ho označ."); return; }
       add({ kind: "marker", p: s });
     } else if (tool === "pravitko") {
       if (!pending) setPending(s);
@@ -285,13 +291,17 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   function resetZoom() { setZoom(1); setCenter({ x: W / 2, y: H / 2 }); }
 
   function check() {
-    const r = matchMarkers(markers.map((m) => m.p), scene.targets, scene.tolerance);
+    const pts = markers.map((m) => m.p);
+    const r = scene.locus
+      ? matchLocus(pts, shapesOf(scene.locus.shapes), scene.locus.count, scene.tolerance, 40)
+      : matchMarkers(pts, scene.targets, scene.tolerance);
     setResult(r);
+    setNotice(null);
     if (r.ok) playCorrect(); else playWrong();
   }
 
   const hint =
-    tool === "bod" ? "Klepnutím označ výsledek (jen v průsečíku čar, ukazatel se k němu přichytí); klepnutím na značku ji zrušíš."
+    tool === "bod" ? (scene.locus ? "Klepnutím označ body na sestrojené čáře (ukazatel se k ní přichytí); klepnutím na značku ji zrušíš." : "Klepnutím označ výsledek (jen v průsečíku čar, ukazatel se k němu přichytí); klepnutím na značku ji zrušíš.")
     : tool === "pravitko" ? (pending ? "Klepni na druhý bod, kterým přímka prochází." : "Klepni na první bod přímky. Body se přichytávají k průsečíkům.")
     : tool === "kolmice" ? (refLine ? "Teď klepni na bod, kterým má kolmice procházet." : "Pravý úhel: klepni na přímku nebo úsečku, ke které chceš vést kolmici.")
     : tool === "rovnobezka" ? (refLine ? "Teď klepni na bod, kterým má rovnoběžka procházet." : "Rovnoběžka: klepni na přímku nebo úsečku, se kterou má být rovnoběžná.")
@@ -323,6 +333,10 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     </button>
   );
 
+  // Sestrojené body se pojmenují X, Y, Z… (bez písmen, která už v obrázku jsou) — dá se o nich psát v postupu.
+  const givenLabels = new Set(scene.given.flatMap((e) => (e.t === "point" && e.label ? [e.label] : [])));
+  const letters = ["X", "Y", "Z", "U", "V", "W", "S", "T"].filter((l) => !givenLabels.has(l));
+  const markerLabel = (i: number) => letters[i] ?? `X${i + 1}`;
   const markerColor = (i: number) => (!checked ? ORANGE : result!.matchedMarker[i] ? GREEN : RED);
   const shownSteps = scene.steps.slice(0, stepShown);
 
@@ -445,6 +459,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
                 if (l) els.push(<Element key="kp" el={{ t: "line", x1: l.a.x, y1: l.a.y, x2: l.b.x, y2: l.b.y }} w={W} h={H} color={gray} sw={1.4} dashed u={u} />);
               }
             }
+            if (a.onLine) els.push(<circle key="ol" cx={a.pt.x} cy={a.pt.y} r={5 * u} fill={ORANGE} fillOpacity={0.55} stroke={ORANGE} strokeWidth={1.4} vectorEffect="non-scaling-stroke" />);
             // kurzor: malý kroužek; přichycený k bodu → oranžový terč
             els.push(a.snapped
               ? <g key="cur"><circle cx={a.pt.x} cy={a.pt.y} r={9 * u} fill="none" stroke={ORANGE} strokeWidth={2} vectorEffect="non-scaling-stroke" /><circle cx={a.pt.x} cy={a.pt.y} r={3.2 * u} fill={ORANGE} /></g>
@@ -462,6 +477,9 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           {/* rozpracovaný první bod pravítka/kružítka */}
           {pending && <circle cx={pending.x} cy={pending.y} r={7 * u} fill="none" stroke={ORANGE} strokeWidth={2} vectorEffect="non-scaling-stroke" />}
 
+          {/* hledaná čára (množina bodů) po kontrole */}
+          {checked && scene.locus && scene.locus.shapes.map((el, i) => <Element key={`lo${i}`} el={el} w={W} h={H} color={GREEN} sw={2.4} dashed u={u} />)}
+
           {/* správné body po kontrole */}
           {checked && scene.targets.map((t, i) => (
             <g key={`t${i}`}>
@@ -472,7 +490,10 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
 
           {/* moje značky */}
           {markers.map((m, i) => (
-            <circle key={m.id} cx={m.p.x} cy={m.p.y} r={5.5 * u} fill={markerColor(i)} stroke="#fff" strokeWidth={1.6} vectorEffect="non-scaling-stroke" />
+            <g key={m.id}>
+              <circle cx={m.p.x} cy={m.p.y} r={5.5 * u} fill={markerColor(i)} stroke="#fff" strokeWidth={1.6} vectorEffect="non-scaling-stroke" />
+              <text x={m.p.x + 9 * u} y={m.p.y - 8 * u} fontSize={14 * u} fontWeight={800} fill={markerColor(i)} stroke="#fff" strokeWidth={3} paintOrder="stroke" style={{ fontFamily: "system-ui, sans-serif" }}>{markerLabel(i)}</text>
+            </g>
           ))}
 
           {/* měřítko */}
@@ -512,14 +533,25 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           >
             <div className="text-sm font-black" style={{ color: result!.ok ? "#166534" : "#991b1b" }}>
               {result!.ok
-                ? scene.targets.length > 1 ? "✅ Správně — našel jsi všechny body." : "✅ Správně!"
+                ? scene.locus ? "✅ Správně — všechny body leží na hledané čáře." : scene.targets.length > 1 ? "✅ Správně — našel jsi všechny body." : "✅ Správně!"
                 : "❌ Není to ono."}
             </div>
             {!result!.ok && (
               <div className="text-xs mt-1" style={{ color: "#7f1d1d" }}>
-                {result!.matched} z {scene.targets.length} hledaných bodů máš správně
-                {result!.extra > 0 ? `, ${result!.extra} ${result!.extra === 1 ? "značka je" : "značky jsou"} navíc nebo mimo` : ""}.
-                Správné body jsou v obrázku vyznačené zeleně.
+                {scene.locus ? (
+                  <>
+                    {result!.matched} z {scene.locus.count} bodů leží na hledané čáře
+                    {markers.length !== scene.locus.count ? `; máš ${markers.length} značek místo ${scene.locus.count}` : ""}
+                    {(result as { sepOk?: boolean }).sepOk === false ? "; body jsou příliš blízko u sebe (aspoň 1,3 cm)" : ""}.
+                    Hledaná čára je v obrázku vyznačená zeleně.
+                  </>
+                ) : (
+                  <>
+                    {result!.matched} z {scene.targets.length} hledaných bodů máš správně
+                    {result!.extra > 0 ? `, ${result!.extra} ${result!.extra === 1 ? "značka je" : "značky jsou"} navíc nebo mimo` : ""}.
+                    Správné body jsou v obrázku vyznačené zeleně.
+                  </>
+                )}
               </div>
             )}
           </div>

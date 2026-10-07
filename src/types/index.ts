@@ -282,6 +282,11 @@ export interface ConstructionScene {
   radii?: { label: string; r: number }[];
   targets: { x: number; y: number }[];
   tolerance: number;
+  /**
+   * Úloha „označ libovolné body na čáře" (množina bodů): místo `targets` se ověřuje, že `count` navzájem různých
+   * značek leží na některém z útvarů `shapes` (přímky, kružnice). `targets` je pak prázdné pole.
+   */
+  locus?: { shapes: SceneElement[]; count: number };
   steps: { text: string; draw: SceneElement[] }[];
 }
 
@@ -363,6 +368,8 @@ export const PODTEMA_LABELS: Record<string, string> = {
   kruznice_vepsana:   "Kružnice vepsaná",
   obdelnik_thales:    "Obdélník (Thales)",
   mnoziny_bodu:       "Množiny bodů",
+  uhel_bez_uhlomeru:  "Úhel bez úhloměru",
+  tecna:              "Tečna ke kružnici",
   ctverec:            "Čtverec",
   stred_kruznice:     "Střed kružnice",
   kruznice_dotyk:     "Kružnice a tečna",

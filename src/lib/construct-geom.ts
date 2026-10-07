@@ -160,6 +160,45 @@ export function matchMarkers(markers: Pt[], targets: Pt[], tol: number) {
   return { ok: matched === targets.length && extra === 0, matched, extra, matchedMarker, matchedTarget };
 }
 
+/** Nejbližší bod na útvaru `s` k bodu `p` (u přímky/úsečky/polopřímky průmět, u kružnice bod ve směru k `p`). */
+export function projectOnShape(p: Pt, s: Shape): Pt | null {
+  if (s.k === "circ") {
+    const d = dist(p, s.c);
+    if (d < EPS) return null;
+    return { x: s.c.x + ((p.x - s.c.x) / d) * s.r, y: s.c.y + ((p.y - s.c.y) / d) * s.r };
+  }
+  const dx = s.b.x - s.a.x, dy = s.b.y - s.a.y;
+  const len2 = dx * dx + dy * dy;
+  if (len2 < EPS) return null;
+  let t = ((p.x - s.a.x) * dx + (p.y - s.a.y) * dy) / len2;
+  if (s.k === "seg") t = Math.min(1, Math.max(0, t));
+  else if (s.k === "ray") t = Math.max(0, t);
+  return { x: s.a.x + t * dx, y: s.a.y + t * dy };
+}
+
+/** Vzdálenost bodu od útvaru včetně kružnice (od jejího obvodu). */
+export function distToLocus(p: Pt, s: Shape): number {
+  return s.k === "circ" ? Math.abs(dist(p, s.c) - s.r) : distToShape(p, s);
+}
+
+/**
+ * Úloha „označ libovolné body na čáře": ověří, že je právě `count` značek, každá leží (do `tol`) na některém z útvarů
+ * `shapes` a žádné dvě nejsou blíž než `minSep` (jinak by šlo „označit dva body" jediným klepnutím).
+ */
+export function matchLocus(markers: Pt[], shapes: Shape[], count: number, tol: number, minSep: number) {
+  const matchedMarker = markers.map((m) => shapes.some((sh) => distToLocus(m, sh) <= tol));
+  const sepOk = markers.every((m, i) => markers.every((q, j) => j <= i || dist(m, q) >= minSep));
+  const onLocus = matchedMarker.filter(Boolean).length;
+  return {
+    ok: markers.length === count && onLocus === count && sepOk,
+    matched: Math.min(onLocus, count),
+    extra: Math.max(0, markers.length - onLocus),
+    matchedMarker,
+    matchedTarget: [] as boolean[],
+    sepOk,
+  };
+}
+
 /** Oblouk kružnice (c, r) pokrývající směry k bodům `pts` + okraj `margin` stupňů; úhly v souřadnicích SVG (y dolů). */
 export function arcThrough(c: Pt, r: number, pts: Pt[], margin = 28): { a1: number; a2: number } {
   const norm = (a: number) => ((a % 360) + 360) % 360;

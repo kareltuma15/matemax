@@ -400,6 +400,197 @@ const T = (o) => tasks.push(o);
   });
 }
 
+
+// ───────────── Rozšíření: rovnostranný trojúhelník, úhly bez úhloměru, tečny, množiny bodů ─────────────
+// 18) rovnostranný trojúhelník
+{
+  const A = P(60, 150), B = P(150, 150);
+  const Cs = intersections({ k: "circ", c: A, r: 90 }, { k: "circ", c: B, r: 90 });
+  T({
+    id: "KONS1_05", podtema: "trojuhelnik_sss", obtiznost: 1, radii: [{ label: "3 cm", r: 90 }],
+    zadani: "Úsečka AB má délku 3 cm. Označ všechny body C, pro které je trojúhelník ABC rovnostranný.",
+    given: [seg(A, B), pt(A, "A", -14, 16), pt(B, "B", 6, 16)],
+    targets: Cs,
+    steps: [
+      { text: "V rovnostranném trojúhelníku jsou všechny strany 3 cm: bod C je 3 cm od A a zároveň 3 cm od B.", draw: [] },
+      { text: "Narýsuj kružnice k(A; 3 cm) a l(B; 3 cm). Průsečíky jsou dva (nad a pod úsečkou AB) a oba vyhovují.", draw: [arcAt(A, 90, Cs, 36), arcAt(B, 90, Cs, 36), pt(Cs[0], "C₁", 8, 4), pt(Cs[1], "C₂", 8, 4)] },
+    ],
+    odpoved: "Dva body — průsečíky kružnic k(A; 3 cm) a l(B; 3 cm).",
+    check: (t) => t.length === 2 && t.every((c) => Math.abs(dist(c, A) - 90) < 1e-6 && Math.abs(dist(c, B) - 90) < 1e-6),
+  });
+}
+// 19) úhel 60° bez úhloměru
+{
+  const A = P(60, 190), X = P(300, 190), r = 90, D = P(A.x + r, A.y);
+  const C = intersections({ k: "circ", c: A, r }, { k: "circ", c: D, r }).reduce((m, q) => (q.y < m.y ? q : m));
+  T({
+    id: "KONS2_08", podtema: "uhel_bez_uhlomeru", obtiznost: 2, radii: [{ label: "3 cm", r: 90 }],
+    zadani: "Úhel 60° bez úhloměru: označ bod C ležící nad polopřímkou AX, pro který je úhel XAC roven 60° a |AC| = 3 cm.",
+    given: [ray(A, X), pt(A, "A", -14, 16), pt(X, "X", -4, -9)],
+    targets: [C],
+    steps: [
+      { text: "Narýsuj kružnici k(A; 3 cm); protne polopřímku AX v bodě D.", draw: [arcAt(A, r, [D, C], 30), pt(D, "D", 2, 18)] },
+      { text: "Kružnice l(D; 3 cm) protne k v bodě C. Trojúhelník ADC je rovnostranný, proto je úhel DAC (tedy XAC) roven 60°.", draw: [arcAt(D, r, [C], 30), pt(C, "C", 8, -6), seg(A, C)] },
+    ],
+    odpoved: "Bod C, pro který je trojúhelník ADC rovnostranný (průsečík k(A; 3 cm) a l(D; 3 cm)).",
+    check: (t) => Math.abs(dist(t[0], A) - 90) < 1e-6 && Math.abs(Math.atan2(A.y - t[0].y, t[0].x - A.x) * 180 / Math.PI - 60) < 1e-6,
+  });
+}
+// 20) pravý úhel (pravítko s pravým úhlem)
+{
+  const A = P(60, 190), X = P(300, 190), C = P(60, 70);
+  T({
+    id: "KONS2_09", podtema: "uhel_bez_uhlomeru", obtiznost: 2, radii: [{ label: "4 cm", r: 120 }],
+    zadani: "Označ bod C ležící nad polopřímkou AX, pro který je úhel XAC pravý a |AC| = 4 cm.",
+    given: [ray(A, X), pt(A, "A", -14, 16), pt(X, "X", -4, -9)],
+    targets: [C],
+    steps: [
+      { text: "Pravý úhel sestroj pravítkem s pravým úhlem: nástroj „Pravý úhel“ → klepni na polopřímku AX a potom na bod A. Vznikne kolmice k AX v bodě A.", draw: [line(A, P(60, 60))] },
+      { text: "Bod C leží na kolmici ve vzdálenosti 4 cm od A: je to průsečík kolmice s kružnicí k(A; 4 cm).", draw: [circ(A, 120), pt(C, "C", 8, -6)] },
+    ],
+    odpoved: "Průsečík kolmice k AX v bodě A s kružnicí k(A; 4 cm).",
+    check: (t) => Math.abs(t[0].x - A.x) < 1e-6 && Math.abs(dist(t[0], A) - 120) < 1e-6 && t[0].y < A.y,
+  });
+}
+// 21) úhel 45°
+{
+  const A = P(60, 190), X = P(300, 190), len = 120;
+  const C = P(A.x + len * Math.cos(Math.PI / 4), A.y - len * Math.sin(Math.PI / 4));
+  const r2 = 70, K = P(A.x + r2, A.y), L = P(A.x, A.y - r2), M = sub(add(K, L), A);
+  T({
+    id: "KONS2_10", podtema: "uhel_bez_uhlomeru", obtiznost: 2, radii: [{ label: "4 cm", r: 120 }],
+    zadani: "Označ bod C ležící nad polopřímkou AX, pro který je úhel XAC roven 45° a |AC| = 4 cm.",
+    given: [ray(A, X), pt(A, "A", -14, 16), pt(X, "X", -4, -9)],
+    targets: [C],
+    steps: [
+      { text: "Úhel 45° je polovina pravého úhlu. Nejdřív sestroj pravý úhel — kolmici k AX v bodě A (nástrojem „Pravý úhel“).", draw: [line(A, P(60, 60))] },
+      { text: "Osu pravého úhlu sestroj kružítkem: kružnice se středem A protne obě ramena v K a L, stejné kružnice se středy K a L se protnou v M. Polopřímka AM je osa.", draw: [arcAt(A, r2, [K, L], 14), pt(K, "K", 0, 16), pt(L, "L", -16, 4), arcAt(K, r2, [M], 24), arcAt(L, r2, [M], 24), ray(A, M)] },
+      { text: "Bod C leží na ose AM ve vzdálenosti 4 cm od A: průsečík osy s kružnicí k(A; 4 cm).", draw: [circ(A, 120), pt(C, "C", 8, -6)] },
+    ],
+    odpoved: "Průsečík osy pravého úhlu s kružnicí k(A; 4 cm).",
+    check: (t) => Math.abs(dist(t[0], A) - 120) < 1e-6 && Math.abs(Math.atan2(A.y - t[0].y, t[0].x - A.x) * 180 / Math.PI - 45) < 1e-6,
+  });
+}
+// 22) úhel 30°
+{
+  const A = P(60, 190), X = P(300, 190), len = 150;
+  const C = P(A.x + len * Math.cos(Math.PI / 6), A.y - len * Math.sin(Math.PI / 6));
+  const r = 90, D = P(A.x + r, A.y), E = P(A.x + r * Math.cos(Math.PI / 3), A.y - r * Math.sin(Math.PI / 3));
+  const r2 = 70, K = P(A.x + r2, A.y), L = P(A.x + r2 * Math.cos(Math.PI / 3), A.y - r2 * Math.sin(Math.PI / 3)), M = sub(add(K, L), A);
+  T({
+    id: "KONS3_07", podtema: "uhel_bez_uhlomeru", obtiznost: 3, radii: [{ label: "5 cm", r: 150 }],
+    zadani: "Označ bod C ležící nad polopřímkou AX, pro který je úhel XAC roven 30° a |AC| = 5 cm.",
+    given: [ray(A, X), pt(A, "A", -14, 16), pt(X, "X", -4, -9)],
+    targets: [C],
+    steps: [
+      { text: "Úhel 30° je polovina úhlu 60°. Nejdřív sestroj úhel 60°: kružnice k(A; r) protne AX v D, kružnice se středem D a stejným poloměrem protne k v E. Trojúhelník ADE je rovnostranný, takže úhel XAE = 60°.", draw: [arcAt(A, r, [D, E], 24), pt(D, "D", 2, 18), arcAt(D, r, [E], 26), pt(E, "E", -16, -6), ray(A, E)] },
+      { text: "Osu úhlu XAE sestroj kružítkem: kružnice se středem A protne ramena v K a L, stejné kružnice se středy K a L se protnou v M. Polopřímka AM svírá s AX úhel 30°.", draw: [arcAt(A, r2, [K, L], 14), pt(K, "K", -2, 16), pt(L, "L", -18, 6), arcAt(K, r2, [M], 24), arcAt(L, r2, [M], 24), ray(A, M)] },
+      { text: "Bod C leží na polopřímce AM ve vzdálenosti 5 cm od A: průsečík s kružnicí k(A; 5 cm).", draw: [circ(A, 150), pt(C, "C", 8, -6)] },
+    ],
+    odpoved: "Průsečík osy úhlu 60° s kružnicí k(A; 5 cm).",
+    check: (t) => Math.abs(dist(t[0], A) - 150) < 1e-6 && Math.abs(Math.atan2(A.y - t[0].y, t[0].x - A.x) * 180 / Math.PI - 30) < 1e-6,
+  });
+}
+// 23) tečny z bodu ke kružnici (Thaletova kružnice)
+{
+  const S = P(110, 125), Pp = P(270, 125), R = 60, Mm = mid(S, Pp);
+  const Ts = intersections({ k: "circ", c: S, r: R }, { k: "circ", c: Mm, r: dist(S, Mm) });
+  const Ps = intersections({ k: "circ", c: S, r: 100 }, { k: "circ", c: Pp, r: 100 });
+  T({
+    id: "KONS3_08", podtema: "tecna", obtiznost: 3, radii: [],
+    zadani: "Kružnice k má střed S a bod P leží vně kružnice. Z bodu P vedeme ke kružnici k dvě tečny. Označ oba body dotyku.",
+    given: [circ(S, R), pt(S, "S", -16, 16), pt(Pp, "P", 8, -6)],
+    targets: Ts,
+    steps: [
+      { text: "Tečna je kolmá na poloměr do bodu dotyku T, takže úhel STP je pravý. Podle Thaletovy věty leží T na kružnici nad průměrem SP.", draw: [] },
+      { text: "Najdi střed M úsečky SP (osa úsečky) a narýsuj Thaletovu kružnici se středem M a poloměrem |MS|.", draw: [arcAt(S, 100, Ps, 30), arcAt(Pp, 100, Ps, 30), line(Ps[0], Ps[1]), pt(Mm, "M", 8, 16), circ(Mm, dist(S, Mm))] },
+      { text: "Průsečíky Thaletovy kružnice s kružnicí k jsou body dotyku T₁ a T₂; tečny jsou přímky PT₁ a PT₂.", draw: [pt(Ts[0], "T₁", 8, -8), pt(Ts[1], "T₂", 8, 14), seg(Pp, Ts[0]), seg(Pp, Ts[1])] },
+    ],
+    odpoved: "Dva body — průsečíky kružnice k s Thaletovou kružnicí nad průměrem SP.",
+    check: (t) => t.length === 2 && t.every((x) => Math.abs(dist(x, S) - R) < 1e-6 && Math.abs(dot(sub(x, S), sub(x, Pp))) < 1e-4),
+    _ops: [arcAt(S, 100, Ps, 30), arcAt(Pp, 100, Ps, 30), line(Ps[0], Ps[1]), circ(Mm, dist(S, Mm))],
+  });
+}
+// 24) tečna v bodě dotyku
+{
+  const S = P(110, 140), R = 60, Tp = polar(S, R, 330);
+  const dir = unit(sub(Tp, S)), n = P(-dir.y, dir.x);
+  const X1 = add(Tp, mul(n, 90)), X2 = sub(Tp, mul(n, 90));
+  T({
+    id: "KONS3_09", podtema: "tecna", obtiznost: 3, radii: [{ label: "3 cm", r: 90 }],
+    zadani: "Bod T leží na kružnici k se středem S. Označ všechny body X tečny kružnice k v bodě T, které jsou od bodu T vzdáleny 3 cm.",
+    given: [circ(S, R), seg(S, Tp), pt(S, "S", -16, 16), pt(Tp, "T", 8, -6)],
+    targets: [X1, X2],
+    steps: [
+      { text: "Tečna v bodě T je kolmá na poloměr ST. Nástrojem „Pravý úhel“ vyber úsečku ST a klepni na bod T.", draw: [line(X2, X1)] },
+      { text: "Body tečny vzdálené 3 cm od T leží na kružnici l(T; 3 cm). Průsečíky jsou dva a oba vyhovují.", draw: [circ(Tp, 90), pt(X1, "X₁", 8, 4), pt(X2, "X₂", 8, 4)] },
+    ],
+    odpoved: "Dva body — průsečíky tečny v bodě T s kružnicí l(T; 3 cm).",
+    check: (t) => t.length === 2 && t.every((x) => Math.abs(dist(x, Tp) - 90) < 1e-6 && Math.abs(dot(sub(x, Tp), sub(Tp, S))) < 1e-4),
+  });
+}
+// 25) množina bodů: osa úsečky — libovolné dva body
+{
+  const A = P(70, 125), B = P(190, 125);
+  const Ps = intersections({ k: "circ", c: A, r: 100 }, { k: "circ", c: B, r: 100 });
+  const axis = line(P(130, 0), P(130, 250));
+  T({
+    id: "KONS2_11", podtema: "mnoziny_bodu", obtiznost: 2, radii: [],
+    zadani: "Označ dva různé body, které jsou stejně vzdálené od bodů A a B.",
+    given: [seg(A, B), pt(A, "A", -14, 16), pt(B, "B", 6, 16)],
+    targets: [], locus: { shapes: [axis], count: 2 },
+    steps: [
+      { text: "Body stejně vzdálené od A a B leží na ose úsečky AB. Sestroj ji dvěma stejnými kružnicemi se středy A a B.", draw: [arcAt(A, 100, Ps, 30), arcAt(B, 100, Ps, 30), line(Ps[0], Ps[1])] },
+      { text: "Správným řešením jsou libovolné dva různé body osy (aspoň 1,3 cm od sebe) — nástrojem „Označit bod“ je polož přímo na sestrojenou osu.", draw: [pt(P(130, 70), "X", 8, 4), pt(P(130, 180), "Y", 8, 4)] },
+    ],
+    odpoved: "Libovolné dva různé body osy úsečky AB.",
+    check: () => true,
+    _ops: [arcAt(A, 100, Ps, 30), arcAt(B, 100, Ps, 30), line(Ps[0], Ps[1])],
+  });
+}
+// 26) množina bodů: dvě rovnoběžky ve vzdálenosti 2 cm
+{
+  const p1 = P(15, 130), p2 = P(315, 120), F0 = P(165, 125);
+  const n = unit(P(-(p2.y - p1.y), p2.x - p1.x));
+  const E1 = add(F0, mul(n, 60)), E2 = sub(F0, mul(n, 60));
+  const L1 = [add(p1, mul(n, 60)), add(p2, mul(n, 60))], L2 = [sub(p1, mul(n, 60)), sub(p2, mul(n, 60))];
+  T({
+    id: "KONS2_12", podtema: "mnoziny_bodu", obtiznost: 2, radii: [{ label: "2 cm", r: 60 }],
+    zadani: "Označ dva různé body, jejichž vzdálenost od přímky p je 2 cm.",
+    given: [line(p1, p2), txt(296, 108, "p")],
+    targets: [], locus: { shapes: [line(L1[0], L1[1]), line(L2[0], L2[1])], count: 2 },
+    steps: [
+      { text: "Body ve vzdálenosti 2 cm od přímky p leží na dvou rovnoběžkách s p, po každé straně jedné. Sestroj kolmici k p (nástrojem „Pravý úhel“).", draw: [line(F0, add(F0, mul(n, 100)))] },
+      { text: "Na kolmici najdi body E₁ a E₂ ve vzdálenosti 2 cm od paty kolmice — kružnice k(F; 2 cm).", draw: [circ(F0, 60), pt(F0, "F", 8, 16), pt(E1, "E₁", 8, 4), pt(E2, "E₂", 8, 4)] },
+      { text: "Rovnoběžkami s p vedenými body E₁ a E₂ (nástroj „Rovnoběžka“) dostaneš hledané čáry. Libovolné dva různé body na nich vyhovují.", draw: [line(L1[0], L1[1]), line(L2[0], L2[1])] },
+    ],
+    odpoved: "Libovolné dva různé body dvou rovnoběžek s p ve vzdálenosti 2 cm.",
+    check: () => true,
+    _ops: [line(F0, add(F0, mul(n, 100))), circ(F0, 60), line(L1[0], L1[1]), line(L2[0], L2[1])],
+  });
+}
+// 27) množina bodů: osy úhlů dvou přímek
+{
+  const V = P(165, 125), th1 = -20, th2 = 50;
+  const e1 = P(Math.cos((th1 * Math.PI) / 180), Math.sin((th1 * Math.PI) / 180)), e2 = P(Math.cos((th2 * Math.PI) / 180), Math.sin((th2 * Math.PI) / 180));
+  const b1 = unit(add(e1, e2)), b2 = P(-b1.y, b1.x);
+  const far = (e, k) => add(V, mul(e, k));
+  const K1 = add(V, mul(e1, 60)), L1 = add(V, mul(e2, 60)), M1 = sub(add(K1, L1), V);
+  T({
+    id: "KONS3_10", podtema: "mnoziny_bodu", obtiznost: 3, radii: [],
+    zadani: "Přímky p a q se protínají v bodě V. Označ dva různé body, které jsou od přímek p a q stejně vzdálené.",
+    given: [line(far(e1, -170), far(e1, 170)), line(far(e2, -170), far(e2, 170)), txt(far(e1, 1).x + 135, far(e1, 1).y - 56, "p"), txt(far(e2, 1).x + 90, far(e2, 1).y + 105, "q"), pt(V, "V", -16, 16)],
+    targets: [], locus: { shapes: [line(far(b1, -170), far(b1, 170)), line(far(b2, -170), far(b2, 170))], count: 2 },
+    steps: [
+      { text: "Body stejně vzdálené od dvou protínajících se přímek leží na osách úhlů, které přímky svírají. Osu jednoho úhlu sestroj kružítkem: kružnice se středem V protne p a q v K a L, stejné kružnice z K a L se protnou v M, osa je přímka VM.", draw: [arcAt(V, 60, [K1, L1], 16), arcAt(K1, 60, [M1], 24), arcAt(L1, 60, [M1], 24), line(V, M1)] },
+      { text: "Druhá osa (osa vedlejšího úhlu) je kolmá na první a prochází bodem V — nástroj „Pravý úhel“. Libovolné dva různé body na obou osách vyhovují.", draw: [line(far(b2, -170), far(b2, 170))] },
+    ],
+    odpoved: "Libovolné dva různé body na osách úhlů přímek p a q.",
+    check: () => true,
+    _ops: [arcAt(V, 60, [K1, L1], 16), arcAt(K1, 60, [M1], 24), arcAt(L1, 60, [M1], 24), line(V, M1), line(far(b2, -170), far(b2, 170))],
+  });
+}
+
 // ───────────── ověření ─────────────
 let fail = 0;
 const ok = (n, c, i = "") => { if (!c) { fail++; console.log("CHYBA", n, i); } };
@@ -445,6 +636,15 @@ for (const t of tasks) {
   const ops = (t._ops ?? t.steps.flatMap((s) => s.draw)).map(toShape).filter(Boolean);
   const cands = [...givenPts(t.given), ...allIntersections([...givenShapes(t.given), ...ops])];
   targets.forEach((p, i) => ok(t.id + ` cíl ${i} sestrojitelný`, cands.some((q) => dist(p, q) < 1.5), JSON.stringify(p)));
+  // množina bodů: hledaná čára musí ležet mezi čarami postupu (aby šla sestrojit)
+  if (t.locus) {
+    const opLines = ops.filter((o) => o.k === "line");
+    t.locus.shapes.forEach((sh, i) => {
+      const a2 = P(sh.x1, sh.y1), b2 = P(sh.x2, sh.y2);
+      ok(t.id + ` hledaná čára ${i} sestrojitelná`, opLines.some((o) => G.distToShape(a2, o) < 0.6 && G.distToShape(b2, o) < 0.6));
+    });
+    ok(t.id + " počet bodů", t.locus.count >= 2);
+  }
   // pevné poloměry musí odpovídat cm
   (t.radii ?? []).forEach((r) => ok(t.id + " poloměr " + r.label, Math.abs(r.r / CM - parseFloat(r.label.replace(",", "."))) < 1e-9, r.r));
   out.push({
@@ -452,7 +652,7 @@ for (const t of tasks) {
     zadani: t.zadani, odpoved: t.odpoved,
     reseni_kroky: t.steps.map((s, i) => `${i + 1}. ${s.text}`),
     cas_sekund: 60 + 60 * t.obtiznost, sm2_interval: 1,
-    konstrukce_scena: { width: W, height: H, cm: CM, given: t.given, ...(t.radii?.length ? { radii: t.radii } : {}), targets, tolerance: TOL, steps: t.steps },
+    konstrukce_scena: { width: W, height: H, cm: CM, given: t.given, ...(t.radii?.length ? { radii: t.radii } : {}), targets, ...(t.locus ? { locus: t.locus } : {}), tolerance: TOL, steps: t.steps },
   });
 }
 const ids = out.map((e) => e.id);
@@ -466,6 +666,6 @@ let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* žádná předchozí dávka */ }
 const others = (prev.examples ?? []).filter((e) => !e.id.startsWith("KONS"));
 const base = (prev.nazev ?? "").replace(/ \+ Konstrukce.*$/, "");
-const nazev = others.length ? `${base} + Konstrukce — rýsování v aplikaci (17 úloh)` : "Konstrukce — rýsování v aplikaci (17 úloh: pravítko, kružítko, označení výsledku)";
+const nazev = others.length ? `${base} + Konstrukce — rýsování v aplikaci (27 úloh)` : "Konstrukce — rýsování v aplikaci (27 úloh: pravítko, kružítko, označení výsledku)";
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...out] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${out.length} konstrukcí)`);
