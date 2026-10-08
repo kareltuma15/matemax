@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 196" width="330" height="196" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélníková zahrada 20 m × 12 m, uvnitř čtvercový záhon o straně 4 m, zbytek je trávník</title>
+  <rect x="56" y="20" width="240" height="144" fill="#dcfce7" stroke="#0D1B3E" stroke-width="2.2"/>
+  <rect x="90" y="94" width="48" height="48" fill="#fde68a" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="114" y="123" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">záhon</text>
+  <text x="114" y="157" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">4 m</text>
+  <text x="226" y="48" font-size="13" font-weight="700" fill="#166534" text-anchor="middle">trávník</text>
+  <line x1="56" y1="178" x2="296" y2="178" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="56" y1="174" x2="56" y2="182" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="296" y1="174" x2="296" y2="182" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="176" y="194" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">20 m</text>
+  <line x1="44" y1="20" x2="44" y2="164" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="40" y1="20" x2="48" y2="20" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="40" y1="164" x2="48" y2="164" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="36" y="97" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="end">12 m</text>
+</svg>

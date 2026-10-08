@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 176" width="330" height="176" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Čtvercový pozemek o straně a a obdélníkový pozemek o stranách 0,8a a a + 12 (obrázek není v měřítku)</title>
+  <text x="66" y="24" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">čtvercový pozemek</text>
+  <text x="204" y="24" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">obdélníkový pozemek</text>
+  <rect x="16" y="40" width="100" height="100" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2"/>
+  <rect x="144" y="60" width="120" height="80" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="16" y1="152" x2="116" y2="152" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="16" y1="148" x2="16" y2="156" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="116" y1="148" x2="116" y2="156" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="66" y="168" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">a</text>
+  <line x1="144" y1="152" x2="264" y2="152" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="144" y1="148" x2="144" y2="156" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="264" y1="148" x2="264" y2="156" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="204" y="168" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">a + 12</text>
+  <line x1="276" y1="60" x2="276" y2="140" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="272" y1="60" x2="280" y2="60" stroke="#2E6DA4" stroke-width="1.4"/>
+  <line x1="272" y1="140" x2="280" y2="140" stroke="#2E6DA4" stroke-width="1.4"/>
+  <text x="286" y="105" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="start">0,8a</text>
+</svg>

@@ -465,8 +465,22 @@ export const PODTEMA_GEOMETRIE_ORDER = ["rovinne", "prostorova"] as const;
  * na 30 příkladů) — syrový slug typu „scitani_a_odcitani" vypadá jako
  * nedodělek, který se omylem dostal ven. Radši nezobrazíme nic.
  */
+// Souhrnné úlohy mají podtéma složené z témat, která kombinují (např. „geometrie_procenta"). Popisek se z nich poskládá sám:
+// [s velkým písmenem na začátku, uprostřed/na konci]. Neznámé slovo → žádný popisek.
+const COMBO_WORDS: Record<string, [string, string]> = {
+  geometrie: ["Geometrie", "geometrie"], rovnice: ["Rovnice", "rovnice"], procenta: ["Procenta", "procenta"],
+  zlomky: ["Zlomky", "zlomky"], slovni: ["Slovní úloha", "slovní úloha"], slova: ["Slovní úloha", "slovní úloha"],
+  funkce: ["Funkce", "funkce"], pravdepodobnost: ["Pravděpodobnost", "pravděpodobnost"], kombinace: ["Kombinatorika", "kombinatorika"],
+  soustava: ["Soustava rovnic", "soustava rovnic"], pytagoras: ["Pythagorova věta", "Pythagorova věta"], cisla: ["Čísla", "čísla"],
+  kombinovane: ["Kombinované", "kombinované"], tabulka: ["Tabulka", "tabulka"], uhly: ["Úhly", "úhly"],
+};
+
 export function podtemaLabel(podtema: string): string | null {
-  return PODTEMA_LABELS[podtema] ?? null;
+  const known = PODTEMA_LABELS[podtema];
+  if (known) return known;
+  const parts = podtema.split("_");
+  if (parts.length >= 2 && parts.every((w) => COMBO_WORDS[w])) return parts.map((w, i) => COMBO_WORDS[w][i === 0 ? 0 : 1]).join(" + ");
+  return null;
 }
 
 export const TEMA_COLORS: Record<string, string> = {
