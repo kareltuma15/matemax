@@ -1,5 +1,5 @@
 {
-  "nazev": "Úhly — dorovnání (31 úloh: L1 ×8, L2 ×13, L3 ×10, všechny s obrázkem: pravidelné mnohoúhelníky, hodiny, osy úhlů, kružnice se středem, rovnoběžky)",
+  "nazev": "Úhly — dorovnání (36 úloh: L1 ×8, L2 ×14, L3 ×14, všechny s obrázkem: pravidelné mnohoúhelníky, hodiny, osy úhlů, kružnice se středem, rovnoběžky)",
   "examples": [
     {
       "id": "UHN1_01",
@@ -480,6 +480,28 @@
       "sm2_interval": 1
     },
     {
+      "id": "UHN2_14",
+      "tema": "uhly",
+      "podtema": "rovnobezky",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-primky-r.svg",
+        "width": 400,
+        "height": 340,
+        "alt": "Přímky p, q, r procházejí bodem R; přímka s je rovnoběžná s r, přímka t je kolmá na s; úhel mezi r a q je 125°, úhel mezi r a p je 25°; hledané úhly β a γ"
+      },
+      "zadani": "Přímky p, q a r procházejí bodem R, přímka s je rovnoběžná s přímkou r (viz obrázek). Úhel mezi přímkami r a q, označený na obrázku, má 125°. Jak velký je úhel β? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "55°",
+      "reseni_kroky": [
+        "Úhel mezi přímkou q a pravou částí přímky r je vedlejší k úhlu 125°: 180° − 125° = 55°.",
+        "Přímky r a s jsou rovnoběžné a q je příčka, takže úhel β je souhlasný s úhlem 55°.",
+        "β = 55°."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
       "id": "UHN3_01",
       "tema": "uhly",
       "podtema": "osa_uhlu",
@@ -742,6 +764,110 @@
         "Osa o úhel β půlí: φ = 26° : 2 = 13°."
       ],
       "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHN3_11",
+      "tema": "uhly",
+      "podtema": "osy_soumernosti",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-petiuhelnik-osy.svg",
+        "width": 360,
+        "height": 320,
+        "alt": "Pravidelný pětiúhelník ABCDE s osami souměrnosti o₁ (přes D) a o₂ (přes A), které se protínají v bodě S; úhel mezi osami 36°; úhlopříčka AD; hledaný úhel ω = SAD"
+      },
+      "zadani": "V pravidelném pětiúhelníku ABCDE jsou vyznačeny osy souměrnosti o₁ (prochází vrcholem D) a o₂ (prochází vrcholem A), jejich průsečík S a úsečka AD (viz obrázek). Úhel mezi osami má 36°. Jak velký je úhel ω = SAD? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "18°",
+      "reseni_kroky": [
+        "Osy souměrnosti pravidelného mnohoúhelníku se protínají v jeho středu, proto je SA = SD (poloměr opsané kružnice) a trojúhelník ASD je rovnoramenný.",
+        "Úhel ASD je vedlejší k úhlu 36° mezi osami: 180° − 36° = 144°.",
+        "Úhly při základně AD: ω = (180° − 144°) : 2 = 18°."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHN3_12",
+      "tema": "uhly",
+      "podtema": "rovnobezky",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-primky-r.svg",
+        "width": 400,
+        "height": 340,
+        "alt": "Přímky p, q, r procházejí bodem R; přímka s je rovnoběžná s r, přímka t je kolmá na s; úhel mezi r a q je 125°, úhel mezi r a p je 25°; hledané úhly β a γ"
+      },
+      "zadani": "Přímky p, q a r procházejí bodem R, přímka s je rovnoběžná s r a přímka t je kolmá na s (viz obrázek). Úhel mezi přímkami r a q, označený na obrázku, má 125°. Jak velký je úhel γ? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "35°",
+      "reseni_kroky": [
+        "Přímka q svírá s pravou částí přímky r úhel 180° − 125° = 55°.",
+        "Přímka t je kolmá na s, a protože s ∥ r, je kolmá i na r. Přímky q, r a t tedy tvoří pravoúhlý trojúhelník, ve kterém je jeden úhel 55° a druhý 90°.",
+        "Třetí úhel tohoto trojúhelníku je 180° − 90° − 55° = 35°. Úhel γ je k němu vrcholový, takže γ = 35°."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHN3_13",
+      "tema": "uhly",
+      "podtema": "rovnoramenny_trojuhelnik",
+      "obtiznost": 3,
+      "moznosti": [
+        "50°",
+        "65°",
+        "115°",
+        "130°",
+        "jiná velikost"
+      ],
+      "spravna": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-dva-trojuhelniky.svg",
+        "width": 400,
+        "height": 270,
+        "alt": "Dva shodné rovnoramenné trojúhelníky: první má úhel 50° při vrcholu, druhý má rameno rovnoběžné s ramenem prvního; přímka p je rovnoběžná se základnou prvního trojúhelníku; hledaný úhel α"
+      },
+      "zadani": "V rovině leží dva shodné rovnoramenné trojúhelníky. Přímka p je rovnoběžná se základnou prvního z nich. Druhý trojúhelník má právě jedno rameno rovnoběžné s ramenem prvního trojúhelníku (viz obrázek). Jak velký je úhel α? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "115°",
+      "reseni_kroky": [
+        "První trojúhelník má úhel 50° při vrcholu, úhly při základně mají (180° − 50°) : 2 = 65°.",
+        "Přímka p je rovnoběžná se základnou a rameno druhého trojúhelníku je rovnoběžné s ramenem prvního, takže přímka p svírá s tímto ramenem stejné úhly jako základna s ramenem prvního trojúhelníku: 65° a 115°.",
+        "Úhel α je tupý, tedy 180° − 65° = 115°. Správně je C). (Druhé rameno druhého trojúhelníku pro výpočet nepotřebujeme.)"
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHN3_14",
+      "tema": "uhly",
+      "podtema": "osa_uhlu",
+      "obtiznost": 3,
+      "moznosti": [
+        "12°",
+        "22°",
+        "32°",
+        "44°",
+        "jiná velikost"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-obdelnik-osy.svg",
+        "width": 400,
+        "height": 290,
+        "alt": "Obdélník ABCD s bodem X na straně CD; přímka o₁ je osa úhlu BAX, přímka o₂ osa úhlu AXB; úhel 24° u A, úhel 124° v průsečíku os; hledaný úhel α u B"
+      },
+      "zadani": "V obdélníku ABCD leží na straně CD bod X. Přímka o₁ je osou úhlu BAX a přímka o₂ je osou úhlu AXB (viz obrázek). V průsečíku os je vyznačen úhel 124°. Jak velký je úhel α? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "22°",
+      "reseni_kroky": [
+        "Osa o₁ půlí úhel BAX, proto úhel BAX = 2 · 24° = 48°.",
+        "Označme I průsečík os. V trojúhelníku AIX je úhel IAX = 24° a úhel AIX = 124°, takže úhel AXI = 180° − 24° − 124° = 32°. Osa o₂ půlí úhel AXB, proto AXB = 2 · 32° = 64°.",
+        "V trojúhelníku ABX je úhel ABX = 180° − 48° − 64° = 68°. Úhel ABC je pravý, takže α = 90° − 68° = 22°. Správně je B)."
+      ],
+      "cas_sekund": 330,
       "sm2_interval": 1
     }
   ]

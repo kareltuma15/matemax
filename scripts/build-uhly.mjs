@@ -1,4 +1,4 @@
-// Úhly (CERMAT styl): 31 nových úloh UHN1_* (L1 ×8), UHN2_* (L2 ×13), UHN3_* (L3 ×10) — KAŽDÁ s vlastním obrázkem (gen-uhly-svg.mjs),
+// Úhly (CERMAT styl): 36 nových úloh UHN1_* (L1 ×8), UHN2_* (L2 ×14), UHN3_* (L3 ×14) — KAŽDÁ s vlastním obrázkem (gen-uhly-svg.mjs),
 // protože CERMAT úlohy na úhly jsou vždy obrázkové (zadané údaje jsou v obrázku, úhly se nemají měřit, ale počítat).
 // Spuštění: node scripts/gen-uhly-svg.mjs && node scripts/build-uhly.mjs  → doplní/přepíše UHN* v src/data/nahled-batch.json (ostatní dávky nechá).
 // Každá odpověď se nezávisle přepočítá; psané odpovědi musí jít vyhodnotit, A–E musí mít právě jednu správnou možnost.
@@ -34,6 +34,10 @@ const IMG = {
   rovnobeznik: img("nove-rovnobeznik-osa.svg", 270, 230, "Rovnoběžník ABCD s úhlem 70° u vrcholu A; osa úhlu při A protíná stranu BC v bodě E; hledaný úhel AEC"),
   hodiny1440: img("nove-hodiny-14-40.svg", 210, 210, "Ciferník hodin ve 14:40 (2:40); hledaný menší úhel mezi ručičkami"),
   vnejsi: img("nove-vnejsi-uhly.svg", 300, 230, "Trojúhelník ABC s prodlouženými stranami; vnější úhly α′ při A, β′ při B a 140° při C"),
+  petiuhelnik: img("nove-petiuhelnik-osy.svg", 360, 320, "Pravidelný pětiúhelník ABCDE s osami souměrnosti o₁ (přes D) a o₂ (přes A), které se protínají v bodě S; úhel mezi osami 36°; úhlopříčka AD; hledaný úhel ω = SAD"),
+  primkyR: img("nove-primky-r.svg", 400, 340, "Přímky p, q, r procházejí bodem R; přímka s je rovnoběžná s r, přímka t je kolmá na s; úhel mezi r a q je 125°, úhel mezi r a p je 25°; hledané úhly β a γ"),
+  dvaTroj: img("nove-dva-trojuhelniky.svg", 400, 270, "Dva shodné rovnoramenné trojúhelníky: první má úhel 50° při vrcholu, druhý má rameno rovnoběžné s ramenem prvního; přímka p je rovnoběžná se základnou prvního trojúhelníku; hledaný úhel α"),
+  obdelnikOsy: img("nove-obdelnik-osy.svg", 400, 290, "Obdélník ABCD s bodem X na straně CD; přímka o₁ je osa úhlu BAX, přímka o₂ osa úhlu AXB; úhel 24° u A, úhel 124° v průsečíku os; hledaný úhel α u B"),
   osyRovnobezky: img("nove-rovnobezky-osy.svg", 300, 190, "Rovnoběžky p a q protnuté příčkou AB; úhel 70° u bodu A; osy úhlů na téže straně příčky se protínají v bodě O; hledaný úhel AOB"),
 };
 
@@ -142,6 +146,11 @@ const ex = [
     "V pravoúhlém trojúhelníku CPB je úhel β = 90° − 64° = 26°.",
     "V pravoúhlém trojúhelníku ABC je α = 90° − 26° = 64°.",
   ], 210, { image: IMG.thales }),
+  typed("UHN2_14", "rovnobezky", 2, "Přímky p, q a r procházejí bodem R, přímka s je rovnoběžná s přímkou r (viz obrázek). Úhel mezi přímkami r a q, označený na obrázku, má 125°. Jak velký je úhel β?" + ILU, "55°", [
+    "Úhel mezi přímkou q a pravou částí přímky r je vedlejší k úhlu 125°: 180° − 125° = 55°.",
+    "Přímky r a s jsou rovnoběžné a q je příčka, takže úhel β je souhlasný s úhlem 55°.",
+    "β = 55°.",
+  ], 150, { image: IMG.primkyR }),
 
   // ───────── L3 ─────────
   choice("UHN3_01", "osa_uhlu", 3, "V trojúhelníku ABC je α = 52° a β = 64° (viz obrázek). Osy úhlů při vrcholech A a B se protínají v bodě I. Jak velký je úhel AIB?" + ILU,
@@ -203,6 +212,28 @@ const ex = [
     "V pravoúhlém trojúhelníku CPB je úhel β u vrcholu B roven 90° − 64° = 26°.",
     "Osa o úhel β půlí: φ = 26° : 2 = 13°.",
   ], 270, { image: IMG.thales }),
+  typed("UHN3_11", "osy_soumernosti", 3, "V pravidelném pětiúhelníku ABCDE jsou vyznačeny osy souměrnosti o₁ (prochází vrcholem D) a o₂ (prochází vrcholem A), jejich průsečík S a úsečka AD (viz obrázek). Úhel mezi osami má 36°. Jak velký je úhel ω = SAD?" + ILU, "18°", [
+    "Osy souměrnosti pravidelného mnohoúhelníku se protínají v jeho středu, proto je SA = SD (poloměr opsané kružnice) a trojúhelník ASD je rovnoramenný.",
+    "Úhel ASD je vedlejší k úhlu 36° mezi osami: 180° − 36° = 144°.",
+    "Úhly při základně AD: ω = (180° − 144°) : 2 = 18°.",
+  ], 270, { image: IMG.petiuhelnik }),
+  typed("UHN3_12", "rovnobezky", 3, "Přímky p, q a r procházejí bodem R, přímka s je rovnoběžná s r a přímka t je kolmá na s (viz obrázek). Úhel mezi přímkami r a q, označený na obrázku, má 125°. Jak velký je úhel γ?" + ILU, "35°", [
+    "Přímka q svírá s pravou částí přímky r úhel 180° − 125° = 55°.",
+    "Přímka t je kolmá na s, a protože s ∥ r, je kolmá i na r. Přímky q, r a t tedy tvoří pravoúhlý trojúhelník, ve kterém je jeden úhel 55° a druhý 90°.",
+    "Třetí úhel tohoto trojúhelníku je 180° − 90° − 55° = 35°. Úhel γ je k němu vrcholový, takže γ = 35°.",
+  ], 270, { image: IMG.primkyR }),
+  choice("UHN3_13", "rovnoramenny_trojuhelnik", 3, "V rovině leží dva shodné rovnoramenné trojúhelníky. Přímka p je rovnoběžná se základnou prvního z nich. Druhý trojúhelník má právě jedno rameno rovnoběžné s ramenem prvního trojúhelníku (viz obrázek). Jak velký je úhel α?" + ILU,
+    ["50°", "65°", "115°", "130°", "jiná velikost"], 2, [
+      "První trojúhelník má úhel 50° při vrcholu, úhly při základně mají (180° − 50°) : 2 = 65°.",
+      "Přímka p je rovnoběžná se základnou a rameno druhého trojúhelníku je rovnoběžné s ramenem prvního, takže přímka p svírá s tímto ramenem stejné úhly jako základna s ramenem prvního trojúhelníku: 65° a 115°.",
+      "Úhel α je tupý, tedy 180° − 65° = 115°. Správně je C). (Druhé rameno druhého trojúhelníku pro výpočet nepotřebujeme.)",
+    ], 270, { image: IMG.dvaTroj }),
+  choice("UHN3_14", "osa_uhlu", 3, "V obdélníku ABCD leží na straně CD bod X. Přímka o₁ je osou úhlu BAX a přímka o₂ je osou úhlu AXB (viz obrázek). V průsečíku os je vyznačen úhel 124°. Jak velký je úhel α?" + ILU,
+    ["12°", "22°", "32°", "44°", "jiná velikost"], 1, [
+      "Osa o₁ půlí úhel BAX, proto úhel BAX = 2 · 24° = 48°.",
+      "Označme I průsečík os. V trojúhelníku AIX je úhel IAX = 24° a úhel AIX = 124°, takže úhel AXI = 180° − 24° − 124° = 32°. Osa o₂ půlí úhel AXB, proto AXB = 2 · 32° = 64°.",
+      "V trojúhelníku ABX je úhel ABX = 180° − 48° − 64° = 68°. Úhel ABC je pravý, takže α = 90° − 68° = 22°. Správně je B).",
+    ], 330, { image: IMG.obdelnikOsy }),
 ];
 
 // ───────── nezávislé ověření ─────────
@@ -245,6 +276,12 @@ ok("L3_07", clockAngle(14, 40) === 160 && clockAngle(2, 40) === 160 && by.UHN3_0
 { let sol = []; for (let k = 1; k < 100; k++) { const A = 5 * k, B = 6 * k; if (A + B + 140 === 360) sol.push([A, B]); } const [ea, eb] = sol[0]; const inner = [180 - ea, 180 - eb, 180 - 140]; ok("L3_08", sol.length === 1 && inner.reduce((s, v) => s + v, 0) === 180 && Math.max(...inner) === 80 && by.UHN3_08.odpoved === "80°", sol); }
 ok("L3_09", 70 / 2 + 110 / 2 === 90 && 180 - 70 / 2 - 110 / 2 === 90 && opt("UHN3_09") === "90°");
 { const beta = 90 - (180 - 116); ok("L3_10", beta === 26 && beta / 2 === 13 && by.UHN3_10.odpoved === "13°"); }
+ok("L2_14", 180 - 125 === 55 && by.UHN2_14.odpoved === "55°");
+{ const sas = 180 - (180 - 36), asd = 180 - 36, omega = (180 - asd) / 2; ok("L3_11", sas === 36 && asd === 144 && omega === 18 && by.UHN3_11.odpoved === "18°"); // S je střed: 5 shodných středových úhlů po 72°, A a D jsou 2 kroky od sebe
+  ok("L3_11 střed", 360 / 5 * 2 === asd && 180 - asd === 36); }
+{ const t = 180 - 125, gam = 180 - 90 - t; ok("L3_12", t === 55 && gam === 35 && by.UHN3_12.odpoved === "35°"); }
+{ const base = (180 - 50) / 2; ok("L3_13", base === 65 && 180 - base === 115 && opt("UHN3_13") === "115°" && by.UHN3_13.moznosti.includes("130°")); }
+{ const bax = 2 * 24, axi = 180 - 24 - 124, axb = 2 * axi, abx = 180 - bax - axb, alfa = 90 - abx; ok("L3_14", bax === 48 && axb === 64 && abx === 68 && alfa === 22 && opt("UHN3_14") === "22°"); }
 // struktura + zadávání odpovědí
 for (const e of ex) {
   ok(e.id + " obrázek", e.image?.kind === "static" && fs.existsSync("public" + e.image.url) && !!e.image.alt, e.id);
@@ -265,7 +302,7 @@ for (const e of ex) {
   if (/PŘEPOČ|přepoč|\boprava\b|zkusme|Jiný postup|Pozor: výsledek/i.test(e.reseni_kroky.join(" "))) ok(e.id + " poznámka v řešení", false);
 }
 const ids = ex.map((e) => e.id);
-ok("unikátní id", new Set(ids).size === ids.length && ex.length === 31);
+ok("unikátní id", new Set(ids).size === ids.length && ex.length === 36);
 const all = ["databaze", "cermat-200", "doplnky-uhly-souhrnne", "konstrukce-interaktivni"].flatMap((f) => JSON.parse(fs.readFileSync(`src/data/${f}.json`, "utf8")).examples);
 ok("id bez kolize s databází", ids.every((id) => !all.some((e) => e.id === id)));
 const lv = (n) => ex.filter((e) => e.obtiznost === n).length;
@@ -275,6 +312,6 @@ if (fail) { console.log("NEZAPISUJI"); process.exit(1); }
 let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* bez předchozí dávky */ }
 const others = (prev.examples ?? []).filter((e) => !/^UHN[123]_/.test(e.id));
-const nazev = others.length ? `${prev.nazev} + Úhly (31 úloh)` : "Úhly — dorovnání (31 úloh: L1 ×8, L2 ×13, L3 ×10, všechny s obrázkem: pravidelné mnohoúhelníky, hodiny, osy úhlů, kružnice se středem, rovnoběžky)";
+const nazev = others.length ? `${prev.nazev} + Úhly (36 úloh)` : "Úhly — dorovnání (36 úloh: L1 ×8, L2 ×14, L3 ×14, všechny s obrázkem: pravidelné mnohoúhelníky, hodiny, osy úhlů, kružnice se středem, rovnoběžky)";
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...ex] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${ex.length} úhlových)`);

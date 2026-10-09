@@ -502,5 +502,107 @@ partialPolygon("nove-mnohouhelnik-vnitrni-150.svg", 12, "int", "150°", "Část 
   ].join("\n"), "Trojúhelník ABC vepsaný do kružnice se středem S na straně AB; přímka q prochází bodem C kolmo na AB; osa o úhlu při B; úhel 116° u C; hledané úhly α a φ");
 }
 
+// ───────────── CERMAT vzory 2: osy pětiúhelníku, přímky bodem R, dva shodné trojúhelníky, obdélník s osami ─────────────
+const dashdot = (a, b, c = NAVY) => L(a, b, { stroke: c, w: 1.6, dash: "11 3 2 3" });
+const extendLine = (a, b, k0, k1) => [add(a, mul(sub(a, b), k0)), add(b, mul(sub(b, a), k1))];
+
+// m) pravidelný pětiúhelník ABCDE s osami souměrnosti o1 (vrchol D) a o2 (vrchol A)
+{
+  const c = P(0, 0), Rr = 100, S = c;
+  const V = { D: polar(c, Rr, 270), C: polar(c, Rr, 342), B: polar(c, Rr, 54), A: polar(c, Rr, 126), E: polar(c, Rr, 198) };
+  const o1a = add(V.D, P(0, -30)), o1b = P(0, Rr * Math.sin(rad(54)) + 34);       // o1 přes D a střed, pod stranou AB
+  const dA = unit(sub(S, V.A)), o2a = add(V.A, mul(dA, -28)), o2b = add(S, mul(dA, 190));
+  const o2far = add(S, mul(dA, 70));                                               // bod na o2 za středem (k úhlu 36°)
+  const p = fit({ ...V, S, o1a, o1b, o2a, o2b, o2far }, 360, 320, 26);
+  must("pět 36", ang(p.S, p.D, p.o2far), 36); must("pět SAD", ang(p.A, p.S, p.D), 18); must("pět ASD", ang(p.S, p.A, p.D), 144);
+  must("pět SA=SD", len(sub(p.S, p.A)), len(sub(p.S, p.D)), 0.01);
+  must("pět strana", len(sub(p.A, p.B)), len(sub(p.B, p.C)), 0.01);
+  const cen = p.S;
+  write("nove-petiuhelnik-osy.svg", 360, 320, [
+    poly([p.A, p.B, p.C, p.D, p.E]), dashdot(p.o1a, p.o1b), dashdot(p.o2a, p.o2b), L(p.A, p.D, { stroke: NAVY, w: 1.8 }),
+    angle(p.S, p.D, p.o2far, 26, "36°", 0.5, false), angle(p.A, p.D, p.S, 40, "ω", 0.5, true),
+    dot(p.S, 3), text(p.S.x + 14, p.S.y + 16, "S", { size: 15, weight: 700, fill: NAVY }),
+    ...["A", "B", "C", "D", "E"].map((n) => vlabel(p[n], n, cen, 16)),
+    text(p.o1b.x + 14, p.o1b.y + 4, "o₁", { size: 14, weight: 700, fill: NAVY, italic: true }), text(p.o2b.x + 4, p.o2b.y - 8, "o₂", { size: 14, weight: 700, fill: NAVY, italic: true }),
+  ].join("\n"), "Pravidelný pětiúhelník ABCDE s osami souměrnosti o₁ (přes D) a o₂ (přes A), které se protínají v bodě S; úhel mezi osami 36°; úhlopříčka AD; hledaný úhel ω = SAD");
+}
+
+// n) přímky p, q, r bodem R, s ∥ r, t ⊥ s
+{
+  const R0 = P(0, 0), yS = 78, xT = 100;
+  const seg = (deg, r1, r2) => [ray(R0, deg + 180, r1), ray(R0, deg, r2)];
+  const [rl, rr] = [P(-150, 0), P(170, 0)];
+  const [pa, pb] = seg(25, 150, 190), [qa, qb] = seg(55, 100, 250);
+  const sL = P(-150, yS), sR = P(170, yS), tT = P(xT, -190), tB = P(xT, yS + 28);
+  const qAtS = P(yS / Math.tan(rad(55)) * -1, yS);                    // q (ray 235°) protíná s
+  const qAtT = P(xT, -xT * Math.tan(rad(55)));                       // q protíná t
+  const tUp = P(xT, qAtT.y - 60), qBeyond = add(qAtT, mul(unit(sub(qAtT, R0)), 60));
+  const p = fit({ rl, rr, pa, pb, qa, qb, sL, sR, tT, tB, R0, qAtS, qAtT, tUp, qBeyond }, 400, 340, 26);
+  const rightOfS = P(p.qAtS.x + 40, p.qAtS.y), q70 = add(p.qAtS, mul(unit(sub(p.R0, p.qAtS)), 40));
+  const r0 = P(p.R0.x + 40, p.R0.y), rL = P(p.R0.x - 40, p.R0.y), qUpR = add(p.R0, mul(unit(sub(p.qb, p.R0)), 40));
+  must("R 125", ang(p.R0, rL, qUpR), 125); must("R β", ang(p.qAtS, rightOfS, q70), 55); must("R γ", ang(p.qAtT, p.tUp, p.qBeyond), 35);
+  must("R ∥", p.sL.y - p.sR.y, 0, 0.01); must("R ⊥", p.tT.x - p.tB.x, 0, 0.01);
+  must("R p", ang(p.R0, r0, p.pb), 25);
+  write("nove-primky-r.svg", 400, 340, [
+    L(p.rl, p.rr, { w: 2 }), L(p.sL, p.sR, { w: 2 }), L(p.tT, p.tB, { w: 2 }), L(p.pa, p.pb, { w: 2 }), L(p.qa, p.qb, { w: 2 }),
+    angle(p.R0, rL, qUpR, 42, "125°", 0.5, false), angle(p.R0, r0, p.pb, 60, "25°", 0.5, false),
+    angle(p.qAtS, rightOfS, q70, 34, "β", 0.45, true), angle(p.qAtT, p.tUp, p.qBeyond, 34, "γ", 0.5, true),
+    rightMark(P(p.tB.x, p.sR.y), P(p.tB.x, p.sR.y - 30), P(p.tB.x + 30, p.sR.y), 10),
+    dot(p.R0, 3), text(p.R0.x - 6, p.R0.y + 20, "R", { size: 15, weight: 700, fill: NAVY }),
+    text(p.rr.x - 6, p.rr.y - 8, "r", { size: 15, weight: 700, fill: NAVY, italic: true }), text(p.sR.x - 6, p.sR.y - 8, "s", { size: 15, weight: 700, fill: NAVY, italic: true }),
+    text(p.tB.x + 12, p.tB.y + 2, "t", { size: 15, weight: 700, fill: NAVY, italic: true }),
+    text(p.pb.x + 8, p.pb.y - 6, "p", { size: 15, weight: 700, fill: NAVY, italic: true }), text(p.qb.x + 10, p.qb.y + 6, "q", { size: 15, weight: 700, fill: NAVY, italic: true }),
+    // značky rovnoběžnosti r ∥ s
+    text(p.rl.x + 40, p.rl.y - 7, "//", { size: 14, weight: 800, fill: NAVY }), text(p.sL.x + 40, p.sL.y - 7, "//", { size: 14, weight: 800, fill: NAVY }),
+  ].join("\n"), "Přímky p, q, r procházejí bodem R; přímka s je rovnoběžná s r, přímka t je kolmá na s; úhel mezi r a q je 125°, úhel mezi r a p je 25°; hledané úhly β a γ");
+}
+
+// o) dva shodné rovnoramenné trojúhelníky a rovnoběžka p s základnou prvního
+{
+  const L1 = 130, half = 25;
+  const A1 = P(0, 0);
+  const rb = ray(A1, -(90 - half), L1), lb = ray(A1, -(90 + half), L1);                  // základna T1 vodorovná
+  const Q = P(125, -20), q1 = ray(Q, -(90 - half), L1), q2 = ray(Q, -(90 - half) + 2 * half, L1);  // T2: rameno 1 ∥ pravému ramenu T1
+  const yP = 75, pL = P(-60, yP), pR = P(300, yP);
+  const X = P(Q.x + (yP - Q.y) / Math.tan(rad(90 - half)), yP);                           // p ∩ rameno 1 trojúhelníku T2
+  const p = fit({ A1, rb, lb, Q, q1, q2, pL, pR, X }, 400, 270, 24);
+  must("2T apex", ang(p.A1, p.rb, p.lb), 50); must("2T T2 apex", ang(p.Q, p.q1, p.q2), 50);
+  must("2T shodné", len(sub(p.A1, p.rb)), len(sub(p.Q, p.q1)), 0.01); must("2T T2 ramena", len(sub(p.Q, p.q1)), len(sub(p.Q, p.q2)), 0.01);
+  must("2T rovnoběžné", Math.abs((p.rb.x - p.A1.x) * (p.q1.y - p.Q.y) - (p.rb.y - p.A1.y) * (p.q1.x - p.Q.x)), 0, 0.5);
+  const pRay = P(p.X.x - 60, p.X.y), down = add(p.X, mul(unit(sub(p.q1, p.Q)), 60));
+  must("2T α", ang(p.X, pRay, down), 115);
+  write("nove-dva-trojuhelniky.svg", 400, 270, [
+    poly([p.A1, p.rb, p.lb]), poly([p.Q, p.q1, p.q2]),
+    L(p.pL, p.pR, { w: 2 }), ticks(p.A1, p.rb, 2), ticks(p.Q, p.q1, 2),
+    angle(p.A1, p.rb, p.lb, 34, "50°", 0.5, false), angle(p.X, pRay, down, 26, "α", 0.5, true),
+    text(p.pR.x - 8, p.pR.y - 8, "p", { size: 15, weight: 700, fill: NAVY, italic: true }),
+  ].join("\n"), "Dva shodné rovnoběžné rovnoramenné trojúhelníky: první má úhel 50° při vrcholu, druhý má rameno rovnoběžné s ramenem prvního; přímka p je rovnoběžná se základnou prvního trojúhelníku; hledaný úhel α");
+}
+
+// p) obdélník ABCD, bod X na straně CD, osy úhlů BAX (o1) a AXB (o2)
+{
+  const W = 240, a1 = rad(48), x1 = rad(64), b1 = rad(68);
+  const A = P(0, 0), B = P(W, 0), AX = (W * Math.sin(b1)) / Math.sin(x1);
+  const h = AX * Math.sin(a1), X = P(AX * Math.cos(a1), -h);
+  const C = P(W, -h), D = P(0, -h);
+  const a = len(sub(X, B)), b = len(sub(X, A)), x = W;                              // protilehlé strany: a (u A), b (u B), x (u X)
+  const I = P((a * A.x + b * B.x + x * X.x) / (a + b + x), (a * A.y + b * B.y + x * X.y) / (a + b + x));
+  const [o1a, o1b] = [add(A, mul(sub(A, I), 0.12)), add(I, mul(unit(sub(I, A)), 95))];
+  const [o2a, o2b] = [add(X, mul(sub(X, I), 0.1)), add(I, mul(unit(sub(I, X)), 50))];
+  const p = fit({ A, B, C, D, X, I, o1a, o1b, o2a, o2b }, 400, 290, 30);
+  must("ob A/2", ang(p.A, p.B, p.I), 24); must("ob BAX", ang(p.A, p.B, p.X), 48); must("ob X/2", ang(p.X, p.A, p.I), 32);
+  must("ob AIX", ang(p.I, p.A, p.X), 124); must("ob α", ang(p.B, p.X, p.C), 22); must("ob ABX", ang(p.B, p.A, p.X), 68);
+  must("ob pravé", ang(p.A, p.B, p.D), 90);
+  const cen = centroid([p.A, p.B, p.C, p.D]);
+  write("nove-obdelnik-osy.svg", 400, 290, [
+    poly([p.A, p.B, p.C, p.D]), L(p.A, p.X, { w: 2.2 }), L(p.X, p.B, { w: 2.2 }),
+    dashdot(p.o1a, p.o1b), dashdot(p.o2a, p.o2b),
+    angle(p.A, p.B, p.I, 44, "24°", 0.5, false), angle(p.I, p.A, p.X, 22, "124°", 0.5, false), angle(p.B, p.X, p.C, 34, "α", 0.5, true),
+    dot(p.X, 3), dot(p.I, 3),
+    vlabel(p.A, "A", cen), vlabel(p.B, "B", cen), vlabel(p.C, "C", cen), vlabel(p.D, "D", cen), text(p.X.x, p.X.y - 12, "X", { size: 15, weight: 700, fill: NAVY }),
+    text(p.o1b.x - 4, p.o1b.y - 12, "o₁", { size: 14, weight: 700, fill: NAVY, italic: true }), text(p.o2b.x - 14, p.o2b.y + 14, "o₂", { size: 14, weight: 700, fill: NAVY, italic: true }),
+  ].join("\n"), "Obdélník ABCD s bodem X na straně CD; přímka o₁ je osa úhlu BAX, přímka o₂ osa úhlu AXB; úhel 24° u A, úhel 124° v průsečíku os; hledaný úhel α u B");
+}
+
 console.log("Zapsáno:");
 for (const w of written) console.log(`  uhly/${w.name} (${w.w}×${w.h})`);

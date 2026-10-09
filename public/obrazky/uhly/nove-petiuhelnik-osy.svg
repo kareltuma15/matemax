@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 320" width="360" height="320" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Pravidelný pětiúhelník ABCDE s osami souměrnosti o₁ (přes D) a o₂ (přes A), které se protínají v bodě S; úhel mezi osami 36°; úhlopříčka AD; hledaný úhel ω = SAD</title>
+  <polygon points="113.09,260.08 230.38,260.08 266.62,148.53 171.73,79.59 76.84,148.53" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="171.73" y1="49.66" x2="171.73" y2="294" stroke="#0D1B3E" stroke-width="1.6" stroke-dasharray="11 3 2 3"/>
+  <line x1="96.67" y1="282.68" x2="283.16" y2="26" stroke="#0D1B3E" stroke-width="1.6" stroke-dasharray="11 3 2 3"/>
+  <line x1="113.09" y1="260.08" x2="171.73" y2="79.59" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 171.73 153.36 A 26 26 0 0 1 187.01 158.33" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="183.78" y="147.27" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">36°</text>
+  <path d="M 125.45 222.04 A 40 40 0 0 1 136.6 227.72" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="137.15" y="217.85" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">ω</text>
+  <circle cx="171.73" cy="179.36" r="3" fill="#0D1B3E"/>
+  <text x="185.73" y="195.36" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">S</text>
+  <text x="103.68" y="278.02" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="239.78" y="278.02" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="281.84" y="148.59" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="171.73" y="68.59" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+  <text x="61.63" y="148.59" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">E</text>
+  <text x="185.73" y="298" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">o₁</text>
+  <text x="287.16" y="18" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">o₂</text>
+</svg>

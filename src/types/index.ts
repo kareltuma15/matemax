@@ -446,6 +446,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   rovnobeznik:              "Rovnoběžník",
   pravidelny_mnohouhelnik:  "Pravidelný mnohoúhelník",
   doplnkove_uhly:           "Doplňkové úhly",
+  osy_soumernosti:          "Osy souměrnosti",
   stupne_minuty:            "Stupně a minuty",
   hodiny:                   "Úhel hodinových ručiček",
   deltoid:                  "Deltoid",

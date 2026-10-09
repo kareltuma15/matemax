@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 290" width="400" height="290" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélník ABCD s bodem X na straně CD; přímka o₁ je osa úhlu BAX, přímka o₂ osa úhlu AXB; úhel 24° u A, úhel 124° v průsečíku os; hledaný úhel α u B</title>
+  <polygon points="74.29,251.28 345.31,251.28 345.31,43.51 74.29,43.51" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="74.29" y1="251.28" x2="261.36" y2="43.51" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="261.36" y1="43.51" x2="345.31" y2="251.28" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="54.69" y1="260" x2="335.55" y2="134.96" stroke="#0D1B3E" stroke-width="1.6" stroke-dasharray="11 3 2 3"/>
+  <line x1="263.74" y1="30" x2="227.74" y2="234.2" stroke="#0D1B3E" stroke-width="1.6" stroke-dasharray="11 3 2 3"/>
+  <path d="M 118.29 251.28 A 44 44 0 0 0 114.48 233.38" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="130.04" y="244.43" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">24°</text>
+  <path d="M 217.44 187.54 A 22 22 0 0 1 241.36 156.92" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="209.96" y="162.04" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">124°</text>
+  <path d="M 332.57 219.75 A 34 34 0 0 1 345.31 217.28" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="336.34" y="210.14" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">α</text>
+  <circle cx="261.36" cy="43.51" r="3" fill="#0D1B3E"/>
+  <circle cx="237.54" cy="178.59" r="3" fill="#0D1B3E"/>
+  <text x="62.38" y="265.4" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="357.21" y="265.4" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="357.21" y="39.38" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="62.38" y="39.38" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+  <text x="261.36" y="31.51" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">X</text>
+  <text x="331.55" y="122.96" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">o₁</text>
+  <text x="213.74" y="248.2" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">o₂</text>
+</svg>
