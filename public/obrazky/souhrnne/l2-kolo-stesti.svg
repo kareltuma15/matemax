@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 220" width="330" height="220" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Kolo štěstí rozdělené na 8 shodných výsečí: 3 červené, 2 modré a 3 zelené</title>
+  <path d="M 110 110 L 110 20 A 90 90 0 0 1 173.64 46.36 Z" fill="#fca5a5" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="131.35" y="63.45" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">č</text>
+  <path d="M 110 110 L 173.64 46.36 A 90 90 0 0 1 200 110 Z" fill="#93c5fd" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="161.55" y="93.65" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">m</text>
+  <path d="M 110 110 L 200 110 A 90 90 0 0 1 173.64 173.64 Z" fill="#86efac" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="161.55" y="136.35" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">z</text>
+  <path d="M 110 110 L 173.64 173.64 A 90 90 0 0 1 110 200 Z" fill="#fca5a5" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="131.35" y="166.55" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">č</text>
+  <path d="M 110 110 L 110 200 A 90 90 0 0 1 46.36 173.64 Z" fill="#86efac" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="88.65" y="166.55" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">z</text>
+  <path d="M 110 110 L 46.36 173.64 A 90 90 0 0 1 20 110 Z" fill="#93c5fd" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="58.45" y="136.35" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">m</text>
+  <path d="M 110 110 L 20 110 A 90 90 0 0 1 46.36 46.36 Z" fill="#fca5a5" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="58.45" y="93.65" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">č</text>
+  <path d="M 110 110 L 46.36 46.36 A 90 90 0 0 1 110 20 Z" fill="#86efac" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="88.65" y="63.45" font-size="16" font-weight="800" fill="#0D1B3E" text-anchor="middle">z</text>
+  <circle cx="110" cy="110" r="5" fill="#0D1B3E"/>
+  <polygon points="110,18 102,4 118,4" fill="#0D1B3E"/>
+  <text x="218" y="70" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="start">č – červená</text>
+  <text x="218" y="88" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="start">m – modrá</text>
+  <text x="218" y="106" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="start">z – zelená</text>
+</svg>

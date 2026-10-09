@@ -1,4 +1,978 @@
 {
-  "nazev": "Úhly — dorovnání (36 úloh: L1 ×8, L2 ×14, L3 ×14, všechny s obrázkem: pravidelné mnohoúhelníky, hodiny, osy úhlů, kružnice se středem, rovnoběžky) — ZAPSÁNO",
-  "examples": []
+  "nazev": "Souhrnné L2 — dvě témata najednou (46 úloh: 33 psaných, 7 A–E, 6 ano/ne; 15 s obrázkem nebo tabulkou) — nahradí 48 starých jednovětých úloh",
+  "examples": [
+    {
+      "id": "SOU2_01",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Obdélník má rozměry 12 cm a 8 cm. Délku zvětšíme o 25 % a šířku zmenšíme o 25 %. O kolik procent se zmenší obsah obdélníku?",
+      "odpoved": "6,25 %",
+      "reseni_kroky": [
+        "Původní obsah: 12 · 8 = 96 cm².",
+        "Nové rozměry: 12 · 1,25 = 15 cm a 8 · 0,75 = 6 cm, obsah 15 · 6 = 90 cm².",
+        "Rozdíl 96 − 90 = 6 cm², což je 6 : 96 = 0,0625, tedy 6,25 %."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_02",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "moznosti": [
+        "20 %",
+        "40 %",
+        "44 %",
+        "48 %",
+        "120 %"
+      ],
+      "spravna": 2,
+      "zadani": "Strana čtverce se zvětší o 20 %. O kolik procent se zvětší jeho obsah?",
+      "odpoved": "44 %",
+      "reseni_kroky": [
+        "Původní strana a, nová strana 1,2a.",
+        "Původní obsah a², nový obsah (1,2a)² = 1,44a².",
+        "Obsah vzroste o 44 %. Správně je C). (20 % je změna strany, 40 % je chyba při sčítání.)"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_03",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-zahrada-chodnik.svg",
+        "width": 330,
+        "height": 200,
+        "alt": "Kruhová zahrada o průměru 20 m obklopená chodníkem široký 1 m (obrázek není v měřítku)"
+      },
+      "zadani": "Kruhová zahrada má průměr 20 m a obklopuje ji chodník široký 1 m (viz obrázek). Kolik procent plochy zahrady tvoří plocha chodníku? Výsledek zapište v procentech.",
+      "odpoved": "21 %",
+      "reseni_kroky": [
+        "Zahrada má poloměr 10 m a obsah π · 10² = 100π m².",
+        "Zahrada s chodníkem má poloměr 11 m a obsah π · 11² = 121π m².",
+        "Chodník: 121π − 100π = 21π m².",
+        "21π : 100π = 0,21, tedy 21 %."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_04",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-dva-obdelniky.svg",
+        "width": 470,
+        "height": 196,
+        "alt": "Obdélník o stranách 9 cm a 6 cm a obdélník, jehož strany jsou o 50 % delší (obrázek není v měřítku)"
+      },
+      "zadani": "Obdélník má strany 9 cm a 6 cm. Každou jeho stranu prodloužíme o 50 % (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Obvod nového obdélníku je o 50 % větší než obvod původního.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Původní obvod 2 · (9 + 6) = 30 cm, nový 2 · (13,5 + 9) = 45 cm.",
+        "45 : 30 = 1,5, obvod je o 50 % větší — Ano."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_05",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-dva-obdelniky.svg",
+        "width": 470,
+        "height": 196,
+        "alt": "Obdélník o stranách 9 cm a 6 cm a obdélník, jehož strany jsou o 50 % delší (obrázek není v měřítku)"
+      },
+      "zadani": "Obdélník má strany 9 cm a 6 cm. Každou jeho stranu prodloužíme o 50 % (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Obsah nového obdélníku je o 50 % větší než obsah původního.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Původní obsah 9 · 6 = 54 cm², nový 13,5 · 9 = 121,5 cm².",
+        "121,5 : 54 = 2,25, obsah je 2,25krát větší, tedy o 125 % — Ne."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_06",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-dva-obdelniky.svg",
+        "width": 470,
+        "height": 196,
+        "alt": "Obdélník o stranách 9 cm a 6 cm a obdélník, jehož strany jsou o 50 % delší (obrázek není v měřítku)"
+      },
+      "zadani": "Obdélník má strany 9 cm a 6 cm. Každou jeho stranu prodloužíme o 50 % (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Nový obdélník má obsah 121,5 cm².\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Nové strany jsou 9 · 1,5 = 13,5 cm a 6 · 1,5 = 9 cm.",
+        "Obsah 13,5 · 9 = 121,5 cm² — Ano."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_07",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "moznosti": [
+        "20 %",
+        "60 %",
+        "72 %",
+        "72,8 %",
+        "jiná hodnota"
+      ],
+      "spravna": 3,
+      "zadani": "Hranu krychle zvětšíme o 20 %. O kolik procent se zvětší její objem?",
+      "odpoved": "72,8 %",
+      "reseni_kroky": [
+        "Původní objem a³, nový (1,2a)³ = 1,728a³.",
+        "Objem vzroste o 72,8 %. Správně je D). (72 % vznikne chybným zaokrouhlením.)"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_08",
+      "tema": "souhrnne",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 2,
+      "zadani": "Pole tvaru obdélníku má rozměry 80 m a 50 m. Na 30 % pole roste kukuřice a na čtvrtině zbytku brambory. Kolik metrů čtverečních pole zbývá?",
+      "odpoved": "2 100 m²",
+      "reseni_kroky": [
+        "Obsah pole: 80 · 50 = 4 000 m².",
+        "Kukuřice: 30 % ze 4 000 = 1 200 m², zbývá 2 800 m².",
+        "Brambory: 1/4 z 2 800 = 700 m².",
+        "Zbývá 2 800 − 700 = 2 100 m²."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_09",
+      "tema": "souhrnne",
+      "podtema": "zlomky_slovni",
+      "obtiznost": 2,
+      "moznosti": [
+        "60 l",
+        "75 l",
+        "90 l",
+        "120 l",
+        "150 l"
+      ],
+      "spravna": 4,
+      "zadani": "V nádrži je voda do dvou pětin jejího objemu. Když přilijeme 30 litrů vody, bude nádrž naplněná do tří pětin. Jaký je objem nádrže?",
+      "odpoved": "150 l",
+      "reseni_kroky": [
+        "Přibyly 3/5 − 2/5 = 1/5 objemu nádrže.",
+        "1/5 je 30 litrů, celý objem je 5 · 30 = 150 litrů. Správně je E)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_10",
+      "tema": "souhrnne",
+      "podtema": "procenta_slovni",
+      "obtiznost": 2,
+      "moznosti": [
+        "10 %",
+        "28 %",
+        "30 %",
+        "32 %",
+        "72 %"
+      ],
+      "spravna": 1,
+      "zadani": "Kabát nejdříve zlevnili o 20 %, a když se neprodal, zlevnili ho ještě o 10 % z nové ceny. O kolik procent je teď levnější než na začátku?",
+      "odpoved": "28 %",
+      "reseni_kroky": [
+        "Po první slevě stojí 80 % původní ceny, tedy 0,8.",
+        "Po druhé slevě stojí 0,9 · 0,8 = 0,72, tedy 72 % původní ceny.",
+        "Je levnější o 100 % − 72 % = 28 %. Správně je B). (30 % vznikne sečtením slev.)"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_11",
+      "tema": "souhrnne",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 2,
+      "zadani": "Ve třídě je 35 žáků. Chlapci tvoří tři sedminy třídy. Brýle nosí 40 % dívek. Kolik dívek brýle nenosí?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Chlapců je 3/7 z 35 = 15, dívek je 35 − 15 = 20.",
+        "Brýle nosí 40 % z 20 = 8 dívek.",
+        "Bez brýlí je 20 − 8 = 12 dívek."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_12",
+      "tema": "souhrnne",
+      "podtema": "zlomky_slovni",
+      "obtiznost": 2,
+      "zadani": "Turista první den ušel tři osminy trasy a druhý den 40 % zbytku. Zbývá mu ještě 45 km. Kolik kilometrů měří celá trasa?",
+      "odpoved": "120 km",
+      "reseni_kroky": [
+        "Po prvním dni zbývá 1 − 3/8 = 5/8 trasy.",
+        "Druhý den ušel 40 % z 5/8, tedy 2/5 · 5/8 = 1/4 trasy.",
+        "Zbývá 5/8 − 1/4 = 3/8 trasy a to je 45 km.",
+        "1/8 trasy je 15 km, celá trasa má 8 · 15 = 120 km."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_13",
+      "tema": "souhrnne",
+      "podtema": "procenta_tabulka",
+      "obtiznost": 2,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Ceny zboží v obchodě",
+        "hlavicka": [
+          "Zboží",
+          "Původní cena (Kč)",
+          "Po zdražení o 25 % (Kč)",
+          "Po zlevnění o 20 % (Kč)"
+        ],
+        "radky": [
+          [
+            "Kolo",
+            8000,
+            10000,
+            8000
+          ],
+          [
+            "Helma",
+            600,
+            750,
+            600
+          ],
+          [
+            "Zvonek",
+            120,
+            150,
+            120
+          ]
+        ]
+      },
+      "zadani": "V obchodě zdražili všechno zboží o 25 % a pak ho zlevnili o 20 % z nové ceny (viz tabulka). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Helma po zdražení stála 750 Kč.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Helma stála původně 600 Kč: 600 · 1,25 = 750 Kč — Ano."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_14",
+      "tema": "souhrnne",
+      "podtema": "procenta_tabulka",
+      "obtiznost": 2,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Ceny zboží v obchodě",
+        "hlavicka": [
+          "Zboží",
+          "Původní cena (Kč)",
+          "Po zdražení o 25 % (Kč)",
+          "Po zlevnění o 20 % (Kč)"
+        ],
+        "radky": [
+          [
+            "Kolo",
+            8000,
+            10000,
+            8000
+          ],
+          [
+            "Helma",
+            600,
+            750,
+            600
+          ],
+          [
+            "Zvonek",
+            120,
+            150,
+            120
+          ]
+        ]
+      },
+      "zadani": "V obchodě zdražili všechno zboží o 25 % a pak ho zlevnili o 20 % z nové ceny (viz tabulka). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Kolo zdražilo o 2 500 Kč.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Kolo stálo 8 000 Kč a po zdražení o 25 % 10 000 Kč.",
+        "Zdražilo o 10 000 − 8 000 = 2 000 Kč, ne o 2 500 Kč — Ne."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_15",
+      "tema": "souhrnne",
+      "podtema": "procenta_tabulka",
+      "obtiznost": 2,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Ceny zboží v obchodě",
+        "hlavicka": [
+          "Zboží",
+          "Původní cena (Kč)",
+          "Po zdražení o 25 % (Kč)",
+          "Po zlevnění o 20 % (Kč)"
+        ],
+        "radky": [
+          [
+            "Kolo",
+            8000,
+            10000,
+            8000
+          ],
+          [
+            "Helma",
+            600,
+            750,
+            600
+          ],
+          [
+            "Zvonek",
+            120,
+            150,
+            120
+          ]
+        ]
+      },
+      "zadani": "V obchodě zdražili všechno zboží o 25 % a pak ho zlevnili o 20 % z nové ceny (viz tabulka). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „U jakéhokoli zboží platí, že po zdražení o 25 % a zlevnění o 20 % z nové ceny je cena stejná jako na začátku.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Zdražení násobí cenu číslem 1,25, zlevnění číslem 0,8.",
+        "1,25 · 0,8 = 1, takže cena se vrátí na původní hodnotu — Ano."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_16",
+      "tema": "souhrnne",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 2,
+      "zadani": "Obchod smíchal 3 kg oříšků po 240 Kč za kilogram a 2 kg rozinek po 120 Kč za kilogram. Kolik korun stojí jeden kilogram směsi?",
+      "odpoved": "192 Kč",
+      "reseni_kroky": [
+        "Cena oříšků: 3 · 240 = 720 Kč, cena rozinek: 2 · 120 = 240 Kč.",
+        "Dohromady 960 Kč za 5 kg.",
+        "Jeden kilogram směsi: 960 : 5 = 192 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_17",
+      "tema": "souhrnne",
+      "podtema": "geometrie_rovnice",
+      "obtiznost": 2,
+      "zadani": "Obdélník má obvod 50 cm a jeho délka je o 5 cm větší než šířka. Jaký je obsah obdélníku?",
+      "odpoved": "150 cm²",
+      "reseni_kroky": [
+        "Polovina obvodu: a + b = 25, a = b + 5.",
+        "b + 5 + b = 25, takže b = 10 cm a a = 15 cm.",
+        "Obsah: 15 · 10 = 150 cm²."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_18",
+      "tema": "souhrnne",
+      "podtema": "geometrie_rovnice",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-rovnoramenny-obvod.svg",
+        "width": 240,
+        "height": 190,
+        "alt": "Rovnoramenný trojúhelník s rameny x, základnou x − 3 a obvodem 33 cm (obrázek není v měřítku)"
+      },
+      "zadani": "Rovnoramenný trojúhelník má základnu o 3 cm kratší než rameno a obvod 33 cm (viz obrázek). Kolik centimetrů měří rameno?",
+      "odpoved": "12 cm",
+      "reseni_kroky": [
+        "Rameno označíme x, základna má x − 3.",
+        "Obvod: x + x + (x − 3) = 33, tedy 3x = 36.",
+        "x = 12 cm. Kontrola: 12 + 12 + 9 = 33."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_19",
+      "tema": "souhrnne",
+      "podtema": "rovnice_slovni",
+      "obtiznost": 2,
+      "zadani": "Otec je čtyřikrát starší než syn. Za 5 let bude otec třikrát starší než syn. Kolik let je teď otci?",
+      "odpoved": "40",
+      "reseni_kroky": [
+        "Synovi je x let, otci 4x let.",
+        "Za 5 let: 4x + 5 = 3 · (x + 5).",
+        "4x + 5 = 3x + 15, takže x = 10.",
+        "Synovi je 10 let, otci 40 let."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_20",
+      "tema": "souhrnne",
+      "podtema": "rovnice_zlomky",
+      "obtiznost": 2,
+      "zadani": "Třetina čísla zvětšená o 7 je stejná jako polovina tohoto čísla zmenšená o 2. Jaké je to číslo?",
+      "odpoved": "54",
+      "reseni_kroky": [
+        "x/3 + 7 = x/2 − 2.",
+        "Vynásobíme 6: 2x + 42 = 3x − 12.",
+        "x = 54.",
+        "Kontrola: 54 : 3 + 7 = 25 a 54 : 2 − 2 = 25."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_21",
+      "tema": "souhrnne",
+      "podtema": "soustava_slovni",
+      "obtiznost": 2,
+      "zadani": "V pokladničce je 20 mincí, každá je buď dvoukorunová, nebo pětikorunová. Dohromady mají hodnotu 61 Kč. Kolik je v pokladničce pětikorun?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Dvoukorun je a, pětikorun b: a + b = 20 a 2a + 5b = 61.",
+        "Z první rovnice a = 20 − b, dosadíme: 40 − 2b + 5b = 61.",
+        "3b = 21, takže b = 7 (a = 13).",
+        "Kontrola: 13 · 2 + 7 · 5 = 26 + 35 = 61."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_22",
+      "tema": "souhrnne",
+      "podtema": "geometrie_pytagoras",
+      "obtiznost": 2,
+      "moznosti": [
+        "24 m",
+        "28 m",
+        "32 m",
+        "48 m",
+        "60 m"
+      ],
+      "spravna": 1,
+      "zadani": "Obdélníkový pozemek má úhlopříčku 10 m a jednu stranu 6 m. Jaký je jeho obvod?",
+      "odpoved": "28 m",
+      "reseni_kroky": [
+        "Druhá strana podle Pythagorovy věty: √(10² − 6²) = √64 = 8 m.",
+        "Obvod: 2 · (6 + 8) = 28 m. Správně je B)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_23",
+      "tema": "souhrnne",
+      "podtema": "pravdepodobnost_kombinace",
+      "obtiznost": 2,
+      "zadani": "Hodíme dvakrát hrací kostkou (nebo jednou dvěma různými kostkami). Jaká je pravděpodobnost, že součet hozených čísel bude 7? Výsledek napište zlomkem v základním tvaru.",
+      "odpoved": "1/6",
+      "reseni_kroky": [
+        "Všech možných dvojic je 6 · 6 = 36.",
+        "Součet 7 dávají dvojice (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) — je jich 6.",
+        "P = 6/36 = 1/6."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_24",
+      "tema": "souhrnne",
+      "podtema": "pravdepodobnost_zlomky",
+      "obtiznost": 2,
+      "zadani": "V neprůhledné nádobě je 4 červené a 6 modrých kuliček. Vytáhneme dvě kuličky po sobě bez vracení. Jaká je pravděpodobnost, že obě budou modré? Výsledek napište zlomkem v základním tvaru.",
+      "odpoved": "1/3",
+      "reseni_kroky": [
+        "První kulička je modrá s pravděpodobností 6/10.",
+        "Druhá je pak modrá s pravděpodobností 5/9 (zbývá 5 modrých z 9 kuliček).",
+        "P = 6/10 · 5/9 = 30/90 = 1/3."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_25",
+      "tema": "souhrnne",
+      "podtema": "kombinace_cisla",
+      "obtiznost": 2,
+      "zadani": "Z číslic 1, 2, 3, 4 vytváříme trojciferná čísla, v nichž se žádná číslice neopakuje. Kolik z těchto čísel je sudých?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Číslo je sudé, když končí číslicí 2 nebo 4 — pro poslední místo jsou 2 možnosti.",
+        "Na první místo zbývají 3 číslice, na prostřední 2.",
+        "Počet: 2 · 3 · 2 = 12."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_26",
+      "tema": "souhrnne",
+      "podtema": "tabulka_pravdepodobnost",
+      "obtiznost": 2,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Žáci 9. ročníku",
+        "hlavicka": [
+          "Třída",
+          "Počet žáků",
+          "z toho dívek"
+        ],
+        "radky": [
+          [
+            "9. A",
+            28,
+            16
+          ],
+          [
+            "9. B",
+            24,
+            12
+          ],
+          [
+            "9. C",
+            22,
+            14
+          ],
+          [
+            "9. D",
+            26,
+            10
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje počty žáků 9. ročníku. Vybíráme náhodně jednoho žáka. Jaká je pravděpodobnost, že to bude dívka z 9. A nebo z 9. C? Výsledek zapište v procentech.",
+      "odpoved": "30 %",
+      "reseni_kroky": [
+        "Žáků je celkem 28 + 24 + 22 + 26 = 100.",
+        "Dívek z 9. A je 16 a z 9. C je 14, dohromady 30.",
+        "P = 30/100 = 30 %."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_27",
+      "tema": "souhrnne",
+      "podtema": "pravdepodobnost_geometrie",
+      "obtiznost": 2,
+      "moznosti": [
+        "1/4",
+        "3/8",
+        "5/8",
+        "3/4",
+        "jiná hodnota"
+      ],
+      "spravna": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-kolo-stesti.svg",
+        "width": 330,
+        "height": 220,
+        "alt": "Kolo štěstí rozdělené na 8 shodných výsečí: 3 červené, 2 modré a 3 zelené"
+      },
+      "zadani": "Roztočíme kolo štěstí rozdělené na 8 shodných výsečí (viz obrázek). Jaká je pravděpodobnost, že šipka neukáže na modrou výseč?",
+      "odpoved": "3/4",
+      "reseni_kroky": [
+        "Modré jsou 2 výseče z 8, neukáže na ně šipka v 6 případech z 8.",
+        "P = 6/8 = 3/4. Správně je D). (1/4 je pravděpodobnost modré.)"
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_28",
+      "tema": "souhrnne",
+      "podtema": "pravdepodobnost_slovni",
+      "obtiznost": 2,
+      "zadani": "V rodině jsou tři děti. Předpokládejme, že dívka a chlapec se rodí se stejnou pravděpodobností. Jaká je pravděpodobnost, že mezi nimi je aspoň jedna dívka? Výsledek napište zlomkem.",
+      "odpoved": "7/8",
+      "reseni_kroky": [
+        "Všech uspořádání tří dětí je 2 · 2 · 2 = 8.",
+        "Bez dívky (všichni chlapci) je jediné uspořádání, P = 1/8.",
+        "Aspoň jedna dívka: 1 − 1/8 = 7/8."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_29",
+      "tema": "souhrnne",
+      "podtema": "funkce_slovni",
+      "obtiznost": 2,
+      "zadani": "Taxi si účtuje základní sazbu 30 Kč a za každý ujetý kilometr 22 Kč. Cesta stála 250 Kč. Kolik kilometrů jelo taxi?",
+      "odpoved": "10 km",
+      "reseni_kroky": [
+        "Cena = 30 + 22 · x, kde x je počet kilometrů.",
+        "30 + 22x = 250, takže 22x = 220.",
+        "x = 10 km."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_30",
+      "tema": "souhrnne",
+      "podtema": "funkce_geometrie",
+      "obtiznost": 2,
+      "zadani": "Graf funkce y = −2x + 8 protíná osu x v jednom bodě a osu y v druhém. S počátkem soustavy souřadnic tvoří tyto body pravoúhlý trojúhelník. Jaký je jeho obsah?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Průsečík s osou y: x = 0, y = 8.",
+        "Průsečík s osou x: y = 0, −2x + 8 = 0, x = 4.",
+        "Odvěsny mají délky 4 a 8, obsah je 4 · 8 : 2 = 16."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_31",
+      "tema": "souhrnne",
+      "podtema": "funkce_rovnice",
+      "obtiznost": 2,
+      "zadani": "Funkce f je dána předpisem y = 2x + 3 a funkce g předpisem y = x + 7. Pro jakou hodnotu x mají obě funkce stejnou hodnotu?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Hledáme x, pro které 2x + 3 = x + 7.",
+        "2x − x = 7 − 3, takže x = 4.",
+        "Kontrola: 2 · 4 + 3 = 11 a 4 + 7 = 11."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_32",
+      "tema": "souhrnne",
+      "podtema": "soustava_slovni",
+      "obtiznost": 2,
+      "zadani": "Za 3 stromky a 2 keře zaplatíme 700 Kč, za 2 stromky a 3 keře 650 Kč. Kolik korun stojí jeden keř?",
+      "odpoved": "110 Kč",
+      "reseni_kroky": [
+        "Stromek s, keř k: 3s + 2k = 700 a 2s + 3k = 650.",
+        "První rovnici vynásobíme 3 a druhou 2: 9s + 6k = 2 100 a 4s + 6k = 1 300.",
+        "Odečteme: 5s = 800, s = 160. Pak 2k = 700 − 480 = 220, k = 110.",
+        "Kontrola: 2 · 160 + 3 · 110 = 320 + 330 = 650."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_33",
+      "tema": "souhrnne",
+      "podtema": "geometrie_pytagoras",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-ctverec-uhlopricka.svg",
+        "width": 220,
+        "height": 180,
+        "alt": "Čtverec s úhlopříčkou o délce 12 cm (obrázek není v měřítku)"
+      },
+      "zadani": "Čtverec má úhlopříčku 12 cm (viz obrázek). Jaký je jeho obsah?",
+      "odpoved": "72 cm²",
+      "reseni_kroky": [
+        "Strana a a úhlopříčka tvoří pravoúhlý trojúhelník: a² + a² = 12².",
+        "2a² = 144, takže a² = 72.",
+        "Obsah čtverce je a² = 72 cm²."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_34",
+      "tema": "souhrnne",
+      "podtema": "geometrie_pytagoras",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-antena-lano.svg",
+        "width": 270,
+        "height": 216,
+        "alt": "Svislá anténa vysoká 12 m zajištěná lanem dlouhým 13 m; hledá se vzdálenost kotvy od paty antény"
+      },
+      "zadani": "Svislá anténa vysoká 12 m je zajištěna lanem dlouhým 13 m, které vede od jejího vrcholu k zemi (viz obrázek). Jak daleko od paty antény je lano zakotveno?",
+      "odpoved": "5 m",
+      "reseni_kroky": [
+        "Anténa, zem a lano tvoří pravoúhlý trojúhelník s přeponou 13 m a odvěsnou 12 m.",
+        "Vzdálenost x: x² = 13² − 12² = 169 − 144 = 25.",
+        "x = 5 m."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_35",
+      "tema": "souhrnne",
+      "podtema": "geometrie_zlomky",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "teleso",
+          "tvar": "kvadr",
+          "a": "30 cm",
+          "b": "20 cm",
+          "c": "25 cm"
+        }
+      },
+      "zadani": "Akvárium tvaru kvádru má rozměry dna 30 cm a 20 cm a výšku 25 cm (viz obrázek). Je naplněné do tří pětin objemu. Kolik litrů vody v něm je?",
+      "odpoved": "9 l",
+      "reseni_kroky": [
+        "Objem akvária: 30 · 20 · 25 = 15 000 cm³ = 15 l.",
+        "Voda tvoří 3/5 z 15 l: 15 : 5 · 3 = 9 l."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_36",
+      "tema": "souhrnne",
+      "podtema": "geometrie_slovni",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "teleso",
+          "tvar": "valec",
+          "r": "r = 5 cm",
+          "v": "v = 20 cm"
+        }
+      },
+      "zadani": "Válcová nádoba má poloměr dna 5 cm a výšku 20 cm (viz obrázek). Kolik litrů se do ní vejde? Počítejte s π ≈ 3,14.",
+      "odpoved": "1,57 l",
+      "reseni_kroky": [
+        "Obsah dna: π · 5² ≈ 3,14 · 25 = 78,5 cm².",
+        "Objem: 78,5 · 20 = 1 570 cm³.",
+        "1 570 cm³ = 1,57 litru (1 l = 1 000 cm³)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_37",
+      "tema": "souhrnne",
+      "podtema": "geometrie_slovni",
+      "obtiznost": 2,
+      "moznosti": [
+        "25 cm³",
+        "100 cm³",
+        "125 cm³",
+        "150 cm³",
+        "jiná hodnota"
+      ],
+      "spravna": 2,
+      "zadani": "Povrch krychle je 150 cm². Jaký je její objem?",
+      "odpoved": "125 cm³",
+      "reseni_kroky": [
+        "Krychle má 6 shodných stěn, jedna má 150 : 6 = 25 cm².",
+        "Hrana je √25 = 5 cm.",
+        "Objem 5³ = 125 cm³. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_38",
+      "tema": "souhrnne",
+      "podtema": "procenta_slovni",
+      "obtiznost": 2,
+      "zadani": "Jedna nádoba má objem 2,4 litru. Druhá nádoba je o 25 % větší než první. Kolik litrů se vejde do druhé nádoby?",
+      "odpoved": "3 l",
+      "reseni_kroky": [
+        "O 25 % větší znamená 1,25 násobek: 2,4 · 1,25 = 3.",
+        "Do druhé nádoby se vejdou 3 litry."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_39",
+      "tema": "souhrnne",
+      "podtema": "geometrie_slovni",
+      "obtiznost": 2,
+      "image": {
+        "kind": "parametric",
+        "diagram": {
+          "typ": "teleso",
+          "tvar": "kvadr",
+          "a": "4 cm",
+          "b": "5 cm",
+          "c": "h"
+        }
+      },
+      "zadani": "Kvádr má podstavu o rozměrech 4 cm a 5 cm a objem 120 cm³ (viz obrázek). Jaký je povrch kvádru?",
+      "odpoved": "148 cm²",
+      "reseni_kroky": [
+        "Výška h: 4 · 5 · h = 120, takže h = 6 cm.",
+        "Povrch: 2 · (4·5 + 4·6 + 5·6) = 2 · (20 + 24 + 30) = 148 cm²."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_40",
+      "tema": "souhrnne",
+      "podtema": "geometrie_procenta",
+      "obtiznost": 2,
+      "zadani": "Bazén tvaru kvádru má dno 8 m × 4 m a hloubku 1,5 m. Voda v něm sahá do 80 % hloubky. Kolik metrů krychlových vody je v bazénu?",
+      "odpoved": "38,4 m³",
+      "reseni_kroky": [
+        "Výška hladiny: 80 % z 1,5 m = 1,2 m.",
+        "Objem vody: 8 · 4 · 1,2 = 38,4 m³."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_41",
+      "tema": "souhrnne",
+      "podtema": "procenta_cisla",
+      "obtiznost": 2,
+      "zadani": "Průměr čtyř známek je 2,25. Po páté známce je průměr 2,4. Jakou známku student dostal jako pátou?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Součet čtyř známek: 4 · 2,25 = 9.",
+        "Součet pěti známek: 5 · 2,4 = 12.",
+        "Pátá známka: 12 − 9 = 3."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_42",
+      "tema": "souhrnne",
+      "podtema": "uhly_rovnice",
+      "obtiznost": 2,
+      "zadani": "V rovnoramenném trojúhelníku je úhel při vrcholu o 30° menší než každý z úhlů při základně. Jak velký je úhel při vrcholu?",
+      "odpoved": "40°",
+      "reseni_kroky": [
+        "Úhel při základně je α, při vrcholu α − 30°.",
+        "Součet úhlů: α + α + (α − 30°) = 180°, tedy 3α = 210° a α = 70°.",
+        "Úhel při vrcholu: 70° − 30° = 40°."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_43",
+      "tema": "souhrnne",
+      "podtema": "rovnice_slovni",
+      "obtiznost": 2,
+      "zadani": "Chodec vyšel v 8:00 rychlostí 5 km/h. Ve 10:00 vyjel za ním stejným směrem cyklista rychlostí 15 km/h. Za kolik hodin po vyjetí cyklista chodce dohoní?",
+      "odpoved": "1 hodinu",
+      "reseni_kroky": [
+        "Za dvě hodiny ušel chodec 2 · 5 = 10 km.",
+        "Cyklista se k němu přibližuje rychlostí 15 − 5 = 10 km/h.",
+        "Dohoní ho za 10 : 10 = 1 hodinu (tedy v 11:00)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_44",
+      "tema": "souhrnne",
+      "podtema": "cisla_slovni",
+      "obtiznost": 2,
+      "zadani": "V kultuře je 50 bakterií a každou hodinu se jejich počet zdvojnásobí. Kolik bakterií bude v kultuře po pěti hodinách?",
+      "odpoved": "1 600",
+      "reseni_kroky": [
+        "Po každé hodině se počet násobí dvěma: 50 · 2⁵.",
+        "2⁵ = 32, takže 50 · 32 = 1 600 bakterií."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_45",
+      "tema": "souhrnne",
+      "podtema": "geometrie_cisla",
+      "obtiznost": 2,
+      "zadani": "Čtvercový pozemek má rozlohu 2,25 hektaru. Kolik metrů měří jeho obvod? (1 ha = 10 000 m²)",
+      "odpoved": "600 m",
+      "reseni_kroky": [
+        "2,25 ha = 22 500 m².",
+        "Strana: √22 500 = 150 m.",
+        "Obvod: 4 · 150 = 600 m."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU2_46",
+      "tema": "souhrnne",
+      "podtema": "cisla_rovnice",
+      "obtiznost": 2,
+      "zadani": "Součet tří po sobě jdoucích lichých čísel je 63. Které z těch tří čísel je nejmenší?",
+      "odpoved": "19",
+      "reseni_kroky": [
+        "Prostřední číslo označíme x, sousední lichá jsou x − 2 a x + 2.",
+        "Součet: 3x = 63, takže x = 21.",
+        "Čísla jsou 19, 21, 23. Nejmenší je 19."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    }
+  ]
 }
