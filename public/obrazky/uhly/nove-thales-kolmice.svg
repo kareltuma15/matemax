@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 330" width="420" height="330" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Trojúhelník ABC vepsaný do kružnice se středem S na straně AB; přímka q prochází bodem C kolmo na AB; osa o úhlu při B; úhel 116° u C; hledané úhly α a φ</title>
+  <circle cx="222.32" cy="165" r="135" fill="#ffffff" stroke="#2E6DA4" stroke-width="1.6"/>
+  <polygon points="87.32,165 357.32,165 139.21,58.62" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="139.21" y1="42.42" x2="139.21" y2="287.58" stroke="#0D1B3E" stroke-width="1.8"/>
+  <line x1="357.32" y1="165" x2="62.68" y2="96.97" stroke="#2E6DA4" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <polyline points="148.21,165 148.21,156 139.21,156" fill="none" stroke="#2E6DA4" stroke-width="1.8"/>
+  <path d="M 139.21 18.62 A 40 40 0 0 1 175.16 76.15" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="191.24" y="53.52" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">116°</text>
+  <path d="M 115.32 165 A 28 28 0 0 0 99.6 139.83" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="122.09" y="148.27" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">α</text>
+  <path d="M 257.32 165 A 100 100 0 0 1 259.89 142.5" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="245.05" y="157.21" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">φ</text>
+  <circle cx="222.32" cy="165" r="3" fill="#0D1B3E"/>
+  <circle cx="139.21" cy="165" r="2.6" fill="#0D1B3E"/>
+  <text x="222.32" y="183" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">S</text>
+  <text x="73.32" y="181" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="371.32" y="181" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="123.21" y="52.62" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="153.21" y="285.58" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">q</text>
+  <text x="58.68" y="86.97" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">o</text>
+</svg>

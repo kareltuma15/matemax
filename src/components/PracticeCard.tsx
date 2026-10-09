@@ -363,6 +363,23 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               </button>
             )}
           </div>
+          {/* Stupně a minuty: ° a ′ se na mobilu hledají špatně — tlačítka je vloží, a stačí i mezera („22 30") */}
+          {status === "idle" && /′/.test(example.odpoved) && (
+            <div className="flex items-center gap-2 text-xs text-slate-500">
+              <span>Zapiš např. 22°30′ nebo 22 30</span>
+              {["°", "′"].map((ch) => (
+                <button
+                  key={ch}
+                  type="button"
+                  onClick={() => { setInput((v) => v + ch); inputRef.current?.focus(); }}
+                  className="w-9 h-9 rounded-lg border border-slate-200 bg-white text-lg font-bold text-slate-700 press-scale"
+                  aria-label={ch === "°" ? "Vložit znak stupně" : "Vložit znak minuty"}
+                >
+                  {ch}
+                </button>
+              ))}
+            </div>
+          )}
         </form>
 
         {/* Correct result */}

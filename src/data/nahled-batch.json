@@ -1,16 +1,23 @@
 {
-  "nazev": "Úhly — dorovnání (29 úloh: L1 ×8, L2 ×12, L3 ×9 s vlastními obrázky: pravidelné mnohoúhelníky, osy úhlů, kružnice se středem, rovnoběžky, hodiny)",
+  "nazev": "Úhly — dorovnání (31 úloh: L1 ×8, L2 ×13, L3 ×10, všechny s obrázkem: pravidelné mnohoúhelníky, hodiny, osy úhlů, kružnice se středem, rovnoběžky)",
   "examples": [
     {
       "id": "UHN1_01",
       "tema": "uhly",
       "podtema": "doplnkove_uhly",
       "obtiznost": 1,
-      "zadani": "Úhel α má velikost 38°. Jak velký je úhel, který α doplňuje na pravý úhel (90°)?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-doplnek.svg",
+        "width": 200,
+        "height": 180,
+        "alt": "Pravý úhel rozdělený polopřímkou na úhel 38° a hledaný úhel"
+      },
+      "zadani": "Pravý úhel (90°) je rozdělen na dva úhly (viz obrázek). Jeden z nich má 38°. Jak velký je druhý úhel (?)? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "52°",
       "reseni_kroky": [
-        "Pravý úhel má 90°.",
-        "Doplňkový úhel: 90° − 38° = 52°."
+        "Oba úhly dohromady tvoří pravý úhel, tedy 90°.",
+        "Druhý úhel: 90° − 38° = 52°."
       ],
       "cas_sekund": 60,
       "sm2_interval": 1
@@ -20,9 +27,17 @@
       "tema": "uhly",
       "podtema": "stupne_minuty",
       "obtiznost": 1,
-      "zadani": "Sečtěte úhly 47°30′ a 12°45′. Výsledek zapište ve stupních a minutách.",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-sousedni-uhly.svg",
+        "width": 250,
+        "height": 240,
+        "alt": "Tři polopřímky z vrcholu V: úhel AVB je 47°30′, úhel BVC je 12°45′, hledaný úhel AVC (obrázek je ilustrační)"
+      },
+      "zadani": "Úhly AVB a BVC leží vedle sebe (viz obrázek). Úhel AVB má 47°30′ a úhel BVC má 12°45′. Jak velký je úhel AVC? Výsledek zapiš ve stupních a minutách (např. 22°30′ nebo 22 30). Obrázek je ilustrační.",
       "odpoved": "60°15′",
       "reseni_kroky": [
+        "Úhel AVC je součet obou úhlů.",
         "Minuty: 30′ + 45′ = 75′, což je 1° a 15′.",
         "Stupně: 47° + 12° + 1° = 60°.",
         "Výsledek: 60°15′."
@@ -35,9 +50,17 @@
       "tema": "uhly",
       "podtema": "stupne_minuty",
       "obtiznost": 1,
-      "zadani": "Přímý úhel má 180°. Jak velký úhel zbude, když od něj odečteme úhel 62°40′? Výsledek zapište ve stupních a minutách.",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-primy-uhel.svg",
+        "width": 260,
+        "height": 180,
+        "alt": "Přímka AB a polopřímka VC: úhel BVC je 62°40′, hledaný úhel AVC"
+      },
+      "zadani": "Body A, V a B leží na jedné přímce (viz obrázek). Úhel BVC má 62°40′. Jak velký je úhel AVC? Výsledek zapiš ve stupních a minutách (např. 22°30′ nebo 22 30). Obrázek je ilustrační.",
       "odpoved": "117°20′",
       "reseni_kroky": [
+        "Úhly AVC a BVC jsou vedlejší, dávají dohromady přímý úhel 180°.",
         "Přepíšeme 180° = 179°60′ (1° = 60′).",
         "179°60′ − 62°40′ = 117°20′."
       ],
@@ -56,7 +79,7 @@
         "height": 200,
         "alt": "Pravidelný šestiúhelník s vyznačeným vnitřním úhlem"
       },
-      "zadani": "Obrázek ukazuje pravidelný šestiúhelník. Jak velký je jeho vnitřní úhel (?)?",
+      "zadani": "Obrázek ukazuje pravidelný šestiúhelník. Jak velký je jeho vnitřní úhel (?)? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "120°",
       "reseni_kroky": [
         "Z jednoho vrcholu rozdělíme šestiúhelník na 4 trojúhelníky, jejich úhly dají všechny vnitřní úhly: 4 · 180° = 720°.",
@@ -70,11 +93,18 @@
       "tema": "uhly",
       "podtema": "rovnoramenny_trojuhelnik",
       "obtiznost": 1,
-      "zadani": "Pravoúhlý trojúhelník má dvě stejně dlouhé odvěsny. Jak velký je každý z jeho ostrých úhlů?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-pravouhly-rovnoramenny.svg",
+        "width": 200,
+        "height": 190,
+        "alt": "Pravoúhlý trojúhelník ABC s pravým úhlem u C a shodnými odvěsnami CA a CB; hledaný úhel u A"
+      },
+      "zadani": "Na obrázku je pravoúhlý trojúhelník ABC se shodnými odvěsnami CA a CB. Jak velký je úhel při vrcholu A? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "45°",
       "reseni_kroky": [
-        "Součet úhlů v trojúhelníku je 180°, pravý úhel má 90°, zbývající dva úhly mají dohromady 90°.",
-        "Stejně dlouhé odvěsny znamenají stejné úhly: 90° : 2 = 45°."
+        "Součet úhlů v trojúhelníku je 180°, pravý úhel u C má 90°, zbývající dva úhly mají dohromady 90°.",
+        "Odvěsny jsou shodné, proto jsou shodné i úhly u A a B: 90° : 2 = 45°."
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -84,7 +114,14 @@
       "tema": "uhly",
       "podtema": "hodiny",
       "obtiznost": 1,
-      "zadani": "Na ciferníku hodin ukazují ručičky přesně 4:00. Jak velký (menší) úhel spolu svírají?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-hodiny-4-00.svg",
+        "width": 210,
+        "height": 210,
+        "alt": "Ciferník hodin: hodinová ručička na 4, minutová na 12; hledaný menší úhel mezi ručičkami"
+      },
+      "zadani": "Na obrázku ukazují hodinové ručičky přesně 4:00. Jak velký (menší) úhel spolu svírají? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "120°",
       "reseni_kroky": [
         "Ciferník má 12 dílků a celý kruh 360°, jeden dílek (hodina) je 360° : 12 = 30°.",
@@ -98,7 +135,14 @@
       "tema": "uhly",
       "podtema": "osa_uhlu",
       "obtiznost": 1,
-      "zadani": "Osa úhlu AVB ho dělí na dva shodné úhly. Úhel AVB má 84°. Jak velký je každý z nich?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-osa-uhlu-84.svg",
+        "width": 250,
+        "height": 200,
+        "alt": "Úhel AVB o velikosti 84° s osou VO; hledaný úhel AVO"
+      },
+      "zadani": "Polopřímka VO je osou úhlu AVB, který má 84° (viz obrázek). Jak velký je úhel AVO? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "42°",
       "reseni_kroky": [
         "Osa rozděluje úhel na dvě stejné poloviny.",
@@ -112,11 +156,18 @@
       "tema": "uhly",
       "podtema": "rovnobeznik",
       "obtiznost": 1,
-      "zadani": "V rovnoběžníku ABCD má úhel u vrcholu A velikost α = 65°. Jak velký je úhel β u sousedního vrcholu B?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-rovnobeznik.svg",
+        "width": 260,
+        "height": 160,
+        "alt": "Rovnoběžník ABCD s úhlem 65° u vrcholu A; hledaný úhel u B"
+      },
+      "zadani": "ABCD je rovnoběžník (viz obrázek). Úhel u vrcholu A má velikost 65°. Jak velký je úhel u sousedního vrcholu B (?)? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "115°",
       "reseni_kroky": [
         "V rovnoběžníku dávají dva sousední úhly dohromady 180° (rovnoběžné strany a příčka).",
-        "β = 180° − 65° = 115°."
+        "Úhel u B: 180° − 65° = 115°."
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -126,7 +177,14 @@
       "tema": "uhly",
       "podtema": "pravidelny_mnohouhelnik",
       "obtiznost": 2,
-      "zadani": "Vnější úhel pravidelného mnohoúhelníku má velikost 40°. Kolik vrcholů má tento mnohoúhelník?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-mnohouhelnik-vnejsi-40.svg",
+        "width": 300,
+        "height": 175,
+        "alt": "Část pravidelného mnohoúhelníku; vnější úhel při jednom vrcholu má 40°"
+      },
+      "zadani": "Na obrázku je část pravidelného mnohoúhelníku. Jeho vnější úhel při jednom vrcholu má 40°. Kolik vrcholů má celý mnohoúhelník? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "9",
       "reseni_kroky": [
         "Součet všech vnějších úhlů každého konvexního mnohoúhelníku je 360°.",
@@ -141,7 +199,14 @@
       "tema": "uhly",
       "podtema": "pravidelny_mnohouhelnik",
       "obtiznost": 2,
-      "zadani": "Vnitřní úhel pravidelného mnohoúhelníku má velikost 150°. Kolik stran má tento mnohoúhelník?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-mnohouhelnik-vnitrni-150.svg",
+        "width": 300,
+        "height": 175,
+        "alt": "Část pravidelného mnohoúhelníku; vnitřní úhel při jednom vrcholu má 150°"
+      },
+      "zadani": "Na obrázku je část pravidelného mnohoúhelníku. Jeho vnitřní úhel při jednom vrcholu má 150°. Kolik stran má celý mnohoúhelník? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "12",
       "reseni_kroky": [
         "Vnější úhel je doplněk vnitřního do 180°: 180° − 150° = 30°.",
@@ -171,7 +236,7 @@
         "height": 250,
         "alt": "Deltoid ABCD: AB = AD, CB = CD, úhel u A je 70°, úhel u C je 50°, hledaný úhel u B"
       },
-      "zadani": "Čtyřúhelník ABCD je deltoid, platí AB = AD a CB = CD (viz obrázek). Úhel u vrcholu A má 70° a úhel u vrcholu C má 50°. Jak velký je úhel u vrcholu B?",
+      "zadani": "Čtyřúhelník ABCD je deltoid, platí AB = AD a CB = CD (viz obrázek). Úhel u vrcholu A má 70° a úhel u vrcholu C má 50°. Jak velký je úhel u vrcholu B? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "120°",
       "reseni_kroky": [
         "Součet úhlů čtyřúhelníku je 360°.",
@@ -193,7 +258,7 @@
         "height": 170,
         "alt": "Rovnoramenný lichoběžník ABCD se základnami AB a CD; úhel u A je 68°, hledaný úhel u D"
       },
-      "zadani": "Rovnoramenný lichoběžník ABCD má základny AB a CD a úhel u vrcholu A měří 68° (viz obrázek). Jak velký je úhel u vrcholu D?",
+      "zadani": "Rovnoramenný lichoběžník ABCD má základny AB a CD a úhel u vrcholu A měří 68° (viz obrázek). Jak velký je úhel u vrcholu D? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "112°",
       "reseni_kroky": [
         "Základny AB a CD jsou rovnoběžné, rameno AD je příčka.",
@@ -208,7 +273,14 @@
       "tema": "uhly",
       "podtema": "hodiny",
       "obtiznost": 2,
-      "zadani": "Kolik stupňů měří menší úhel mezi hodinovou a minutovou ručičkou ve 2:30?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-hodiny-2-30.svg",
+        "width": 210,
+        "height": 210,
+        "alt": "Ciferník hodin ve 2:30; hledaný menší úhel mezi ručičkami"
+      },
+      "zadani": "Na obrázku ukazují hodinové ručičky 2:30. Kolik stupňů měří menší úhel mezi hodinovou a minutovou ručičkou? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "105°",
       "reseni_kroky": [
         "Minutová ručička ukazuje na 6, tedy 6 · 30° = 180° od dvanáctky.",
@@ -223,7 +295,14 @@
       "tema": "uhly",
       "podtema": "stupne_minuty",
       "obtiznost": 2,
-      "zadani": "Jak velký je úhel, který tvoří tři osminy pravého úhlu? Výsledek zapište ve stupních a minutách.",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-osminy-pravy-uhel.svg",
+        "width": 220,
+        "height": 200,
+        "alt": "Pravý úhel rozdělený na osm shodných úhlů; zbarvené jsou tři z nich, hledaná velikost zbarveného úhlu"
+      },
+      "zadani": "Pravý úhel je rozdělen na osm shodných úhlů, tři z nich jsou zbarvené (viz obrázek). Jak velký je zbarvený úhel (?)? Výsledek zapiš ve stupních a minutách (např. 22°30′ nebo 22 30). Obrázek je ilustrační.",
       "odpoved": "33°45′",
       "reseni_kroky": [
         "Osmina pravého úhlu: 90° : 8 = 11,25°.",
@@ -238,13 +317,20 @@
       "tema": "uhly",
       "podtema": "doplnkove_uhly",
       "obtiznost": 2,
-      "zadani": "Úhel α je o 36° větší než úhel, který ho doplňuje na pravý úhel. Jak velký je úhel α?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-alfa-beta.svg",
+        "width": 200,
+        "height": 180,
+        "alt": "Pravý úhel rozdělený polopřímkou na úhly α a β; α je o 36° větší než β"
+      },
+      "zadani": "Pravý úhel je rozdělen na úhly α a β (viz obrázek). Úhel α je o 36° větší než úhel β. Jak velký je úhel α? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "63°",
       "reseni_kroky": [
-        "Doplňkový úhel označíme β: β = 90° − α.",
+        "Úhly α a β dávají dohromady 90°, tedy β = 90° − α.",
         "Podle zadání je α = β + 36° = 90° − α + 36°.",
         "Odtud 2α = 126°, takže α = 63°.",
-        "Kontrola: doplněk je 27°, a 63° − 27° = 36°."
+        "Kontrola: β = 27° a 63° − 27° = 36°."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -261,7 +347,7 @@
         "height": 170,
         "alt": "Rovnoběžky p a q, bod X mezi nimi; úhly 35° u bodu A a 50° u bodu B, hledaný úhel AXB"
       },
-      "zadani": "Přímky p a q jsou rovnoběžné (viz obrázek). Jak velký je úhel AXB?",
+      "zadani": "Přímky p a q jsou rovnoběžné (viz obrázek). Jak velký je úhel AXB? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "85°",
       "reseni_kroky": [
         "Bodem X vedeme přímku rovnoběžnou s p a q. Rozdělí úhel AXB na dva úhly.",
@@ -288,7 +374,7 @@
         "height": 200,
         "alt": "Trojúhelník ABC s úhly α = 50° a β = 70°; přerušovaná osa úhlu při vrcholu C protíná stranu AB v bodě D"
       },
-      "zadani": "V trojúhelníku ABC je α = 50° a β = 70°. Bod D leží na straně AB a přímka CD je osou úhlu γ (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Úhel γ má velikost 60°.\"",
+      "zadani": "V trojúhelníku ABC je α = 50° a β = 70°. Bod D leží na straně AB a přímka CD je osou úhlu γ (viz obrázek, je ilustrační). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Úhel γ má velikost 60°.\"",
       "odpoved": "Ano",
       "reseni_kroky": [
         "γ = 180° − 50° − 70° = 60°. Tvrzení je pravdivé — Ano."
@@ -313,7 +399,7 @@
         "height": 200,
         "alt": "Trojúhelník ABC s úhly α = 50° a β = 70°; přerušovaná osa úhlu při vrcholu C protíná stranu AB v bodě D"
       },
-      "zadani": "V trojúhelníku ABC je α = 50° a β = 70°. Bod D leží na straně AB a přímka CD je osou úhlu γ (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Úhel ACD má velikost 25°.\"",
+      "zadani": "V trojúhelníku ABC je α = 50° a β = 70°. Bod D leží na straně AB a přímka CD je osou úhlu γ (viz obrázek, je ilustrační). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Úhel ACD má velikost 25°.\"",
       "odpoved": "Ne",
       "reseni_kroky": [
         "γ = 180° − 50° − 70° = 60°. Osa úhlu γ ho dělí na dvě poloviny po 30°.",
@@ -339,7 +425,7 @@
         "height": 200,
         "alt": "Trojúhelník ABC s úhly α = 50° a β = 70°; přerušovaná osa úhlu při vrcholu C protíná stranu AB v bodě D"
       },
-      "zadani": "V trojúhelníku ABC je α = 50° a β = 70°. Bod D leží na straně AB a přímka CD je osou úhlu γ (viz obrázek). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Úhel ADC má velikost 100°.\"",
+      "zadani": "V trojúhelníku ABC je α = 50° a β = 70°. Bod D leží na straně AB a přímka CD je osou úhlu γ (viz obrázek, je ilustrační). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Úhel ADC má velikost 100°.\"",
       "odpoved": "Ano",
       "reseni_kroky": [
         "γ = 60°, takže úhel ACD = 60° : 2 = 30°.",
@@ -360,7 +446,7 @@
         "height": 250,
         "alt": "Pravidelný osmiúhelník ABCDEFGH s úhlopříčkou AC; hledaný úhel BAC"
       },
-      "zadani": "Obrázek ukazuje pravidelný osmiúhelník ABCDEFGH s úhlopříčkou AC. Jak velký je úhel BAC? Výsledek zapište ve stupních a minutách.",
+      "zadani": "Obrázek ukazuje pravidelný osmiúhelník ABCDEFGH s úhlopříčkou AC. Jak velký je úhel BAC? Výsledek zapiš ve stupních a minutách (např. 22°30′ nebo 22 30). Obrázek je ilustrační.",
       "odpoved": "22°30′",
       "reseni_kroky": [
         "Vnitřní úhel pravidelného osmiúhelníku: (8 − 2) · 180° : 8 = 135°.",
@@ -368,6 +454,29 @@
         "Úhly při základně: (180° − 135°) : 2 = 22,5° = 22°30′."
       ],
       "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHN2_13",
+      "tema": "uhly",
+      "podtema": "kruznice_opsana",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-thales-kolmice.svg",
+        "width": 420,
+        "height": 330,
+        "alt": "Trojúhelník ABC vepsaný do kružnice se středem S na straně AB; přímka q prochází bodem C kolmo na AB; osa o úhlu při B; úhel 116° u C; hledané úhly α a φ"
+      },
+      "zadani": "Trojúhelník ABC je vepsán do kružnice se středem S, který leží na straně AB. Přímka q prochází bodem C kolmo na AB. Úhel mezi přímkou q a stranou CB (označený na obrázku) má 116°. Jak velký je úhel α? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "64°",
+      "reseni_kroky": [
+        "Střed S leží na straně AB, takže AB je průměr kružnice a podle Thaletovy věty je úhel ACB pravý.",
+        "Označme P patu kolmice z C na AB. Úhel PCB je vedlejší k úhlu 116°: 180° − 116° = 64°.",
+        "V pravoúhlém trojúhelníku CPB je úhel β = 90° − 64° = 26°.",
+        "V pravoúhlém trojúhelníku ABC je α = 90° − 26° = 64°."
+      ],
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
@@ -390,7 +499,7 @@
         "height": 210,
         "alt": "Trojúhelník ABC s úhly 52° a 64°; osy úhlů při vrcholech A a B se protínají v bodě I; hledaný úhel AIB"
       },
-      "zadani": "V trojúhelníku ABC je α = 52° a β = 64° (viz obrázek). Osy úhlů při vrcholech A a B se protínají v bodě I. Jak velký je úhel AIB?",
+      "zadani": "V trojúhelníku ABC je α = 52° a β = 64° (viz obrázek). Osy úhlů při vrcholech A a B se protínají v bodě I. Jak velký je úhel AIB? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "122°",
       "reseni_kroky": [
         "Osa úhlu při A svírá se stranou AB úhel 52° : 2 = 26°, osa úhlu při B úhel 64° : 2 = 32°.",
@@ -412,7 +521,7 @@
         "height": 270,
         "alt": "Kružnice se středem S, trojúhelník ABC vepsaný do kružnice; úhel SAB je 25°, úhel SBC je 35°, hledaný úhel ACB"
       },
-      "zadani": "Bod S je střed kružnice opsané trojúhelníku ABC. Úhel SAB má 25° a úhel SBC má 35° (viz obrázek). Jak velký je úhel ACB?",
+      "zadani": "Bod S je střed kružnice opsané trojúhelníku ABC. Úhel SAB má 25° a úhel SBC má 35° (viz obrázek). Jak velký je úhel ACB? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "65°",
       "reseni_kroky": [
         "Úsečky SA, SB a SC jsou poloměry, proto jsou trojúhelníky SAB, SBC a SCA rovnoramenné.",
@@ -443,7 +552,7 @@
         "height": 230,
         "alt": "Pravidelný šestiúhelník ABCDEF s úhlopříčkami AC a AE; hledaný úhel CAE"
       },
-      "zadani": "ABCDEF je pravidelný šestiúhelník (viz obrázek). Jak velký je úhel CAE, který svírají úhlopříčky AC a AE?",
+      "zadani": "ABCDEF je pravidelný šestiúhelník (viz obrázek). Jak velký je úhel CAE, který svírají úhlopříčky AC a AE? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "60°",
       "reseni_kroky": [
         "Vnitřní úhel pravidelného šestiúhelníku má 120°.",
@@ -465,7 +574,7 @@
         "height": 230,
         "alt": "Trojúhelník ABC s úhly 48° a 72°; výška CV a osa úhlu CD; hledaný úhel VCD"
       },
-      "zadani": "V trojúhelníku ABC je α = 48° a β = 72° (viz obrázek). Přímka CV je výška na stranu AB a přímka CD je osa úhlu γ; body V a D leží na straně AB. Jak velký je úhel VCD?",
+      "zadani": "V trojúhelníku ABC je α = 48° a β = 72° (viz obrázek). Přímka CV je výška na stranu AB a přímka CD je osa úhlu γ; body V a D leží na straně AB. Jak velký je úhel VCD? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "12°",
       "reseni_kroky": [
         "γ = 180° − 48° − 72° = 60°, takže osa vytvoří úhel ACD = 30°.",
@@ -495,7 +604,7 @@
         "height": 250,
         "alt": "Rovnoramenný trojúhelník ABC se základnou BC a bodem D na straně AC; úseky AD, BD a BC jsou shodné; hledaný úhel u vrcholu A"
       },
-      "zadani": "V rovnoramenném trojúhelníku ABC se základnou BC (AB = AC) leží na straně AC bod D tak, že AD = BD = BC (viz obrázek). Jak velký je úhel u vrcholu A?",
+      "zadani": "V rovnoramenném trojúhelníku ABC se základnou BC (AB = AC) leží na straně AC bod D tak, že AD = BD = BC (viz obrázek). Jak velký je úhel u vrcholu A? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "36°",
       "reseni_kroky": [
         "Úhel u vrcholu A označíme x. Trojúhelník ABD je rovnoramenný (AD = BD), proto úhel ABD = x.",
@@ -526,7 +635,7 @@
         "height": 230,
         "alt": "Rovnoběžník ABCD s úhlem 70° u vrcholu A; osa úhlu při A protíná stranu BC v bodě E; hledaný úhel AEC"
       },
-      "zadani": "V rovnoběžníku ABCD je α = 70°. Osa úhlu při vrcholu A protíná stranu BC v bodě E (viz obrázek). Jak velký je úhel AEC?",
+      "zadani": "V rovnoběžníku ABCD je α = 70°. Osa úhlu při vrcholu A protíná stranu BC v bodě E (viz obrázek). Jak velký je úhel AEC? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "145°",
       "reseni_kroky": [
         "Osa dělí úhel DAB na dva úhly po 35°.",
@@ -541,7 +650,14 @@
       "tema": "uhly",
       "podtema": "hodiny",
       "obtiznost": 3,
-      "zadani": "Kolik stupňů měří menší úhel mezi hodinovou a minutovou ručičkou ve 14:40 (tedy ve 2:40 odpoledne)?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-hodiny-14-40.svg",
+        "width": 210,
+        "height": 210,
+        "alt": "Ciferník hodin ve 14:40 (2:40); hledaný menší úhel mezi ručičkami"
+      },
+      "zadani": "Na obrázku ukazují hodinové ručičky 14:40 (tedy 2:40 odpoledne). Kolik stupňů měří menší úhel mezi hodinovou a minutovou ručičkou? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "160°",
       "reseni_kroky": [
         "Minutová ručička ukazuje na 8, tedy 8 · 30° = 240° od dvanáctky.",
@@ -556,7 +672,14 @@
       "tema": "uhly",
       "podtema": "vnejsi_uhel",
       "obtiznost": 3,
-      "zadani": "V trojúhelníku ABC jsou vnější úhly při vrcholech A a B v poměru 5 : 6 a vnější úhel při vrcholu C má 140°. Jak velký je největší vnitřní úhel tohoto trojúhelníku?",
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-vnejsi-uhly.svg",
+        "width": 300,
+        "height": 230,
+        "alt": "Trojúhelník ABC s prodlouženými stranami; vnější úhly α′ při A, β′ při B a 140° při C"
+      },
+      "zadani": "V trojúhelníku ABC jsou vnější úhly α′ při vrcholu A a β′ při vrcholu B v poměru 5 : 6 a vnější úhel při vrcholu C má 140° (viz obrázek). Jak velký je největší vnitřní úhel tohoto trojúhelníku? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "80°",
       "reseni_kroky": [
         "Součet vnějších úhlů trojúhelníku je 360°, takže vnější úhly při A a B dávají dohromady 360° − 140° = 220°.",
@@ -587,7 +710,7 @@
         "height": 190,
         "alt": "Rovnoběžky p a q protnuté příčkou AB; úhel 70° u bodu A; osy úhlů na téže straně příčky se protínají v bodě O; hledaný úhel AOB"
       },
-      "zadani": "Příčka AB protíná rovnoběžky p a q (viz obrázek). Úhel, který svírá příčka s přímkou p vpravo od příčky, má 70°. Osy tohoto úhlu a úhlu, který příčka svírá s přímkou q na téže straně, se protínají v bodě O. Jak velký je úhel AOB?",
+      "zadani": "Příčka AB protíná rovnoběžky p a q (viz obrázek). Úhel, který svírá příčka s přímkou p vpravo od příčky, má 70°. Osy tohoto úhlu a úhlu, který příčka svírá s přímkou q na téže straně, se protínají v bodě O. Jak velký je úhel AOB? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
       "odpoved": "90°",
       "reseni_kroky": [
         "Úhly na téže straně příčky mezi rovnoběžkami se doplňují do 180°: u A je 70°, u B tedy 110°.",
@@ -596,6 +719,29 @@
         "(Výsledek je vždy 90° — polovina z 180° — bez ohledu na velikost úhlu 70°.)"
       ],
       "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "UHN3_10",
+      "tema": "uhly",
+      "podtema": "kruznice_opsana",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/uhly/nove-thales-kolmice.svg",
+        "width": 420,
+        "height": 330,
+        "alt": "Trojúhelník ABC vepsaný do kružnice se středem S na straně AB; přímka q prochází bodem C kolmo na AB; osa o úhlu při B; úhel 116° u C; hledané úhly α a φ"
+      },
+      "zadani": "Trojúhelník ABC je vepsán do kružnice se středem S, který leží na straně AB. Přímka q prochází bodem C kolmo na AB a přímka o je osa úhlu při vrcholu B. Úhel mezi přímkou q a stranou CB (označený na obrázku) má 116°. Jak velký je úhel φ, který svírá osa o se stranou AB? Obrázek je ilustrační, úhly neměř, ale vypočítej je.",
+      "odpoved": "13°",
+      "reseni_kroky": [
+        "Střed S leží na AB, takže AB je průměr a podle Thaletovy věty je úhel ACB pravý.",
+        "Úhel PCB (P je pata kolmice z C) je vedlejší k úhlu 116°: 180° − 116° = 64°.",
+        "V pravoúhlém trojúhelníku CPB je úhel β u vrcholu B roven 90° − 64° = 26°.",
+        "Osa o úhel β půlí: φ = 26° : 2 = 13°."
+      ],
+      "cas_sekund": 270,
       "sm2_interval": 1
     }
   ]

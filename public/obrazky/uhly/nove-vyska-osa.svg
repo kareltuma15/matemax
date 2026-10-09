@@ -5,11 +5,11 @@
   <line x1="197.77" y1="32" x2="162.48" y2="198" stroke="#2E6DA4" stroke-width="1.8" stroke-dasharray="6 4"/>
   <polyline points="197.77,189 206.77,189 206.77,198" fill="none" stroke="#2E6DA4" stroke-width="1.8"/>
   <path d="M 82.3 198 A 34 34 0 0 0 71.05 172.73" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="91.23" y="183.88" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">48°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="91.23" y="183.88" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">48°</text>
   <path d="M 219.7 198 A 32 32 0 0 1 241.81 167.57" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="215.3" y="176.55" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">72°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="215.3" y="176.55" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">72°</text>
   <path d="M 197.77 102 A 70 70 0 0 1 183.21 100.47" fill="none" stroke="#d9480f" stroke-width="2"/>
-  <text x="189.09" y="119.55" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="189.09" y="119.55" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
   <circle cx="197.77" cy="198" r="2.4" fill="#0D1B3E"/>
   <circle cx="162.48" cy="198" r="2.4" fill="#0D1B3E"/>
   <text x="34.73" y="209.39" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>

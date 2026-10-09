@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 175" width="300" height="175" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Část pravidelného mnohoúhelníku; vnitřní úhel při jednom vrcholu má 150°</title>
+  <line x1="42.35" y1="133" x2="75.65" y2="75.31" stroke="#0D1B3E" stroke-width="2.2" stroke-dasharray="2 6"/>
+  <line x1="75.65" y1="75.31" x2="133.35" y2="42" stroke="#0D1B3E" stroke-width="2.4"/>
+  <line x1="133.35" y1="42" x2="199.96" y2="42" stroke="#0D1B3E" stroke-width="2.4"/>
+  <line x1="199.96" y1="42" x2="257.65" y2="75.31" stroke="#0D1B3E" stroke-width="2.2" stroke-dasharray="2 6"/>
+  <circle cx="75.65" cy="75.31" r="3" fill="#0D1B3E"/>
+  <circle cx="133.35" cy="42" r="3" fill="#0D1B3E"/>
+  <circle cx="199.96" cy="42" r="3" fill="#0D1B3E"/>
+  <path d="M 107.37 57 A 30 30 0 0 0 163.35 42" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="144.48" y="88.53" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">150°</text>
+</svg>

@@ -4,11 +4,11 @@
   <line x1="49.82" y1="180" x2="156.73" y2="127.86" stroke="#2E6DA4" stroke-width="1.8" stroke-dasharray="6 4"/>
   <line x1="240.18" y1="180" x2="156.73" y2="127.86" stroke="#2E6DA4" stroke-width="1.8" stroke-dasharray="6 4"/>
   <path d="M 83.82 180 A 34 34 0 0 0 70.76 153.21" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="85.98" y="154.97" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">52°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="85.98" y="154.97" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">52°</text>
   <path d="M 208.18 180 A 32 32 0 0 1 226.15 151.24" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="205.97" y="155.76" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">64°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="205.97" y="155.76" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">64°</text>
   <path d="M 138.76 136.63 A 20 20 0 0 0 173.69 138.46" fill="none" stroke="#d9480f" stroke-width="2"/>
-  <text x="155" y="165.81" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="155" y="165.81" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
   <circle cx="156.73" cy="127.86" r="2.8" fill="#0D1B3E"/>
   <text x="36.34" y="191.58" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
   <text x="253.21" y="192.42" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>

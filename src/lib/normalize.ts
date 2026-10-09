@@ -85,7 +85,33 @@ export function toValue(raw: string): number | null {
   return null;
 }
 
+/**
+ * Úhel ve stupních a minutách → celkem minut, nebo null. Zvládne „22°30′", „22°30'", „22° 30",
+ * „22 30", „22 st 30 min" i desetinné stupně „22,5" / „22,5°". Minuty musí být 0–59.
+ * Žáci na mobilu ° a ′ většinou nenajdou, proto stačí i samotná mezera mezi čísly.
+ */
+export function toAngleMinutes(raw: string): number | null {
+  const s = raw.trim().toLowerCase().replace(/,/g, ".").replace(/\s+/g, " ");
+  const deg = "(?:°|º|˚|stupn\\p{L}*|st\\.?)";
+  const min = "(?:['′’´`]|min\\p{L}*)";
+  const dm = s.match(new RegExp(`^(\\d+)(?:\\s*${deg}\\s*|\\s+)(\\d+)\\s*${min}?$`, "u"));
+  if (dm) {
+    const minutes = parseInt(dm[2]);
+    return minutes < 60 ? parseInt(dm[1]) * 60 + minutes : null;
+  }
+  const dec = s.match(new RegExp(`^(\\d+(?:\\.\\d+)?)\\s*${deg}?$`, "u"));
+  return dec ? Math.round(parseFloat(dec[1]) * 60) : null;
+}
+
 export function checkAnswer(userAnswer: string, correct: string): boolean {
+  // Úhel ve stupních a minutách („22°30′"): porovnáváme celkový počet minut, ne text.
+  // (Bez toho by se „22°30′" i „22°45′" zjednodušilo na „22".)
+  if (/\d\s*°\s*\d+\s*['′]/.test(correct)) {
+    const c = toAngleMinutes(correct);
+    const u = toAngleMinutes(userAnswer);
+    return c !== null && u !== null && c === u;
+  }
+
   // Když jde obojí převést na číslo, rozhoduje hodnota — 47/12 = 3 11/12 = 3,9166…
   const u = toValue(userAnswer);
   const c = toValue(correct);

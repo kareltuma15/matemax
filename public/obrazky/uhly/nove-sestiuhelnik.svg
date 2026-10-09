@@ -2,5 +2,5 @@
   <title>Pravidelný šestiúhelník s vyznačeným vnitřním úhlem</title>
   <polygon points="200.45,100 157.72,174 72.28,174 29.55,100 72.28,26 157.72,26" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
   <path d="M 188.45 120.78 A 24 24 0 0 1 188.45 79.22" fill="none" stroke="#d9480f" stroke-width="2"/>
-  <text x="163.45" y="105" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="163.45" y="105" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
 </svg>

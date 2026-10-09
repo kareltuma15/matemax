@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="200" height="180" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Pravý úhel rozdělený polopřímkou na úhly α a β; α je o 36° větší než β</title>
+  <line x1="40" y1="150" x2="170" y2="150" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="40" y1="150" x2="40" y2="30" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="40" y1="150" x2="151.38" y2="93.25" stroke="#0D1B3E" stroke-width="2.2"/>
+  <polyline points="52,150 52,138 40,138" fill="none" stroke="#2E6DA4" stroke-width="1.8"/>
+  <path d="M 116 150 A 76 76 0 0 0 107.72 115.5" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="128.13" y="142.59" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">β</text>
+  <path d="M 84.55 127.3 A 50 50 0 0 0 40 100" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="72.92" y="101.28" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">α</text>
+  <circle cx="40" cy="150" r="3" fill="#0D1B3E"/>
+  <text x="26" y="166" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">V</text>
+</svg>

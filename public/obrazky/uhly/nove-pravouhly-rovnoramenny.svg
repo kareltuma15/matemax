@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 190" width="200" height="190" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Pravoúhlý trojúhelník ABC s pravým úhlem u C a shodnými odvěsnami CA a CB; hledaný úhel u A</title>
+  <polygon points="165,160 35,30 35,160" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <polyline points="47,160 47,148 35,148" fill="none" stroke="#2E6DA4" stroke-width="1.8"/>
+<line x1="100" y1="166" x2="100" y2="154" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="41" y1="95" x2="29" y2="95" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 135 160 A 30 30 0 0 1 143.79 138.79" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="125.27" y="148.54" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="178.42" y="171.71" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="28.29" y="21.58" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="24.39" y="175.61" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+</svg>

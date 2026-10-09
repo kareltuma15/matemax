@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" width="260" height="180" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Přímka AB a polopřímka VC: úhel BVC je 62°40′, hledaný úhel AVC</title>
+  <line x1="25" y1="150" x2="235" y2="150" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="130" y1="150" x2="185.1" y2="43.4" stroke="#0D1B3E" stroke-width="2.2"/>
+  <path d="M 172 150 A 42 42 0 0 0 149.28 112.69" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="180.09" y="132.29" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">62°40′</text>
+  <path d="M 149.28 112.69 A 42 42 0 0 0 88 150" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="94.16" y="113.28" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <circle cx="130" cy="150" r="3" fill="#0D1B3E"/>
+  <text x="15" y="156" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="247" y="156" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="191.1" y="33.4" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="130" y="172" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">V</text>
+</svg>

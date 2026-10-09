@@ -7,11 +7,11 @@
   <line x1="140.73" y1="45" x2="205" y2="90" stroke="#0D1B3E" stroke-width="2.2"/>
   <line x1="205" y1="90" x2="167.24" y2="135" stroke="#0D1B3E" stroke-width="2.2"/>
   <path d="M 166.73 45 A 26 26 0 0 1 162.03 59.91" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="179.1" y="56.98" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">35°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="179.1" y="56.98" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">35°</text>
   <path d="M 193.24 135 A 26 26 0 0 0 183.95 115.08" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="205.01" y="130.28" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">50°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="205.01" y="130.28" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">50°</text>
   <path d="M 186.98 77.38 A 22 22 0 0 0 190.86 106.85" fill="none" stroke="#d9480f" stroke-width="2"/>
-  <text x="170.3" y="99.57" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="170.3" y="99.57" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
   <circle cx="140.73" cy="45" r="3" fill="#0D1B3E"/>
   <circle cx="205" cy="90" r="3" fill="#0D1B3E"/>
   <circle cx="167.24" cy="135" r="3" fill="#0D1B3E"/>

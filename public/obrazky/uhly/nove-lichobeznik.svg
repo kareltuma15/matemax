@@ -4,9 +4,9 @@
 <line x1="53.26" y1="87.25" x2="42.14" y2="82.75" stroke="#0D1B3E" stroke-width="1.8"/>
 <line x1="227.86" y1="82.75" x2="216.74" y2="87.25" stroke="#0D1B3E" stroke-width="1.8"/>
   <path d="M 58 128.81 A 28 28 0 0 0 40.49 102.85" fill="none" stroke="#2E6DA4" stroke-width="2"/>
-  <text x="63.99" y="110.88" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">68°</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="63.99" y="110.88" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">68°</text>
   <path d="M 55.66 65.3 A 26 26 0 0 0 91.4 41.19" fill="none" stroke="#d9480f" stroke-width="2"/>
-  <text x="87.21" y="78.52" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="87.21" y="78.52" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
   <text x="16.16" y="139.59" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
   <text x="253.84" y="139.59" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
   <text x="217.29" y="38.2" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>

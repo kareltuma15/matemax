@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 240" width="250" height="240" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Tři polopřímky z vrcholu V: úhel AVB je 47°30′, úhel BVC je 12°45′, hledaný úhel AVC (obrázek je ilustrační)</title>
+  <line x1="30" y1="210" x2="230" y2="210" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="30" y1="210" x2="160.81" y2="79.19" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="30" y1="210" x2="72.34" y2="40.2" stroke="#0D1B3E" stroke-width="2.2"/>
+  <path d="M 98 210 A 68 68 0 0 0 78.08 161.92" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="108.09" y="193.47" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">47°30′</text>
+  <path d="M 107.78 132.22 A 110 110 0 0 0 56.61 103.27" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="90.57" y="107.95" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">12°45′</text>
+  <path d="M 180 210 A 150 150 0 0 0 66.29 64.46" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="190.85" y="188.59" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <circle cx="30" cy="210" r="3" fill="#0D1B3E"/>
+  <text x="18" y="226" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">V</text>
+  <text x="242" y="215" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="172.81" y="75.19" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="78.34" y="30.2" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+</svg>

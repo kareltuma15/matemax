@@ -3,7 +3,7 @@
   <polygon points="44,87.31 97.31,34 172.69,34 226,87.31 226,162.69 172.69,216 97.31,216 44,162.69" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
   <line x1="44" y1="87.31" x2="172.69" y2="34" stroke="#2E6DA4" stroke-width="2"/>
   <path d="M 72.28 59.02 A 40 40 0 0 1 80.96 72" fill="none" stroke="#d9480f" stroke-width="2"/>
-  <text x="88.07" y="62.86" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="88.07" y="62.86" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
   <text x="30.14" y="86.57" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
   <text x="91.57" y="25.14" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
   <text x="178.43" y="25.14" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
