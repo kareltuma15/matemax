@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" width="280" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Trojúhelník ABC s úhly α = 50° a β = 70°; přerušovaná osa úhlu při vrcholu C protíná stranu AB v bodě D</title>
+  <polygon points="55.79,170 224.21,170 173.26,30" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="173.26" y1="30" x2="148.57" y2="170" stroke="#2E6DA4" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <path d="M 85.79 170 A 30 30 0 0 0 75.07 147.02" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text x="94.76" y="156.83" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">50°</text>
+  <path d="M 196.21 170 A 28 28 0 0 1 214.64 143.69" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text x="190.63" y="151.48" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">70°</text>
+  <circle cx="148.57" cy="170" r="2.6" fill="#0D1B3E"/>
+  <text x="42.31" y="181.6" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="236.86" y="183.07" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="176.73" y="20.41" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="148.57" y="191" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+</svg>

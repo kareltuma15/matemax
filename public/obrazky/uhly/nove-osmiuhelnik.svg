@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 250" width="270" height="250" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Pravidelný osmiúhelník ABCDEFGH s úhlopříčkou AC; hledaný úhel BAC</title>
+  <polygon points="44,87.31 97.31,34 172.69,34 226,87.31 226,162.69 172.69,216 97.31,216 44,162.69" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="44" y1="87.31" x2="172.69" y2="34" stroke="#2E6DA4" stroke-width="2"/>
+  <path d="M 72.28 59.02 A 40 40 0 0 1 80.96 72" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text x="88.07" y="62.86" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="30.14" y="86.57" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="91.57" y="25.14" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="178.43" y="25.14" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="239.86" y="86.57" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+  <text x="239.86" y="173.43" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">E</text>
+  <text x="178.43" y="234.86" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">F</text>
+  <text x="91.57" y="234.86" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">G</text>
+  <text x="30.14" y="173.43" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">H</text>
+</svg>

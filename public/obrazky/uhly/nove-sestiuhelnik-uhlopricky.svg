@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 230" width="280" height="230" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Pravidelný šestiúhelník ABCDEF s úhlopříčkami AC a AE; hledaný úhel CAE</title>
+  <polygon points="46.47,115 93.23,34 186.77,34 233.53,115 186.77,196 93.23,196" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="46.47" y1="115" x2="186.77" y2="34" stroke="#2E6DA4" stroke-width="2"/>
+  <line x1="46.47" y1="115" x2="186.77" y2="196" stroke="#2E6DA4" stroke-width="2"/>
+  <path d="M 75.91 98 A 34 34 0 0 1 75.91 132" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text x="93.47" y="120" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="31.47" y="120" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="85.73" y="26.01" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="194.27" y="26.01" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="248.53" y="120" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+  <text x="194.27" y="213.99" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">E</text>
+  <text x="85.73" y="213.99" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">F</text>
+</svg>

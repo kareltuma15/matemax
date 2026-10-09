@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 250" width="260" height="250" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Deltoid ABCD: AB = AD, CB = CD, úhel u A je 70°, úhel u C je 50°, hledaný úhel u B</title>
+  <polygon points="130,30 76.82,105.95 130,220 183.18,105.95" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+<line x1="98.49" y1="64.53" x2="108.32" y2="71.42" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="151.68" y1="71.42" x2="161.51" y2="64.53" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="110.11" y1="163.16" x2="99.24" y2="168.23" stroke="#0D1B3E" stroke-width="1.8"/>
+  <line x1="107.58" y1="157.72" x2="96.7" y2="162.79" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="160.76" y1="168.23" x2="149.89" y2="163.16" stroke="#0D1B3E" stroke-width="1.8"/>
+  <line x1="163.3" y1="162.79" x2="152.42" y2="157.72" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 112.79 54.57 A 30 30 0 0 0 147.21 54.57" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text x="130" y="78" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">70°</text>
+  <path d="M 115.63 189.19 A 34 34 0 0 1 144.37 189.19" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text x="130" y="178" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">50°</text>
+  <path d="M 90.58 86.29 A 24 24 0 0 1 86.96 127.7" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text x="113.68" y="114.18" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="130" y="20" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="62.05" y="108.31" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="130" y="240" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="197.95" y="108.31" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Rovnoramenný trojúhelník ABC se základnou BC a bodem D na straně AC; úseky AD, BD a BC jsou shodné; hledaný úhel u vrcholu A</title>
+  <polygon points="125,30 63.27,220 186.73,220" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="63.27" y1="220" x2="163.15" y2="147.43" stroke="#0D1B3E" stroke-width="2.2"/>
+<line x1="138.37" y1="90.57" x2="149.78" y2="86.86" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="116.74" y1="188.57" x2="109.68" y2="178.86" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="125" y1="226" x2="125" y2="214" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 113.88 64.24 A 36 36 0 0 0 136.12 64.24" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text x="125" y="84" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <circle cx="163.15" cy="147.43" r="2.8" fill="#0D1B3E"/>
+  <text x="125" y="20" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="52.8" y="235.74" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="197.2" y="235.74" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="178.15" y="151.43" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">D</text>
+</svg>
