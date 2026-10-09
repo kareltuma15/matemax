@@ -12,6 +12,14 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "karel.tuma15@gmail.com")
 export interface AdminUser {
   id: string;
   email: string;
+  /** Jméno z registrace (user_metadata), nebo null */
+  name: string | null;
+  /** paid = platí předplatné, trial = zkušební období, free = zdarma */
+  plan: "paid" | "trial" | "free";
+  trialUntil: string | null;
+  lastLogin: string | null;
+  answered: number;
+  correct: number;
   createdAt: string;
   lastSession: string | null;
   sessionCount: number;
@@ -45,18 +53,35 @@ export async function GET(req: NextRequest) {
     { data: xpRows },
     { data: sessionRows },
     { data: diagRows },
+    { data: premiumRows },
   ] = await Promise.all([
     supabaseAdmin.from("user_xp").select("user_id, total_xp, current_level").in("user_id", userIds),
     supabaseAdmin
       .from("sessions")
-      .select("user_id, date")
+      .select("user_id, date, correct, total")
       .in("user_id", userIds)
       .order("date", { ascending: false }),
     supabaseAdmin
       .from("diagnostic_results")
       .select("user_id")
       .in("user_id", userIds),
+    supabaseAdmin
+      .from("user_premium")
+      .select("user_id, is_premium, trial_expires_at")
+      .in("user_id", userIds),
   ]);
+
+  const premiumMap = new Map<string, { isPremium: boolean; trialUntil: string | null }>();
+  for (const row of premiumRows ?? []) {
+    premiumMap.set(row.user_id as string, { isPremium: !!row.is_premium, trialUntil: (row.trial_expires_at as string | null) ?? null });
+  }
+  const answersByUser = new Map<string, { answered: number; correct: number }>();
+  for (const row of sessionRows ?? []) {
+    const cur = answersByUser.get(row.user_id as string) ?? { answered: 0, correct: 0 };
+    cur.answered += (row.total as number) ?? 0;
+    cur.correct += (row.correct as number) ?? 0;
+    answersByUser.set(row.user_id as string, cur);
+  }
 
   const xpMap = new Map<string, { xp: number; level: string }>();
   for (const row of xpRows ?? []) {
@@ -94,9 +119,24 @@ export async function GET(req: NextRequest) {
   const users: AdminUser[] = authUsers.map((u) => {
     const dates = sessionsByUser.get(u.id) ?? [];
     const xpInfo = xpMap.get(u.id) ?? { xp: 0, level: "zacatecnik" };
+    const prem = premiumMap.get(u.id);
+    const trialActive = !!prem?.trialUntil && new Date(prem.trialUntil) > new Date();
+    const plan: AdminUser["plan"] = prem?.isPremium ? (prem.trialUntil ? (trialActive ? "trial" : "free") : "paid") : "free";
+    const meta = (u.user_metadata ?? {}) as Record<string, unknown>;
+    const first = typeof meta.first_name === "string" ? meta.first_name : "";
+    const last = typeof meta.last_name === "string" ? meta.last_name : "";
+    const full = typeof meta.full_name === "string" ? meta.full_name : "";
+    const name = `${first} ${last}`.trim() || full.trim() || null;
+    const ans = answersByUser.get(u.id) ?? { answered: 0, correct: 0 };
     return {
       id: u.id,
       email: u.email ?? "(no email)",
+      name,
+      plan,
+      trialUntil: plan === "trial" ? prem?.trialUntil ?? null : null,
+      lastLogin: u.last_sign_in_at ?? null,
+      answered: ans.answered,
+      correct: ans.correct,
       createdAt: u.created_at,
       lastSession: dates[0] ?? null,
       sessionCount: dates.length,

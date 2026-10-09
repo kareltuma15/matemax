@@ -12,21 +12,39 @@ const supabaseAdmin = createClient(
 // Next.js must not parse the body — Stripe needs raw bytes for signature verification
 export const runtime = "nodejs";
 
-async function setPremium(customerId: string, isPremium: boolean, subscriptionId?: string) {
+/**
+ * Najde uživatele podle Stripe zákazníka. Primárně přes user_premium.stripe_customer_id;
+ * když se ID při zakládání checkoutu neuložilo (create-checkout to jen zaloguje, platbu nerušil),
+ * použije se supabase_user_id z metadat předplatného, nebo zákazníka ve Stripe.
+ * Bez tohoto záložního párování by zaplatil zákazník zůstal bez prémia.
+ */
+async function findUserId(customerId: string, hintUserId?: string | null): Promise<string | null> {
   const { data } = await supabaseAdmin
     .from("user_premium")
     .select("user_id")
     .eq("stripe_customer_id", customerId)
     .maybeSingle();
+  if (data?.user_id) return data.user_id as string;
+  if (hintUserId) return hintUserId;
+  try {
+    const customer = await stripe.customers.retrieve(customerId);
+    if (!customer.deleted) return customer.metadata?.supabase_user_id ?? null;
+  } catch (err) {
+    console.error("webhook: načtení zákazníka ze Stripe selhalo", customerId, err);
+  }
+  return null;
+}
 
-  if (!data?.user_id) {
-    console.error("webhook: no user found for customer", customerId);
-    return;
+async function setPremium(customerId: string, isPremium: boolean, subscriptionId?: string, hintUserId?: string | null) {
+  const userId = await findUserId(customerId, hintUserId);
+  if (!userId) {
+    // Chyba, ne tiché přeskočení: Stripe webhook zopakuje a v logu je vidět, že platba nemá uživatele.
+    throw new Error(`webhook: nenalezen uživatel pro zákazníka ${customerId}`);
   }
 
-  await supabaseAdmin.from("user_premium").upsert(
+  const { error } = await supabaseAdmin.from("user_premium").upsert(
     {
-      user_id: data.user_id,
+      user_id: userId,
       is_premium: isPremium,
       trial_expires_at: null,
       stripe_customer_id: customerId,
@@ -34,6 +52,8 @@ async function setPremium(customerId: string, isPremium: boolean, subscriptionId
     },
     { onConflict: "user_id" }
   );
+  // Selhání zápisu musí shodit webhook (500) — Stripe ho pak zopakuje, místo aby zaplacené prémium zmizelo.
+  if (error) throw new Error(`webhook: zápis user_premium selhal: ${error.message}`);
 }
 
 // Potvrzení přihlášení na test nanečisto. Stripe umí webhook zopakovat,
@@ -136,13 +156,13 @@ export async function POST(req: Request) {
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription;
         const active = sub.status === "active" || sub.status === "trialing";
-        await setPremium(sub.customer as string, active, sub.id);
+        await setPremium(sub.customer as string, active, sub.id, sub.metadata?.supabase_user_id);
         break;
       }
 
       case "customer.subscription.deleted": {
         const sub = event.data.object as Stripe.Subscription;
-        await setPremium(sub.customer as string, false, sub.id);
+        await setPremium(sub.customer as string, false, sub.id, sub.metadata?.supabase_user_id);
         break;
       }
 

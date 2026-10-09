@@ -121,7 +121,7 @@ export default function AdminPage() {
   }
 
   const filtered = users.filter((u) =>
-    search === "" || u.email.toLowerCase().includes(search.toLowerCase())
+    search === "" || u.email.toLowerCase().includes(search.toLowerCase()) || (u.name ?? "").toLowerCase().includes(search.toLowerCase())
   );
 
   if (loading) {
@@ -197,7 +197,7 @@ export default function AdminPage() {
           </div>
           <input
             type="text"
-            placeholder="Hledat email…"
+            placeholder="Hledat jméno nebo e-mail…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="ml-auto rounded-lg px-3 py-1.5 text-sm border outline-none"
@@ -209,7 +209,9 @@ export default function AdminPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
-                <th className="text-left px-4 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Email</th>
+                <th className="text-left px-4 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Uživatel</th>
+                <th className="text-center px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Plán</th>
+                <th className="text-center px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Úspěšnost</th>
                 <th className="text-center px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Sessions</th>
                 <th className="text-center px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Streak</th>
                 <th className="text-center px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: "#94a3b8" }}>Level</th>
@@ -228,12 +230,26 @@ export default function AdminPage() {
                   }}
                 >
                   <td className="px-4 py-3">
-                    <div className="font-medium" style={{ color: "var(--text-primary)", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {u.name && (
+                      <div className="font-bold" style={{ color: "var(--text-primary)" }}>{u.name}</div>
+                    )}
+                    <div className="font-medium" style={{ color: "var(--text-primary)", maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                       {u.email}
                     </div>
                     <div className="text-xs" style={{ color: "#94a3b8" }}>
-                      {u.lastSession ? `Naposledy: ${u.lastSession}` : `Reg: ${u.createdAt.slice(0, 10)}`}
+                      Reg: {u.createdAt.slice(0, 10)} · {u.lastSession ? `trénink: ${u.lastSession}` : "zatím netrénoval"}{u.lastLogin ? ` · přihlášen: ${u.lastLogin.slice(0, 10)}` : ""}
                     </div>
+                  </td>
+                  <td className="px-3 py-3 text-center">
+                    <span
+                      className="rounded-full px-2 py-0.5 text-xs font-bold"
+                      style={{ background: u.plan === "paid" ? "#dcfce7" : u.plan === "trial" ? "#fef3c7" : "#f1f5f9", color: u.plan === "paid" ? "#166534" : u.plan === "trial" ? "#92400e" : "#64748b" }}
+                    >
+                      {u.plan === "paid" ? "Premium" : u.plan === "trial" ? `Trial do ${(u.trialUntil ?? "").slice(5, 10)}` : "Zdarma"}
+                    </span>
+                  </td>
+                  <td className="px-3 py-3 text-center text-xs font-semibold" style={{ color: "#64748b" }}>
+                    {u.answered > 0 ? `${Math.round((u.correct / u.answered) * 100)} % z ${u.answered}` : "—"}
                   </td>
                   <td className="px-3 py-3 text-center font-bold" style={{ color: "var(--text-primary)" }}>{u.sessionCount}</td>
                   <td className="px-3 py-3 text-center font-bold" style={{ color: u.streak >= 3 ? "#f97316" : "#64748b" }}>
@@ -268,7 +284,7 @@ export default function AdminPage() {
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="text-center py-8 text-sm" style={{ color: "#94a3b8" }}>
+                  <td colSpan={9} className="text-center py-8 text-sm" style={{ color: "#94a3b8" }}>
                     Žádní uživatelé nenalezeni
                   </td>
                 </tr>
