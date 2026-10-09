@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 911,
+    "total": 943,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -18677,6 +18677,589 @@
         "64 : 16 = 4. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_01",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 1,
+      "zadani": "3 kg jablek stojí 84 Kč. Kolik korun stojí 5 kg stejných jablek?",
+      "odpoved": "140 Kč",
+      "reseni_kroky": [
+        "1 kg stojí 84 : 3 = 28 Kč.",
+        "5 kg stojí 5 · 28 = 140 Kč."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_02",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 1,
+      "zadani": "Auto spotřebuje na 100 km 6 litrů benzínu. Kolik litrů spotřebuje na 250 km?",
+      "odpoved": "15 l",
+      "reseni_kroky": [
+        "Na 1 km spotřebuje 6 : 100 = 0,06 l.",
+        "Na 250 km spotřebuje 250 · 0,06 = 15 l."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_03",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 1,
+      "zadani": "Čtyři dělníci vykopou příkop za 6 dní. Za kolik dní by příkop vykopalo osm stejně rychlých dělníků?",
+      "odpoved": "3 dny",
+      "reseni_kroky": [
+        "Dělníků je dvakrát víc, takže práce bude hotová dvakrát rychleji (nepřímá úměra).",
+        "6 : 2 = 3 dny."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_04",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 1,
+      "zadani": "Na 12 sendvičů je potřeba 300 g šunky. Kolik gramů šunky je potřeba na 20 sendvičů?",
+      "odpoved": "500 g",
+      "reseni_kroky": [
+        "Na 1 sendvič připadá 300 : 12 = 25 g šunky.",
+        "Na 20 sendvičů je potřeba 20 · 25 = 500 g."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_05",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 1,
+      "zadani": "Při rychlosti 4 km/h trvá výlet 3 hodiny. Za jak dlouho ho ujdeme rychlostí 6 km/h?",
+      "odpoved": "2 hodiny",
+      "reseni_kroky": [
+        "Dráha výletu je 4 · 3 = 12 km.",
+        "Rychlostí 6 km/h to trvá 12 : 6 = 2 hodiny."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_06",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 1,
+      "zadani": "Tričko stojí 280 Kč. Prodavač nabídl slevu 25 %. Kolik korun zaplatíme?",
+      "odpoved": "210 Kč",
+      "reseni_kroky": [
+        "Sleva je 0,25 · 280 = 70 Kč.",
+        "Zaplatíme 280 − 70 = 210 Kč."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_07",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 1,
+      "zadani": "Na účet s úrokem 3 % ročně uložil Karel 20 000 Kč. Kolik korun úroku dostane za jeden rok?",
+      "odpoved": "600 Kč",
+      "reseni_kroky": [
+        "Úrok je 3 % z 20 000 Kč.",
+        "0,03 · 20 000 = 600 Kč."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_08",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 1,
+      "zadani": "Za 3 sešity a 2 tužky zaplatíme 88 Kč. Jeden sešit stojí 24 Kč. Kolik korun stojí jedna tužka?",
+      "odpoved": "8 Kč",
+      "reseni_kroky": [
+        "Sešity stojí 3 · 24 = 72 Kč.",
+        "Na dvě tužky zbývá 88 − 72 = 16 Kč, jedna tužka stojí 16 : 2 = 8 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_09",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 1,
+      "zadani": "Kniha stála 400 Kč a zdražila o 15 %. Kolik korun stojí nyní?",
+      "odpoved": "460 Kč",
+      "reseni_kroky": [
+        "Zdražení je 0,15 · 400 = 60 Kč.",
+        "Nová cena: 400 + 60 = 460 Kč."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_10",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 1,
+      "zadani": "Petra dostává kapesné 1 500 Kč měsíčně a třetinu z něj šetří. Kolik korun ušetří za rok?",
+      "odpoved": "6 000 Kč",
+      "reseni_kroky": [
+        "Za měsíc ušetří 1 500 : 3 = 500 Kč.",
+        "Za rok (12 měsíců) ušetří 12 · 500 = 6 000 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_11",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 1,
+      "zadani": "Malíř vymaluje jeden pokoj za 6 hodin. Kolik stejných pokojů vymaluje za 18 hodin?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Za 18 hodin uplyne 18 : 6 = 3 šestihodinové úseky.",
+        "Vymaluje 3 pokoje."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_12",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 1,
+      "zadani": "Dva stejně rychlí pracovníci udělají práci za 10 dní. Za kolik dní by ji udělal jeden z nich sám?",
+      "odpoved": "20 dní",
+      "reseni_kroky": [
+        "Jeden pracovník je dvakrát pomalejší než dva.",
+        "Práci udělá za 2 · 10 = 20 dní."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_13",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 1,
+      "zadani": "Kohoutek naplní vanu za 12 minut. Jakou část vany naplní za 3 minuty? Výsledek zapište zlomkem.",
+      "odpoved": "1/4",
+      "reseni_kroky": [
+        "Za 1 minutu naplní 1/12 vany.",
+        "Za 3 minuty naplní 3/12 = 1/4 vany."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_14",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 1,
+      "zadani": "Tři stejně rychlí kopáči vykopou jámu za 4 hodiny. Za jak dlouho by ji vykopalo šest kopáčů?",
+      "odpoved": "2 hodiny",
+      "reseni_kroky": [
+        "Kopáčů je dvakrát víc, práce půjde dvakrát rychleji.",
+        "4 : 2 = 2 hodiny."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_15",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 1,
+      "zadani": "Písek a štěrk jsou ve směsi v poměru 2 : 3. Kolik kilogramů štěrku je ve 20 kg směsi?",
+      "odpoved": "12 kg",
+      "reseni_kroky": [
+        "Směs má 2 + 3 = 5 dílů, jeden díl váží 20 : 5 = 4 kg.",
+        "Štěrk tvoří 3 díly: 3 · 4 = 12 kg."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_16",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 1,
+      "zadani": "Na mapě s měřítkem 1 : 50 000 měří vzdálenost dvou obcí 6 cm. Kolik kilometrů je to ve skutečnosti?",
+      "odpoved": "3 km",
+      "reseni_kroky": [
+        "6 cm · 50 000 = 300 000 cm.",
+        "300 000 cm = 3 000 m = 3 km."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_17",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 1,
+      "zadani": "Počet chlapců a dívek ve třídě je v poměru 3 : 2. Chlapců je 15. Kolik je ve třídě dívek?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Jeden díl odpovídá 15 : 3 = 5 žáků.",
+        "Dívky tvoří 2 díly: 2 · 5 = 10."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD1_18",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
+      "obtiznost": 1,
+      "zadani": "Na plánu je vzdálenost 12 km zakreslena úsečkou dlouhou 4 cm. Kolik kilometrů ve skutečnosti odpovídá 1 cm na plánu?",
+      "odpoved": "3 km",
+      "reseni_kroky": [
+        "4 cm na plánu odpovídá 12 km.",
+        "1 cm odpovídá 12 : 4 = 3 km."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD2_01",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 2,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Ceny sešitů",
+        "hlavicka": [
+          "Počet sešitů",
+          "Cena (Kč)"
+        ],
+        "radky": [
+          [
+            5,
+            40
+          ],
+          [
+            8,
+            64
+          ],
+          [
+            12,
+            null
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje cenu různého počtu stejných sešitů. Kolik korun stojí 12 sešitů?",
+      "odpoved": "96 Kč",
+      "reseni_kroky": [
+        "Z tabulky: 5 sešitů stojí 40 Kč, takže 1 sešit stojí 40 : 5 = 8 Kč (druhý řádek to potvrzuje: 8 · 8 = 64).",
+        "12 sešitů stojí 12 · 8 = 96 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD2_02",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 2,
+      "zadani": "Šest čerpadel by vyčerpalo nádrž za 10 hodin. Po 4 hodinách společné práce se dvě čerpadla porouchala. Za kolik dalších hodin vyčerpají nádrž zbylá čtyři čerpadla?",
+      "odpoved": "9 hodin",
+      "reseni_kroky": [
+        "Celá práce je 6 · 10 = 60 hodin čerpadla. Za první 4 hodiny se udělalo 6 · 4 = 24.",
+        "Zbývá 60 − 24 = 36 hodin čerpadla; čtyři čerpadla ji zvládnou za 36 : 4 = 9 hodin."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD2_03",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 2,
+      "zadani": "Ze 75 dkg mouky se upeče 30 koláčů. Kolik koláčů se upeče ze 2 kg mouky?",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "2 kg = 200 dkg. Z 1 dkg se upeče 30 : 75 = 0,4 koláče.",
+        "Z 200 dkg se upeče 200 · 0,4 = 80 koláčů."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD2_04",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 2,
+      "zadani": "Patnáct kopáčů by vykopalo příkop za 8 dní. Kolik kopáčů je potřeba, aby byl příkop hotový za 5 dní? (Všichni pracují stejně rychle.)",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Celá práce je 15 · 8 = 120 kopáčodnů.",
+        "Na 5 dní je potřeba 120 : 5 = 24 kopáčů."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_01",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "zadani": "Zásoba vody pro 12 turistů vystačí na 15 dní. Po 3 dnech přišlo na tábor dalších 6 turistů. Na kolik dalších dní vystačí zbylá zásoba všem turistům?",
+      "odpoved": "8 dní",
+      "reseni_kroky": [
+        "Celá zásoba odpovídá 12 · 15 = 180 turistodnů. Za první 3 dny se spotřebovalo 12 · 3 = 36.",
+        "Zbývá 180 − 36 = 144 turistodnů. Turistů je teď 12 + 6 = 18, zásoba vystačí na 144 : 18 = 8 dní."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_02",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "moznosti": [
+        "300",
+        "320",
+        "360",
+        "400",
+        "450"
+      ],
+      "spravna": 3,
+      "zadani": "Osm pekařů upeče za 6 hodin 480 housek. Kolik housek upečou pět pekařů za 8 hodin? (Všichni pracují stejně rychle.)",
+      "odpoved": "400",
+      "reseni_kroky": [
+        "Jeden pekař upeče za 1 hodinu 480 : (8 · 6) = 10 housek.",
+        "Pět pekařů za 8 hodin: 5 · 8 · 10 = 400 housek. Správně je D)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_03",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "zadani": "Při rychlosti 80 km/h trvá cesta 3 hodiny. O kolik procent se zkrátí doba cesty, zvýšíme-li rychlost na 100 km/h?",
+      "odpoved": "20 %",
+      "reseni_kroky": [
+        "Délka cesty: 80 · 3 = 240 km.",
+        "Rychlostí 100 km/h trvá cesta 240 : 100 = 2,4 h, tedy o 0,6 h méně.",
+        "0,6 : 3 = 0,2, tedy o 20 % kratší. (Rychlost vzrostla o 25 %, doba se ale zkrátila jen o 20 % — úměra je nepřímá.)"
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_04",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Výroba zakázky",
+        "hlavicka": [
+          "Počet strojů",
+          "Doba výroby (h)"
+        ],
+        "radky": [
+          [
+            3,
+            20
+          ],
+          [
+            4,
+            15
+          ],
+          [
+            5,
+            12
+          ],
+          [
+            6,
+            10
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje, za kolik hodin vyrobí stejnou zakázku různý počet strojů (všechny stroje pracují stejně rychle). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Čtyři stroje vyrobí zakázku za 16 hodin.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Součin počtu strojů a doby výroby je stálý: 3 · 20 = 60 (4 · 15 = 60, 5 · 12 = 60, 6 · 10 = 60).",
+        "Čtyři stroje potřebují 60 : 4 = 15 hodin, ne 16. Tvrzení je nepravdivé — Ne."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_05",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Výroba zakázky",
+        "hlavicka": [
+          "Počet strojů",
+          "Doba výroby (h)"
+        ],
+        "radky": [
+          [
+            3,
+            20
+          ],
+          [
+            4,
+            15
+          ],
+          [
+            5,
+            12
+          ],
+          [
+            6,
+            10
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje, za kolik hodin vyrobí stejnou zakázku různý počet strojů (všechny stroje pracují stejně rychle). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Osm strojů by zakázku vyrobilo za 7,5 hodiny.\"",
+      "odpoved": "Ano",
+      "reseni_kroky": [
+        "Součin počtu strojů a doby výroby je stálý: 3 · 20 = 60.",
+        "Osm strojů potřebuje 60 : 8 = 7,5 hodiny. Tvrzení je pravdivé — Ano."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_06",
+      "tema": "slovni_ulohy",
+      "podtema": "umera",
+      "obtiznost": 3,
+      "moznosti": [
+        "Ano",
+        "Ne"
+      ],
+      "spravna": 1,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Výroba zakázky",
+        "hlavicka": [
+          "Počet strojů",
+          "Doba výroby (h)"
+        ],
+        "radky": [
+          [
+            3,
+            20
+          ],
+          [
+            4,
+            15
+          ],
+          [
+            5,
+            12
+          ],
+          [
+            6,
+            10
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje, za kolik hodin vyrobí stejnou zakázku různý počet strojů (všechny stroje pracují stejně rychle). Rozhodněte, zda je tvrzení pravdivé. Tvrzení: „Při dvojnásobném počtu strojů se doba výroby zdvojnásobí.\"",
+      "odpoved": "Ne",
+      "reseni_kroky": [
+        "Součin počtu strojů a doby výroby je stálý (60), jde o nepřímou úměru.",
+        "Při dvojnásobném počtu strojů se doba výroby zkrátí na polovinu (např. 3 stroje 20 h, 6 strojů 10 h). Tvrzení je nepravdivé — Ne."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_07",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "moznosti": [
+        "80x",
+        "80x + 40",
+        "80x + 120",
+        "120x − 40",
+        "200x"
+      ],
+      "spravna": 1,
+      "zadani": "Půjčovna kol: první hodina stojí 120 Kč a každá další hodina 80 Kč. Který výraz vyjadřuje cenu půjčení kola na x hodin (x je celé číslo, x ≥ 1)?",
+      "odpoved": "80x + 40",
+      "reseni_kroky": [
+        "První hodina stojí 120 Kč, zbývajících x − 1 hodin stojí po 80 Kč: 120 + 80 · (x − 1).",
+        "Roznásobíme: 120 + 80x − 80 = 80x + 40. Správně je B). (Výraz 80x + 120 by platil, kdyby první hodina byla navíc.)"
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_08",
+      "tema": "slovni_ulohy",
+      "podtema": "finance",
+      "obtiznost": 3,
+      "zadani": "Půjčovna kol: první hodina stojí 120 Kč a každá další hodina 80 Kč. Eva si půjčila kolo na x hodin a Jana na x + 2 hodin. Dohromady zaplatily 1 360 Kč. Kolik hodin si půjčila Eva?",
+      "odpoved": "7 hodin",
+      "reseni_kroky": [
+        "Cena za n hodin je 80n + 40. Eva zaplatila 80x + 40, Jana 80(x + 2) + 40 = 80x + 200.",
+        "Dohromady: 160x + 240 = 1 360, tedy 160x = 1 120 a x = 7.",
+        "Zkouška: Eva 7 hodin = 600 Kč, Jana 9 hodin = 760 Kč, dohromady 1 360 Kč."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_09",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "zadani": "První čerpadlo vyčerpá bazén za 6 hodin, druhé za 12 hodin. Čerpají spolu 2 hodiny, pak druhé čerpadlo vypnou a zbytek dočerpá první samo. Kolik hodin trvalo vyčerpání celého bazénu?",
+      "odpoved": "5 hodin",
+      "reseni_kroky": [
+        "Za hodinu vyčerpají společně 1/6 + 1/12 = 3/12 = 1/4 bazénu, za 2 hodiny tedy 1/2.",
+        "Zbývá 1/2 bazénu; první čerpadlo vyčerpá za hodinu 1/6, zbytek tedy za (1/2) : (1/6) = 3 hodiny.",
+        "Celkem 2 + 3 = 5 hodin."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SLD3_10",
+      "tema": "slovni_ulohy",
+      "podtema": "spolecna_prace",
+      "obtiznost": 3,
+      "zadani": "Pracovník A zvládne práci za 12 dní, pracovník B za 6 dní. Pracovali spolu 3 dny, zbytek práce dokončil za 2 dny sám pracovník C. Za kolik dní by celou práci udělal pracovník C sám?",
+      "odpoved": "8 dní",
+      "reseni_kroky": [
+        "A + B udělají za den 1/12 + 1/6 = 3/12 = 1/4 práce, za 3 dny 3/4.",
+        "Zbývá 1/4 práce, kterou C udělal za 2 dny, takže za den udělá 1/8.",
+        "Celou práci by C udělal za 8 dní."
+      ],
+      "cas_sekund": 240,
       "sm2_interval": 1
     }
   ]
