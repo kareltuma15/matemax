@@ -137,7 +137,7 @@ const root = process.cwd();
 const load = (f) => { const j = JSON.parse(fs.readFileSync(path.join(root, f), "utf8")); return Array.isArray(j) ? j : (j.examples ?? j.priklady ?? []); };
 const sets = [["databaze", load("src/data/databaze.json")], ["cermat-200", load("src/data/cermat-200.json")]];
 
-const NOTE = /PŘEPOČ|přepoč|\boprava\b|zkusme|Jiný postup|Přesná CERMAT|Pozor: výsledek|\?\?\?|TODO|FIXME|XXX|chyba v zadání|znovu spočít|nesedí|neodpovídá zadání/i;
+const NOTE = /PŘEPOČ|přepoč|přeprač|odchyluje se|ale\.\.\.|\boprava\b|zkusme|Jiný postup|Přesná CERMAT|Pozor: výsledek|\?\?\?|TODO|FIXME|XXX|chyba v zadání|znovu spočít|nesedí|neodpovídá zadání/i;
 const GARBLED = [/\\frac\{[^{}]*\}\{[^{}]*\}\\frac\{-/, /[0-9]\\frac\{-/];
 
 const stat = { celkem: 0, overeno: 0, ok: 0, spatne: 0, prevazano: 0 };
@@ -148,7 +148,8 @@ for (const [name, list] of sets) {
     const text = ex.zadani ?? "";
     const steps = (ex.reseni_kroky ?? []).join(" | ");
 
-    if (NOTE.test(steps) || NOTE.test(text)) problems.push({ typ: "poznámka", name, id: ex.id, detail: (steps.match(NOTE) ?? text.match(NOTE))[0] });
+    const odp = String(ex.odpoved ?? "");
+    if (NOTE.test(steps) || NOTE.test(text) || NOTE.test(odp)) problems.push({ typ: "poznámka", name, id: ex.id, detail: (steps.match(NOTE) ?? text.match(NOTE) ?? odp.match(NOTE))[0] });
     if (GARBLED.some((re) => re.test(steps) || re.test(text))) problems.push({ typ: "poškozený minus", name, id: ex.id, detail: steps.slice(0, 80) });
 
     let m = text.match(/\$([^$]+)\$/);

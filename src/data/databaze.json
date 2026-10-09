@@ -2587,10 +2587,10 @@
       "zadani": "Obdélník má obvod 32 cm. Délka je o 4 cm větší než šířka. Rozměry?",
       "odpoved": "10 × 6 cm",
       "reseni_kroky": [
-        "2(a+b)=32",
-        "a=b+4",
-        "2b+4+b=16, b=4...",
-        "b=6, a=10"
+        "Polovina obvodu: a + b = 32 : 2 = 16",
+        "Délka je o 4 cm větší: a = b + 4",
+        "b + 4 + b = 16, takže 2b = 12 a b = 6",
+        "a = 6 + 4 = 10, rozměry jsou 10 × 6 cm"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -4966,12 +4966,13 @@
       "tema": "souhrnne",
       "podtema": "zlomky_rovnice",
       "obtiznost": 2,
-      "zadani": "Číslo zvětšené o jeho třetinu a jeho čtvrtinu je 13. Číslo?",
-      "odpoved": "7,2 — přepočítej: 156/17",
+      "zadani": "Číslo zvětšené o jeho třetinu a jeho čtvrtinu je 38. Jaké je to číslo?",
+      "odpoved": "24",
       "reseni_kroky": [
-        "x+x/3+x/4=13",
-        "NSN=12: 12x+4x+3x=156",
-        "19x=156"
+        "x + x/3 + x/4 = 38",
+        "Společný jmenovatel 12: 12x + 4x + 3x = 456",
+        "19x = 456, takže x = 24",
+        "Kontrola: 24 + 8 + 6 = 38"
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -5010,12 +5011,13 @@
       "tema": "souhrnne",
       "podtema": "zlomky_slovni",
       "obtiznost": 2,
-      "zadani": "Petr vyřešil 2/5 úloh pondělí a 1/3 úterý. Zbývá 14 úloh. Celkem?",
+      "zadani": "Petr vyřešil v pondělí 2/5 všech úloh a v úterý 1/3 všech úloh. Zbývá mu 8 úloh. Kolik úloh bylo celkem?",
       "odpoved": "30",
       "reseni_kroky": [
-        "1-2/5-1/3=4/15 zbývá",
-        "4/15=14, celek=30... přeprač: 1-2/5-1/3=15/15-6/15-5/15=4/15",
-        "4/15×n=14, n=52,5"
+        "Vyřešil 2/5 + 1/3 = 6/15 + 5/15 = 11/15 úloh",
+        "Zbývá 1 − 11/15 = 4/15 všech úloh",
+        "4/15 z celku je 8 úloh, takže 1/15 je 2 úlohy",
+        "Celkem 15 · 2 = 30 úloh"
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -5121,11 +5123,11 @@
       "podtema": "pravdepodobnost_kombinace",
       "obtiznost": 3,
       "zadani": "Ze skupiny 5 č. (1,2,3,4,5) vybereme 2. P(součet > 6)?",
-      "odpoved": "3/10",
+      "odpoved": "2/5",
       "reseni_kroky": [
-        "příznivé: (3,4),(3,5),(4,5)=3",
-        "celkem C(5,2)=10",
-        "P=3/10"
+        "Dvojic ze 5 čísel je C(5,2) = 10",
+        "Součet větší než 6 mají dvojice (2,5), (3,4), (3,5), (4,5) — to jsou 4 dvojice",
+        "P = 4/10 = 2/5"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -5531,11 +5533,10 @@
       "podtema": "zlomky_geometrie",
       "obtiznost": 3,
       "zadani": "Lichoběžník: základny 8 a 12 cm, výška = průměr základen. Obsah?",
-      "odpoved": "50 cm²",
+      "odpoved": "100 cm²",
       "reseni_kroky": [
-        "výška=(8+12)/2=10",
-        "S=(8+12)/2×10=100 — přeprač: h=průměr základen=(8+12)/2=10",
-        "S=(8+12)/2×10=100, ale...odchyluje se zadání, S=100/2=50? Zkontroluj"
+        "Výška je průměr základen: (8 + 12) : 2 = 10 cm",
+        "Obsah lichoběžníku: S = (8 + 12) : 2 · 10 = 100 cm²"
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -5669,7 +5670,7 @@
       "podtema": "pravdepodobnost_slovni",
       "obtiznost": 2,
       "zadani": "Tříčlenná komise z 5 mužů a 3 žen. P(aspoň 1 žena)?",
-      "odpoved": "25/28",
+      "odpoved": "23/28",
       "reseni_kroky": [
         "P=1-C(5,3)/C(8,3)=1-10/56=46/56=23/28"
       ],
