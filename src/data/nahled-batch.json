@@ -1,5 +1,5 @@
 {
-  "nazev": "Souhrnné L2 — dvě témata najednou (46 úloh: 33 psaných, 7 A–E, 6 ano/ne; 15 s obrázkem nebo tabulkou) — nahradí 48 starých jednovětých úloh",
+  "nazev": "Souhrnné L2 — dvě témata najednou (46 úloh: 31 psaných, 9 A–E, 6 ano/ne; 16 s obrázkem nebo tabulkou) — nahradí staré jednovětné úlohy",
   "examples": [
     {
       "id": "SOU2_01",
@@ -525,31 +525,44 @@
     {
       "id": "SOU2_23",
       "tema": "souhrnne",
-      "podtema": "pravdepodobnost_kombinace",
+      "podtema": "geometrie_zlomky",
       "obtiznost": 2,
-      "zadani": "Hodíme dvakrát hrací kostkou (nebo jednou dvěma různými kostkami). Jaká je pravděpodobnost, že součet hozených čísel bude 7? Výsledek napište zlomkem v základním tvaru.",
-      "odpoved": "1/6",
-      "reseni_kroky": [
-        "Všech možných dvojic je 6 · 6 = 36.",
-        "Součet 7 dávají dvojice (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) — je jich 6.",
-        "P = 6/36 = 1/6."
+      "moznosti": [
+        "1/4",
+        "3/8",
+        "1/2",
+        "5/8",
+        "jiná část"
       ],
-      "cas_sekund": 150,
+      "spravna": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/souhrnne/l2-kolo-stesti.svg",
+        "width": 330,
+        "height": 220,
+        "alt": "Kolo štěstí rozdělené na 8 shodných výsečí: 3 červené, 2 modré a 3 zelené"
+      },
+      "zadani": "Kolo je rozděleno na 8 shodných výsečí (viz obrázek). Jaká část obsahu kola je zbarvená zeleně?",
+      "odpoved": "3/8",
+      "reseni_kroky": [
+        "Zelených výsečí je 3 z 8 shodných.",
+        "Zeleně je zbarvena 3/8 obsahu kola. Správně je B). (1/4 jsou modré výseče.)"
+      ],
+      "cas_sekund": 90,
       "sm2_interval": 1
     },
     {
       "id": "SOU2_24",
       "tema": "souhrnne",
-      "podtema": "pravdepodobnost_zlomky",
+      "podtema": "zlomky_slovni",
       "obtiznost": 2,
-      "zadani": "V neprůhledné nádobě je 4 červené a 6 modrých kuliček. Vytáhneme dvě kuličky po sobě bez vracení. Jaká je pravděpodobnost, že obě budou modré? Výsledek napište zlomkem v základním tvaru.",
-      "odpoved": "1/3",
+      "zadani": "V lahvi je 1,5 litru limonády. Naplníme z ní čtyři sklenice a do každé nalijeme jednu pětinu litru. Kolik litrů limonády v lahvi zbyde?",
+      "odpoved": "0,7 l",
       "reseni_kroky": [
-        "První kulička je modrá s pravděpodobností 6/10.",
-        "Druhá je pak modrá s pravděpodobností 5/9 (zbývá 5 modrých z 9 kuliček).",
-        "P = 6/10 · 5/9 = 30/90 = 1/3."
+        "Do čtyř sklenic nalijeme 4 · 1/5 = 4/5 l = 0,8 l.",
+        "V lahvi zbyde 1,5 − 0,8 = 0,7 l."
       ],
-      "cas_sekund": 180,
+      "cas_sekund": 120,
       "sm2_interval": 1
     },
     {
@@ -570,7 +583,7 @@
     {
       "id": "SOU2_26",
       "tema": "souhrnne",
-      "podtema": "tabulka_pravdepodobnost",
+      "podtema": "tabulka_procenta",
       "obtiznost": 2,
       "image": {
         "kind": "tabulka",
@@ -603,12 +616,12 @@
           ]
         ]
       },
-      "zadani": "Tabulka ukazuje počty žáků 9. ročníku. Vybíráme náhodně jednoho žáka. Jaká je pravděpodobnost, že to bude dívka z 9. A nebo z 9. C? Výsledek zapište v procentech.",
+      "zadani": "Tabulka ukazuje počty žáků 9. ročníku. Kolik procent všech žáků ročníku tvoří dívky z 9. A a 9. C dohromady?",
       "odpoved": "30 %",
       "reseni_kroky": [
         "Žáků je celkem 28 + 24 + 22 + 26 = 100.",
         "Dívek z 9. A je 16 a z 9. C je 14, dohromady 30.",
-        "P = 30/100 = 30 %."
+        "30 ze 100 žáků jsou 30 %."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -616,13 +629,13 @@
     {
       "id": "SOU2_27",
       "tema": "souhrnne",
-      "podtema": "pravdepodobnost_geometrie",
+      "podtema": "geometrie_procenta",
       "obtiznost": 2,
       "moznosti": [
-        "1/4",
-        "3/8",
-        "5/8",
-        "3/4",
+        "25 %",
+        "37,5 %",
+        "62,5 %",
+        "75 %",
         "jiná hodnota"
       ],
       "spravna": 3,
@@ -633,11 +646,11 @@
         "height": 220,
         "alt": "Kolo štěstí rozdělené na 8 shodných výsečí: 3 červené, 2 modré a 3 zelené"
       },
-      "zadani": "Roztočíme kolo štěstí rozdělené na 8 shodných výsečí (viz obrázek). Jaká je pravděpodobnost, že šipka neukáže na modrou výseč?",
-      "odpoved": "3/4",
+      "zadani": "Kolo je rozděleno na 8 shodných výsečí (viz obrázek). Kolik procent obsahu kola tvoří výseče, které nejsou modré?",
+      "odpoved": "75 %",
       "reseni_kroky": [
-        "Modré jsou 2 výseče z 8, neukáže na ně šipka v 6 případech z 8.",
-        "P = 6/8 = 3/4. Správně je D). (1/4 je pravděpodobnost modré.)"
+        "Modré jsou 2 výseče z 8, tedy 2/8 = 25 % obsahu kola.",
+        "Ostatní výseče tvoří 100 % − 25 % = 75 % (6/8 = 0,75). Správně je D)."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -645,14 +658,14 @@
     {
       "id": "SOU2_28",
       "tema": "souhrnne",
-      "podtema": "pravdepodobnost_slovni",
+      "podtema": "rovnice_procenta",
       "obtiznost": 2,
-      "zadani": "V rodině jsou tři děti. Předpokládejme, že dívka a chlapec se rodí se stejnou pravděpodobností. Jaká je pravděpodobnost, že mezi nimi je aspoň jedna dívka? Výsledek napište zlomkem.",
-      "odpoved": "7/8",
+      "zadani": "Do třídy chodí 25 žáků. Dívek je o 7 víc než chlapců. Kolik procent třídy tvoří chlapci?",
+      "odpoved": "36 %",
       "reseni_kroky": [
-        "Všech uspořádání tří dětí je 2 · 2 · 2 = 8.",
-        "Bez dívky (všichni chlapci) je jediné uspořádání, P = 1/8.",
-        "Aspoň jedna dívka: 1 − 1/8 = 7/8."
+        "Chlapců je b, dívek b + 7: b + b + 7 = 25.",
+        "2b = 18, takže b = 9 chlapců (a 16 dívek).",
+        "9 z 25 žáků je 9 : 25 = 0,36, tedy 36 %."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -660,14 +673,13 @@
     {
       "id": "SOU2_29",
       "tema": "souhrnne",
-      "podtema": "funkce_slovni",
+      "podtema": "rovnice_slovni",
       "obtiznost": 2,
       "zadani": "Taxi si účtuje základní sazbu 30 Kč a za každý ujetý kilometr 22 Kč. Cesta stála 250 Kč. Kolik kilometrů jelo taxi?",
       "odpoved": "10 km",
       "reseni_kroky": [
-        "Cena = 30 + 22 · x, kde x je počet kilometrů.",
-        "30 + 22x = 250, takže 22x = 220.",
-        "x = 10 km."
+        "Za kilometry zaplatíme 250 − 30 = 220 Kč.",
+        "Jeden kilometr stojí 22 Kč, ujeli jsme 220 : 22 = 10 km."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -675,31 +687,39 @@
     {
       "id": "SOU2_30",
       "tema": "souhrnne",
-      "podtema": "funkce_geometrie",
+      "podtema": "geometrie_pytagoras",
       "obtiznost": 2,
-      "zadani": "Graf funkce y = −2x + 8 protíná osu x v jednom bodě a osu y v druhém. S počátkem soustavy souřadnic tvoří tyto body pravoúhlý trojúhelník. Jaký je jeho obsah?",
-      "odpoved": "16",
-      "reseni_kroky": [
-        "Průsečík s osou y: x = 0, y = 8.",
-        "Průsečík s osou x: y = 0, −2x + 8 = 0, x = 4.",
-        "Odvěsny mají délky 4 a 8, obsah je 4 · 8 : 2 = 16."
+      "moznosti": [
+        "6 cm",
+        "7,2 cm",
+        "7,5 cm",
+        "9 cm",
+        "jiná hodnota"
       ],
-      "cas_sekund": 180,
+      "spravna": 1,
+      "zadani": "Pravoúhlý trojúhelník má odvěsny 9 cm a 12 cm. Jak dlouhá je výška na přeponu?",
+      "odpoved": "7,2 cm",
+      "reseni_kroky": [
+        "Přepona podle Pythagorovy věty: √(9² + 12²) = √225 = 15 cm.",
+        "Obsah trojúhelníku spočítáme dvakrát: 9 · 12 : 2 = 54 cm² a také 15 · v : 2.",
+        "15v : 2 = 54, takže v = 108 : 15 = 7,2 cm. Správně je B)."
+      ],
+      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
       "id": "SOU2_31",
       "tema": "souhrnne",
-      "podtema": "funkce_rovnice",
+      "podtema": "geometrie_slovni",
       "obtiznost": 2,
-      "zadani": "Funkce f je dána předpisem y = 2x + 3 a funkce g předpisem y = x + 7. Pro jakou hodnotu x mají obě funkce stejnou hodnotu?",
-      "odpoved": "4",
+      "zadani": "Úsek turistické trasy je na mapě s měřítkem 1 : 25 000 dlouhý 8 cm. Za kolik minut ho turista ujde rychlostí 5 km/h?",
+      "odpoved": "24 minut",
       "reseni_kroky": [
-        "Hledáme x, pro které 2x + 3 = x + 7.",
-        "2x − x = 7 − 3, takže x = 4.",
-        "Kontrola: 2 · 4 + 3 = 11 a 4 + 7 = 11."
+        "Ve skutečnosti: 8 · 25 000 = 200 000 cm = 2 km.",
+        "Čas: 2 km : 5 km/h = 0,4 h.",
+        "0,4 hodiny je 0,4 · 60 = 24 minut."
       ],
-      "cas_sekund": 120,
+      "cas_sekund": 180,
       "sm2_interval": 1
     },
     {

@@ -2,11 +2,12 @@
   <title>Kruhová zahrada o průměru 20 m obklopená chodníkem široký 1 m (obrázek není v měřítku)</title>
   <circle cx="130" cy="100" r="82" fill="#d6d3d1" stroke="#0D1B3E" stroke-width="2"/>
   <circle cx="130" cy="100" r="70" fill="#dcfce7" stroke="#0D1B3E" stroke-width="2"/>
-  <text x="130" y="105" font-size="14" font-weight="700" fill="#166534" text-anchor="middle">zahrada</text>
-  <line x1="60" y1="126" x2="200" y2="126" stroke="#2E6DA4" stroke-width="1.4"/>
-  <line x1="60" y1="122" x2="60" y2="130" stroke="#2E6DA4" stroke-width="1.4"/>
-  <line x1="200" y1="122" x2="200" y2="130" stroke="#2E6DA4" stroke-width="1.4"/>
-  <text x="130" y="144" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">průměr 20 m</text>
+  <text x="130" y="88" font-size="14" font-weight="700" fill="#166534" text-anchor="middle">zahrada</text>
+  <line x1="60" y1="100" x2="200" y2="100" stroke="#2E6DA4" stroke-width="1.6"/>
+  <line x1="60" y1="95" x2="60" y2="105" stroke="#2E6DA4" stroke-width="1.6"/>
+  <line x1="200" y1="95" x2="200" y2="105" stroke="#2E6DA4" stroke-width="1.6"/>
+  <circle cx="130" cy="100" r="3" fill="#2E6DA4"/>
+  <text x="130" y="122" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">průměr 20 m</text>
   <line x1="200" y1="64" x2="212" y2="64" stroke="#b45309" stroke-width="2.4"/>
   <text x="220" y="60" font-size="13" font-weight="700" fill="#92400e" text-anchor="start">chodník</text>
   <text x="220" y="75" font-size="13" font-weight="700" fill="#92400e" text-anchor="start">šířka 1 m</text>

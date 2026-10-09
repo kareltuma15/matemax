@@ -1,4 +1,4 @@
-// Souhrnné úlohy L2 (CERMAT styl): 46 nových úloh SOU2_01–46 — dvě témata najednou, souvislý text místo telegramu,
+// Souhrnné úlohy L2 (CERMAT styl): 46 nových úloh SOU2_01–46 (bez pravděpodobnosti a funkcí — nejsou v CERMATu) — dvě témata najednou, souvislý text místo telegramu,
 // část s obrázkem/tabulkou, část A–E nebo ano/ne. Nahrazují 48 starých jednovětých KOM_* L2 (po schválení se vyřadí).
 // Spuštění: node scripts/gen-souhrnne2-svg.mjs && node scripts/build-souhrnne-l2.mjs → doplní/přepíše SOU2_* v src/data/nahled-batch.json.
 // Každá odpověď se nezávisle přepočítá; psané odpovědi musí jít vyhodnotit (toValue/checkAnswer), A–E má právě jednu správnou možnost.
@@ -102,33 +102,33 @@ const ex = [
   choice("SOU2_22", "geometrie_pytagoras", "Obdélníkový pozemek má úhlopříčku 10 m a jednu stranu 6 m. Jaký je jeho obvod?", ["24 m", "28 m", "32 m", "48 m", "60 m"], 1, [
     "Druhá strana podle Pythagorovy věty: √(10² − 6²) = √64 = 8 m.", "Obvod: 2 · (6 + 8) = 28 m. Správně je B).",
   ], 150),
-  typed("SOU2_23", "pravdepodobnost_kombinace", "Hodíme dvakrát hrací kostkou (nebo jednou dvěma různými kostkami). Jaká je pravděpodobnost, že součet hozených čísel bude 7? Výsledek napište zlomkem v základním tvaru.", "1/6", [
-    "Všech možných dvojic je 6 · 6 = 36.", "Součet 7 dávají dvojice (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) — je jich 6.", "P = 6/36 = 1/6.",
-  ], 150),
-  typed("SOU2_24", "pravdepodobnost_zlomky", "V neprůhledné nádobě je 4 červené a 6 modrých kuliček. Vytáhneme dvě kuličky po sobě bez vracení. Jaká je pravděpodobnost, že obě budou modré? Výsledek napište zlomkem v základním tvaru.", "1/3", [
-    "První kulička je modrá s pravděpodobností 6/10.", "Druhá je pak modrá s pravděpodobností 5/9 (zbývá 5 modrých z 9 kuliček).", "P = 6/10 · 5/9 = 30/90 = 1/3.",
-  ], 180),
+  choice("SOU2_23", "geometrie_zlomky", "Kolo je rozděleno na 8 shodných výsečí (viz obrázek). Jaká část obsahu kola je zbarvená zeleně?", ["1/4", "3/8", "1/2", "5/8", "jiná část"], 1, [
+    "Zelených výsečí je 3 z 8 shodných.", "Zeleně je zbarvena 3/8 obsahu kola. Správně je B). (1/4 jsou modré výseče.)",
+  ], 90, { image: IMG.kolo }),
+  typed("SOU2_24", "zlomky_slovni", "V lahvi je 1,5 litru limonády. Naplníme z ní čtyři sklenice a do každé nalijeme jednu pětinu litru. Kolik litrů limonády v lahvi zbyde?", "0,7 l", [
+    "Do čtyř sklenic nalijeme 4 · 1/5 = 4/5 l = 0,8 l.", "V lahvi zbyde 1,5 − 0,8 = 0,7 l.",
+  ], 120),
   typed("SOU2_25", "kombinace_cisla", "Z číslic 1, 2, 3, 4 vytváříme trojciferná čísla, v nichž se žádná číslice neopakuje. Kolik z těchto čísel je sudých?", "12", [
     "Číslo je sudé, když končí číslicí 2 nebo 4 — pro poslední místo jsou 2 možnosti.", "Na první místo zbývají 3 číslice, na prostřední 2.", "Počet: 2 · 3 · 2 = 12.",
   ], 180),
-  typed("SOU2_26", "tabulka_pravdepodobnost", "Tabulka ukazuje počty žáků 9. ročníku. Vybíráme náhodně jednoho žáka. Jaká je pravděpodobnost, že to bude dívka z 9. A nebo z 9. C? Výsledek zapište v procentech.", "30 %", [
-    "Žáků je celkem 28 + 24 + 22 + 26 = 100.", "Dívek z 9. A je 16 a z 9. C je 14, dohromady 30.", "P = 30/100 = 30 %.",
+  typed("SOU2_26", "tabulka_procenta", "Tabulka ukazuje počty žáků 9. ročníku. Kolik procent všech žáků ročníku tvoří dívky z 9. A a 9. C dohromady?", "30 %", [
+    "Žáků je celkem 28 + 24 + 22 + 26 = 100.", "Dívek z 9. A je 16 a z 9. C je 14, dohromady 30.", "30 ze 100 žáků jsou 30 %.",
   ], 150, { image: IMG.tabTridy }),
-  choice("SOU2_27", "pravdepodobnost_geometrie", "Roztočíme kolo štěstí rozdělené na 8 shodných výsečí (viz obrázek). Jaká je pravděpodobnost, že šipka neukáže na modrou výseč?", ["1/4", "3/8", "5/8", "3/4", "jiná hodnota"], 3, [
-    "Modré jsou 2 výseče z 8, neukáže na ně šipka v 6 případech z 8.", "P = 6/8 = 3/4. Správně je D). (1/4 je pravděpodobnost modré.)",
+  choice("SOU2_27", "geometrie_procenta", "Kolo je rozděleno na 8 shodných výsečí (viz obrázek). Kolik procent obsahu kola tvoří výseče, které nejsou modré?", ["25 %", "37,5 %", "62,5 %", "75 %", "jiná hodnota"], 3, [
+    "Modré jsou 2 výseče z 8, tedy 2/8 = 25 % obsahu kola.", "Ostatní výseče tvoří 100 % − 25 % = 75 % (6/8 = 0,75). Správně je D).",
   ], 120, { image: IMG.kolo }),
-  typed("SOU2_28", "pravdepodobnost_slovni", "V rodině jsou tři děti. Předpokládejme, že dívka a chlapec se rodí se stejnou pravděpodobností. Jaká je pravděpodobnost, že mezi nimi je aspoň jedna dívka? Výsledek napište zlomkem.", "7/8", [
-    "Všech uspořádání tří dětí je 2 · 2 · 2 = 8.", "Bez dívky (všichni chlapci) je jediné uspořádání, P = 1/8.", "Aspoň jedna dívka: 1 − 1/8 = 7/8.",
+  typed("SOU2_28", "rovnice_procenta", "Do třídy chodí 25 žáků. Dívek je o 7 víc než chlapců. Kolik procent třídy tvoří chlapci?", "36 %", [
+    "Chlapců je b, dívek b + 7: b + b + 7 = 25.", "2b = 18, takže b = 9 chlapců (a 16 dívek).", "9 z 25 žáků je 9 : 25 = 0,36, tedy 36 %.",
   ], 150),
-  typed("SOU2_29", "funkce_slovni", "Taxi si účtuje základní sazbu 30 Kč a za každý ujetý kilometr 22 Kč. Cesta stála 250 Kč. Kolik kilometrů jelo taxi?", "10 km", [
-    "Cena = 30 + 22 · x, kde x je počet kilometrů.", "30 + 22x = 250, takže 22x = 220.", "x = 10 km.",
+  typed("SOU2_29", "rovnice_slovni", "Taxi si účtuje základní sazbu 30 Kč a za každý ujetý kilometr 22 Kč. Cesta stála 250 Kč. Kolik kilometrů jelo taxi?", "10 km", [
+    "Za kilometry zaplatíme 250 − 30 = 220 Kč.", "Jeden kilometr stojí 22 Kč, ujeli jsme 220 : 22 = 10 km.",
   ], 120),
-  typed("SOU2_30", "funkce_geometrie", "Graf funkce y = −2x + 8 protíná osu x v jednom bodě a osu y v druhém. S počátkem soustavy souřadnic tvoří tyto body pravoúhlý trojúhelník. Jaký je jeho obsah?", "16", [
-    "Průsečík s osou y: x = 0, y = 8.", "Průsečík s osou x: y = 0, −2x + 8 = 0, x = 4.", "Odvěsny mají délky 4 a 8, obsah je 4 · 8 : 2 = 16.",
+  choice("SOU2_30", "geometrie_pytagoras", "Pravoúhlý trojúhelník má odvěsny 9 cm a 12 cm. Jak dlouhá je výška na přeponu?", ["6 cm", "7,2 cm", "7,5 cm", "9 cm", "jiná hodnota"], 1, [
+    "Přepona podle Pythagorovy věty: √(9² + 12²) = √225 = 15 cm.", "Obsah trojúhelníku spočítáme dvakrát: 9 · 12 : 2 = 54 cm² a také 15 · v : 2.", "15v : 2 = 54, takže v = 108 : 15 = 7,2 cm. Správně je B).",
+  ], 210),
+  typed("SOU2_31", "geometrie_slovni", "Úsek turistické trasy je na mapě s měřítkem 1 : 25 000 dlouhý 8 cm. Za kolik minut ho turista ujde rychlostí 5 km/h?", "24 minut", [
+    "Ve skutečnosti: 8 · 25 000 = 200 000 cm = 2 km.", "Čas: 2 km : 5 km/h = 0,4 h.", "0,4 hodiny je 0,4 · 60 = 24 minut.",
   ], 180),
-  typed("SOU2_31", "funkce_rovnice", "Funkce f je dána předpisem y = 2x + 3 a funkce g předpisem y = x + 7. Pro jakou hodnotu x mají obě funkce stejnou hodnotu?", "4", [
-    "Hledáme x, pro které 2x + 3 = x + 7.", "2x − x = 7 − 3, takže x = 4.", "Kontrola: 2 · 4 + 3 = 11 a 4 + 7 = 11.",
-  ], 120),
   typed("SOU2_32", "soustava_slovni", "Za 3 stromky a 2 keře zaplatíme 700 Kč, za 2 stromky a 3 keře 650 Kč. Kolik korun stojí jeden keř?", "110 Kč", [
     "Stromek s, keř k: 3s + 2k = 700 a 2s + 3k = 650.", "První rovnici vynásobíme 3 a druhou 2: 9s + 6k = 2 100 a 4s + 6k = 1 300.", "Odečteme: 5s = 800, s = 160. Pak 2k = 700 − 480 = 220, k = 110.",
     "Kontrola: 2 · 160 + 3 · 110 = 320 + 330 = 650.",
@@ -205,15 +205,15 @@ ok("16", close((3 * 240 + 2 * 120) / 5, 192) && val("SOU2_16") === 192);
 { let sol = []; for (let x = 1; x < 300; x++) if (close(x / 3 + 7, x / 2 - 2)) sol.push(x); ok("20", sol.length === 1 && sol[0] === 54 && val("SOU2_20") === 54, sol); }
 { let sol = []; for (let b = 0; b <= 20; b++) { const a = 20 - b; if (2 * a + 5 * b === 61) sol.push(b); } ok("21", sol.length === 1 && sol[0] === 7 && val("SOU2_21") === 7, sol); }
 ok("22", close(Math.sqrt(100 - 36), 8) && 2 * (6 + 8) === 28 && opt("SOU2_22") === "28 m");
-{ let n = 0; for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) if (a + b === 7) n++; const g = gcd(n, 36); ok("23", n === 6 && `${n / g}/${36 / g}` === "1/6" && by.SOU2_23.odpoved === "1/6"); }
-{ const p = (6 / 10) * (5 / 9), g = gcd(30, 90); ok("24", close(p, 1 / 3) && close(C(6, 2) / C(10, 2), 1 / 3) && by.SOU2_24.odpoved === "1/3" && g === 30); }
+ok("23", 3 / 8 === 0.375 && opt("SOU2_23") === "3/8");
+ok("24", close(1.5 - 4 / 5, 0.7) && val("SOU2_24") === 0.7);
 { let n = 0; const d = [1, 2, 3, 4]; for (const a of d) for (const b of d) for (const c of d) if (a !== b && b !== c && a !== c && c % 2 === 0) n++; ok("25", n === 12 && val("SOU2_25") === 12); }
 { const rows = [[28, 16], [24, 12], [22, 14], [26, 10]]; const tot = rows.reduce((s, r) => s + r[0], 0); ok("26", tot === 100 && rows[0][1] + rows[2][1] === 30 && val("SOU2_26") === 30); }
-ok("27", close(1 - 2 / 8, 3 / 4) && opt("SOU2_27") === "3/4");
-ok("28", close(1 - 1 / 8, 7 / 8) && by.SOU2_28.odpoved === "7/8");
+ok("27", close((1 - 2 / 8) * 100, 75) && opt("SOU2_27") === "75 %");
+{ let sol = []; for (let b = 1; b < 25; b++) if (b + (b + 7) === 25) sol.push((b / 25) * 100); ok("28", sol.length === 1 && close(sol[0], 36) && val("SOU2_28") === 36, sol); }
 ok("29", (250 - 30) / 22 === 10 && val("SOU2_29") === 10);
-ok("30", (8 / 2) * 4 === 16 && close(8 / 2, 4) && val("SOU2_30") === 16);
-ok("31", 2 * 4 + 3 === 4 + 7 && val("SOU2_31") === 4);
+{ const p = Math.hypot(9, 12), v = (9 * 12) / p; ok("30", close(p, 15) && close(v, 7.2) && opt("SOU2_30") === "7,2 cm"); }
+ok("31", close(((8 * 25000) / 100000 / 5) * 60, 24) && val("SOU2_31") === 24);
 { let sol = []; for (let s = 1; s <= 500; s++) for (let k = 1; k <= 500; k++) if (3 * s + 2 * k === 700 && 2 * s + 3 * k === 650) sol.push(k); ok("32", sol.length === 1 && sol[0] === 110 && val("SOU2_32") === 110, sol); }
 ok("33", close(144 / 2, 72) && val("SOU2_33") === 72);
 ok("34", close(Math.sqrt(169 - 144), 5) && val("SOU2_34") === 5);
@@ -255,6 +255,6 @@ if (fail) { console.log("NEZAPISUJI"); process.exit(1); }
 let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* bez předchozí dávky */ }
 const others = (prev.examples ?? []).filter((e) => !/^SOU2_/.test(e.id));
-const nazev = others.length ? `${prev.nazev} + Souhrnné L2 (46 úloh)` : "Souhrnné L2 — dvě témata najednou (46 úloh: 33 psaných, 7 A–E, 6 ano/ne; 15 s obrázkem nebo tabulkou) — nahradí 48 starých jednovětých úloh";
+const nazev = others.length ? `${prev.nazev} + Souhrnné L2 (${ex.length} úloh)` : `Souhrnné L2 — dvě témata najednou (${ex.length} úloh: ${ex.length - nA - nAN} psaných, ${nA} A–E, ${nAN} ano/ne; ${nImg} s obrázkem nebo tabulkou) — nahradí staré jednovětné úlohy`;
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...ex] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${ex.length} souhrnných L2)`);

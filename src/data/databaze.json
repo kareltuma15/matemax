@@ -4978,19 +4978,6 @@
       "sm2_interval": 2
     },
     {
-      "id": "KOM_008",
-      "tema": "souhrnne",
-      "podtema": "geometrie_pravdepodobnost",
-      "obtiznost": 2,
-      "zadani": "Čtverec 4×4. Náhodně hozený bod padne dovnitř. P(padne do kruhu r=2 vepsaného)?",
-      "odpoved": "π/4 ≈ 78,5 %",
-      "reseni_kroky": [
-        "P=π×4/16=π/4"
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 2
-    },
-    {
       "id": "KOM_009",
       "tema": "souhrnne",
       "podtema": "rovnice_geometrie",
@@ -5051,33 +5038,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "KOM_013",
-      "tema": "souhrnne",
-      "podtema": "procenta_pravdepodobnost",
-      "obtiznost": 2,
-      "zadani": "Škola: 55 % dívek. Náhodně vybereme 1 žáka. P(vybrán chlapec)?",
-      "odpoved": "45 %",
-      "reseni_kroky": [
-        "P=1-0,55=0,45=45 %"
-      ],
-      "cas_sekund": 60,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_014",
-      "tema": "souhrnne",
-      "podtema": "rovnice_funkce",
-      "obtiznost": 2,
-      "zadani": "Přímka y = ax + b prochází (2,5) a (-1,-1). Koeficienty a, b?",
-      "odpoved": "a=2, b=1",
-      "reseni_kroky": [
-        "k=(5-(-1))/(2-(-1))=2",
-        "5=4+b, b=1"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "KOM_015",
       "tema": "souhrnne",
       "podtema": "geometrie_pytagoras",
@@ -5102,34 +5062,6 @@
         "1,15×0,8=0,92 → -8 %"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_017",
-      "tema": "souhrnne",
-      "podtema": "funkce_rovnice",
-      "obtiznost": 2,
-      "zadani": "Pro která x je y = 3x - 6 kladné?",
-      "odpoved": "x > 2",
-      "reseni_kroky": [
-        "3x-6>0, x>2"
-      ],
-      "cas_sekund": 75,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_018",
-      "tema": "souhrnne",
-      "podtema": "pravdepodobnost_kombinace",
-      "obtiznost": 3,
-      "zadani": "Ze skupiny 5 č. (1,2,3,4,5) vybereme 2. P(součet > 6)?",
-      "odpoved": "2/5",
-      "reseni_kroky": [
-        "Dvojic ze 5 čísel je C(5,2) = 10",
-        "Součet větší než 6 mají dvojice (2,5), (3,4), (3,5), (4,5) — to jsou 4 dvojice",
-        "P = 4/10 = 2/5"
-      ],
-      "cas_sekund": 120,
       "sm2_interval": 1
     },
     {
@@ -5204,35 +5136,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "KOM_024",
-      "tema": "souhrnne",
-      "podtema": "pravdepodobnost_cisla",
-      "obtiznost": 2,
-      "zadani": "Z číslic 1,2,3,4 sestavíme 2místné číslo bez opakování. P(číslo > 30)?",
-      "odpoved": "1/2",
-      "reseni_kroky": [
-        "celkem: 4×3=12",
-        ">30: (3,1),(3,2),(3,4),(4,1),(4,2),(4,3)=6",
-        "P=6/12=1/2"
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_025",
-      "tema": "souhrnne",
-      "podtema": "geometrie_funkce",
-      "obtiznost": 2,
-      "zadani": "Přímka prochází počátkem a vrcholem čtverce (4,4). Rovnice přímky?",
-      "odpoved": "y = x",
-      "reseni_kroky": [
-        "k=(4-0)/(4-0)=1",
-        "y=x"
-      ],
-      "cas_sekund": 75,
-      "sm2_interval": 1
-    },
-    {
       "id": "KOM_026",
       "tema": "souhrnne",
       "podtema": "zlomky_soustava",
@@ -5288,19 +5191,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "KOM_030",
-      "tema": "souhrnne",
-      "podtema": "funkce_geometrie",
-      "obtiznost": 2,
-      "zadani": "Čára y=3 a kruh se středem (0,0) a r=5. Kolik společných bodů mají?",
-      "odpoved": "2",
-      "reseni_kroky": [
-        "y=3: x²+9=25, x²=16, x=±4, 2 body"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "KOM_031",
       "tema": "souhrnne",
       "podtema": "geometrie_procenta",
@@ -5327,19 +5217,6 @@
         "x=3"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_033",
-      "tema": "souhrnne",
-      "podtema": "pravdepodobnost_slovni",
-      "obtiznost": 2,
-      "zadani": "V pytlíku 5 červených, 3 modré, 2 žluté. Vytáhneme 1. P(není žlutá)?",
-      "odpoved": "4/5",
-      "reseni_kroky": [
-        "P=8/10=4/5"
-      ],
-      "cas_sekund": 75,
       "sm2_interval": 1
     },
     {
@@ -5399,31 +5276,18 @@
     {
       "id": "KOM_038",
       "tema": "souhrnne",
-      "podtema": "funkce_procenta",
+      "podtema": "procenta_slovni",
       "obtiznost": 2,
-      "zadani": "Funkce y = 1000 × 0,9^x modeluje pokles ceny. Hodnota po 3 letech?",
-      "odpoved": "729",
+      "zadani": "Cena zboží každý rok klesne o 10 % oproti předchozímu roku. Dnes stojí 1 000 Kč. Kolik bude stát za 3 roky?",
+      "odpoved": "729 Kč",
       "reseni_kroky": [
-        "y=1000×0,9³=1000×0,729=729"
+        "Po každém roce platí 90 % ceny z předchozího roku.",
+        "Po 1 roce: 1 000 · 0,9 = 900 Kč.",
+        "Po 2 letech: 900 · 0,9 = 810 Kč.",
+        "Po 3 letech: 810 · 0,9 = 729 Kč."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
-    },
-    {
-      "id": "KOM_039",
-      "tema": "souhrnne",
-      "podtema": "zlomky_pravdepodobnost",
-      "obtiznost": 2,
-      "zadani": "Ze 4 karet (1/2, 1/3, 1/4, 1/5) vytáhneme dvě. P(součet > 1/2)?",
-      "odpoved": "5/6",
-      "reseni_kroky": [
-        "Z 4 karet lze vybrat 6 dvojic.",
-        "Součty: 1/2 + 1/3 = 5/6, 1/2 + 1/4 = 3/4, 1/2 + 1/5 = 7/10, 1/3 + 1/4 = 7/12, 1/3 + 1/5 = 8/15 a 1/4 + 1/5 = 9/20.",
-        "Větší než 1/2 (což je 10/20) je pět z nich; jen 9/20 je menší.",
-        "Pravděpodobnost je 5/6."
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 2
     },
     {
       "id": "KOM_040",
@@ -5447,19 +5311,6 @@
         "8 × 9 cm"
       ],
       "spravna": 1
-    },
-    {
-      "id": "KOM_041",
-      "tema": "souhrnne",
-      "podtema": "pravdepodobnost_kombinace",
-      "obtiznost": 2,
-      "zadani": "Z 10 čísel (1–10) vybereme 3. P(all tři sudá)?",
-      "odpoved": "1/12",
-      "reseni_kroky": [
-        "C(5,3)/C(10,3)=10/120=1/12"
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
     },
     {
       "id": "KOM_042",
@@ -5489,40 +5340,16 @@
       "sm2_interval": 1
     },
     {
-      "id": "KOM_044",
-      "tema": "souhrnne",
-      "podtema": "funkce_slovni",
-      "obtiznost": 2,
-      "zadani": "Taxík: základní sazba 40 Kč + 25 Kč/km. Rovnice ceny?",
-      "odpoved": "C = 25x + 40",
-      "reseni_kroky": [
-        "C=25x+40"
-      ],
-      "cas_sekund": 75,
-      "sm2_interval": 1
-    },
-    {
       "id": "KOM_045",
       "tema": "souhrnne",
-      "podtema": "funkce_slovni",
+      "podtema": "rovnice_slovni",
       "obtiznost": 2,
-      "zadani": "Taxík: základní sazba 40 Kč + 25 Kč/km. Cena za 12 km?",
+      "zadani": "Taxík si účtuje základní sazbu 40 Kč a za každý ujetý kilometr 25 Kč. Kolik korun zaplatíme za cestu dlouhou 12 km?",
       "odpoved": "340 Kč",
       "reseni_kroky": [
-        "C=25×12+40=340"
-      ],
-      "cas_sekund": 75,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_046",
-      "tema": "souhrnne",
-      "podtema": "geometrie_pravdepodobnost",
-      "obtiznost": 3,
-      "zadani": "Na 10×10 cm šachovnici hodíme šipku. P(zasáhne černé pole)?",
-      "odpoved": "1/2",
-      "reseni_kroky": [
-        "P=50/100=1/2"
+        "Za kilometry: 12 · 25 = 300 Kč.",
+        "K tomu základní sazba 40 Kč.",
+        "Celkem 300 + 40 = 340 Kč."
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -5552,19 +5379,6 @@
         "7/20×100=35"
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
-    },
-    {
-      "id": "KOM_049",
-      "tema": "souhrnne",
-      "podtema": "rovnice_funkce",
-      "obtiznost": 2,
-      "zadani": "Přímka y = 2x + k prochází středem (3, 9). Hodnota k?",
-      "odpoved": "k = 3",
-      "reseni_kroky": [
-        "9=6+k, k=3"
-      ],
-      "cas_sekund": 75,
       "sm2_interval": 1
     },
     {
@@ -5641,12 +5455,13 @@
     {
       "id": "KOM_055",
       "tema": "souhrnne",
-      "podtema": "funkce_procenta",
+      "podtema": "procenta_slovni",
       "obtiznost": 2,
-      "zadani": "Populace roste o 2 % ročně. Nyní 10 000. Po 1 roce?",
+      "zadani": "Počet obyvatel obce roste o 2 % ročně. Nyní má obec 10 000 obyvatel. Kolik jich bude za rok?",
       "odpoved": "10 200",
       "reseni_kroky": [
-        "10000×1,02=10200"
+        "Přírůstek: 2 % z 10 000 = 200.",
+        "Za rok: 10 000 + 200 = 10 200 obyvatel."
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -5663,19 +5478,6 @@
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
-    },
-    {
-      "id": "KOM_057",
-      "tema": "souhrnne",
-      "podtema": "pravdepodobnost_slovni",
-      "obtiznost": 2,
-      "zadani": "Tříčlenná komise z 5 mužů a 3 žen. P(aspoň 1 žena)?",
-      "odpoved": "23/28",
-      "reseni_kroky": [
-        "P=1-C(5,3)/C(8,3)=1-10/56=46/56=23/28"
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 2
     },
     {
       "id": "KOM_058",

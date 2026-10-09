@@ -476,7 +476,7 @@ export const PODTEMA_GEOMETRIE_ORDER = ["rovinne", "prostorova"] as const;
 const COMBO_WORDS: Record<string, [string, string]> = {
   geometrie: ["Geometrie", "geometrie"], rovnice: ["Rovnice", "rovnice"], procenta: ["Procenta", "procenta"],
   zlomky: ["Zlomky", "zlomky"], slovni: ["Slovní úloha", "slovní úloha"], slova: ["Slovní úloha", "slovní úloha"],
-  funkce: ["Funkce", "funkce"], pravdepodobnost: ["Pravděpodobnost", "pravděpodobnost"], kombinace: ["Kombinatorika", "kombinatorika"],
+  kombinace: ["Kombinatorika", "kombinatorika"],
   soustava: ["Soustava rovnic", "soustava rovnic"], pytagoras: ["Pythagorova věta", "Pythagorova věta"], cisla: ["Čísla", "čísla"],
   kombinovane: ["Kombinované", "kombinované"], tabulka: ["Tabulka", "tabulka"], uhly: ["Úhly", "úhly"],
 };
