@@ -305,19 +305,13 @@
       "tema": "slovni_ulohy",
       "podtema": "pomer_meritko",
       "obtiznost": 3,
-      "zadani": "Poměr věků otce a syna je nyní 7 : 2. Za 6 let bude poměr jejich věků 13 : 5. Kolik let je nyní otci?",
+      "zadani": "Poměr věků otce a syna je nyní 7 : 2. Za 6 let bude poměr jejich věků 8 : 3. Kolik let je nyní otci?",
       "odpoved": "42 let",
       "reseni_kroky": [
-        "Nyní: otec = 7k, syn = 2k",
-        "Za 6 let: (7k+6)/(2k+6) = 13/5",
-        "5(7k+6) = 13(2k+6)",
-        "35k + 30 = 26k + 78",
-        "9k = 48 → k = 48/9... zkus jinak:",
-        "5(7k+6) = 13(2k+6) → 35k+30 = 26k+78 → 9k=48 → k=16/3",
-        "Otci: 7 × 16/3 = 112/3 ≈ není celé číslo → zkontroluj: syn = 2k",
-        "Správně: otci 42 let (7×6=42), syn 12 let (2×6=12), k=6",
-        "Za 6 let: 48:18 = 8:3 ≠ 13:5 → ověření: (42+6)/(12+6)=48/18=8/3 ✗",
-        "Opravná rovnice: 7k+6 / 2k+6 = 13/5 → k = 16/3, otec = 37,3... Příklad s celými čísly: otec=35, syn=10 (7:2), za 6: 41:16 ≠ 13:5. Odpověď: otci je 42 let."
+        "Nyní: otec 7k, syn 2k.",
+        "Za 6 let: (7k + 6) : (2k + 6) = 8 : 3, tedy 3 · (7k + 6) = 8 · (2k + 6).",
+        "21k + 18 = 16k + 48, takže 5k = 30 a k = 6.",
+        "Otci je nyní 7 · 6 = 42 let (synovi 12). Kontrola: za 6 let 48 : 18 = 8 : 3."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -827,22 +821,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "t03_14",
-      "tema": "slovni_ulohy",
-      "podtema": "procenta",
-      "obtiznost": 2,
-      "zadani": "V nádobě je 3 litry alkoholu. Celá nádoba má objem 12 litrů. Kolik procent tvoří alkohol? Doplňte vodou na 40% roztok – kolik vody přidáme?",
-      "odpoved": "Nyní 25 %. Přidáme 4,5 litrů vody.",
-      "reseni_kroky": [
-        "Nyní: 3/12 × 100 = 25 %",
-        "40% roztok: 3 l alkoholu = 40 % z celku",
-        "Celkový objem: 3 ÷ 0,40 = 7,5 l",
-        "Přidáme vody: 7,5 − 3 = 4,5 l"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "t03_15",
       "tema": "slovni_ulohy",
       "podtema": "procenta",
@@ -1095,21 +1073,6 @@
         "$(2^{3})^{4} = 2^{12}$",
         "$2^{12} \\div 2^{6} = 2^{12-6} = 2^{6}$",
         "2^{6} = 64"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1,
-      "latex": true
-    },
-    {
-      "id": "t04_12",
-      "tema": "vyrazy",
-      "podtema": "odmocniny",
-      "obtiznost": 2,
-      "zadani": "Zjednodušte: $\\sqrt{72}$",
-      "odpoved": "6√2",
-      "reseni_kroky": [
-        "72 = 36 \\times 2",
-        "\\sqrt{72} = \\sqrt{36} \\times \\sqrt{2} = 6\\sqrt{2}"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1,
@@ -1736,22 +1699,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "t06_14",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 2,
-      "zadani": "Lichoběžník ABCD má AB = 10 cm, CD = 6 cm, výška = 4 cm. Vypočítejte obsah. Kolik stojí pokrytí podlahy toho tvaru za 150 Kč/m², pokud jsou rozměry v metrech?",
-      "odpoved": "S = 32 cm², pro metrové rozměry: 4,8 m² × 150 = 720 Kč",
-      "reseni_kroky": [
-        "S = (10+6)/2 × 4 = 8 × 4 = 32 cm²",
-        "Pro metry: (10+6)/2×4 = 32 m²... jako cm→m: (0,1+0,06)/2×0,04",
-        "Pozor: příklad předpokládá metry → S=(10+6)/2×4=32 m²",
-        "Cena: 32×150=4800 Kč"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "t06_15",
       "tema": "geometrie",
       "podtema": "rovinne",
@@ -1787,14 +1734,12 @@
       "tema": "geometrie",
       "podtema": "rovinne",
       "obtiznost": 2,
-      "zadani": "Obdélník má obvod 60 cm a délka je 2,5krát větší než šířka. Určete rozměry.",
-      "odpoved": "Délka 21,43 cm, šířka 8,57 cm",
+      "zadani": "Obdélník má obvod 60 cm a délka je 1,5krát větší než šířka. Určete rozměry.",
+      "odpoved": "Délka 18 cm, šířka 12 cm",
       "reseni_kroky": [
-        "2(a + b) = 60 → a + b = 30",
-        "a = 2,5b",
-        "2,5b + b = 30 → 3,5b = 30",
-        "b = 30/3,5 ≈ 8,57 cm",
-        "a = 2,5 × 8,57 ≈ 21,43 cm"
+        "2(a + b) = 60, tedy a + b = 30 a a = 1,5b.",
+        "1,5b + b = 30, takže 2,5b = 30 a b = 12 cm.",
+        "a = 1,5 · 12 = 18 cm."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -1825,21 +1770,6 @@
         "Velký kruh: 3,14 × 64 = 200,96 cm²",
         "Malý kruh: 3,14 × 25 = 78,5 cm²",
         "Mezikruží: 200,96 − 78,5 = 122,46 cm²"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "t06_20",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 3,
-      "zadani": "Úsečka AB má délku 10 cm a úsečka CD rovnoběžná s AB má délku 6 cm. Vzdálenost AB a CD je 4 cm. Tři body tvoří trojúhelník s vrcholem V ve výšce 3 cm nad AB (V leží na CD). Vypočítejte obsah trojúhelníku AVB.",
-      "odpoved": "15 cm²",
-      "reseni_kroky": [
-        "Základna AVB = AB = 10 cm",
-        "Výška = vzdálenost V od AB = 3 cm",
-        "S = (10 × 3)/2 = 15 cm²"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2302,7 +2232,7 @@
       "tema": "slovni_ulohy",
       "podtema": "spolecna_prace",
       "obtiznost": 2,
-      "zadani": "Čerpadlo A vypumpuje nádrž za 6 h, čerpadlo B za 4 h. Jak dlouho budou pumpovatdohromady?",
+      "zadani": "Čerpadlo A vypumpuje nádrž za 6 h, čerpadlo B za 4 h. Jak dlouho budou pumpovat dohromady?",
       "odpoved": "2,4 hodiny",
       "reseni_kroky": [
         "A: 1/6/h, B: 1/4/h",
@@ -2348,14 +2278,12 @@
       "tema": "slovni_ulohy",
       "podtema": "spolecna_prace",
       "obtiznost": 2,
-      "zadani": "Dělník A pracuje 3 hodiny, pak odejde. Dělník B pracuje celých 8 hodin. Dohromady dokončí dílo přesně. A dokončí dílo sám za 12 h. Za kolik hodin ho dokončí B sám?",
-      "odpoved": "Za 8 hodin",
+      "zadani": "Dělník A pracuje 4 hodiny, pak odejde. Dělník B pracuje celých 8 hodin. Dohromady dokončí dílo přesně. A by dílo dokončil sám za 12 hodin. Za kolik hodin by dílo dokončil sám B?",
+      "odpoved": "Za 12 hodin",
       "reseni_kroky": [
-        "A udělá za 3 h: 3/12 = 1/4 díla",
-        "B musí udělat zbylých 3/4 za 8 h",
-        "Výkon B: (3/4)/8 = 3/32 díla/h",
-        "Čas B na celé dílo: 1/(3/32) = 32/3 ≈ 10,67 h",
-        "Ověřme: 3/12 + 8/T_B = 1 → 8/T_B = 3/4 → T_B = 32/3 h"
+        "A udělá za 4 h: 4/12 = 1/3 díla.",
+        "B musí udělat zbylé 2/3 díla za 8 hodin, za hodinu tedy (2/3) : 8 = 1/12 díla.",
+        "Celé dílo by B dokončil sám za 12 hodin."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2380,7 +2308,7 @@
       "tema": "slovni_ulohy",
       "podtema": "spolecna_prace",
       "obtiznost": 2,
-      "zadani": "Troje stádo krav: 10 krav spase louku za 12 dní, 15 krav za 8 dní. Kolik krav spase louku za 6 dní?",
+      "zadani": "Dvě stáda krav: 10 krav spase louku za 12 dní, 15 krav za 8 dní. Kolik krav spase louku za 6 dní? (Zanedbejte dorůstání trávy.)",
       "odpoved": "20 krav",
       "reseni_kroky": [
         "Nepřímá úměrnost: n × 6 = 10 × 12 (nebo 15 × 8)",
@@ -2555,7 +2483,7 @@
       "tema": "uhly",
       "podtema": "vnejsi_uhel_trojuhelniku",
       "obtiznost": 1,
-      "zadani": "Vnější úhel trojúhelníku je 130°. Dva vnitřní úhly sousední s tímto vnějším úhlem jsou 50° a β. Jaký je β?",
+      "zadani": "Vnější úhel trojúhelníku je 130°. Dva vnitřní úhly, které s ním nesousedí, jsou 50° a β. Jaký je β?",
       "odpoved": "80°",
       "reseni_kroky": [
         "Vnější úhel = součet dvou nevousedních vnitřních úhlů",
@@ -2740,13 +2668,11 @@
       "podtema": "slozita_konfigurace",
       "obtiznost": 3,
       "zadani": "V trojúhelníku ABC: AB = AC (rovnoramenný). Úhel BAC = 36°. Z vrcholu B vedeme osu úhlu ABC, která protíná AC v bodě D. Jaký je úhel BDC?",
-      "odpoved": "108°",
+      "odpoved": "72°",
       "reseni_kroky": [
-        "Základnový úhel: (180°−36°)/2 = 72°",
-        "Osa úhlu ABC dělí 72° na dvě části: 36° a 36°",
-        "Trojúhelník ABD: úhly 36° + 36° + úhel ADB = 180°",
-        "Úhel ADB = 108°",
-        "Úhel BDC = 180° − 108° = 72°... Ověření: trojúhelník BDC: 36°+72°+72°=180° ✓, BDC=72°"
+        "Úhly při základně: (180° − 36°) : 2 = 72°.",
+        "Osa úhlu ABC ho půlí: úhel DBC = 36°.",
+        "V trojúhelníku BCD: úhel BDC = 180° − 36° − 72° = 72°."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2875,12 +2801,11 @@
       "podtema": "logicka_dedukce",
       "obtiznost": 1,
       "zadani": "V obchodě jsou 3 krabice: červená, modrá, zelená. V každé je jiný předmět: kniha, hračka, sešit. Víme: Kniha není v červené. Hračka je v modré. Co je v zelené krabici?",
-      "odpoved": "Sešit nebo kniha (kniha v zelené, sešit v červené)",
+      "odpoved": "Kniha",
       "reseni_kroky": [
-        "Hračka → modrá (dáno)",
-        "V červené a zelené: kniha nebo sešit",
-        "Kniha není v červené → kniha je v zelené",
-        "Sešit je v červené"
+        "Hračka je v modré krabici.",
+        "Kniha není v červené ani v modré (tam je hračka), takže je v zelené.",
+        "V červené krabici je sešit; v zelené je kniha."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2896,25 +2821,6 @@
         "Vzorec: z = 3n + 1",
         "Pro n=1: 4 ✓, n=2: 7 ✓, n=3: 10 ✓",
         "Pro n=10: 3×10 + 1 = 31"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "t10_11",
-      "tema": "grafy_logika",
-      "podtema": "logicka_dedukce",
-      "obtiznost": 2,
-      "zadani": "Čtyři přátelé (Adam, Bořek, Cecil, Dan) mají různá povolání (lékař, učitel, řidič, kuchař). Víme: (1) Adam není lékař ani učitel. (2) Bořek není řidič. (3) Cecil je lékař. Kdo je učitel?",
-      "odpoved": "Dan je učitel",
-      "reseni_kroky": [
-        "Cecil = lékař (podmínka 3)",
-        "Adam není lékař ani učitel → Adam je řidič nebo kuchař",
-        "Bořek není řidič → Bořek je učitel nebo kuchař",
-        "Pokud Bořek = učitel → Dan = řidič nebo kuchař, Adam = zbývající",
-        "Pokud Bořek = kuchař → Dan = učitel nebo řidič, Adam = zbývající",
-        "Adam není učitel → Adam je řidič nebo kuchař; Bořek není řidič → zbývá: Dan=učitel, Adam=řidič nebo kuchař, Bořek=kuchař nebo řidič",
-        "Jediné konzistentní: Dan=učitel, Adam=řidič, Bořek=kuchař"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2963,21 +2869,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "t10_15",
-      "tema": "grafy_logika",
-      "podtema": "logicka_dedukce",
-      "obtiznost": 2,
-      "zadani": "Na ostrově žijí jen pravdomluvní (vždy pravda) a lháři (vždy lžou). Osoba A říká: 'Jsem lhář.' Je A pravdomluvný nebo lhář?",
-      "odpoved": "Toto tvrzení je paradox — žádná z možností není konzistentní. A nemůže být ani jedno. (V CERMAT kontextu: A je lhář a jeho výrok je lež, tedy A není lhář — paradox.)",
-      "reseni_kroky": [
-        "Pokud A = pravdomluvný: říká pravdu → A je lhář → spor",
-        "Pokud A = lhář: jeho výrok je lež → A není lhář → spor",
-        "Závěr: tvrzení je paradox (sebereferenční lež)"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "t10_16",
       "tema": "grafy_logika",
       "podtema": "ciselne_zakonitosti",
@@ -3011,7 +2902,7 @@
       "tema": "grafy_logika",
       "podtema": "logicka_dedukce",
       "obtiznost": 3,
-      "zadani": "Pět závodníků (A–E) doběhlo cílem. Víme: (1) A skončil před B. (2) C skončil za D. (3) E skončil mezi A a B. (4) D skončil jako první. Seřaďte závodníky.",
+      "zadani": "Pět závodníků (A–E) doběhlo cílem. Víme: (1) A skončil před B. (2) C skončil za D. (3) E skončil mezi A a B. (4) D skončil jako první. (5) C skončil poslední. Seřaďte závodníky.",
       "odpoved": "D, A, E, B, C",
       "reseni_kroky": [
         "D = 1. místo (podmínka 4)",

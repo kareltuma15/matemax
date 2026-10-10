@@ -1805,13 +1805,12 @@
       "tema": "slovni_ulohy",
       "podtema": "procenta",
       "obtiznost": 3,
-      "zadani": "Škola má 40 % chlapců. Přibyli 3 chlapci a počet dívek zůstal. Nyní je 43 % chlapců. Kolik bylo původně žáků?",
-      "odpoved": "100",
+      "zadani": "Ve třídě tvoří chlapci 40 % žáků. Když do třídy přibyli 3 noví chlapci, tvoří chlapci polovinu třídy. Kolik žáků bylo ve třídě původně?",
+      "odpoved": "15",
       "reseni_kroky": [
-        "0,40x+3=0,43(x+3)",
-        "0,40x+3=0,43x+1,29",
-        "0,71=0,03x",
-        "x≈23,7 — zkontroluj: původní škola 100 žáků"
+        "Původní počet žáků x: 0,4x + 3 = 0,5 · (x + 3).",
+        "0,4x + 3 = 0,5x + 1,5, takže 0,1x = 1,5 a x = 15.",
+        "Kontrola: chlapců bylo 6, nyní 9 z 18 žáků, což je polovina."
       ],
       "cas_sekund": 180,
       "sm2_interval": 2
@@ -1901,10 +1900,12 @@
       "tema": "slovni_ulohy",
       "podtema": "procenta",
       "obtiznost": 2,
-      "zadani": "Zboží nejdřív zdražilo o 20 %, pak zlevnilo o 20 %. Výsledná cena vs. původní?",
-      "odpoved": "96 % (pokles o 4 %)",
+      "zadani": "Zboží nejdřív zdražilo o 20 % a pak zlevnilo o 20 %. Kolik procent původní ceny stojí nakonec?",
+      "odpoved": "96 %",
       "reseni_kroky": [
-        "1,20×0,80=0,96"
+        "Zdražení o 20 %: 1,20 původní ceny.",
+        "Zlevnění o 20 % z nové ceny: 1,20 · 0,80 = 0,96.",
+        "Zboží stojí 96 % původní ceny (je o 4 % levnější)."
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -1988,21 +1989,6 @@
         "80×0,4=32"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 2
-    },
-    {
-      "id": "PRO_068",
-      "tema": "slovni_ulohy",
-      "podtema": "procenta",
-      "obtiznost": 3,
-      "zadani": "Město A má 50 000 obyvatel a roste o 2 % ročně. Město B má 55 000 a klesá o 1 % ročně. Po kolika letech bude počet obyvatel stejný?",
-      "odpoved": "cca 6 let",
-      "reseni_kroky": [
-        "A: 50000×1,02^n",
-        "B: 55000×0,99^n",
-        "rovnost: n≈6"
-      ],
-      "cas_sekund": 180,
       "sm2_interval": 2
     },
     {
@@ -2939,21 +2925,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "ROV_063",
-      "tema": "rovnice",
-      "podtema": "soustava",
-      "obtiznost": 2,
-      "zadani": "Řešením soustavy x+y=7; x·y=12 jsou...",
-      "odpoved": "x=3, y=4 nebo x=4, y=3",
-      "reseni_kroky": [
-        "x+y=7, xy=12",
-        "x² - 7x + 12 = 0",
-        "(x-3)(x-4)=0"
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 2
-    },
-    {
       "id": "ROV_064",
       "tema": "rovnice",
       "podtema": "zlomkova",
@@ -3005,10 +2976,12 @@
       "podtema": "slovni",
       "obtiznost": 2,
       "zadani": "Za 3 kg jablek a 2 kg hrušek zaplatíš 126 Kč. Za 1 kg jablek a 3 kg hrušek 119 Kč. Cena 1 kg jablek?",
-      "odpoved": "24 Kč",
+      "odpoved": "20 Kč",
       "reseni_kroky": [
-        "3j+2h=126, j+3h=119",
-        "řeš soustavu: j=24, h=27"
+        "3j + 2h = 126 a j + 3h = 119.",
+        "Z druhé rovnice j = 119 − 3h; dosadíme: 3 · (119 − 3h) + 2h = 126, tedy 357 − 7h = 126 a h = 33.",
+        "j = 119 − 99 = 20 Kč.",
+        "Kontrola: 3 · 20 + 2 · 33 = 126 a 20 + 3 · 33 = 119."
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -3046,24 +3019,6 @@
       "cas_sekund": 180,
       "sm2_interval": 3,
       "latex": true
-    },
-    {
-      "id": "ROV_070",
-      "tema": "rovnice",
-      "podtema": "soustava",
-      "obtiznost": 3,
-      "zadani": "Vyřeš: x²+y²=25; x+y=7",
-      "odpoved": "x=3, y=4 nebo x=4, y=3",
-      "reseni_kroky": [
-        "z x+y=7: x=7-y",
-        "(7-y)²+y²=25",
-        "49-14y+2y²=25",
-        "2y²-14y+24=0",
-        "y²-7y+12=0",
-        "(y-3)(y-4)=0"
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 2
     },
     {
       "id": "SLO_001",
@@ -3192,10 +3147,9 @@
       "zadani": "Vlak A jede 60 km/h a vlak B 90 km/h vstříc sobě, vzdálenost 300 km. Za jak dlouho se setkají a kde?",
       "odpoved": "2 h, 120 km od A",
       "reseni_kroky": [
-        "Vlaky jedou VSTŘÍC → rychlosti se sčítají: v_celková = 60 + 90 = 150 km/h",
-        "Čas setkání: t = vzdálenost ÷ v_celková",
-        "Potřebujeme vzdálenost — příklad ji musí uvádět (typicky 300 km → t = 300/150 = 2 h)",
-        "Obecný postup: t = D ÷ (v₁ + v₂), kde D je počáteční vzdálenost"
+        "Vlaky jedou vstříc, rychlosti se sčítají: 60 + 90 = 150 km/h.",
+        "Čas setkání: 300 : 150 = 2 h.",
+        "Vlak A za 2 h ujede 60 · 2 = 120 km, takže se setkají 120 km od A."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3419,14 +3373,12 @@
       "tema": "slovni_ulohy",
       "podtema": "pomer_meritko",
       "obtiznost": 2,
-      "zadani": "Babičce je 60 let, vnukovi 12. Před kolika lety bylo babičce 5× více než vnukovi?",
-      "odpoved": "5 let",
+      "zadani": "Babičce je 60 let, vnukovi 12. Před kolika lety bylo babičce 7× více let než vnukovi?",
+      "odpoved": "4 roky",
       "reseni_kroky": [
-        "Označíme: x = počet let zpět, kdy byl poměr věků 5:1",
-        "Babičce tehdy: 60 − x, vnukovi: 12 − x",
-        "Podmínka: (60 − x) = 5 · (12 − x)",
-        "60 − x = 60 − 5x → 4x = 0 → x = 0 — to nedává smysl (platí dnes!)",
-        "Tip: pokud hledáme jiný poměr (např. 6:1): 60−x = 6(12−x) → x = 12/5 = 2,4 let zpět"
+        "Před x lety měla babička 60 − x a vnuk 12 − x let.",
+        "60 − x = 7 · (12 − x) = 84 − 7x, takže 6x = 24 a x = 4.",
+        "Kontrola: před 4 lety bylo babičce 56 a vnukovi 8 let, 56 = 7 · 8."
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -3683,11 +3635,12 @@
       "tema": "slovni_ulohy",
       "podtema": "pohyb",
       "obtiznost": 3,
-      "zadani": "Výletníci vyjdou v 8:00, 4 km/h. Ve 9:00 vyjíždí auto 60 km/h, aby je dohonilo. Za jak dlouho?",
-      "odpoved": "4 minuty",
+      "zadani": "Výletníci vyjdou v 8:00 rychlostí 6 km/h. V 9:00 vyjede za nimi auto rychlostí 66 km/h. Za kolik minut je dožene?",
+      "odpoved": "6 minut",
       "reseni_kroky": [
-        "4km/h×1h=4km napřed",
-        "4/(60-4)=4/56=1/14 h ≈ 4,3 min"
+        "Výletníci mají v 9:00 náskok 6 km/h · 1 h = 6 km.",
+        "Auto se k nim přibližuje rychlostí 66 − 6 = 60 km/h.",
+        "Doženou je za 6 : 60 = 0,1 h = 6 minut."
       ],
       "cas_sekund": 150,
       "sm2_interval": 2
@@ -3740,11 +3693,13 @@
       "tema": "slovni_ulohy",
       "podtema": "finance",
       "obtiznost": 2,
-      "zadani": "Za 5 jablek a 3 hrušky zaplatíme 47 Kč. Za 3 jablka a 5 hrušek 49 Kč. Cena 1 jablka?",
+      "zadani": "Za 5 jablek a 3 hrušky zaplatíme 37 Kč. Za 3 jablka a 5 hrušek 35 Kč. Kolik stojí 1 jablko?",
       "odpoved": "5 Kč",
       "reseni_kroky": [
-        "5j+3h=47, 3j+5h=49",
-        "řeš: j=5, h=4"
+        "5j + 3h = 37 a 3j + 5h = 35.",
+        "Sečteme: 8j + 8h = 72, tedy j + h = 9. Odečteme: 2j − 2h = 2, tedy j − h = 1.",
+        "Z toho j = 5 Kč a h = 4 Kč.",
+        "Kontrola: 5 · 5 + 3 · 4 = 37 a 3 · 5 + 5 · 4 = 35."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -3813,7 +3768,7 @@
       "tema": "slovni_ulohy",
       "podtema": "pohyb",
       "obtiznost": 1,
-      "zadani": "Koňara jede 30 km/h. Za kolik hodin ujede 90 km?",
+      "zadani": "Kočár jede rychlostí 30 km/h. Za kolik hodin ujede 90 km?",
       "odpoved": "3 hodiny",
       "reseni_kroky": [
         "t=90/30=3"
@@ -4306,36 +4261,10 @@
       "tema": "geometrie",
       "podtema": "rovinne",
       "obtiznost": 2,
-      "zadani": "Tečna k ružnici z bodu vzdáleného 10 cm od středu, poloměr 6 cm. Délka tečny?",
+      "zadani": "Tečna ke kružnici z bodu vzdáleného 10 cm od středu, poloměr 6 cm. Délka tečny?",
       "odpoved": "8 cm",
       "reseni_kroky": [
         "t²=10²-6²=64, t=8 cm"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GEO_029",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 2,
-      "zadani": "Rovnostranný trojúhelník se stranou 6 cm. Výška?",
-      "odpoved": "3√3 ≈ 5,2 cm",
-      "reseni_kroky": [
-        "h=6√3/2=3√3"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GEO_030",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 2,
-      "zadani": "Rovnostranný trojúhelník se stranou 6 cm. Obsah?",
-      "odpoved": "9√3 ≈ 15,6 cm²",
-      "reseni_kroky": [
-        "S=6²√3/4=9√3"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -4432,20 +4361,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "GEO_038",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 3,
-      "zadani": "Heronův vzorec: trojúhelník se stranami 7, 8, 9. Obsah?",
-      "odpoved": "26,83 cm²",
-      "reseni_kroky": [
-        "s=(7+8+9)/2=12",
-        "S=√(12×5×4×3)=√720≈26,83"
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 2
-    },
-    {
       "id": "GEO_039",
       "tema": "geometrie",
       "podtema": "rovinne",
@@ -4476,11 +4391,12 @@
       "tema": "geometrie",
       "podtema": "prostorova",
       "obtiznost": 3,
-      "zadani": "Válec: objem 1000 cm³, výška 10 cm. Poloměr (π≈3,14)?",
-      "odpoved": "5,64 cm",
+      "zadani": "Válec má výšku 10 cm a objem 785 cm³. Jaký je jeho poloměr? (π ≈ 3,14)",
+      "odpoved": "5 cm",
       "reseni_kroky": [
-        "r²=1000/(3,14×10)=31,85",
-        "r≈5,64 cm"
+        "V = π · r² · v, tedy 785 = 3,14 · r² · 10.",
+        "r² = 785 : 31,4 = 25.",
+        "r = 5 cm."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -4520,34 +4436,6 @@
       "odpoved": "50,24 cm²",
       "reseni_kroky": [
         "S=3,14×64×90/360=50,24 cm²"
-      ],
-      "cas_sekund": 120,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GEO_045",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 2,
-      "zadani": "Čtverec má úhlopříčku 10 cm. Délka strany?",
-      "odpoved": "5√2 ≈ 7,07 cm",
-      "reseni_kroky": [
-        "d²=2a²",
-        "a=10/√2=5√2≈7,07"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GEO_046",
-      "tema": "geometrie",
-      "podtema": "prostorova",
-      "obtiznost": 2,
-      "zadani": "Hranatý hranol 3×4×5 cm. Délka prostorové úhlopříčky?",
-      "odpoved": "5√2 ≈ 7,07 cm",
-      "reseni_kroky": [
-        "d²=9+16+25=50",
-        "d=√50=5√2≈7,07 cm"
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -4624,11 +4512,12 @@
       "tema": "geometrie",
       "podtema": "rovinne",
       "obtiznost": 3,
-      "zadani": "Rovnoramenný lichoběžník: základny 10 a 6 cm, ramena 5 cm. Obsah?",
-      "odpoved": "32 cm²",
+      "zadani": "Rovnoramenný lichoběžník má základny 10 cm a 4 cm a ramena 5 cm. Jaký je jeho obsah?",
+      "odpoved": "28 cm²",
       "reseni_kroky": [
-        "výška: h²=25-4=21, h=√21≈4,58",
-        "S=(10+6)/2×√21≈32"
+        "Rozdíl základen je 10 − 4 = 6 cm, na každé straně tedy 3 cm.",
+        "Výška: v² = 5² − 3² = 16, v = 4 cm.",
+        "Obsah: (10 + 4) : 2 · 4 = 28 cm²."
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -4665,10 +4554,11 @@
       "tema": "geometrie",
       "podtema": "rovinne",
       "obtiznost": 2,
-      "zadani": "Kolísání kola: průměr 26 palců (1 palec = 2,54 cm). Obvod (π≈3,14)?",
-      "odpoved": "207,07 cm",
+      "zadani": "Kolo má průměr 26 palců (1 palec = 2,54 cm). Jaký je jeho obvod? (π ≈ 3,14)",
+      "odpoved": "207,37 cm",
       "reseni_kroky": [
-        "O=3,14×26×2,54=207,07 cm"
+        "Průměr: 26 · 2,54 = 66,04 cm.",
+        "Obvod: 3,14 · 66,04 = 207,3656 ≈ 207,37 cm."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
@@ -4717,7 +4607,7 @@
       "tema": "geometrie",
       "podtema": "rovinne",
       "obtiznost": 3,
-      "zadani": "Diamant (čtverec) s úhlopříčkami 16 cm a 12 cm. Obsah?",
+      "zadani": "Kosočtverec má úhlopříčky 16 cm a 12 cm. Jaký je jeho obsah?",
       "odpoved": "96 cm²",
       "reseni_kroky": [
         "S=d₁×d₂/2=16×12/2=96 cm²"
@@ -4772,10 +4662,11 @@
       "podtema": "rovinne",
       "obtiznost": 2,
       "zadani": "Čtverec a kruh mají stejný obvod 40 cm. Který má větší obsah?",
-      "odpoved": "Kruh (127,4 vs. 100 cm²)",
+      "odpoved": "Kruh",
       "reseni_kroky": [
-        "čtverec: a=10, S=100",
-        "kruh: r=40/(2π)≈6,37, S=π×40,6≈127,4"
+        "Čtverec: strana 40 : 4 = 10 cm, obsah 100 cm².",
+        "Kruh: obvod 2πr = 40, r ≈ 6,37 cm, obsah π · r² ≈ 127,3 cm².",
+        "Kruh má větší obsah než čtverec (při stejném obvodu má největší obsah kruh)."
       ],
       "cas_sekund": 120,
       "sm2_interval": 2
@@ -8578,25 +8469,13 @@
       "tema": "geometrie",
       "podtema": "prostorova",
       "obtiznost": 3,
-      "zadani": "Kvádr 4×5×6 cm. Délka prostorové úhlopříčky?",
-      "odpoved": "sqrt(77) cm ≈ 8,8 cm",
+      "zadani": "Kvádr má rozměry 3 × 4 × 12 cm. Jaká je délka jeho prostorové úhlopříčky?",
+      "odpoved": "13 cm",
       "reseni_kroky": [
-        "d = sqrt(a^2 + b^2 + c^2) = sqrt(16+25+36) = sqrt(77) ≈ 8,77 cm"
+        "d² = 3² + 4² + 12² = 9 + 16 + 144 = 169.",
+        "d = √169 = 13 cm."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
-    },
-    {
-      "id": "GEO_089",
-      "tema": "geometrie",
-      "podtema": "rovinne",
-      "obtiznost": 3,
-      "zadani": "Dva podobné trojúhelníky mají poměr stran 2:3. Jaký je poměr jejich ploch?",
-      "odpoved": "4:9",
-      "reseni_kroky": [
-        "Poměr ploch = (poměr stran)^2 = 2^2 : 3^2 = 4:9"
-      ],
-      "cas_sekund": 90,
       "sm2_interval": 1
     },
     {
@@ -8604,11 +8483,11 @@
       "tema": "geometrie",
       "podtema": "rovinne",
       "obtiznost": 3,
-      "zadani": "Trojúhelník má strany 3, 4, 5 cm. Je pravoúhlý? Jaký je jeho obsah?",
-      "odpoved": "Ano, S = 6 cm²",
+      "zadani": "Trojúhelník o stranách 3, 4 a 5 cm je pravoúhlý. Jaký je jeho obsah?",
+      "odpoved": "6 cm²",
       "reseni_kroky": [
-        "3^2 + 4^2 = 9+16 = 25 = 5^2 → pravoúhlý",
-        "S = (3 × 4) / 2 = 6 cm²"
+        "Pravý úhel je mezi stranami 3 cm a 4 cm (3² + 4² = 5²).",
+        "Obsah: 3 · 4 : 2 = 6 cm²."
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -9105,7 +8984,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\frac{\\dfrac{4}{9} \\cdot \\left(-\\dfrac{3}{6}\\right) + \\dfrac{1}{2}}{2 - \\dfrac{5}{6} \\div \\dfrac{5}{4}} = ?",
-      "odpoved": "1/6",
+      "odpoved": "5/24",
       "reseni_kroky": [
         "Čitatel — násobení: \\frac{4}{9} \\cdot \\left(-\\frac{1}{2}\\right) = -\\frac{4}{18} = -\\frac{2}{9}",
         "Čitatel celkem: -\\frac{2}{9} + \\frac{1}{2} = -\\frac{4}{18} + \\frac{9}{18} = \\frac{5}{18}",
@@ -9123,7 +9002,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\frac{\\dfrac{25}{28} \\cdot \\left(-\\dfrac{2}{5}\\right)}{\\dfrac{6}{7} \\div 2 + 1} = ?",
-      "odpoved": "-5/18",
+      "odpoved": "-1/4",
       "reseni_kroky": [
         "Čitatel: \\frac{25}{28} \\cdot \\left(-\\frac{2}{5}\\right) = -\\frac{50}{140} = -\\frac{5}{14}",
         "Jmenovatel: \\frac{6}{7} \\div 2 = \\frac{6}{14} = \\frac{3}{7}, \\quad \\frac{3}{7} + 1 = \\frac{10}{7}",
@@ -9139,7 +9018,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\frac{1 - \\dfrac{1}{4}}{2 \\cdot \\dfrac{5}{8} - 2} = ?",
-      "odpoved": "-3/2",
+      "odpoved": "-1",
       "reseni_kroky": [
         "Čitatel: 1 - \\frac{1}{4} = \\frac{3}{4}",
         "Jmenovatel: 2 \\cdot \\frac{5}{8} = \\frac{10}{8} = \\frac{5}{4}, \\quad \\frac{5}{4} - 2 = \\frac{5}{4} - \\frac{8}{4} = -\\frac{3}{4}",
@@ -9700,7 +9579,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\frac{\\dfrac{4}{9} \\cdot \\left(-\\dfrac{3}{8}\\right) + \\dfrac{1}{2}}{2 - \\dfrac{5}{6} \\cdot \\dfrac{5}{4}} = ?",
-      "odpoved": "1/17",
+      "odpoved": "8/23",
       "reseni_kroky": [
         "Čitatel: \\frac{4}{9} \\cdot \\left(-\\frac{3}{8}\\right) = -\\frac{12}{72} = -\\frac{1}{6}",
         "-\\frac{1}{6} + \\frac{1}{2} = -\\frac{1}{6} + \\frac{3}{6} = \\frac{2}{6} = \\frac{1}{3}",
@@ -9733,11 +9612,11 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "Uprav: $\\frac{7a}{3}(a+3) + 2(1-3a)(a+5)$",
-      "odpoved": "(5a² − 23a + 10)/3",
+      "odpoved": "(−11a² − 63a + 30)/3",
       "reseni_kroky": [
-        "\\frac{7a}{3}(a+3) = \\frac{7a^2 + 21a}{3}",
-        "2(1-3a)(a+5) = 2(a + 5 - 3a^2 - 15a) = 2(-3a^2 - 14a + 5) = -6a^2 - 28a + 10",
-        "Převedeme na společného jmenovatele 3 a sečteme"
+        "(7a/3)·(a + 3) = (7a² + 21a)/3.",
+        "2·(1 − 3a)(a + 5) = 2·(−3a² − 14a + 5) = −6a² − 28a + 10 = (−18a² − 84a + 30)/3.",
+        "Součet: (7a² + 21a − 18a² − 84a + 30)/3 = (−11a² − 63a + 30)/3."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -9749,7 +9628,7 @@
       "obtiznost": 3,
       "latex": true,
       "zadani": "\\left($\\frac{11}{5}$ - $\\frac{11}{6}$\\right) \\div \\left(-$\\frac{1}{3}$\\right) + \\left($\\frac{6}{5}$ \\div $\\frac{9}{15}$ - 2\\right) = ?",
-      "odpoved": "-6/5",
+      "odpoved": "-11/10",
       "reseni_kroky": [
         "Část 1: \\frac{11}{5} - \\frac{11}{6} = \\frac{66}{30} - \\frac{55}{30} = \\frac{11}{30}",
         "\\frac{11}{30} \\div \\left(-\\frac{1}{3}\\right) = \\frac{11}{30} \\cdot (-3) = -\\frac{33}{30} = -\\frac{11}{10}",
