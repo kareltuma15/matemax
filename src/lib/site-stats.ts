@@ -2,7 +2,7 @@
  * Čísla, která tvrdíme na webu a v emailech — jedno místo, ať se marketing
  * nerozejde s realitou ani sám se sebou.
  *
- * Počet příkladů je schválně zaokrouhlený dolů na padesátky: tvrzení „900+"
+ * Počet příkladů je schválně zaokrouhlený dolů na stovky: tvrzení „1 100+"
  * tak zůstává pravdivé i po přidání pár příkladů a nemusí se přepisovat.
  * Soulad s databází hlídá `scripts/check-site-stats.mjs`.
  *
@@ -11,10 +11,13 @@
  */
 
 /** Počet příkladů pro počítadlo na landingu (bez „+"). */
-export const EXAMPLES_ROUNDED = 900;
+export const EXAMPLES_ROUNDED = 1100;
 
-/** Počet příkladů jako text do vět: „900+ příkladů". */
-export const EXAMPLES_LABEL = `${EXAMPLES_ROUNDED}+`;
+/** Počet s pevnou mezerou jako tisícovým oddělovačem: „1 100" (bez „+"). */
+export const EXAMPLES_TEXT = `${Math.floor(EXAMPLES_ROUNDED / 1000)} ${String(EXAMPLES_ROUNDED % 1000).padStart(3, "0")}`;
+
+/** Počet příkladů jako text do vět: „1 100+ příkladů". */
+export const EXAMPLES_LABEL = `${EXAMPLES_TEXT}+`;
 
 /** Počet témat CERMAT (= kapitoly sešitu + souhrnné). */
 export const TOPICS_COUNT = 9;
@@ -25,5 +28,4 @@ export const DIAGNOSTIC_MINUTES = 8;
 /** Doporučená délka denního tréninku v minutách. */
 export const DAILY_MINUTES = 10;
 
-/** Kolik žáků se s Matematika Snadno připravovalo — drženo shodně s pracovním sešitem. */
-export const STUDENTS_LABEL = "500+";
+// Počet žáků se na MateMaxu záměrně netvrdí (schváleno 10. 10. 2026): v aplikaci je zatím málo uživatelů a ověřený fakt „200+ žáků“ se týká celé přípravy, ne MateMaxu.

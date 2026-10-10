@@ -26,7 +26,7 @@ for (const f of DATA_FILES) {
   for (const e of examples) temata.add(e.tema);
 }
 
-const ocekavano = Math.floor(total / 50) * 50;
+const ocekavano = Math.floor(total / 100) * 100;
 const uvedeno = num("EXAMPLES_ROUNDED");
 
 const problemy = [];

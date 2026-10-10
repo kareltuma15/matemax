@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const BENEFITS = [
   { icon: "🧮", title: "Všech 9 témat CERMAT", desc: "Geometrie, mocniny, slovní úlohy, číselné řady a další" },
-  { icon: "♾️", title: "Neomezený počet příkladů", desc: "500+ příkladů, nové přibývají každý měsíc" },
+  { icon: "♾️", title: "Neomezený počet příkladů", desc: `${EXAMPLES_LABEL} úloh, nové přibývají každý měsíc` },
   { icon: "🧠", title: "Adaptivní SM-2 algoritmus", desc: "Systém tě vrací k tomu, co ti nejde — automaticky" },
   { icon: "📊", title: "Týdenní report pro rodiče", desc: "Každé pondělí přehled pokroku na email" },
   { icon: "🎯", title: "CERMAT cvičné testy", desc: "Přesné simulace přijímaček na čas" },

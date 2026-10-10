@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const STEPS = [
   {
@@ -30,7 +31,7 @@ const STEPS = [
 const WHY_ITEMS = [
   ["🧠", "Spaced Repetition", "Příklady se opakují přesně ve chvíli, kdy je začínáš zapomínat — ne zbytečně brzy ani příliš pozdě."],
   ["🎮", "Gamifikace", "XP, level systém a odznaky tě motivují každý den. Streak ti nedovolí přestat."],
-  ["📊", "CERMAT formát", "Databáze 500+ příkladů ve stejném formátu jako skutečný přijímací test."],
+  ["📊", "CERMAT formát", `Databáze ${EXAMPLES_LABEL} úloh ve stylu skutečného přijímacího testu.`],
   ["📱", "Mobilní první", "Funguje na mobilu, tabletu i počítači. Nainstaluj jako PWA a trénuj i offline."],
 ];
 

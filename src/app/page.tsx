@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { loadProgress, saveProgress } from "@/lib/progress";
 import type { Session } from "@supabase/supabase-js";
 import { getSmartRedirect } from "@/lib/smart-redirect";
-import { EXAMPLES_ROUNDED, EXAMPLES_LABEL, TOPICS_COUNT, DIAGNOSTIC_MINUTES, STUDENTS_LABEL } from "@/lib/site-stats";
+import { EXAMPLES_ROUNDED, EXAMPLES_LABEL, TOPICS_COUNT, DIAGNOSTIC_MINUTES, EXAMPLES_TEXT } from "@/lib/site-stats";
 
 const LoggedInDashboard = dynamic(() => import("@/components/LoggedInDashboard"), {
   ssr: false,
@@ -587,7 +587,7 @@ export default function LandingPage() {
               ))}
             </div>
             <p className="text-sm text-blue-200">
-              Již <strong className="text-white">{STUDENTS_LABEL}</strong> žáků procvičuje každý den
+              Více než <strong className="text-white">{EXAMPLES_TEXT}</strong> úloh ve stylu CERMAT – začni diagnostikou zdarma
             </p>
           </div>
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { usePremium } from "@/lib/premium";
+import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const FREE_FEATURES = [
   "✓ Diagnostický test (všechna témata)",
@@ -19,7 +20,7 @@ const FREE_FEATURES = [
 
 const PREMIUM_FEATURES = [
   "✓ Všech 9 témat CERMAT",
-  "✓ 500+ příkladů, neomezený přístup",
+  `✓ ${EXAMPLES_LABEL} úloh, neomezený přístup`,
   "✓ Adaptivní algoritmus SM-2",
   "✓ Streak systém a XP",
   "✓ Všechny odznaky a achievementy",
