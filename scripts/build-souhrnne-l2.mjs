@@ -108,9 +108,9 @@ const ex = [
   typed("SOU2_24", "zlomky_slovni", "V lahvi je 1,5 litru limonády. Naplníme z ní čtyři sklenice a do každé nalijeme jednu pětinu litru. Kolik litrů limonády v lahvi zbyde?", "0,7 l", [
     "Do čtyř sklenic nalijeme 4 · 1/5 = 4/5 l = 0,8 l.", "V lahvi zbyde 1,5 − 0,8 = 0,7 l.",
   ], 120),
-  typed("SOU2_25", "kombinace_cisla", "Z číslic 1, 2, 3, 4 vytváříme trojciferná čísla, v nichž se žádná číslice neopakuje. Kolik z těchto čísel je sudých?", "12", [
-    "Číslo je sudé, když končí číslicí 2 nebo 4 — pro poslední místo jsou 2 možnosti.", "Na první místo zbývají 3 číslice, na prostřední 2.", "Počet: 2 · 3 · 2 = 12.",
-  ], 180),
+  typed("SOU2_25", "zlomky_procenta", "V sadu je 120 stromů. Jabloně tvoří 40 % všech stromů, hrušně čtvrtinu zbytku a ostatní stromy jsou švestky. Kolik švestek je v sadu?", "54", [
+    "Jabloní je 40 % ze 120 = 48, zbývá 120 − 48 = 72 stromů.", "Hrušní je čtvrtina zbytku: 72 : 4 = 18.", "Švestek je 72 − 18 = 54.",
+  ], 150),
   typed("SOU2_26", "tabulka_procenta", "Tabulka ukazuje počty žáků 9. ročníku. Kolik procent všech žáků ročníku tvoří dívky z 9. A a 9. C dohromady?", "30 %", [
     "Žáků je celkem 28 + 24 + 22 + 26 = 100.", "Dívek z 9. A je 16 a z 9. C je 14, dohromady 30.", "30 ze 100 žáků jsou 30 %.",
   ], 150, { image: IMG.tabTridy }),
@@ -207,7 +207,7 @@ ok("16", close((3 * 240 + 2 * 120) / 5, 192) && val("SOU2_16") === 192);
 ok("22", close(Math.sqrt(100 - 36), 8) && 2 * (6 + 8) === 28 && opt("SOU2_22") === "28 m");
 ok("23", 3 / 8 === 0.375 && opt("SOU2_23") === "3/8");
 ok("24", close(1.5 - 4 / 5, 0.7) && val("SOU2_24") === 0.7);
-{ let n = 0; const d = [1, 2, 3, 4]; for (const a of d) for (const b of d) for (const c of d) if (a !== b && b !== c && a !== c && c % 2 === 0) n++; ok("25", n === 12 && val("SOU2_25") === 12); }
+{ const jab = 0.4 * 120, zb = 120 - jab, hr = zb / 4; ok("25", jab === 48 && zb === 72 && hr === 18 && zb - hr === 54 && val("SOU2_25") === 54); }
 { const rows = [[28, 16], [24, 12], [22, 14], [26, 10]]; const tot = rows.reduce((s, r) => s + r[0], 0); ok("26", tot === 100 && rows[0][1] + rows[2][1] === 30 && val("SOU2_26") === 30); }
 ok("27", close((1 - 2 / 8) * 100, 75) && opt("SOU2_27") === "75 %");
 { let sol = []; for (let b = 1; b < 25; b++) if (b + (b + 7) === 25) sol.push((b / 25) * 100); ok("28", sol.length === 1 && close(sol[0], 36) && val("SOU2_28") === 36, sol); }

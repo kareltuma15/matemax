@@ -2618,20 +2618,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "t09_17",
-      "tema": "uhly",
-      "podtema": "uhly_v_kruhu",
-      "obtiznost": 2,
-      "zadani": "Středový úhel kružnice odpovídá oblouku 80°. Jaký je odpovídající obvodový úhel?",
-      "odpoved": "40°",
-      "reseni_kroky": [
-        "Obvodový úhel = ½ × středový úhel",
-        "Obvodový úhel = ½ × 80° = 40°"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "t09_18",
       "tema": "uhly",
       "podtema": "kombinace_rovnobezek_a_trojuhelniku",
@@ -2766,19 +2752,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "t10_07",
-      "tema": "grafy_logika",
-      "podtema": "kombinatorika",
-      "obtiznost": 1,
-      "zadani": "3 žáci si mají rozdělit 3 různé úkoly (každý právě jeden). Kolik existuje způsobů rozdělení?",
-      "odpoved": "6",
-      "reseni_kroky": [
-        "Permutace 3 prvků: 3! = 3×2×1 = 6"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "t10_08",
       "tema": "grafy_logika",
       "podtema": "ciselne_zakonitosti",
@@ -2841,19 +2814,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "t10_13",
-      "tema": "grafy_logika",
-      "podtema": "kombinatorika",
-      "obtiznost": 2,
-      "zadani": "Z 5 žáků vybíráme 2 do soutěže (nezáleží na pořadí). Kolik způsobů výběru existuje?",
-      "odpoved": "10",
-      "reseni_kroky": [
-        "Kombinační číslo C(5,2) = 5!/(2!×3!) = (5×4)/(2×1) = 10"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
       "id": "t10_14",
       "tema": "grafy_logika",
       "podtema": "ciselne_zakonitosti",
@@ -2879,20 +2839,6 @@
         "Levý sloupec: 2 + 7 + x = 15, tedy levý dolní roh je 6.",
         "Diagonála z pravého horního do levého dolního rohu: a + 5 + 6 = 15, tedy pravý horní roh je 4.",
         "Horní řádek: 2 + b + 4 = 15, tedy uprostřed horního řádku je 9."
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "t10_17",
-      "tema": "grafy_logika",
-      "podtema": "kombinatorika",
-      "obtiznost": 2,
-      "zadani": "Kolik čtyřciferných čísel lze sestavit z číslic 1, 2, 3, 4, pokud se každá číslice použije právě jednou?",
-      "odpoved": "24",
-      "reseni_kroky": [
-        "Jde o permutace 4 prvků",
-        "P(4) = 4! = 4×3×2×1 = 24"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
@@ -2926,20 +2872,6 @@
         "Vzorec: n(n+1)(2n+1)/6 pro n=10",
         "= 10×11×21/6 = 2310/6 = 385",
         "Nebo sčítáním: 1+4+9+16+25+36+49+64+81+100 = 385"
-      ],
-      "cas_sekund": 90,
-      "sm2_interval": 1
-    },
-    {
-      "id": "t10_20",
-      "tema": "grafy_logika",
-      "podtema": "kombinatorika",
-      "obtiznost": 3,
-      "zadani": "Síť ulic je mřížka 3×3 (4 uzly × 4 uzly = 16 uzlů). Kolik nejkratších cest vede z levého dolního rohu do pravého horního rohu? (Pohyb jen doprava nebo nahoru.)",
-      "odpoved": "20",
-      "reseni_kroky": [
-        "Nejkratší cesta = 3 kroky doprava + 3 kroky nahoru = 6 kroků celkem",
-        "Počet cest = C(6,3) = 6!/(3!×3!) = 720/36 = 20"
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
