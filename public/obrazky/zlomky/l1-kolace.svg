@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348 92" width="348" height="92" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Tři celé koláče rozdělené na poloviny a jedna polovina koláče</title>
+
+  <circle cx="44" cy="44" r="34" fill="#fde68a" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="10" y1="44" x2="78" y2="44" stroke="#0D1B3E" stroke-width="1.2"/>
+  <circle cx="126" cy="44" r="34" fill="#fde68a" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="92" y1="44" x2="160" y2="44" stroke="#0D1B3E" stroke-width="1.2"/>
+  <circle cx="208" cy="44" r="34" fill="#fde68a" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="174" y1="44" x2="242" y2="44" stroke="#0D1B3E" stroke-width="1.2"/>
+  <path d="M 256 44 A 34 34 0 0 1 324 44 Z" fill="#fde68a" stroke="#0D1B3E" stroke-width="2"/>
+</svg>

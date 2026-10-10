@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 156" width="192" height="156" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Mřížka 4 × 5 = 20 shodných polí, 15 z nich je šedých</title>
+
+  <rect x="16" y="14" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="48" y="14" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="80" y="14" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="112" y="14" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="144" y="14" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="46" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="48" y="46" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="80" y="46" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="112" y="46" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="144" y="46" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="78" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="48" y="78" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="80" y="78" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="112" y="78" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="144" y="78" width="32" height="32" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="110" width="32" height="32" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="48" y="110" width="32" height="32" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="80" y="110" width="32" height="32" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="112" y="110" width="32" height="32" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="144" y="110" width="32" height="32" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="14" width="160" height="128" fill="none" stroke="#0D1B3E" stroke-width="2.6"/>
+</svg>

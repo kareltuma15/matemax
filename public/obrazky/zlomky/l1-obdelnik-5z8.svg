@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 184 104" width="184" height="104" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélník rozdělený na 8 shodných částí, 5 z nich je šedých</title>
+
+  <rect x="16" y="14" width="38" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="54" y="14" width="38" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="92" y="14" width="38" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="130" y="14" width="38" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="52" width="38" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="54" y="52" width="38" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="92" y="52" width="38" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="130" y="52" width="38" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="14" width="152" height="76" fill="none" stroke="#0D1B3E" stroke-width="2.6"/>
+</svg>

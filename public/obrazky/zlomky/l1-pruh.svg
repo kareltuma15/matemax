@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 316 106" width="316" height="106" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Pruh rozdělený na 12 shodných dílků: 4 červené, 3 modré, zbytek bílý</title>
+
+  <rect x="14" y="14" width="24" height="36" fill="#fca5a5" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="38" y="14" width="24" height="36" fill="#fca5a5" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="62" y="14" width="24" height="36" fill="#fca5a5" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="86" y="14" width="24" height="36" fill="#fca5a5" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="110" y="14" width="24" height="36" fill="#93c5fd" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="134" y="14" width="24" height="36" fill="#93c5fd" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="158" y="14" width="24" height="36" fill="#93c5fd" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="182" y="14" width="24" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="206" y="14" width="24" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="230" y="14" width="24" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="254" y="14" width="24" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="278" y="14" width="24" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="14" y="14" width="288" height="36" fill="none" stroke="#0D1B3E" stroke-width="2.6"/>
+  <rect x="14" y="66" width="16" height="16" fill="#fca5a5" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="38" y="79" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">červená</text>
+  <rect x="114" y="66" width="16" height="16" fill="#93c5fd" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="138" y="79" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">modrá</text>
+  <rect x="214" y="66" width="16" height="16" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.4"/>
+  <text x="238" y="79" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">bílá</text>
+</svg>

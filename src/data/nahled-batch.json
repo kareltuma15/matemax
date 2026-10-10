@@ -1,4 +1,393 @@
 {
-  "nazev": "Souhrnné L2 — dvě témata najednou (46 úloh: 31 psaných, 9 A–E, 6 ano/ne; 16 s obrázkem nebo tabulkou) — nahradí staré jednovětné úlohy — ZAPSÁNO",
-  "examples": []
+  "nazev": "Zlomky L1 s obrázky (10) a Souhrnné L1 (10) — 20 úloh",
+  "examples": [
+    {
+      "id": "ZLN1_01",
+      "tema": "zlomky",
+      "podtema": "cast_obrazce",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-obdelnik-5z8.svg",
+        "width": 184,
+        "height": 104,
+        "alt": "Obdélník rozdělený na 8 shodných částí, 5 z nich je šedých"
+      },
+      "zadani": "Jaká část obdélníku je šedá (viz obrázek)? Výsledek zapište zlomkem.",
+      "odpoved": "5/8",
+      "reseni_kroky": [
+        "Obdélník je rozdělen na 8 shodných částí.",
+        "Šedých částí je 5, šedá je tedy 5/8 obdélníku."
+      ],
+      "cas_sekund": 45,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_02",
+      "tema": "zlomky",
+      "podtema": "cast_obrazce",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-kruh-4z6.svg",
+        "width": 180,
+        "height": 180,
+        "alt": "Kruh rozdělený na 6 shodných výsečí, 4 z nich jsou šedé"
+      },
+      "zadani": "Jakou část kruhu tvoří šedé výseče (viz obrázek)? Výsledek zapište zlomkem v základním tvaru.",
+      "odpoved": "2/3",
+      "reseni_kroky": [
+        "Kruh má 6 shodných výsečí, šedé jsou 4.",
+        "4/6 zkrátíme dvěma: 2/3."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_03",
+      "tema": "zlomky",
+      "podtema": "cast_obrazce",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-ctverec-3x3.svg",
+        "width": 146,
+        "height": 142,
+        "alt": "Čtverec rozdělený na 9 shodných čtverečků, šest z nich je šedých"
+      },
+      "zadani": "Jaká část čtverce není šedá (viz obrázek)? Výsledek zapište zlomkem v základním tvaru.",
+      "odpoved": "1/3",
+      "reseni_kroky": [
+        "Čtverec je rozdělen na 9 shodných čtverečků, šedých je 6, bílé jsou 3.",
+        "Bílá část je 3/9 = 1/3."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_04",
+      "tema": "zlomky",
+      "podtema": "ciselna_osa",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-osa-osminy.svg",
+        "width": 370,
+        "height": 100,
+        "alt": "Číselná osa od 0 do 1 rozdělená na osm shodných dílků, bod X je u pátého dílku"
+      },
+      "zadani": "Který zlomek odpovídá bodu X na číselné ose (viz obrázek)?",
+      "odpoved": "5/8",
+      "reseni_kroky": [
+        "Úsek od 0 do 1 je rozdělen na 8 shodných dílků, jeden dílek je 1/8.",
+        "Bod X leží u pátého dílku, odpovídá mu tedy 5/8."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_05",
+      "tema": "zlomky",
+      "podtema": "ciselna_osa",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-osa-ctvrtiny.svg",
+        "width": 370,
+        "height": 100,
+        "alt": "Číselná osa od 0 do 2 rozdělená na osm shodných dílků, bod X je u sedmého dílku"
+      },
+      "zadani": "Které číslo odpovídá bodu X na číselné ose (viz obrázek)? Zapište ho nevlastním zlomkem.",
+      "odpoved": "7/4",
+      "reseni_kroky": [
+        "Mezi 0 a 1 jsou 4 shodné dílky, jeden dílek je 1/4.",
+        "Bod X leží u sedmého dílku, odpovídá mu tedy 7/4 (což je 1 3/4)."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_06",
+      "tema": "zlomky",
+      "podtema": "porovnavani",
+      "obtiznost": 1,
+      "moznosti": [
+        "v prvním obdélníku",
+        "ve druhém obdélníku",
+        "v obou je šedá část stejně velká"
+      ],
+      "spravna": 0,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-porovnani.svg",
+        "width": 224,
+        "height": 160,
+        "alt": "Dva obdélníky stejné délky: první má 4 shodné části a 3 jsou šedé, druhý má 8 shodných částí a 5 je šedých"
+      },
+      "zadani": "Oba obdélníky na obrázku mají stejnou délku i šířku. Ve kterém z nich je šedá část větší?",
+      "odpoved": "v prvním obdélníku",
+      "reseni_kroky": [
+        "První obdélník: šedé jsou 3 ze 4 částí, tedy 3/4 = 6/8.",
+        "Druhý obdélník: šedých je 5 z 8 částí, tedy 5/8.",
+        "6/8 > 5/8, šedá část je větší v prvním obdélníku."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_07",
+      "tema": "zlomky",
+      "podtema": "cast_obrazce",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-pruh.svg",
+        "width": 316,
+        "height": 106,
+        "alt": "Pruh rozdělený na 12 shodných dílků: 4 červené, 3 modré, zbytek bílý"
+      },
+      "zadani": "Jaká část pruhu je bílá (viz obrázek)? Výsledek zapište zlomkem v základním tvaru.",
+      "odpoved": "5/12",
+      "reseni_kroky": [
+        "Pruh má 12 shodných dílků: 4 červené, 3 modré.",
+        "Bílých dílků je 12 − 4 − 3 = 5, bílá část je 5/12."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_08",
+      "tema": "zlomky",
+      "podtema": "smisena_cisla",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-kolace.svg",
+        "width": 348,
+        "height": 92,
+        "alt": "Tři celé koláče rozdělené na poloviny a jedna polovina koláče"
+      },
+      "zadani": "Kolik koláčů je na obrázku? Výsledek zapište nevlastním zlomkem se jmenovatelem 2.",
+      "odpoved": "7/2",
+      "reseni_kroky": [
+        "Každý celý koláč jsou 2 poloviny: 3 celé koláče je 3 · 2 = 6 polovin.",
+        "K tomu ještě 1 polovina: celkem 7 polovin, tedy 7/2 koláče (3 1/2)."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_09",
+      "tema": "zlomky",
+      "podtema": "cast_obrazce",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-mrizka-15z20.svg",
+        "width": 192,
+        "height": 156,
+        "alt": "Mřížka 4 × 5 = 20 shodných polí, 15 z nich je šedých"
+      },
+      "zadani": "Kolik procent mřížky je šedých (viz obrázek)?",
+      "odpoved": "75 %",
+      "reseni_kroky": [
+        "Mřížka má 4 · 5 = 20 polí, šedých je 15.",
+        "15/20 = 3/4 = 75 %."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "ZLN1_10",
+      "tema": "zlomky",
+      "podtema": "cast_obrazce",
+      "obtiznost": 1,
+      "moznosti": [
+        "3/8",
+        "1/2",
+        "5/8",
+        "3/5",
+        "jiná část"
+      ],
+      "spravna": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/zlomky/l1-kruh-3z8.svg",
+        "width": 180,
+        "height": 180,
+        "alt": "Kruh rozdělený na 8 shodných výsečí, 3 z nich jsou šedé"
+      },
+      "zadani": "Jaká část kruhu není šedá (viz obrázek)?",
+      "odpoved": "5/8",
+      "reseni_kroky": [
+        "Kruh má 8 shodných výsečí, šedé jsou 3, bílých je 5.",
+        "Bílá část je 5/8. Správně je C). (3/8 je šedá část.)"
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_10",
+      "tema": "souhrnne",
+      "podtema": "zlomky_geometrie",
+      "obtiznost": 1,
+      "zadani": "Strana čtverce měří 12 cm. Kolik centimetrů je jedna třetina jeho obvodu?",
+      "odpoved": "16 cm",
+      "reseni_kroky": [
+        "Obvod čtverce: 4 · 12 = 48 cm.",
+        "Třetina obvodu: 48 : 3 = 16 cm."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_11",
+      "tema": "souhrnne",
+      "podtema": "procenta_geometrie",
+      "obtiznost": 1,
+      "zadani": "Obdélník má rozměry 20 cm a 10 cm. Kratší stranu zmenšíme na polovinu. Jaký bude obsah nového obdélníku?",
+      "odpoved": "100 cm²",
+      "reseni_kroky": [
+        "Kratší strana je 10 cm, polovina je 5 cm.",
+        "Nový obdélník má rozměry 20 cm a 5 cm, obsah 20 · 5 = 100 cm²."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_12",
+      "tema": "souhrnne",
+      "podtema": "rovnice_geometrie",
+      "obtiznost": 1,
+      "zadani": "Strana čtverce měří x + 3 cm a obvod čtverce je 28 cm. Určete x.",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Obvod: 4 · (x + 3) = 28.",
+        "x + 3 = 7, takže x = 4.",
+        "Kontrola: strana 7 cm, obvod 28 cm."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_13",
+      "tema": "souhrnne",
+      "podtema": "zlomky_slovni",
+      "obtiznost": 1,
+      "zadani": "Karel přečetl tři pětiny knihy, což je 90 stran. Kolik stran má celá kniha?",
+      "odpoved": "150",
+      "reseni_kroky": [
+        "Tři pětiny knihy jsou 90 stran, jedna pětina je 90 : 3 = 30 stran.",
+        "Celá kniha (5 pětin): 5 · 30 = 150 stran."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_14",
+      "tema": "souhrnne",
+      "podtema": "procenta_slovni",
+      "obtiznost": 1,
+      "zadani": "Jízdenka stála 40 Kč a zdražila o 25 %. Kolik korun stojí teď?",
+      "odpoved": "50 Kč",
+      "reseni_kroky": [
+        "25 % ze 40 Kč je 40 : 4 = 10 Kč.",
+        "Nová cena: 40 + 10 = 50 Kč."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_15",
+      "tema": "souhrnne",
+      "podtema": "geometrie_pytagoras",
+      "obtiznost": 1,
+      "zadani": "Pravoúhlý trojúhelník má odvěsny 9 cm a 12 cm. Jaký je jeho obvod?",
+      "odpoved": "36 cm",
+      "reseni_kroky": [
+        "Přepona: √(9² + 12²) = √225 = 15 cm.",
+        "Obvod: 9 + 12 + 15 = 36 cm."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_16",
+      "tema": "souhrnne",
+      "podtema": "zlomky_procenta",
+      "obtiznost": 1,
+      "zadani": "Kolik procent hodiny tvoří 15 minut?",
+      "odpoved": "25 %",
+      "reseni_kroky": [
+        "Hodina má 60 minut.",
+        "15/60 = 1/4 = 25 %."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_17",
+      "tema": "souhrnne",
+      "podtema": "rovnice_slovni",
+      "obtiznost": 1,
+      "zadani": "Myslím si číslo. Když ho vynásobím třemi a přičtu 5, dostanu 26. Které číslo si myslím?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "3x + 5 = 26.",
+        "3x = 21, takže x = 7.",
+        "Kontrola: 3 · 7 + 5 = 26."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_18",
+      "tema": "souhrnne",
+      "podtema": "geometrie_slovni",
+      "obtiznost": 1,
+      "zadani": "Obdélníkový pozemek měří 30 m × 20 m. Kolik metrů pletiva je potřeba na oplocení celého pozemku?",
+      "odpoved": "100 m",
+      "reseni_kroky": [
+        "Obvod obdélníku: 2 · (30 + 20) = 2 · 50 = 100 m."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "SOU1_19",
+      "tema": "souhrnne",
+      "podtema": "tabulka_procenta",
+      "obtiznost": 1,
+      "image": {
+        "kind": "tabulka",
+        "nazev": "Kroužky ve škole",
+        "hlavicka": [
+          "Kroužek",
+          "Počet dětí"
+        ],
+        "radky": [
+          [
+            "Fotbal",
+            12
+          ],
+          [
+            "Šachy",
+            8
+          ],
+          [
+            "Kreslení",
+            5
+          ]
+        ]
+      },
+      "zadani": "Tabulka ukazuje, kolik dětí chodí do kroužků. Kolik procent všech dětí v tabulce chodí na fotbal?",
+      "odpoved": "48 %",
+      "reseni_kroky": [
+        "Dětí je celkem 12 + 8 + 5 = 25.",
+        "Na fotbal chodí 12 z 25 dětí: 12/25 = 48/100 = 48 %."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    }
+  ]
 }

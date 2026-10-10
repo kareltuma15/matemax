@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 160" width="224" height="160" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Dva obdélníky stejné délky: první má 4 shodné části a 3 jsou šedé, druhý má 8 shodných částí a 5 je šedých</title>
+  <text x="16" y="22" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">první obdélník</text>
+  <rect x="16" y="30" width="48" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="64" y="30" width="48" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="112" y="30" width="48" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="160" y="30" width="48" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="30" width="192" height="38" fill="none" stroke="#0D1B3E" stroke-width="2.6"/>
+  <text x="16" y="100" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">druhý obdélník</text>
+  <rect x="16" y="108" width="24" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="40" y="108" width="24" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="64" y="108" width="24" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="88" y="108" width="24" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="112" y="108" width="24" height="38" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="136" y="108" width="24" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="160" y="108" width="24" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="184" y="108" width="24" height="38" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="16" y="108" width="192" height="38" fill="none" stroke="#0D1B3E" stroke-width="2.6"/>
+</svg>

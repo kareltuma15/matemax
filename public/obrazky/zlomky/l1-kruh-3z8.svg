@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Kruh rozdělený na 8 shodných výsečí, 3 z nich jsou šedé</title>
+
+  <path d="M 90 90 L 90 20 A 70 70 0 0 1 139.5 40.5 Z" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 139.5 40.5 A 70 70 0 0 1 160 90 Z" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 160 90 A 70 70 0 0 1 139.5 139.5 Z" fill="#9ca3af" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 139.5 139.5 A 70 70 0 0 1 90 160 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 90 160 A 70 70 0 0 1 40.5 139.5 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 40.5 139.5 A 70 70 0 0 1 20 90 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 20 90 A 70 70 0 0 1 40.5 40.5 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 90 90 L 40.5 40.5 A 70 70 0 0 1 90 20 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+</svg>
