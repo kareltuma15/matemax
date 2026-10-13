@@ -150,7 +150,7 @@ const TESTIMONIALS = [
 ];
 
 const COMPARISON = [
-  { label: "Cena", matemax: "99 Kč/měsíc", doucovatel: "400 Kč/hod", sesit: "150 Kč" },
+  { label: "Cena", matemax: "99 Kč/měsíc", doucovatel: "400 Kč/hod", sesit: "249 Kč" },
   { label: "Přizpůsobí se žákovi", matemax: true, doucovatel: true, sesit: false },
   { label: "Dostupný 24/7", matemax: true, doucovatel: false, sesit: true },
   { label: "Týdenní report rodičům", matemax: true, doucovatel: false, sesit: false },
