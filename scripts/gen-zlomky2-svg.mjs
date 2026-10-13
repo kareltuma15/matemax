@@ -78,23 +78,7 @@ pie("l1-kruh-4z6.svg", 6, [0, 1, 2, 3], "Kruh rozdělený na 6 shodných výseč
 grid("l1-ctverec-3x3.svg", 3, 3, [0, 1, 3, 4, 6, 7], "Čtverec rozdělený na 9 shodných čtverečků, šest z nich je šedých");
 // 4) číselná osa 0 až 1 po osminách, X = 5/8
 numberLine("l1-osa-osminy.svg", 0, 1, 8, 5, { 0: "0", 8: "1" }, "Číselná osa od 0 do 1 rozdělená na osm shodných dílků, bod X je u pátého dílku");
-// 5) číselná osa 0 až 2 po čtvrtinách, X = 7/4
-numberLine("l1-osa-ctvrtiny.svg", 0, 2, 8, 7, { 0: "0", 4: "1", 8: "2" }, "Číselná osa od 0 do 2 rozdělená na osm shodných dílků, bod X je u sedmého dílku");
-// 6) dva obdélníky pod sebou: 3/4 a 5/8
-{
-  const NL = String.fromCharCode(10);
-  const rect = (x, y, cw, n, shadedN) => Array.from({ length: n }, (_, i) => `  <rect x="${x + i * cw}" y="${y}" width="${cw}" height="38" fill="${i < shadedN ? GREY : LIGHT}" stroke="${NAVY}" stroke-width="1.6"/>`).join(NL) + NL + `  <rect x="${x}" y="${y}" width="${cw * n}" height="38" fill="none" stroke="${NAVY}" stroke-width="2.6"/>`;
-  const body = [text(16, 22, "první obdélník", { size: 13, weight: 700, fill: NAVY, anchor: "start" }), rect(16, 30, 48, 4, 3), text(16, 100, "druhý obdélník", { size: 13, weight: 700, fill: NAVY, anchor: "start" }), rect(16, 108, 24, 8, 5)].join(NL);
-  write("l1-porovnani.svg", 224, 160, body, "Dva obdélníky stejné délky: první má 4 shodné části a 3 jsou šedé, druhý má 8 shodných částí a 5 je šedých");
-}
 // 7) pruh 12 dílků: 4 červené, 3 modré, 5 bílých
 strip("l1-pruh.svg", ["#fca5a5", "#fca5a5", "#fca5a5", "#fca5a5", "#93c5fd", "#93c5fd", "#93c5fd", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"], [["#fca5a5", "červená"], ["#93c5fd", "modrá"], ["#ffffff", "bílá"]], "Pruh rozdělený na 12 shodných dílků: 4 červené, 3 modré, zbytek bílý");
-// 8) tři celé koláče a půlka
-pizzas("l1-kolace.svg", 3, "Tři celé koláče rozdělené na poloviny a jedna polovina koláče");
-// 9) mřížka 5 × 4 (20 polí), 15 šedých
-grid("l1-mrizka-15z20.svg", 4, 5, Array.from({ length: 15 }, (_, i) => i), "Mřížka 4 × 5 = 20 shodných polí, 15 z nich je šedých", { cw: 32, ch: 32 });
-// 10) kruh 8 výsečí, 3 šedé
-pie("l1-kruh-3z8.svg", 8, [0, 1, 2], "Kruh rozdělený na 8 shodných výsečí, 3 z nich jsou šedé");
-
 console.log("Zapsáno:");
 for (const w of written.filter((x) => x.name.startsWith("l1-"))) console.log(`  zlomky/${w.name} (${w.w}×${w.h})`);
