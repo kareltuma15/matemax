@@ -37,6 +37,8 @@ export async function POST(req: Request) {
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email,
+        // Stripe posílá potvrzení a účtenky v jazyce zákazníka — bez tohoto chodí anglicky.
+        preferred_locales: ["cs"],
         metadata: { supabase_user_id: user.id },
       });
       customerId = customer.id;

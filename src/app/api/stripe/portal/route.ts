@@ -35,6 +35,7 @@ export async function POST(req: Request) {
 
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
+      locale: "cs",
       return_url: `${appUrl}/cenik`,
     });
 
