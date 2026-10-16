@@ -453,8 +453,8 @@ export default function ProfilPage() {
 
   async function handleChangePassword(e: React.FormEvent) {
     e.preventDefault();
-    if (!supabase || newPassword.length < 6) {
-      setPasswordMsg({ ok: false, text: "Heslo musí mít alespoň 6 znaků." });
+    if (!supabase || newPassword.length < 8) {
+      setPasswordMsg({ ok: false, text: "Heslo musí mít alespoň 8 znaků." });
       return;
     }
     setPasswordLoading(true);
@@ -1286,7 +1286,7 @@ export default function ProfilPage() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Nové heslo (min. 6 znaků)"
+                  placeholder="Nové heslo (min. 8 znaků)"
                   required
                   className="w-full mt-3 px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
                 />

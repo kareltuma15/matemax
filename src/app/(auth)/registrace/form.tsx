@@ -43,8 +43,8 @@ export default function RegistraceForm() {
       setError("Registrace není dostupná – chybí konfigurace.");
       return;
     }
-    if (password.length < 6) {
-      setError("Heslo musí mít alespoň 6 znaků.");
+    if (password.length < 8) {
+      setError("Heslo musí mít alespoň 8 znaků.");
       return;
     }
     setError(null);
@@ -187,7 +187,7 @@ export default function RegistraceForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="alespoň 6 znaků"
+              placeholder="alespoň 8 znaků"
               className="w-full px-4 py-2.5 pr-16 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
             />
             <button

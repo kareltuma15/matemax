@@ -119,12 +119,12 @@ export default function RodicePrihlaseni() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            minLength={6}
+            minLength={8}
             placeholder="••••••••"
             className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:border-blue-400 transition-colors"
           />
           {mode === "register" && (
-            <p className="text-[11px] text-slate-400">Minimálně 6 znaků</p>
+            <p className="text-[11px] text-slate-400">Minimálně 8 znaků</p>
           )}
         </div>
 
