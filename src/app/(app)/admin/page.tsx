@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { Fragment, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import type { AdminUser } from "@/app/api/admin/users/route";
+import type { AdminUserDetail } from "@/app/api/admin/user-detail/route";
+import { TEMA_LABELS } from "@/types";
 
 interface Stats {
   totalUsers: number;
@@ -43,6 +45,45 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
   );
 }
 
+const EVENT_LABELS: Record<string, string> = {
+  session_completed: "dokončil trénink",
+  diagnostika_dokoncena: "dokončil diagnostiku",
+};
+
+function UserDetailPanel({ detail }: { detail: AdminUserDetail | "chyba" | undefined }) {
+  if (!detail) return <div className="text-sm" style={{ color: "#94a3b8" }}>Načítám…</div>;
+  if (detail === "chyba") return <div className="text-sm text-red-600">Detail se nepodařilo načíst.</div>;
+  const box = "rounded-xl p-3 bg-white border border-slate-200";
+  const h = "text-xs font-bold uppercase tracking-widest mb-2";
+  return (
+    <div className="grid gap-3 md:grid-cols-3 text-sm" style={{ color: "var(--text-primary)" }}>
+      <div className={box}>
+        <div className={h} style={{ color: "#94a3b8" }}>Diagnostika podle témat</div>
+        {detail.diagnostics.length === 0 ? <div style={{ color: "#94a3b8" }}>Zatím neudělal.</div> : detail.diagnostics.map((d) => (
+          <div key={d.tema} className="flex justify-between gap-2"><span>{TEMA_LABELS[d.tema as keyof typeof TEMA_LABELS] ?? d.tema}</span><b>{d.correct} / {d.total}</b></div>
+        ))}
+      </div>
+      <div className={box}>
+        <div className={h} style={{ color: "#94a3b8" }}>Posledních 10 tréninků</div>
+        {detail.sessions.length === 0 ? <div style={{ color: "#94a3b8" }}>Zatím žádný.</div> : detail.sessions.map((s, i) => (
+          <div key={i} className="flex justify-between gap-2"><span>{s.date}</span><span>{s.correct} / {s.total} správně · {s.xp} XP</span></div>
+        ))}
+      </div>
+      <div className={box}>
+        <div className={h} style={{ color: "#94a3b8" }}>Shrnutí</div>
+        <div>Úroveň: <b>{detail.xp ? `${LEVEL_LABELS[detail.xp.level] ?? detail.xp.level} (${detail.xp.total} XP, série ${detail.xp.streak})` : "—"}</b></div>
+        <div>Odznaky: <b>{detail.badges}</b> · Opakovací karty: <b>{detail.cards}</b></div>
+        <div>Onboarding: <b>{detail.onboarding ?? "—"}</b> · Propojení s rodičem: <b>{detail.parentLinks}</b></div>
+        {detail.events.length > 0 && (
+          <div className="mt-2" style={{ color: "#64748b" }}>
+            Poslední akce: {detail.events.slice(0, 4).map((e) => `${EVENT_LABELS[e.name] ?? e.name} (${e.at.slice(0, 10)})`).join(", ")}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
@@ -53,6 +94,8 @@ export default function AdminPage() {
   const [search, setSearch] = useState("");
   const [resetting, setResetting] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState<Set<string>>(new Set());
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [details, setDetails] = useState<Record<string, AdminUserDetail | "chyba">>({});
 
   const fetchData = useCallback(async (tok: string) => {
     const headers = { Authorization: `Bearer ${tok}` };
@@ -110,6 +153,19 @@ export default function AdminPage() {
       setUsers((prev) => prev.map((u) => u.id === userId ? { ...u, diagDone: false } : u));
     } finally {
       setResetting(null);
+    }
+  }
+
+  async function toggleDetail(id: string) {
+    if (openId === id) { setOpenId(null); return; }
+    setOpenId(id);
+    if (!token || details[id]) return;
+    try {
+      const res = await fetch(`/api/admin/user-detail?id=${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      const value: AdminUserDetail | "chyba" = res.ok ? ((await res.json()) as AdminUserDetail) : "chyba";
+      setDetails((d) => ({ ...d, [id]: value }));
+    } catch {
+      setDetails((d) => ({ ...d, [id]: "chyba" }));
     }
   }
 
@@ -222,14 +278,14 @@ export default function AdminPage() {
             </thead>
             <tbody>
               {filtered.map((u, i) => (
+                <Fragment key={u.id}>
                 <tr
-                  key={u.id}
                   style={{
                     background: i % 2 === 0 ? "#fff" : "#f8fafc",
                     borderBottom: "1px solid #f1f5f9",
                   }}
                 >
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 cursor-pointer" onClick={() => toggleDetail(u.id)} title="Klikni pro detail">
                     {u.name && (
                       <div className="font-bold" style={{ color: "var(--text-primary)" }}>{u.name}</div>
                     )}
@@ -281,6 +337,14 @@ export default function AdminPage() {
                     </button>
                   </td>
                 </tr>
+                {openId === u.id && (
+                  <tr style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
+                    <td colSpan={9} className="px-4 py-4">
+                      <UserDetailPanel detail={details[u.id]} />
+                    </td>
+                  </tr>
+                )}
+                </Fragment>
               ))}
               {filtered.length === 0 && (
                 <tr>
