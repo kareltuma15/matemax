@@ -54,18 +54,8 @@ export async function POST(req: NextRequest) {
   ).slice(0, 30);
   const metaEmoji = meta?.avatar_emoji ?? "";
 
-  // Fallback: user_progress table (may have older nickname data)
-  const { data: profile } = await supabase
-    .from("user_progress")
-    .select("nickname, avatar_emoji, display_name")
-    .eq("user_id", user.id)
-    .maybeSingle();
-
-  const nickname =
-    metaName ||
-    (profile?.nickname?.trim() || profile?.display_name?.trim() || "").slice(0, 30) ||
-    `Žák ${user.id.slice(-4).toUpperCase()}`;
-  const avatarEmoji = metaEmoji || profile?.avatar_emoji || "🧑‍💻";
+  const nickname = metaName || `Žák ${user.id.slice(-4).toUpperCase()}`;
+  const avatarEmoji = metaEmoji || "🧑‍💻";
 
   const weekKey = getWeekKey();
 
