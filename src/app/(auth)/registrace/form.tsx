@@ -71,6 +71,14 @@ export default function RegistraceForm() {
       return;
     }
 
+    // Supabase při zapnutém potvrzování e-mailů u už registrované adresy NEVRÁTÍ chybu (kvůli ochraně
+    // soukromí), jen „prázdného“ uživatele bez identit — a žádný e-mail neodešle. Bez této kontroly by
+    // žák viděl „Zkontroluj email“ a čekal na zprávu, která nikdy nepřijde.
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      setError("Tento e-mail už je registrovaný. Přihlas se, nebo si nech poslat nové heslo (odkaz Zapomenuté heslo).");
+      return;
+    }
+
     if (data.user) {
       const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
       fetch("/api/welcome-email", {
