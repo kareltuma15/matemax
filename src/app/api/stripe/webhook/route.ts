@@ -155,7 +155,9 @@ export async function POST(req: Request) {
 
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription;
-        const active = sub.status === "active" || sub.status === "trialing";
+        // past_due = platba selhala, ale Stripe ji ještě opakuje (zákazník dostal e-mail) — Premium necháme.
+        // Odebere se, až Stripe předplatné zruší (customer.subscription.deleted) nebo ho označí za unpaid.
+        const active = sub.status === "active" || sub.status === "trialing" || sub.status === "past_due";
         await setPremium(sub.customer as string, active, sub.id, sub.metadata?.supabase_user_id);
         break;
       }
@@ -167,10 +169,10 @@ export async function POST(req: Request) {
       }
 
       case "invoice.payment_failed": {
+        // Záměrně NEODEBÍRÁME Premium: Stripe platbu zkouší znovu a zákazník dostane e-mail.
+        // O stavu rozhodují události customer.subscription.updated/deleted.
         const invoice = event.data.object as Stripe.Invoice;
-        if (invoice.customer) {
-          await setPremium(invoice.customer as string, false);
-        }
+        console.warn("webhook: selhala platba faktury", invoice.id, "zákazník", invoice.customer);
         break;
       }
     }
