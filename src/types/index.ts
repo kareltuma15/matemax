@@ -362,6 +362,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   osa_usecky:         "Osa úsečky",
   osa_uhlu:           "Osa úhlu",
   kolmice:            "Kolmice",
+  rovnobezka:         "Rovnoběžka",
   trojuhelnik_sss:    "Trojúhelník (sss)",
   trojuhelnik_sus:    "Trojúhelník (sus)",
   kruznice_opsana:    "Kružnice opsaná",
