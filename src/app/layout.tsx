@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "katex/dist/katex.min.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import PwaSetup from "@/components/PwaSetup";
 import ProgressSync from "@/components/ProgressSync";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
 
-const SITE_DESCRIPTION = `Adaptivní matematický trenér pro žáky 8. a 9. třídy. ${EXAMPLES_LABEL} příkladů, chytrý algoritmus, ${DAILY_MINUTES} minut denně.`;
+const SITE_DESCRIPTION = `Adaptivní matematický trenér pro žáky 9. třídy. ${EXAMPLES_LABEL} příkladů, chytrý algoritmus, ${DAILY_MINUTES} minut denně.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://matemax.matematika-snadno.cz"),
@@ -55,6 +57,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PwaSetup />
         <ProgressSync />
         {children}
+        {/* Měření návštěvnosti a rychlosti bez cookies a bez osobních údajů (zapnuté ve Vercelu u projektu) */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

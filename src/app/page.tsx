@@ -93,7 +93,7 @@ const PRICING = [
 const FAQS = [
   {
     q: "Pro jaký věk je MateMax určen?",
-    a: "Pro žáky 8. a 9. třídy, ideálně rok před přijímačkami. Obsah přesně odpovídá formátu CERMAT, který používá většina gymnázií a středních škol.",
+    a: "Pro žáky 9. třídy, ideálně v roce před přijímačkami. Obsah přesně odpovídá formátu CERMAT, který používá většina gymnázií a středních škol.",
   },
   {
     q: "Jak dlouho denně se má dítě učit?",
