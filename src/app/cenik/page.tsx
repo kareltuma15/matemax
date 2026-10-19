@@ -9,12 +9,12 @@ import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const FREE_FEATURES = [
   "✓ Diagnostický test (všechna témata)",
-  "✓ 3 témata: Zlomky, Rovnice, Procenta",
+  "✓ 3 témata: Zlomky, Výrazy, Rovnice",
   "✓ 10 příkladů denně",
   "✓ Streak systém a XP",
   "✓ Základní statistiky a odznaky",
-  "✗ Geometrie, Mocniny, Slovní úlohy",
-  "✗ Číselné řady, Výrazy, Kombinované",
+  "✗ Geometrie, Slovní úlohy, Úhly",
+  "✗ Konstrukce, Grafy a logika, Souhrnné",
   "✗ Týdenní report pro rodiče",
 ];
 
@@ -25,7 +25,6 @@ const PREMIUM_FEATURES = [
   "✓ Streak systém a XP",
   "✓ Všechny odznaky a achievementy",
   "✓ Týdenní report pro rodiče (email)",
-  "✓ Prioritní podpora",
   "✓ Přístup na mobilu i PC",
 ];
 

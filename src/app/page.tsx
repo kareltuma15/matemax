@@ -125,30 +125,6 @@ const FAQS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    quote: "Syn se poprvé začal učit sám. Po dvou týdnech vidím zlepšení — a to jsem ho nemusela ani nutit.",
-    name: "Petra K.",
-    role: "maminka deváťáka",
-    emoji: "👩",
-    stars: 5,
-  },
-  {
-    quote: "Konečně chápu zlomky! Vždycky mi to vůbec nešlo, ale tady mi algoritmus opakoval přesně ty příklady, kde jsem chyboval.",
-    name: "Tomáš, 14 let",
-    role: "žák 9. třídy",
-    emoji: "🧑‍💻",
-    stars: 5,
-  },
-  {
-    quote: "Dcera procvičuje každý den 10 minut a my dostaneme přehled emailem. Přesně to, co jsme hledali.",
-    name: "Jan H.",
-    role: "tatínek osmačky",
-    emoji: "👨",
-    stars: 5,
-  },
-];
-
 const COMPARISON = [
   { label: "Cena", matemax: "99 Kč/měsíc", doucovatel: "400 Kč/hod", sesit: "249 Kč" },
   { label: "Přizpůsobí se žákovi", matemax: true, doucovatel: true, sesit: false },
@@ -448,7 +424,7 @@ export default function LandingPage() {
           </>
         ),
         sub: "Chytrý trenér pro deváťáky: 10 minut denně, příklady ve stylu CERMAT a streak, který tě nakopne. Přijímačky bez stresu a bez doučování.",
-        tags: ["Pro 8. a 9. třídu", "Příklady ze CERMAT", "Streak tě nakopne", "Na mobilu i PC"],
+        tags: ["Pro 9. třídu", "Příklady ze CERMAT", "Streak tě nakopne", "Na mobilu i PC"],
         primary: { label: "Začít zdarma →", href: "/vitej" },
         secondary: { label: "Vyzkoušet CERMAT test →", href: "/cermat-test" },
         note: "Zdarma navždy pro 3 témata · Premium od 99 Kč/měsíc · Bez kreditní karty",
@@ -640,32 +616,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-      {/* ── CO TĚ ČEKÁ (žák) ─────────────────────────────────────────── */}
-      {!isRodic && (
-      <section className="max-w-4xl mx-auto px-6 py-14">
-        <div className="text-center mb-10 scroll-reveal">
-          <h2 className="text-2xl md:text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>Co tě čeká</h2>
-          <p className="text-gray-500 mt-2 text-sm">Tři nástroje, které tě naučí připravit se bez stresu.</p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-5">
-          {[
-            { icon: "🎯", title: "Diagnostický test", desc: `Zjisti kde máš mezery za ${DIAGNOSTIC_MINUTES} minut` },
-            { icon: "💪", title: "Denní výzvy", desc: "Každý den nová výzva, každý den o krok blíž" },
-            { icon: "📊", title: "Sledování pokroku", desc: "Vidíš přesně co umíš a co ne" },
-          ].map(({ icon, title, desc }, i) => (
-            <div
-              key={title}
-              className={`bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col items-center text-center gap-3 card-hover scroll-reveal delay-${i + 1}`}
-            >
-              <span className="text-4xl">{icon}</span>
-              <p className="text-base font-extrabold" style={{ color: "var(--text-primary)" }}>{title}</p>
-              <p className="text-sm text-slate-500 leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      )}
 
       {/* ── ČÍSLA — count-up animace ─────────────────────────────────── */}
       <section className="bg-gray-50 border-y border-gray-200 scroll-reveal">
@@ -891,47 +841,6 @@ export default function LandingPage() {
       </section>
 
       )}
-
-      {/* ── TESTIMONIALS ─────────────────────────────────────────────── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12 scroll-reveal">
-            <Badge>Co říkají uživatelé</Badge>
-            <h2 className="mt-4 text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
-              Příprava, která skutečně funguje
-            </h2>
-            <p className="mt-3 text-gray-500 max-w-xl mx-auto">
-              MateMax používají stovky žáků a jejich rodičů každý den.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t, i) => (
-              <div
-                key={t.name}
-                className={`bg-gray-50 rounded-2xl p-7 border border-slate-100 card-hover scroll-reveal delay-${i + 1}`}
-              >
-                <div className="flex items-center gap-1 mb-4">
-                  {Array.from({ length: t.stars }).map((_, s) => (
-                    <span key={s} className="text-yellow-400 text-sm">★</span>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="mt-5 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-lg flex-shrink-0">
-                    {t.emoji}
-                  </div>
-                  <div>
-                    <p className="font-bold text-sm" style={{ color: "var(--text-primary)" }}>{t.name}</p>
-                    <p className="text-xs text-gray-400">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── SROVNÁNÍ S ALTERNATIVAMI (rodič) ──────────────────────────── */}
       {isRodic && (

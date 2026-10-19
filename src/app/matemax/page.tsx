@@ -75,7 +75,7 @@ export default function MatemaxPage() {
             <span style={{ color: "#00B4D8" }}>Bez stresu.</span>
           </h1>
           <p className="mt-5 text-lg text-blue-200 max-w-xl mx-auto leading-relaxed">
-            MateMax je adaptivní trenér pro 8. a 9. třídu. 10 minut denně stačí k výraznému zlepšení.
+            MateMax je adaptivní trenér pro 9. třídu. 10 minut denně stačí k výraznému zlepšení.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link

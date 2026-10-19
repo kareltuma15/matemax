@@ -9,7 +9,7 @@ import MathText from "@/components/MathText";
 const DEMO_EXAMPLES = [
   { zadani: "Kolik je 1/2 + 1/4?", odpoved: "3/4", hint: "Najdi společného jmenovatele", tema: "Zlomky" },
   { zadani: "2x + 4 = 10. Kolik je x?", odpoved: "3", hint: "Odečti 4 od obou stran", tema: "Rovnice" },
-  { zadani: "Kolik je 15 % ze 60?", odpoved: "9", hint: "15 % = 15/100 × 60", tema: "Procenta" },
+  { zadani: "Kolik je 15 % ze 60?", odpoved: "9", hint: "15 % = 15/100 × 60", tema: "Slovní úlohy" },
   { zadani: "Kolik je 2/3 z čísla 12?", odpoved: "8", hint: "12 ÷ 3 × 2 = ?", tema: "Zlomky" },
   { zadani: "Obvod čtverce je 20 cm. Kolik je strana?", odpoved: "5", hint: "O = 4 × a", tema: "Geometrie" },
 ];
@@ -17,7 +17,7 @@ const DEMO_EXAMPLES = [
 const TEMA_COLOR: Record<string, string> = {
   Zlomky: "#6366f1",
   Rovnice: "#0891b2",
-  Procenta: "#059669",
+  "Slovní úlohy": "#059669",
   Geometrie: "#d97706",
 };
 
