@@ -94,6 +94,7 @@ export default function AdminPage() {
   const [search, setSearch] = useState("");
   const [resetting, setResetting] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState<Set<string>>(new Set());
+  const [premiumBusy, setPremiumBusy] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [details, setDetails] = useState<Record<string, AdminUserDetail | "chyba">>({});
 
@@ -153,6 +154,41 @@ export default function AdminPage() {
       setUsers((prev) => prev.map((u) => u.id === userId ? { ...u, diagDone: false } : u));
     } finally {
       setResetting(null);
+    }
+  }
+
+  /** Ruční udělení / odebrání Premium (zákazníci plánů z webu bez Stripe předplatného). */
+  async function handlePremium(u: AdminUser) {
+    if (!token) return;
+    const revoke = u.plan === "paid" || u.source === "manual";
+    let until: string | null = null;
+    if (revoke) {
+      if (!confirm(`Odebrat Premium uživateli ${u.email}?`)) return;
+    } else {
+      const answer = prompt(
+        `Udělit Premium uživateli ${u.email}.\nDo kdy? Napiš datum ve tvaru RRRR-MM-DD, nebo nech prázdné pro Premium bez omezení.`,
+        ""
+      );
+      if (answer === null) return;
+      until = answer.trim() === "" ? null : answer.trim();
+    }
+    setPremiumBusy(u.id);
+    try {
+      const res = await fetch("/api/admin/premium", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ userId: u.id, action: revoke ? "revoke" : "grant", until }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        alert("Chyba: " + (j.error ?? "neznámá"));
+        return;
+      }
+      setUsers((prev) => prev.map((x) => x.id === u.id
+        ? { ...x, plan: j.plan, trialUntil: j.trialUntil ?? null, source: j.plan === "free" ? null : "manual" }
+        : x));
+    } finally {
+      setPremiumBusy(null);
     }
   }
 
@@ -301,7 +337,11 @@ export default function AdminPage() {
                       className="rounded-full px-2 py-0.5 text-xs font-bold"
                       style={{ background: u.plan === "paid" ? "#dcfce7" : u.plan === "trial" ? "#fef3c7" : "#f1f5f9", color: u.plan === "paid" ? "#166534" : u.plan === "trial" ? "#92400e" : "#64748b" }}
                     >
-                      {u.plan === "paid" ? "Premium" : u.plan === "trial" ? `Trial do ${(u.trialUntil ?? "").slice(5, 10)}` : "Zdarma"}
+                      {u.plan === "paid"
+                        ? (u.source === "stripe" ? "Premium (Stripe)" : u.source === "manual" ? "Premium (ručně)" : "Premium")
+                        : u.plan === "trial"
+                          ? `${u.source === "manual" ? "Ručně do" : "Trial do"} ${(u.trialUntil ?? "").slice(0, 10)}`
+                          : "Zdarma"}
                     </span>
                   </td>
                   <td className="px-3 py-3 text-center text-xs font-semibold" style={{ color: "#64748b" }}>
@@ -326,7 +366,21 @@ export default function AdminPage() {
                       : <span className="text-slate-300 text-xs">—</span>
                     }
                   </td>
-                  <td className="px-3 py-3 text-center">
+                  <td className="px-3 py-3 text-center whitespace-nowrap">
+                    {u.source === "stripe" ? (
+                      <span className="mr-1 rounded-lg px-2 py-1 text-xs font-bold" style={{ background: "#f1f5f9", color: "#64748b" }} title="Platí přes Stripe — spravuje se tam">
+                        Stripe
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => handlePremium(u)}
+                        disabled={premiumBusy === u.id}
+                        className="mr-1 rounded-lg px-2 py-1 text-xs font-bold transition-opacity disabled:opacity-40"
+                        style={u.plan === "paid" || u.source === "manual" ? { background: "#fef3c7", color: "#92400e" } : { background: "#dcfce7", color: "#166534" }}
+                      >
+                        {premiumBusy === u.id ? "…" : u.plan === "paid" || u.source === "manual" ? "Odebrat Premium" : "Udělit Premium"}
+                      </button>
+                    )}
                     <button
                       onClick={() => handleResetDiag(u.id, u.email)}
                       disabled={resetting === u.id || resetDone.has(u.id)}

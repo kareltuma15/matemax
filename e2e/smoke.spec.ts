@@ -81,6 +81,22 @@ test.describe("zapisující trasy odmítnou nepřihlášeného", () => {
     expect(res.status()).toBe(404);
   });
 
+  // Ruční Premium smí udělit jen přihlášený admin — nikdo jiný si ho nesmí přidělit.
+  test("/api/admin/premium bez přihlášení → 401", async ({ request }) => {
+    const res = await request.post("/api/admin/premium", {
+      data: { userId: "00000000-0000-0000-0000-000000000000", action: "grant" },
+    });
+    expect(res.status()).toBe(401);
+  });
+
+  test("/api/admin/premium s neplatným tokenem → 401", async ({ request }) => {
+    const res = await request.post("/api/admin/premium", {
+      headers: { Authorization: "Bearer neplatny.token.hodnota" },
+      data: { userId: "00000000-0000-0000-0000-000000000000", action: "grant" },
+    });
+    expect(res.status()).toBe(401);
+  });
+
   test("/api/push-subscribe s neplatným odběrem → 400", async ({ request }) => {
     const res = await request.post("/api/push-subscribe", { data: { subscription: { endpoint: "http://nezabezpecene" } } });
     expect(res.status()).toBe(400);

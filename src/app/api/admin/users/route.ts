@@ -17,6 +17,8 @@ export interface AdminUser {
   /** paid = platí předplatné, trial = zkušební období, free = zdarma */
   plan: "paid" | "trial" | "free";
   trialUntil: string | null;
+  /** stripe = platí přes Stripe, manual = udělil admin ručně, null = bez Premium nebo trial z pozvánky */
+  source: "stripe" | "manual" | null;
   lastLogin: string | null;
   answered: number;
   correct: number;
@@ -67,13 +69,15 @@ export async function GET(req: NextRequest) {
       .in("user_id", userIds),
     supabaseAdmin
       .from("user_premium")
-      .select("user_id, is_premium, trial_expires_at")
+      .select("user_id, is_premium, trial_expires_at, stripe_subscription_id, trial_granted_by")
       .in("user_id", userIds),
   ]);
 
-  const premiumMap = new Map<string, { isPremium: boolean; trialUntil: string | null }>();
+  const premiumMap = new Map<string, { isPremium: boolean; trialUntil: string | null; source: AdminUser["source"] }>();
   for (const row of premiumRows ?? []) {
-    premiumMap.set(row.user_id as string, { isPremium: !!row.is_premium, trialUntil: (row.trial_expires_at as string | null) ?? null });
+    const grantedBy = (row.trial_granted_by as string | null) ?? "";
+    const source: AdminUser["source"] = row.stripe_subscription_id ? "stripe" : grantedBy.startsWith("admin") ? "manual" : null;
+    premiumMap.set(row.user_id as string, { isPremium: !!row.is_premium, trialUntil: (row.trial_expires_at as string | null) ?? null, source });
   }
   const answersByUser = new Map<string, { answered: number; correct: number }>();
   for (const row of sessionRows ?? []) {
@@ -134,6 +138,7 @@ export async function GET(req: NextRequest) {
       name,
       plan,
       trialUntil: plan === "trial" ? prem?.trialUntil ?? null : null,
+      source: plan === "free" ? null : prem?.source ?? null,
       lastLogin: u.last_sign_in_at ?? null,
       answered: ans.answered,
       correct: ans.correct,
