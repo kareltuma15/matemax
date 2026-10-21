@@ -103,6 +103,15 @@ test.describe("zapisující trasy odmítnou nepřihlášeného", () => {
   });
 });
 
+test("/api/health vrací stav bez osobních údajů a bez cache", async ({ request }) => {
+  const res = await request.get("/api/health");
+  expect([200, 503]).toContain(res.status());
+  const body = await res.json();
+  expect(Object.keys(body).sort()).toEqual(["db", "ms", "status", "version"]);
+  expect(body.status).toBe(body.db ? "ok" : "degraded");
+  expect(res.headers()["cache-control"]).toContain("no-store");
+});
+
 test("bezpečnostní hlavičky jsou nastavené", async ({ request }) => {
   const res = await request.get("/");
   const h = res.headers();
