@@ -376,6 +376,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   kruznice_dotyk:     "Kružnice a tečna",
   trojuhelnik_ssu:    "Trojúhelník (ssu)",
   trojuhelnik_vyska:  "Trojúhelník s výškou",
+  kosoctverec:        "Kosočtverec",
 
   // Zlomky — některé slugy znamenají totéž, proto sdílí popisek
   scitani:              "Sčítání",
