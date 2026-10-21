@@ -1,4 +1,4 @@
-// Rovnice L3 v CERMAT stylu (11 úloh ROV3_11–13, 16, 18–24): vyjádření neznámé ze vzorce, rovnice se zlomky,
+// Rovnice L3 v CERMAT stylu (10 úloh ROV3_11–13, 16, 18, 20–24): vyjádření neznámé ze vzorce, rovnice se zlomky,
 // slovní úlohy a soustavy z kontextu, ověření řešení, tvrzení Ano/Ne.
 // Spuštění: node scripts/build-rovnice-l3.mjs → doplní/přepíše ROV3_11–24 v src/data/nahled-batch.json (jiné dávky nechá).
 // Každá odpověď se nezávisle ověří: dosazením a hrubou silou přes zlomky (bez použití postupu z řešení);
@@ -84,12 +84,6 @@ ex.push(mk("ROV3_18", "slovni", "Myslím si číslo. Když ho zvětším o 4 a v
   "Převedeme: $6 = 2x$, tedy $x = 3$.",
   "Zkouška: $3 \\cdot (3 + 4) = 21$ a $5 \\cdot 3 + 6 = 21$.",
 ], 180));
-ex.push(mk("ROV3_19", "slovni", "Smícháme 2 litry 10% roztoku soli a $x$ litrů 40% roztoku soli. Vznikne 30% roztok. Kolik litrů 40% roztoku jsme přilili?", "4 l", [
-  "Soli je v prvním roztoku $0{,}1 \\cdot 2 = 0{,}2$ l a ve druhém $0{,}4x$ l. Ve směsi o objemu $2 + x$ litrů je $0{,}3(2 + x)$ l soli.",
-  "Rovnice: $0{,}2 + 0{,}4x = 0{,}3(2 + x)$, tedy $0{,}2 + 0{,}4x = 0{,}6 + 0{,}3x$.",
-  "Odečteme: $0{,}1x = 0{,}4$, tedy $x = 4$.",
-  "Zkouška: soli je $0{,}2 + 1{,}6 = 1{,}8$ l ve 6 l směsi, to je 30 %.",
-], 210));
 ex.push(mk("ROV3_20", "soustava", "Na statku jsou slepice a ovce. Dohromady mají 30 hlav a 84 nohou. Kolik je na statku ovcí?", "12", [
   "Slepic je $s$, ovcí $o$. Hlav je $s + o = 30$ a nohou $2s + 4o = 84$.",
   "Kdyby byla všechna zvířata slepice, mělo by 30 hlav jen $2 \\cdot 30 = 60$ nohou. Chybí $84 - 60 = 24$ nohou.",
@@ -135,8 +129,6 @@ for (const t of vyj) {
   ok("16", s.length === 1 && isZero(sub(mul(a, b), F(99))) && A("ROV3_16") === "99 cm²" && a.n > 0n && b.n > 0n, s.map(show)); }
 // ROV3_18: 3(x+4) = 5x + 6
 { const s = solutions((x) => eq(mul(F(3), add(x, F(4))), add(mul(F(5), x), F(6)))); ok("18", s.length === 1 && show(s[0]) === A("ROV3_18"), s.map(show)); }
-// ROV3_19: 0,1·2 + 0,4x = 0,3(2+x)
-{ const s = solutions((x) => eq(add(mul(F(1, 10), F(2)), mul(F(2, 5), x)), mul(F(3, 10), add(F(2), x)))); ok("19", s.length === 1 && show(s[0]) === "4" && A("ROV3_19") === "4 l", s.map(show)); }
 // ROV3_20: s + o = 30, 2s + 4o = 84
 { const sol = []; for (let s = 0; s <= 30; s++) for (let o = 0; o <= 30; o++) if (s + o === 30 && 2 * s + 4 * o === 84) sol.push([s, o]); ok("20", sol.length === 1 && sol[0][1] === 12 && A("ROV3_20") === "12", sol); }
 // ROV3_21: řešení z nabízených čísel
@@ -162,7 +154,7 @@ for (const e of ex) {
 const pos = ex.filter((e) => e.moznosti && e.moznosti.length === 5).map((e) => e.spravna);
 ok("rozmístění správných možností", new Set(pos).size >= 3, pos.join());
 const ids = ex.map((e) => e.id);
-ok("unikátní id", new Set(ids).size === ids.length && ex.length === 11, ex.length);
+ok("unikátní id", new Set(ids).size === ids.length && ex.length === 10, ex.length);
 const all = ["databaze", "cermat-200", "doplnky-uhly-souhrnne", "konstrukce-interaktivni"].flatMap((f) => { try { return JSON.parse(fs.readFileSync(`src/data/${f}.json`, "utf8")).examples; } catch { return []; } });
 ok("id bez kolize s databází", ids.every((id) => !all.some((e) => e.id === id)));
 console.log(`úloh: ${ex.length} (A–E ${ex.filter((e) => e.moznosti?.length === 5).length}, Ano/Ne ${ex.filter((e) => e.moznosti?.length === 2).length}, psané ${ex.filter((e) => !e.moznosti).length}) | chyb: ${fail}`);
@@ -171,6 +163,6 @@ if (fail) { console.log("NEZAPISUJI"); process.exit(1); }
 let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* bez předchozí dávky */ }
 const others = (prev.examples ?? []).filter((e) => !/^ROV3_(1[1-9]|2[0-4])$/.test(e.id));
-const nazev = others.length ? `${prev.nazev} + Rovnice L3 (11 úloh)` : "Rovnice L3 — vyjádření ze vzorce, zlomky, slovní úlohy a soustavy z kontextu (11 úloh)";
+const nazev = others.length ? `${prev.nazev} + Rovnice L3 (10 úloh)` : "Rovnice L3 — vyjádření ze vzorce, zlomky, slovní úlohy a soustavy z kontextu (10 úloh)";
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...ex] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${ex.length} rovnic)`);

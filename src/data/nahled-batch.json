@@ -1,5 +1,5 @@
 {
-  "nazev": "Rovnice L3 — vyjádření ze vzorce, zlomky, slovní úlohy a soustavy z kontextu (11 úloh)",
+  "nazev": "Rovnice L3 — vyjádření ze vzorce, zlomky, slovní úlohy a soustavy z kontextu (10 úloh)",
   "examples": [
     {
       "id": "ROV3_11",
@@ -104,23 +104,6 @@
         "Zkouška: $3 \\cdot (3 + 4) = 21$ a $5 \\cdot 3 + 6 = 21$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
-    },
-    {
-      "id": "ROV3_19",
-      "tema": "rovnice",
-      "podtema": "slovni",
-      "obtiznost": 3,
-      "latex": true,
-      "zadani": "Smícháme 2 litry 10% roztoku soli a $x$ litrů 40% roztoku soli. Vznikne 30% roztok. Kolik litrů 40% roztoku jsme přilili?",
-      "odpoved": "4 l",
-      "reseni_kroky": [
-        "Soli je v prvním roztoku $0{,}1 \\cdot 2 = 0{,}2$ l a ve druhém $0{,}4x$ l. Ve směsi o objemu $2 + x$ litrů je $0{,}3(2 + x)$ l soli.",
-        "Rovnice: $0{,}2 + 0{,}4x = 0{,}3(2 + x)$, tedy $0{,}2 + 0{,}4x = 0{,}6 + 0{,}3x$.",
-        "Odečteme: $0{,}1x = 0{,}4$, tedy $x = 4$.",
-        "Zkouška: soli je $0{,}2 + 1{,}6 = 1{,}8$ l ve 6 l směsi, to je 30 %."
-      ],
-      "cas_sekund": 210,
       "sm2_interval": 1
     },
     {
