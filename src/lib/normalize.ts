@@ -1,5 +1,6 @@
 export function normalize(raw: string): string {
-  const s = raw.trim().replace(/\s/g, "").toLowerCase();
+  // „−“ (U+2212), „–“ a „—“ z jiných klávesnic berou jako obyčejné mínus
+  const s = raw.trim().replace(/[−–—]/g, "-").replace(/\s/g, "").toLowerCase();
 
   // Extract value after "=" — handles "x=7" → "7", "x = 1/2" → "1/2"
   const eqIdx = s.indexOf("=");
@@ -45,7 +46,7 @@ function gcd(a: number, b: number): number {
  */
 export function toValue(raw: string): number | null {
   if (!raw) return null;
-  let s = raw.trim().toLowerCase().replace(/\s+/g, " ");
+  let s = raw.trim().toLowerCase().replace(/[−–—]/g, "-").replace(/\s+/g, " ");
 
   // „x = 1/2" → „1/2"
   const eqIdx = s.indexOf("=");

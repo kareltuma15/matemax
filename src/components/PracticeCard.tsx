@@ -32,6 +32,23 @@ const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: strin
   3: { label: "Těžká ⭐⭐⭐",   bg: "#fef2f2", color: "#991b1b" },
 };
 
+/**
+ * Znaky, které se na telefonu píšou špatně a které vyhodnocení odpovědí (normalize.ts) umí.
+ * Lišta je pro všechny příklady stejná — jinak by sada tlačítek prozradila tvar odpovědi (např. záporné číslo).
+ * „Mínus“ vkládá obyčejný „-“ (to vyhodnocení čte); „−“ z jiných klávesnic normalize.ts převádí také.
+ */
+const MATH_KEYS = [
+  { name: "slash", label: "/", insert: "/", aria: "Zlomková čára" },
+  { name: "comma", label: ",", insert: ",", aria: "Desetinná čárka" },
+  { name: "minus", label: "−", insert: "-", aria: "Mínus" },
+  { name: "square", label: "²", insert: "²", aria: "Druhá mocnina" },
+  { name: "cube", label: "³", insert: "³", aria: "Třetí mocnina" },
+  { name: "degree", label: "°", insert: "°", aria: "Stupně" },
+  { name: "minute", label: "′", insert: "′", aria: "Minuty" },
+  { name: "percent", label: "%", insert: "%", aria: "Procento" },
+  { name: "backspace", label: "⌫", insert: "", aria: "Smazat poslední znak" },
+] as const;
+
 export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult, onSkip }: Props) {
   const [input, setInput]               = useState("");
   const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
@@ -53,6 +70,31 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const [aiHintUnavailable, setAiHintUnavailable] = useState(false); // klíč nenastaven → skryj tlačítko
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  /** Vloží znak na pozici kurzoru (nebo přepíše výběr) a nechá klávesnici otevřenou. */
+  function insertChar(ch: string) {
+    const el = inputRef.current;
+    const start = el?.selectionStart ?? input.length;
+    const end = el?.selectionEnd ?? input.length;
+    setInput(input.slice(0, start) + ch + input.slice(end));
+    requestAnimationFrame(() => {
+      el?.focus();
+      el?.setSelectionRange(start + ch.length, start + ch.length);
+    });
+  }
+
+  /** Smaže výběr, nebo znak před kurzorem. */
+  function deleteBack() {
+    const el = inputRef.current;
+    const start = el?.selectionStart ?? input.length;
+    const end = el?.selectionEnd ?? input.length;
+    const from = start === end ? Math.max(0, start - 1) : start;
+    setInput(input.slice(0, from) + input.slice(end));
+    requestAnimationFrame(() => {
+      el?.focus();
+      el?.setSelectionRange(from, from);
+    });
+  }
 
   useEffect(() => {
     setInput("");
@@ -351,6 +393,10 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               placeholder={example.tema === "zlomky" ? "např. 5/6" : "napiš výsledek"}
               className="flex-1 px-4 py-3 text-lg outline-none bg-transparent placeholder:text-slate-300"
               autoComplete="off"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="done"
             />
             {status === "idle" && (
               <button
@@ -363,7 +409,27 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               </button>
             )}
           </div>
-          {/* Stupně a minuty: ° a ′ se na mobilu hledají špatně — tlačítka je vloží, a stačí i mezera („22 30") */}
+          {/* Matematická lišta pro telefon: zlomek, desetinná čárka, mínus, mocniny, ° a ′ se na běžné klávesnici
+              píšou špatně. Tlačítka vkládají na pozici kurzoru a nechají klávesnici otevřenou. Na počítači
+              se skrývá (pointer-coarse = dotyková obrazovka). */}
+          {status === "idle" && (
+            <div className="hidden pointer-coarse:grid grid-cols-5 gap-1.5" role="group" aria-label="Matematické znaky">
+              {MATH_KEYS.map((k) => (
+                <button
+                  key={k.label}
+                  type="button"
+                  data-testid={`mathkey-${k.name}`}
+                  aria-label={k.aria}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => (k.name === "backspace" ? deleteBack() : insertChar(k.insert))}
+                  className="w-full h-11 rounded-lg border border-slate-200 bg-white text-lg font-bold text-slate-700 press-scale"
+                >
+                  {k.label}
+                </button>
+              ))}
+            </div>
+          )}
+          {/* Stupně a minuty: nápověda k zápisu (na počítači i tlačítka ° a ′; na telefonu je má lišta výše) */}
           {status === "idle" && /′/.test(example.odpoved) && (
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <span>Zapiš např. 22°30′ nebo 22 30</span>
@@ -371,8 +437,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                 <button
                   key={ch}
                   type="button"
-                  onClick={() => { setInput((v) => v + ch); inputRef.current?.focus(); }}
-                  className="w-9 h-9 rounded-lg border border-slate-200 bg-white text-lg font-bold text-slate-700 press-scale"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => insertChar(ch)}
+                  className="pointer-coarse:hidden w-9 h-9 rounded-lg border border-slate-200 bg-white text-lg font-bold text-slate-700 press-scale"
                   aria-label={ch === "°" ? "Vložit znak stupně" : "Vložit znak minuty"}
                 >
                   {ch}
