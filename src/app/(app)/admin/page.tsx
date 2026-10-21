@@ -94,6 +94,7 @@ export default function AdminPage() {
   const [search, setSearch] = useState("");
   const [resetting, setResetting] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState<Set<string>>(new Set());
+  const [resetAsk, setResetAsk] = useState<{ id: string; error: string | null } | null>(null);
   const [premiumBusy, setPremiumBusy] = useState<string | null>(null);
   const [premiumAsk, setPremiumAsk] = useState<{ id: string; revoke: boolean; until: string; error: string | null } | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -136,9 +137,13 @@ export default function AdminPage() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function handleResetDiag(userId: string, email: string) {
+  // Potvrzení přímo ve stránce (ne přes confirm/alert — blokují hlavní vlákno a kazí INP).
+  function openResetAsk(userId: string) {
+    setResetAsk((cur) => (cur?.id === userId ? null : { id: userId, error: null }));
+  }
+
+  async function handleResetDiag(userId: string) {
     if (!token) return;
-    if (!confirm(`Opravdu resetovat diagnostiku pro ${email}?`)) return;
     setResetting(userId);
     try {
       const res = await fetch("/api/admin/reset-diagnostics", {
@@ -147,12 +152,13 @@ export default function AdminPage() {
         body: JSON.stringify({ userId }),
       });
       if (!res.ok) {
-        const j = await res.json();
-        alert("Chyba: " + (j.error ?? "neznámá"));
+        const j = await res.json().catch(() => ({}));
+        setResetAsk({ id: userId, error: j.error ?? "Neznámá chyba" });
         return;
       }
       setResetDone((prev) => new Set([...prev, userId]));
       setUsers((prev) => prev.map((u) => u.id === userId ? { ...u, diagDone: false } : u));
+      setResetAsk(null);
     } finally {
       setResetting(null);
     }
@@ -379,7 +385,7 @@ export default function AdminPage() {
                       </button>
                     )}
                     <button
-                      onClick={() => handleResetDiag(u.id, u.email)}
+                      onClick={() => openResetAsk(u.id)}
                       disabled={resetting === u.id || resetDone.has(u.id)}
                       className="rounded-lg px-2 py-1 text-xs font-bold transition-opacity disabled:opacity-40"
                       style={{ background: "#fee2e2", color: "#dc2626" }}
@@ -388,6 +394,31 @@ export default function AdminPage() {
                     </button>
                   </td>
                 </tr>
+                {resetAsk?.id === u.id && (
+                  <tr style={{ background: "#fef2f2", borderBottom: "1px solid #fecaca" }}>
+                    <td colSpan={9} className="px-4 py-3">
+                      <div className="flex flex-wrap items-center gap-2 text-sm" style={{ color: "var(--text-primary)" }}>
+                        <span>Opravdu resetovat diagnostiku pro <b>{u.email}</b>? Smaže se její výsledek a uživatel ji bude dělat znovu.</span>
+                        <button
+                          onClick={() => handleResetDiag(u.id)}
+                          disabled={resetting === u.id}
+                          className="rounded-lg px-3 py-1 text-xs font-bold disabled:opacity-40"
+                          style={{ background: "#fee2e2", color: "#dc2626" }}
+                        >
+                          {resetting === u.id ? "…" : "Resetovat"}
+                        </button>
+                        <button
+                          onClick={() => setResetAsk(null)}
+                          className="rounded-lg px-3 py-1 text-xs font-bold"
+                          style={{ background: "#f1f5f9", color: "#64748b" }}
+                        >
+                          Zrušit
+                        </button>
+                        {resetAsk.error && <span className="text-xs font-semibold text-red-600">{resetAsk.error}</span>}
+                      </div>
+                    </td>
+                  </tr>
+                )}
                 {premiumAsk?.id === u.id && (
                   <tr style={{ background: "#fffbeb", borderBottom: "1px solid #fde68a" }}>
                     <td colSpan={9} className="px-4 py-3">
