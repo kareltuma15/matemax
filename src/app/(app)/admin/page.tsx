@@ -95,6 +95,7 @@ export default function AdminPage() {
   const [resetting, setResetting] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState<Set<string>>(new Set());
   const [premiumBusy, setPremiumBusy] = useState<string | null>(null);
+  const [premiumAsk, setPremiumAsk] = useState<{ id: string; revoke: boolean; until: string; error: string | null } | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [details, setDetails] = useState<Record<string, AdminUserDetail | "chyba">>({});
 
@@ -158,35 +159,31 @@ export default function AdminPage() {
   }
 
   /** Ruční udělení / odebrání Premium (zákazníci plánů z webu bez Stripe předplatného). */
-  async function handlePremium(u: AdminUser) {
-    if (!token) return;
+  // Potvrzení a datum se zadávají přímo ve stránce (ne přes prompt/confirm — ty blokují hlavní vlákno a kazí INP).
+  function openPremiumAsk(u: AdminUser) {
     const revoke = u.plan === "paid" || u.source === "manual";
-    let until: string | null = null;
-    if (revoke) {
-      if (!confirm(`Odebrat Premium uživateli ${u.email}?`)) return;
-    } else {
-      const answer = prompt(
-        `Udělit Premium uživateli ${u.email}.\nDo kdy? Napiš datum ve tvaru RRRR-MM-DD, nebo nech prázdné pro Premium bez omezení.`,
-        ""
-      );
-      if (answer === null) return;
-      until = answer.trim() === "" ? null : answer.trim();
-    }
+    setPremiumAsk((cur) => (cur?.id === u.id ? null : { id: u.id, revoke, until: "", error: null }));
+  }
+
+  async function submitPremium(u: AdminUser) {
+    if (!token || !premiumAsk || premiumAsk.id !== u.id) return;
+    const { revoke, until } = premiumAsk;
     setPremiumBusy(u.id);
     try {
       const res = await fetch("/api/admin/premium", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ userId: u.id, action: revoke ? "revoke" : "grant", until }),
+        body: JSON.stringify({ userId: u.id, action: revoke ? "revoke" : "grant", until: until.trim() === "" ? null : until.trim() }),
       });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) {
-        alert("Chyba: " + (j.error ?? "neznámá"));
+        setPremiumAsk((cur) => (cur ? { ...cur, error: j.error ?? "Neznámá chyba" } : cur));
         return;
       }
       setUsers((prev) => prev.map((x) => x.id === u.id
         ? { ...x, plan: j.plan, trialUntil: j.trialUntil ?? null, source: j.plan === "free" ? null : "manual" }
         : x));
+      setPremiumAsk(null);
     } finally {
       setPremiumBusy(null);
     }
@@ -373,7 +370,7 @@ export default function AdminPage() {
                       </span>
                     ) : (
                       <button
-                        onClick={() => handlePremium(u)}
+                        onClick={() => openPremiumAsk(u)}
                         disabled={premiumBusy === u.id}
                         className="mr-1 rounded-lg px-2 py-1 text-xs font-bold transition-opacity disabled:opacity-40"
                         style={u.plan === "paid" || u.source === "manual" ? { background: "#fef3c7", color: "#92400e" } : { background: "#dcfce7", color: "#166534" }}
@@ -391,6 +388,46 @@ export default function AdminPage() {
                     </button>
                   </td>
                 </tr>
+                {premiumAsk?.id === u.id && (
+                  <tr style={{ background: "#fffbeb", borderBottom: "1px solid #fde68a" }}>
+                    <td colSpan={9} className="px-4 py-3">
+                      <div className="flex flex-wrap items-center gap-2 text-sm" style={{ color: "var(--text-primary)" }}>
+                        {premiumAsk.revoke ? (
+                          <span>Odebrat Premium uživateli <b>{u.email}</b>?</span>
+                        ) : (
+                          <>
+                            <span>Udělit Premium uživateli <b>{u.email}</b> do:</span>
+                            <input
+                              type="date"
+                              value={premiumAsk.until}
+                              onChange={(e) => setPremiumAsk((cur) => (cur ? { ...cur, until: e.target.value, error: null } : cur))}
+                              className="rounded-lg border px-2 py-1 text-sm"
+                              style={{ borderColor: "#cbd5e1" }}
+                              aria-label="Premium do data (prázdné = bez omezení)"
+                            />
+                            <span className="text-xs" style={{ color: "#94a3b8" }}>prázdné = bez omezení</span>
+                          </>
+                        )}
+                        <button
+                          onClick={() => submitPremium(u)}
+                          disabled={premiumBusy === u.id}
+                          className="rounded-lg px-3 py-1 text-xs font-bold disabled:opacity-40"
+                          style={premiumAsk.revoke ? { background: "#fef3c7", color: "#92400e" } : { background: "#dcfce7", color: "#166534" }}
+                        >
+                          {premiumBusy === u.id ? "…" : premiumAsk.revoke ? "Odebrat" : "Udělit"}
+                        </button>
+                        <button
+                          onClick={() => setPremiumAsk(null)}
+                          className="rounded-lg px-3 py-1 text-xs font-bold"
+                          style={{ background: "#f1f5f9", color: "#64748b" }}
+                        >
+                          Zrušit
+                        </button>
+                        {premiumAsk.error && <span className="text-xs font-semibold text-red-600">{premiumAsk.error}</span>}
+                      </div>
+                    </td>
+                  </tr>
+                )}
                 {openId === u.id && (
                   <tr style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
                     <td colSpan={9} className="px-4 py-4">
