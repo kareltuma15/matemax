@@ -191,6 +191,43 @@ test("rýsování: kružítko se zastaví na stejném poloměru a střed úsečk
   await expect(page.getByText("✅ Správně")).toBeVisible();
 });
 
+// ── „Nabrat délku": kružítko se rozevře na vzdálenost dvou bodů, aniž by se kreslila pomocná kružnice ──
+test("rýsování: Nabrat délku rozevře kružítko přesně na úsečku AB a střed úsečky vyjde", async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.addInitScript(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = true; });
+  await page.goto("/diagnostika");
+  for (const tema of TEMA.slice(0, 6)) { await answer(page, q(tema, 2), true); await answer(page, q(tema, 3), true); }
+  await answer(page, q("konstrukce", 2), false);
+  await page.evaluate(() => { (window as unknown as { __MATEMAX_FREE_MARKERS?: boolean }).__MATEMAX_FREE_MARKERS = false; });
+
+  const sc = pool.find((e) => e.id === "diag_konstrukce_1")!.konstrukce_scena as unknown as { width: number; given: { label?: string; x?: number; y?: number }[] };
+  const A = sc.given.find((e) => e.label === "A")!, B = sc.given.find((e) => e.label === "B")!;
+  const svg = page.locator("svg[role=img]").first();
+  const tap = (x: number, y: number) => tapScene(page, sc.width, x, y);
+
+  await page.getByRole("button", { name: /Nabrat délku/ }).click();
+  await tap(A.x!, A.y!);                                    // 1. konec úsečky
+  await tap(B.x!, B.y!);                                    // 2. konec → kružítko je rozevřené na |AB|
+  await expect(page.getByText(/kružítko je rozevřené na/)).toBeVisible();   // nástroj se sám přepnul na kreslení
+  await expect(svg.locator("circle[stroke='#2E6DA4']")).toHaveCount(0);      // žádná pomocná kružnice nevznikla
+  await tap(A.x!, A.y!);                                    // kružnice se středem A
+  await tap(B.x!, B.y!);                                    // kružnice se středem B (kružítko zůstává rozevřené)
+  const radii = await svg.locator("circle[stroke='#2E6DA4']").evaluateAll((els) => els.map((e) => Number(e.getAttribute("r"))));
+  const d = Math.hypot(B.x! - A.x!, B.y! - A.y!);
+  expect(radii).toHaveLength(2);
+  expect(Math.abs(radii[0] - d)).toBeLessThan(1e-6);
+  expect(Math.abs(radii[1] - d)).toBeLessThan(1e-6);
+
+  const S = { x: (A.x! + B.x!) / 2, y: (A.y! + B.y!) / 2 };
+  const h = (Math.sqrt(3) / 2) * d, n = { x: -(B.y! - A.y!) / d, y: (B.x! - A.x!) / d };
+  await page.getByRole("button", { name: /Pravítko/ }).click();
+  await tap(S.x + n.x * h, S.y + n.y * h); await tap(S.x - n.x * h, S.y - n.y * h);
+  await page.getByRole("button", { name: /^📍 Označit bod/ }).click();
+  await tap(S.x + 3, S.y + 3);
+  await page.getByRole("button", { name: /Zkontrolovat/ }).click();
+  await expect(page.getByText("✅ Správně")).toBeVisible();
+});
+
 test("geometrie: průmět na čáru a ověření množiny bodů (libovolné body na čáře)", () => {
   const line = { k: "line" as const, a: { x: 130, y: 0 }, b: { x: 130, y: 250 } };
   const circ = { k: "circ" as const, c: { x: 0, y: 0 }, r: 10 };

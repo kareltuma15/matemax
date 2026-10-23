@@ -120,7 +120,8 @@
       "reseni_kroky": [
         "1. Protější strany rovnoběžníku jsou rovnoběžné. Nástrojem „Rovnoběžka“ vyber úsečku AB a klepni na bod D — vznikne přímka bodem D rovnoběžná s AB.",
         "2. Stejně vyber úsečku AD a klepni na bod B — vznikne přímka bodem B rovnoběžná s AD.",
-        "3. Hledaný vrchol C je průsečík obou rovnoběžek."
+        "3. Hledaný vrchol C je průsečík obou rovnoběžek.",
+        "4. Jiný postup kružítkem: nástrojem „Nabrat délku“ klepni na A a D, pak klepni na bod B — kružnice se středem B má poloměr |AD|. Potom nabrat délku A a B a klepni na bod D — kružnice se středem D má poloměr |AB|. Kružnice se protínají v bodě C (a v bodě A)."
       ],
       "cas_sekund": 180,
       "sm2_interval": 1,
@@ -210,6 +211,27 @@
                 "label": "C",
                 "dx": 8,
                 "dy": -6
+              }
+            ]
+          },
+          {
+            "text": "Jiný postup kružítkem: nástrojem „Nabrat délku“ klepni na A a D, pak klepni na bod B — kružnice se středem B má poloměr |AD|. Potom nabrat délku A a B a klepni na bod D — kružnice se středem D má poloměr |AB|. Kružnice se protínají v bodě C (a v bodě A).",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 170,
+                "cy": 185,
+                "r": 132.1,
+                "a1": 140,
+                "a2": 339.5
+              },
+              {
+                "t": "arc",
+                "cx": 115,
+                "cy": 70,
+                "r": 120,
+                "a1": -40,
+                "a2": 159.5
               }
             ]
           }

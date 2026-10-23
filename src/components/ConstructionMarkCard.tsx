@@ -18,7 +18,8 @@ import MathText from "@/components/MathText";
  * Výsledný bod se smí označit JEN v průsečíku čar (nebo v zadaném bodě) — ne odhadem od oka.
  * Výsledek se ověřuje výpočtem, postup se po kontrole ukáže krok za krokem.
  * Lupa přiblíží obrázek (hustá konstrukce se na mobilu špatně klepe). Kružítko umí pevný poloměr
- * (např. „3 cm") i „stejný poloměr jako naposledy" (kružítko zůstane rozevřené).
+ * (např. „3 cm"), „stejný poloměr jako naposledy" (kružítko zůstane rozevřené) i „nabrat délku" (klepnutí na dva body
+ * úsečky rozevře kružítko přesně na její délku, bez kreslení pomocné kružnice).
  * Data: `example.konstrukce_scena` (viz ConstructionScene v types).
  */
 
@@ -277,6 +278,10 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     } else if (tool === "kruzitko") {
       if (!pending) setPending(s);
       else if (dist(pending, s) > 2) { addCircle(pending, aim.r ?? dist(pending, s)); setPending(null); }
+    } else if (tool === "odmer") {
+      // „Nabrat délku": kružítko se rozevře na vzdálenost dvou bodů (např. konců úsečky) a rovnou se přepne na kreslení
+      if (!pending) setPending(s);
+      else if (dist(pending, s) > 2) { setLastR(dist(pending, s)); setPending(null); setTool("stejny"); setNotice(null); }
     } else if (tool === "stejny") {
       if (lastR) addCircle(s, lastR);
     } else if (tool.startsWith("r:")) {
@@ -306,7 +311,8 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
     : tool === "kolmice" ? (refLine ? "Teď klepni na bod, kterým má kolmice procházet." : "Pravý úhel: klepni na přímku nebo úsečku, ke které chceš vést kolmici.")
     : tool === "rovnobezka" ? (refLine ? "Teď klepni na bod, kterým má rovnoběžka procházet." : "Rovnoběžka: klepni na přímku nebo úsečku, se kterou má být rovnoběžná.")
     : tool === "kruzitko" ? (pending ? "Táhni ukazatel: kružnice se zvětšuje. U bodu nebo u poloměru jiné kružnice se zastaví — klepnutím ji nakreslíš." : "Klepni na střed kružnice.")
-    : tool === "stejny" ? "Klepni na střed kružnice — poloměr zůstane stejný jako u poslední kružnice."
+    : tool === "odmer" ? (pending ? "Klepni na druhý bod úsečky — kružítko se rozevře přesně na její délku." : "Klepni na první bod úsečky, jejíž délku chceš nabrat do kružítka (např. A a D).")
+    : tool === "stejny" ? (lastR ? `Klepni na střed kružnice — kružítko je rozevřené na ${(lastR / scene.cm).toFixed(1).replace(".", ",")} cm (naposledy nabraná nebo nakreslená délka).` : "Klepni na střed kružnice.")
     : tool === "lupa" ? "Klepni do místa, které chceš přiblížit (až 4×)."
     : "Klepni na střed kružnice (poloměr je pevný).";
 
@@ -370,6 +376,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
         {toolBtn("kolmice", "⟂ Pravý úhel")}
         {toolBtn("rovnobezka", "∥ Rovnoběžka")}
         {toolBtn("kruzitko", "⭕ Kružítko")}
+        {toolBtn("odmer", "↔ Nabrat délku")}
         {lastR !== null && toolBtn("stejny", "⭕ Stejný poloměr")}
         {(scene.radii ?? []).map((r, i) => toolBtn(`r:${i}`, `⭕ ${r.label}`))}
         {toolBtn("bod", "📍 Označit bod")}
@@ -442,6 +449,12 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
               const label = `${cm(a.r)}${a.note ? ` · ${a.note}` : ""}`;
               const flipX = a.pt.x + (label.length * 6.8 + 18) * u > vx + vw, flipY = a.pt.y < vy + 24 * u;
               els.push(<text key="kl" x={a.pt.x + (flipX ? -12 : 12) * u} y={a.pt.y + (flipY ? 20 : -12) * u} textAnchor={flipX ? "end" : "start"} fontSize={12 * u} fontWeight={700} fill={a.note ? GREEN : "#334155"} stroke="#fff" strokeWidth={3} paintOrder="stroke" style={{ fontFamily: "system-ui, sans-serif" }}>{label}</text>);
+            }
+            if (tool === "odmer" && pending) {
+              els.push(<line key="om" x1={pending.x} y1={pending.y} x2={a.pt.x} y2={a.pt.y} stroke={gray} strokeWidth={2} strokeDasharray="5 4" opacity={0.8} vectorEffect="non-scaling-stroke" />);
+              const label = cm(dist(pending, a.pt));
+              const flipX = a.pt.x + (label.length * 6.8 + 18) * u > vx + vw, flipY = a.pt.y < vy + 24 * u;
+              els.push(<text key="ol2" x={a.pt.x + (flipX ? -12 : 12) * u} y={a.pt.y + (flipY ? 20 : -12) * u} textAnchor={flipX ? "end" : "start"} fontSize={12 * u} fontWeight={700} fill={a.snapped ? GREEN : "#334155"} stroke="#fff" strokeWidth={3} paintOrder="stroke" style={{ fontFamily: "system-ui, sans-serif" }}>{label}</text>);
             }
             if (tool === "stejny" && lastR) els.push(circle(a.pt, lastR, "sc"));
             if (tool.startsWith("r:")) { const rr = scene.radii?.[Number(tool.slice(2))]; if (rr) els.push(circle(a.pt, rr.r, "fc")); }
