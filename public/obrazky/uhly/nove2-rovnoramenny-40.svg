@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Rovnoramenný trojúhelník ABC se shodnými stranami AB a AC; úhel při vrcholu A je 40°, hledaný úhel při vrcholu B</title>
+  <polygon points="120,30 69.04,170 170.96,170" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+<line x1="88.88" y1="97.95" x2="100.16" y2="102.05" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="139.84" y1="102.05" x2="151.12" y2="97.95" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 109.74 58.19 A 30 30 0 0 0 130.26 58.19" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="120" y="78" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">40°</text>
+  <path d="M 79.3 141.81 A 30 30 0 0 1 99.04 170" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="104.27" y="150.34" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="120" y="20" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="57.98" y="185.13" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="182.02" y="185.13" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 175" width="300" height="175" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Body A, V a B leží na přímce; polopřímky z bodu V ji dělí na tři úhly 50°, 75° a hledaný úhel</title>
+  <line x1="25" y1="140" x2="275" y2="140" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="150" y1="140" x2="227.13" y2="48.07" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="150" y1="140" x2="81.17" y2="41.7" stroke="#0D1B3E" stroke-width="2.2"/>
+  <path d="M 240 140 A 90 90 0 0 0 207.85 71.06" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="243.35" y="101.47" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">50°</text>
+  <path d="M 183.42 100.17 A 52 52 0 0 0 120.17 97.4" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="152.84" y="80.06" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">75°</text>
+  <path d="M 98.38 66.28 A 90 90 0 0 0 60 140" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="58.64" y="97.44" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="21" y="160" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="275" y="160" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="150" y="162" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">V</text>
+  <circle cx="150" cy="140" r="3" fill="#0D1B3E"/>
+</svg>

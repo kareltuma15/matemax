@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Rovnoramenný trojúhelník ABC se základnou BC (AB = AC); základna je prodloužena za bod B; vnější úhel při B má 110°, hledaný úhel při vrcholu A</title>
+  <polygon points="182.59,30 131.63,170 233.55,170" fill="#eef4fb" stroke="#0D1B3E" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="131.63" y1="170" x2="66.45" y2="170" stroke="#0D1B3E" stroke-width="2.2"/>
+<line x1="151.47" y1="97.95" x2="162.75" y2="102.05" stroke="#0D1B3E" stroke-width="1.8"/>
+<line x1="202.43" y1="102.05" x2="213.71" y2="97.95" stroke="#0D1B3E" stroke-width="1.8"/>
+  <path d="M 141.9 141.81 A 30 30 0 0 0 101.63 170" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="106.97" y="139.78" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">110°</text>
+  <path d="M 172.33 58.19 A 30 30 0 0 0 192.85 58.19" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="182.59" y="78" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <text x="182.59" y="20" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="120.57" y="185.13" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="244.61" y="185.13" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">C</text>
+</svg>

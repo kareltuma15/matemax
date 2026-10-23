@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 170" width="300" height="170" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Rovnoběžky p a q protnuté příčkou AB; úhel 115° u bodu A a hledaný úhel u bodu B jsou na téže straně příčky mezi rovnoběžkami</title>
+  <line x1="14" y1="40" x2="286" y2="40" stroke="#0D1B3E" stroke-width="2.2"/>
+  <line x1="14" y1="130" x2="286" y2="130" stroke="#0D1B3E" stroke-width="2.2"/>
+  <text x="276" y="32" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">p</text>
+  <text x="276" y="122" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle" font-style="italic">q</text>
+  <line x1="190.14" y1="18.25" x2="127.89" y2="151.75" stroke="#0D1B3E" stroke-width="2.2"/>
+  <path d="M 208 40 A 28 28 0 0 1 168.17 65.38" fill="none" stroke="#2E6DA4" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="211.38" y="71.39" font-size="13" font-weight="800" fill="#0D1B3E" text-anchor="middle">115°</text>
+  <path d="M 149.87 104.62 A 28 28 0 0 1 166.03 130" fill="none" stroke="#d9480f" stroke-width="2"/>
+  <text paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" x="169.55" y="108.78" font-size="17" font-weight="800" fill="#d9480f" text-anchor="middle">?</text>
+  <circle cx="180" cy="40" r="3" fill="#0D1B3E"/>
+  <circle cx="138.03" cy="130" r="3" fill="#0D1B3E"/>
+  <text x="194" y="31" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="124.03" y="150" font-size="15" font-weight="700" fill="#0D1B3E" text-anchor="middle">B</text>
+</svg>
