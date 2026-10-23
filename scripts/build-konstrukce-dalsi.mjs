@@ -63,7 +63,7 @@ const T = (o) => tasks.push(o);
       { text: "Protější strany rovnoběžníku jsou rovnoběžné. Nástrojem „Rovnoběžka“ vyber úsečku AB a klepni na bod D — vznikne přímka bodem D rovnoběžná s AB.", draw: [line(D, add(D, sub(B, A)))] },
       { text: "Stejně vyber úsečku AD a klepni na bod B — vznikne přímka bodem B rovnoběžná s AD.", draw: [line(B, add(B, sub(D, A)))] },
       { text: "Hledaný vrchol C je průsečík obou rovnoběžek.", draw: [pt(C, "C", 8, -6)] },
-      { text: "Jiný postup kružítkem: nástrojem „Nabrat délku“ klepni na A a D, pak klepni na bod B — kružnice se středem B má poloměr |AD|. Potom nabrat délku A a B a klepni na bod D — kružnice se středem D má poloměr |AB|. Kružnice se protínají v bodě C (a v bodě A).", draw: [arcAt(B, dist(A, D), [A, C], 40), arcAt(D, dist(A, B), [A, C], 40)] },
+      { text: "Druhá možnost, jen kružítkem: nástrojem „Nabrat délku“ klepni na A a D, pak klepni na bod B — kružnice se středem B má poloměr |AD|. Potom nabrat délku A a B a klepni na bod D — kružnice se středem D má poloměr |AB|. Kružnice se protínají v bodě C (a v bodě A).", draw: [arcAt(B, dist(A, D), [A, C], 40), arcAt(D, dist(A, B), [A, C], 40)] },
     ],
     odpoved: "Průsečík rovnoběžky s AB vedené bodem D a rovnoběžky s AD vedené bodem B.",
     check: (t) => dist(t[0], sub(add(B, D), A)) < 1e-9,

@@ -4,7 +4,7 @@
     "created": "2026-04",
     "author": "Karel Tuma - Matematika Snadno",
     "description": "Databaze 500 prikladu pro MateMax PWA aplikaci",
-    "total": 1003,
+    "total": 1007,
     "schema": {
       "id": "Unikatni identifikator prikladu",
       "tema": "Hlavni tema (zlomky, procenta, rovnice, ...)",
@@ -21508,6 +21508,590 @@
       ],
       "cas_sekund": 90,
       "sm2_interval": 1
+    },
+    {
+      "id": "KONS1_12",
+      "tema": "konstrukce",
+      "podtema": "kolmice",
+      "obtiznost": 1,
+      "zadani": "Bod P leží na přímce p. Označ všechny body, které leží na kolmici k přímce p vedené bodem P a jsou od bodu P vzdáleny 3 cm.",
+      "odpoved": "Dva body — průsečíky kolmice k p vedené bodem P s kružnicí k(P; 3 cm).",
+      "reseni_kroky": [
+        "1. Nástrojem „Pravý úhel“ klepni na přímku p a pak na bod P — narýsuje se kolmice k p vedená bodem P.",
+        "2. Body vzdálené 3 cm od P leží na kružnici k(P; 3 cm). Protne kolmici ve dvou bodech — oba vyhovují."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1,
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "line",
+            "x1": 15,
+            "y1": 135,
+            "x2": 315,
+            "y2": 125
+          },
+          {
+            "t": "text",
+            "x": 300,
+            "y": 116,
+            "text": "p"
+          },
+          {
+            "t": "point",
+            "x": 150,
+            "y": 130.5,
+            "label": "P",
+            "dx": 8,
+            "dy": -6
+          }
+        ],
+        "radii": [
+          {
+            "label": "3 cm",
+            "r": 90
+          }
+        ],
+        "targets": [
+          {
+            "x": 152.998,
+            "y": 220.45
+          },
+          {
+            "x": 147.002,
+            "y": 40.55
+          }
+        ],
+        "tolerance": 4,
+        "steps": [
+          {
+            "text": "Nástrojem „Pravý úhel“ klepni na přímku p a pak na bod P — narýsuje se kolmice k p vedená bodem P.",
+            "draw": [
+              {
+                "t": "line",
+                "x1": 146.34,
+                "y1": 20.56,
+                "x2": 153.66,
+                "y2": 240.44
+              },
+              {
+                "t": "right",
+                "x": 150,
+                "y": 130.5,
+                "ux": 0.9994,
+                "uy": -0.0333,
+                "vx": 0.0333,
+                "vy": 0.9994
+              }
+            ]
+          },
+          {
+            "text": "Body vzdálené 3 cm od P leží na kružnici k(P; 3 cm). Protne kolmici ve dvou bodech — oba vyhovují.",
+            "draw": [
+              {
+                "t": "circle",
+                "cx": 150,
+                "cy": 130.5,
+                "r": 90
+              },
+              {
+                "t": "point",
+                "x": 147,
+                "y": 40.55,
+                "label": "X",
+                "dx": 8,
+                "dy": 4
+              },
+              {
+                "t": "point",
+                "x": 153,
+                "y": 220.45,
+                "label": "Y",
+                "dx": 8,
+                "dy": 4
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "KONS2_14",
+      "tema": "konstrukce",
+      "podtema": "rovnobeznik",
+      "obtiznost": 2,
+      "zadani": "ABCD je rovnoběžník, body A, B a D jsou dány. Označ vrchol C.",
+      "odpoved": "Průsečík rovnoběžky s AB vedené bodem D a rovnoběžky s AD vedené bodem B.",
+      "reseni_kroky": [
+        "1. Protější strany rovnoběžníku jsou rovnoběžné. Nástrojem „Rovnoběžka“ vyber úsečku AB a klepni na bod D — vznikne přímka bodem D rovnoběžná s AB.",
+        "2. Stejně vyber úsečku AD a klepni na bod B — vznikne přímka bodem B rovnoběžná s AD.",
+        "3. Hledaný vrchol C je průsečík obou rovnoběžek.",
+        "4. Druhá možnost, jen kružítkem: nástrojem „Nabrat délku“ klepni na A a D, pak klepni na bod B — kružnice se středem B má poloměr |AD|. Potom nabrat délku A a B a klepni na bod D — kružnice se středem D má poloměr |AB|. Kružnice se protínají v bodě C (a v bodě A)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "segment",
+            "x1": 50,
+            "y1": 185,
+            "x2": 170,
+            "y2": 185
+          },
+          {
+            "t": "segment",
+            "x1": 50,
+            "y1": 185,
+            "x2": 115,
+            "y2": 70
+          },
+          {
+            "t": "point",
+            "x": 50,
+            "y": 185,
+            "label": "A",
+            "dx": -14,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 170,
+            "y": 185,
+            "label": "B",
+            "dx": 6,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 115,
+            "y": 70,
+            "label": "D",
+            "dx": -16,
+            "dy": -6
+          }
+        ],
+        "targets": [
+          {
+            "x": 235,
+            "y": 70
+          }
+        ],
+        "tolerance": 4,
+        "steps": [
+          {
+            "text": "Protější strany rovnoběžníku jsou rovnoběžné. Nástrojem „Rovnoběžka“ vyber úsečku AB a klepni na bod D — vznikne přímka bodem D rovnoběžná s AB.",
+            "draw": [
+              {
+                "t": "line",
+                "x1": 115,
+                "y1": 70,
+                "x2": 235,
+                "y2": 70
+              }
+            ]
+          },
+          {
+            "text": "Stejně vyber úsečku AD a klepni na bod B — vznikne přímka bodem B rovnoběžná s AD.",
+            "draw": [
+              {
+                "t": "line",
+                "x1": 170,
+                "y1": 185,
+                "x2": 235,
+                "y2": 70
+              }
+            ]
+          },
+          {
+            "text": "Hledaný vrchol C je průsečík obou rovnoběžek.",
+            "draw": [
+              {
+                "t": "point",
+                "x": 235,
+                "y": 70,
+                "label": "C",
+                "dx": 8,
+                "dy": -6
+              }
+            ]
+          },
+          {
+            "text": "Druhá možnost, jen kružítkem: nástrojem „Nabrat délku“ klepni na A a D, pak klepni na bod B — kružnice se středem B má poloměr |AD|. Potom nabrat délku A a B a klepni na bod D — kružnice se středem D má poloměr |AB|. Kružnice se protínají v bodě C (a v bodě A).",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 170,
+                "cy": 185,
+                "r": 132.1,
+                "a1": 140,
+                "a2": 339.5
+              },
+              {
+                "t": "arc",
+                "cx": 115,
+                "cy": 70,
+                "r": 120,
+                "a1": -40,
+                "a2": 159.5
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "KONS2_15",
+      "tema": "konstrukce",
+      "podtema": "kosoctverec",
+      "obtiznost": 2,
+      "zadani": "ABCD je kosočtverec se stranou 4 cm, body A, B a D jsou dány. Označ vrchol C.",
+      "odpoved": "Průsečík kružnic k(B; 4 cm) a l(D; 4 cm), který není bodem A.",
+      "reseni_kroky": [
+        "1. Všechny strany kosočtverce mají 4 cm. Bod C je od B vzdálen 4 cm a od D také 4 cm.",
+        "2. Narýsuj kružnice k(B; 4 cm) a l(D; 4 cm). Protínají se ve dvou bodech: v bodě A a v hledaném vrcholu C."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "segment",
+            "x1": 60,
+            "y1": 125,
+            "x2": 180,
+            "y2": 125
+          },
+          {
+            "t": "segment",
+            "x1": 60,
+            "y1": 125,
+            "x2": 137.13,
+            "y2": 33.07
+          },
+          {
+            "t": "point",
+            "x": 60,
+            "y": 125,
+            "label": "A",
+            "dx": -14,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 180,
+            "y": 125,
+            "label": "B",
+            "dx": 6,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 137.13,
+            "y": 33.07,
+            "label": "D",
+            "dx": -16,
+            "dy": -6
+          }
+        ],
+        "radii": [
+          {
+            "label": "4 cm",
+            "r": 120
+          }
+        ],
+        "targets": [
+          {
+            "x": 257.135,
+            "y": 33.075
+          }
+        ],
+        "tolerance": 4,
+        "steps": [
+          {
+            "text": "Všechny strany kosočtverce mají 4 cm. Bod C je od B vzdálen 4 cm a od D také 4 cm.",
+            "draw": []
+          },
+          {
+            "text": "Narýsuj kružnice k(B; 4 cm) a l(D; 4 cm). Protínají se ve dvou bodech: v bodě A a v hledaném vrcholu C.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 180,
+                "cy": 125,
+                "r": 120,
+                "a1": 140,
+                "a2": 350
+              },
+              {
+                "t": "arc",
+                "cx": 137.13,
+                "cy": 33.07,
+                "r": 120,
+                "a1": -40,
+                "a2": 170
+              },
+              {
+                "t": "point",
+                "x": 257.13,
+                "y": 33.07,
+                "label": "C",
+                "dx": 8,
+                "dy": -6
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "KONS2_16",
+      "tema": "konstrukce",
+      "podtema": "osa_uhlu",
+      "obtiznost": 2,
+      "zadani": "Označ bod X ležící uvnitř úhlu s vrcholem V, který je stejně vzdálený od obou ramen a od vrcholu V je vzdálen 3 cm.",
+      "odpoved": "Průsečík osy úhlu s kružnicí k(V; 3 cm) uvnitř úhlu.",
+      "reseni_kroky": [
+        "1. Body stejně vzdálené od obou ramen leží na ose úhlu. Kružnice se středem V protne ramena v bodech K a L.",
+        "2. Z bodů K a L narýsuj stejně velké kružnice — protnou se v bodě M. Přímka VM je osa úhlu.",
+        "3. Bod X leží na ose a je od V vzdálen 3 cm: průsečík osy s kružnicí k(V; 3 cm), ten uvnitř úhlu."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "ray",
+            "x1": 60,
+            "y1": 170,
+            "x2": 286.51,
+            "y2": 130.06
+          },
+          {
+            "t": "ray",
+            "x1": 60,
+            "y1": 170,
+            "x2": 145,
+            "y2": 22.78
+          },
+          {
+            "t": "point",
+            "x": 60,
+            "y": 170,
+            "label": "V",
+            "dx": -16,
+            "dy": 16
+          }
+        ],
+        "radii": [
+          {
+            "label": "3 cm",
+            "r": 90
+          }
+        ],
+        "targets": [
+          {
+            "x": 133.724,
+            "y": 118.378
+          }
+        ],
+        "tolerance": 4,
+        "steps": [
+          {
+            "text": "Body stejně vzdálené od obou ramen leží na ose úhlu. Kružnice se středem V protne ramena v bodech K a L.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 60,
+                "cy": 170,
+                "r": 70,
+                "a1": 286,
+                "a2": 364
+              },
+              {
+                "t": "point",
+                "x": 128.94,
+                "y": 157.84,
+                "label": "K",
+                "dx": 2,
+                "dy": 16
+              },
+              {
+                "t": "point",
+                "x": 95,
+                "y": 109.38,
+                "label": "L",
+                "dx": 8,
+                "dy": -2
+              }
+            ]
+          },
+          {
+            "text": "Z bodů K a L narýsuj stejně velké kružnice — protnou se v bodě M. Přímka VM je osa úhlu.",
+            "draw": [
+              {
+                "t": "arc",
+                "cx": 128.94,
+                "cy": 157.84,
+                "r": 70,
+                "a1": 276,
+                "a2": 324
+              },
+              {
+                "t": "arc",
+                "cx": 95,
+                "cy": 109.38,
+                "r": 70,
+                "a1": 326,
+                "a2": 374
+              },
+              {
+                "t": "line",
+                "x1": 60,
+                "y1": 170,
+                "x2": 163.94,
+                "y2": 97.22
+              }
+            ]
+          },
+          {
+            "text": "Bod X leží na ose a je od V vzdálen 3 cm: průsečík osy s kružnicí k(V; 3 cm), ten uvnitř úhlu.",
+            "draw": [
+              {
+                "t": "circle",
+                "cx": 60,
+                "cy": 170,
+                "r": 90
+              },
+              {
+                "t": "point",
+                "x": 133.72,
+                "y": 118.38,
+                "label": "X",
+                "dx": 8,
+                "dy": -6
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "KONS2_17",
+      "tema": "konstrukce",
+      "podtema": "trojuhelnik_vyska",
+      "obtiznost": 2,
+      "zadani": "Označ patu výšky z vrcholu C v trojúhelníku ABC (bod, v němž výška protíná stranu AB).",
+      "odpoved": "Průsečík kolmice vedené bodem C k přímce AB se stranou AB.",
+      "reseni_kroky": [
+        "1. Výška z vrcholu C je kolmá na stranu AB. Nástrojem „Pravý úhel“ klepni na úsečku AB a pak na bod C.",
+        "2. Narýsovaná kolmice protne stranu AB v hledané patě výšky."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "konstrukce_scena": {
+        "width": 330,
+        "height": 250,
+        "cm": 30,
+        "given": [
+          {
+            "t": "polygon",
+            "pts": [
+              [
+                40,
+                195
+              ],
+              [
+                270,
+                180
+              ],
+              [
+                125,
+                45
+              ]
+            ]
+          },
+          {
+            "t": "point",
+            "x": 40,
+            "y": 195,
+            "label": "A",
+            "dx": -14,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 270,
+            "y": 180,
+            "label": "B",
+            "dx": 6,
+            "dy": 16
+          },
+          {
+            "t": "point",
+            "x": 125,
+            "y": 45,
+            "label": "C",
+            "dx": 8,
+            "dy": -6
+          }
+        ],
+        "targets": [
+          {
+            "x": 134.381,
+            "y": 188.845
+          }
+        ],
+        "tolerance": 4,
+        "steps": [
+          {
+            "text": "Výška z vrcholu C je kolmá na stranu AB. Nástrojem „Pravý úhel“ klepni na úsečku AB a pak na bod C.",
+            "draw": [
+              {
+                "t": "line",
+                "x1": 125,
+                "y1": 45,
+                "x2": 131.51,
+                "y2": 144.79
+              },
+              {
+                "t": "right",
+                "x": 134.38,
+                "y": 188.84,
+                "ux": 0.9979,
+                "uy": -0.0651,
+                "vx": -0.0651,
+                "vy": -0.9979
+              }
+            ]
+          },
+          {
+            "text": "Narýsovaná kolmice protne stranu AB v hledané patě výšky.",
+            "draw": [
+              {
+                "t": "point",
+                "x": 134.38,
+                "y": 188.84,
+                "label": "F",
+                "dx": 8,
+                "dy": 16
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
