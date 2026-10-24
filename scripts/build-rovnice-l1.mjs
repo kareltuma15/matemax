@@ -1,4 +1,4 @@
-// Rovnice L1 (12 úloh ROV1_01–ROV1_12): jednoduché lineární rovnice, slovní úlohy a soustava „z hlavy“, ověření řešení, Ano/Ne.
+// Rovnice L1 (12 úloh ROV1_01–ROV2_01): jednoduché lineární rovnice, slovní úlohy a soustava „z hlavy“, ověření řešení, Ano/Ne.
 // Spuštění: node scripts/build-rovnice-l1.mjs → doplní/přepíše ROV1_01–12 v src/data/nahled-batch.json (jiné dávky nechá).
 // Každá odpověď se nezávisle ověří dosazením a hrubou silou přes zlomky (bez postupu z řešení);
 // A–E musí mít právě jednu správnou možnost; psané odpovědi musí jít vyhodnotit (toValue).
@@ -80,11 +80,11 @@ const ex = [
     "Rovnice: $x + (x + 5) = 31$, tedy $2x + 5 = 31$.",
     "Odečteme 5: $2x = 26$, tedy $x = 13$. Pavlovi je 18 let, dohromady 31.",
   ], 120),
-  mk("ROV1_12", "linearni_se_zlomky", "Řešte rovnici: $\\dfrac{x + 2}{3} = 4$", "10", [
+  mk("ROV2_01", "linearni_se_zlomky", "Řešte rovnici: $\\dfrac{x + 2}{3} = 4$", "10", [
     "Obě strany vynásobíme třemi: $x + 2 = 12$.",
     "Odečteme 2: $x = 10$.",
     "Zkouška: $\\dfrac{10 + 2}{3} = 4$.",
-  ], 90),
+  ], 90, { obtiznost: 2 }),
 ];
 
 // ───────── nezávislé ověření ─────────
@@ -105,7 +105,7 @@ one("ROV1_07", (x) => eq(div(x, f2(6)), div(f2(10), f2(4))), A("ROV1_07"));
 ok("ROV1_09", 2 * 3 + 1 === 7 && A("ROV1_09") === "Ano");
 one("ROV1_10", (x) => eq(mul(f2(4), sub(x, f2(2))), add(mul(f2(2), x), f2(6))), A("ROV1_10"));
 { const s = solutions((e) => eq(add(e, add(e, f2(5))), f2(31))); ok("ROV1_11", s.length === 1 && show(s[0]) === "13" && A("ROV1_11") === "13 let", s.map(show)); }
-one("ROV1_12", (x) => eq(div(add(x, f2(2)), f2(3)), f2(4)), A("ROV1_12"));
+one("ROV2_01", (x) => eq(div(add(x, f2(2)), f2(3)), f2(4)), A("ROV2_01"));
 
 for (const e of ex) {
   if (e.moznosti) ok(e.id + " možnosti", e.moznosti.length >= 2 && new Set(e.moznosti).size === e.moznosti.length && e.odpoved === e.moznosti[e.spravna]);
@@ -125,7 +125,7 @@ if (fail) { console.log("NEZAPISUJI"); process.exit(1); }
 
 let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* bez předchozí dávky */ }
-const others = (prev.examples ?? []).filter((e) => !/^ROV1_(0[1-9]|1[0-2])$/.test(e.id));
+const others = (prev.examples ?? []).filter((e) => !/^ROV1_(0[1-9]|1[0-1])$/.test(e.id) && e.id !== "ROV2_01");
 const nazev = others.length ? `${prev.nazev} + Rovnice L1 (12 úloh)` : "Rovnice L1 — jednoduché lineární rovnice, slovní úlohy a soustava (12 úloh)";
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...ex] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${ex.length} rovnic)`);

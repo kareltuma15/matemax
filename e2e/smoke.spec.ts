@@ -15,6 +15,17 @@ for (const route of PUBLIC_ROUTES) {
   });
 }
 
+// Registrace: jedno nepovinné pole „Jak ti říkat?“ místo jména a příjmení; e-mail a heslo zůstávají povinné.
+test("registrace má jedno nepovinné pole jména (ne jméno a příjmení)", async ({ page }) => {
+  await page.goto("/registrace");
+  const name = page.getByLabel(/Jak ti říkat/);
+  await expect(name).toBeVisible();
+  await expect(name).not.toHaveAttribute("required", "");
+  await expect(page.getByText("Příjmení")).toHaveCount(0);
+  await expect(page.getByPlaceholder("tvuj@email.cz")).toHaveAttribute("required", "");
+  await expect(page.getByPlaceholder("alespoň 8 znaků")).toHaveAttribute("required", "");
+});
+
 // Ochrana tras: nepřihlášený nesmí do chráněných částí (hlídá src/proxy.ts).
 test.describe("chráněné trasy přesměrují nepřihlášeného", () => {
   test("/profil → /prihlaseni", async ({ page }) => {
