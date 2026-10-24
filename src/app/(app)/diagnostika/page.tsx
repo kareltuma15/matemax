@@ -13,6 +13,8 @@ import MoznostiCard from "@/components/MoznostiCard";
 import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import pool from "@/data/diagnostika.json";
 import { DIAG_WEAK_BELOW } from "@/lib/levels";
+import { usePremium } from "@/lib/premium";
+import { FREE_TOPICS, GUEST_FREE_TOPICS } from "@/lib/subscription";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -85,6 +87,23 @@ function questionFor(tema: string, level: 1 | 2 | 3): DBExample {
   return q;
 }
 
+/**
+ * Téma, kterým má žák začít první trénink: nejslabší z těch, které si může otevřít
+ * (host jen zlomky, přihlášený bez Premium první tři kapitoly, Premium všechna).
+ * Ať tlačítko vede rovnou do tréninku, ne na obecný rozcestník, kde se lidé ztráceli.
+ */
+function pickStartTopic(
+  results: Record<string, { correct: number; total: number }>,
+  reachable: Set<string>,
+): { tema: string; label: string } | null {
+  const rows = Object.entries(results)
+    .filter(([, v]) => v.total > 0)
+    .map(([tema, v]) => ({ tema, pct: v.correct / v.total }))
+    .sort((a, b) => a.pct - b.pct);
+  const hit = rows.find((r) => reachable.has(r.tema));
+  return hit ? { tema: hit.tema, label: RESULT_LABELS[hit.tema] ?? hit.tema } : null;
+}
+
 /** Popis výsledku tématu pro žáka (skóre 0–3 z 3; starší výsledky z 2 otázek se ukazují jako „x z y"). */
 function levelText(correct: number, total: number): string {
   if (total !== SCORE_TOTAL) return `${correct} z ${total} správně`;
@@ -104,6 +123,26 @@ export default function DiagnostikaPage() {
   useEffect(() => {
     if (localStorage.getItem("matemax-diag-done") === "1") setAlreadyDone(true);
   }, []);
+
+  // Které téma si žák může otevřít (podle přihlášení a Premium) → kam povede tlačítko „první trénink"
+  const { isPremium } = usePremium();
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setLoggedIn(!!data.session));
+  }, []);
+  const reachable = new Set<string>(isPremium ? STEPS.map((s) => s.tema) : loggedIn ? FREE_TOPICS : GUEST_FREE_TOPICS);
+  const startTopic = pickStartTopic(results, reachable);
+
+  /** Spustí trénink (rovnou na tématu, když ho známe) a změří, odkud žák kliknul. */
+  function startTraining(tema: string | null, source: "okno" | "vysledky" | "tema") {
+    if (supabase) {
+      supabase.auth.getSession().then(({ data }) => {
+        trackEvent(data.session?.user.id ?? null, "diagnostika_prvni_trenink", { tema, zdroj: source }).catch(() => {});
+      });
+    }
+    router.push(tema ? `/trenink?tema=${tema}` : "/trenink");
+  }
 
   const tema = STEPS[stepIdx].tema;
   const current = phase === 0 ? questionFor(tema, 2) : questionFor(tema, firstCorrect ? 3 : 1);
@@ -200,8 +239,8 @@ export default function DiagnostikaPage() {
   if (finished) {
     return (
       <>
-        {showPlanModal && <DiagPlanModal onStart={() => { setShowPlanModal(false); router.push("/trenink"); }} onClose={() => setShowPlanModal(false)} />}
-        <DiagResults onStart={() => router.push("/trenink")} />
+        {showPlanModal && <DiagPlanModal start={startTopic} onStart={() => { setShowPlanModal(false); startTraining(startTopic?.tema ?? null, "okno"); }} onClose={() => setShowPlanModal(false)} />}
+        <DiagResults start={startTopic} onStart={(tema) => startTraining(tema ?? startTopic?.tema ?? null, tema ? "tema" : "vysledky")} />
       </>
     );
   }
@@ -282,7 +321,7 @@ export default function DiagnostikaPage() {
 
 // ── DiagPlanModal — aha-moment po dokončení diagnostiky ──────────────────────
 
-function DiagPlanModal({ onStart, onClose }: { onStart: () => void; onClose: () => void }) {
+function DiagPlanModal({ start, onStart, onClose }: { start: { tema: string; label: string } | null; onStart: () => void; onClose: () => void }) {
   let results: Record<string, { correct: number; total: number }> = {};
   try {
     const raw = localStorage.getItem("matemax-diag-results");
@@ -364,8 +403,9 @@ function DiagPlanModal({ onStart, onClose }: { onStart: () => void; onClose: () 
             className="w-full py-3.5 text-white font-black rounded-xl text-base"
             style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
           >
-            Spustit první trénink →
+            {start ? `Spustit první trénink: ${start.label} →` : "Spustit první trénink →"}
           </button>
+          {start && <p className="text-xs text-center text-slate-400 -mt-2">Krátký trénink, zabere jen pár minut.</p>}
           <button
             onClick={onClose}
             className="w-full py-2 text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors"
@@ -390,7 +430,7 @@ const RESULT_LABELS: Record<string, string> = {
   uhly:         "Úhly",
 };
 
-function DiagResults({ onStart }: { onStart: () => void }) {
+function DiagResults({ start, onStart }: { start: { tema: string; label: string } | null; onStart: (tema?: string) => void }) {
   let results: Record<string, { correct: number; total: number }> = {};
   try {
     const raw = localStorage.getItem("matemax-diag-results");
@@ -440,7 +480,7 @@ function DiagResults({ onStart }: { onStart: () => void }) {
                 </p>
               </div>
               <button
-                onClick={onStart}
+                onClick={() => onStart(row.tema)}
                 className="shrink-0 text-xs font-black px-3 py-2 rounded-lg text-white"
                 style={{ background: "#dc2626" }}
               >
@@ -516,11 +556,11 @@ function DiagResults({ onStart }: { onStart: () => void }) {
       )}
 
       <button
-        onClick={onStart}
+        onClick={() => onStart()}
         className="w-full py-3 text-white font-bold rounded-xl text-base"
         style={{ background: "#0D1B3E" }}
       >
-        Začít trénovat →
+        {start ? `Začít první trénink: ${start.label} →` : "Začít trénovat →"}
       </button>
     </div>
   );

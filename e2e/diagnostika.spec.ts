@@ -81,6 +81,25 @@ test("diagnostika: všechno špatně → 0/3 v každém tématu", async ({ page 
   for (const tema of TEMA) expect(r[tema], tema).toEqual({ correct: 0, total: 3 });
 });
 
+// Po diagnostice vede tlačítko „první trénink" rovnou na nejslabší téma, které si žák může otevřít
+// (nepřihlášený host jen Zlomky) — ne na obecný rozcestník, kde se lidé ztráceli.
+test("diagnostika: tlačítko prvního tréninku vede rovnou na trénink tématu", async ({ page }) => {
+  await runDiagnostic(page, () => false);
+  const modalButton = page.getByRole("button", { name: /Spustit první trénink: Zlomky/ });
+  await expect(modalButton).toBeVisible();
+  // výsledková obrazovka: hlavní tlačítko i „Procvičit" u slabého tématu
+  await page.getByRole("button", { name: /Zobrazit detailní výsledky/ }).click();
+  await expect(page.getByRole("button", { name: /Začít první trénink: Zlomky/ })).toBeVisible();
+  await page.getByRole("button", { name: /^Procvičit →/ }).first().click();
+  await expect(page).toHaveURL(/\/trenink\?tema=zlomky/);
+});
+
+test("diagnostika: tlačítko v okně „Tvůj plán“ spustí trénink nejslabšího dostupného tématu", async ({ page }) => {
+  await runDiagnostic(page, () => false);
+  await page.getByRole("button", { name: /Spustit první trénink: Zlomky/ }).click();
+  await expect(page).toHaveURL(/\/trenink\?tema=zlomky/);
+});
+
 test("diagnostika: L2 správně a L3 špatně = 2, L2 špatně a L1 správně = 1", async ({ page }) => {
   const r = await runDiagnostic(page, (tema, phase) => (TEMA.indexOf(tema) % 2 === 0 ? phase === 1 : phase === 2));
   TEMA.forEach((tema, i) => expect(r[tema], tema).toEqual({ correct: i % 2 === 0 ? 2 : 1, total: 3 }));
