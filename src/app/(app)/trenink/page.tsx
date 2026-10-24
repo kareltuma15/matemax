@@ -1092,6 +1092,7 @@ function TreningPageInner() {
           total={sessionIds.length}
           onResult={handleResult}
           onSkip={handleSkip}
+          videoHint
         />
       ) : currentExample.porovnani ? (
         <ComparisonCard

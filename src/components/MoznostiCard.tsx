@@ -7,6 +7,7 @@ import MathText from "@/components/MathText";
 import TaskImageView from "@/components/TaskImageView";
 import FitMath, { splitPrompt } from "@/components/FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
+import VideoLessonHint from "@/components/VideoLessonHint";
 
 /**
  * Výběr z možností (A–E) — formát těžších CERMAT úloh. Žák klikne na jednu
@@ -23,6 +24,8 @@ interface Props {
   total: number;
   onResult: (correct: boolean, userAnswer: string) => void;
   onSkip?: () => void;
+  /** Po chybě nabídnout videolekci k tématu (v diagnostice ne — žák nemá být vytržen z testu). */
+  videoHint?: boolean;
 }
 
 const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
@@ -37,7 +40,7 @@ function Text({ ex, text }: { ex: DBExample; text: string }) {
   return ex.latex ? <MathDisplay tex={text} /> : <MathText text={text} />;
 }
 
-export default function MoznostiCard({ example, cardNumber, total, onResult, onSkip }: Props) {
+export default function MoznostiCard({ example, cardNumber, total, onResult, onSkip, videoHint = false }: Props) {
   const [picked, setPicked] = useState<number | null>(null);
 
   useEffect(() => { setPicked(null); }, [example.id]);
@@ -155,6 +158,7 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
               </ol>
             )}
           </div>
+          {videoHint && !spravneVybrano && <VideoLessonHint tema={example.tema} podtema={example.podtema} />}
           <button
             onClick={() => onResult(spravneVybrano, moznosti[picked])}
             className="rounded-xl px-4 py-3 text-sm font-bold text-white"

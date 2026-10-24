@@ -10,6 +10,7 @@ import TaskImageView from "./TaskImageView";
 import MathDisplay from "./MathDisplay";
 import FitMath, { splitPrompt } from "./FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
+import VideoLessonHint from "./VideoLessonHint";
 
 /** Renderuje text nebo LaTeX podle typu příkladu */
 function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
@@ -588,6 +589,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             )}
           </>
         )}
+
+        {/* Po chybě nabídka videolekce k tématu (jen když nějaká veřejná je) */}
+        {status === "wrong" && <VideoLessonHint tema={example.tema} podtema={example.podtema} />}
 
         {/* Solution steps — po 2. špatné odpovědi nebo ručně */}
         {status !== "idle" && example.reseni_kroky.length > 0 && (
