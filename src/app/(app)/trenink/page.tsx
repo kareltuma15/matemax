@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { examples, plainExamples } from "@/data/examples";
+import { examples, allExamples, examples5, plainExamples, plainExamplesFor } from "@/data/examples";
+import { useTrida } from "@/lib/trida";
+import TopicMap5 from "@/components/TopicMap5";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
@@ -51,12 +53,17 @@ const ProgressMilestoneModal = dynamic(() => import("@/components/ProgressMilest
 const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr: false });
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
-import { TEMA_LABELS, podtemaLabel, DBExample } from "@/types";
+import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
 import { pickMission, snapshotReadiness } from "@/lib/mise";
 import { getReadiness } from "@/lib/readiness";
 
+/** Třída z prohlížeče pro první sestavení sezení (hook se v tu chvíli ještě nemusel načíst). */
+function readTridaForSession(): Trida {
+  try { return Number(localStorage.getItem("matemax-trida")) === 5 ? 5 : 9; } catch { return 9; }
+}
+
 function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
-  const hard = plainExamples.filter(
+  const hard = [...plainExamples, ...plainExamplesFor(5)].filter(
     (ex) => ex.tema === tema && ex.obtiznost === 3 && !usedIds.has(ex.id)
   );
   if (hard.length === 0) return null;
@@ -92,7 +99,7 @@ function loadSessionDraft(): SessionDraft | null {
     if (raw) {
       const d = JSON.parse(raw) as SessionDraft;
       // úlohy mezitím mohly být vyřazeny z databáze — rozpracovaná session s neexistující úlohou se zahodí
-      const known = new Set(examples.map((e) => e.id));
+      const known = new Set(allExamples.map((e) => e.id));
       if (!d.sessionIds.every((id) => known.has(id))) { localStorage.removeItem(SESSION_DRAFT_KEY); return null; }
       return d;
     }
@@ -192,9 +199,12 @@ function buildSession(
   temaFilter?: string | null,
   rezim?: "chyby" | "sm2" | null,
   guestOnly = false,
-  podtemaFilter?: string | null
+  podtemaFilter?: string | null,
+  trida: Trida = 9
 ): string[] {
-  let pool = temaFilter ? examples.filter((ex) => ex.tema === temaFilter) : examples;
+  // Základ losování: téma určuje třídu samo (p5_ = 5. třída); bez tématu rozhoduje třída žáka.
+  const zaklad = temaFilter ? (temaFilter.startsWith("p5_") ? examples5 : examples) : (trida === 5 ? examples5 : examples);
+  let pool = temaFilter ? zaklad.filter((ex) => ex.tema === temaFilter) : zaklad;
   if (podtemaFilter) pool = pool.filter((ex) => ex.podtema === podtemaFilter);
   if (guestOnly) pool = pool.filter((ex) => GUEST_FREE_TOPICS.has(ex.tema));
 
@@ -225,7 +235,7 @@ function buildSession(
 
   const cardMap = new Map(cards.map((c) => [c.exampleId, c]));
   const diagScores = loadDiagScores();
-  const exById = new Map(examples.map((e) => [e.id, e]));
+  const exById = new Map(allExamples.map((e) => [e.id, e]));
 
   // Odemčená obtížnost per téma — počítá se jednou na téma
   const levelCache = new Map<string, 1 | 2 | 3>();
@@ -245,9 +255,8 @@ function buildSession(
   });
 
   if (due.length === 0) {
-    const fallback = temaFilter
-      ? cards.filter((c) => pool.some((ex) => ex.id === c.exampleId))
-      : [...cards];
+    const poolIdsFb = new Set(pool.map((ex) => ex.id));
+    const fallback = cards.filter((c) => poolIdsFb.has(c.exampleId));
     const ids = fallback
       .sort((a, b) => a.nextReview - b.nextReview)
       .slice(0, SESSION_SIZE)
@@ -313,6 +322,7 @@ function TreningPageInner() {
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
 
   const { isPremium } = usePremium();
+  const { trida } = useTrida();
 
   // Gamification
   const [xp, setXp]                     = useState(0);
@@ -385,7 +395,7 @@ function TreningPageInner() {
         setSkipped(draft.skipped);
         setWrongAnswers(draft.wrongAnswers);
       } else if (guest ? !!urlTema : !!(urlTema || urlRezim || urlPodtema)) {
-        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest, urlPodtema));
+        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest, urlPodtema, readTridaForSession()));
       }
       setHydrated(true);
     };
@@ -406,7 +416,7 @@ function TreningPageInner() {
 
     // Save session to localStorage history
     const practiceTopics = [...new Set(
-      sessionIds.map((id) => examples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
+      sessionIds.map((id) => allExamples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
     )];
     localSaveSession({
       date: localDateStr(),
@@ -520,7 +530,7 @@ function TreningPageInner() {
       if (!readinessBeforeRef.current) readinessBeforeRef.current = snapshotReadiness();
 
       const exId = sessionIds[currentIdx];
-      const example = examples.find((ex) => ex.id === exId);
+      const example = allExamples.find((ex) => ex.id === exId);
       const existing = cards.find((c) => c.exampleId === exId) ?? createCard(exId);
       const quality: 0 | 1 | 2 | 3 | 4 | 5 = wasCorrect ? 4 : 1;
       const updated = reviewCard(existing, quality);
@@ -712,7 +722,7 @@ function TreningPageInner() {
   function restart(rezim?: "chyby" | "sm2" | null) {
     clearSessionDraft();
     setRezimFilter(rezim ?? null);
-    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false, podtemaFilter));
+    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false, podtemaFilter, trida));
     setCurrentIdx(0);
     setCorrect(0);
     setSkipped(0);
@@ -764,20 +774,32 @@ function TreningPageInner() {
 
   // Logged-in: show topic map if no topic/rezim selected yet
   if (!isGuest && !temaFilter && !rezimFilter && sessionIds.length === 0 && !done) {
+    if (trida === 5) {
+      return (
+        <TopicMap5
+          isPremium={isPremium}
+          onSelectTopic={(tema) => {
+            setTemaFilter(tema);
+            setPodtemaFilter(null);
+            setSessionIds(buildSession(cards, tema, null, false, null, 5));
+          }}
+        />
+      );
+    }
     return (
       <LoggedInTopicMap
         isPremium={isPremium}
         onSelectTopic={(tema, podtema) => {
           setTemaFilter(tema);
           setPodtemaFilter(podtema ?? null);
-          setSessionIds(buildSession(cards, tema, null, false, podtema ?? null));
+          setSessionIds(buildSession(cards, tema, null, false, podtema ?? null, trida));
         }}
         onStartMix={() => {
-          setSessionIds(buildSession(cards, null, null, false));
+          setSessionIds(buildSession(cards, null, null, false, null, trida));
         }}
         onStartMistakes={() => {
           setRezimFilter("chyby");
-          setSessionIds(buildSession(cards, null, "chyby", false));
+          setSessionIds(buildSession(cards, null, "chyby", false, null, trida));
         }}
       />
     );
@@ -888,7 +910,7 @@ function TreningPageInner() {
   if (done) {
     const progress = loadProgress();
     const practiceTopics = [...new Set(
-      sessionIds.map((id) => examples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
+      sessionIds.map((id) => allExamples.find((ex) => ex.id === id)?.tema ?? "").filter(Boolean)
     )];
     return (
       <>
@@ -956,7 +978,7 @@ function TreningPageInner() {
     );
   }
 
-  const currentExample = examples.find((ex) => ex.id === sessionIds[currentIdx]);
+  const currentExample = allExamples.find((ex) => ex.id === sessionIds[currentIdx]);
   if (!currentExample) return null;
   const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < DIAG_WEAK_BELOW;
 

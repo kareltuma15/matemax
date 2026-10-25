@@ -6,11 +6,14 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { reportDbError } from "@/lib/db-error";
 import { PENDING_REF_KEY } from "@/lib/referral";
+import { saveLocalTrida } from "@/lib/trida";
+import type { Trida } from "@/types";
 
 export default function RegistraceForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [name, setName]             = useState(""); // „Jak ti říkat?“ (nepovinné)
+  const [trida, setTrida]           = useState<Trida | null>(null); // 5. nebo 9. třída (povinné)
   const [email, setEmail]           = useState("");
   const [password, setPassword]     = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +29,7 @@ export default function RegistraceForm() {
 
   async function handleGoogleSignup() {
     if (!supabase) return;
+    if (trida) saveLocalTrida(trida);
     setGoogleLoading(true);
     const ref = searchParams.get("ref");
     const next = ref ? `/vitej?ref=${encodeURIComponent(ref)}` : "/vitej";
@@ -40,6 +44,10 @@ export default function RegistraceForm() {
     e.preventDefault();
     if (!supabase) {
       setError("Registrace není dostupná – chybí konfigurace.");
+      return;
+    }
+    if (!trida) {
+      setError("Vyber, jestli jsi v 5. nebo 9. třídě.");
       return;
     }
     if (password.length < 8) {
@@ -58,6 +66,7 @@ export default function RegistraceForm() {
         data: {
           first_name: callName,
           full_name: callName || undefined,
+          trida,
         },
       },
     });
@@ -77,6 +86,8 @@ export default function RegistraceForm() {
       setError("Tento e-mail už je registrovaný. Přihlas se, nebo si nech poslat nové heslo (odkaz Zapomenuté heslo).");
       return;
     }
+
+    saveLocalTrida(trida);
 
     if (data.user) {
       const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
@@ -143,6 +154,30 @@ export default function RegistraceForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1" role="group" aria-label="Třída">
+          <span className="text-xs font-medium text-slate-500">Jsi v 5. nebo 9. třídě?</span>
+          <div className="grid grid-cols-2 gap-2">
+            {([
+              { t: 5 as Trida, ikona: "🎒", nadpis: "5. třída", popis: "Přijímačky na víceletá gymnázia" },
+              { t: 9 as Trida, ikona: "🎓", nadpis: "9. třída", popis: "Přijímačky na střední školu" },
+            ]).map((o) => (
+              <button
+                key={o.t}
+                type="button"
+                onClick={() => { setTrida(o.t); setError(null); }}
+                aria-pressed={trida === o.t}
+                data-testid={`trida-${o.t}`}
+                className="rounded-xl border-2 px-3 py-3 text-center transition-colors"
+                style={trida === o.t ? { borderColor: "#2E6DA4", background: "#eff6ff" } : { borderColor: "#e2e8f0", background: "#fff" }}
+              >
+                <span className="block text-2xl">{o.ikona}</span>
+                <span className="block text-sm font-bold" style={{ color: "var(--text-primary)" }}>{o.nadpis}</span>
+                <span className="block text-[11px] text-slate-400 leading-tight mt-0.5">{o.popis}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col gap-1">
           <label htmlFor="reg-name" className="text-xs font-medium text-slate-500">Jak ti říkat? <span className="font-normal text-slate-400">(nepovinné)</span></label>
           <input

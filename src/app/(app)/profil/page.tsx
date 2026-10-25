@@ -17,6 +17,7 @@ import { computeTrainingState, computeTopicProgress, LEVEL_DONE_RATIO, type Leve
 import ActivityHeatmap from "@/components/ActivityHeatmap";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
+import { useTrida } from "@/lib/trida";
 import { PREMIUM_TOPICS } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
@@ -34,7 +35,7 @@ const AVATAR_EMOJIS = [
   "🧠", "🏆", "🌟", "🦄", "🎮", "🎸",
 ];
 
-const ALL_TOPICS = Object.keys(TEMA_LABELS);
+const ALL_TOPICS: string[] = [...TEMATA_ORDER];
 
 const TOPIC_EMOJI: Record<string, string> = {
   zlomky: "🍕", vyrazy: "🔢", rovnice: "⚖️", geometrie: "📐",
@@ -237,6 +238,7 @@ export default function ProfilPage() {
   const [personaSaving, setPersonaSaving]   = useState(false);
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
+  const { trida, setTrida } = useTrida();
   const [soundOn, setSoundOn]             = useState(true);
   const [darkMode, setDarkMode]           = useState<Theme>("light");
 
@@ -559,7 +561,7 @@ export default function ProfilPage() {
 
   // SM-2 progress per topic
   const sm2CardMap = new Map(sm2Cards.map((c) => [c.exampleId, c]));
-  const sm2TopicStats = Object.keys(TEMA_LABELS).reduce<Record<string, { practiced: number; mastered: number; total: number }>>((acc, tema) => {
+  const sm2TopicStats = [...TEMATA_ORDER].reduce<Record<string, { practiced: number; mastered: number; total: number }>>((acc, tema) => {
     const topicExamples = examplesIndex.filter((ex) => ex.tema === tema);
     const practiced = topicExamples.filter((ex) => (sm2CardMap.get(ex.id)?.repetitions ?? 0) > 0).length;
     const mastered  = topicExamples.filter((ex) => (sm2CardMap.get(ex.id)?.interval ?? 0) >= 7).length;
@@ -755,6 +757,13 @@ export default function ProfilPage() {
             </div>
           )}
 
+          {trida === 5 ? (
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center" data-testid="profil-5-pripravujeme">
+              <p className="text-3xl mb-1">🚧</p>
+              <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Přehled pokroku pro 5. třídu připravujeme</p>
+              <p className="text-xs text-slate-400 mt-1">Až bude hotová příprava pro 5. třídu, uvidíš tady, jak ti jdou jednotlivé okruhy.</p>
+            </div>
+          ) : (<>
           {/* ── SEKCE: PŘIPRAVENOST ── */}
           <div className="scroll-reveal">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost na přijímačky</p>
@@ -884,6 +893,7 @@ export default function ProfilPage() {
             )}
           </div>
 
+          </>)}
           {/* ── SEKCE: TREND CHART ── */}
           {sessions.length >= 2 && (
             <div className="scroll-reveal">
@@ -902,6 +912,7 @@ export default function ProfilPage() {
 
         {/* ── PRAVÝ SLOUPEC (aside) — plán, cíl, pozvánka ── */}
         <aside className="flex flex-col gap-4 mt-4 lg:mt-0">
+          {trida === 9 && (<>
           {/* Plán */}
           {isPremium ? (
             <div
@@ -935,6 +946,7 @@ export default function ProfilPage() {
             </div>
           )}
 
+          </>)}
           {/* Nejbližší cíl (odznak) */}
           {nextBadge && earnedBadges.length < allBadges.length && (
             <div>
@@ -1113,6 +1125,29 @@ export default function ProfilPage() {
       <div id="nastaveni-section">
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nastavení & účet</p>
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
+
+          {/* Třída */}
+          <div className="px-4 py-3.5 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-slate-800">Třída</p>
+              <p className="text-xs text-slate-400">Podle ní vidíš témata a úlohy</p>
+            </div>
+            <div className="flex rounded-xl overflow-hidden border border-slate-200 shrink-0" role="group" aria-label="Třída">
+              {([5, 9] as const).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => { void setTrida(t); }}
+                  aria-pressed={trida === t}
+                  data-testid={`profil-trida-${t}`}
+                  className="px-3 py-2 text-xs font-bold transition-colors"
+                  style={trida === t ? { background: "#0D1B3E", color: "#fff" } : { background: "#fff", color: "#64748b" }}
+                >
+                  {t}. třída
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Přezdívka a avatar */}
           <div>

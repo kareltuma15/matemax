@@ -21,6 +21,8 @@ import DnesniMise from "@/components/DnesniMise";
 import { vokativ } from "@/lib/vokativ";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { localDateStr, localDateDaysAgo } from "@/lib/date";
+import { useTrida } from "@/lib/trida";
+import Dashboard5 from "@/components/Dashboard5";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -236,7 +238,7 @@ const HERO_SYMBOLS = [
 
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 
-export default function LoggedInDashboard({
+function LoggedInDashboard9({
   session,
   xp,
   streak,
@@ -835,4 +837,16 @@ export default function LoggedInDashboard({
       <BottomNav />
     </div>
   );
+}
+
+/** Úvodní stránka podle třídy: žák 5. třídy má vlastní (okruhy 5. třídy), 9. třída zůstává beze změny. */
+export default function LoggedInDashboard(props: {
+  session: Session;
+  xp: number;
+  streak: number;
+  diagDone: boolean;
+}) {
+  const { trida, ready } = useTrida();
+  if (ready && trida === 5) return <Dashboard5 session={props.session} />;
+  return <LoggedInDashboard9 {...props} />;
 }

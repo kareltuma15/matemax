@@ -213,6 +213,8 @@ export interface TelesoDiagram {
 
 export interface DBExample {
   id: string;
+  /** Třída, pro kterou je úloha. Bez hodnoty = 9. třída (všechny dřívější úlohy). */
+  trida?: Trida;
   tema: string;
   podtema: string;
   obtiznost: 1 | 2 | 3;
@@ -310,13 +312,25 @@ export interface UserProgress {
 
 // === 9 sjednocených témat (dle CERMAT testů a pracovního sešitu 2026/27) ===
 // Pořadí odpovídá kapitolám sešitu. Viz docs/STRUKTURA-cermat-sesit-matemax.md
+/** Třída, pro kterou žák procvičuje (přijímačky z 5. třídy na víceletá gymnázia, nebo z 9. třídy na střední školy). */
+export type Trida = 5 | 9;
+
+// === 8 okruhů pro 5. třídu (podle oficiálních testů CERMAT, viz docs/CERMAT-5-ROZBOR.md) ===
+// Klíče mají předponu p5_, aby se nikdy nepromíchaly s tématy 9. třídy.
+export const TEMATA_ORDER_5 = [
+  "p5_pocitani", "p5_jednotky", "p5_slovni", "p5_zlomky",
+  "p5_obsah", "p5_telesa", "p5_rysovani", "p5_grafy",
+] as const;
+
+export const TEMATA_PRO_TRIDU: Record<Trida, readonly string[]> = { 5: TEMATA_ORDER_5, 9: [] };
+
 export const TEMATA_ORDER = [
   "zlomky", "vyrazy", "rovnice", "geometrie", "slovni_ulohy",
   "grafy_logika", "konstrukce", "uhly", "souhrnne",
 ] as const;
 
-// POZOR: některé komponenty iterují Object.keys(TEMA_LABELS) jako seznam témat —
-// drž zde jen 9 kanonických témat (legacy mapuj přes legacyTemaLabel()).
+// POZOR: TEMA_LABELS obsahuje popisky témat 9. i 5. třídy (kvůli zobrazení štítků).
+// Seznam témat pro výpis bereš vždy z TEMATA_ORDER (9. třída) nebo TEMATA_ORDER_5 (5. třída), ne z Object.keys.
 export const TEMA_LABELS: Record<string, string> = {
   zlomky:       "Zlomky",
   vyrazy:       "Výrazy",
@@ -327,6 +341,15 @@ export const TEMA_LABELS: Record<string, string> = {
   konstrukce:   "Konstrukční úlohy",
   uhly:         "Úhly",
   souhrnne:     "Souhrnné",
+  // 5. třída
+  p5_pocitani:  "Počítání s čísly",
+  p5_jednotky:  "Jednotky, čas a peníze",
+  p5_slovni:    "Slovní úlohy a úvaha",
+  p5_zlomky:    "Zlomky a části celku",
+  p5_obsah:     "Obvod a obsah",
+  p5_telesa:    "Tělesa a souměrnost",
+  p5_rysovani:  "Rýsování",
+  p5_grafy:     "Grafy, tabulky a vzory",
 };
 
 // Stará témata (z dřívějších localStorage dat / odkazů) → label, jen pro zobrazení

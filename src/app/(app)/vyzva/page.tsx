@@ -15,6 +15,7 @@ import { supabase } from "@/lib/supabase";
 import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import ShareButton from "@/components/ShareButton";
 import { localDateStr } from "@/lib/date";
+import { jenPro9 } from "@/components/JenPro9";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -116,7 +117,7 @@ function formatTime(s: number): string {
 
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
-export default function VyzvaPage() {
+function VyzvaPage() {
   const challenge = getTodayChallenge();
   const todayKey = getTodayKey();
 
@@ -709,3 +710,5 @@ export default function VyzvaPage() {
     </div>
   );
 }
+
+export default jenPro9(VyzvaPage, "Výzva");

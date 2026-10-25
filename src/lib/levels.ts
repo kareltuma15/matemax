@@ -1,4 +1,4 @@
-import { examples } from "@/data/examples";
+import { allExamples as examples } from "@/data/examples";
 import { localLoadCards } from "@/lib/storage";
 
 /**

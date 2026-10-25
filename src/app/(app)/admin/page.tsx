@@ -326,7 +326,13 @@ export default function AdminPage() {
                 >
                   <td className="px-4 py-3 cursor-pointer" onClick={() => toggleDetail(u.id)} title="Klikni pro detail">
                     {u.name && (
-                      <div className="font-bold" style={{ color: "var(--text-primary)" }}>{u.name}</div>
+                      <div className="font-bold" style={{ color: "var(--text-primary)" }}>
+                        {u.name}
+                        <span className="ml-2 rounded-full px-1.5 py-0.5 text-[10px] font-bold align-middle" style={{ background: u.trida === 5 ? "#fef3c7" : "#eff6ff", color: u.trida === 5 ? "#92400e" : "#2E6DA4" }}>{u.trida}. tř.</span>
+                      </div>
+                    )}
+                    {!u.name && (
+                      <div className="text-[10px] font-bold" style={{ color: u.trida === 5 ? "#92400e" : "#2E6DA4" }}>{u.trida}. třída</div>
                     )}
                     <div className="font-medium" style={{ color: "var(--text-primary)", maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                       {u.email}

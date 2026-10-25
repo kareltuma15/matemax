@@ -10,6 +10,7 @@ import { TEMA_LABELS } from "@/types";
 import { supabase } from "@/lib/supabase";
 import { trackEvent } from "@/lib/analytics";
 import { localDateStr } from "@/lib/date";
+import { jenPro9 } from "@/components/JenPro9";
 
 const TEST_SIZE = 15;
 const TEST_SECONDS = 25 * 60; // 25 minutes
@@ -52,7 +53,7 @@ function getRating(pct: number): { emoji: string; label: string; color: string }
   return { emoji: "📚", label: "Procvičuj dál", color: "#d97706" };
 }
 
-export default function CermatTestPage() {
+function CermatTestPage() {
   const [phase, setPhase] = useState<"intro" | "test" | "results">("intro");
   const [testExamples] = useState(() => pickRandom(TEST_SIZE));
   const [userAnswers, setUserAnswers] = useState<string[]>(Array(TEST_SIZE).fill(""));
@@ -473,3 +474,5 @@ export default function CermatTestPage() {
     </div>
   );
 }
+
+export default jenPro9(CermatTestPage, "CERMAT test");

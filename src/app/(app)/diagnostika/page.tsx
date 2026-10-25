@@ -15,6 +15,7 @@ import pool from "@/data/diagnostika.json";
 import { DIAG_WEAK_BELOW } from "@/lib/levels";
 import { usePremium } from "@/lib/premium";
 import { FREE_TOPICS, GUEST_FREE_TOPICS } from "@/lib/subscription";
+import { jenPro9 } from "@/components/JenPro9";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -110,7 +111,7 @@ function levelText(correct: number, total: number): string {
   return ["Začneme od základů", "Základ ano, střední úlohy zatím ne", "Základy i střední úlohy sedí", "Zvládáš i úlohy na úrovni přijímaček"][Math.min(3, Math.max(0, correct))];
 }
 
-export default function DiagnostikaPage() {
+function DiagnostikaPage() {
   const router = useRouter();
   const [alreadyDone, setAlreadyDone] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
@@ -565,3 +566,5 @@ function DiagResults({ start, onStart }: { start: { tema: string; label: string 
     </div>
   );
 }
+
+export default jenPro9(DiagnostikaPage, "Diagnostika");

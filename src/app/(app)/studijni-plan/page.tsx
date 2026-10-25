@@ -5,8 +5,9 @@ import Link from "next/link";
 import { generateCesta, CestaStop } from "@/lib/cesta";
 import { getCermatUrgency } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
+import { jenPro9 } from "@/components/JenPro9";
 
-export default function CestaPage() {
+function CestaPage() {
   const { isPremium } = usePremium();
   const cesta = useMemo(() => generateCesta(isPremium), [isPremium]);
   const urgency = getCermatUrgency(cesta.daysUntil);
@@ -211,3 +212,5 @@ function Stop({ stop }: { stop: CestaStop }) {
     </div>
   );
 }
+
+export default jenPro9(CestaPage, "Studijní plán");

@@ -8,12 +8,15 @@ import { reportDbError } from "@/lib/db-error";
 import { PENDING_REF_KEY } from "@/lib/referral";
 import { DIAGNOSTIC_MINUTES } from "@/lib/site-stats";
 import { vokativ } from "@/lib/vokativ";
+import { useTrida, isTrida, readLocalTrida } from "@/lib/trida";
 
 export default function VitejPage() {
   const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [referralGranted, setReferralGranted] = useState(false);
+  const { trida, setTrida } = useTrida();
+  const [vybratTridu, setVybratTridu] = useState(false); // účet (např. přes Google) ještě nemá zvolenou třídu
 
   useEffect(() => {
     if (!supabase) return;
@@ -29,6 +32,7 @@ export default function VitejPage() {
       const meta = data.session.user.user_metadata ?? {};
       const jmeno = (meta.first_name as string) || ((meta.full_name as string) ?? "").split(" ")[0] || "";
       setFirstName(jmeno);
+      if (!isTrida(Number(meta.trida)) && readLocalTrida() === null) setVybratTridu(true);
 
       // Pojistka: kdo má diagnostiku za sebou, nemá tady co dělat. Rozhodnutí
       // po přihlášení sice čte obnovená data, ale kdyby obnova selhala nebo se
@@ -146,6 +150,24 @@ export default function VitejPage() {
           </div>
         </div>
 
+        {vybratTridu && (
+          <div className="w-full bg-white rounded-2xl border border-slate-200 p-4" data-testid="vitej-vyber-tridy">
+            <p className="text-sm font-bold text-center mb-2" style={{ color: "var(--text-primary)" }}>Jsi v 5. nebo 9. třídě?</p>
+            <div className="grid grid-cols-2 gap-2">
+              {([5, 9] as const).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => { void setTrida(t); setVybratTridu(false); }}
+                  className="rounded-xl border-2 border-slate-200 py-3 font-bold text-sm hover:border-blue-400"
+                >
+                  {t === 5 ? "🎒 5. třída" : "🎓 9. třída"}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Astronaut illustration */}
         <div
           className="w-24 h-24 rounded-full flex items-center justify-center text-5xl shrink-0"
@@ -160,17 +182,18 @@ export default function VitejPage() {
             Vítej v MateMax{osloveni}! 🎉
           </h1>
           <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto">
-            Nejdřív zjistíme kde máš mezery — pak připravíme plán přesně pro tebe.
+            {trida === 5
+              ? "Vyber si okruh a procvičuj po malých krocích, ať jsi na přijímačky připravený."
+              : "Nejdřív zjistíme kde máš mezery — pak připravíme plán přesně pro tebe."}
           </p>
         </div>
 
         {/* Info karty */}
         <div className="grid grid-cols-3 gap-2 w-full">
-          {[
-            ["⏱️", `${DIAGNOSTIC_MINUTES} minut`, "diagnostika"],
-            ["📚", "9 témat", "CERMAT"],
-            ["🎯", "Výsledek", "ihned"],
-          ].map(([icon, title, sub]) => (
+          {(trida === 5
+            ? [["📚", "8 okruhů", "5. třída"], ["🧩", "Úlohy", "jako u přijímaček"], ["🔥", "Série", "každý den"]]
+            : [["⏱️", `${DIAGNOSTIC_MINUTES} minut`, "diagnostika"], ["📚", "9 témat", "CERMAT"], ["🎯", "Výsledek", "ihned"]]
+          ).map(([icon, title, sub]) => (
             <div
               key={title}
               className="bg-white rounded-xl border border-slate-200 p-3 text-center"
@@ -185,11 +208,11 @@ export default function VitejPage() {
         {/* CTA */}
         <div className="flex flex-col gap-3 w-full">
           <Link
-            href="/diagnostika"
+            href={trida === 5 ? "/trenink" : "/diagnostika"}
             className="block w-full py-4 text-white font-black rounded-2xl text-center text-base shadow-lg"
             style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
           >
-            Spustit diagnostiku →
+            {trida === 5 ? "Začít trénovat →" : "Spustit diagnostiku →"}
           </Link>
           <button
             onClick={() => setShowModal(true)}

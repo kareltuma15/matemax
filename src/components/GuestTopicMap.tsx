@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { TEMA_LABELS } from "@/types";
+import { TEMA_LABELS, TEMATA_ORDER } from "@/types";
 import { GUEST_FREE_TOPICS, FREE_TOPICS } from "@/lib/subscription";
 import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
-const ALL_TOPICS = Object.keys(TEMA_LABELS);
+const ALL_TOPICS: string[] = [...TEMATA_ORDER];
 
 const FREE_COLORS: Record<string, { border: string; label: string; bg: string }> = {
   zlomky: { border: "#2E6DA4", label: "#2E6DA4", bg: "#eff6ff" },

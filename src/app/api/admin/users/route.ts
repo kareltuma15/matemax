@@ -17,6 +17,8 @@ export interface AdminUser {
   /** paid = platí předplatné, trial = zkušební období, free = zdarma */
   plan: "paid" | "trial" | "free";
   trialUntil: string | null;
+  /** Třída žáka (5 nebo 9); kdo ji nemá nastavenou, je v 9. třídě */
+  trida: 5 | 9;
   /** stripe = platí přes Stripe, manual = udělil admin ručně, null = bez Premium nebo trial z pozvánky */
   source: "stripe" | "manual" | null;
   lastLogin: string | null;
@@ -139,6 +141,7 @@ export async function GET(req: NextRequest) {
       plan,
       trialUntil: plan === "trial" ? prem?.trialUntil ?? null : null,
       source: plan === "free" ? null : prem?.source ?? null,
+      trida: Number(meta.trida) === 5 ? 5 : 9,
       lastLogin: u.last_sign_in_at ?? null,
       answered: ans.answered,
       correct: ans.correct,

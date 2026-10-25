@@ -13,6 +13,7 @@ function ExMath({ ex, text, large }: { ex: DBExample; text: string; large?: bool
   return <MathText text={text} large={large} />;
 }
 import { playCorrect, playWrong } from "@/lib/sound";
+import { jenPro9 } from "@/components/JenPro9";
 
 const TOTAL_TIME = 60;
 const QUESTION_COUNT = 10;
@@ -36,7 +37,7 @@ function pickQuestions(): DBExample[] {
 
 type Phase = "start" | "playing" | "done";
 
-export default function RychlyMod() {
+function RychlyMod() {
   const [phase, setPhase]       = useState<Phase>("start");
   const [questions, setQuestions] = useState<DBExample[]>([]);
   const [idx, setIdx]           = useState(0);
@@ -301,3 +302,5 @@ export default function RychlyMod() {
     </div>
   );
 }
+
+export default jenPro9(RychlyMod, "Rychlý mód");

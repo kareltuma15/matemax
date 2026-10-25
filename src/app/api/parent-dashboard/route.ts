@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { pragueDateStr } from "@/lib/date";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import { examples } from "@/data/examples";
+import { allExamples as examples } from "@/data/examples";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";

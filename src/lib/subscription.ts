@@ -1,4 +1,4 @@
-import { TEMATA_ORDER } from "@/types";
+import { TEMATA_ORDER, TEMATA_ORDER_5 } from "@/types";
 
 /**
  * Kdo má k jakým tématům přístup — jediný zdroj pravdy.
@@ -26,9 +26,13 @@ export const PREMIUM_TOPICS = new Set<string>(
   TEMATA_ORDER.filter((tema) => !FREE_TOPICS.has(tema))
 );
 
-/** Zámek pro přihlášeného uživatele. */
+/** 5. třída: stejné pravidlo jako u 9. třídy — první tři okruhy zdarma (rozhodnutí Karla 25. 10. 2026). */
+export const FREE_TOPICS_5 = new Set<string>(TEMATA_ORDER_5.slice(0, 3));
+export const PREMIUM_TOPICS_5 = new Set<string>(TEMATA_ORDER_5.filter((tema) => !FREE_TOPICS_5.has(tema)));
+
+/** Zámek pro přihlášeného uživatele (platí pro témata 9. i 5. třídy). */
 export function isTopicLocked(tema: string, isPremium: boolean): boolean {
-  return !isPremium && PREMIUM_TOPICS.has(tema);
+  return !isPremium && (PREMIUM_TOPICS.has(tema) || PREMIUM_TOPICS_5.has(tema));
 }
 
 /** Zámek pro nepřihlášeného hosta. */

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import Link from "next/link";
 import { DBExample, TEMA_LABELS } from "@/types";
-import { examples } from "@/data/examples";
+import { allExamples as examples } from "@/data/examples";
 import MathText from "./MathText";
 import MathDisplay from "./MathDisplay";
 
