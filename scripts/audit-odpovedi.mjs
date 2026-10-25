@@ -135,7 +135,7 @@ function answerValue(raw) {
 // ── databáze ──
 const root = process.cwd();
 const load = (f) => { const j = JSON.parse(fs.readFileSync(path.join(root, f), "utf8")); return Array.isArray(j) ? j : (j.examples ?? j.priklady ?? []); };
-const sets = [["databaze", load("src/data/databaze.json")], ["cermat-200", load("src/data/cermat-200.json")]];
+const sets = [["databaze", load("src/data/databaze.json")], ["cermat-200", load("src/data/cermat-200.json")], ["databaze-5", load("src/data/databaze-5.json")]];
 
 const NOTE = /PŘEPOČ|přepoč|přeprač|odchyluje se|ale\.\.\.|\boprava\b|zkusme|Jiný postup|Přesná CERMAT|Pozor: výsledek|\?\?\?|TODO|FIXME|XXX|chyba v zadání|znovu spočít|nesedí|neodpovídá zadání/i;
 const GARBLED = [/\\frac\{[^{}]*\}\{[^{}]*\}\\frac\{-/, /[0-9]\\frac\{-/];

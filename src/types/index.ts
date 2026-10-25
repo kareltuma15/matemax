@@ -441,6 +441,10 @@ export const PODTEMA_LABELS: Record<string, string> = {
   linearni_se_zavorkou: "Rovnice se závorkami",
   linearni_rovnice_se_zavorkami: "Rovnice se závorkami",
   vyjadreni_neznama:    "Vyjádření neznámé ze vzorce",
+  // 5. třída
+  poradi_operaci:       "Pořadí operací",
+  doplnit_cislo:        "Doplň číslo",
+  vyber_vyrazu:         "Který výraz",
   zlomkova:             "Zlomková rovnice",
   linearni_se_zlomky:   "Zlomková rovnice",
   linearni_rovnice_se_zlomky: "Zlomková rovnice",

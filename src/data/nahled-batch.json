@@ -1,4 +1,202 @@
 {
-  "nazev": "Úhly s obrázky — vedlejší, střídavé a jednostranné úhly, vnější úhel, rovnoramenný trojúhelník, pětiúhelník (10 úloh: L1 ×5, L2 ×5) — ZAPSÁNO",
-  "examples": []
+  "nazev": "5. třída — Počítání s čísly: pořadí operací, doplňování čísla, výběr výrazu (12 úloh: L1 ×4, L2 ×5, L3 ×3)",
+  "examples": [
+    {
+      "id": "P5_POC_01",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $18 + 6 \\cdot 4$",
+      "odpoved": "42",
+      "reseni_kroky": [
+        "Nejdřív se počítá násobení: $6 \\cdot 4 = 24$.",
+        "Pak sčítání: $18 + 24 = 42$."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_02",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $56 : 7 + 3 \\cdot 5$",
+      "odpoved": "23",
+      "reseni_kroky": [
+        "Dělení a násobení se počítají před sčítáním: $56 : 7 = 8$ a $3 \\cdot 5 = 15$.",
+        "Teď sečteme: $8 + 15 = 23$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_03",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $(30 - 12) : 6 + 9$",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Nejdřív závorka: $30 - 12 = 18$.",
+        "Pak dělení: $18 : 6 = 3$.",
+        "Nakonec sčítání: $3 + 9 = 12$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_04",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $100 - 4 \\cdot (8 + 7)$",
+      "odpoved": "40",
+      "reseni_kroky": [
+        "Nejdřív závorka: $8 + 7 = 15$.",
+        "Pak násobení: $4 \\cdot 15 = 60$.",
+        "Nakonec odčítání: $100 - 60 = 40$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_05",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $72 : (2 \\cdot 4) + 15 \\cdot 3 - 20$",
+      "odpoved": "34",
+      "reseni_kroky": [
+        "Závorka: $2 \\cdot 4 = 8$.",
+        "Dělení a násobení: $72 : 8 = 9$ a $15 \\cdot 3 = 45$.",
+        "Zbývá zleva doprava sčítání a odčítání: $9 + 45 - 20 = 34$."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_06",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $1200 : 40 + 25 \\cdot 12$",
+      "odpoved": "330",
+      "reseni_kroky": [
+        "Dělení: $1200 : 40 = 30$ (12 set děleno 4 desítkami je 30).",
+        "Násobení: $25 \\cdot 12 = 300$.",
+        "Součet: $30 + 300 = 330$."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_07",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $450 : 9 - (6 + 2 \\cdot 7)$",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "V závorce se nejdřív násobí: $2 \\cdot 7 = 14$, pak $6 + 14 = 20$.",
+        "Dělení: $450 : 9 = 50$.",
+        "Rozdíl: $50 - 20 = 30$."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_08",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $300 - 24 \\cdot 5 + 36 : 4$",
+      "odpoved": "189",
+      "reseni_kroky": [
+        "Násobení a dělení před odčítáním a sčítáním: $24 \\cdot 5 = 120$ a $36 : 4 = 9$.",
+        "Zleva doprava: $300 - 120 = 180$ a $180 + 9 = 189$."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_09",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $\\square : 6 = (12 + 3 \\cdot 4) - 18$",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "Pravou stranu spočítáme: $3 \\cdot 4 = 12$, pak $12 + 12 = 24$ a $24 - 18 = 6$.",
+        "Rovnost má tvar $\\square : 6 = 6$. Hledané číslo děleno šesti dá šest.",
+        "Proto $\\square = 6 \\cdot 6 = 36$. Zkouška: $36 : 6 = 6$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_10",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $100 - 54 : (2 + \\square) = 91$",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Od 100 se odečítá nějaké číslo a vyjde 91. Odčítá se tedy $100 - 91 = 9$, takže $54 : (2 + \\square) = 9$.",
+        "Číslo 54 děleno čímsi dá 9, to „cosi“ je $54 : 9 = 6$. Tedy $2 + \\square = 6$.",
+        "Proto $\\square = 4$. Zkouška: $54 : 6 = 9$ a $100 - 9 = 91$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_11",
+      "tema": "p5_pocitani",
+      "podtema": "vyber_vyrazu",
+      "obtiznost": 2,
+      "latex": true,
+      "moznosti": [
+        "$4 + 4 \\cdot 4$",
+        "$(4 + 4) \\cdot 4$",
+        "$4 \\cdot 4 - 4$",
+        "$4 + 4 : 4$",
+        "$4 \\cdot (4 + 4) - 4$"
+      ],
+      "spravna": 0,
+      "zadani": "Který z výrazů má hodnotu 20?",
+      "odpoved": "$4 + 4 \\cdot 4$",
+      "reseni_kroky": [
+        "Každý výraz spočítáme podle pořadí operací.",
+        "A) $4 + 4 \\cdot 4 = 4 + 16 = 20$. To vyhovuje.",
+        "Ostatní: B) $(4 + 4) \\cdot 4 = 32$, C) $4 \\cdot 4 - 4 = 12$, D) $4 + 4 : 4 = 5$, E) $4 \\cdot (4 + 4) - 4 = 28$. Správně je A)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_12",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "O kolik se liší hodnota výrazu $(6 + 4 \\cdot 5) : 2$ od hodnoty výrazu $6 + 4 \\cdot 5 : 2$?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "První výraz: $4 \\cdot 5 = 20$, v závorce $6 + 20 = 26$ a $26 : 2 = 13$.",
+        "Druhý výraz bez závorek: nejdřív $4 \\cdot 5 = 20$, pak $20 : 2 = 10$ a nakonec $6 + 10 = 16$.",
+        "Rozdíl hodnot: $16 - 13 = 3$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    }
+  ]
 }
