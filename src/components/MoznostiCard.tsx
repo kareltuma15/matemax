@@ -66,13 +66,13 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
       <div className="flex items-center gap-2 text-xs">
         <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
         <span
-          className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0"
+          className="font-semibold px-2 py-0.5 rounded-full text-[11px] min-w-0 truncate"
           style={{ background: "#eff6ff", color: "#2E6DA4" }}
         >
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
         {podtemaLabel(example.podtema) && (
-          <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[90px]">
+          <span className="text-slate-300 text-[10px] min-w-0 truncate max-w-[90px] hidden min-[420px]:inline">
             {podtemaLabel(example.podtema)}
           </span>
         )}

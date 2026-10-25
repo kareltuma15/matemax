@@ -104,7 +104,22 @@ export function toAngleMinutes(raw: string): number | null {
   return dec ? Math.round(parseFloat(dec[1]) * 60) : null;
 }
 
+/** Čas „hodiny:minuty" (např. 20:35) v minutách od půlnoci, nebo null. Žák smí psát 20:35, 20.35, 20,35 i „20 35". */
+export function toClockMinutes(raw: string): number | null {
+  const m = raw.trim().match(/^(\d{1,2})\s*[:.,\s]\s*(\d{2})$/);
+  if (!m) return null;
+  const h = parseInt(m[1]), min = parseInt(m[2]);
+  return h < 24 && min < 60 ? h * 60 + min : null;
+}
+
 export function checkAnswer(userAnswer: string, correct: string): boolean {
+  // Údaj o čase („20:35"): porovnáváme čas, ne text — žák může psát i 20.35 nebo 20 35.
+  if (/^\d{1,2}:\d{2}$/.test(correct.trim())) {
+    const c = toClockMinutes(correct);
+    const u = toClockMinutes(userAnswer);
+    return c !== null && u !== null && c === u;
+  }
+
   // Úhel ve stupních a minutách („22°30′"): porovnáváme celkový počet minut, ne text.
   // (Bez toho by se „22°30′" i „22°45′" zjednodušilo na „22".)
   if (/\d\s*°\s*\d+\s*['′]/.test(correct)) {

@@ -1,201 +1,225 @@
 {
-  "nazev": "5. třída — Počítání s čísly: pořadí operací, doplňování čísla, výběr výrazu (12 úloh: L1 ×4, L2 ×5, L3 ×3)",
+  "nazev": "5. třída — Jednotky, čas a peníze: převody, čas hodiny:minuty, mince, ceny (14 úloh: L1 ×4, L2 ×6, L3 ×4)",
   "examples": [
     {
-      "id": "P5_POC_01",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
+      "id": "P5_JED_01",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
       "obtiznost": 1,
-      "latex": true,
-      "zadani": "Vypočítej: $18 + 6 \\cdot 4$",
-      "odpoved": "42",
+      "zadani": "Kolik metrů je 2 km 350 m?",
+      "odpoved": "2350",
       "reseni_kroky": [
-        "Nejdřív se počítá násobení: $6 \\cdot 4 = 24$.",
-        "Pak sčítání: $18 + 24 = 42$."
+        "Jeden kilometr má 1 000 metrů, takže 2 km je 2 000 m.",
+        "K tomu přidáme 350 m: 2 000 + 350 = 2 350 m."
       ],
       "cas_sekund": 60,
       "sm2_interval": 1
     },
     {
-      "id": "P5_POC_02",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
+      "id": "P5_JED_02",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
       "obtiznost": 1,
-      "latex": true,
-      "zadani": "Vypočítej: $56 : 7 + 3 \\cdot 5$",
-      "odpoved": "23",
+      "zadani": "Kolik gramů je 3 kg 40 g?",
+      "odpoved": "3040",
       "reseni_kroky": [
-        "Dělení a násobení se počítají před sčítáním: $56 : 7 = 8$ a $3 \\cdot 5 = 15$.",
-        "Teď sečteme: $8 + 15 = 23$."
+        "Jeden kilogram má 1 000 gramů, takže 3 kg je 3 000 g.",
+        "K tomu přidáme 40 g: 3 000 + 40 = 3 040 g."
       ],
-      "cas_sekund": 75,
+      "cas_sekund": 60,
       "sm2_interval": 1
     },
     {
-      "id": "P5_POC_03",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
+      "id": "P5_JED_03",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
       "obtiznost": 1,
-      "latex": true,
-      "zadani": "Vypočítej: $(30 - 12) : 6 + 9$",
-      "odpoved": "12",
+      "zadani": "Kolik minut je 2 hodiny 15 minut?",
+      "odpoved": "135",
       "reseni_kroky": [
-        "Nejdřív závorka: $30 - 12 = 18$.",
-        "Pak dělení: $18 : 6 = 3$.",
-        "Nakonec sčítání: $3 + 9 = 12$."
+        "Jedna hodina má 60 minut, takže 2 hodiny je 120 minut.",
+        "K tomu přidáme 15 minut: 120 + 15 = 135 minut."
       ],
-      "cas_sekund": 75,
+      "cas_sekund": 60,
       "sm2_interval": 1
     },
     {
-      "id": "P5_POC_04",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
+      "id": "P5_JED_04",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
       "obtiznost": 1,
-      "latex": true,
-      "zadani": "Vypočítej: $100 - 4 \\cdot (8 + 7)$",
-      "odpoved": "40",
+      "zadani": "Sešit stojí 24 Kč. Kolik korun zaplatíš za 5 takových sešitů?",
+      "odpoved": "120",
       "reseni_kroky": [
-        "Nejdřív závorka: $8 + 7 = 15$.",
-        "Pak násobení: $4 \\cdot 15 = 60$.",
-        "Nakonec odčítání: $100 - 60 = 40$."
+        "Cena se násobí počtem kusů: 5 · 24.",
+        "5 · 24 = 120, tedy 120 Kč."
       ],
-      "cas_sekund": 75,
+      "cas_sekund": 60,
       "sm2_interval": 1
     },
     {
-      "id": "P5_POC_05",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
+      "id": "P5_JED_05",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
       "obtiznost": 2,
-      "latex": true,
-      "zadani": "Vypočítej: $72 : (2 \\cdot 4) + 15 \\cdot 3 - 20$",
-      "odpoved": "34",
+      "latex": false,
+      "zadani": "Kolikrát je jeden metr kratší než jedna dvacetina kilometru?",
+      "odpoved": "50",
       "reseni_kroky": [
-        "Závorka: $2 \\cdot 4 = 8$.",
-        "Dělení a násobení: $72 : 8 = 9$ a $15 \\cdot 3 = 45$.",
-        "Zbývá zleva doprava sčítání a odčítání: $9 + 45 - 20 = 34$."
-      ],
-      "cas_sekund": 100,
-      "sm2_interval": 1
-    },
-    {
-      "id": "P5_POC_06",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
-      "obtiznost": 2,
-      "latex": true,
-      "zadani": "Vypočítej: $1200 : 40 + 25 \\cdot 12$",
-      "odpoved": "330",
-      "reseni_kroky": [
-        "Dělení: $1200 : 40 = 30$ (12 set děleno 4 desítkami je 30).",
-        "Násobení: $25 \\cdot 12 = 300$.",
-        "Součet: $30 + 300 = 330$."
-      ],
-      "cas_sekund": 100,
-      "sm2_interval": 1
-    },
-    {
-      "id": "P5_POC_07",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
-      "obtiznost": 2,
-      "latex": true,
-      "zadani": "Vypočítej: $450 : 9 - (6 + 2 \\cdot 7)$",
-      "odpoved": "30",
-      "reseni_kroky": [
-        "V závorce se nejdřív násobí: $2 \\cdot 7 = 14$, pak $6 + 14 = 20$.",
-        "Dělení: $450 : 9 = 50$.",
-        "Rozdíl: $50 - 20 = 30$."
-      ],
-      "cas_sekund": 100,
-      "sm2_interval": 1
-    },
-    {
-      "id": "P5_POC_08",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
-      "obtiznost": 2,
-      "latex": true,
-      "zadani": "Vypočítej: $300 - 24 \\cdot 5 + 36 : 4$",
-      "odpoved": "189",
-      "reseni_kroky": [
-        "Násobení a dělení před odčítáním a sčítáním: $24 \\cdot 5 = 120$ a $36 : 4 = 9$.",
-        "Zleva doprava: $300 - 120 = 180$ a $180 + 9 = 189$."
-      ],
-      "cas_sekund": 100,
-      "sm2_interval": 1
-    },
-    {
-      "id": "P5_POC_09",
-      "tema": "p5_pocitani",
-      "podtema": "doplnit_cislo",
-      "obtiznost": 3,
-      "latex": true,
-      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $\\square : 6 = (12 + 3 \\cdot 4) - 18$",
-      "odpoved": "36",
-      "reseni_kroky": [
-        "Pravou stranu spočítáme: $3 \\cdot 4 = 12$, pak $12 + 12 = 24$ a $24 - 18 = 6$.",
-        "Rovnost má tvar $\\square : 6 = 6$. Hledané číslo děleno šesti dá šest.",
-        "Proto $\\square = 6 \\cdot 6 = 36$. Zkouška: $36 : 6 = 6$."
-      ],
-      "cas_sekund": 150,
-      "sm2_interval": 1
-    },
-    {
-      "id": "P5_POC_10",
-      "tema": "p5_pocitani",
-      "podtema": "doplnit_cislo",
-      "obtiznost": 3,
-      "latex": true,
-      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $100 - 54 : (2 + \\square) = 91$",
-      "odpoved": "4",
-      "reseni_kroky": [
-        "Od 100 se odečítá nějaké číslo a vyjde 91. Odčítá se tedy $100 - 91 = 9$, takže $54 : (2 + \\square) = 9$.",
-        "Číslo 54 děleno čímsi dá 9, to „cosi“ je $54 : 9 = 6$. Tedy $2 + \\square = 6$.",
-        "Proto $\\square = 4$. Zkouška: $54 : 6 = 9$ a $100 - 9 = 91$."
-      ],
-      "cas_sekund": 180,
-      "sm2_interval": 1
-    },
-    {
-      "id": "P5_POC_11",
-      "tema": "p5_pocitani",
-      "podtema": "vyber_vyrazu",
-      "obtiznost": 2,
-      "latex": true,
-      "moznosti": [
-        "$4 + 4 \\cdot 4$",
-        "$(4 + 4) \\cdot 4$",
-        "$4 \\cdot 4 - 4$",
-        "$4 + 4 : 4$",
-        "$4 \\cdot (4 + 4) - 4$"
-      ],
-      "spravna": 0,
-      "zadani": "Který z výrazů má hodnotu 20?",
-      "odpoved": "$4 + 4 \\cdot 4$",
-      "reseni_kroky": [
-        "Každý výraz spočítáme podle pořadí operací.",
-        "A) $4 + 4 \\cdot 4 = 4 + 16 = 20$. To vyhovuje.",
-        "Ostatní: B) $(4 + 4) \\cdot 4 = 32$, C) $4 \\cdot 4 - 4 = 12$, D) $4 + 4 : 4 = 5$, E) $4 \\cdot (4 + 4) - 4 = 28$. Správně je A)."
+        "Kilometr má 1 000 metrů. Jedna dvacetina z něj je 1 000 : 20 = 50 metrů.",
+        "Metr se do 50 metrů vejde 50krát, takže jeden metr je 50krát kratší."
       ],
       "cas_sekund": 120,
       "sm2_interval": 1
     },
     {
-      "id": "P5_POC_12",
-      "tema": "p5_pocitani",
-      "podtema": "poradi_operaci",
-      "obtiznost": 3,
-      "latex": true,
-      "zadani": "O kolik se liší hodnota výrazu $(6 + 4 \\cdot 5) : 2$ od hodnoty výrazu $6 + 4 \\cdot 5 : 2$?",
-      "odpoved": "3",
+      "id": "P5_JED_06",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 2,
+      "zadani": "O kolik gramů je čtvrtkilogramové závaží lehčí než závaží o hmotnosti 300 g?",
+      "odpoved": "50",
       "reseni_kroky": [
-        "První výraz: $4 \\cdot 5 = 20$, v závorce $6 + 20 = 26$ a $26 : 2 = 13$.",
-        "Druhý výraz bez závorek: nejdřív $4 \\cdot 5 = 20$, pak $20 : 2 = 10$ a nakonec $6 + 10 = 16$.",
-        "Rozdíl hodnot: $16 - 13 = 3$."
+        "Čtvrt kilogramu je 1 000 : 4 = 250 g.",
+        "Rozdíl: 300 − 250 = 50 g."
       ],
-      "cas_sekund": 180,
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_07",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Kolik nejvíce celých 35minutových dílů pořadu lze zhlédnout za 4 hodiny?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Čtyři hodiny jsou 4 · 60 = 240 minut.",
+        "240 : 35 vyjde 6 a zbyde 30 minut (6 · 35 = 210, 7 · 35 = 245 je víc než 240).",
+        "Celých dílů se stihne zhlédnout nejvíc 6."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_08",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Film začal v 18:45 a trval 1 hodinu a 50 minut. V kolik hodin skončil? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "20:35",
+      "reseni_kroky": [
+        "K 18:45 přidáme nejdřív hodinu: 19:45.",
+        "Zbývá přidat 50 minut. Do 20:00 je to 15 minut, zbývajících 35 minut vede na 20:35.",
+        "Film skončil ve 20:35."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_14",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 2,
+      "latex": true,
+      "moznosti": [
+        "500 g",
+        "0,45 kg",
+        "$\\frac{3}{4}$ kg",
+        "700 g",
+        "0,6 kg"
+      ],
+      "spravna": 2,
+      "zadani": "Která z hmotností je největší?",
+      "odpoved": "$\\frac{3}{4}$ kg",
+      "reseni_kroky": [
+        "Všechno převedeme na gramy: A) 500 g, B) 0,45 kg = 450 g, C) $\\frac{3}{4}$ kg = 750 g, D) 700 g, E) 0,6 kg = 600 g.",
+        "Největší je 750 g, tedy $\\frac{3}{4}$ kg. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_15",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "latex": true,
+      "moznosti": [
+        "20 minut",
+        "25 minut",
+        "30 minut",
+        "35 minut",
+        "40 minut"
+      ],
+      "spravna": 1,
+      "zadani": "Kolik minut je $\\frac{5}{12}$ hodiny?",
+      "odpoved": "25 minut",
+      "reseni_kroky": [
+        "Hodina má 60 minut. Jedna dvanáctina hodiny je 60 : 12 = 5 minut.",
+        "Pět dvanáctin je 5 · 5 = 25 minut. Správně je B)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_09",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 3,
+      "zadani": "V peněžence jsou jen dvoukorunové a pětikorunové mince. Je jich dohromady 9 a mají hodnotu 30 korun. Kolik dvoukorunových mincí je v peněžence?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "Kdyby byly všech 9 mincí pětikorunové, měly by hodnotu 9 · 5 = 45 Kč. To je o 15 Kč víc, než je ve skutečnosti.",
+        "Každá výměna pětikoruny za dvoukorunu sníží hodnotu o 3 Kč. Potřebujeme snížit o 15 Kč, tedy 15 : 3 = 5 výměn.",
+        "Dvoukorunových mincí je 5 (a pětikorunových 4). Zkouška: 5 · 2 + 4 · 5 = 10 + 20 = 30 Kč."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_11",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 3,
+      "zadani": "V řeznictví stojí 1 kg šunky 240 korun. Kolik gramů šunky koupíš za 150 korun?",
+      "odpoved": "625",
+      "reseni_kroky": [
+        "Za 240 Kč dostaneš 1 000 g. Za 24 Kč tedy 100 g (obojí je desetkrát méně).",
+        "Za 150 Kč koupíš 6 dílů po 100 g (6 · 24 = 144 Kč), tedy 600 g, a zbyde ti 6 Kč. Těch 6 Kč je čtvrtina z 24 Kč, takže za ně koupíš čtvrtinu ze 100 g, to je 25 g.",
+        "Za 150 korun koupíš 625 g šunky. Zkouška: 625 g je 0,625 kg a 0,625 · 240 = 150."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_12",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 3,
+      "zadani": "K dispozici jsou mince po 1, 2, 5, 10 a 20 Kč, od každého druhu libovolně mnoho. Kolik nejméně mincí je potřeba na zaplacení přesně 37 korun?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Vybíráme co největší mince. Největší, která se vejde, je 20 Kč: zbývá 37 − 20 = 17 Kč.",
+        "Dál 10 Kč: zbývá 7 Kč. Pak 5 Kč: zbývá 2 Kč. Nakonec 2 Kč: zbývá 0.",
+        "Použili jsme mince 20, 10, 5 a 2 Kč, tedy 4 mince. Méně to nejde: se třemi mincemi vyjde třeba 35 (20 + 10 + 5) nebo 40 (20 + 10 + 10), ale 37 žádná trojice nedá."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_13",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 3,
+      "zadani": "Janek vyšel z domu v 7:42. Cesta do školy trvá 18 minut. Po 5 minutách chůze si uvědomil, že zapomněl penál, a šel stejně rychle zpátky domů. Doma strávil 4 minuty a pak šel znovu rovnou do školy. V kolik hodin dorazil do školy? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "8:14",
+      "reseni_kroky": [
+        "Pět minut šel z domu a pět zpátky: 7:42 + 10 minut = 7:52 je zpátky doma.",
+        "Doma strávil 4 minuty, takže znovu vyšel v 7:56.",
+        "Cesta do školy trvá 18 minut: 7:56 + 18 minut = 8:14 (do 8:00 jsou 4 minuty a zbývá 14)."
+      ],
+      "cas_sekund": 240,
       "sm2_interval": 1
     }
   ]

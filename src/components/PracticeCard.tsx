@@ -40,6 +40,7 @@ const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: strin
  */
 const MATH_KEYS = [
   { name: "slash", label: "/", insert: "/", aria: "Zlomková čára" },
+  { name: "colon", label: ":", insert: ":", aria: "Dvojtečka (čas, poměr)" },
   { name: "comma", label: ",", insert: ",", aria: "Desetinná čárka" },
   { name: "minus", label: "−", insert: "-", aria: "Mínus" },
   { name: "square", label: "²", insert: "²", aria: "Druhá mocnina" },

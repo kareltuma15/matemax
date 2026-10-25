@@ -10,6 +10,22 @@ test("mínus z jiných klávesnic (−, –) se čte jako obyčejné mínus", ()
   expect(checkAnswer("3", "-3")).toBe(false);
 });
 
+// Časový údaj hodiny:minuty (úlohy 5. třídy): porovnává se čas, ne text.
+test("čas: 20:35 uznáme i jako 20.35, 20 35 nebo 8:14 jako 08:14, jiný čas ne", () => {
+  expect(checkAnswer("20:35", "20:35")).toBe(true);
+  expect(checkAnswer("20.35", "20:35")).toBe(true);
+  expect(checkAnswer("20 35", "20:35")).toBe(true);
+  expect(checkAnswer("08:14", "8:14")).toBe(true);
+  expect(checkAnswer("8:14", "08:14")).toBe(true);
+  expect(checkAnswer("20:36", "20:35")).toBe(false);
+  expect(checkAnswer("2035", "20:35")).toBe(false);
+  expect(checkAnswer("20:75", "20:35")).toBe(false);
+  expect(checkAnswer("8:14", "20:14")).toBe(false);   // jiná hodina
+  // poměry a běžné odpovědi zůstávají beze změny
+  expect(checkAnswer("3:5", "3:5")).toBe(true);
+  expect(checkAnswer("3 : 5", "3:5")).toBe(true);
+});
+
 test.describe("matematická lišta na telefonu", () => {
   test.skip(({ isMobile }) => !isMobile, "lišta se zobrazuje jen na dotykových zařízeních");
 
@@ -19,7 +35,7 @@ test.describe("matematická lišta na telefonu", () => {
     await input.waitFor({ timeout: 15_000 }).catch(() => {});
     test.skip((await input.count()) === 0, "první příklad je s výběrem odpovědi, ne s psaním");
 
-    await expect(page.locator('[data-testid^="mathkey-"]')).toHaveCount(9);
+    await expect(page.locator('[data-testid^="mathkey-"]')).toHaveCount(10);
 
     await input.fill("12");
     await page.getByTestId("mathkey-slash").click();
