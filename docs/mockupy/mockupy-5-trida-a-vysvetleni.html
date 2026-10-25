@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MateMax – návrh: 5. třída a nové vysvětlení po chybě</title>
+<style>
+  :root {
+    --navy: #0D1B3E; --blue: #2E6DA4; --bg: #F8FAFF; --line: #e2e8f0; --muted: #64748b;
+    --ok: #16a34a; --okbg: #f0fdf4; --bad: #dc2626; --badbg: #fef2f2; --amber: #d97706; --indigo: #6366f1;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #eef2f7; color: var(--navy); }
+  header.page { padding: 28px 20px 8px; max-width: 1180px; margin: 0 auto; }
+  header.page h1 { margin: 0 0 6px; font-size: 26px; }
+  header.page p { margin: 0; color: var(--muted); max-width: 760px; line-height: 1.5; }
+  section { max-width: 1180px; margin: 0 auto; padding: 22px 20px 10px; }
+  section > h2 { font-size: 18px; margin: 0 0 4px; }
+  section > p.lead { margin: 0 0 14px; color: var(--muted); max-width: 760px; line-height: 1.5; font-size: 14px; }
+  .row { display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-start; }
+  .cap { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 8px; }
+  .phone { width: 340px; background: var(--bg); border-radius: 28px; border: 8px solid var(--navy); padding: 16px 14px 18px; box-shadow: 0 10px 30px rgba(13,27,62,.18); }
+  .topbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .logo { width: 30px; height: 30px; border-radius: 9px; background: var(--navy); color: #fff; font-weight: 800; font-size: 11px; display: grid; place-items: center; }
+  .topbar b { font-size: 15px; } .topbar small { display: block; color: var(--muted); font-size: 10px; margin-top: -2px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-bottom: 12px; }
+  h3 { margin: 0 0 4px; font-size: 17px; } .sub { color: var(--muted); font-size: 12.5px; margin: 0 0 12px; line-height: 1.4; }
+  label.f { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin: 10px 0 4px; }
+  label.f span { font-weight: 400; color: #94a3b8; }
+  .inp { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 14px; color: var(--navy); background: #fff; }
+  .btn { display: block; width: 100%; text-align: center; border: 0; border-radius: 12px; padding: 12px; font-weight: 800; font-size: 14px; background: var(--navy); color: #fff; margin-top: 14px; cursor: pointer; }
+  .btn.ghost { background: #eff6ff; color: var(--blue); border: 1.5px solid #bfdbfe; margin-top: 8px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile { border: 2px solid var(--line); border-radius: 14px; padding: 12px 10px; text-align: center; cursor: pointer; background: #fff; }
+  .tile.on { border-color: var(--blue); background: #eff6ff; }
+  .tile .ic { font-size: 28px; } .tile b { display: block; margin-top: 4px; font-size: 14px; } .tile small { color: var(--muted); font-size: 11px; line-height: 1.3; display: block; margin-top: 2px; }
+  /* mapa témat */
+  .hero { background: linear-gradient(135deg, #0D1B3E, #1c3a6e); color: #fff; border-radius: 16px; padding: 14px; margin-bottom: 12px; }
+  .hero b { font-size: 17px; } .hero p { margin: 4px 0 0; color: #bfdbfe; font-size: 12px; }
+  .pill { display: inline-block; font-size: 10.5px; font-weight: 700; background: rgba(255,255,255,.15); border-radius: 99px; padding: 3px 9px; margin-left: 6px; }
+  .tema { display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 8px; }
+  .tema .ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; font-size: 19px; background: #eff6ff; }
+  .tema b { font-size: 14px; display: block; } .tema small { color: var(--muted); font-size: 11px; }
+  .tema .go { margin-left: auto; font-size: 11px; font-weight: 800; color: var(--blue); background: #eff6ff; padding: 5px 9px; border-radius: 9px; white-space: nowrap; }
+  .tema.lock { opacity: .6; } .tema.lock .go { color: var(--muted); background: #f1f5f9; }
+  .bar { height: 5px; border-radius: 9px; background: #e2e8f0; margin-top: 5px; overflow: hidden; } .bar i { display: block; height: 100%; background: #22c55e; }
+  /* vysvětlení */
+  .q { font-size: 15px; font-weight: 700; line-height: 1.4; margin: 6px 0 10px; }
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: #eff6ff; color: var(--blue); }
+  .wrong { background: var(--badbg); border: 1px solid #fecaca; border-radius: 14px; padding: 11px 12px; color: #991b1b; font-size: 13px; }
+  .wrong b { display: block; font-size: 14px; }
+  .seg { display: flex; background: #e8eef7; border-radius: 12px; padding: 3px; margin: 12px 0 10px; }
+  .seg button { flex: 1; border: 0; background: transparent; font-weight: 700; font-size: 12.5px; padding: 8px; border-radius: 10px; color: var(--muted); cursor: pointer; }
+  .seg button.on { background: #fff; color: var(--navy); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .step { display: flex; gap: 10px; background: #fff; border: 1.5px solid #dbeafe; border-radius: 14px; padding: 10px 11px; margin-bottom: 8px; }
+  .step .n { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 800; font-size: 13px; display: grid; place-items: center; }
+  .step p { margin: 0; font-size: 13px; line-height: 1.45; } .step em { font-style: normal; font-weight: 800; color: var(--blue); }
+  .step.hid { opacity: .45; background: #f8fafc; border-style: dashed; } .step.hid .n { background: #94a3b8; }
+  .step.ask { border-color: #c7d2fe; background: #eef2ff; } .step.ask .n { background: var(--indigo); }
+  .result { background: var(--okbg); border: 2px solid #86efac; border-radius: 14px; padding: 11px 12px; margin-bottom: 10px; }
+  .result small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; color: #15803d; text-transform: uppercase; }
+  .result b { font-size: 18px; color: #166534; } .result span { display: block; font-size: 12px; color: #166534; margin-top: 2px; }
+  .mini { font-size: 12.5px; font-weight: 800; border-radius: 10px; padding: 8px 12px; border: 1.5px solid #c7d2fe; background: #eef2ff; color: #4338ca; cursor: pointer; margin-top: 4px; }
+  .ai { background: linear-gradient(135deg, #faf5ff, #eef2ff); border: 1.5px solid #ddd6fe; border-radius: 14px; padding: 11px 12px; margin-top: 8px; font-size: 12.8px; line-height: 1.5; }
+  .ai b.h { display: flex; gap: 6px; align-items: center; color: #6d28d9; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+  .badge { font-size: 9.5px; font-weight: 800; background: #6d28d9; color: #fff; border-radius: 99px; padding: 2px 7px; }
+  .vid { display: flex; align-items: center; gap: 10px; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 14px; padding: 9px 12px; margin-bottom: 8px; }
+  .vid b { display: block; font-size: 10px; letter-spacing: .08em; color: var(--indigo); text-transform: uppercase; } .vid span { font-size: 13px; font-weight: 700; }
+  .note { max-width: 520px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .note b { color: var(--navy); }
+  footer { max-width: 1180px; margin: 10px auto 40px; padding: 0 20px; color: var(--muted); font-size: 12.5px; }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>MateMax – návrhy vzhledu</h1>
+  <p>Tři ukázky: (1) registrace s volbou třídy a polem „Jak ti říkat?“, (2) mapa témat pro 5. třídu, (3) nové vysvětlení po chybě. Je to klikací náčrt, nic z toho zatím není v aplikaci. Příklad v části 3 je vymyšlený pro tuto ukázku.</p>
+</header>
+
+<!-- 1. REGISTRACE -->
+<section>
+  <h2>1 · Registrace s volbou třídy</h2>
+  <p class="lead">Žák hned na začátku vybere třídu. Podle toho uvidí správná témata, diagnostiku i úlohy. „Jak ti říkat?“ je jedno nepovinné pole místo jména a příjmení.</p>
+  <div class="row">
+    <div>
+      <p class="cap">Registrace</p>
+      <div class="phone">
+        <div class="topbar"><div class="logo">M²</div><div><b>MateMax</b><small>CERMAT přijímačky</small></div></div>
+        <div class="card">
+          <h3>Vytvořit účet</h3>
+          <p class="sub">Zdarma, žádná karta není potřeba.</p>
+          <label class="f">Jsi v 5. nebo 9. třídě?</label>
+          <div class="tiles" id="tridy">
+            <div class="tile" data-t="5"><div class="ic">🎒</div><b>5. třída</b><small>Přijímačky na víceletá gymnázia</small></div>
+            <div class="tile on" data-t="9"><div class="ic">🎓</div><b>9. třída</b><small>Přijímačky na střední školu</small></div>
+          </div>
+          <label class="f">Jak ti říkat? <span>(nepovinné)</span></label>
+          <input class="inp" placeholder="Tomáš">
+          <label class="f">E-mail</label>
+          <input class="inp" placeholder="tvuj@email.cz">
+          <label class="f">Heslo</label>
+          <input class="inp" placeholder="alespoň 8 znaků">
+          <div class="btn">Vytvořit účet →</div>
+        </div>
+      </div>
+    </div>
+    <p class="note"><b>Co je nového:</b> dvě velké dlaždice místo roletky, aby se zvolilo jedním klepnutím. Třídu lze později změnit v profilu (a v adminu). Pro rodiče, kteří registrují dítě, jsou texty stejné, jen vykání.</p>
+  </div>
+</section>
+
+<!-- 2. MAPA TÉMAT 5. TŘÍDY -->
+<section>
+  <h2>2 · Mapa témat pro 5. třídu</h2>
+  <p class="lead">Osm okruhů odvozených z oficiálních testů. První tři zdarma, ostatní v Premium (stejně jako u 9. třídy). Příklady a čísla jsou jen ukázka.</p>
+  <div class="row">
+    <div>
+      <p class="cap">Mapa témat</p>
+      <div class="phone">
+        <div class="topbar"><div class="logo">M²</div><div><b>MateMax</b><small>Přijímačky 5. třída</small></div></div>
+        <div class="hero"><b>🗺️ Mapa témat<span class="pill">3 / 8 zdarma</span></b><p>Začni diagnostikou, ať vidíš, kde máš mezery.</p></div>
+        <div class="tema"><div class="ic">🔢</div><div style="flex:1"><b>Počítání s čísly</b><small>pořadí operací, násobilka, dělení</small><div class="bar"><i style="width:60%"></i></div></div><div class="go">Procvičit →</div></div>
+        <div class="tema"><div class="ic">⏱️</div><div style="flex:1"><b>Jednotky, čas a peníze</b><small>převody, hodiny, mince</small><div class="bar"><i style="width:25%"></i></div></div><div class="go">Procvičit →</div></div>
+        <div class="tema"><div class="ic">🧩</div><div style="flex:1"><b>Slovní úlohy a úvaha</b><small>tempo, hmotnosti, mince</small><div class="bar"><i style="width:0%"></i></div></div><div class="go">Procvičit →</div></div>
+        <div class="tema lock"><div class="ic">½</div><div style="flex:1"><b>Zlomky a části celku</b><small>polovina, třetina, čtvrtina</small></div><div class="go">🔒 Premium</div></div>
+        <div class="tema lock"><div class="ic">▦</div><div style="flex:1"><b>Obvod a obsah</b><small>čtvercová síť, obrazce</small></div><div class="go">🔒 Premium</div></div>
+        <div class="tema lock"><div class="ic">🧊</div><div style="flex:1"><b>Tělesa a souměrnost</b><small>krychličky, stavby</small></div><div class="go">🔒 Premium</div></div>
+        <div class="tema lock"><div class="ic">📐</div><div style="flex:1"><b>Rýsování</b><small>střed, kolmice, čtverec</small></div><div class="go">🔒 Premium</div></div>
+        <div class="tema lock"><div class="ic">📊</div><div style="flex:1"><b>Grafy, tabulky a vzory</b><small>čtení grafů, posloupnosti</small></div><div class="go">🔒 Premium</div></div>
+      </div>
+    </div>
+    <p class="note"><b>Co se přidává:</b> osm okruhů, barevné ikony pro mladší děti a kratší, přátelštější texty. Rýsování využije kartu, kterou už máme u 9. třídy. U „Počítání s čísly“ a podobných okruhů přibude později karta pro úlohy s více podúlohami (1.1, 1.2…), jaké jsou v oficiálních testech.</p>
+  </div>
+</section>
+
+<!-- 3. VYSVĚTLENÍ PO CHYBĚ -->
+<section>
+  <h2>3 · Vysvětlení po chybě</h2>
+  <p class="lead">Dnes je řešení rozbalovací seznam. Nově: kroky jako karty, přepínač <b>Rovnou</b> (všechno najednou) / <b>Navádět mě</b> (krok po kroku s otázkou), zvýrazněný <b>Výsledek</b> a nabídka lekce. Kroky jsou ověřené počítačem, takže se v nich nemůže objevit chyba. Klikej na přepínač a tlačítka.</p>
+  <div class="row">
+    <div>
+      <p class="cap">A · Rovnou (všechny kroky)</p>
+      <div class="phone" id="phA">
+        <div class="topbar"><div class="logo">M²</div><div><b>MateMax</b><small>Slovní úlohy a úvaha</small></div></div>
+        <div class="card">
+          <span class="tag">Střední ⭐⭐</span>
+          <div class="q">Tereza koupila 3 sešity a 2 pera za 80 Kč. Pero je o 5 Kč dražší než sešit. Kolik stojí jeden sešit?</div>
+          <div class="wrong"><b>✗ Není správně</b>Tvoje odpověď: 16 Kč</div>
+          <div class="seg" data-ph="A"><button class="on" data-m="rovnou">Rovnou</button><button data-m="navadet">Navádět mě</button></div>
+          <div class="steps">
+            <div class="step"><div class="n">1</div><p>Kdyby pera stála stejně jako sešity, ušetřili bychom <em>2 · 5 = 10 Kč</em>.</p></div>
+            <div class="step"><div class="n">2</div><p>Pak by všech <em>5 věcí</em> (3 sešity a 2 pera) stálo <em>80 − 10 = 70 Kč</em>.</p></div>
+            <div class="step"><div class="n">3</div><p>Jedna věc stojí <em>70 : 5 = 14 Kč</em>.</p></div>
+          </div>
+          <div class="result"><small>Výsledek</small><b>Sešit stojí 14 Kč</b><span>Kontrola: pero 19 Kč, 3 · 14 + 2 · 19 = 80 ✓</span></div>
+          <div class="vid"><span style="font-size:22px">🎬</span><div><b>Zopakuj si základy</b><span>Lekce: Slovní úlohy</span></div></div>
+          <div class="btn" style="margin-top:6px">Další příklad →</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">B · Navádět mě (krok po kroku)</p>
+      <div class="phone" id="phB">
+        <div class="topbar"><div class="logo">M²</div><div><b>MateMax</b><small>Slovní úlohy a úvaha</small></div></div>
+        <div class="card">
+          <span class="tag">Střední ⭐⭐</span>
+          <div class="q">Tereza koupila 3 sešity a 2 pera za 80 Kč. Pero je o 5 Kč dražší než sešit. Kolik stojí jeden sešit?</div>
+          <div class="wrong"><b>✗ Není správně</b>Tvoje odpověď: 16 Kč</div>
+          <div class="seg" data-ph="B"><button data-m="rovnou">Rovnou</button><button class="on" data-m="navadet">Navádět mě</button></div>
+          <div class="steps" id="guide">
+            <div class="step ask" data-i="0"><div class="n">1</div><p><b>Co by se stalo, kdyby pera stála stejně jako sešity?</b><br><button class="mini" onclick="reveal(0)">Ukaž krok</button></p></div>
+            <div class="step hid" data-i="1"><div class="n">2</div><p>Další krok se odkryje po prvním.</p></div>
+            <div class="step hid" data-i="2"><div class="n">3</div><p>Poslední krok a výsledek.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">C · Premium: „Vysvětli mi moji chybu“</p>
+      <div class="phone" id="phC">
+        <div class="topbar"><div class="logo">M²</div><div><b>MateMax</b><small>Slovní úlohy a úvaha</small></div></div>
+        <div class="card">
+          <span class="tag">Střední ⭐⭐</span>
+          <div class="q">Tereza koupila 3 sešity a 2 pera za 80 Kč. Pero je o 5 Kč dražší než sešit. Kolik stojí jeden sešit?</div>
+          <div class="wrong"><b>✗ Není správně</b>Tvoje odpověď: 16 Kč</div>
+          <div class="ai"><b class="h">✨ Vysvětlení tvé chyby <span class="badge">PREMIUM</span></b>
+            Vyšlo ti 16 Kč, když jsi <b>80 : 5</b> spočítal rovnou. Jenže pera jsou o 5 Kč dražší, takže všech 5 věcí nestojí stejně. Nejdřív musíš těch 2 · 5 = 10 Kč „přebytku“ odečíst a až zbytek (70 Kč) dělit pěti.
+          </div>
+          <button class="mini" style="margin-top:10px">Ukaž celé řešení</button>
+          <div class="note" style="margin-top:10px;font-size:11.5px">Zbývá dnes: 7 vysvětlení</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:14px"><b>Poznámka:</b> A a B nestojí nic navíc (používají naše ověřené kroky). C je jediná část, která využívá placenou umělou inteligenci: odhadem pár haléřů za vysvětlení, proto jen pro Premium a s denním limitem. AI dostane naše ověřené kroky a smí vysvětlovat jen podle nich.</p>
+</section>
+
+<footer>Návrh vytvořen 25. 10. 2026. Ukázkové texty a čísla slouží jen k předvedení vzhledu.</footer>
+
+<script>
+  // 1) volba třídy
+  document.querySelectorAll('#tridy .tile').forEach(function (t) {
+    t.addEventListener('click', function () {
+      document.querySelectorAll('#tridy .tile').forEach(function (x) { x.classList.remove('on'); });
+      t.classList.add('on');
+    });
+  });
+  // 3) přepínač režimů: v panelu A přepne mezi „rovnou“ a „navádět“, v panelu B také
+  var GUIDE = [
+    { q: 'Co by se stalo, kdyby pera stála stejně jako sešity?', a: 'Ušetřili bychom <em>2 · 5 = 10 Kč</em>.', next: 'A kolik by pak stálo všech 5 věcí?' },
+    { q: 'A kolik by pak stálo všech 5 věcí?', a: '<em>80 − 10 = 70 Kč</em>.', next: 'A kolik tedy stojí jedna věc?' },
+    { q: 'A kolik tedy stojí jedna věc?', a: '<em>70 : 5 = 14 Kč</em>. Sešit stojí 14 Kč.', next: null }
+  ];
+  function reveal(i) {
+    var steps = document.querySelectorAll('#guide .step');
+    var s = steps[i]; s.classList.remove('ask'); s.querySelector('p').innerHTML = '<b>' + GUIDE[i].q + '</b><br>' + GUIDE[i].a;
+    var n = steps[i + 1];
+    if (n) { n.classList.remove('hid'); n.classList.add('ask'); n.querySelector('p').innerHTML = '<b>' + GUIDE[i + 1].q + '</b><br><button class="mini" onclick="reveal(' + (i + 1) + ')">Ukaž krok</button>'; }
+    else { s.insertAdjacentHTML('afterend', '<div class="result"><small>Výsledek</small><b>Sešit stojí 14 Kč</b><span>Kontrola: pero 19 Kč, 3 · 14 + 2 · 19 = 80 ✓</span></div>'); }
+  }
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var seg = b.parentElement; seg.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on');
+      var target = b.dataset.m === 'rovnou' ? document.getElementById('phA') : document.getElementById('phB');
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    });
+  });
+</script>
+</body>
+</html>

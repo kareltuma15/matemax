@@ -45,3 +45,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .tmp-pdf-study/
+
+# Oficiální testy CERMAT (cizí autorská práva) – jen lokálně, nikdy do gitu
+/docs/cermat-5/
