@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 100" width="208" height="100" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Hrebinek ze ctvercku</title>
+  <rect x="0" y="0" width="208" height="100" fill="#ffffff"/>
+  <rect x="14" y="14" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="86" y="14" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="158" y="14" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="14" y="50" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="50" y="50" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="86" y="50" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="122" y="50" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="158" y="50" width="36" height="36" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <line x1="14" y1="14" x2="50" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="14" x2="14" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="50" y1="14" x2="50" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="86" y1="14" x2="122" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="86" y1="14" x2="86" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="122" y1="14" x2="122" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="158" y1="14" x2="194" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="158" y1="14" x2="158" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="194" y1="14" x2="194" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="86" x2="50" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="50" x2="14" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="50" y1="50" x2="86" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="50" y1="86" x2="86" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="86" y1="86" x2="122" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="122" y1="50" x2="158" y2="50" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="122" y1="86" x2="158" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="158" y1="86" x2="194" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="194" y1="50" x2="194" y2="86" stroke="#0D1B3E" stroke-width="3"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 92" width="156" height="92" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Dva stejne ctverce</title>
+  <rect x="0" y="0" width="156" height="92" fill="#ffffff"/>
+  <rect x="14" y="14" width="64" height="64" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="78" y="14" width="64" height="64" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <line x1="14" y1="14" x2="78" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="78" x2="78" y2="78" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="14" x2="14" y2="78" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="78" y1="14" x2="142" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="78" y1="78" x2="142" y2="78" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="142" y1="14" x2="142" y2="78" stroke="#0D1B3E" stroke-width="3"/>
+</svg>

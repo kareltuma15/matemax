@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 84" width="196" height="84" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Tri stejne ctverce</title>
+  <rect x="0" y="0" width="196" height="84" fill="#ffffff"/>
+  <rect x="14" y="14" width="56" height="56" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="70" y="14" width="56" height="56" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <rect x="126" y="14" width="56" height="56" fill="#cfe3f7" stroke="#8fb0d3" stroke-width="1"/>
+  <line x1="14" y1="14" x2="70" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="70" x2="70" y2="70" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="14" y1="14" x2="14" y2="70" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="70" y1="14" x2="126" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="70" y1="70" x2="126" y2="70" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="126" y1="14" x2="182" y2="14" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="126" y1="70" x2="182" y2="70" stroke="#0D1B3E" stroke-width="3"/>
+  <line x1="182" y1="14" x2="182" y2="70" stroke="#0D1B3E" stroke-width="3"/>
+</svg>
