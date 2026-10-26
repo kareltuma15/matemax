@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 26,
+    "total": 41,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -420,6 +420,238 @@
         "Pět minut šel z domu a pět zpátky: 7:42 + 10 minut = 7:52 je zpátky doma.",
         "Doma strávil 4 minuty, takže znovu vyšel v 7:56.",
         "Cesta do školy trvá 18 minut: 7:56 + 18 minut = 8:14 (do 8:00 jsou 4 minuty a zbývá 14)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_01",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 1,
+      "zadani": "Anička má 35 korun a Petr má o 12 korun víc než Anička. Kolik korun mají dohromady?",
+      "odpoved": "82",
+      "reseni_kroky": [
+        "Petr má o 12 korun víc: 35 + 12 = 47 Kč.",
+        "Dohromady: 35 + 47 = 82 Kč."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_02",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 1,
+      "zadani": "Robot postaví za jednu minutu 6 věžiček. Kolik věžiček postaví za 8 minut?",
+      "odpoved": "48",
+      "reseni_kroky": [
+        "Za každou minutu přibude 6 věžiček, minut je 8.",
+        "8 · 6 = 48 věžiček."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_03",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 1,
+      "zadani": "Mamince je 34 let a Honzovi je 8 let. Kolik let bude mamince, až bude Honzovi 12 let?",
+      "odpoved": "38",
+      "reseni_kroky": [
+        "Honzovi chybí do 12 let 12 − 8 = 4 roky.",
+        "Maminka bude o stejné 4 roky starší: 34 + 4 = 38 let."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_04",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 1,
+      "zadani": "Tři stejné pytlíky bonbonů váží dohromady 450 gramů. Kolik gramů váží jeden pytlík?",
+      "odpoved": "150",
+      "reseni_kroky": [
+        "Hmotnost se rozdělí na tři stejné díly: 450 : 3.",
+        "450 : 3 = 150 g."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_05",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "zadani": "Eva si každý týden ukládá do pokladničky 40 korun. Po osmi týdnech koupila knihu za 250 korun. Kolik korun jí zbylo?",
+      "odpoved": "70",
+      "reseni_kroky": [
+        "Za 8 týdnů naspořila 8 · 40 = 320 Kč.",
+        "Po koupi knihy jí zbylo 320 − 250 = 70 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_06",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 2,
+      "zadani": "Pekař upeče za jednu hodinu 45 rohlíků. Kolik hodin potřebuje na upečení 270 rohlíků?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Zjišťujeme, kolikrát se 45 rohlíků vejde do 270 rohlíků: 270 : 45.",
+        "Zkouška: 6 · 45 = 270, takže pekař potřebuje 6 hodin."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_07",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 2,
+      "zadani": "Jablko a hruška váží dohromady 340 gramů. Hruška váží o 40 gramů víc než jablko. Kolik gramů váží jablko?",
+      "odpoved": "150",
+      "reseni_kroky": [
+        "Kdyby hruška vážila stejně jako jablko, ubylo by 40 g a obě by vážily dohromady 340 − 40 = 300 g.",
+        "Pak by dva stejné kousky vážily 300 g, takže jedno jablko váží 300 : 2 = 150 g.",
+        "Zkouška: hruška váží 150 + 40 = 190 g a 150 + 190 = 340 g."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_08",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 2,
+      "zadani": "Před čtyřmi lety bylo Kláře 7 let. Kolik let jí bude za pět let?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Před čtyřmi lety jí bylo 7, dnes je jí 7 + 4 = 11 let.",
+        "Za pět let jí bude 11 + 5 = 16 let."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_09",
+      "tema": "p5_slovni",
+      "podtema": "p5_logika",
+      "obtiznost": 2,
+      "moznosti": [
+        "Adam",
+        "Božena",
+        "Cyril",
+        "Dana",
+        "nedá se určit"
+      ],
+      "spravna": 2,
+      "zadani": "Čtyři kamarádi závodili v běhu. Adam doběhl dřív než Božena, Božena doběhla dřív než Cyril a Dana doběhla dřív než Adam. Kdo doběhl do cíle poslední?",
+      "odpoved": "Cyril",
+      "reseni_kroky": [
+        "Zapíšeme pořadí od prvního: Dana je před Adamem, Adam před Boženou a Božena před Cyrilem.",
+        "Pořadí je tedy Dana, Adam, Božena, Cyril. Poslední doběhl Cyril, správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_10",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "moznosti": [
+        "21",
+        "24",
+        "25",
+        "27",
+        "30"
+      ],
+      "spravna": 3,
+      "zadani": "Na výlet jelo 6 aut a v každém sedělo 4 děti. Další 3 děti jely na kole. Kolik dětí bylo na výletě celkem?",
+      "odpoved": "27",
+      "reseni_kroky": [
+        "V autech jelo 6 · 4 = 24 dětí.",
+        "S dětmi na kolech: 24 + 3 = 27 dětí. Správně je D)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_11",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 3,
+      "zadani": "Dva roboti stavějí věž z kostek. Červený položí 4 kostky za minutu, modrý položí 6 kostek za minutu. Začali ve stejnou chvíli a skončili, když měla věž přesně 80 kostek. Kolik minut stavěli?",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Oba roboti společně položí za jednu minutu 4 + 6 = 10 kostek.",
+        "Na 80 kostek potřebují 80 : 10 = 8 minut.",
+        "Zkouška: červený položí 8 · 4 = 32 kostek, modrý 8 · 6 = 48 kostek a 32 + 48 = 80."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_12",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 3,
+      "zadani": "Na jedné misce vah leží 3 stejné koule a závaží 200 gramů. Na druhé misce leží 5 stejných koulí. Váhy jsou v rovnováze. Kolik gramů váží jedna koule?",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "Na obou miskách jsou stejné hmotnosti. Odebereme z každé misky 3 koule.",
+        "Na jedné misce zůstane jen závaží 200 g a na druhé 2 koule, takže 2 koule váží 200 g.",
+        "Jedna koule váží 200 : 2 = 100 g. Zkouška: 3 · 100 + 200 = 500 a 5 · 100 = 500."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_13",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 3,
+      "zadani": "Tatínek je o 28 let starší než syn. Za 4 roky bude tatínek právě třikrát starší než syn. Kolik let je synovi dnes?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Rozdíl věku se nemění, vždy zůstává 28 let.",
+        "Až bude tatínek třikrát starší než syn, bude mít na věku syna tři díly a rozdíl dva díly. Dva díly jsou 28 let, jeden díl je 14 let, takže synovi bude za 4 roky 14 let.",
+        "Dnes je synovi 14 − 4 = 10 let. Zkouška: tatínkovi je 38, za 4 roky 42 a 3 · 14 = 42."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_14",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 3,
+      "zadani": "Lenka dostala kapesné. Polovinu z něj utratila za časopis a z toho, co jí zbylo, utratila třetinu za sladkosti. Nakonec jí zbylo 40 korun. Kolik korun dostala?",
+      "odpoved": "120",
+      "reseni_kroky": [
+        "Po koupi časopisu jí zbyla polovina. Pak utratila třetinu zbytku, takže jí zbyly dvě třetiny z poloviny.",
+        "Dvě třetiny poloviny jsou třetina celku, takže třetina kapesného je 40 Kč. Celé kapesné je 3 · 40 = 120 Kč.",
+        "Zkouška: 120 − 60 = 60 Kč, třetina ze 60 je 20 Kč, 60 − 20 = 40 Kč."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_15",
+      "tema": "p5_slovni",
+      "podtema": "p5_logika",
+      "obtiznost": 3,
+      "zadani": "Na dvoře jsou slepice a králíci. Dohromady mají 9 hlav a 26 nohou. Kolik je tam králíků?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Kdyby všech 9 zvířat byly slepice, mělo by dohromady 9 · 2 = 18 nohou. To je o 26 − 18 = 8 nohou méně, než je ve skutečnosti.",
+        "Každý králík místo slepice přidá 2 nohy (4 − 2), takže králíků je 8 : 2 = 4.",
+        "Zkouška: 4 králíci mají 16 nohou, 5 slepic má 10 nohou, dohromady 26 nohou a 9 hlav."
       ],
       "cas_sekund": 240,
       "sm2_interval": 1
