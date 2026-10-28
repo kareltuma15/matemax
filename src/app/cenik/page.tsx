@@ -8,7 +8,7 @@ import { usePremium } from "@/lib/premium";
 import { EXAMPLES_LABEL } from "@/lib/site-stats";
 
 const FREE_FEATURES = [
-  "✓ Diagnostický test (všechna témata)",
+  "✓ Diagnostický test (8 hlavních témat, cca 10 minut)",
   "✓ 3 témata: Zlomky, Výrazy, Rovnice",
   "✓ 10 příkladů denně",
   "✓ Streak systém a XP",
