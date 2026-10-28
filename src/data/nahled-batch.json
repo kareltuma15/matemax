@@ -1,4 +1,251 @@
 {
-  "nazev": "5. třída — Tělesa a souměrnost: stavby z krychliček, půdorys, skládání z dílků, kvádr, osová souměrnost (16 úloh: L1 ×4, L2 ×6, L3 ×6) — ZAPSÁNO",
-  "examples": []
+  "nazev": "5. třída — Počítání s čísly, druhá dávka: větší čísla, zbytek, zaokrouhlování, násobky a dělitelé, doplň číslo (15 úloh: L1 ×5, L2 ×6, L3 ×4)",
+  "examples": [
+    {
+      "id": "P5_POC_13",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $4350 + 2780$",
+      "odpoved": "7130",
+      "reseni_kroky": [
+        "Sčítáme po řádech: $4350 + 2000 = 6350$, pak $6350 + 700 = 7050$ a $7050 + 80 = 7130$.",
+        "Výsledek je 7130."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_14",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $9000 - 3475$",
+      "odpoved": "5525",
+      "reseni_kroky": [
+        "Odečítat od 9000 se dá po částech: $9000 - 3000 = 6000$, pak $6000 - 400 = 5600$ a $5600 - 75 = 5525$.",
+        "Zkouška sčítáním: $5525 + 3475 = 9000$. Výsledek je 5525."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_15",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $24 \\cdot 35$",
+      "odpoved": "840",
+      "reseni_kroky": [
+        "Rozložíme: $24 \\cdot 35 = 24 \\cdot 30 + 24 \\cdot 5$.",
+        "$24 \\cdot 30 = 720$ a $24 \\cdot 5 = 120$, dohromady $720 + 120 = 840$."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_16",
+      "tema": "p5_pocitani",
+      "podtema": "p5_deleni_zbytek",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Jaký je zbytek po dělení $85 : 6$?",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Šestka se do 85 vejde nejvýš 14krát, protože $14 \\cdot 6 = 84$ (a $15 \\cdot 6 = 90$ je už víc).",
+        "Zbytek je $85 - 84 = 1$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_17",
+      "tema": "p5_pocitani",
+      "podtema": "p5_zaokrouhlovani",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Zaokrouhli číslo 4678 na stovky.",
+      "odpoved": "4700",
+      "reseni_kroky": [
+        "Na místě stovek je v čísle 4678 šestka. Podíváme se na další číslici, desítky: je to 7.",
+        "Sedmička je 5 nebo víc, takže zaokrouhlujeme nahoru: z 4600 se stane 4700."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_18",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $18 \\cdot 125$",
+      "odpoved": "2250",
+      "reseni_kroky": [
+        "Číslo 125 je osmina z tisíce, takže se dá počítat po částech: $10 \\cdot 125 = 1250$ a $8 \\cdot 125 = 1000$.",
+        "Dohromady $1250 + 1000 = 2250$."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_19",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $7200 : 15$",
+      "odpoved": "480",
+      "reseni_kroky": [
+        "Zjednodušíme: číslo 7200 i 15 jdou vydělit pěti, takže $7200 : 15 = 1440 : 3$.",
+        "$1440 : 3 = 480$. Zkouška: $480 \\cdot 15 = 4800 + 2400 = 7200$."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_20",
+      "tema": "p5_pocitani",
+      "podtema": "p5_zaokrouhlovani",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Zaokrouhli čísla 4560 a 2480 na tisíce a vypočítej jejich součet.",
+      "odpoved": "7000",
+      "reseni_kroky": [
+        "Číslo 4560 má na místě tisíců 4 a další číslice je 5, takže zaokrouhlíme nahoru na 5000.",
+        "Číslo 2480 má na místě tisíců 2 a další číslice je 4, takže zaokrouhlíme dolů na 2000.",
+        "Součet zaokrouhlených čísel: $5000 + 2000 = 7000$."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_21",
+      "tema": "p5_pocitani",
+      "podtema": "p5_nasobky",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Které je největší dvojciferné číslo dělitelné osmi?",
+      "odpoved": "96",
+      "reseni_kroky": [
+        "Největší dvojciferné číslo je 99. Hledáme největší násobek osmi, který není větší.",
+        "Násobky osmi: 8, 16, 24, ..., $12 \\cdot 8 = 96$ a $13 \\cdot 8 = 104$ už je trojciferné.",
+        "Hledané číslo je 96."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_22",
+      "tema": "p5_pocitani",
+      "podtema": "p5_deleni_zbytek",
+      "obtiznost": 2,
+      "latex": true,
+      "moznosti": [
+        "56",
+        "59",
+        "52",
+        "61",
+        "63"
+      ],
+      "spravna": 2,
+      "zadani": "Které z čísel dává po dělení šesti zbytek 4?",
+      "odpoved": "52",
+      "reseni_kroky": [
+        "U každého čísla zjistíme zbytek po dělení šesti: $56 = 9 \\cdot 6 + 2$, $59 = 9 \\cdot 6 + 5$, $52 = 8 \\cdot 6 + 4$, $61 = 10 \\cdot 6 + 1$, $63 = 10 \\cdot 6 + 3$.",
+        "Zbytek 4 má jen číslo 52. Správně je C)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_23",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $\\square \\cdot 8 = 480 : 2$",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "Pravou stranu spočítáme: $480 : 2 = 240$.",
+        "Rovnost má tvar $\\square \\cdot 8 = 240$, takže $\\square = 240 : 8 = 30$.",
+        "Zkouška: $30 \\cdot 8 = 240$."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_24",
+      "tema": "p5_pocitani",
+      "podtema": "p5_nasobky",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Kolik dvojciferných čísel je dělitelných dvanácti?",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Hledáme násobky dvanácti, které mají dvě číslice: $1 \\cdot 12 = 12$, $2 \\cdot 12 = 24$, ..., $8 \\cdot 12 = 96$.",
+        "Další násobek $9 \\cdot 12 = 108$ už je trojciferné. Dvojciferných násobků dvanácti je tedy 8."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_25",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $(\\square + 15) : 4 = 3 \\cdot 5 - 7$",
+      "odpoved": "17",
+      "reseni_kroky": [
+        "Pravou stranu spočítáme: $3 \\cdot 5 = 15$ a $15 - 7 = 8$.",
+        "Rovnost má tvar $(\\square + 15) : 4 = 8$. Něco děleno čtyřmi dá 8, takže závorka je $8 \\cdot 4 = 32$.",
+        "Z $\\square + 15 = 32$ vyjde $\\square = 17$. Zkouška: $(17 + 15) : 4 = 32 : 4 = 8$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_26",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Součin dvou čísel je 360 a jedno z nich je 24. Jaký je součet obou čísel?",
+      "odpoved": "39",
+      "reseni_kroky": [
+        "Druhé číslo zjistíme dělením: $360 : 24 = 15$ (zkouška: $24 \\cdot 15 = 360$).",
+        "Součet obou čísel je $24 + 15 = 39$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_27",
+      "tema": "p5_pocitani",
+      "podtema": "p5_deleni_zbytek",
+      "obtiznost": 3,
+      "latex": true,
+      "moznosti": [
+        "84",
+        "89",
+        "91",
+        "96",
+        "99"
+      ],
+      "spravna": 1,
+      "zadani": "Které číslo dává po dělení sedmi podíl 12 a zbytek 5?",
+      "odpoved": "89",
+      "reseni_kroky": [
+        "Dělené číslo se dá zpětně složit: podíl krát dělitel plus zbytek, tedy $12 \\cdot 7 + 5$.",
+        "$12 \\cdot 7 = 84$ a $84 + 5 = 89$. Správně je B).",
+        "Zkouška: $89 : 7 = 12$ a $12 \\cdot 7 = 84$, zbytek $89 - 84 = 5$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    }
+  ]
 }
