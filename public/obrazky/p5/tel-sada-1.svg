@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 372 258" width="372" height="258" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Dílek ze tří krychliček ve tvaru L a čtyři tělesa A až D</title>
+  <rect x="0" y="0" width="372" height="258" fill="#ffffff"/>
+  <text x="14" y="26" font-size="12" font-weight="800" fill="#0D1B3E" text-anchor="start">dílek</text>
+  <g transform="translate(14 32)">
+<polygon points="0,63.7 26,63.7 26,37.7 0,37.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,63.7 40.3,52 40.3,26 26,37.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,37.7 26,37.7 26,11.7 0,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,11.7 26,11.7 40.3,0 14.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="26,37.7 52,37.7 52,11.7 26,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="52,37.7 66.3,26 66.3,0 52,11.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="26,11.7 52,11.7 66.3,0 40.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 63.7L26 63.7M26 63.7L26 37.7M26 37.7L0 37.7M0 37.7L0 63.7M26 63.7L40.3 52M40.3 52L40.3 37.2M26 37.7L26 63.7M0 37.7L26 37.7M26 37.7L26 11.7M26 11.7L0 11.7M0 11.7L0 37.7M0 11.7L26 11.7M26 11.7L40.3 0M40.3 0L14.3 0M14.3 0L0 11.7M26 37.7L52 37.7M52 37.7L52 11.7M52 11.7L26 11.7M26 11.7L26 37.7M52 37.7L66.3 26M66.3 26L66.3 0M66.3 0L52 11.7M52 11.7L52 37.7M26 11.7L52 11.7M52 11.7L66.3 0M66.3 0L40.3 0M40.3 0L26 11.7" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="47.15" y="113.7" font-size="14" font-weight="800" fill="#0D1B3E" text-anchor="middle"></text>
+  <text x="14" y="137.7" font-size="12" font-weight="800" fill="#0D1B3E" text-anchor="start">tělesa</text>
+  <g transform="translate(14 195.7)">
+<polygon points="0,37.7 26,37.7 26,11.7 0,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,11.7 26,11.7 40.3,0 14.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="26,37.7 52,37.7 52,11.7 26,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,11.7 52,11.7 66.3,0 40.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="52,37.7 78,37.7 78,11.7 52,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="78,37.7 92.3,26 92.3,0 78,11.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="52,11.7 78,11.7 92.3,0 66.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 37.7L26 37.7M26 37.7L26 11.7M26 11.7L0 11.7M0 11.7L0 37.7M0 11.7L26 11.7M26 11.7L40.3 0M40.3 0L14.3 0M14.3 0L0 11.7M26 37.7L52 37.7M52 37.7L52 11.7M52 11.7L26 11.7M26 11.7L26 37.7M26 11.7L52 11.7M52 11.7L66.3 0M66.3 0L40.3 0M40.3 0L26 11.7M52 37.7L78 37.7M78 37.7L78 11.7M78 11.7L52 11.7M52 11.7L52 37.7M78 37.7L92.3 26M92.3 26L92.3 0M92.3 0L78 11.7M78 11.7L78 37.7M52 11.7L78 11.7M78 11.7L92.3 0M92.3 0L66.3 0M66.3 0L52 11.7" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="60.15" y="251.4" font-size="14" font-weight="800" fill="#0D1B3E" text-anchor="middle">A</text>
+  <g transform="translate(132.3 169.7)">
+<polygon points="0,63.7 26,63.7 26,37.7 0,37.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,37.7 26,37.7 26,11.7 0,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,37.7 40.3,26 40.3,0 26,11.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,11.7 26,11.7 40.3,0 14.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="26,63.7 52,63.7 52,37.7 26,37.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="52,63.7 66.3,52 66.3,26 52,37.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="26,37.7 52,37.7 66.3,26 40.3,26" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 63.7L26 63.7M26 63.7L26 37.7M26 37.7L0 37.7M0 37.7L0 63.7M0 37.7L26 37.7M26 37.7L26 11.7M26 11.7L0 11.7M0 11.7L0 37.7M26 37.7L40.3 26M40.3 26L40.3 0M40.3 0L26 11.7M26 11.7L26 37.7M0 11.7L26 11.7M26 11.7L40.3 0M40.3 0L14.3 0M14.3 0L0 11.7M26 63.7L52 63.7M52 63.7L52 37.7M52 37.7L26 37.7M26 37.7L26 63.7M52 63.7L66.3 52M66.3 52L66.3 26M66.3 26L52 37.7M52 37.7L52 63.7M26 37.7L52 37.7M52 37.7L66.3 26M66.3 26L40.3 26M40.3 26L26 37.7" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="165.45" y="251.4" font-size="14" font-weight="800" fill="#0D1B3E" text-anchor="middle">B</text>
+  <g transform="translate(224.6 143.7)">
+<polygon points="0,89.7 26,89.7 26,63.7 0,63.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,89.7 40.3,78 40.3,52 26,63.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,63.7 26,63.7 26,37.7 0,37.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,63.7 40.3,52 40.3,26 26,37.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,37.7 26,37.7 26,11.7 0,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,37.7 40.3,26 40.3,0 26,11.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,11.7 26,11.7 40.3,0 14.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 89.7L26 89.7M26 89.7L26 63.7M26 63.7L0 63.7M0 63.7L0 89.7M26 89.7L40.3 78M40.3 78L40.3 52M40.3 52L26 63.7M26 63.7L26 89.7M0 63.7L26 63.7M26 63.7L26 37.7M26 37.7L0 37.7M0 37.7L0 63.7M26 63.7L40.3 52M40.3 52L40.3 26M40.3 26L26 37.7M26 37.7L26 63.7M0 37.7L26 37.7M26 37.7L26 11.7M26 11.7L0 11.7M0 11.7L0 37.7M26 37.7L40.3 26M40.3 26L40.3 0M40.3 0L26 11.7M26 11.7L26 37.7M0 11.7L26 11.7M26 11.7L40.3 0M40.3 0L14.3 0M14.3 0L0 11.7" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="244.75" y="251.4" font-size="14" font-weight="800" fill="#0D1B3E" text-anchor="middle">C</text>
+  <g transform="translate(290.9 169.7)">
+<polygon points="0,37.7 26,37.7 26,11.7 0,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,11.7 26,11.7 40.3,0 14.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="26,63.7 52,63.7 52,37.7 26,37.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="52,63.7 66.3,52 66.3,26 52,37.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="26,37.7 52,37.7 52,11.7 26,11.7" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="52,37.7 66.3,26 66.3,0 52,11.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="26,11.7 52,11.7 66.3,0 40.3,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 37.7L26 37.7M26 37.7L26 11.7M26 11.7L0 11.7M0 11.7L0 37.7M0 11.7L26 11.7M26 11.7L40.3 0M40.3 0L14.3 0M14.3 0L0 11.7M26 63.7L52 63.7M52 63.7L52 37.7M52 37.7L26 37.7M26 37.7L26 63.7M52 63.7L66.3 52M66.3 52L66.3 26M66.3 26L52 37.7M52 37.7L52 63.7M26 37.7L52 37.7M52 37.7L52 11.7M52 11.7L26 11.7M26 11.7L26 37.7M52 37.7L66.3 26M66.3 26L66.3 0M66.3 0L52 11.7M52 11.7L52 37.7M26 11.7L52 11.7M52 11.7L66.3 0M66.3 0L40.3 0M40.3 0L26 11.7" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="324.05" y="251.4" font-size="14" font-weight="800" fill="#0D1B3E" text-anchor="middle">D</text>
+</svg>

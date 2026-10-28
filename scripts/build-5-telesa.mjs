@@ -1,10 +1,11 @@
-// 5. třída, okruh „Tělesa a souměrnost" (P5_TEL_01–15): stavby z krychliček, půdorys s čísly, kvádr, osová souměrnost.
+// 5. třída, okruh „Tělesa a souměrnost" (P5_TEL_01–16): stavby z krychliček, půdorys s čísly, skládání těles z dílků, osová souměrnost.
 // Styl podle úloh 9–13 oficiálních testů CERMAT pro 5. třídu (vlastní tělesa, obrazce a čísla, nic se nekopíruje).
 // Spuštění: node scripts/build-5-telesa.mjs → nakreslí public/obrazky/p5/tel-*.svg a doplní/přepíše P5_TEL_* v src/data/nahled-batch.json (jiné dávky nechá).
 // Obrázky se kreslí ze stejných dat (seznam krychliček, vzorek čtverečků), ze kterých se odpovědi nezávisle počítají.
 import fs from "node:fs";
 import { NAVY, text, line, makeWriter } from "./lib/svg.mjs";
 import { voxel, place, box } from "./lib/voxel.mjs";
+import { canBuild, sameShape, allVisible, unambiguous, L } from "./lib/skladani.mjs";
 const N = await import("../src/lib/normalize.ts");
 
 const { write } = makeWriter("p5");
@@ -35,6 +36,53 @@ const dimSt = drawVoxel("tel-stavba.svg", S_STAVBA, { alt: "Stavba z krychliček
 const dimDi = drawVoxel("tel-diera.svg", S_DIRA, { u: 30, alt: "Krychle 3 × 3 × 3 z krychliček, ze které je vyjmutý vodorovný tunel uprostřed" });
 const dimDo = drawVoxel("tel-doplnit.svg", S_DOSTAVBA, { alt: "Stavba ve tvaru schodů o výškách 3, 2 a 1 krychlička a hloubce 3 krychličky" });
 const dimKr = drawVoxel("tel-krychle.svg", S_KRYCHLE, { u: 30, alt: "Velká krychle 3 × 3 × 3 slepená z 27 malých krychliček" });
+
+// ── dílky a tělesa A–E v jednom obrázku (vlevo nahoře dílky, pod nimi tělesa s písmeny) ──
+function drawSada(name, { pieces, figs, u = 17, perRow = 3, alt }) {
+  const m = 14, gap = 26, dx = 0.55, dy = 0.45;
+  const mk1 = (cells) => voxel(cells, { u, grid: true, dx, dy });
+  const row = (items) => items.map((it) => ({ ...it, v: mk1(it.cells) }));
+  const rows = [];
+  const pRow = row(pieces); rows.push({ caption: pieces.length > 1 ? "dílky" : "dílek", items: pRow });
+  for (let i = 0; i < figs.length; i += perRow) rows.push({ caption: i === 0 ? "tělesa" : null, items: row(figs.slice(i, i + perRow)) });
+  let y = m, maxW = 0; const parts = [];
+  for (const r of rows) {
+    const h = Math.max(...r.items.map((it) => it.v.h)), top = y + (r.caption ? 18 : 0);
+    if (r.caption) parts.push(text(m, y + 12, r.caption, { size: 12, weight: 800, fill: NAVY, anchor: "start" }));
+    let x = m;
+    for (const it of r.items) {
+      parts.push(place(it.v, x + it.v.origin[0], top + (h - it.v.h) + it.v.origin[1]));
+      parts.push(text(x + it.v.w / 2, top + h + 18, it.label, { size: 14, weight: 800, fill: NAVY }));
+      x += it.v.w + gap;
+    }
+    maxW = Math.max(maxW, x - gap + m); y = top + h + 30;
+  }
+  const W = Math.ceil(maxW), H = Math.ceil(y - 6);
+  write(name, W, H, `  <rect x="0" y="0" width="${W}" height="${H}" fill="#ffffff"/>\n` + parts.join("\n"), alt);
+  return { w: W, h: H };
+}
+// Útvary kreslíme v čelním pohledu (řádky shora dolů, hloubka jedna krychlička), aby byl tvar dílku ostrý a dobře čitelný.
+const F = (rows) => rows.flatMap((row, r) => [...row].flatMap((ch, i) => (ch === "#" ? [[i, 0, rows.length - 1 - r]] : [])));
+const I3 = F(["###"]), L3 = F(["##", "#."]), L4 = F(["###", "#.."]);
+const FIG = {
+  a_2x3: F(["###", "###"]), b_L4: F(["####", "#...", "#..."]), d_T: F(["###", ".#.", ".#.", ".#."]), e_hreben: F(["#.#.", "####"]),
+  f_U: F(["#..#", "####"]), g_schod: F(["#..", "##.", "###"]), h_P: F(["##.", "###", ".#."]),
+};
+const FIG8 = {
+  p: F(["####", "####"]), q: F(["###.", "####", "#..."]), s: F(["#.#.#", "#####"]), u: F(["###", "#.#", "###"]), x: F(["###.", "####", ".#.."]),
+};
+const lbl = (names) => (cells, i) => ({ cells, label: names[i] });
+const ABCDE = "ABCDE".split("");
+const SADA1 = { pieces: [{ cells: L3, label: "" }], figs: [F(["###"]), F(["#.", "##"]), F(["#", "#", "#"]), F(["##", ".#"])].map(lbl(ABCDE)) };
+const SADA2 = { pieces: [{ cells: I3, label: "1" }, { cells: I3, label: "2" }], figs: [FIG.d_T, FIG.e_hreben, FIG.a_2x3, FIG.g_schod, FIG.b_L4].map(lbl(ABCDE)) };
+const SADA3 = { pieces: [{ cells: L3, label: "1" }, { cells: L3, label: "2" }], figs: [FIG.h_P, FIG.d_T, FIG.f_U, FIG.g_schod, FIG.b_L4].map(lbl(ABCDE)) };
+const SADA4 = { pieces: [{ cells: I3, label: "1" }, { cells: L3, label: "2" }], figs: [FIG.f_U, FIG.d_T, FIG.h_P, FIG.e_hreben, FIG.g_schod].map(lbl(ABCDE)) };
+const SADA5 = { pieces: [{ cells: L4, label: "1" }, { cells: L4, label: "2" }], figs: [FIG8.q, FIG8.p, FIG8.s, FIG8.x, FIG8.u].map(lbl(ABCDE)) };
+const dimSa1 = drawSada("tel-sada-1.svg", { ...SADA1, perRow: 4, u: 26, alt: "Dílek ze tří krychliček ve tvaru L a čtyři tělesa A až D" });
+const dimSa2 = drawSada("tel-sada-2.svg", { ...SADA2, u: 21, alt: "Dva dílky, každý ze tří krychliček v řadě, a pět těles A až E ze šesti krychliček" });
+const dimSa3 = drawSada("tel-sada-3.svg", { ...SADA3, u: 21, alt: "Dva dílky ve tvaru L ze tří krychliček a pět těles A až E ze šesti krychliček" });
+const dimSa4 = drawSada("tel-sada-4.svg", { ...SADA4, u: 21, alt: "Dva různé dílky ze tří krychliček, jeden v řadě a jeden ve tvaru L, a pět těles A až E ze šesti krychliček" });
+const dimSa5 = drawSada("tel-sada-5.svg", { ...SADA5, u: 19, alt: "Dva stejné dílky ze čtyř krychliček ve tvaru L a pět plochých těles A až E z osmi krychliček" });
 
 // ── čtvercová mřížka: půdorys s čísly a souměrnost ──
 const CELL = 30;
@@ -69,10 +117,6 @@ const img = (url, dim, alt) => ({ image: { kind: "static", url: "/obrazky/p5/" +
 
 const ex = [
   // ───────── L1 ─────────
-  mk("P5_TEL_01", "p5_soumernost", 1, "Kolik os souměrnosti má čtverec?", "4", [
-    "Čtverec se dá přeložit na dvě shodné poloviny podél dvou přímek středem protilehlých stran (svislé a vodorovné).",
-    "Další dvě osy jsou obě úhlopříčky. Dohromady má čtverec 2 + 2 = 4 osy souměrnosti.",
-  ], 60),
   mk("P5_TEL_02", "p5_krychlicky", 1, "Stavba je postavená z krychliček. Z kolika krychliček se skládá?", "6", [
     "Stavba má tři sloupce vedle sebe: první z 1 krychličky, druhý ze 2 a třetí ze 3 krychliček.",
     "1 + 2 + 3 = 6 krychliček.",
@@ -95,14 +139,6 @@ const ex = [
     "Sečteme čísla v prvním řádku: 2 + 1 + 3 = 6, ve druhém: 1 + 2 + 1 = 4 a ve třetím: 3 + 1 + 2 = 6.",
     "Celá stavba má 6 + 4 + 6 = 16 krychliček.",
   ], 120, img("tel-pudorys.svg", dimPu, "Půdorys stavby z krychliček: čísla po řádcích 2 1 3, 1 2 1, 3 1 2")),
-  mk("P5_TEL_07", "p5_soumernost", 2, "Které z tiskacích písmen je osově souměrné?", null, [
-    "Písmeno je osově souměrné, když se dá přeložit podél přímky na dvě shodné poloviny.",
-    "Písmena F, G, J a R takovou přímku nemají. Písmeno H se dá přeložit svisle i vodorovně, správně je D).",
-  ], 105, { moznosti: ["F", "G", "J", "H", "R"], spravna: 3 }),
-  mk("P5_TEL_08", "p5_soumernost", 2, "Kolik os souměrnosti má obdélník, který není čtverec?", "2", [
-    "Obdélník se dá přeložit na shodné poloviny podél přímky, která vede středy protilehlých stran.",
-    "Takové přímky jsou dvě (svislá a vodorovná). Úhlopříčky osy souměrnosti nejsou, protože by se po přeložení strany neshodly. Odpověď je 2.",
-  ], 90),
   mk("P5_TEL_09", "p5_soumernost", 2, "Obrazec vlevo od osy o doplníme souměrně podle osy o. Kolik čtverečků bude mít celý obrazec (původní i jeho souměrný obraz)?", "18", [
     "Původní obrazec vlevo má 2 + 3 + 4 = 9 čtverečků.",
     "Souměrný obraz vpravo má také 9 čtverečků. Celý obrazec má 9 + 9 = 18 čtverečků.",
@@ -121,10 +157,6 @@ const ex = [
     "Schody mají tři sloupce vysoké 3, 2 a 1 krychličku a každý je 3 krychličky hluboký: 3 · (3 + 2 + 1) = 18 krychliček.",
     "Krychle 3 × 3 × 3 má 27 krychliček, chybí tedy 27 − 18 = 9 krychliček.",
   ], 180, img("tel-doplnit.svg", dimDo, "Stavba ve tvaru schodů o výškách 3, 2 a 1 krychlička a hloubce 3 krychličky")),
-  mk("P5_TEL_13", "p5_kvadr", 3, "Kvádr má rozměry 6 cm, 4 cm a 3 cm. Jaký je součet délek všech hran kvádru v centimetrech?", "52", [
-    "Kvádr má 12 hran: čtyři hrany dlouhé 6 cm, čtyři dlouhé 4 cm a čtyři dlouhé 3 cm.",
-    "4 · 6 + 4 · 4 + 4 · 3 = 24 + 16 + 12 = 52 cm. Nebo 4 · (6 + 4 + 3) = 4 · 13 = 52 cm.",
-  ], 150),
   mk("P5_TEL_14", "p5_krychlicky", 3, "Velká krychle 3 × 3 × 3 je slepená z 27 malých krychliček. Celou ji z vnějšku obarvíme (i dno). Kolik malých krychliček má obarvené právě dvě stěny?", null, [
     "Dvě obarvené stěny mají jen krychličky uprostřed hran velké krychle (v rozích jsou tři obarvené stěny, uprostřed stěn jen jedna).",
     "Velká krychle má 12 hran a na každé hraně je jedna taková krychlička. Správně je C) 12.",
@@ -134,6 +166,32 @@ const ex = [
     "Zrcadlením podle svislé osy dostaneme 2 · 7 = 14 čtverečků v horní půlce a zrcadlením podle vodorovné osy ještě jednou tolik.",
     "Celý obrazec má 4 · 7 = 28 čtverečků.",
   ], 210, img("tel-soum-3.svg", dimS3, "Mřížka 8 × 6 čtverečků se dvěma osami souměrnosti; v levém horním čtverci jsou vybarvené čtverečky, jinde nic")),
+  // ── skládání z dílků (nové) ──
+  mk("NEW_1", "p5_skladani", 1, "Dílek je slepený ze tří krychliček (viz obrázek). Dílek smíš libovolně otáčet. Kolik z těles A až D má stejný tvar jako dílek?", "2", [
+    "Dílek má tvar písmene L: dvě krychličky vedle sebe a třetí je připojená k jedné z nich do pravého úhlu.",
+    "Těleso B je tentýž dílek otočený o čtvrt otáčky a těleso D je dílek otočený o další čtvrt otáčky. Těleso A (tři v řadě) a těleso C (tři nad sebou) mají jiný tvar.",
+    "Stejný tvar mají dvě tělesa, B a D.",
+  ], 120, img("tel-sada-1.svg", dimSa1, "Dílek ze tří krychliček ve tvaru L a čtyři tělesa A až D")),
+  mk("NEW_2", "p5_skladani", 2, "Máme dva stejné dílky, každý je ze tří krychliček v řadě (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Kolik z těles A až E se dá složit přesně z těchto dvou dílků?", "3", [
+    "Každé těleso má 6 krychliček a dva dílky mají dohromady také 6 krychliček. Zkoušíme, jestli se těleso dá rozdělit na dvě řady po třech krychličkách.",
+    "A) vodorovná řada tří krychliček a pod ní svislý sloupec tří: ano. B) hřeben: ne, nedají se v něm najít dvě rovné řady po třech krychličkách. C) obdélník 2 × 3: ano (dvě řady po třech). D) schody: ne. E) velké L: ano (svislý sloupec tří a vodorovná řada tří).",
+    "Dá se složit 3 těles: A, C a E.",
+  ], 210, img("tel-sada-2.svg", dimSa2, "Dva dílky z řady tří krychliček a pět těles A až E")),
+  mk("NEW_3", "p5_skladani", 2, "Máme dva stejné dílky ve tvaru L, každý ze tří krychliček (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Kolik z těles A až E se dá složit přesně z těchto dvou dílků?", "2", [
+    "Každé těleso má 6 krychliček. Zkoušíme, jestli se dá rozdělit na dva dílky ve tvaru L, každý ze tří krychliček.",
+    "A) ano (dvě L do sebe zapadnou). B) tvar T s dlouhým sloupcem: ne. C) ano (dvě L tvoří písmeno U se dvěma sloupky). D) schody: ne. E) velké L: ne.",
+    "Dá se složit 2 těles: A a C.",
+  ], 210, img("tel-sada-3.svg", dimSa3, "Dva dílky ve tvaru L a pět těles A až E")),
+  mk("NEW_4", "p5_skladani", 3, "Máme dva dílky z krychliček: dílek 1 je řada tří krychliček a dílek 2 je dílek ve tvaru L ze tří krychliček (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Které z těles A až E se dá složit přesně z těchto dvou dílků?", null, [
+    "Každé těleso má 6 krychliček. Hledáme způsob, jak z něj vybrat jednu řadu tří krychliček a zbytek ve tvaru L.",
+    "A) ne. B) ne. C) ne. D) ne. E) ano: spodní řada tří krychliček je dílek 1 a zbylé tři krychličky nahoře mají tvar L, tedy dílek 2.",
+    "Z obou dílků se dá složit jen těleso E, správně je E).",
+  ], 270, { ...img("tel-sada-4.svg", dimSa4, "Dva různé dílky ze tří krychliček a pět těles A až E"), moznosti: ["A", "B", "C", "D", "E"], spravna: 4 }),
+  mk("NEW_5", "p5_skladani", 3, "Máme dva stejné dílky, každý je ze čtyř krychliček ve tvaru písmene L (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Kolik z těles A až E, každé z osmi krychliček, se dá složit přesně z těchto dvou dílků?", "3", [
+    "Každé těleso má 8 krychliček a dva dílky mají dohromady také 8 krychliček. Hledáme, jestli se těleso dá rozdělit na dva dílky tvaru L ze čtyř krychliček.",
+    "A) ne. B) obdélník 2 × 4: ano (dva dílky L složené k sobě). C) hřeben: ne. D) ano. E) rámeček 3 × 3 bez prostředku: ano.",
+    "Dají se složit 3 tělesa: B, D a E.",
+  ], 300, img("tel-sada-5.svg", dimSa5, "Dva dílky ve tvaru L ze čtyř krychliček a pět těles A až E z osmi krychliček")),
 ];
 for (const e of ex) if (e.moznosti) e.odpoved = e.moznosti[e.spravna];
 
@@ -149,16 +207,31 @@ cmp("P5_TEL_03", S_KVADR.length);
 cmp("P5_TEL_04", cnt(P_SOUM1));
 cmp("P5_TEL_05", S_STAVBA.length); ok("05 nic nevisí", nahoru(S_STAVBA)); ok("05 součet řad", 2 * 1 + 2 * 2 + 2 * 4 === S_STAVBA.length);
 cmp("P5_TEL_06", PUDORYS.flat().reduce((a, b) => a + b, 0));
-{ const lv = (a) => a.join(""); const t = ["F", "G", "J", "H", "R"].filter((c) => c === "H"); ok("07 jedno souměrné", t.length === 1 && by.P5_TEL_07.moznosti[by.P5_TEL_07.spravna] === "H"); }
 cmp("P5_TEL_09", cnt(P_SOUM2) * 2);
 ok("09 vlevo od osy", P_SOUM2.every((r) => r.length === 4)); ok("04 vlevo od osy", P_SOUM1.every((r) => r.length === 3)); ok("15 čtvrtina", P_SOUM3.every((r) => r.length === 4) && P_SOUM3.length === 3);
 cmp("P5_TEL_10", 4 * 3 * 2);
 cmp("P5_TEL_11", S_DIRA.length); ok("11 tunel skrz", 27 - S_DIRA.length === 3 && !S_DIRA.some(([i, , k]) => i === 1 && k === 1));
 cmp("P5_TEL_12", 27 - S_DOSTAVBA.length); ok("12 schody 18", S_DOSTAVBA.length === 18 && nahoru(S_DOSTAVBA));
-cmp("P5_TEL_13", 4 * (6 + 4 + 3));
 { const e = exposed(S_KRYCHLE); const dvě = e.filter((x) => x === 2).length; ok("14 právě dvě stěny", dvě === 12 && by.P5_TEL_14.odpoved === "12"); ok("14 rohy a střed", e.filter((x) => x === 3).length === 8 && e.filter((x) => x === 1).length === 6); }
 cmp("P5_TEL_15", cnt(P_SOUM3) * 4);
-ok("01/08 osy", 4 === 2 + 2);
+
+// skládání z dílků: odpovědi se počítají hrubou silou (všech 24 otočení, bez překrytí); obrázky musí být jednoznačné
+{
+  const count = (sada) => sada.figs.filter((f) => canBuild(f.cells, sada.pieces.map((p) => p.cells))).length;
+  const which = (sada) => sada.figs.map((f, i) => (canBuild(f.cells, sada.pieces.map((p) => p.cells)) ? "ABCDE"[i] : null)).filter(Boolean);
+  const sameAsPiece = SADA1.figs.filter((f) => sameShape(f.cells, SADA1.pieces[0].cells)).length;
+  cmp("NEW_1", sameAsPiece);
+  cmp("NEW_2", count(SADA2)); cmp("NEW_3", count(SADA3));
+  const w4 = which(SADA4); ok("NEW_4 právě jedno těleso", w4.length === 1 && w4[0] === "ABCDE"[by.NEW_4.spravna], w4);
+  cmp("NEW_5", count(SADA5));
+  console.log("skládání: NEW_2", which(SADA2).join(""), "| NEW_3", which(SADA3).join(""), "| NEW_4", w4.join(""), "| NEW_5", which(SADA5).join(""), "| NEW_1 stejný tvar", SADA1.figs.map((f, i) => (sameShape(f.cells, SADA1.pieces[0].cells) ? "ABCDE"[i] : null)).filter(Boolean).join(""));
+  for (const [n, sada] of Object.entries({ SADA1, SADA2, SADA3, SADA4, SADA5 })) {
+    const total = sada.pieces.reduce((a, pc) => a + pc.cells.length, 0);
+    sada.figs.forEach((f, i) => { ok(`${n} těleso ${"ABCDE"[i]} viditelné`, allVisible(f.cells)); ok(`${n} těleso ${"ABCDE"[i]} jednoznačné`, unambiguous(f.cells)); if (n !== "SADA1") ok(`${n} těleso ${"ABCDE"[i]} má ${total} krychliček`, f.cells.length === total, f.cells.length); });
+  }
+}
+// pořadí podle obtížnosti a průběžné číslování
+{ const order = [...ex].sort((a, b) => a.obtiznost - b.obtiznost); order.forEach((e, i) => { e.id = `P5_TEL_${String(i + 1).padStart(2, "0")}`; }); ex.splice(0, ex.length, ...order); }
 
 for (const e of ex) {
   if (e.moznosti) ok(e.id + " možnosti", e.moznosti.length === 5 && new Set(e.moznosti).size === 5 && e.odpoved === e.moznosti[e.spravna]);
@@ -169,7 +242,7 @@ for (const e of ex) {
 }
 ok("rozmístění A–E", new Set(ex.filter((e) => e.moznosti).map((e) => e.spravna)).size === 2);
 const ids = ex.map((e) => e.id);
-ok("unikátní id", new Set(ids).size === ids.length && ex.length === 15, ex.length);
+ok("unikátní id", new Set(ids).size === ids.length && ex.length === 16, ex.length);
 const all = ["databaze", "cermat-200", "databaze-5"].flatMap((fl) => JSON.parse(fs.readFileSync(`src/data/${fl}.json`, "utf8")).examples);
 ok("id bez kolize", ids.every((id) => !all.some((e) => e.id === id)));
 const lv = (n) => ex.filter((e) => e.obtiznost === n).length;
@@ -179,6 +252,6 @@ if (fail) { console.log("NEZAPISUJI"); process.exit(1); }
 let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* bez předchozí dávky */ }
 const others = (prev.examples ?? []).filter((e) => !/^P5_TEL_/.test(e.id));
-const nazev = others.length ? `${prev.nazev} + 5. třída: Tělesa a souměrnost (15 úloh)` : "5. třída — Tělesa a souměrnost: stavby z krychliček, půdorys, kvádr, osová souměrnost (15 úloh: L1 ×4, L2 ×6, L3 ×5)";
+const nazev = others.length ? `${prev.nazev} + 5. třída: Tělesa a souměrnost (16 úloh)` : "5. třída — Tělesa a souměrnost: stavby z krychliček, půdorys, skládání z dílků, kvádr, osová souměrnost (16 úloh: L1 ×4, L2 ×6, L3 ×6)";
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...ex] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${ex.length} úloh)`);

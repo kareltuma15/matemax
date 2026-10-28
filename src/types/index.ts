@@ -468,6 +468,7 @@ export const PODTEMA_LABELS: Record<string, string> = {
   p5_pudorys:           "Půdorys stavby",
   p5_soumernost:        "Osová souměrnost",
   p5_kvadr:             "Kvádr a krychle",
+  p5_skladani:          "Skládání z dílků",
   kruznice:             "Kružnice",
   obdelnik:             "Obdélník",
   stred_usecky:         "Střed úsečky",
