@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 129,
+    "total": 144,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -3408,6 +3408,237 @@
         "Hodnotu 36 má jen výraz D)."
       ],
       "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_16",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 1,
+      "zadani": "Kolik centimetrů je 8 dm 5 cm?",
+      "odpoved": "85",
+      "reseni_kroky": [
+        "Jeden decimetr má 10 centimetrů, takže 8 dm je 80 cm.",
+        "K tomu přidáme 5 cm: 80 + 5 = 85 cm."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_17",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 1,
+      "zadani": "Kolik milimetrů je 7 cm?",
+      "odpoved": "70",
+      "reseni_kroky": [
+        "Jeden centimetr má 10 milimetrů.",
+        "Sedm centimetrů je 7 · 10 = 70 mm."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_18",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 1,
+      "zadani": "Kolik hodin je 180 minut?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Jedna hodina má 60 minut.",
+        "Kolikrát se 60 vejde do 180? 3 · 60 = 180, tedy 3 hodiny."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_19",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 1,
+      "zadani": "Rohlík stojí 3 koruny. Kolik rohlíků koupíš za 27 korun?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Zjišťujeme, kolikrát se 3 koruny vejdou do 27 korun: 27 : 3.",
+        "27 : 3 = 9, koupíš 9 rohlíků. Zkouška: 9 · 3 = 27."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_20",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 1,
+      "zadani": "Kolik sekund je 4 minuty?",
+      "odpoved": "240",
+      "reseni_kroky": [
+        "Jedna minuta má 60 sekund.",
+        "Čtyři minuty jsou 4 · 60 = 240 sekund."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_21",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 2,
+      "zadani": "Do cíle zbývá kilometr. Kolik metrů zbývá, když už jsi ušel 650 metrů?",
+      "odpoved": "350",
+      "reseni_kroky": [
+        "Kilometr má 1 000 metrů.",
+        "Zbývá 1 000 − 650 = 350 metrů."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_22",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Autobus vyjel v 7:50 a jel 45 minut. V kolik hodin dojel? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "8:35",
+      "reseni_kroky": [
+        "Do 8:00 zbývá 10 minut: 7:50 + 10 minut = 8:00.",
+        "Zbývá přidat 45 − 10 = 35 minut: 8:00 + 35 minut = 8:35.",
+        "Autobus dojel v 8:35."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_23",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Přednáška začala ve 13:20 a skončila v 15:05. Kolik minut trvala?",
+      "odpoved": "105",
+      "reseni_kroky": [
+        "Od 13:20 do 14:20 je jedna hodina, tedy 60 minut. Od 14:20 do 15:05 je dalších 45 minut.",
+        "Dohromady 60 + 45 = 105 minut."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_24",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 2,
+      "moznosti": [
+        "102",
+        "119",
+        "128",
+        "136",
+        "144"
+      ],
+      "spravna": 3,
+      "zadani": "Za 5 stejných tužek jsi zaplatil 85 korun. Kolik korun stojí 8 takových tužek?",
+      "odpoved": "136",
+      "reseni_kroky": [
+        "Jedna tužka stojí 85 : 5 = 17 korun.",
+        "Osm tužek stojí 8 · 17 = 136 korun. Správně je D)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_25",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 2,
+      "zadani": "Pytlík cukru váží 250 gramů. Kolik pytlíků cukru je potřeba na 3 kilogramy?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Tři kilogramy jsou 3 000 gramů.",
+        "Čtyři pytlíky po 250 g mají 1 000 g, tedy 1 kg. Na 3 kg je potřeba 3 · 4 = 12 pytlíků."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_26",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 2,
+      "zadani": "V peněžence je 7 pětikorun a 6 dvoukorun. Jakou hodnotu mají všechny tyto mince dohromady (v korunách)?",
+      "odpoved": "47",
+      "reseni_kroky": [
+        "Pětikoruny: 7 · 5 = 35 Kč.",
+        "Dvoukoruny: 6 · 2 = 12 Kč.",
+        "Dohromady 35 + 12 = 47 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_27",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 3,
+      "zadani": "V kasičce jsou jen desetikorunové a dvacetikorunové mince. Je jich dohromady 11 a mají hodnotu 190 korun. Kolik dvacetikorunových mincí je v kasičce?",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Kdyby všech 11 mincí bylo desetikorunových, měly by hodnotu 11 · 10 = 110 Kč. To je o 190 − 110 = 80 Kč méně, než je ve skutečnosti.",
+        "Každá výměna desetikoruny za dvacetikorunu přidá 10 Kč. Potřebujeme přidat 80 Kč, tedy 80 : 10 = 8 výměn.",
+        "Dvacetikorunových mincí je 8 (a desetikorunové 3). Zkouška: 8 · 20 + 3 · 10 = 160 + 30 = 190 Kč."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_28",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 3,
+      "zadani": "Hodiny předbíhají každou hodinu o 4 minuty. V 6:00 ukazovaly správný čas. Jaký čas budou ukazovat, až bude správně 10:00? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "10:16",
+      "reseni_kroky": [
+        "Od 6:00 do 10:00 uplynou 4 hodiny.",
+        "Za každou hodinu hodiny předbíhají o 4 minuty, za 4 hodiny tedy o 4 · 4 = 16 minut.",
+        "Správný čas je 10:00, hodiny ukazují o 16 minut víc, tedy 10:16."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_29",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 3,
+      "moznosti": [
+        "72",
+        "81",
+        "90",
+        "96",
+        "108"
+      ],
+      "spravna": 2,
+      "zadani": "Kilogram jablek stojí 36 korun. Kolik korun zaplatíš za 2 kilogramy 500 gramů jablek?",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "Dva kilogramy stojí 2 · 36 = 72 Kč.",
+        "Půl kilogramu stojí polovinu z 36 Kč, tedy 18 Kč.",
+        "Dohromady 72 + 18 = 90 Kč. Správně je C)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_30",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 3,
+      "zadani": "Maminka vyšla z domu v 7:45 a vrátila se v 9:10. Z toho 25 minut nakupovala v obchodě. Kolik minut šla celkem na cestě tam a zpátky?",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "Od 7:45 do 8:45 je hodina, tedy 60 minut, a od 8:45 do 9:10 je dalších 25 minut. Celá doba mimo domov je 85 minut.",
+        "Nakupováním strávila 25 minut, na cestě je tedy 85 − 25 = 60 minut."
+      ],
+      "cas_sekund": 210,
       "sm2_interval": 1
     }
   ]

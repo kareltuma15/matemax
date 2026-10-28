@@ -13,9 +13,9 @@ const hm = (min) => `${Math.floor(min / 60)}:${String(min % 60).padStart(2, "0")
 
 const ex = [
   // ───────── L1 ─────────
-  mk("P5_JED_16", "p5_prevody", 1, "Kolik centimetrů je 3 m 5 cm?", "305", [
-    "Jeden metr má 100 centimetrů, takže 3 m je 300 cm.",
-    "K tomu přidáme 5 cm: 300 + 5 = 305 cm.",
+  mk("P5_JED_16", "p5_prevody", 1, "Kolik centimetrů je 8 dm 5 cm?", "85", [
+    "Jeden decimetr má 10 centimetrů, takže 8 dm je 80 cm.",
+    "K tomu přidáme 5 cm: 80 + 5 = 85 cm.",
   ], 60),
   mk("P5_JED_17", "p5_prevody", 1, "Kolik milimetrů je 7 cm?", "70", [
     "Jeden centimetr má 10 milimetrů.",
@@ -90,7 +90,7 @@ const by = Object.fromEntries(ex.map((e) => [e.id, e]));
 const A = (id) => by[id].odpoved;
 const t = (h, m) => h * 60 + m;
 
-ok("16", 3 * 100 + 5 === 305 && A("P5_JED_16") === "305");
+ok("16", 8 * 10 + 5 === 85 && A("P5_JED_16") === "85");
 ok("17", 7 * 10 === 70 && A("P5_JED_17") === "70");
 ok("18", 180 / 60 === 3 && A("P5_JED_18") === "3");
 ok("19", 27 / 3 === 9 && A("P5_JED_19") === "9");
