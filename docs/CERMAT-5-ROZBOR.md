@@ -67,3 +67,24 @@ Náročnost je vyšší, než by čekal čtvrťák: téměř každá úloha vyž
 3. Mají mít žáci 5. třídy stejné rozdělení zdarma/Premium?
 4. Souhlasíš, že úlohy pro 5. třídu píšeme na tykání a v jednodušší češtině než pro 9. třídu?
 5. Souhlasíš, že fakt „sešit, MateMax a videolekce jsou jen pro 9. třídu“ upravím na „MateMax je pro 5. i 9. třídu“ až ve chvíli, kdy bude první balíček hotový?
+
+## 7. Kalibrace obtížnosti podle dalších osmi testů (2022 a 2023, varianty A–D; doplněno 29. 10. 2026)
+
+Celkem jsme rozebrali 18 sešitů (2022–2026). Dodatečné testy potvrzují kostru z oddílu 2 a upřesňují, **jak těžké úlohy jsou**.
+
+**Co určuje obtížnost L3 (úroveň přijímaček):**
+- Každá úloha má 2–4 podúlohy, které na sebe často navazují (6.1 → 6.2 → 6.3). Poslední podúloha je nejtěžší.
+- Úvaha místo vzorce: soustava dvou podmínek (dvouhlaví a tříhlaví draci, 5 a 10 Kč mince se stejnou hodnotou), součet dvou údajů a rozdíl (Venn: kroužky, palindromy), „najděte všechna řešení“.
+- Zlomky: nejčastěji **o polovinu, o třetinu, o pětinu, o čtvrtinu**, dále šestina a desetina; většinou jako „o zlomek víc/míň“ nebo „zlomek z celku, zbytek je dané číslo“.
+- Obrazce: obvod složeného obrazce ze čtverců, trojúhelníků a obdélníků, kde strany spolu souvisí (rozdíl obvodů, „obvod čtverce = obvod trojúhelníku“); čtvercová síť (osová souměrnost, obsah mřížového obrazce).
+- Vzory a posloupnosti (úloha 14): pyramida z řad, rostoucí obrazce, opakující se řada čísel; ptají se na malé číslo, na velké (73. řada) i obráceně („kolik řad má pyramida“).
+- Diagramy se šipkami a písmeny (úloha 13): dosazení stejného čísla za symbol, výpočet po šipkách.
+
+**Úroveň L1 a L2 v MateMaxu:** L1 je úvod (jeden krok, jedno číslo, procvičení základu), L2 se přibližuje (dva kroky, dva údaje, obrázek), L3 odpovídá skutečné úloze testu včetně podúloh.
+
+**Rozpor s dřívějším pravidlem (nutno odsouhlasit s Karlem):**
+- **Dělení dvouciferným číslem** je v testech vždy, ale jen s „hezkými“ čísly: 440 : 20, 2 000 : 40, 1 600 : 40, 384 : 16, : 11, : 12, : 21. Zbytek po dělení se objevil v 2022 C („213 : □ = 14, zbytek 3“).
+- **Převody přes více jednotek** se také objevují: „2 m 72 cm − 520 mm + 100 cm“, „18 m − 15 dm + □ cm = 20 m“, „20 km + 34 000 cm v metrech“, „1 hodina = 20 minut + □ sekund“.
+- Dělitelnost a „násobky a dělitele“ jako samostatné téma v testech nejsou (potvrzeno).
+
+Úlohy MateMaxu zůstávají vlastní (nekopírujeme zadání ani čísla).

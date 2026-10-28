@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 196" width="236" height="196" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Čtverec o straně 6 cm; vrcholy tmavého čtverce uvnitř leží ve středech stran velkého čtverce</title>
+  <rect x="0" y="0" width="236" height="196" fill="#ffffff"/>
+  <polygon points="14,14 182,14 182,182 14,182" fill="#ffffff" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="98,14 182,98 98,182 14,98" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="98" cy="14" r="4" fill="#0D1B3E"/>
+  <circle cx="182" cy="98" r="4" fill="#0D1B3E"/>
+  <circle cx="98" cy="182" r="4" fill="#0D1B3E"/>
+  <circle cx="14" cy="98" r="4" fill="#0D1B3E"/>
+  <text x="190" y="103" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="start">6 cm</text>
+  <line x1="186" y1="14" x2="186" y2="182" stroke="#0D1B3E" stroke-width="1.5"/>
+</svg>

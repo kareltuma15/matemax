@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 154 112" width="154" height="112" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélník složený z velkého čtverce o straně 6 cm a dvou malých čtverců o straně 3 cm nad sebou</title>
+  <rect x="0" y="0" width="154" height="112" fill="#ffffff"/>
+  <polygon points="14,14 98,14 98,98 14,98" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="98,14 140,14 140,56 98,56" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="98,56 140,56 140,98 98,98" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="56" y="61" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="middle">6 cm</text>
+  <text x="119" y="40" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="middle">3 cm</text>
+  <text x="119" y="82" font-size="13" font-weight="600" fill="#0D1B3E" text-anchor="middle">3 cm</text>
+</svg>

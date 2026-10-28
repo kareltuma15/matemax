@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 207.1384387633061" width="124" height="207.1384387633061" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Domeček: čtverec, na jehož horní straně stojí rovnostranný trojúhelník</title>
+  <rect x="0" y="0" width="124" height="207.1384387633061" fill="#ffffff"/>
+  <polygon points="14,97.14 14,193.14 110,193.14 110,97.14 62,14" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="14" y1="97.14" x2="110" y2="97.14" stroke="#0D1B3E" stroke-width="1.5" stroke-dasharray="5 4"/>
+</svg>

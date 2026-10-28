@@ -1,5 +1,5 @@
 {
-  "nazev": "5. třída — Zlomky a části celku, druhá dávka: část z celku, celek z části, zbytek, o zlomek, porovnání, zlomek na ose a na obrazci (15 úloh: L1 ×4, L2 ×6, L3 ×5)",
+  "nazev": "5. třída — Zlomky a části celku, druhá dávka: část z celku, celek z části, zbytek, o zlomek, porovnání, zlomek na ose a na obrazci (15 úloh: L1 ×4, L2 ×6, L3 ×5) + 5. třída: Obvod a obsah, druhá dávka (15 úloh) + 5. třída: Obvod a obsah, druhá dávka (15 úloh)",
   "examples": [
     {
       "id": "P5_ZLO_16",
@@ -250,6 +250,292 @@
         "Zkouška: polovina z 48 je 24, čtvrtina je 12 a 24 − 12 = 12."
       ],
       "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_16",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 1,
+      "zadani": "Obvod obdélníku je 26 cm. Jedna jeho strana měří 8 cm. Kolik centimetrů měří druhá strana?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "Obvod obdélníku jsou dvě délky a dvě šířky, takže součet dvou sousedních stran je 26 : 2 = 13 cm.",
+        "Druhá strana měří 13 − 8 = 5 cm. Zkouška: 2 · (8 + 5) = 26."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_17",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-tecko.svg",
+        "width": 178,
+        "height": 118,
+        "alt": "Obrazec ve tvaru obrácené pyramidy ze 9 čtverečků"
+      },
+      "zadani": "Každý čtvereček má stranu 1 cm. Jaký je obsah vybarveného obrazce v cm²?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Obsah obrazce ze čtverečků o straně 1 cm spočítáme tak, že čtverečky spočítáme: každý má obsah 1 cm².",
+        "V horní řadě je 5 čtverečků, v prostřední 3 a v dolní 1, dohromady 5 + 3 + 1 = 9 čtverečků, tedy 9 cm²."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_18",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 1,
+      "zadani": "Zahrada tvaru čtverce má obvod 36 m. Kolik metrů měří její strana?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Čtverec má čtyři stejně dlouhé strany, takže jedna strana je 36 : 4 = 9 m.",
+        "Zkouška: 4 · 9 = 36."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_19",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 1,
+      "zadani": "Rovnostranný trojúhelník má obvod 27 cm. Kolik centimetrů měří jedna jeho strana?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Rovnostranný trojúhelník má tři stejně dlouhé strany.",
+        "Jedna strana měří 27 : 3 = 9 cm."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_20",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-domecek.svg",
+        "width": 124,
+        "height": 207.1384387633061,
+        "alt": "Domeček: čtverec, na jehož horní straně stojí rovnostranný trojúhelník"
+      },
+      "zadani": "Domeček na obrázku se skládá ze čtverce a rovnostranného trojúhelníku, které mají společnou jednu stranu. Obvod čtverce je 32 cm. Jaký je obvod domečku v centimetrech?",
+      "odpoved": "40",
+      "reseni_kroky": [
+        "Strana čtverce je 32 : 4 = 8 cm. Trojúhelník je rovnostranný a má stejnou stranu 8 cm.",
+        "Obvod domečku tvoří tři strany čtverce a dvě strany trojúhelníku (společná strana je uvnitř a do obvodu se nepočítá).",
+        "5 · 8 = 40 cm."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_21",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-kriz.svg",
+        "width": 248,
+        "height": 86,
+        "alt": "Čtverec o straně 4 cm se dvěma stejnými obdélníky po stranách"
+      },
+      "zadani": "Obrazec se skládá ze čtverce o straně 4 cm a dvou stejných obdélníků, které přiléhají k protilehlým stranám čtverce. Obvod celého obrazce je 52 cm. Jaký je obvod jednoho obdélníku v centimetrech?",
+      "odpoved": "26",
+      "reseni_kroky": [
+        "Celý obrazec je velký obdélník s kratší stranou 4 cm. Jeho obvod je 52 cm, takže součet dvou sousedních stran je 52 : 2 = 26 cm.",
+        "Delší strana celého obrazce je 26 − 4 = 22 cm. Z toho čtverec zabírá 4 cm a oba obdélníky dohromady 22 − 4 = 18 cm, takže každý obdélník je dlouhý 9 cm.",
+        "Jeden obdélník má strany 4 cm a 9 cm, jeho obvod je 2 · (4 + 9) = 26 cm."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_22",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 2,
+      "zadani": "Čtverec má stranu 9 cm. Obdélník má stejný obvod jako tento čtverec a jedna jeho strana měří 11 cm. O kolik cm² je obsah čtverce větší než obsah obdélníku?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Obvod čtverce je 4 · 9 = 36 cm. Obdélník má obvod také 36 cm, takže součet jeho dvou sousedních stran je 18 cm.",
+        "Druhá strana obdélníku měří 18 − 11 = 7 cm. Obsah obdélníku je 11 · 7 = 77 cm², obsah čtverce 9 · 9 = 81 cm².",
+        "Obsah čtverce je větší o 81 − 77 = 4 cm²."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_23",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "moznosti": [
+        "1 cm × 24 cm",
+        "2 cm × 12 cm",
+        "3 cm × 8 cm",
+        "4 cm × 6 cm",
+        "všechny mají stejný obvod"
+      ],
+      "spravna": 3,
+      "zadani": "Z 24 čtverečků o straně 1 cm skládáme obdélníky, které mají vždy obsah 24 cm². Strany obdélníků jsou v celých centimetrech. Který z nich má nejmenší obvod?",
+      "odpoved": "4 cm × 6 cm",
+      "reseni_kroky": [
+        "Obdélníků s obsahem 24 cm² je několik: 1 cm × 24 cm, 2 cm × 12 cm, 3 cm × 8 cm a 4 cm × 6 cm.",
+        "Obvody jsou 2 · (1 + 24) = 50 cm, 2 · (2 + 12) = 28 cm, 2 · (3 + 8) = 22 cm a 2 · (4 + 6) = 20 cm.",
+        "Nejmenší obvod 20 cm má obdélník 4 cm × 6 cm (nejvíc se podobá čtverci). Správně je D)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_24",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "zadani": "Dva stejné čtverce o straně 5 cm přiložíme k sobě celými stranami a vznikne obdélník. O kolik centimetrů je součet obvodů obou čtverců větší než obvod vzniklého obdélníku?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Obvod jednoho čtverce je 4 · 5 = 20 cm, oba čtverce mají dohromady 40 cm.",
+        "Obdélník má strany 10 cm a 5 cm, jeho obvod je 2 · (10 + 5) = 30 cm.",
+        "Rozdíl je 40 − 30 = 10 cm. (Přiložené strany se do obvodu už nepočítají: 2 · 5 = 10 cm.)"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_25",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-skladani.svg",
+        "width": 154,
+        "height": 112,
+        "alt": "Velký čtverec o straně 6 cm a dva malé čtverce o straně 3 cm nad sebou"
+      },
+      "zadani": "Obdélník je složený z velkého čtverce o straně 6 cm a dvou malých čtverců o straně 3 cm, které jsou nad sebou. Jaký je obvod obdélníku v centimetrech?",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "Velký čtverec má stranu 6 cm a dva malé nad sebou mají výšku 3 + 3 = 6 cm, takže výška obdélníku je 6 cm.",
+        "Šířka obdélníku je 6 + 3 = 9 cm.",
+        "Obvod je 2 · (9 + 6) = 30 cm."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_26",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 3,
+      "zadani": "Čtverec a rovnostranný trojúhelník mají stejný obvod. Strana trojúhelníku je o 2 cm delší než strana čtverce. Jaký je obvod čtverce v centimetrech?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Strana čtverce nazveme jedna část. Čtverec má obvod čtyři takové části, trojúhelník tři části a k tomu třikrát 2 cm (každá jeho strana je o 2 cm delší).",
+        "Čtyři části se rovnají třem částem a 6 cm, takže jedna část (strana čtverce) je 6 cm.",
+        "Obvod čtverce je 4 · 6 = 24 cm. Zkouška: strana trojúhelníku je 8 cm a 3 · 8 = 24."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_27",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-ab.svg",
+        "width": 266,
+        "height": 232.73651497465943,
+        "alt": "Útvar A je čtverec, útvar B je čtverec s rovnostranným trojúhelníkem na horní straně"
+      },
+      "zadani": "Útvar A je čtverec. Útvar B vznikne tak, že na horní stranu čtverce A (stejné velikosti) přiložíme rovnostranný trojúhelník se stejnou stranou. Obvod útvaru B je o 9 cm větší než obvod útvaru A. Jaký je obvod útvaru B v centimetrech?",
+      "odpoved": "45",
+      "reseni_kroky": [
+        "Trojúhelník přidá k obvodu dvě své strany, ale přiložená strana čtverce z obvodu zmizí. Obvod se tedy zvětší o 2 strany − 1 strana = 1 stranu.",
+        "Strana čtverce má proto 9 cm.",
+        "Útvar B má obvod tři strany čtverce a dvě strany trojúhelníku, dohromady 5 · 9 = 45 cm. Zkouška: obvod A je 4 · 9 = 36 cm a 45 − 36 = 9."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_28",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 3,
+      "moznosti": [
+        "24",
+        "32",
+        "36",
+        "40",
+        "48"
+      ],
+      "spravna": 2,
+      "zadani": "Zahrada tvaru obdélníku měří 12 m a 8 m. Uvnitř podél celého plotu vede pěšina široká 1 metr. Kolik metrů čtverečních zabírá pěšina?",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "Celá zahrada má obsah 12 · 8 = 96 m².",
+        "Zbylá plocha uvnitř pěšiny je obdélník, který je z každé strany o 1 m užší, tedy o 2 m kratší v obou rozměrech: 10 m a 6 m, obsah 60 m².",
+        "Pěšina zabírá 96 − 60 = 36 m². Správně je C)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_29",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-ctverec-ve-ctverci.svg",
+        "width": 236,
+        "height": 196,
+        "alt": "Čtverec o straně 6 cm s tmavým čtvercem, jehož vrcholy leží ve středech stran"
+      },
+      "zadani": "Velký čtverec má stranu 6 cm. Vrcholy tmavého čtverce uvnitř leží přesně ve středech stran velkého čtverce. Jaký je obsah tmavého čtverce v cm²?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "Velký čtverec má obsah 6 · 6 = 36 cm². Po odříznutí tmavého čtverce zbydou v rozích čtyři stejné pravoúhlé trojúhelníky.",
+        "Každý trojúhelník je polovinou čtverce o straně 3 cm: 3 · 3 : 2 = 4,5 cm². Čtyři trojúhelníky mají 4 · 4,5 = 18 cm².",
+        "Tmavý čtverec má obsah 36 − 18 = 18 cm², tedy přesně polovinu velkého čtverce."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_30",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs2-rada.svg",
+        "width": 252,
+        "height": 76,
+        "alt": "První tři obrazce řady: 1, 2, 3 čtverečky vedle sebe"
+      },
+      "zadani": "Obrazce se tvoří z čtverečků o straně 1 cm, které leží vedle sebe v jedné řadě. Každý další obrazec má o 1 čtvereček více než předchozí. Který obrazec v řadě má obvod 40 cm? (Napiš jeho pořadové číslo.)",
+      "odpoved": "19",
+      "reseni_kroky": [
+        "Řada čtverečků vedle sebe je obdélník 1 cm × n cm, jeho obvod je 2 · (n + 1) = 2n + 2 cm.",
+        "Z 2n + 2 = 40 vyjde 2n = 38, takže n = 19. Zkouška: 1. obrazec má obvod 4 cm a každý další o 2 cm víc, 19. obrazec má 4 + 18 · 2 = 40 cm.",
+        "Je to 19. obrazec (má 19 čtverečků)."
+      ],
+      "cas_sekund": 240,
       "sm2_interval": 1
     }
   ]
