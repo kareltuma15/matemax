@@ -1,4 +1,4 @@
-// 5. třída, okruh „Počítání s čísly", druhá dávka (P5_POC_13–27): větší čísla, zbytek po dělení, zaokrouhlování, násobky a dělitelé, doplňování čísla.
+// 5. třída, okruh „Počítání s čísly", druhá dávka (P5_POC_13–27): větší čísla, zaokrouhlování, výběr výrazu, doplňování čísla, úvaha s čísly.
 // Styl podle úlohy 1 oficiálních testů CERMAT pro 5. třídu (vlastní čísla a zadání, nic se nekopíruje).
 // Spuštění: node scripts/build-5-pocitani2.mjs → doplní/přepíše P5_POC_13–27 v src/data/nahled-batch.json (jiné dávky nechá).
 // Každá odpověď se nezávisle přepočítá z textu zadání (vyhodnocení výrazu, hrubá síla); A–E má právě jednu správnou možnost.
@@ -30,9 +30,9 @@ const ex = [
     "Rozložíme: $24 \\cdot 35 = 24 \\cdot 30 + 24 \\cdot 5$.",
     "$24 \\cdot 30 = 720$ a $24 \\cdot 5 = 120$, dohromady $720 + 120 = 840$.",
   ], 90),
-  mk("P5_POC_16", "p5_deleni_zbytek", 1, "Jaký je zbytek po dělení $85 : 6$?", "1", [
-    "Šestka se do 85 vejde nejvýš 14krát, protože $14 \\cdot 6 = 84$ (a $15 \\cdot 6 = 90$ je už víc).",
-    "Zbytek je $85 - 84 = 1$.",
+  mk("P5_POC_16", "p5_velka_cisla", 1, "Vypočítej: $432 : 6$", "72", [
+    "Číslo 432 rozložíme na 420 a 12: $420 : 6 = 70$ a $12 : 6 = 2$.",
+    "Dohromady $70 + 2 = 72$. Zkouška: $72 \\cdot 6 = 432$.",
   ], 75),
   mk("P5_POC_17", "p5_zaokrouhlovani", 1, "Zaokrouhli číslo 4678 na stovky.", "4700", [
     "Na místě stovek je v čísle 4678 šestka. Podíváme se na další číslici, desítky: je to 7.",
@@ -43,48 +43,48 @@ const ex = [
     "Číslo 125 je osmina z tisíce, takže se dá počítat po částech: $10 \\cdot 125 = 1250$ a $8 \\cdot 125 = 1000$.",
     "Dohromady $1250 + 1000 = 2250$.",
   ], 100),
-  mk("P5_POC_19", "p5_velka_cisla", 2, "Vypočítej: $7200 : 15$", "480", [
-    "Zjednodušíme: číslo 7200 i 15 jdou vydělit pěti, takže $7200 : 15 = 1440 : 3$.",
-    "$1440 : 3 = 480$. Zkouška: $480 \\cdot 15 = 4800 + 2400 = 7200$.",
-  ], 120),
+  mk("P5_POC_19", "p5_velka_cisla", 2, "Vypočítej: $5600 : 7$", "800", [
+    "Číslo 5600 je 56 set a $56 : 7 = 8$, takže 56 set děleno sedmi je 8 set.",
+    "$5600 : 7 = 800$. Zkouška: $800 \\cdot 7 = 5600$.",
+  ], 90),
   mk("P5_POC_20", "p5_zaokrouhlovani", 2, "Zaokrouhli čísla 4560 a 2480 na tisíce a vypočítej jejich součet.", "7000", [
     "Číslo 4560 má na místě tisíců 4 a další číslice je 5, takže zaokrouhlíme nahoru na 5000.",
     "Číslo 2480 má na místě tisíců 2 a další číslice je 4, takže zaokrouhlíme dolů na 2000.",
     "Součet zaokrouhlených čísel: $5000 + 2000 = 7000$.",
   ], 120),
-  mk("P5_POC_21", "p5_nasobky", 2, "Které je největší dvojciferné číslo dělitelné osmi?", "96", [
-    "Největší dvojciferné číslo je 99. Hledáme největší násobek osmi, který není větší.",
-    "Násobky osmi: 8, 16, 24, ..., $12 \\cdot 8 = 96$ a $13 \\cdot 8 = 104$ už je trojciferné.",
-    "Hledané číslo je 96.",
-  ], 120),
-  mk("P5_POC_22", "p5_deleni_zbytek", 2, "Které z čísel dává po dělení šesti zbytek 4?", null, [
-    "U každého čísla zjistíme zbytek po dělení šesti: $56 = 9 \\cdot 6 + 2$, $59 = 9 \\cdot 6 + 5$, $52 = 8 \\cdot 6 + 4$, $61 = 10 \\cdot 6 + 1$, $63 = 10 \\cdot 6 + 3$.",
-    "Zbytek 4 má jen číslo 52. Správně je C).",
-  ], 120, { moznosti: ["56", "59", "52", "61", "63"], spravna: 2 }),
+  mk("P5_POC_21", "p5_velka_cisla", 2, "Vypočítej: $306 \\cdot 5$", "1530", [
+    "Rozložíme: $306 \\cdot 5 = 300 \\cdot 5 + 6 \\cdot 5$.",
+    "$300 \\cdot 5 = 1500$ a $6 \\cdot 5 = 30$, dohromady $1500 + 30 = 1530$.",
+  ], 90),
+  mk("P5_POC_22", "vyber_vyrazu", 2, "Který z výrazů má největší hodnotu?", null, [
+    "Každý výraz spočítáme podle pořadí operací: A) $8 \\cdot 7 - 5 = 51$, B) $8 + 7 \\cdot 5 = 43$, C) $(8 + 7) \\cdot 5 = 75$, D) $8 \\cdot (7 - 5) = 16$, E) $8 \\cdot 7 + 5 = 61$.",
+    "Největší hodnotu má výraz C) s hodnotou 75.",
+  ], 150, { moznosti: ["$8 \\cdot 7 - 5$", "$8 + 7 \\cdot 5$", "$(8 + 7) \\cdot 5$", "$8 \\cdot (7 - 5)$", "$8 \\cdot 7 + 5$"], spravna: 2 }),
   mk("P5_POC_23", "doplnit_cislo", 2, "Doplň do čtverečku takové číslo, aby platila rovnost: $\\square \\cdot 8 = 480 : 2$", "30", [
     "Pravou stranu spočítáme: $480 : 2 = 240$.",
     "Rovnost má tvar $\\square \\cdot 8 = 240$, takže $\\square = 240 : 8 = 30$.",
     "Zkouška: $30 \\cdot 8 = 240$.",
   ], 120),
   // ───────── L3 ─────────
-  mk("P5_POC_24", "p5_nasobky", 3, "Kolik dvojciferných čísel je dělitelných dvanácti?", "8", [
-    "Hledáme násobky dvanácti, které mají dvě číslice: $1 \\cdot 12 = 12$, $2 \\cdot 12 = 24$, ..., $8 \\cdot 12 = 96$.",
-    "Další násobek $9 \\cdot 12 = 108$ už je trojciferné. Dvojciferných násobků dvanácti je tedy 8.",
+  mk("P5_POC_24", "p5_logika", 3, "Součet tří po sobě jdoucích čísel je 87. Které z nich je prostřední?", "29", [
+    "U tří po sobě jdoucích čísel je prostřední číslo „uprostřed“: o jedna menší a o jedna větší číslo se při sčítání navzájem vyruší.",
+    "Součet je tedy třikrát prostřední číslo: $87 : 3 = 29$.",
+    "Zkouška: $28 + 29 + 30 = 87$. Prostřední číslo je 29.",
   ], 150),
   mk("P5_POC_25", "doplnit_cislo", 3, "Doplň do čtverečku takové číslo, aby platila rovnost: $(\\square + 15) : 4 = 3 \\cdot 5 - 7$", "17", [
     "Pravou stranu spočítáme: $3 \\cdot 5 = 15$ a $15 - 7 = 8$.",
     "Rovnost má tvar $(\\square + 15) : 4 = 8$. Něco děleno čtyřmi dá 8, takže závorka je $8 \\cdot 4 = 32$.",
     "Z $\\square + 15 = 32$ vyjde $\\square = 17$. Zkouška: $(17 + 15) : 4 = 32 : 4 = 8$.",
   ], 180),
-  mk("P5_POC_26", "p5_velka_cisla", 3, "Součin dvou čísel je 360 a jedno z nich je 24. Jaký je součet obou čísel?", "39", [
-    "Druhé číslo zjistíme dělením: $360 : 24 = 15$ (zkouška: $24 \\cdot 15 = 360$).",
-    "Součet obou čísel je $24 + 15 = 39$.",
+  mk("P5_POC_26", "doplnit_cislo", 3, "Doplň do čtverečku takové číslo, aby platila rovnost: $(\\square - 14) \\cdot 6 = 108$", "32", [
+    "Něco krát šest je 108, takže závorka je $108 : 6 = 18$.",
+    "Z $\\square - 14 = 18$ vyjde $\\square = 18 + 14 = 32$.",
+    "Zkouška: $(32 - 14) \\cdot 6 = 18 \\cdot 6 = 108$.",
   ], 150),
-  mk("P5_POC_27", "p5_deleni_zbytek", 3, "Které číslo dává po dělení sedmi podíl 12 a zbytek 5?", null, [
-    "Dělené číslo se dá zpětně složit: podíl krát dělitel plus zbytek, tedy $12 \\cdot 7 + 5$.",
-    "$12 \\cdot 7 = 84$ a $84 + 5 = 89$. Správně je B).",
-    "Zkouška: $89 : 7 = 12$ a $12 \\cdot 7 = 84$, zbytek $89 - 84 = 5$.",
-  ], 180, { moznosti: ["84", "89", "91", "96", "99"], spravna: 1 }),
+  mk("P5_POC_27", "vyber_vyrazu", 3, "Který z výrazů má hodnotu 36?", null, [
+    "Každý výraz spočítáme podle pořadí operací: A) $4 + 6 \\cdot 12 = 76$, B) $4 \\cdot (6 + 12) = 72$, C) $(4 + 6) \\cdot 12 = 120$, D) $4 \\cdot 6 + 12 = 36$, E) $4 \\cdot 6 \\cdot 12 = 288$.",
+    "Hodnotu 36 má jen výraz D).",
+  ], 180, { moznosti: ["$4 + 6 \\cdot 12$", "$4 \\cdot (6 + 12)$", "$(4 + 6) \\cdot 12$", "$4 \\cdot 6 + 12$", "$4 \\cdot 6 \\cdot 12$"], spravna: 3 }),
 ];
 for (const e of ex) if (e.moznosti) e.odpoved = e.moznosti[e.spravna];
 
@@ -100,16 +100,16 @@ for (const e of ex.filter((x) => /^Vypočítej: /.test(x.zadani))) {
   const v = vyhodnot(dolar(e.zadani))();
   ok(e.id + " hodnota výrazu", Number.isInteger(v) && String(v) === e.odpoved, `${v} ≠ ${e.odpoved}`);
 }
-ok("16 zbytek", 85 % 6 === 1 && Math.floor(85 / 6) === 14 && A("P5_POC_16") === "1");
+ok("16", Math.floor(432 / 6) === 72 && 432 % 6 === 0 && A("P5_POC_16") === "72");
 ok("17 zaokrouhlení", Math.round(4678 / 100) * 100 === 4700 && A("P5_POC_17") === "4700");
 ok("20 zaokrouhlení součtu", Math.round(4560 / 1000) * 1000 + Math.round(2480 / 1000) * 1000 === 7000 && A("P5_POC_20") === "7000");
-{ let m = 0; for (let n = 10; n <= 99; n++) if (n % 8 === 0) m = n; ok("21", m === 96 && A("P5_POC_21") === "96", m); }
-{ const e = by.P5_POC_22, sh = e.moznosti.map((m, i) => (Number(m) % 6 === 4 ? i : -1)).filter((i) => i >= 0); ok("22", sh.length === 1 && sh[0] === e.spravna, sh); }
+ok("21", 306 * 5 === 1530 && A("P5_POC_21") === "1530");
+{ const e = by.P5_POC_22, h = e.moznosti.map((m) => vyhodnot(dolar(m))()), mx = Math.max(...h); ok("22", h.filter((x) => x === mx).length === 1 && h.indexOf(mx) === e.spravna && mx === 75, h.join()); }
 { const [l, r] = dolar(by.P5_POC_23.zadani).split("="), f = vyhodnot(l), g = vyhodnot(r), s = []; for (let q = 0; q <= 999; q++) if (f(q) === g(q)) s.push(q); ok("23", s.length === 1 && String(s[0]) === A("P5_POC_23"), s); }
-{ let c = 0; for (let n = 10; n <= 99; n++) if (n % 12 === 0) c++; ok("24", c === 8 && A("P5_POC_24") === "8", c); }
+{ const s3 = []; for (let a = 1; a < 100; a++) if (a - 1 + a + (a + 1) === 87) s3.push(a); ok("24", s3.length === 1 && String(s3[0]) === A("P5_POC_24"), s3); }
 { const [l, r] = dolar(by.P5_POC_25.zadani).split("="), f = vyhodnot(l), g = vyhodnot(r), s = []; for (let q = 0; q <= 999; q++) if (f(q) === g(q)) s.push(q); ok("25", s.length === 1 && String(s[0]) === A("P5_POC_25"), s); }
-{ const s = []; for (let a = 1; a < 361; a++) if (360 % a === 0 && a === 24) s.push(a + 360 / a); ok("26", s.length === 1 && String(s[0]) === A("P5_POC_26"), s); }
-{ const e = by.P5_POC_27, sh = e.moznosti.map((m, i) => (Math.floor(Number(m) / 7) === 12 && Number(m) % 7 === 5 ? i : -1)).filter((i) => i >= 0); ok("27", sh.length === 1 && sh[0] === e.spravna, sh); }
+{ const [l, r] = dolar(by.P5_POC_26.zadani).split("="), f = vyhodnot(l), g = vyhodnot(r), q3 = []; for (let q = 0; q <= 999; q++) if (f(q) === g(q)) q3.push(q); ok("26", q3.length === 1 && String(q3[0]) === A("P5_POC_26"), q3); }
+{ const e = by.P5_POC_27, h = e.moznosti.map((m) => vyhodnot(dolar(m))()), sh = h.map((x, i) => (x === 36 ? i : -1)).filter((i) => i >= 0); ok("27", sh.length === 1 && sh[0] === e.spravna, h.join()); }
 
 for (const e of ex) {
   if (e.moznosti) ok(e.id + " možnosti", e.moznosti.length === 5 && new Set(e.moznosti).size === 5 && e.odpoved === e.moznosti[e.spravna]);
@@ -133,6 +133,6 @@ if (fail) { console.log("NEZAPISUJI"); process.exit(1); }
 let prev = { nazev: "", examples: [] };
 try { prev = JSON.parse(fs.readFileSync("src/data/nahled-batch.json", "utf8")); } catch { /* bez předchozí dávky */ }
 const others = (prev.examples ?? []).filter((e) => !ids.includes(e.id));
-const nazev = others.length ? `${prev.nazev} + 5. třída: Počítání s čísly, druhá dávka (15 úloh)` : "5. třída — Počítání s čísly, druhá dávka: větší čísla, zbytek, zaokrouhlování, násobky a dělitelé, doplň číslo (15 úloh: L1 ×5, L2 ×6, L3 ×4)";
+const nazev = others.length ? `${prev.nazev} + 5. třída: Počítání s čísly, druhá dávka (15 úloh)` : "5. třída — Počítání s čísly, druhá dávka: větší čísla, zaokrouhlování, výběr výrazu, doplň číslo (15 úloh: L1 ×5, L2 ×6, L3 ×4)";
 fs.writeFileSync("src/data/nahled-batch.json", JSON.stringify({ nazev, examples: [...others, ...ex] }, null, 2) + "\n");
 console.log(`zapsáno do src/data/nahled-batch.json (${others.length} jiných + ${ex.length} úloh)`);

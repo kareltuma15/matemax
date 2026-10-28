@@ -1,5 +1,5 @@
 {
-  "nazev": "5. třída — Počítání s čísly, druhá dávka: větší čísla, zbytek, zaokrouhlování, násobky a dělitelé, doplň číslo (15 úloh: L1 ×5, L2 ×6, L3 ×4)",
+  "nazev": "5. třída — Počítání s čísly, druhá dávka: větší čísla, zaokrouhlování, výběr výrazu, doplň číslo (15 úloh: L1 ×5, L2 ×6, L3 ×4)",
   "examples": [
     {
       "id": "P5_POC_13",
@@ -49,14 +49,14 @@
     {
       "id": "P5_POC_16",
       "tema": "p5_pocitani",
-      "podtema": "p5_deleni_zbytek",
+      "podtema": "p5_velka_cisla",
       "obtiznost": 1,
       "latex": true,
-      "zadani": "Jaký je zbytek po dělení $85 : 6$?",
-      "odpoved": "1",
+      "zadani": "Vypočítej: $432 : 6$",
+      "odpoved": "72",
       "reseni_kroky": [
-        "Šestka se do 85 vejde nejvýš 14krát, protože $14 \\cdot 6 = 84$ (a $15 \\cdot 6 = 90$ je už víc).",
-        "Zbytek je $85 - 84 = 1$."
+        "Číslo 432 rozložíme na 420 a 12: $420 : 6 = 70$ a $12 : 6 = 2$.",
+        "Dohromady $70 + 2 = 72$. Zkouška: $72 \\cdot 6 = 432$."
       ],
       "cas_sekund": 75,
       "sm2_interval": 1
@@ -97,13 +97,13 @@
       "podtema": "p5_velka_cisla",
       "obtiznost": 2,
       "latex": true,
-      "zadani": "Vypočítej: $7200 : 15$",
-      "odpoved": "480",
+      "zadani": "Vypočítej: $5600 : 7$",
+      "odpoved": "800",
       "reseni_kroky": [
-        "Zjednodušíme: číslo 7200 i 15 jdou vydělit pěti, takže $7200 : 15 = 1440 : 3$.",
-        "$1440 : 3 = 480$. Zkouška: $480 \\cdot 15 = 4800 + 2400 = 7200$."
+        "Číslo 5600 je 56 set a $56 : 7 = 8$, takže 56 set děleno sedmi je 8 set.",
+        "$5600 : 7 = 800$. Zkouška: $800 \\cdot 7 = 5600$."
       ],
-      "cas_sekund": 120,
+      "cas_sekund": 90,
       "sm2_interval": 1
     },
     {
@@ -125,40 +125,39 @@
     {
       "id": "P5_POC_21",
       "tema": "p5_pocitani",
-      "podtema": "p5_nasobky",
+      "podtema": "p5_velka_cisla",
       "obtiznost": 2,
       "latex": true,
-      "zadani": "Které je největší dvojciferné číslo dělitelné osmi?",
-      "odpoved": "96",
+      "zadani": "Vypočítej: $306 \\cdot 5$",
+      "odpoved": "1530",
       "reseni_kroky": [
-        "Největší dvojciferné číslo je 99. Hledáme největší násobek osmi, který není větší.",
-        "Násobky osmi: 8, 16, 24, ..., $12 \\cdot 8 = 96$ a $13 \\cdot 8 = 104$ už je trojciferné.",
-        "Hledané číslo je 96."
+        "Rozložíme: $306 \\cdot 5 = 300 \\cdot 5 + 6 \\cdot 5$.",
+        "$300 \\cdot 5 = 1500$ a $6 \\cdot 5 = 30$, dohromady $1500 + 30 = 1530$."
       ],
-      "cas_sekund": 120,
+      "cas_sekund": 90,
       "sm2_interval": 1
     },
     {
       "id": "P5_POC_22",
       "tema": "p5_pocitani",
-      "podtema": "p5_deleni_zbytek",
+      "podtema": "vyber_vyrazu",
       "obtiznost": 2,
       "latex": true,
       "moznosti": [
-        "56",
-        "59",
-        "52",
-        "61",
-        "63"
+        "$8 \\cdot 7 - 5$",
+        "$8 + 7 \\cdot 5$",
+        "$(8 + 7) \\cdot 5$",
+        "$8 \\cdot (7 - 5)$",
+        "$8 \\cdot 7 + 5$"
       ],
       "spravna": 2,
-      "zadani": "Které z čísel dává po dělení šesti zbytek 4?",
-      "odpoved": "52",
+      "zadani": "Který z výrazů má největší hodnotu?",
+      "odpoved": "$(8 + 7) \\cdot 5$",
       "reseni_kroky": [
-        "U každého čísla zjistíme zbytek po dělení šesti: $56 = 9 \\cdot 6 + 2$, $59 = 9 \\cdot 6 + 5$, $52 = 8 \\cdot 6 + 4$, $61 = 10 \\cdot 6 + 1$, $63 = 10 \\cdot 6 + 3$.",
-        "Zbytek 4 má jen číslo 52. Správně je C)."
+        "Každý výraz spočítáme podle pořadí operací: A) $8 \\cdot 7 - 5 = 51$, B) $8 + 7 \\cdot 5 = 43$, C) $(8 + 7) \\cdot 5 = 75$, D) $8 \\cdot (7 - 5) = 16$, E) $8 \\cdot 7 + 5 = 61$.",
+        "Největší hodnotu má výraz C) s hodnotou 75."
       ],
-      "cas_sekund": 120,
+      "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
@@ -180,14 +179,15 @@
     {
       "id": "P5_POC_24",
       "tema": "p5_pocitani",
-      "podtema": "p5_nasobky",
+      "podtema": "p5_logika",
       "obtiznost": 3,
       "latex": true,
-      "zadani": "Kolik dvojciferných čísel je dělitelných dvanácti?",
-      "odpoved": "8",
+      "zadani": "Součet tří po sobě jdoucích čísel je 87. Které z nich je prostřední?",
+      "odpoved": "29",
       "reseni_kroky": [
-        "Hledáme násobky dvanácti, které mají dvě číslice: $1 \\cdot 12 = 12$, $2 \\cdot 12 = 24$, ..., $8 \\cdot 12 = 96$.",
-        "Další násobek $9 \\cdot 12 = 108$ už je trojciferné. Dvojciferných násobků dvanácti je tedy 8."
+        "U tří po sobě jdoucích čísel je prostřední číslo „uprostřed“: o jedna menší a o jedna větší číslo se při sčítání navzájem vyruší.",
+        "Součet je tedy třikrát prostřední číslo: $87 : 3 = 29$.",
+        "Zkouška: $28 + 29 + 30 = 87$. Prostřední číslo je 29."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -211,14 +211,15 @@
     {
       "id": "P5_POC_26",
       "tema": "p5_pocitani",
-      "podtema": "p5_velka_cisla",
+      "podtema": "doplnit_cislo",
       "obtiznost": 3,
       "latex": true,
-      "zadani": "Součin dvou čísel je 360 a jedno z nich je 24. Jaký je součet obou čísel?",
-      "odpoved": "39",
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $(\\square - 14) \\cdot 6 = 108$",
+      "odpoved": "32",
       "reseni_kroky": [
-        "Druhé číslo zjistíme dělením: $360 : 24 = 15$ (zkouška: $24 \\cdot 15 = 360$).",
-        "Součet obou čísel je $24 + 15 = 39$."
+        "Něco krát šest je 108, takže závorka je $108 : 6 = 18$.",
+        "Z $\\square - 14 = 18$ vyjde $\\square = 18 + 14 = 32$.",
+        "Zkouška: $(32 - 14) \\cdot 6 = 18 \\cdot 6 = 108$."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -226,23 +227,22 @@
     {
       "id": "P5_POC_27",
       "tema": "p5_pocitani",
-      "podtema": "p5_deleni_zbytek",
+      "podtema": "vyber_vyrazu",
       "obtiznost": 3,
       "latex": true,
       "moznosti": [
-        "84",
-        "89",
-        "91",
-        "96",
-        "99"
+        "$4 + 6 \\cdot 12$",
+        "$4 \\cdot (6 + 12)$",
+        "$(4 + 6) \\cdot 12$",
+        "$4 \\cdot 6 + 12$",
+        "$4 \\cdot 6 \\cdot 12$"
       ],
-      "spravna": 1,
-      "zadani": "Které číslo dává po dělení sedmi podíl 12 a zbytek 5?",
-      "odpoved": "89",
+      "spravna": 3,
+      "zadani": "Který z výrazů má hodnotu 36?",
+      "odpoved": "$4 \\cdot 6 + 12$",
       "reseni_kroky": [
-        "Dělené číslo se dá zpětně složit: podíl krát dělitel plus zbytek, tedy $12 \\cdot 7 + 5$.",
-        "$12 \\cdot 7 = 84$ a $84 + 5 = 89$. Správně je B).",
-        "Zkouška: $89 : 7 = 12$ a $12 \\cdot 7 = 84$, zbytek $89 - 84 = 5$."
+        "Každý výraz spočítáme podle pořadí operací: A) $4 + 6 \\cdot 12 = 76$, B) $4 \\cdot (6 + 12) = 72$, C) $(4 + 6) \\cdot 12 = 120$, D) $4 \\cdot 6 + 12 = 36$, E) $4 \\cdot 6 \\cdot 12 = 288$.",
+        "Hodnotu 36 má jen výraz D)."
       ],
       "cas_sekund": 180,
       "sm2_interval": 1
