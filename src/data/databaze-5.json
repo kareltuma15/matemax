@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 98,
+    "total": 114,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -2809,6 +2809,359 @@
         "Pro 9 platí 3 · 9 + 1 = 28."
       ],
       "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_01",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-schody.svg",
+        "width": 128,
+        "height": 125,
+        "alt": "Stavba ze 6 krychliček ve tvaru schodů: sloupce o výšce 1, 2 a 3 krychličky"
+      },
+      "zadani": "Stavba je postavená z krychliček. Z kolika krychliček se skládá?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Stavba má tři sloupce vedle sebe: první z 1 krychličky, druhý ze 2 a třetí ze 3 krychliček.",
+        "1 + 2 + 3 = 6 krychliček."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_02",
+      "tema": "p5_telesa",
+      "podtema": "p5_kvadr",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-kvader.svg",
+        "width": 143,
+        "height": 110,
+        "alt": "Kvádr složený z krychliček, široký 3, hluboký 2 a vysoký 2 krychličky"
+      },
+      "zadani": "Kvádr je slepený z malých krychliček. Z kolika krychliček se skládá?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Spodní vrstva má 3 · 2 = 6 krychliček (3 vedle sebe a 2 za sebou).",
+        "Kvádr má dvě stejné vrstvy nad sebou: 2 · 6 = 12 krychliček."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_03",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-soum-1.svg",
+        "width": 212,
+        "height": 152,
+        "alt": "Mřížka 6 × 4 čtverečků s osou souměrnosti uprostřed; vlevo od osy je vybarveno 7 čtverečků, vpravo nic"
+      },
+      "zadani": "Obrazec vlevo od osy o doplň souměrně podle osy o. Kolik čtverečků je třeba vybarvit vpravo od osy?",
+      "odpoved": "7",
+      "reseni_kroky": [
+        "Souměrný obraz má stejný počet čtverečků jako původní obrazec.",
+        "Vlevo jsou vybarvené čtverečky po řádcích 2 + 1 + 3 + 1 = 7, vpravo je tedy třeba vybarvit také 7 čtverečků."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_04",
+      "tema": "p5_telesa",
+      "podtema": "p5_skladani",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-sada-1.svg",
+        "width": 372,
+        "height": 258,
+        "alt": "Dílek ze tří krychliček ve tvaru L a čtyři tělesa A až D"
+      },
+      "zadani": "Dílek je slepený ze tří krychliček (viz obrázek). Dílek smíš libovolně otáčet. Kolik z těles A až D má stejný tvar jako dílek?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Dílek má tvar písmene L: dvě krychličky vedle sebe a třetí je připojená k jedné z nich do pravého úhlu.",
+        "Těleso B je tentýž dílek otočený o čtvrt otáčky a těleso D je dílek otočený o další čtvrt otáčky. Těleso A (tři v řadě) a těleso C (tři nad sebou) mají jiný tvar.",
+        "Stejný tvar mají dvě tělesa, B a D."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_05",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-stavba.svg",
+        "width": 131,
+        "height": 178,
+        "alt": "Stavba z krychliček: tři řady za sebou, každá je 2 krychličky široká; přední řada je 1, prostřední 2 a zadní 4 krychličky vysoká"
+      },
+      "zadani": "Stavba je postavená z krychliček a žádná krychlička nevisí ve vzduchu. Z kolika krychliček se skládá?",
+      "odpoved": "14",
+      "reseni_kroky": [
+        "Stavba má tři řady za sebou a každá řada je 2 krychličky široká.",
+        "Přední řada je vysoká 1 krychličku, prostřední 2 a zadní 4 krychličky: 2 · 1 + 2 · 2 + 2 · 4 = 2 + 4 + 8.",
+        "Celkem 2 + 4 + 8 = 14 krychliček."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_06",
+      "tema": "p5_telesa",
+      "podtema": "p5_pudorys",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-pudorys.svg",
+        "width": 122,
+        "height": 122,
+        "alt": "Půdorys stavby z krychliček: čísla po řádcích 2 1 3, 1 2 1, 3 1 2"
+      },
+      "zadani": "Stavbu z krychliček jsme nakreslili shora. Číslo v políčku říká, z kolika krychliček je na tomto místě věž. Kolik krychliček má celá stavba?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Sečteme čísla v prvním řádku: 2 + 1 + 3 = 6, ve druhém: 1 + 2 + 1 = 4 a ve třetím: 3 + 1 + 2 = 6.",
+        "Celá stavba má 6 + 4 + 6 = 16 krychliček."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_07",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-soum-2.svg",
+        "width": 272,
+        "height": 182,
+        "alt": "Mřížka 8 × 5 čtverečků s osou souměrnosti uprostřed; vlevo od osy je vybarvený obrazec z 9 čtverečků, vpravo nic"
+      },
+      "zadani": "Obrazec vlevo od osy o doplníme souměrně podle osy o. Kolik čtverečků bude mít celý obrazec (původní i jeho souměrný obraz)?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "Původní obrazec vlevo má 2 + 3 + 4 = 9 čtverečků.",
+        "Souměrný obraz vpravo má také 9 čtverečků. Celý obrazec má 9 + 9 = 18 čtverečků."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_08",
+      "tema": "p5_telesa",
+      "podtema": "p5_kvadr",
+      "obtiznost": 2,
+      "zadani": "Kvádr má rozměry 4 cm, 3 cm a 2 cm. Kolik krychliček o hraně 1 cm se do něj vejde?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Na dně kvádru je 4 · 3 = 12 krychliček.",
+        "Kvádr je vysoký 2 cm, takže vrstvy jsou dvě: 2 · 12 = 24 krychliček."
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_09",
+      "tema": "p5_telesa",
+      "podtema": "p5_skladani",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-sada-2.svg",
+        "width": 325,
+        "height": 331,
+        "alt": "Dva dílky z řady tří krychliček a pět těles A až E"
+      },
+      "zadani": "Máme dva stejné dílky, každý je ze tří krychliček v řadě (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Kolik z těles A až E se dá složit přesně z těchto dvou dílků?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Každé těleso má 6 krychliček a dva dílky mají dohromady také 6 krychliček. Zkoušíme, jestli se těleso dá rozdělit na dvě řady po třech krychličkách.",
+        "A) vodorovná řada tří krychliček a pod ní svislý sloupec tří: ano. B) hřeben: ne, nedají se v něm najít dvě rovné řady po třech krychličkách. C) obdélník 2 × 3: ano (dvě řady po třech). D) schody: ne. E) velké L: ano (svislý sloupec tří a vodorovná řada tří).",
+        "Dá se složit 3 těles: A, C a E."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_10",
+      "tema": "p5_telesa",
+      "podtema": "p5_skladani",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-sada-3.svg",
+        "width": 325,
+        "height": 352,
+        "alt": "Dva dílky ve tvaru L a pět těles A až E"
+      },
+      "zadani": "Máme dva stejné dílky ve tvaru L, každý ze tří krychliček (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Kolik z těles A až E se dá složit přesně z těchto dvou dílků?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Každé těleso má 6 krychliček. Zkoušíme, jestli se dá rozdělit na dva dílky ve tvaru L, každý ze tří krychliček.",
+        "A) ano (dvě L do sebe zapadnou). B) tvar T s dlouhým sloupcem: ne. C) ano (dvě L tvoří písmeno U se dvěma sloupky). D) schody: ne. E) velké L: ne.",
+        "Dá se složit 2 těles: A a C."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_11",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-diera.svg",
+        "width": 168,
+        "height": 159,
+        "alt": "Krychle 3 × 3 × 3 z krychliček, ze které je vyjmutý vodorovný tunel uprostřed"
+      },
+      "zadani": "Velká krychle 3 × 3 × 3 byla slepená z malých krychliček. Potom z ní vyjmuli vodorovný tunel uprostřed, který vede skrz celou krychli. Kolik malých krychliček zbylo?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Celá krychle měla 3 · 3 · 3 = 27 malých krychliček.",
+        "Tunel vede ve středu skrz tři krychličky (je dlouhý jako krychle, tedy 3 krychličky).",
+        "Zbylo 27 − 3 = 24 krychliček."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_12",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-doplnit.svg",
+        "width": 159,
+        "height": 150,
+        "alt": "Stavba ve tvaru schodů o výškách 3, 2 a 1 krychlička a hloubce 3 krychličky"
+      },
+      "zadani": "Stavba ve tvaru schodů má hloubku 3 krychličky. Kolik krychliček je třeba ještě přidat, aby vznikla krychle 3 × 3 × 3?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Schody mají tři sloupce vysoké 3, 2 a 1 krychličku a každý je 3 krychličky hluboký: 3 · (3 + 2 + 1) = 18 krychliček.",
+        "Krychle 3 × 3 × 3 má 27 krychliček, chybí tedy 27 − 18 = 9 krychliček."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_13",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-krychle.svg",
+        "width": 168,
+        "height": 159,
+        "alt": "Velká krychle 3 × 3 × 3 slepená z 27 malých krychliček"
+      },
+      "moznosti": [
+        "6",
+        "8",
+        "12",
+        "24",
+        "27"
+      ],
+      "spravna": 2,
+      "zadani": "Velká krychle 3 × 3 × 3 je slepená z 27 malých krychliček. Celou ji z vnějšku obarvíme (i dno). Kolik malých krychliček má obarvené právě dvě stěny?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Dvě obarvené stěny mají jen krychličky uprostřed hran velké krychle (v rozích jsou tři obarvené stěny, uprostřed stěn jen jedna).",
+        "Velká krychle má 12 hran a na každé hraně je jedna taková krychlička. Správně je C) 12."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_14",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-soum-3.svg",
+        "width": 272,
+        "height": 212,
+        "alt": "Mřížka 8 × 6 čtverečků se dvěma osami souměrnosti; v levém horním čtverci jsou vybarvené čtverečky, jinde nic"
+      },
+      "zadani": "Obrazec je souměrný podle obou os, osy o a p. Vybarveno je jen v levé horní části. Kolik čtverečků bude mít celý obrazec, až ho doplníme souměrně podle obou os?",
+      "odpoved": "28",
+      "reseni_kroky": [
+        "Ve vybarvené části (levý horní čtverec) je 2 + 3 + 2 = 7 čtverečků.",
+        "Zrcadlením podle svislé osy dostaneme 2 · 7 = 14 čtverečků v horní půlce a zrcadlením podle vodorovné osy ještě jednou tolik.",
+        "Celý obrazec má 4 · 7 = 28 čtverečků."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_15",
+      "tema": "p5_telesa",
+      "podtema": "p5_skladani",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-sada-4.svg",
+        "width": 325,
+        "height": 352,
+        "alt": "Dva různé dílky ze tří krychliček a pět těles A až E"
+      },
+      "moznosti": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "spravna": 4,
+      "zadani": "Máme dva dílky z krychliček: dílek 1 je řada tří krychliček a dílek 2 je dílek ve tvaru L ze tří krychliček (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Které z těles A až E se dá složit přesně z těchto dvou dílků?",
+      "odpoved": "E",
+      "reseni_kroky": [
+        "Každé těleso má 6 krychliček. Hledáme způsob, jak z něj vybrat jednu řadu tří krychliček a zbytek ve tvaru L.",
+        "A) ne. B) ne. C) ne. D) ne. E) ano: spodní řada tří krychliček je dílek 1 a zbylé tři krychličky nahoře mají tvar L, tedy dílek 2.",
+        "Z obou dílků se dá složit jen těleso E, správně je E)."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_16",
+      "tema": "p5_telesa",
+      "podtema": "p5_skladani",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel-sada-5.svg",
+        "width": 359,
+        "height": 312,
+        "alt": "Dva dílky ve tvaru L ze čtyř krychliček a pět těles A až E z osmi krychliček"
+      },
+      "zadani": "Máme dva stejné dílky, každý je ze čtyř krychliček ve tvaru písmene L (viz obrázek). Dílky smíš libovolně otáčet, ale nesmí se překrývat. Kolik z těles A až E, každé z osmi krychliček, se dá složit přesně z těchto dvou dílků?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Každé těleso má 8 krychliček a dva dílky mají dohromady také 8 krychliček. Hledáme, jestli se těleso dá rozdělit na dva dílky tvaru L ze čtyř krychliček.",
+        "A) ne. B) obdélník 2 × 4: ano (dva dílky L složené k sobě). C) hřeben: ne. D) ano. E) rámeček 3 × 3 bez prostředku: ano.",
+        "Dají se složit 3 tělesa: B, D a E."
+      ],
+      "cas_sekund": 300,
       "sm2_interval": 1
     }
   ]
