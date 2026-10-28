@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 144,
+    "total": 159,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -3639,6 +3639,242 @@
         "Nakupováním strávila 25 minut, na cestě je tedy 85 − 25 = 60 minut."
       ],
       "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_16",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 1,
+      "zadani": "V autobuse jelo 28 lidí. Na zastávce 9 lidí vystoupilo a 14 nastoupilo. Kolik lidí jede v autobuse teď?",
+      "odpoved": "33",
+      "reseni_kroky": [
+        "Po vystoupení zůstalo 28 − 9 = 19 lidí.",
+        "Po nastoupení je jich 19 + 14 = 33."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_17",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 1,
+      "zadani": "Truhlář vyrobí za jeden den 4 židle. Kolik židlí vyrobí za 7 dní?",
+      "odpoved": "28",
+      "reseni_kroky": [
+        "Za každý den přibudou 4 židle, dní je 7.",
+        "7 · 4 = 28 židlí."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_18",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 1,
+      "zadani": "Pět stejných pomerančů váží dohromady 1 kilogram. Kolik gramů váží jeden pomeranč?",
+      "odpoved": "200",
+      "reseni_kroky": [
+        "Jeden kilogram má 1 000 gramů.",
+        "Rozdělíme na pět stejných dílů: 1 000 : 5 = 200 g."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_19",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 1,
+      "zadani": "Tomášovi je 11 let a jeho sestře je o 4 roky méně. Kolik let bude sestře za 3 roky?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Sestře je dnes 11 − 4 = 7 let.",
+        "Za 3 roky jí bude 7 + 3 = 10 let."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_20",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "zadani": "Kamila koupila 3 sešity po 18 korunách a pastelky za 25 korun. Zaplatila stokorunou. Kolik korun jí vrátili?",
+      "odpoved": "21",
+      "reseni_kroky": [
+        "Sešity stojí 3 · 18 = 54 Kč.",
+        "Spolu s pastelkami je to 54 + 25 = 79 Kč.",
+        "Vrátili jí 100 − 79 = 21 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_21",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 2,
+      "zadani": "Kamion odveze při jedné jízdě 8 palet. Kolik jízd musí udělat, aby odvezl 72 palet?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Zjišťujeme, kolikrát se 8 palet vejde do 72 palet: 72 : 8.",
+        "72 : 8 = 9. Zkouška: 9 · 8 = 72, takže kamion musí udělat 9 jízd."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_22",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 2,
+      "zadani": "Krabice se 6 stejnými knihami váží 5 kilogramů. Prázdná krabice váží 800 gramů. Kolik gramů váží jedna kniha?",
+      "odpoved": "700",
+      "reseni_kroky": [
+        "Pět kilogramů je 5 000 gramů.",
+        "Samotné knihy váží 5 000 − 800 = 4 200 g.",
+        "Jedna kniha váží 4 200 : 6 = 700 g. Zkouška: 6 · 700 + 800 = 4 200 + 800 = 5 000 g."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_23",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 2,
+      "zadani": "Otec je čtyřikrát starší než jeho syn. Dohromady mají 50 let. Kolik let je synovi?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Věk syna vezmeme jako jeden díl, otec má čtyři takové díly. Dohromady je to 5 dílů.",
+        "Pět dílů je 50 let, jeden díl je 50 : 5 = 10 let.",
+        "Synovi je 10 let (otci 40). Zkouška: 10 + 40 = 50."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_24",
+      "tema": "p5_slovni",
+      "podtema": "p5_logika",
+      "obtiznost": 2,
+      "moznosti": [
+        "15",
+        "20",
+        "25",
+        "30",
+        "35"
+      ],
+      "spravna": 1,
+      "zadani": "Karel, Jana a Petr mají dohromady 65 korun. Jana má o 10 korun víc než Petr a Karel má o 5 korun míň než Petr. Kolik korun má Petr?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "Porovnáme všechny s Petrem: Jana má o 10 Kč víc a Karel o 5 Kč míň. Dohromady mají tedy o 10 − 5 = 5 Kč víc, než kdyby měli všichni tři stejně jako Petr.",
+        "Třikrát Petrova částka je 65 − 5 = 60 Kč, takže Petr má 60 : 3 = 20 Kč.",
+        "Zkouška: Petr 20, Jana 30, Karel 15 a 20 + 30 + 15 = 65. Správně je B)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_25",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "moznosti": [
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "spravna": 2,
+      "zadani": "Ve třídě je 24 žáků. Dívek je o 4 víc než chlapců. Kolik je ve třídě chlapců?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Kdyby dívek bylo stejně jako chlapců, bylo by ve třídě o 4 žáky méně: 24 − 4 = 20.",
+        "Pak by chlapců i dívek bylo stejně, každých 20 : 2 = 10.",
+        "Chlapců je 10 (a dívek 14). Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_26",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 3,
+      "zadani": "Jana přečte za den 4 strany a Petr 3 strany. Začali číst společně jednu knihu, každý od svého konce, ve stejný den. Kniha má 56 stran. Za kolik dní ji společně dočtou?",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Oba dohromady přečtou za jeden den 4 + 3 = 7 stran.",
+        "Na 56 stran potřebují 56 : 7 = 8 dní.",
+        "Zkouška: Jana přečte za 8 dní 32 stran, Petr 24 stran a 32 + 24 = 56."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_27",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 3,
+      "zadani": "Na jedné misce vah leží 2 stejná závaží a kostka o hmotnosti 300 gramů. Na druhé misce leží 5 stejných závaží. Váhy jsou v rovnováze. Kolik gramů váží jedno závaží?",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "Na obou miskách je stejná hmotnost. Odebereme z každé misky 2 závaží.",
+        "Na jedné misce zůstane jen kostka 300 g a na druhé 3 závaží, takže 3 závaží váží 300 g.",
+        "Jedno závaží váží 300 : 3 = 100 g. Zkouška: 2 · 100 + 300 = 500 a 5 · 100 = 500."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_28",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 3,
+      "zadani": "Před 5 lety byla matka třikrát starší než dcera. Matce je dnes 38 let. Kolik let je dceři dnes?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Před 5 lety bylo matce 38 − 5 = 33 let.",
+        "Tehdy byla třikrát starší než dcera, takže dceři bylo 33 : 3 = 11 let.",
+        "Od té doby uplynulo 5 let, takže dceři je dnes 11 + 5 = 16 let."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_29",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 3,
+      "zadani": "Pavel měl o 30 korun víc než Jirka. Pak dal Pavel Jirkovi 20 korun. O kolik korun má teď Jirka víc než Pavel?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Na začátku měl Pavel o 30 Kč víc. Když dal Jirkovi 20 Kč, ubylo to Pavlovi a přibylo Jirkovi.",
+        "Rozdíl se tedy změnil o dvojnásobek: 2 · 20 = 40 Kč. Pavlův náskok 30 Kč zmizel a Jirka je napřed.",
+        "Jirka má teď víc o 40 − 30 = 10 Kč. (Například Jirka 50 a Pavel 80: po výměně Jirka 70 a Pavel 60.)"
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_30",
+      "tema": "p5_slovni",
+      "podtema": "p5_logika",
+      "obtiznost": 3,
+      "zadani": "Kolika způsoby můžeš zaplatit přesně 16 korun, když máš dost dvoukorunových a pětikorunových mincí? Způsoby se liší počtem mincí každého druhu.",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Počet pětikorun musí být takový, aby zbytek šel zaplatit dvoukorunami, tedy zbylá částka musí být sudá. Zkusíme 0, 1, 2 a 3 pětikoruny.",
+        "0 pětikorun: zbývá 16 Kč, to je 8 dvoukorun. 1 pětikoruna: zbývá 11 Kč, to dvoukorunami nejde. 2 pětikoruny: zbývá 6 Kč, to jsou 3 dvoukoruny. 3 pětikoruny: zbývá 1 Kč, to nejde.",
+        "Jdou jen dva způsoby: 8 dvoukorun, nebo 2 pětikoruny a 3 dvoukoruny."
+      ],
+      "cas_sekund": 270,
       "sm2_interval": 1
     }
   ]
