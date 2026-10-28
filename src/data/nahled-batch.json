@@ -1,4 +1,259 @@
 {
-  "nazev": "5. třída — Rýsování v aplikaci: obdélník, čtverec, trojúhelník, střed a osa úsečky, souměrnost (12 úloh: L1 ×3, L2 ×6, L3 ×3) — ZAPSÁNO",
-  "examples": []
+  "nazev": "5. třída — Zlomky a části celku: část z celku, celek z části, zbytek, o zlomek víc nebo míň, porovnání (15 úloh: L1 ×4, L2 ×6, L3 ×5)",
+  "examples": [
+    {
+      "id": "P5_ZLO_01",
+      "tema": "p5_zlomky",
+      "podtema": "p5_cast_celku",
+      "obtiznost": 1,
+      "zadani": "Ve třídě je 24 žáků. Čtvrtina z nich jde na plavání. Kolik žáků jde na plavání?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Čtvrtina znamená rozdělit na 4 stejné díly: 24 : 4.",
+        "24 : 4 = 6 žáků."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_02",
+      "tema": "p5_zlomky",
+      "podtema": "p5_cast_celku",
+      "obtiznost": 1,
+      "zadani": "Pětina knihy má 14 stran. Kolik stran má celá kniha?",
+      "odpoved": "70",
+      "reseni_kroky": [
+        "Celá kniha má 5 stejných dílů a jeden díl (pětina) má 14 stran.",
+        "5 · 14 = 70 stran."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_03",
+      "tema": "p5_zlomky",
+      "podtema": "p5_zlomek_obrazku",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/zlo-pasek.svg",
+        "width": 368,
+        "height": 68,
+        "alt": "Pásek rozdělený na 10 stejných dílů, z nich 3 vlevo jsou vybarvené"
+      },
+      "zadani": "Pásek je rozdělený na stejné díly. Jakou část pásku tvoří vybarvené díly? Odpověď napiš zlomkem.",
+      "odpoved": "3/10",
+      "reseni_kroky": [
+        "Pásek má 10 stejných dílů, vybarvené jsou 3.",
+        "Vybarvené díly tvoří tři desetiny pásku, tedy 3/10."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_04",
+      "tema": "p5_zlomky",
+      "podtema": "p5_porovnani",
+      "obtiznost": 1,
+      "moznosti": [
+        "třetina",
+        "polovina",
+        "čtvrtina",
+        "pětina",
+        "desetina"
+      ],
+      "spravna": 1,
+      "zadani": "Dort rozdělíme na stejné díly a vezmeme si jen jeden díl. Který díl je největší?",
+      "odpoved": "polovina",
+      "reseni_kroky": [
+        "Čím na víc stejných dílů dort rozdělíme, tím je každý díl menší.",
+        "Polovina je z nabízených částí největší (dělíme jen na 2 díly). Správně je B)."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_05",
+      "tema": "p5_zlomky",
+      "podtema": "p5_cast_celku",
+      "obtiznost": 2,
+      "zadani": "Pavel má 36 samolepek. Dvě třetiny z nich jsou zvířátka. Kolik samolepek zvířátek má Pavel?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Nejdřív najdeme jednu třetinu: 36 : 3 = 12.",
+        "Dvě třetiny jsou dvakrát tolik: 2 · 12 = 24 samolepek."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_06",
+      "tema": "p5_zlomky",
+      "podtema": "p5_zbytek",
+      "obtiznost": 2,
+      "zadani": "Eva měla 120 korun. Třetinu z nich utratila za sešity a čtvrtinu za pití. Kolik korun jí zbylo?",
+      "odpoved": "50",
+      "reseni_kroky": [
+        "Za sešity utratila 120 : 3 = 40 Kč a za pití 120 : 4 = 30 Kč.",
+        "Dohromady utratila 40 + 30 = 70 Kč, zbylo jí 120 − 70 = 50 Kč."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_07",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 2,
+      "zadani": "V nádrži bylo 60 litrů vody. Do nádrže přilili ještě třetinu původního množství. Kolik litrů vody je v nádrži teď?",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "Třetina původního množství je 60 : 3 = 20 litrů.",
+        "Teď je v nádrži 60 + 20 = 80 litrů."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_08",
+      "tema": "p5_zlomky",
+      "podtema": "p5_cast_celku",
+      "obtiznost": 2,
+      "zadani": "Tři čtvrtiny cesty mají 18 kilometrů. Kolik kilometrů má celá cesta?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Tři čtvrtiny jsou 18 km, takže jedna čtvrtina je 18 : 3 = 6 km.",
+        "Celá cesta má čtyři čtvrtiny: 4 · 6 = 24 km."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_09",
+      "tema": "p5_zlomky",
+      "podtema": "p5_zlomek_obrazku",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/zlo-mrizka.svg",
+        "width": 244,
+        "height": 172,
+        "alt": "Obdélník ze čtverečků, 4 řádky po 6 čtverečcích; vybarvených je 18 z 24"
+      },
+      "zadani": "Obdélník je rozdělený na stejné čtverečky. Jakou část obdélníku tvoří vybarvené čtverečky? Napiš zlomek v základním tvaru.",
+      "odpoved": "3/4",
+      "reseni_kroky": [
+        "Spočítáme čtverečky: celkem je jich 4 · 6 = 24, vybarvených je 6 + 5 + 4 + 3 = 18.",
+        "Vybarvená část je 18/24. Zlomek zkrátíme šesti: 18/24 = 3/4."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_10",
+      "tema": "p5_zlomky",
+      "podtema": "p5_porovnani",
+      "obtiznost": 2,
+      "latex": true,
+      "moznosti": [
+        "$\\frac{4}{9}$",
+        "$\\frac{3}{7}$",
+        "$\\frac{5}{8}$",
+        "$\\frac{2}{5}$",
+        "$\\frac{7}{15}$"
+      ],
+      "spravna": 2,
+      "zadani": "Který z uvedených zlomků je větší než polovina?",
+      "odpoved": "$\\frac{5}{8}$",
+      "reseni_kroky": [
+        "Zlomek je větší než polovina, když čitatel je víc než polovina jmenovatele.",
+        "A) 4/9: polovina z 9 je 4,5, takže 4 je málo. B) 3/7: polovina ze 7 je 3,5, málo. C) 5/8: polovina z 8 je 4 a 5 je víc. D) 2/5 a E) 7/15 jsou menší než polovina. Správně je C)."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_11",
+      "tema": "p5_zlomky",
+      "podtema": "p5_zbytek",
+      "obtiznost": 3,
+      "zadani": "Tomáš utratil první den polovinu kapesného a druhý den třetinu toho, co mu zbylo. Potom mu zůstalo 40 korun. Kolik korun měl na začátku?",
+      "odpoved": "120",
+      "reseni_kroky": [
+        "Po prvním dni mu zbyla polovina kapesného. Druhý den utratil třetinu zbytku, tedy mu zůstaly dvě třetiny zbytku.",
+        "Dvě třetiny z poloviny jsou třetina celku (2/3 · 1/2 = 1/3). Jedna třetina kapesného je 40 Kč.",
+        "Celé kapesné bylo 3 · 40 = 120 Kč. Zkouška: polovina je 60, třetina ze 60 je 20, zbude 60 − 20 = 40."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_12",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 3,
+      "zadani": "Cenu kola nejdřív snížili o pětinu a potom ještě o 200 korun. Nová cena je 2 680 korun. Jaká byla původní cena kola?",
+      "odpoved": "3 600",
+      "reseni_kroky": [
+        "Před posledním snížením o 200 Kč stálo kolo 2 680 + 200 = 2 880 Kč.",
+        "Po snížení o pětinu zbyly čtyři pětiny původní ceny. Čtyři pětiny jsou 2 880 Kč, jedna pětina je 2 880 : 4 = 720 Kč.",
+        "Původní cena byla 5 · 720 = 3 600 Kč. Zkouška: pětina z 3 600 je 720, 3 600 − 720 = 2 880 a 2 880 − 200 = 2 680."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_13",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 3,
+      "zadani": "Pavel nasbíral 48 hub. Jirka nasbíral o čtvrtinu víc než Pavel. Kolik hub nasbírali oba kluci dohromady?",
+      "odpoved": "108",
+      "reseni_kroky": [
+        "Čtvrtina z Pavlových 48 hub je 48 : 4 = 12 hub.",
+        "Jirka nasbíral 48 + 12 = 60 hub.",
+        "Dohromady nasbírali 48 + 60 = 108 hub."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_14",
+      "tema": "p5_zlomky",
+      "podtema": "p5_zbytek",
+      "obtiznost": 3,
+      "zadani": "Kniha má 240 stran. Karel přečetl první den pětinu knihy a druhý den třetinu toho, co mu zbývalo. Kolik stran mu ještě zbývá přečíst?",
+      "odpoved": "128",
+      "reseni_kroky": [
+        "První den přečetl 240 : 5 = 48 stran, zbývá mu 240 − 48 = 192 stran.",
+        "Druhý den přečetl třetinu zbytku: 192 : 3 = 64 stran.",
+        "Zbývá mu 192 − 64 = 128 stran."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_15",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 3,
+      "moznosti": [
+        "12",
+        "18",
+        "24",
+        "30",
+        "36"
+      ],
+      "spravna": 2,
+      "zadani": "Nádoba je z jedné třetiny plná vody. Když do ní přilijeme 4 litry vody, bude plná z poloviny. Kolik litrů vody se do celé nádoby vejde?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Rozdíl mezi polovinou a třetinou nádoby jsou právě přilité 4 litry.",
+        "Polovina je 3/6 a třetina je 2/6 nádoby, rozdíl je jedna šestina nádoby. Šestina nádoby je 4 litry.",
+        "Celá nádoba má 6 · 4 = 24 litrů. Správně je C)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    }
+  ]
 }

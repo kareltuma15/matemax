@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 244 172" width="244" height="172" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélník ze čtverečků, 4 řádky po 6 čtverečcích; vybarvených je 18 z 24</title>
+  <rect x="0" y="0" width="244" height="172" fill="#ffffff"/>
+  <rect x="14" y="14" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="50" y="14" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="86" y="14" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="122" y="14" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="158" y="14" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="194" y="14" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="14" y="50" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="50" y="50" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="86" y="50" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="122" y="50" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="158" y="50" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="194" y="50" width="36" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="14" y="86" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="50" y="86" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="86" y="86" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="122" y="86" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="158" y="86" width="36" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="194" y="86" width="36" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="14" y="122" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="50" y="122" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="86" y="122" width="36" height="36" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="122" y="122" width="36" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="158" y="122" width="36" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+  <rect x="194" y="122" width="36" height="36" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.6"/>
+
+</svg>
