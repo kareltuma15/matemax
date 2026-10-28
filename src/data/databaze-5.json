@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 114,
+    "total": 129,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -3162,6 +3162,252 @@
         "Dají se složit 3 tělesa: B, D a E."
       ],
       "cas_sekund": 300,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_13",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $4350 + 2780$",
+      "odpoved": "7130",
+      "reseni_kroky": [
+        "Sčítáme po řádech: $4350 + 2000 = 6350$, pak $6350 + 700 = 7050$ a $7050 + 80 = 7130$.",
+        "Výsledek je 7130."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_14",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $9000 - 3475$",
+      "odpoved": "5525",
+      "reseni_kroky": [
+        "Odečítat od 9000 se dá po částech: $9000 - 3000 = 6000$, pak $6000 - 400 = 5600$ a $5600 - 75 = 5525$.",
+        "Zkouška sčítáním: $5525 + 3475 = 9000$. Výsledek je 5525."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_15",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $24 \\cdot 35$",
+      "odpoved": "840",
+      "reseni_kroky": [
+        "Rozložíme: $24 \\cdot 35 = 24 \\cdot 30 + 24 \\cdot 5$.",
+        "$24 \\cdot 30 = 720$ a $24 \\cdot 5 = 120$, dohromady $720 + 120 = 840$."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_16",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $432 : 6$",
+      "odpoved": "72",
+      "reseni_kroky": [
+        "Číslo 432 rozložíme na 420 a 12: $420 : 6 = 70$ a $12 : 6 = 2$.",
+        "Dohromady $70 + 2 = 72$. Zkouška: $72 \\cdot 6 = 432$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_17",
+      "tema": "p5_pocitani",
+      "podtema": "p5_zaokrouhlovani",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Zaokrouhli číslo 4678 na stovky.",
+      "odpoved": "4700",
+      "reseni_kroky": [
+        "Na místě stovek je v čísle 4678 šestka. Podíváme se na další číslici, desítky: je to 7.",
+        "Sedmička je 5 nebo víc, takže zaokrouhlujeme nahoru: z 4600 se stane 4700."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_18",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $18 \\cdot 125$",
+      "odpoved": "2250",
+      "reseni_kroky": [
+        "Číslo 125 je osmina z tisíce, takže se dá počítat po částech: $10 \\cdot 125 = 1250$ a $8 \\cdot 125 = 1000$.",
+        "Dohromady $1250 + 1000 = 2250$."
+      ],
+      "cas_sekund": 100,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_19",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $5600 : 7$",
+      "odpoved": "800",
+      "reseni_kroky": [
+        "Číslo 5600 je 56 set a $56 : 7 = 8$, takže 56 set děleno sedmi je 8 set.",
+        "$5600 : 7 = 800$. Zkouška: $800 \\cdot 7 = 5600$."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_20",
+      "tema": "p5_pocitani",
+      "podtema": "p5_zaokrouhlovani",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Zaokrouhli čísla 4560 a 2480 na tisíce a vypočítej jejich součet.",
+      "odpoved": "7000",
+      "reseni_kroky": [
+        "Číslo 4560 má na místě tisíců 4 a další číslice je 5, takže zaokrouhlíme nahoru na 5000.",
+        "Číslo 2480 má na místě tisíců 2 a další číslice je 4, takže zaokrouhlíme dolů na 2000.",
+        "Součet zaokrouhlených čísel: $5000 + 2000 = 7000$."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_21",
+      "tema": "p5_pocitani",
+      "podtema": "p5_velka_cisla",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $306 \\cdot 5$",
+      "odpoved": "1530",
+      "reseni_kroky": [
+        "Rozložíme: $306 \\cdot 5 = 300 \\cdot 5 + 6 \\cdot 5$.",
+        "$300 \\cdot 5 = 1500$ a $6 \\cdot 5 = 30$, dohromady $1500 + 30 = 1530$."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_22",
+      "tema": "p5_pocitani",
+      "podtema": "vyber_vyrazu",
+      "obtiznost": 2,
+      "latex": true,
+      "moznosti": [
+        "$8 \\cdot 7 - 5$",
+        "$8 + 7 \\cdot 5$",
+        "$(8 + 7) \\cdot 5$",
+        "$8 \\cdot (7 - 5)$",
+        "$8 \\cdot 7 + 5$"
+      ],
+      "spravna": 2,
+      "zadani": "Který z výrazů má největší hodnotu?",
+      "odpoved": "$(8 + 7) \\cdot 5$",
+      "reseni_kroky": [
+        "Každý výraz spočítáme podle pořadí operací: A) $8 \\cdot 7 - 5 = 51$, B) $8 + 7 \\cdot 5 = 43$, C) $(8 + 7) \\cdot 5 = 75$, D) $8 \\cdot (7 - 5) = 16$, E) $8 \\cdot 7 + 5 = 61$.",
+        "Největší hodnotu má výraz C) s hodnotou 75."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_23",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $\\square \\cdot 8 = 480 : 2$",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "Pravou stranu spočítáme: $480 : 2 = 240$.",
+        "Rovnost má tvar $\\square \\cdot 8 = 240$, takže $\\square = 240 : 8 = 30$.",
+        "Zkouška: $30 \\cdot 8 = 240$."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_24",
+      "tema": "p5_pocitani",
+      "podtema": "p5_logika",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Součet tří po sobě jdoucích čísel je 87. Které z nich je prostřední?",
+      "odpoved": "29",
+      "reseni_kroky": [
+        "U tří po sobě jdoucích čísel je prostřední číslo „uprostřed“: o jedna menší a o jedna větší číslo se při sčítání navzájem vyruší.",
+        "Součet je tedy třikrát prostřední číslo: $87 : 3 = 29$.",
+        "Zkouška: $28 + 29 + 30 = 87$. Prostřední číslo je 29."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_25",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $(\\square + 15) : 4 = 3 \\cdot 5 - 7$",
+      "odpoved": "17",
+      "reseni_kroky": [
+        "Pravou stranu spočítáme: $3 \\cdot 5 = 15$ a $15 - 7 = 8$.",
+        "Rovnost má tvar $(\\square + 15) : 4 = 8$. Něco děleno čtyřmi dá 8, takže závorka je $8 \\cdot 4 = 32$.",
+        "Z $\\square + 15 = 32$ vyjde $\\square = 17$. Zkouška: $(17 + 15) : 4 = 32 : 4 = 8$."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_26",
+      "tema": "p5_pocitani",
+      "podtema": "doplnit_cislo",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Doplň do čtverečku takové číslo, aby platila rovnost: $(\\square - 14) \\cdot 6 = 108$",
+      "odpoved": "32",
+      "reseni_kroky": [
+        "Něco krát šest je 108, takže závorka je $108 : 6 = 18$.",
+        "Z $\\square - 14 = 18$ vyjde $\\square = 18 + 14 = 32$.",
+        "Zkouška: $(32 - 14) \\cdot 6 = 18 \\cdot 6 = 108$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POC_27",
+      "tema": "p5_pocitani",
+      "podtema": "vyber_vyrazu",
+      "obtiznost": 3,
+      "latex": true,
+      "moznosti": [
+        "$4 + 6 \\cdot 12$",
+        "$4 \\cdot (6 + 12)$",
+        "$(4 + 6) \\cdot 12$",
+        "$4 \\cdot 6 + 12$",
+        "$4 \\cdot 6 \\cdot 12$"
+      ],
+      "spravna": 3,
+      "zadani": "Který z výrazů má hodnotu 36?",
+      "odpoved": "$4 \\cdot 6 + 12$",
+      "reseni_kroky": [
+        "Každý výraz spočítáme podle pořadí operací: A) $4 + 6 \\cdot 12 = 76$, B) $4 \\cdot (6 + 12) = 72$, C) $(4 + 6) \\cdot 12 = 120$, D) $4 \\cdot 6 + 12 = 36$, E) $4 \\cdot 6 \\cdot 12 = 288$.",
+        "Hodnotu 36 má jen výraz D)."
+      ],
+      "cas_sekund": 180,
       "sm2_interval": 1
     }
   ]
