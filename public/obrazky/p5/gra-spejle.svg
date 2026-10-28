@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 92" width="384" height="92" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obrazce ze špejlí: 1. obrazec je jeden čtverec, 2. obrazec dva čtverce vedle sebe a 3. obrazec tři čtverce vedle sebe; každá strana je jedna špejle</title>
+  <rect x="0" y="0" width="384" height="92" fill="#ffffff"/>
+  <line x1="36" y1="14" x2="76" y2="14" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="36" y1="54" x2="76" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="36" y1="14" x2="36" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="76" y1="14" x2="76" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <text x="56" y="78" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">1. obrazec</text>
+  <line x1="134" y1="14" x2="174" y2="14" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="134" y1="54" x2="174" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="134" y1="14" x2="134" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="174" y1="14" x2="174" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="174" y1="14" x2="214" y2="14" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="174" y1="54" x2="214" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="214" y1="14" x2="214" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <text x="174" y="78" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">2. obrazec</text>
+  <line x1="250" y1="14" x2="290" y2="14" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="250" y1="54" x2="290" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="250" y1="14" x2="250" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="290" y1="14" x2="290" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="290" y1="14" x2="330" y2="14" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="290" y1="54" x2="330" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="330" y1="14" x2="330" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="330" y1="14" x2="370" y2="14" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="330" y1="54" x2="370" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <line x1="370" y1="14" x2="370" y2="54" stroke="#2E6DA4" stroke-width="5"/>
+  <text x="310" y="78" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">3. obrazec</text>
+</svg>
