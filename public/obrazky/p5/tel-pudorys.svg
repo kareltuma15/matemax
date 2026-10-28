@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122 122" width="122" height="122" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Půdorys stavby z krychliček: v poli je číslo, které říká, z kolika krychliček je tam věž; čísla po řádcích 2 1 3, 1 2 1, 3 1 2</title>
+  <rect x="0" y="0" width="122" height="122" fill="#ffffff"/>
+  <rect x="16" y="16" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="31" y="37" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">2</text>
+  <rect x="46" y="16" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="61" y="37" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">1</text>
+  <rect x="76" y="16" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="91" y="37" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">3</text>
+  <rect x="16" y="46" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="31" y="67" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">1</text>
+  <rect x="46" y="46" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="61" y="67" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">2</text>
+  <rect x="76" y="46" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="91" y="67" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">1</text>
+  <rect x="16" y="76" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="31" y="97" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">3</text>
+  <rect x="46" y="76" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="61" y="97" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">1</text>
+  <rect x="76" y="76" width="30" height="30" fill="#ffffff" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="91" y="97" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">2</text>
+  <rect x="16" y="16" width="90" height="90" fill="none" stroke="#0D1B3E" stroke-width="1.8"/>
+
+</svg>

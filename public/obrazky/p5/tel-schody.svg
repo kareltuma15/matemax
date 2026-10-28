@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 125" width="128" height="125" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Stavba ze 6 krychliček ve tvaru schodů: sloupce o výšce 1, 2 a 3 krychličky</title>
+  <rect x="0" y="0" width="128" height="125" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="0,96.6 28,96.6 28,68.6 0,68.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,68.6 28,68.6 43.4,56 15.4,56" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="28,96.6 56,96.6 56,68.6 28,68.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="28,68.6 56,68.6 56,40.6 28,40.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="28,40.6 56,40.6 71.4,28 43.4,28" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="56,96.6 84,96.6 84,68.6 56,68.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="84,96.6 99.4,84 99.4,56 84,68.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="56,68.6 84,68.6 84,40.6 56,40.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="84,68.6 99.4,56 99.4,28 84,40.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="56,40.6 84,40.6 84,12.6 56,12.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="84,40.6 99.4,28 99.4,0 84,12.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="56,12.6 84,12.6 99.4,0 71.4,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 96.6L28 96.6M28 96.6L28 68.6M28 68.6L0 68.6M0 68.6L0 96.6M0 68.6L28 68.6M28.5 56L15.4 56M15.4 56L0 68.6M28 96.6L56 96.6M56 96.6L56 68.6M56 68.6L28 68.6M28 68.6L28 96.6M28 68.6L56 68.6M56 68.6L56 40.6M56 40.6L28 40.6M28 40.6L28 68.6M28 40.6L56 40.6M56.5 28L43.4 28M43.4 28L28 40.6M56 96.6L84 96.6M84 96.6L84 68.6M84 68.6L56 68.6M56 68.6L56 96.6M84 96.6L99.4 84M99.4 84L99.4 56M99.4 56L84 68.6M84 68.6L84 96.6M56 68.6L84 68.6M84 68.6L84 40.6M84 40.6L56 40.6M56 40.6L56 68.6M84 68.6L99.4 56M99.4 56L99.4 28M99.4 28L84 40.6M84 40.6L84 68.6M56 40.6L84 40.6M84 40.6L84 12.6M84 12.6L56 12.6M56 12.6L56 40.6M84 40.6L99.4 28M99.4 28L99.4 0M99.4 0L84 12.6M84 12.6L84 40.6M56 12.6L84 12.6M84 12.6L99.4 0M99.4 0L71.4 0M71.4 0L56 12.6" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
