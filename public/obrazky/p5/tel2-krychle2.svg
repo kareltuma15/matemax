@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 133" width="140" height="133" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Krychle 2 × 2 × 2 slepená z osmi malých krychliček</title>
+  <rect x="0" y="0" width="140" height="133" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="19.8,16.2 55.8,16.2 75.6,0 39.6,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="91.8,88.2 111.6,72 111.6,36 91.8,52.2" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="91.8,52.2 111.6,36 111.6,0 91.8,16.2" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="55.8,16.2 91.8,16.2 111.6,0 75.6,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,104.4 36,104.4 36,68.4 0,68.4" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,68.4 36,68.4 36,32.4 0,32.4" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,32.4 36,32.4 55.8,16.2 19.8,16.2" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="36,104.4 72,104.4 72,68.4 36,68.4" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="72,104.4 91.8,88.2 91.8,52.2 72,68.4" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="36,68.4 72,68.4 72,32.4 36,32.4" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="72,68.4 91.8,52.2 91.8,16.2 72,32.4" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="36,32.4 72,32.4 91.8,16.2 55.8,16.2" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M19.8 16.2L55.8 16.2M55.8 16.2L75.6 0M75.6 0L39.6 0M39.6 0L19.8 16.2M91.8 88.2L111.6 72M111.6 72L111.6 36M111.6 36L91.8 52.2M91.8 52.2L91.8 88.2M91.8 52.2L111.6 36M111.6 36L111.6 0M111.6 0L91.8 16.2M91.8 16.2L91.8 52.2M55.8 16.2L91.8 16.2M91.8 16.2L111.6 0M111.6 0L75.6 0M75.6 0L55.8 16.2M0 104.4L36 104.4M36 104.4L36 68.4M36 68.4L0 68.4M0 68.4L0 104.4M0 68.4L36 68.4M36 68.4L36 32.4M36 32.4L0 32.4M0 32.4L0 68.4M0 32.4L36 32.4M36 32.4L55.8 16.2M55.8 16.2L19.8 16.2M19.8 16.2L0 32.4M36 104.4L72 104.4M72 104.4L72 68.4M72 68.4L36 68.4M36 68.4L36 104.4M72 104.4L91.8 88.2M91.8 88.2L91.8 52.2M91.8 52.2L72 68.4M72 68.4L72 104.4M36 68.4L72 68.4M72 68.4L72 32.4M72 32.4L36 32.4M36 32.4L36 68.4M72 68.4L91.8 52.2M91.8 52.2L91.8 16.2M91.8 16.2L72 32.4M72 32.4L72 68.4M36 32.4L72 32.4M72 32.4L91.8 16.2M91.8 16.2L55.8 16.2M55.8 16.2L36 32.4" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 159" width="168" height="159" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Velká krychle 3 × 3 × 3 slepená z 27 malých krychliček</title>
+  <rect x="0" y="0" width="168" height="159" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="33,13.5 63,13.5 79.5,0 49.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="63,13.5 93,13.5 109.5,0 79.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="123,103.5 139.5,90 139.5,60 123,73.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="123,73.5 139.5,60 139.5,30 123,43.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="123,43.5 139.5,30 139.5,0 123,13.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="93,13.5 123,13.5 139.5,0 109.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="16.5,27 46.5,27 63,13.5 33,13.5" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="46.5,27 76.5,27 93,13.5 63,13.5" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="106.5,117 123,103.5 123,73.5 106.5,87" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="106.5,87 123,73.5 123,43.5 106.5,57" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="106.5,57 123,43.5 123,13.5 106.5,27" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="76.5,27 106.5,27 123,13.5 93,13.5" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,130.5 30,130.5 30,100.5 0,100.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,100.5 30,100.5 30,70.5 0,70.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,70.5 30,70.5 30,40.5 0,40.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,40.5 30,40.5 46.5,27 16.5,27" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="30,130.5 60,130.5 60,100.5 30,100.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,100.5 60,100.5 60,70.5 30,70.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,70.5 60,70.5 60,40.5 30,40.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,40.5 60,40.5 76.5,27 46.5,27" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="60,130.5 90,130.5 90,100.5 60,100.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="90,130.5 106.5,117 106.5,87 90,100.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="60,100.5 90,100.5 90,70.5 60,70.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="90,100.5 106.5,87 106.5,57 90,70.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="60,70.5 90,70.5 90,40.5 60,40.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="90,70.5 106.5,57 106.5,27 90,40.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="60,40.5 90,40.5 106.5,27 76.5,27" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M33 13.5L63 13.5M63 13.5L79.5 0M79.5 0L49.5 0M49.5 0L33 13.5M63 13.5L93 13.5M93 13.5L109.5 0M109.5 0L79.5 0M79.5 0L63 13.5M123 103.5L139.5 90M139.5 90L139.5 60M139.5 60L123 73.5M123 73.5L123 103.5M123 73.5L139.5 60M139.5 60L139.5 30M139.5 30L123 43.5M123 43.5L123 73.5M123 43.5L139.5 30M139.5 30L139.5 0M139.5 0L123 13.5M123 13.5L123 43.5M93 13.5L123 13.5M123 13.5L139.5 0M139.5 0L109.5 0M109.5 0L93 13.5M16.5 27L46.5 27M46.5 27L63 13.5M63 13.5L33 13.5M33 13.5L16.5 27M46.5 27L76.5 27M76.5 27L93 13.5M93 13.5L63 13.5M63 13.5L46.5 27M106.5 117L123 103.5M123 103.5L123 73.5M123 73.5L106.5 87M106.5 87L106.5 117M106.5 87L123 73.5M123 73.5L123 43.5M123 43.5L106.5 57M106.5 57L106.5 87M106.5 57L123 43.5M123 43.5L123 13.5M123 13.5L106.5 27M106.5 27L106.5 57M76.5 27L106.5 27M106.5 27L123 13.5M123 13.5L93 13.5M93 13.5L76.5 27M0 130.5L30 130.5M30 130.5L30 100.5M30 100.5L0 100.5M0 100.5L0 130.5M0 100.5L30 100.5M30 100.5L30 70.5M30 70.5L0 70.5M0 70.5L0 100.5M0 70.5L30 70.5M30 70.5L30 40.5M30 40.5L0 40.5M0 40.5L0 70.5M0 40.5L30 40.5M30 40.5L46.5 27M46.5 27L16.5 27M16.5 27L0 40.5M30 130.5L60 130.5M60 130.5L60 100.5M60 100.5L30 100.5M30 100.5L30 130.5M30 100.5L60 100.5M60 100.5L60 70.5M60 70.5L30 70.5M30 70.5L30 100.5M30 70.5L60 70.5M60 70.5L60 40.5M60 40.5L30 40.5M30 40.5L30 70.5M30 40.5L60 40.5M60 40.5L76.5 27M76.5 27L46.5 27M46.5 27L30 40.5M60 130.5L90 130.5M90 130.5L90 100.5M90 100.5L60 100.5M60 100.5L60 130.5M90 130.5L106.5 117M106.5 117L106.5 87M106.5 87L90 100.5M90 100.5L90 130.5M60 100.5L90 100.5M90 100.5L90 70.5M90 70.5L60 70.5M60 70.5L60 100.5M90 100.5L106.5 87M106.5 87L106.5 57M106.5 57L90 70.5M90 70.5L90 100.5M60 70.5L90 70.5M90 70.5L90 40.5M90 40.5L60 40.5M60 40.5L60 70.5M90 70.5L106.5 57M106.5 57L106.5 27M106.5 27L90 40.5M90 40.5L90 70.5M60 40.5L90 40.5M90 40.5L106.5 27M106.5 27L76.5 27M76.5 27L60 40.5" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 162" width="105" height="162" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Písmeno L z pěti krychliček: sloupec čtyř krychliček a jedna krychlička vpravo dole</title>
+  <rect x="0" y="0" width="105" height="162" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="0,133.5 30,133.5 30,103.5 0,103.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,103.5 30,103.5 30,73.5 0,73.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,103.5 46.5,90 46.5,60 30,73.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,73.5 30,73.5 30,43.5 0,43.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,73.5 46.5,60 46.5,30 30,43.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,43.5 30,43.5 30,13.5 0,13.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,43.5 46.5,30 46.5,0 30,13.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="0,13.5 30,13.5 46.5,0 16.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="30,133.5 60,133.5 60,103.5 30,103.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="60,133.5 76.5,120 76.5,90 60,103.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,103.5 60,103.5 76.5,90 46.5,90" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 133.5L30 133.5M30 133.5L30 103.5M30 103.5L0 103.5M0 103.5L0 133.5M0 103.5L30 103.5M30 103.5L30 73.5M30 73.5L0 73.5M0 73.5L0 103.5M30 103.5L46.5 90M46.5 90L46.5 60M46.5 60L30 73.5M30 73.5L30 103.5M0 73.5L30 73.5M30 73.5L30 43.5M30 43.5L0 43.5M0 43.5L0 73.5M30 73.5L46.5 60M46.5 60L46.5 30M46.5 30L30 43.5M30 43.5L30 73.5M0 43.5L30 43.5M30 43.5L30 13.5M30 13.5L0 13.5M0 13.5L0 43.5M30 43.5L46.5 30M46.5 30L46.5 0M46.5 0L30 13.5M30 13.5L30 43.5M0 13.5L30 13.5M30 13.5L46.5 0M46.5 0L16.5 0M16.5 0L0 13.5M30 133.5L60 133.5M60 133.5L60 103.5M60 103.5L30 103.5M30 103.5L30 133.5M60 133.5L76.5 120M76.5 120L76.5 90M76.5 90L60 103.5M60 103.5L60 133.5M30 103.5L60 103.5M60 103.5L76.5 90M76.5 90L46.5 90M46.5 90L30 103.5" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

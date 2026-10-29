@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 151 146" width="151" height="146" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Stavba ve tvaru schodů: sloupce vysoké 1, 2, 3 a 4 krychličky, každý 2 krychličky hluboký</title>
+  <rect x="0" y="0" width="151" height="146" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="13.2,82.8 37.2,82.8 50.4,72 26.4,72" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="37.2,58.8 61.2,58.8 74.4,48 50.4,48" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="61.2,34.8 85.2,34.8 98.4,24 74.4,24" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="109.2,106.8 122.4,96 122.4,72 109.2,82.8" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="109.2,82.8 122.4,72 122.4,48 109.2,58.8" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="109.2,58.8 122.4,48 122.4,24 109.2,34.8" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="109.2,34.8 122.4,24 122.4,0 109.2,10.8" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="85.2,10.8 109.2,10.8 122.4,0 98.4,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,117.6 24,117.6 24,93.6 0,93.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,93.6 24,93.6 37.2,82.8 13.2,82.8" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="24,117.6 48,117.6 48,93.6 24,93.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="24,93.6 48,93.6 48,69.6 24,69.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="24,69.6 48,69.6 61.2,58.8 37.2,58.8" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="48,117.6 72,117.6 72,93.6 48,93.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="48,93.6 72,93.6 72,69.6 48,69.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="48,69.6 72,69.6 72,45.6 48,45.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="48,45.6 72,45.6 85.2,34.8 61.2,34.8" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="72,117.6 96,117.6 96,93.6 72,93.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="96,117.6 109.2,106.8 109.2,82.8 96,93.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="72,93.6 96,93.6 96,69.6 72,69.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="96,93.6 109.2,82.8 109.2,58.8 96,69.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="72,69.6 96,69.6 96,45.6 72,45.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="96,69.6 109.2,58.8 109.2,34.8 96,45.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="72,45.6 96,45.6 96,21.6 72,21.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="96,45.6 109.2,34.8 109.2,10.8 96,21.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="72,21.6 96,21.6 109.2,10.8 85.2,10.8" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M13.2 82.8L24.5 82.8M24.5 73.55L13.2 82.8M37.2 58.8L48.5 58.8M48.5 49.55L37.2 58.8M61.2 34.8L72.5 34.8M72.5 25.55L61.2 34.8M109.2 106.8L122.4 96M122.4 96L122.4 72M122.4 72L109.2 82.8M109.2 82.8L109.2 106.8M109.2 82.8L122.4 72M122.4 72L122.4 48M122.4 48L109.2 58.8M109.2 58.8L109.2 82.8M109.2 58.8L122.4 48M122.4 48L122.4 24M122.4 24L109.2 34.8M109.2 34.8L109.2 58.8M109.2 34.8L122.4 24M122.4 24L122.4 0M122.4 0L109.2 10.8M109.2 10.8L109.2 34.8M85.2 10.8L109.2 10.8M109.2 10.8L122.4 0M122.4 0L98.4 0M98.4 0L85.2 10.8M0 117.6L24 117.6M24 117.6L24 93.6M24 93.6L0 93.6M0 93.6L0 117.6M0 93.6L24 93.6M24.5 82.8L13.2 82.8M13.2 82.8L0 93.6M24 117.6L48 117.6M48 117.6L48 93.6M48 93.6L24 93.6M24 93.6L24 117.6M24 93.6L48 93.6M48 93.6L48 69.6M48 69.6L24 69.6M24 69.6L24 93.6M24 69.6L48 69.6M48.5 58.8L37.2 58.8M37.2 58.8L24 69.6M48 117.6L72 117.6M72 117.6L72 93.6M72 93.6L48 93.6M48 93.6L48 117.6M48 93.6L72 93.6M72 93.6L72 69.6M72 69.6L48 69.6M48 69.6L48 93.6M48 69.6L72 69.6M72 69.6L72 45.6M72 45.6L48 45.6M48 45.6L48 69.6M48 45.6L72 45.6M72.5 34.8L61.2 34.8M61.2 34.8L48 45.6M72 117.6L96 117.6M96 117.6L96 93.6M96 93.6L72 93.6M72 93.6L72 117.6M96 117.6L109.2 106.8M109.2 106.8L109.2 82.8M109.2 82.8L96 93.6M96 93.6L96 117.6M72 93.6L96 93.6M96 93.6L96 69.6M96 69.6L72 69.6M72 69.6L72 93.6M96 93.6L109.2 82.8M109.2 82.8L109.2 58.8M109.2 58.8L96 69.6M96 69.6L96 93.6M72 69.6L96 69.6M96 69.6L96 45.6M96 45.6L72 45.6M72 45.6L72 69.6M96 69.6L109.2 58.8M109.2 58.8L109.2 34.8M109.2 34.8L96 45.6M96 45.6L96 69.6M72 45.6L96 45.6M96 45.6L96 21.6M96 21.6L72 21.6M72 21.6L72 45.6M96 45.6L109.2 34.8M109.2 34.8L109.2 10.8M109.2 10.8L96 21.6M96 21.6L96 45.6M72 21.6L96 21.6M96 21.6L109.2 10.8M109.2 10.8L85.2 10.8M85.2 10.8L72 21.6" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

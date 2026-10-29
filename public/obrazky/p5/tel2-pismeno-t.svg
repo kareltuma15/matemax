@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 132" width="135" height="132" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Písmeno T z pěti krychliček: vodorovná řada tří krychliček a pod prostřední dvě krychličky</title>
+  <rect x="0" y="0" width="135" height="132" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="0,43.5 30,43.5 30,13.5 0,13.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,13.5 30,13.5 46.5,0 16.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="30,103.5 60,103.5 60,73.5 30,73.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="60,103.5 76.5,90 76.5,60 60,73.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,73.5 60,73.5 60,43.5 30,43.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="60,73.5 76.5,60 76.5,30 60,43.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="30,43.5 60,43.5 60,13.5 30,13.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="30,13.5 60,13.5 76.5,0 46.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="60,43.5 90,43.5 90,13.5 60,13.5" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="90,43.5 106.5,30 106.5,0 90,13.5" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="60,13.5 90,13.5 106.5,0 76.5,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M0 43.5L30 43.5M30 43.5L30 13.5M30 13.5L0 13.5M0 13.5L0 43.5M0 13.5L30 13.5M30 13.5L46.5 0M46.5 0L16.5 0M16.5 0L0 13.5M30 103.5L60 103.5M60 103.5L60 73.5M60 73.5L30 73.5M30 73.5L30 103.5M60 103.5L76.5 90M76.5 90L76.5 60M76.5 60L60 73.5M60 73.5L60 103.5M30 73.5L60 73.5M60 73.5L60 43.5M60 43.5L30 43.5M30 43.5L30 73.5M60 73.5L76.5 60M76.5 60L76.5 43M60 43.5L60 73.5M30 43.5L60 43.5M60 43.5L60 13.5M60 13.5L30 13.5M30 13.5L30 43.5M30 13.5L60 13.5M60 13.5L76.5 0M76.5 0L46.5 0M46.5 0L30 13.5M60 43.5L90 43.5M90 43.5L90 13.5M90 13.5L60 13.5M60 13.5L60 43.5M90 43.5L106.5 30M106.5 30L106.5 0M106.5 0L90 13.5M90 13.5L90 43.5M60 13.5L90 13.5M90 13.5L106.5 0M106.5 0L76.5 0M76.5 0L60 13.5" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
