@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 234,
+    "total": 249,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -6675,6 +6675,322 @@
         "Zkouška: 13. trojice začíná na 25, takže končí na 27 (25, 26, 27), a 14. trojice začíná na 27 (27, 28, 29). Na 40. místě je 27."
       ],
       "cas_sekund": 330,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_17",
+      "tema": "p5_telesa",
+      "podtema": "p5_kvadr",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-kvader.svg",
+        "width": 171,
+        "height": 110,
+        "alt": "Kvádr z krychliček: čtyři na šířku, dvě do hloubky a dvě na výšku"
+      },
+      "zadani": "Kvádr je slepený z malých krychliček. Z kolika krychliček se skládá?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Spodní vrstva má 4 · 2 = 8 krychliček (4 vedle sebe a 2 za sebou).",
+        "Kvádr má dvě stejné vrstvy nad sebou: 2 · 8 = 16 krychliček."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_18",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-krychle2.svg",
+        "width": 140,
+        "height": 133,
+        "alt": "Krychle 2 × 2 × 2 slepená z osmi malých krychliček"
+      },
+      "zadani": "Velkou krychli 2 × 2 × 2 slepenou z osmi malých krychliček celou zvenku obarvíme. Kolik malých krychliček má obarvené tři stěny?",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Každá malá krychlička je v rohu velké krychle a v rohu se setkávají tři stěny, které jsou vidět zvenku.",
+        "Všech 8 malých krychliček má obarvené tři stěny."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_19",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-schody.svg",
+        "width": 151,
+        "height": 146,
+        "alt": "Stavba ve tvaru schodů: sloupce vysoké 1, 2, 3 a 4 krychličky, každý 2 krychličky hluboký"
+      },
+      "zadani": "Stavba ve tvaru schodů je postavená z krychliček. Z kolika krychliček se skládá?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "Schody mají čtyři sloupce o výškách 1, 2, 3 a 4 krychličky: 1 + 2 + 3 + 4 = 10 krychliček v jedné řadě.",
+        "Stavba je 2 krychličky hluboká, takže má 2 · 10 = 20 krychliček."
+      ],
+      "cas_sekund": 105,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_20",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 1,
+      "zadani": "Kolik os souměrnosti má čtverec?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Čtverec se dá přeložit na sebe podle svislé a vodorovné osy, které vedou středy protilehlých stran.",
+        "Dále podle obou úhlopříček. Dohromady má čtverec 4 osy souměrnosti."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_21",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-pismeno-l.svg",
+        "width": 105,
+        "height": 162,
+        "alt": "Písmeno L z pěti krychliček: sloupec čtyř krychliček a jedna krychlička vpravo dole"
+      },
+      "zadani": "Písmeno L slepené z pěti stejných bílých krychliček jsme celé zvenku obarvili modře (i zespodu). Potom se písmeno rozpadlo na jednotlivé krychličky. Původně slepené stěny zůstaly bílé. Kolik krychliček má právě 4 stěny modré?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Krychlička má 6 stěn. Modré jsou ty stěny, které nesousedily s jinou krychličkou, takže modrých stěn je 6 minus počet sousedů.",
+        "Obě krajní krychličky L mají jednoho souseda, tedy 5 modrých stěn. Zbylé tři krychličky (dvě uprostřed svislého sloupce a ta v rohu) mají dva sousedy, tedy 4 modré stěny.",
+        "Právě 4 modré stěny mají 3 krychličky."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_22",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-pismeno-t.svg",
+        "width": 135,
+        "height": 132,
+        "alt": "Písmeno T z pěti krychliček: vodorovná řada tří krychliček a pod prostřední dvě krychličky"
+      },
+      "zadani": "Písmeno T slepené z pěti stejných bílých krychliček jsme celé zvenku obarvili modře (i zespodu). Potom se písmeno rozpadlo na jednotlivé krychličky. Původně slepené stěny zůstaly bílé. Kolik krychliček má stejný počet modrých a bílých stěn?",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Stejný počet modrých a bílých stěn znamená 3 modré a 3 bílé stěny, tedy krychlička má 3 sousedy.",
+        "Tři sousedy má jen prostřední krychlička horní řady (vlevo, vpravo a dole). Ostatní mají jednoho nebo dva sousedy.",
+        "Taková krychlička je jedna."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_23",
+      "tema": "p5_telesa",
+      "podtema": "p5_kvadr",
+      "obtiznost": 2,
+      "zadani": "Dílek stavebnice má tvar kvádru s rozměry 2 cm, 3 cm a 4 cm. Kolik dílků je třeba ke složení kvádru s rozměry 6 cm, 6 cm a 8 cm?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Objem dílku je 2 · 3 · 4 = 24 cm³ a objem velkého kvádru je 6 · 6 · 8 = 288 cm³.",
+        "Dílky se dají poskládat bez mezer: jednu stranu 6 cm vyplní dva dílky po 3 cm, druhou stranu 6 cm tři dílky po 2 cm a stranu 8 cm dva dílky po 4 cm. Potřeba je 2 · 3 · 2 = 12 dílků, stejně jako 288 : 24 = 12."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_24",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-osy.svg",
+        "width": 118,
+        "height": 118,
+        "alt": "Vybarvený obrazec ve čtvercové síti 3 × 3: čtyři rohové čtverečky, prostřední řádek a prostřední sloupec"
+      },
+      "zadani": "Kolik os souměrnosti má vybarvený obrazec ve čtvercové síti? Počítej i šikmé osy.",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Obrazec se dá přeložit na sebe podle svislé osy (vede prostředním sloupcem) a podle vodorovné osy (vede prostředním řádkem).",
+        "Podle šikmých os (úhlopříček) se na sebe nepřeloží. Obrazec má 2 osy souměrnosti."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_25",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-tri-utvary.svg",
+        "width": 358,
+        "height": 144,
+        "alt": "Tři útvary ve čtvercové síti 3 × 3: 1. útvar má čtyři rohy a kříž, 2. útvar je nesouměrný, 3. útvar je schodovitý trojúhelník"
+      },
+      "zadani": "Ve čtvercové síti jsou zakresleny tři útvary. Kolik z nich je osově souměrných? Osa může být i šikmá.",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "1. útvar: svislá i vodorovná osa vede prostředkem, je souměrný. 2. útvar: nepřeloží se na sebe podle žádné osy, souměrný není.",
+        "3. útvar je schodovitý trojúhelník a přeloží se na sebe podle šikmé osy vedoucí z levého dolního do pravého horního rohu.",
+        "Osově souměrné jsou 2 útvary (1. a 3.)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_26",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-krychle3.svg",
+        "width": 168,
+        "height": 159,
+        "alt": "Velká krychle 3 × 3 × 3 slepená z 27 malých krychliček"
+      },
+      "moznosti": [
+        "1",
+        "6",
+        "8",
+        "12",
+        "27"
+      ],
+      "spravna": 0,
+      "zadani": "Velká krychle 3 × 3 × 3 je slepená z 27 malých krychliček. Celou ji z vnějšku obarvíme (i dno). Kolik malých krychliček nemá obarvenou žádnou stěnu?",
+      "odpoved": "1",
+      "reseni_kroky": [
+        "Žádnou stěnu nemá obarvenou jen krychlička, která není vidět zvenku, tedy ta uprostřed celé velké krychle.",
+        "Taková krychlička je jedna. Správně je A)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_27",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-pohledy.svg",
+        "width": 252,
+        "height": 148,
+        "alt": "Dva pohledy na stavbu z krychliček: zepředu sloupce vysoké 3, 1 a 2, zprava sloupce vysoké 2, 3 a 1"
+      },
+      "zadani": "Ze stejných krychliček se lepí stavba podle návodu. Návod ukazuje pohled zepředu a pohled zprava. Podle téhož návodu se dá stavba slepit z různého počtu krychliček (některé krychličky lze vynechat). Kolik krychliček má největší možná stavba?",
+      "odpoved": "14",
+      "reseni_kroky": [
+        "Pohled zepředu říká, jak vysoké jsou 3 sloupce zleva doprava (3, 1, 2). Pohled zprava říká, jak vysoké jsou 3 řady zepředu dozadu (2, 3, 1).",
+        "Na každém místě stavby smí být nejvýš tolik krychliček, kolik dovolují oba pohledy, tedy menší z obou čísel. Řada 1: 2, 1, 2 (součet 5), řada 2: 3, 1, 2 (6), řada 3: 1, 1, 1 (3).",
+        "Největší stavba má 5 + 6 + 3 = 14 krychliček."
+      ],
+      "cas_sekund": 300,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_28",
+      "tema": "p5_telesa",
+      "podtema": "p5_soumernost",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-odebrani.svg",
+        "width": 148,
+        "height": 118,
+        "alt": "Útvar ze sedmi očíslovaných čtverečků ve čtvercové síti"
+      },
+      "zadani": "Útvar ze sedmi čtverečků je ve čtvercové síti, čtverečky jsou očíslované. Odebráním jediného čtverečku vznikne útvar, který je osově souměrný. Kterého čtverečku (číslo) se to týká?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Zkoušíme odebírat čtverečky po jednom. Útvar bez čtverečku 2 má řádky „.#..“, „####“ a „.#..“ a je souměrný podle vodorovné osy, která vede prostředním řádkem.",
+        "Po odebrání kteréhokoli jiného čtverečku souměrný útvar nevznikne.",
+        "Je to čtvereček číslo 2."
+      ],
+      "cas_sekund": 330,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_29",
+      "tema": "p5_telesa",
+      "podtema": "p5_kvadr",
+      "obtiznost": 3,
+      "zadani": "Dílek stavebnice má tvar kvádru s rozměry 2 cm, 4 cm a 6 cm. Kolik dílků je třeba ke složení nejmenší možné krychle?",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "Hrana krychle musí jít složit z hran dílků, takže se musí dát zapsat pomocí 2 cm, 4 cm i 6 cm. Nejmenší číslo dělitelné 2, 4 i 6 je 12, hrana krychle je 12 cm.",
+        "Objem krychle je 12 · 12 · 12 = 1728 cm³ a objem dílku 2 · 4 · 6 = 48 cm³.",
+        "Potřeba je 1728 : 48 = 36 dílků."
+      ],
+      "cas_sekund": 300,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_30",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-krychle4.svg",
+        "width": 177,
+        "height": 168,
+        "alt": "Velká krychle 4 × 4 × 4 slepená z 64 malých krychliček"
+      },
+      "moznosti": [
+        "12",
+        "18",
+        "24",
+        "30",
+        "36"
+      ],
+      "spravna": 2,
+      "zadani": "Velká krychle 4 × 4 × 4 je slepená z 64 malých krychliček. Celou ji z vnějšku obarvíme (i dno). Kolik malých krychliček má obarvenou právě jednu stěnu?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Právě jednu stěnu mají krychličky uprostřed stěn velké krychle (ne na hranách a ne v rozích). Na každé stěně velké krychle je takových krychliček 2 · 2 = 4.",
+        "Velká krychle má 6 stěn, takže jich je 6 · 4 = 24. Správně je C)."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_TEL_31",
+      "tema": "p5_telesa",
+      "podtema": "p5_pudorys",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/tel2-pudorys.svg",
+        "width": 190,
+        "height": 156,
+        "alt": "Půdorys stavby z krychliček: čísla po řádcích 2 1 3, 1 3 1, 2 1 2; pozorovatel stojí pod dolním řádkem"
+      },
+      "zadani": "Stavbu z krychliček jsme nakreslili shora. Číslo v políčku říká, z kolika krychliček je na tomto místě věž. Pozorovatel stojí pod dolním řádkem a dívá se na stavbu zepředu. Z kolika čtverečků se skládá pohled na stavbu zepředu?",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Při pohledu zepředu vidíme každý sloupec stavby jen tak vysoký, jak je v něm nejvyšší věž (nižší věže vzadu zakryje vyšší věž).",
+        "Nejvyšší věže ve sloupcích zleva doprava jsou 2, 3 a 3. Pohled zepředu tvoří 2 + 3 + 3 = 8 čtverečků."
+      ],
+      "cas_sekund": 240,
       "sm2_interval": 1
     }
   ]
