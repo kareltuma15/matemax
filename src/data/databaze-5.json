@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 249,
+    "total": 264,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -6989,6 +6989,241 @@
       "reseni_kroky": [
         "Při pohledu zepředu vidíme každý sloupec stavby jen tak vysoký, jak je v něm nejvyšší věž (nižší věže vzadu zakryje vyšší věž).",
         "Nejvyšší věže ve sloupcích zleva doprava jsou 2, 3 a 3. Pohled zepředu tvoří 2 + 3 + 3 = 8 čtverečků."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_31",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 1,
+      "zadani": "Kolik decimetrů je 4 m 7 dm?",
+      "odpoved": "47",
+      "reseni_kroky": [
+        "Jeden metr má 10 decimetrů, takže 4 m je 40 dm.",
+        "K tomu přidáme 7 dm: 40 + 7 = 47 dm."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_32",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 1,
+      "zadani": "Kolik minut uplyne od 9:15 do 9:50?",
+      "odpoved": "35",
+      "reseni_kroky": [
+        "Oba časy jsou ve stejné hodině, stačí odečíst minuty.",
+        "50 − 15 = 35 minut."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_33",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 1,
+      "zadani": "Za svačinu jsi zaplatil padesátikorunou a vrátili ti 12 korun. Kolik korun stála svačina?",
+      "odpoved": "38",
+      "reseni_kroky": [
+        "Zaplatil jsi 50 korun a 12 korun ti vrátili.",
+        "Svačina stála 50 − 12 = 38 korun. Zkouška: 38 + 12 = 50."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_34",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 1,
+      "zadani": "Kolik korun je 6 desetikorun a 3 pětikoruny dohromady?",
+      "odpoved": "75",
+      "reseni_kroky": [
+        "Desetikoruny: 6 · 10 = 60 Kč.",
+        "Pětikoruny: 3 · 5 = 15 Kč.",
+        "Dohromady 60 + 15 = 75 Kč."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_35",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 2,
+      "zadani": "Vypočítej a výsledek napiš v centimetrech: 2 m 40 cm − 150 mm.",
+      "odpoved": "225",
+      "reseni_kroky": [
+        "2 m 40 cm je 240 cm.",
+        "150 mm je 15 cm, protože 1 cm má 10 mm.",
+        "240 − 15 = 225 cm."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_36",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 2,
+      "zadani": "Bedna s jablky váží 12 kg. Samotná jablka mají hmotnost 9 kg 600 g. Kolik gramů váží prázdná bedna?",
+      "odpoved": "2400",
+      "reseni_kroky": [
+        "Bedna s jablky váží 12 kg, jablka 9 kg 600 g. Prázdná bedna váží rozdíl: 12 kg − 9 kg 600 g.",
+        "12 kg je 12 000 g a 9 kg 600 g je 9 600 g. 12 000 − 9 600 = 2 400 g."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_37",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Vyučování začíná v 8:00. Každá lekce trvá 45 minut a po každé lekci je přestávka 15 minut. V kolik hodin skončí čtvrtá lekce? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "11:45",
+      "reseni_kroky": [
+        "Lekce spolu s přestávkou trvá 45 + 15 = 60 minut, tedy hodinu.",
+        "Tři první lekce s přestávkami zaberou 3 hodiny: do 11:00.",
+        "Čtvrtá lekce začíná v 11:00 a trvá 45 minut, skončí v 11:45."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_38",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Doplň chybějící číslo: 1 hodina = 20 minut + □ sekund.",
+      "odpoved": "2400",
+      "reseni_kroky": [
+        "Hodina má 60 minut, takže po odečtení 20 minut zbývá 60 − 20 = 40 minut.",
+        "Jedna minuta má 60 sekund: 40 · 60 = 2 400 sekund."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_39",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 2,
+      "moznosti": [
+        "110",
+        "132",
+        "154",
+        "176",
+        "198"
+      ],
+      "spravna": 2,
+      "zadani": "Třída zaplatila za 20 stejných bloků 440 korun. Kolik korun zaplatí za 7 takových bloků?",
+      "odpoved": "154",
+      "reseni_kroky": [
+        "Jeden blok stojí 440 : 20 = 22 korun.",
+        "Sedm bloků stojí 7 · 22 = 154 korun. Správně je C)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_40",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 2,
+      "zadani": "V peněžence jsou jen pětikorunové a desetikorunové mince, od každého druhu stejný počet. Všechny mince mají dohromady hodnotu 90 korun. Kolik mincí je v peněžence?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Jedna pětikoruna a jedna desetikoruna mají dohromady 5 + 10 = 15 Kč.",
+        "Takových dvojic je 90 : 15 = 6.",
+        "Mincí je 6 · 2 = 12 (6 pětikorun a 6 desetikorun). Zkouška: 6 · 5 + 6 · 10 = 30 + 60 = 90 Kč."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_41",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 3,
+      "zadani": "Pavel přečte 8 stran knihy za 20 minut. Kniha má 96 stran a on už přečetl 40 stran. Kolik minut mu ještě zbývá do konce knihy, když bude číst stejným tempem?",
+      "odpoved": "140",
+      "reseni_kroky": [
+        "Zbývá přečíst 96 − 40 = 56 stran.",
+        "Za 20 minut přečte 8 stran, takže 56 stran je 56 : 8 = 7 takových úseků.",
+        "Zbývá mu 7 · 20 = 140 minut."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_42",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 3,
+      "zadani": "Doplň chybějící číslo: 12 m − 35 dm + □ cm = 10 m.",
+      "odpoved": "150",
+      "reseni_kroky": [
+        "Převedeme na decimetry: 12 m = 120 dm a 10 m = 100 dm.",
+        "120 − 35 = 85 dm. Do 100 dm chybí 100 − 85 = 15 dm.",
+        "15 dm je 150 cm (1 dm má 10 cm)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_43",
+      "tema": "p5_jednotky",
+      "podtema": "p5_ceny",
+      "obtiznost": 3,
+      "moznosti": [
+        "30",
+        "33",
+        "36",
+        "39",
+        "42"
+      ],
+      "spravna": 3,
+      "zadani": "Tři kilogramy brambor stojí 54 korun a dva kilogramy mrkve stojí 48 korun. Kolik korun zaplatíš za 1 kg 500 g brambor a 500 g mrkve?",
+      "odpoved": "39",
+      "reseni_kroky": [
+        "Kilogram brambor stojí 54 : 3 = 18 korun, 1 kg 500 g brambor stojí 18 + 9 = 27 korun.",
+        "Kilogram mrkve stojí 48 : 2 = 24 korun, 500 g mrkve stojí polovinu, tedy 12 korun.",
+        "Dohromady 27 + 12 = 39 korun. Správně je D)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_44",
+      "tema": "p5_jednotky",
+      "podtema": "p5_mince",
+      "obtiznost": 3,
+      "zadani": "Anička má jen pětikoruny, Barbora jen desetikoruny. Obě mají stejně korun. Anička má o 6 mincí víc než Barbora. Kolik korun má každá z nich?",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "Dvě pětikoruny mají stejnou hodnotu jako jedna desetikoruna, takže Anička má dvakrát víc mincí než Barbora.",
+        "Rozdíl v počtu mincí je 6. Je to tolik, kolik mincí má Barbora, takže Barbora má 6 desetikorun a Anička 12 pětikorun.",
+        "Barbora má 6 · 10 = 60 Kč. Zkouška: Anička má 12 · 5 = 60 Kč."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_JED_45",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 3,
+      "zadani": "Dva pořady jdou v televizi po sobě. První trvá 48 minut, druhý je o čtvrtinu kratší. První pořad začíná v 18:40. V kolik hodin skončí druhý pořad? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "20:04",
+      "reseni_kroky": [
+        "Čtvrtina ze 48 minut je 48 : 4 = 12 minut, druhý pořad trvá 48 − 12 = 36 minut.",
+        "Oba pořady spolu trvají 48 + 36 = 84 minut, tedy 1 hodinu a 24 minut.",
+        "18:40 + 1 hodina = 19:40, k tomu 24 minut: 19:40 + 20 minut = 20:00 a ještě 4 minuty = 20:04."
       ],
       "cas_sekund": 240,
       "sm2_interval": 1
