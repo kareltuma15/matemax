@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 324,
+    "total": 339,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -9855,6 +9855,348 @@
         "Cena je 5 · 780 = 3 900 Kč."
       ],
       "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_31",
+      "tema": "p5_grafy",
+      "podtema": "p5_sloupcovy",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-piktogram.svg",
+        "width": 250,
+        "height": 220,
+        "alt": "Obrázkový graf: pěšky 3 obrázků, kolo 5 obrázků, autobus 4 obrázků, auto 2 obrázků; jeden obrázek znamená 4 žáky"
+      },
+      "zadani": "Obrázkový graf ukazuje, jak žáci chodí do školy. Jeden obrázek znamená 4 žáky. Kolik žáků jezdí do školy na kole?",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "U kola je v grafu 5 obrázků a každý obrázek znamená 4 žáky.",
+        "Na kole jezdí 5 · 4 = 20 žáků."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_32",
+      "tema": "p5_grafy",
+      "podtema": "p5_tabulka",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-teploty.svg",
+        "width": 410,
+        "height": 88,
+        "alt": "Teploty v poledne: pondělí 9 °C, úterý 12 °C, středa 8 °C, čtvrtek 15 °C, pátek 11 °C"
+      },
+      "zadani": "V tabulce jsou teploty naměřené každý den v poledne. O kolik stupňů bylo v pátek tepleji než ve středu?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "V pátek bylo 11 °C a ve středu 8 °C.",
+        "Rozdíl je 11 − 8 = 3 stupně."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_33",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 1,
+      "zadani": "Čísla jsou řazena podle stejného pravidla: 5, 9, 13, 17, … Které číslo bude na 7. místě?",
+      "odpoved": "29",
+      "reseni_kroky": [
+        "Každé číslo je o 4 větší než předchozí: 9 − 5 = 4, 13 − 9 = 4, 17 − 13 = 4.",
+        "Pokračujeme: 17, 21 (5. místo), 25 (6. místo), 29 (7. místo)."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_34",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-trojuhelniky.svg",
+        "width": 336,
+        "height": 84,
+        "alt": "Obrazce ze špejlí: řada 1, 2 a 3 trojúhelníků vedle sebe z 3, 5 a 7 špejlí"
+      },
+      "zadani": "Obrazce jsou postavené ze špejlí. Kolik špejlí je potřeba na obrazec z 5 trojúhelníků postavených vedle sebe stejným způsobem?",
+      "odpoved": "11",
+      "reseni_kroky": [
+        "Na obrázku je v 1. obrazci 1 trojúhelník ze 3 špejlí, ve 2. obrazci 5 špejlí a ve 3. obrazci 7 špejlí. Každý další trojúhelník přidá 2 špejle.",
+        "4. obrazec má 7 + 2 = 9 špejlí a 5. obrazec 9 + 2 = 11 špejlí."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_35",
+      "tema": "p5_grafy",
+      "podtema": "p5_sloupcovy",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-krouzky-obrazky.svg",
+        "width": 278,
+        "height": 220,
+        "alt": "Obrázkový graf: kreslení 4 obrázků, šachy 2 obrázků, fotbal 6 obrázků, tanec 3 obrázků; jeden obrázek znamená 5 dětí"
+      },
+      "zadani": "Obrázkový graf ukazuje, kolik dětí chodí do jednotlivých kroužků. Jeden obrázek znamená 5 dětí, každé dítě chodí jen do jednoho kroužku. O kolik dětí víc chodí na fotbal než na šachy a tanec dohromady?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "Jeden obrázek znamená 5 dětí. Na fotbal chodí 6 · 5 = 30 dětí, na šachy 2 · 5 = 10 dětí a na tanec 3 · 5 = 15 dětí.",
+        "Šachy a tanec dohromady mají 10 + 15 = 25 dětí.",
+        "Na fotbal chodí o 30 − 25 = 5 dětí víc."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_36",
+      "tema": "p5_grafy",
+      "podtema": "p5_sloupcovy",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-skupiny.svg",
+        "width": 432,
+        "height": 218,
+        "alt": "Sloupcový graf chlapců a dívek v kroužcích: šachy 8 chlapců a 5 dívek, kreslení 4 chlapců a 11 dívek, fotbal 12 chlapců a 3 dívek, tanec 2 chlapců a 10 dívek"
+      },
+      "zadani": "Graf ukazuje, kolik chlapců a kolik dívek chodí do čtyř kroužků. V kterém kroužku je největší rozdíl mezi počtem chlapců a počtem dívek? Napiš, o kolik je tam jedněch víc než druhých.",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Z grafu přečteme: šachy 8 chlapců a 5 dívek (rozdíl 3), kreslení 4 a 11 (rozdíl 7), fotbal 12 a 3 (rozdíl 9), tanec 2 a 10 (rozdíl 8).",
+        "Největší rozdíl je u fotbalu: 12 − 3 = 9."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_37",
+      "tema": "p5_grafy",
+      "podtema": "p5_tvrzeni",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-srazky.svg",
+        "width": 442,
+        "height": 88,
+        "alt": "Srážky: červen 40 mm, červenec 60 mm, srpen 20 mm, září 30 mm"
+      },
+      "moznosti": [
+        "V září pršelo o třetinu méně než v červenci.",
+        "V srpnu pršelo čtvrtinu toho, co v červnu.",
+        "V červnu a srpnu dohromady pršelo stejně jako v červenci.",
+        "Za všechny čtyři měsíce dohromady pršelo méně než 140 mm.",
+        "V červenci pršelo třikrát víc než v září."
+      ],
+      "spravna": 2,
+      "zadani": "V tabulce jsou naměřené srážky ve čtyřech měsících. Které z následujících tvrzení je pravdivé?",
+      "odpoved": "V červnu a srpnu dohromady pršelo stejně jako v červenci.",
+      "reseni_kroky": [
+        "Z tabulky přečteme: červen 40 mm, červenec 60 mm, srpen 20 mm, září 30 mm. Každé tvrzení ověříme.",
+        "A) Třetina ze 60 je 20 a o třetinu méně je 40, ale v září pršelo 30 mm. B) Čtvrtina ze 40 je 10, ne 20. D) Za všechny měsíce je 40 + 60 + 20 + 30 = 150 mm, to není méně než 140. E) Třikrát 30 je 90, ne 60.",
+        "C) V červnu a srpnu dohromady pršelo 40 + 20 = 60 mm, a to je stejně jako v červenci. Správně je C)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_38",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-pravidlo.svg",
+        "width": 378,
+        "height": 88,
+        "alt": "Tabulka: číslo 2 se změní na 7, číslo 5 na 16, číslo 8 na 25, a z otazníku vznikne 40"
+      },
+      "zadani": "V tabulce se každé číslo v horním řádku změní na číslo v dolním řádku podle stejného pravidla. Které číslo patří na místo otazníku v horním řádku?",
+      "odpoved": "13",
+      "reseni_kroky": [
+        "Hledáme pravidlo: 2 → 7, 5 → 16, 8 → 25. Číslo se vynásobí třemi a přičte se 1: 2 · 3 + 1 = 7, 5 · 3 + 1 = 16, 8 · 3 + 1 = 25.",
+        "Hledáme číslo, ze kterého vznikne 40. Pravidlo obrátíme: 40 − 1 = 39 a 39 : 3 = 13.",
+        "Zkouška: 13 · 3 + 1 = 40."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_39",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-ctverce.svg",
+        "width": 240,
+        "height": 122,
+        "alt": "Obrazce z čtverečků: 1 čtvereček, 2 × 2 čtverečky, 3 × 3 čtverečky"
+      },
+      "zadani": "Obrazce jsou složené z čtverečků (viz obrázek). Kolik čtverečků přibude při přechodu ze 7. obrazce na 8. obrazec?",
+      "odpoved": "15",
+      "reseni_kroky": [
+        "1. obrazec má 1 čtvereček, 2. obrazec 2 · 2 = 4 čtverečky, 3. obrazec 3 · 3 = 9 čtverečků. Obrazec s pořadovým číslem n má n · n čtverečků.",
+        "7. obrazec má 7 · 7 = 49 čtverečků a 8. obrazec 8 · 8 = 64 čtverečků.",
+        "Přibude jich 64 − 49 = 15."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_40",
+      "tema": "p5_grafy",
+      "podtema": "p5_sloupcovy",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-zmrzliny.svg",
+        "width": 448,
+        "height": 212,
+        "alt": "Sloupcový graf prodaných zmrzlin: po 12, út 18, st 15, čt 24, pá 27, so 33"
+      },
+      "zadani": "Graf ukazuje, kolik zmrzlin se v kiosku prodalo od pondělí do soboty. Jeden den se prodalo o 9 zmrzlin víc než předchozí den. Kolik zmrzlin se prodalo ten den?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Porovnáme každý den s předchozím: úterý 18 − 12 = 6, ve středu se prodalo méně než v úterý, čtvrtek 24 − 15 = 9, pátek 27 − 24 = 3, sobota 33 − 27 = 6.",
+        "O 9 víc než předchozí den se prodalo ve čtvrtek, a to 24 zmrzlin."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_41",
+      "tema": "p5_grafy",
+      "podtema": "p5_chybi_udaj",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-soutez.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf žáků na soutěži: 5. A 18, 5. B 22, 5. C chybí, 5. D 14"
+      },
+      "zadani": "Graf ukazuje, kolik žáků ze čtyř tříd se přihlásilo na školní soutěž, sloupec 5. C chybí. Na soutěž se přihlásilo celkem 78 žáků. Kolik žáků se přihlásilo z 5. C a o kolik jich je víc než z 5. D?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Ze tří známých sloupců přečteme 18, 22 a 14 žáků, dohromady 18 + 22 + 14 = 54.",
+        "Z 5. C se přihlásilo 78 − 54 = 24 žáků.",
+        "Z 5. D se přihlásilo 14 žáků, takže z 5. C jich je víc o 24 − 14 = 10."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_42",
+      "tema": "p5_grafy",
+      "podtema": "p5_chybi_udaj",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-tridy.svg",
+        "width": 340,
+        "height": 218,
+        "alt": "Sloupcový graf: 5. A 12 chlapců a 13 dívek, 5. B 14 chlapců a chybějící počet dívek, 5. C chybějící počet chlapců a 12 dívek"
+      },
+      "zadani": "Graf ukazuje počty chlapců a dívek v pátých třídách, u některých sloupců chybí. V 5. B je celkem 27 žáků. V 5. C je o 2 chlapce méně než dívek. Kolik žáků je ve všech třech třídách dohromady?",
+      "odpoved": "74",
+      "reseni_kroky": [
+        "V 5. A je 12 + 13 = 25 žáků.",
+        "V 5. B je podle zadání 27 žáků. (Chlapců je 14, takže dívek je 27 − 14 = 13, ale pro výsledek stačí těch 27.)",
+        "V 5. C je 12 dívek a o 2 chlapce méně, tedy 10 chlapců, dohromady 12 + 10 = 22 žáků.",
+        "Ve všech třídách je 25 + 27 + 22 = 74 žáků."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_43",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-trojuhelniky.svg",
+        "width": 336,
+        "height": 84,
+        "alt": "Obrazce ze špejlí: řada 1, 2 a 3 trojúhelníků vedle sebe z 3, 5 a 7 špejlí"
+      },
+      "zadani": "Obrazce jsou postavené ze špejlí (viz obrázek). Řada trojúhelníků vedle sebe se prodlužuje stále stejným způsobem. Kolik nejvíc trojúhelníků v řadě můžeš postavit ze 100 špejlí? Nemusíš použít všechny špejle.",
+      "odpoved": "49",
+      "reseni_kroky": [
+        "Obrazec z jednoho trojúhelníku má 3 špejle a každý další trojúhelník přidá 2 špejle. Řada z n trojúhelníků potřebuje 2 · n + 1 špejlí (n = 1: 3, n = 2: 5, n = 3: 7).",
+        "Musí platit 2 · n + 1 ≤ 100, tedy 2 · n ≤ 99 a n ≤ 49,5.",
+        "Největší celé n je 49. Řada ze 49 trojúhelníků potřebuje 2 · 49 + 1 = 99 špejlí a jedna špejle zbude."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_44",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 3,
+      "zadani": "Čísla jsou řazena podle pravidla: 2, 10, 4, 20, 6, 30, 8, … Jaký je součet čísel, která jsou v řadě na 14. a 15. místě?",
+      "odpoved": "86",
+      "reseni_kroky": [
+        "Čísla na lichých místech tvoří řadu 2, 4, 6, 8, …, čísla na sudých místech řadu 10, 20, 30, 40, …",
+        "14. místo je sudé, je to 7. číslo řady 10, 20, 30, …, tedy 70. 15. místo je liché, je to 8. číslo řady 2, 4, 6, …, tedy 16.",
+        "Součet je 70 + 16 = 86."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_45",
+      "tema": "p5_grafy",
+      "podtema": "p5_tvrzeni",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra3-krouzky.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf dětí v kroužcích: plavání 18, tanec 12, šachy 6, fotbal 24"
+      },
+      "moznosti": [
+        "Na plavání chodí o čtvrtinu víc dětí než na tanec.",
+        "Na fotbal chodí o polovinu víc dětí než na plavání.",
+        "Na fotbal chodí o třetinu víc dětí než na tanec.",
+        "Na šachy chodí pětina všech dětí z těchto kroužků.",
+        "Na tanec a šachy dohromady chodí stejně dětí jako na plavání."
+      ],
+      "spravna": 4,
+      "zadani": "Graf ukazuje, kolik dětí chodí do jednotlivých kroužků (každé dítě chodí jen do jednoho). Které z následujících tvrzení je pravdivé?",
+      "odpoved": "Na tanec a šachy dohromady chodí stejně dětí jako na plavání.",
+      "reseni_kroky": [
+        "Z grafu přečteme: plavání 18, tanec 12, šachy 6, fotbal 24 dětí. Každé tvrzení ověříme.",
+        "A) Čtvrtina z 12 je 3, 12 + 3 = 15, ale na plavání chodí 18. B) Polovina z 18 je 9, 18 + 9 = 27, ne 24. C) Třetina z 12 je 4, 12 + 4 = 16, ne 24. D) Všech dětí je 18 + 12 + 6 + 24 = 60, pětina je 12, ne 6.",
+        "E) Tanec a šachy dohromady mají 12 + 6 = 18 dětí, a to je stejně jako plavání. Správně je E)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_45",
+      "tema": "p5_zlomky",
+      "podtema": "p5_cast_celku",
+      "obtiznost": 3,
+      "zadani": "Z 48 žáků si vybralo sportovní kroužek. Polovina z nich chodí na fotbal, čtvrtina na florbal, osmina na plavání a ostatní na jiný sport. Kolik žáků chodí na florbal nebo na plavání?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "Florbal navštěvuje čtvrtina z 48 žáků: 48 : 4 = 12. Plavání navštěvuje osmina: 48 : 8 = 6.",
+        "Florbal nebo plavání dohromady vybralo 12 + 6 = 18 žáků.",
+        "Zkouška: fotbal 24, florbal 12, plavání 6, jiný sport 48 − 24 − 12 − 6 = 6 žáků, a 24 + 12 + 6 + 6 = 48."
+      ],
+      "cas_sekund": 210,
       "sm2_interval": 1
     }
   ]
