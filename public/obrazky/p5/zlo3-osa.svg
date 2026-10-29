@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Číselná osa od 0 do 1 rozdělená na 10 stejných dílů, šipka A ukazuje na 3. dílek a šipka B na 7. dílek</title>
+  <rect x="0" y="0" width="400" height="100" fill="#ffffff"/>
+  <line x1="30" y1="62" x2="370" y2="62" stroke="#0D1B3E" stroke-width="2.5"/>
+  <line x1="30" y1="53" x2="30" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="64" y1="53" x2="64" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="98" y1="53" x2="98" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="132" y1="53" x2="132" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="166" y1="53" x2="166" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="200" y1="53" x2="200" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="234" y1="53" x2="234" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="268" y1="53" x2="268" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="302" y1="53" x2="302" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="336" y1="53" x2="336" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="370" y1="53" x2="370" y2="71" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="30" y="90" font-size="16" font-weight="600" fill="#0D1B3E" text-anchor="middle">0</text>
+  <text x="370" y="90" font-size="16" font-weight="600" fill="#0D1B3E" text-anchor="middle">1</text>
+  <polygon points="132,58 124,38 140,38" fill="#c0392b"/>
+  <text x="132" y="32" font-size="16" font-weight="600" fill="#c0392b" text-anchor="middle">A</text>
+  <polygon points="268,58 260,38 276,38" fill="#c0392b"/>
+  <text x="268" y="32" font-size="16" font-weight="600" fill="#c0392b" text-anchor="middle">B</text>
+
+</svg>

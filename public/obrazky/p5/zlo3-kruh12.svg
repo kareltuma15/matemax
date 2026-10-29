@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Kruh rozdělený na 12 stejných dílů: 5 modrých (M), 4 červené (Č), ostatní bílé</title>
+  <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+  <path d="M 100 100 L 100.00 14.00 A 86 86 0 0 1 143.00 25.52 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 143.00 25.52 A 86 86 0 0 1 174.48 57.00 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 174.48 57.00 A 86 86 0 0 1 186.00 100.00 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 186.00 100.00 A 86 86 0 0 1 174.48 143.00 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 174.48 143.00 A 86 86 0 0 1 143.00 174.48 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 143.00 174.48 A 86 86 0 0 1 100.00 186.00 Z" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 100.00 186.00 A 86 86 0 0 1 57.00 174.48 Z" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 57.00 174.48 A 86 86 0 0 1 25.52 143.00 Z" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 25.52 143.00 A 86 86 0 0 1 14.00 100.00 Z" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 14.00 100.00 A 86 86 0 0 1 25.52 57.00 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 25.52 57.00 A 86 86 0 0 1 57.00 25.52 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 57.00 25.52 A 86 86 0 0 1 100.00 14.00 Z" fill="#ffffff" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <text x="112.91" y="57.82" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">M</text>
+  <text x="135.27" y="70.73" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">M</text>
+  <text x="148.18" y="93.09" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">M</text>
+  <text x="148.18" y="118.91" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">M</text>
+  <text x="135.27" y="141.27" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">M</text>
+  <text x="112.91" y="154.18" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">Č</text>
+  <text x="87.09" y="154.18" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">Č</text>
+  <text x="64.73" y="141.27" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">Č</text>
+  <text x="51.82" y="118.91" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">Č</text>
+
+</svg>
