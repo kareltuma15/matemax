@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 219,
+    "total": 234,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -6350,6 +6350,332 @@
           }
         ]
       }
+    },
+    {
+      "id": "P5_GRA_16",
+      "tema": "p5_grafy",
+      "podtema": "p5_sloupcovy",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-tridy.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf počtu žáků ve třídách: 5. A 24, 5. B 22, 5. C 26, 5. D 20"
+      },
+      "zadani": "Graf ukazuje počet žáků ve čtyřech pátých třídách. Kolik žáků je dohromady ve třídách 5. B a 5. C?",
+      "odpoved": "48",
+      "reseni_kroky": [
+        "Z grafu přečteme: ve třídě 5. B je 22 žáků a ve třídě 5. C je 26 žáků.",
+        "Dohromady je to 22 + 26 = 48 žáků."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_17",
+      "tema": "p5_grafy",
+      "podtema": "p5_tabulka",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-potraviny.svg",
+        "width": 442,
+        "height": 88,
+        "alt": "Ceník: rohlík 4 Kč, jogurt 12 Kč, jablko 7 Kč, mléko 18 Kč"
+      },
+      "zadani": "V tabulce jsou ceny potravin. Kolik korun zaplatíš za 3 rohlíky a 1 jogurt?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Rohlík stojí 4 Kč, tři rohlíky stojí 3 · 4 = 12 Kč. Jogurt stojí 12 Kč.",
+        "Dohromady zaplatíš 12 + 12 = 24 Kč."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_18",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 1,
+      "zadani": "Čísla jsou řazena podle stejného pravidla: 2, 5, 8, 11, … Které číslo bude na 6. místě?",
+      "odpoved": "17",
+      "reseni_kroky": [
+        "Každé číslo je o 3 větší než předchozí: 5 − 2 = 3, 8 − 5 = 3, 11 − 8 = 3.",
+        "Pokračujeme: 11, pak 14 (5. místo), pak 17 (6. místo)."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_19",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-pyramida.svg",
+        "width": 210,
+        "height": 132,
+        "alt": "Pyramida ze čtverečků: řady po 1, 3, 5 a 7 čtverečcích, tmavá a bílá řada se střídají"
+      },
+      "zadani": "Pyramida se skládá z řad čtverečků. V 1. řadě je 1 čtvereček a každá další řada má o 2 čtverečky víc než řada nad ní. Kolik čtverečků je v 5. řadě?",
+      "odpoved": "9",
+      "reseni_kroky": [
+        "Na obrázku jsou řady po 1, 3, 5 a 7 čtverečcích, takže každá další řada má o 2 víc.",
+        "5. řada má 7 + 2 = 9 čtverečků."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_20",
+      "tema": "p5_grafy",
+      "podtema": "p5_chybi_udaj",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-nehody.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf nehod po čtvrtletích: 1. čtvrtletí 8, 2. čtvrtletí 12, 3. čtvrtletí 6, 4. čtvrtletí chybí"
+      },
+      "zadani": "Graf ukazuje počty dopravních nehod v obci v jednotlivých čtvrtletích loňského roku. Sloupec za 4. čtvrtletí chybí. Za celý rok bylo v obci 36 nehod. Kolik nehod se stalo ve 4. čtvrtletí?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Ze tří známých sloupců přečteme 8, 12 a 6 nehod, dohromady 8 + 12 + 6 = 26.",
+        "Za celý rok bylo 36 nehod, takže ve 4. čtvrtletí jich bylo 36 − 26 = 10."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_21",
+      "tema": "p5_grafy",
+      "podtema": "p5_tvrzeni",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-odpad.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf vytříděného odpadu v kg: papír 24, plast 18, sklo 12, kovy 6"
+      },
+      "moznosti": [
+        "Plastu je o třetinu méně než papíru.",
+        "Skla je o polovinu víc než kovů.",
+        "Papíru je dvakrát víc než plastu.",
+        "Kovů je čtvrtina z množství papíru.",
+        "Plast a kovy dohromady tvoří polovinu všeho odpadu."
+      ],
+      "spravna": 3,
+      "zadani": "Graf ukazuje, kolik kilogramů odpadu vytřídili žáci školy. Které z následujících tvrzení je pravdivé?",
+      "odpoved": "Kovů je čtvrtina z množství papíru.",
+      "reseni_kroky": [
+        "Z grafu přečteme: papír 24 kg, plast 18 kg, sklo 12 kg, kovy 6 kg. Každé tvrzení ověříme.",
+        "A) Třetina z 24 je 8, o třetinu méně je 16, ale plast má 18 kg, takže to neplatí. B) Polovina z 6 je 3 a 6 + 3 = 9, ne 12. C) Dvakrát 18 je 36, ne 24. E) Plast a kovy mají 24 kg, všeho dohromady je 60 kg, polovina je 30.",
+        "D) Čtvrtina z 24 kg je 6 kg, to platí. Správně je D)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_22",
+      "tema": "p5_grafy",
+      "podtema": "p5_chybi_udaj",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-muzeum.svg",
+        "width": 394,
+        "height": 88,
+        "alt": "Tabulka návštěvníků muzea: pondělí 80, úterý chybí, středa 120, čtvrtek chybí"
+      },
+      "zadani": "V tabulce je počet návštěvníků muzea ve čtyřech dnech, údaje za úterý a čtvrtek chybí. V úterý přišlo o čtvrtinu víc návštěvníků než v pondělí. Ve čtvrtek přišlo třikrát méně návštěvníků než ve středu. Kolik návštěvníků přišlo za všechny čtyři dny dohromady?",
+      "odpoved": "340",
+      "reseni_kroky": [
+        "Čtvrtina z pondělních 80 návštěvníků je 80 : 4 = 20, takže v úterý jich bylo 80 + 20 = 100.",
+        "Třikrát méně než ve středu je 120 : 3 = 40 návštěvníků ve čtvrtek.",
+        "Dohromady 80 + 100 + 120 + 40 = 340 návštěvníků."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_23",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-pyramida.svg",
+        "width": 210,
+        "height": 132,
+        "alt": "Pyramida ze čtverečků: řady po 1, 3, 5 a 7 čtverečcích, tmavá a bílá řada se střídají"
+      },
+      "zadani": "Pyramida se skládá z řad čtverečků. V 1. řadě je 1 čtvereček a každá další řada má o 2 čtverečky víc než řada nad ní. Kolik čtverečků má celá pyramida o 6 řadách?",
+      "odpoved": "36",
+      "reseni_kroky": [
+        "Řady mají postupně 1, 3, 5, 7, 9 a 11 čtverečků.",
+        "Dohromady 1 + 3 + 5 + 7 + 9 + 11 = 36 čtverečků. (Je to 6 · 6, součet prvních šesti lichých čísel.)"
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_24",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 2,
+      "moznosti": [
+        "40",
+        "45",
+        "49",
+        "52",
+        "56"
+      ],
+      "spravna": 2,
+      "zadani": "Čísla jsou řazena podle pravidla: 7, 10, 14, 19, … (každé číslo je větší o jedna víc než minule). Které číslo bude na 8. místě?",
+      "odpoved": "49",
+      "reseni_kroky": [
+        "Rozdíly mezi sousedními čísly jsou 3, 4, 5, takže každý další rozdíl je o 1 větší.",
+        "Řada pokračuje: 19, 25 (+6), 32 (+7), 40 (+8), 49 (+9). Číslo 49 je na 8. místě.",
+        "Správně je C)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_25",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-ctverec.svg",
+        "width": 394,
+        "height": 88,
+        "alt": "Tabulka: číslo 2 se změní na 5, 3 na 10, 5 na 26, u čísla 6 nové číslo chybí"
+      },
+      "zadani": "V tabulce se každé číslo v horním řádku změní na číslo v dolním řádku podle stejného pravidla. Jaké číslo patří místo otazníku?",
+      "odpoved": "37",
+      "reseni_kroky": [
+        "Hledáme pravidlo: 2 → 5, 3 → 10, 5 → 26. Číslo se vynásobí samo sebou a přičte se 1: 2 · 2 + 1 = 5, 3 · 3 + 1 = 10, 5 · 5 + 1 = 26.",
+        "Pro 6 je to 6 · 6 + 1 = 37."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_26",
+      "tema": "p5_grafy",
+      "podtema": "p5_chybi_udaj",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-oddily.svg",
+        "width": 340,
+        "height": 218,
+        "alt": "Sloupcový graf dětí v oddílech: oddíl A 10 chlapců a 8 dívek, oddíl B 6 chlapců a 9 dívek, oddíl C 4 chlapci a chybějící počet dívek"
+      },
+      "zadani": "Na táboře je každé dítě zařazeno do jednoho z oddílů A, B a C. V oddíle A je dvakrát víc dětí než v oddíle C. Graf ukazuje počty chlapců a dívek v oddílech, počet dívek v oddíle C chybí. Kolik dívek je v oddíle C?",
+      "odpoved": "5",
+      "reseni_kroky": [
+        "V oddíle A je 10 chlapců a 8 dívek, dohromady 18 dětí.",
+        "V oddíle C je dvakrát méně dětí než v A, tedy 18 : 2 = 9 dětí.",
+        "Chlapců je v oddíle C 4, takže dívek je 9 − 4 = 5."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_27",
+      "tema": "p5_grafy",
+      "podtema": "p5_chybi_udaj",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-karty.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf počtu karet: Alena 15, Bára chybí, Cyril chybí, David 9"
+      },
+      "moznosti": [
+        "47",
+        "55",
+        "59",
+        "63",
+        "71"
+      ],
+      "spravna": 2,
+      "zadani": "Graf ukazuje počty sběratelských karet čtyř kamarádů, u Báry a Cyrila sloupce chybí. Cyril má o třetinu méně karet než Bára a oba dohromady mají 35 karet. Kolik karet mají všichni čtyři kamarádi dohromady?",
+      "odpoved": "59",
+      "reseni_kroky": [
+        "Bára má 3 díly (třetiny), Cyril o třetinu méně, tedy 2 díly. Dohromady mají 5 dílů a to je 35 karet.",
+        "Jeden díl je 35 : 5 = 7 karet. Bára má 3 · 7 = 21 karet, Cyril 2 · 7 = 14 karet.",
+        "Všichni dohromady: 15 + 21 + 14 + 9 = 59 karet. Správně je C)."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_28",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-pyramida.svg",
+        "width": 210,
+        "height": 132,
+        "alt": "Pyramida ze čtverečků: řady po 1, 3, 5 a 7 čtverečcích, tmavá a bílá řada se střídají"
+      },
+      "zadani": "Pyramida se skládá z řad čtverečků. V 1. řadě je 1 čtvereček a každá další řada má o 2 čtverečky víc. Řady se pravidelně střídají: tmavá, bílá, tmavá, … (horní řada je tmavá). Pyramida má 41 řad. O kolik se liší počet tmavých a bílých čtverečků?",
+      "odpoved": "41",
+      "reseni_kroky": [
+        "Tmavé jsou řady s lichým číslem (1., 3., …, 41.), bílé řady se sudým číslem (2., 4., …, 40.). Tmavých řad je 21 a bílých 20.",
+        "Řada s číslem n má 2n − 1 čtverečků. Tmavé řady mají 1, 5, 9, …, 81 čtverečků a bílé řady 3, 7, 11, …, 79 čtverečků.",
+        "První tmavou řadu (1 čtvereček) si dáme stranou. Zbylých 20 tmavých řad (5, 9, …, 81) a 20 bílých řad (3, 7, …, 79) tvoří dvojice, v nichž má tmavá řada vždy o 2 čtverečky víc, dohromady o 20 · 2 = 40. S první řadou je rozdíl 1 + 40 = 41. (Součty: tmavých je 861, bílých 820.)"
+      ],
+      "cas_sekund": 300,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_29",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/gra2-pyramida.svg",
+        "width": 210,
+        "height": 132,
+        "alt": "Pyramida ze čtverečků: řady po 1, 3, 5 a 7 čtverečcích, tmavá a bílá řada se střídají"
+      },
+      "zadani": "Pyramida se skládá z řad čtverečků. V 1. řadě je 1 čtvereček a každá další řada má o 2 čtverečky víc. Řady se střídají: tmavá, bílá, tmavá, … (horní řada je tmavá). V pyramidě je o 59 tmavých čtverečků víc než bílých. Kolik řad má pyramida?",
+      "odpoved": "59",
+      "reseni_kroky": [
+        "Zkusíme malé pyramidy: 1 řada má rozdíl 1 (tmavý 1, bílý 0), 3 řady mají 1 + 5 = 6 tmavých a 3 bílé, rozdíl 3, 5 řad mají 1 + 5 + 9 = 15 tmavých a 3 + 7 = 10 bílých, rozdíl 5.",
+        "Rozdíl tmavých a bílých se rovná počtu řad, pokud je počet řad lichý (tmavých je pak víc).",
+        "Rozdíl 59 tedy znamená 59 řad. Zkouška: tmavé řady 1, 3, …, 59 mají 30 řad, bílé 29 řad, a tmavých je o 59 víc."
+      ],
+      "cas_sekund": 330,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_GRA_30",
+      "tema": "p5_grafy",
+      "podtema": "p5_vzory",
+      "obtiznost": 3,
+      "zadani": "Řada čísel vzniká z trojic. První trojice je 1, 2, 3. Každá další trojice vznikne tak, že čísla předchozí trojice zvětšíme o 2. Řada začíná: 1, 2, 3, 3, 4, 5, 5, 6, 7, … Které číslo je v řadě na 40. místě?",
+      "odpoved": "27",
+      "reseni_kroky": [
+        "Každá trojice zabírá 3 místa. 40. místo leží ve 14. trojici, protože 13 · 3 = 39 a 40. místo je první místo v další trojici.",
+        "První číslo n-té trojice je 1 + 2 · (n − 1). Pro 14. trojici je to 1 + 2 · 13 = 27.",
+        "Zkouška: 13. trojice začíná na 25, takže končí na 27 (25, 26, 27), a 14. trojice začíná na 27 (27, 28, 29). Na 40. místě je 27."
+      ],
+      "cas_sekund": 330,
+      "sm2_interval": 1
     }
   ]
 }
