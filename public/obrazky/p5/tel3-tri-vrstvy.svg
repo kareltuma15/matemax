@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 142" width="175" height="142" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Stavba ze tří vrstev: dole 4 krát 3 krychličky, uprostřed 3 krát 3 a nahoře 2 krát 3 krychličky, vrstvy jsou zarovnané vzadu vlevo</title>
+  <rect x="0" y="0" width="175" height="142" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="28.6,11.7 54.6,11.7 68.9,0 42.9,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="80.6,37.7 94.9,26 94.9,0 80.6,11.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="54.6,11.7 80.6,11.7 94.9,0 68.9,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="106.6,63.7 120.9,52 120.9,26 106.6,37.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="80.6,37.7 106.6,37.7 120.9,26 94.9,26" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="132.6,89.7 146.9,78 146.9,52 132.6,63.7" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="106.6,63.7 132.6,63.7 146.9,52 120.9,52" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="14.3,23.4 40.3,23.4 54.6,11.7 28.6,11.7" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="66.3,49.4 80.6,37.7 80.6,11.7 66.3,23.4" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="40.3,23.4 66.3,23.4 80.6,11.7 54.6,11.7" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="92.3,75.4 106.6,63.7 106.6,37.7 92.3,49.4" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="66.3,49.4 92.3,49.4 106.6,37.7 80.6,37.7" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="118.3,101.4 132.6,89.7 132.6,63.7 118.3,75.4" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="92.3,75.4 118.3,75.4 132.6,63.7 106.6,63.7" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,113.1 26,113.1 26,87.1 0,87.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,87.1 26,87.1 26,61.1 0,61.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,61.1 26,61.1 26,35.1 0,35.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,35.1 26,35.1 40.3,23.4 14.3,23.4" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="26,113.1 52,113.1 52,87.1 26,87.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,87.1 52,87.1 52,61.1 26,61.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="26,61.1 52,61.1 52,35.1 26,35.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="52,61.1 66.3,49.4 66.3,23.4 52,35.1" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="26,35.1 52,35.1 66.3,23.4 40.3,23.4" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="52,113.1 78,113.1 78,87.1 52,87.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="52,87.1 78,87.1 78,61.1 52,61.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="78,87.1 92.3,75.4 92.3,49.4 78,61.1" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="52,61.1 78,61.1 92.3,49.4 66.3,49.4" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="78,113.1 104,113.1 104,87.1 78,87.1" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="104,113.1 118.3,101.4 118.3,75.4 104,87.1" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="78,87.1 104,87.1 118.3,75.4 92.3,75.4" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M28.6 11.7L54.6 11.7M54.6 11.7L68.9 0M68.9 0L42.9 0M42.9 0L28.6 11.7M80.6 37.7L94.9 26M94.9 26L94.9 0M94.9 0L80.6 11.7M80.6 11.7L80.6 37.7M54.6 11.7L80.6 11.7M80.6 11.7L94.9 0M94.9 0L68.9 0M68.9 0L54.6 11.7M106.6 63.7L120.9 52M120.9 52L120.9 26M120.9 26L106.6 37.7M106.6 37.7L106.6 63.7M80.6 37.7L106.6 37.7M106.6 37.7L120.9 26M120.9 26L94.9 26M94.9 26L80.6 37.7M132.6 89.7L146.9 78M146.9 78L146.9 52M146.9 52L132.6 63.7M132.6 63.7L132.6 89.7M106.6 63.7L132.6 63.7M132.6 63.7L146.9 52M146.9 52L120.9 52M120.9 52L106.6 63.7M14.3 23.4L40.3 23.4M40.3 23.4L54.6 11.7M54.6 11.7L28.6 11.7M28.6 11.7L14.3 23.4M66.3 49.4L80.6 37.7M80.6 37.7L80.6 11.7M80.6 11.7L66.3 23.4M66.3 23.4L66.3 49.4M40.3 23.4L66.3 23.4M66.3 23.4L80.6 11.7M80.6 11.7L54.6 11.7M54.6 11.7L40.3 23.4M92.3 75.4L106.6 63.7M106.6 63.7L106.6 37.7M106.6 37.7L92.3 49.4M92.3 49.4L92.3 75.4M66.3 49.4L92.3 49.4M92.3 49.4L106.6 37.7M106.6 37.7L80.6 37.7M80.6 37.7L66.3 49.4M118.3 101.4L132.6 89.7M132.6 89.7L132.6 63.7M132.6 63.7L118.3 75.4M118.3 75.4L118.3 101.4M92.3 75.4L118.3 75.4M118.3 75.4L132.6 63.7M132.6 63.7L106.6 63.7M106.6 63.7L92.3 75.4M0 113.1L26 113.1M26 113.1L26 87.1M26 87.1L0 87.1M0 87.1L0 113.1M0 87.1L26 87.1M26 87.1L26 61.1M26 61.1L0 61.1M0 61.1L0 87.1M0 61.1L26 61.1M26 61.1L26 35.1M26 35.1L0 35.1M0 35.1L0 61.1M0 35.1L26 35.1M26 35.1L40.3 23.4M40.3 23.4L14.3 23.4M14.3 23.4L0 35.1M26 113.1L52 113.1M52 113.1L52 87.1M52 87.1L26 87.1M26 87.1L26 113.1M26 87.1L52 87.1M52 87.1L52 61.1M52 61.1L26 61.1M26 61.1L26 87.1M26 61.1L52 61.1M52 61.1L52 35.1M52 35.1L26 35.1M26 35.1L26 61.1M52 61.1L66.3 49.4M66.3 49.4L66.3 23.4M66.3 23.4L52 35.1M52 35.1L52 61.1M26 35.1L52 35.1M52 35.1L66.3 23.4M66.3 23.4L40.3 23.4M40.3 23.4L26 35.1M52 113.1L78 113.1M78 113.1L78 87.1M78 87.1L52 87.1M52 87.1L52 113.1M52 87.1L78 87.1M78 87.1L78 61.1M78 61.1L52 61.1M52 61.1L52 87.1M78 87.1L92.3 75.4M92.3 75.4L92.3 49.4M92.3 49.4L78 61.1M78 61.1L78 87.1M52 61.1L78 61.1M78 61.1L92.3 49.4M92.3 49.4L66.3 49.4M66.3 49.4L52 61.1M78 113.1L104 113.1M104 113.1L104 87.1M104 87.1L78 87.1M78 87.1L78 113.1M104 113.1L118.3 101.4M118.3 101.4L118.3 75.4M118.3 75.4L104 87.1M104 87.1L104 113.1M78 87.1L104 87.1M104 87.1L118.3 75.4M118.3 75.4L92.3 75.4M92.3 75.4L78 87.1" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

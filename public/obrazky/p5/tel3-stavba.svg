@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 127" width="168" height="127" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Stavba z krychliček: dolní vrstva 3 krychličky na šířku a 2 do hloubky, nad ní horní vrstva 2 krát 2 krychličky</title>
+  <rect x="0" y="0" width="168" height="127" fill="#ffffff"/>
+  <g transform="translate(14 14)">
+<polygon points="18.7,15.3 52.7,15.3 71.4,0 37.4,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="86.7,49.3 105.4,34 105.4,0 86.7,15.3" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="52.7,15.3 86.7,15.3 105.4,0 71.4,0" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="120.7,83.3 139.4,68 139.4,34 120.7,49.3" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="86.7,49.3 120.7,49.3 139.4,34 105.4,34" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="0,98.6 34,98.6 34,64.6 0,64.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,64.6 34,64.6 34,30.6 0,30.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="0,30.6 34,30.6 52.7,15.3 18.7,15.3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="34,98.6 68,98.6 68,64.6 34,64.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="34,64.6 68,64.6 68,30.6 34,30.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="68,64.6 86.7,49.3 86.7,15.3 68,30.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="34,30.6 68,30.6 86.7,15.3 52.7,15.3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<polygon points="68,98.6 102,98.6 102,64.6 68,64.6" fill="#f7f9fc" shape-rendering="crispEdges"/>
+<polygon points="102,98.6 120.7,83.3 120.7,49.3 102,64.6" fill="#d3deea" shape-rendering="crispEdges"/>
+<polygon points="68,64.6 102,64.6 120.7,49.3 86.7,49.3" fill="#e9eff6" shape-rendering="crispEdges"/>
+<path d="M18.7 15.3L52.7 15.3M52.7 15.3L71.4 0M71.4 0L37.4 0M37.4 0L18.7 15.3M86.7 49.3L105.4 34M105.4 34L105.4 0M105.4 0L86.7 15.3M86.7 15.3L86.7 49.3M52.7 15.3L86.7 15.3M86.7 15.3L105.4 0M105.4 0L71.4 0M71.4 0L52.7 15.3M120.7 83.3L139.4 68M139.4 68L139.4 34M139.4 34L120.7 49.3M120.7 49.3L120.7 83.3M86.7 49.3L120.7 49.3M120.7 49.3L139.4 34M139.4 34L105.4 34M105.4 34L86.7 49.3M0 98.6L34 98.6M34 98.6L34 64.6M34 64.6L0 64.6M0 64.6L0 98.6M0 64.6L34 64.6M34 64.6L34 30.6M34 30.6L0 30.6M0 30.6L0 64.6M0 30.6L34 30.6M34 30.6L52.7 15.3M52.7 15.3L18.7 15.3M18.7 15.3L0 30.6M34 98.6L68 98.6M68 98.6L68 64.6M68 64.6L34 64.6M34 64.6L34 98.6M34 64.6L68 64.6M68 64.6L68 30.6M68 30.6L34 30.6M34 30.6L34 64.6M68 64.6L86.7 49.3M86.7 49.3L86.7 15.3M86.7 15.3L68 30.6M68 30.6L68 64.6M34 30.6L68 30.6M68 30.6L86.7 15.3M86.7 15.3L52.7 15.3M52.7 15.3L34 30.6M68 98.6L102 98.6M102 98.6L102 64.6M102 64.6L68 64.6M68 64.6L68 98.6M102 98.6L120.7 83.3M120.7 83.3L120.7 49.3M120.7 49.3L102 64.6M102 64.6L102 98.6M68 64.6L102 64.6M102 64.6L120.7 49.3M120.7 49.3L86.7 49.3M86.7 49.3L68 64.6" fill="none" stroke="#0D1B3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
