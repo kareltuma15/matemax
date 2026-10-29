@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 212" width="320" height="212" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Sloupcový graf počtu karet: Alena 15, Bára chybí, Cyril chybí, David 9</title>
+  <rect x="0" y="0" width="320" height="212" fill="#ffffff"/>
+  <text x="160" y="20" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">Počet sběratelských karet</text>
+  <line x1="46" y1="178" x2="310" y2="178" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="38" y="182" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">0</text>
+  <line x1="46" y1="160.5" x2="310" y2="160.5" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="164.5" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">3</text>
+  <line x1="46" y1="143" x2="310" y2="143" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="147" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">6</text>
+  <line x1="46" y1="125.5" x2="310" y2="125.5" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="129.5" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">9</text>
+  <line x1="46" y1="108" x2="310" y2="108" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="112" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">12</text>
+  <line x1="46" y1="90.5" x2="310" y2="90.5" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="94.5" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">15</text>
+  <line x1="46" y1="73" x2="310" y2="73" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="77" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">18</text>
+  <line x1="46" y1="55.5" x2="310" y2="55.5" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="59.5" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">21</text>
+  <line x1="46" y1="38" x2="310" y2="38" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="42" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">24</text>
+  <line x1="46" y1="38" x2="46" y2="178" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="61" y="90.5" width="34" height="87.5" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="78" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">Alena</text>
+  <rect x="125" y="38" width="34" height="140" fill="none" stroke="#0D1B3E" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <text x="142" y="58" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">?</text>
+  <text x="142" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">Bára</text>
+  <rect x="189" y="38" width="34" height="140" fill="none" stroke="#0D1B3E" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <text x="206" y="58" font-size="17" font-weight="800" fill="#0D1B3E" text-anchor="middle">?</text>
+  <text x="206" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">Cyril</text>
+  <rect x="253" y="125.5" width="34" height="52.5" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="270" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">David</text>
+
+</svg>
