@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 212" width="448" height="212" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Sloupcový graf prodaných zmrzlin: po 12, út 18, st 15, čt 24, pá 27, so 33</title>
+  <rect x="0" y="0" width="448" height="212" fill="#ffffff"/>
+  <text x="224" y="20" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="middle">Prodané zmrzliny</text>
+  <line x1="46" y1="178" x2="438" y2="178" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="38" y="182" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">0</text>
+  <line x1="46" y1="154.67" x2="438" y2="154.67" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="158.67" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">6</text>
+  <line x1="46" y1="131.33" x2="438" y2="131.33" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="135.33" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">12</text>
+  <line x1="46" y1="108" x2="438" y2="108" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="112" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">18</text>
+  <line x1="46" y1="84.67" x2="438" y2="84.67" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="88.67" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">24</text>
+  <line x1="46" y1="61.33" x2="438" y2="61.33" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="65.33" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">30</text>
+  <line x1="46" y1="38" x2="438" y2="38" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="38" y="42" font-size="11" font-weight="600" fill="#0D1B3E" text-anchor="end">36</text>
+  <line x1="46" y1="38" x2="46" y2="178" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="61" y="131.33" width="34" height="46.67" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="78" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">po</text>
+  <rect x="125" y="108" width="34" height="70" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="142" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">út</text>
+  <rect x="189" y="119.67" width="34" height="58.33" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="206" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">st</text>
+  <rect x="253" y="84.67" width="34" height="93.33" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="270" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">čt</text>
+  <rect x="317" y="73" width="34" height="105" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="334" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">pá</text>
+  <rect x="381" y="49.67" width="34" height="128.33" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.6"/>
+  <text x="398" y="197" font-size="12" font-weight="700" fill="#0D1B3E" text-anchor="middle">so</text>
+
+</svg>

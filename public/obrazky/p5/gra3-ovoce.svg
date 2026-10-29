@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Kruhový diagram z 8 stejných dílů: A 3 díly, B 2 díly, C 2 díly, D 1 díl</title>
+  <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+  <path d="M 100 100 L 100.00 14.00 A 86 86 0 0 1 160.81 39.19 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 160.81 39.19 A 86 86 0 0 1 186.00 100.00 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 186.00 100.00 A 86 86 0 0 1 160.81 160.81 Z" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 160.81 160.81 A 86 86 0 0 1 100.00 186.00 Z" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 100.00 186.00 A 86 86 0 0 1 39.19 160.81 Z" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 39.19 160.81 A 86 86 0 0 1 14.00 100.00 Z" fill="#d6ecd0" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 14.00 100.00 A 86 86 0 0 1 39.19 39.19 Z" fill="#d6ecd0" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 100 100 L 39.19 39.19 A 86 86 0 0 1 100.00 14.00 Z" fill="#f8e8b0" stroke="#0D1B3E" stroke-width="2" stroke-linejoin="round"/>
+  <text x="119.75" y="58.33" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">A</text>
+  <text x="119.75" y="153.67" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">B</text>
+  <text x="52.33" y="125.75" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">C</text>
+  <text x="80.25" y="58.33" font-size="18" font-weight="600" fill="#0D1B3E" text-anchor="middle">D</text>
+
+</svg>

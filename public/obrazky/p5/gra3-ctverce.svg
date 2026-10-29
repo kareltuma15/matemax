@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 122" width="240" height="122" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obrazce z čtverečků: 1. obrazec má 1 čtvereček, 2. obrazec 2 × 2 čtverečky, 3. obrazec 3 × 3 čtverečky</title>
+  <rect x="0" y="0" width="240" height="122" fill="#ffffff"/>
+  <rect x="14" y="62" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="26" y="116" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">1. obrazec</text>
+  <rect x="72" y="38" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="72" y="62" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="96" y="38" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="96" y="62" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="96" y="116" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">2. obrazec</text>
+  <rect x="154" y="14" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="154" y="38" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="154" y="62" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="178" y="14" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="178" y="38" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="178" y="62" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="202" y="14" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="202" y="38" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <rect x="202" y="62" width="24" height="24" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="190" y="116" font-size="12" font-weight="600" fill="#0D1B3E" text-anchor="middle">3. obrazec</text>
+
+</svg>

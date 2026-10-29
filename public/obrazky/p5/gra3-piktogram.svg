@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 220" width="250" height="220" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obrázkový graf: pěšky 3 obrázků, kolo 5 obrázků, autobus 4 obrázků, auto 2 obrázků; jeden obrázek znamená 4 žáky</title>
+  <rect x="0" y="0" width="250" height="220" fill="#ffffff"/>
+  <text x="125" y="22" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">Jak chodíme do školy</text>
+  <text x="74" y="66" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">pěšky</text>
+  <circle cx="98" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="154" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="74" y="100" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">kolo</text>
+  <circle cx="98" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="154" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="182" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="210" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="74" y="134" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">autobus</text>
+  <circle cx="98" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="154" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="182" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="74" y="168" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">auto</text>
+  <circle cx="98" cy="163" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="163" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="22" cy="200" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="40" y="205" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">= 4 žáci</text>
+
+</svg>
