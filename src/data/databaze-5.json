@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 264,
+    "total": 279,
     "updated": "2026-10-25"
   },
   "examples": [
@@ -7224,6 +7224,243 @@
         "Čtvrtina ze 48 minut je 48 : 4 = 12 minut, druhý pořad trvá 48 − 12 = 36 minut.",
         "Oba pořady spolu trvají 48 + 36 = 84 minut, tedy 1 hodinu a 24 minut.",
         "18:40 + 1 hodina = 19:40, k tomu 24 minut: 19:40 + 20 minut = 20:00 a ještě 4 minuty = 20:04."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_31",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 1,
+      "zadani": "V knihovně je 6 polic a na každé je 15 knih. Kolik knih je v knihovně celkem?",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "Na každé polici je 15 knih a polic je 6.",
+        "6 · 15 = 90 knih."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_32",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 1,
+      "zadani": "Auto ujede za jednu hodinu 60 kilometrů. Kolik kilometrů ujede za 4 hodiny?",
+      "odpoved": "240",
+      "reseni_kroky": [
+        "Za každou hodinu ujede 60 km, hodiny jsou 4.",
+        "4 · 60 = 240 km."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_33",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 1,
+      "zadani": "Jedno balení mouky váží 500 gramů. Kolik kilogramů váží 6 takových balení?",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "Šest balení váží 6 · 500 = 3 000 g.",
+        "Jeden kilogram má 1 000 g, takže 3 000 g je 3 kg."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_34",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 1,
+      "zadani": "Babičce je 66 let a dědeček je o 3 roky starší. Kolik let mají babička s dědečkem dohromady?",
+      "odpoved": "135",
+      "reseni_kroky": [
+        "Dědečkovi je 66 + 3 = 69 let.",
+        "Dohromady 66 + 69 = 135 let."
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_35",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "zadani": "V sadu rostou jabloně a hrušně. Jabloní je 36, což je o polovinu víc než hrušní. Kolik hrušní roste v sadu?",
+      "odpoved": "24",
+      "reseni_kroky": [
+        "Hrušně rozdělíme na dvě stejné poloviny. Jabloní je o polovinu víc než hrušní, takže jabloně tvoří tři takové poloviny.",
+        "Tři půlky jsou 36 stromů, jedna půlka je 36 : 3 = 12 stromů.",
+        "Hrušně jsou dvě půlky: 2 · 12 = 24. Zkouška: polovina z 24 je 12 a 24 + 12 = 36."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_36",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 2,
+      "zadani": "Tiskárna vytiskne za jednu minutu 25 stran. Kolik minut potřebuje na vytištění 450 stran?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "Zjišťujeme, kolikrát se 25 stran vejde do 450 stran: 450 : 25.",
+        "Čtyři takové minuty dají 100 stran, takže 400 stran je 16 minut. Zbývá 50 stran, to jsou další 2 minuty.",
+        "Celkem 16 + 2 = 18 minut. Zkouška: 18 · 25 = 450."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_37",
+      "tema": "p5_slovni",
+      "podtema": "p5_hmotnosti",
+      "obtiznost": 2,
+      "zadani": "Na nákladní auto naložili 18 beden po 25 kilogramech. Auto unese nejvýše 600 kilogramů. Kolik dalších beden po 25 kilogramech se na auto ještě vejde?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Naložené bedny váží 18 · 25 = 450 kg.",
+        "Auto unese ještě 600 − 450 = 150 kg.",
+        "Beden po 25 kg se vejde 150 : 25 = 6."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_38",
+      "tema": "p5_slovni",
+      "podtema": "p5_vek",
+      "obtiznost": 2,
+      "zadani": "Za šest let bude Markétě dvakrát tolik let, kolik je jí dnes. Kolik let je Markétě dnes?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Dnešní věk označíme jako jeden díl. Za šest let bude Markétě tolik, co dnes, a ještě 6 let navíc.",
+        "To má být dvakrát tolik, co dnes, tedy dva díly. Těch 6 let navíc je proto přesně jeden díl.",
+        "Markétě je dnes 6 let. Zkouška: za šest let jí bude 12, což je dvakrát 6."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_39",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "moznosti": [
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "spravna": 1,
+      "zadani": "Honza koupil 3 stejné housky a 2 stejné rohlíky za 29 korun. Jedna houska stojí 7 korun. Kolik korun stojí jeden rohlík?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Housky stojí 3 · 7 = 21 korun.",
+        "Na rohlíky zbývá 29 − 21 = 8 korun.",
+        "Jeden rohlík stojí 8 : 2 = 4 koruny. Správně je B)."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_40",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "zadani": "Karel šetří. V pondělí uložil do pokladničky 35 korun, v úterý o 15 korun víc než v pondělí a ve středu polovinu toho, co v úterý. Kolik korun uložil za tyto tři dny?",
+      "odpoved": "110",
+      "reseni_kroky": [
+        "V úterý uložil 35 + 15 = 50 korun.",
+        "Ve středu uložil polovinu z 50, tedy 25 korun.",
+        "Dohromady 35 + 50 + 25 = 110 korun."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_41",
+      "tema": "p5_slovni",
+      "podtema": "p5_logika",
+      "obtiznost": 3,
+      "zadani": "Ve třídě je 26 žáků. Fotbal hraje 15 žáků, volejbal hraje 12 žáků a 3 žáci nehrají ani jeden z těchto sportů. Kolik žáků hraje fotbal i volejbal?",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "Nějaký sport hraje 26 − 3 = 23 žáků.",
+        "Kdybychom sečetli fotbalisty a volejbalisty, vyjde 15 + 12 = 27. Ti, kdo hrají oba sporty, jsou započtení dvakrát.",
+        "Rozdíl 27 − 23 = 4 je tedy počet žáků, kteří hrají oba sporty. Zkouška: jen fotbal 11, jen volejbal 8, oba 4, žádný 3 a 11 + 8 + 4 + 3 = 26."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_42",
+      "tema": "p5_slovni",
+      "podtema": "p5_logika",
+      "obtiznost": 3,
+      "zadani": "V pohádce žijí dvouhlaví a tříhlaví draci. Dohromady je jich 7 a mají 16 hlav. Kolik je tříhlavých draků?",
+      "odpoved": "2",
+      "reseni_kroky": [
+        "Kdyby bylo všech 7 draků dvouhlavých, měli by 7 · 2 = 14 hlav. Ve skutečnosti je jich o 16 − 14 = 2 víc.",
+        "Každý tříhlavý drak přidá oproti dvouhlavému jednu hlavu, takže tříhlavých draků jsou právě 2.",
+        "Dvouhlavých je 5. Zkouška: 5 · 2 + 2 · 3 = 10 + 6 = 16 hlav."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_43",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 3,
+      "moznosti": [
+        "100",
+        "120",
+        "150",
+        "180",
+        "200"
+      ],
+      "spravna": 2,
+      "zadani": "V nádrži byla voda. V pondělí se spotřebovala jedna pětina vody, v úterý polovina toho, co zbylo po pondělí. V nádrži zbylo 60 litrů. Kolik litrů vody bylo v nádrži na začátku?",
+      "odpoved": "150",
+      "reseni_kroky": [
+        "Po pondělí zbyly čtyři pětiny vody. V úterý se spotřebovala polovina z toho, takže zbyla polovina ze čtyř pětin, tedy dvě pětiny vody.",
+        "Dvě pětiny jsou 60 litrů, jedna pětina je 60 : 2 = 30 litrů.",
+        "Celá nádrž (pět pětin) má 5 · 30 = 150 litrů. Zkouška: pondělí 30, zbývá 120, úterý 60, zbývá 60. Správně je C)."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_44",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 3,
+      "zadani": "Do školy to má Tomáš 3 kilometry 600 metrů. Za minutu ušel 90 metrů. Vyšel v 7:25. V kolik hodin došel do školy? Napiš čas ve tvaru hodiny:minuty.",
+      "odpoved": "8:05",
+      "reseni_kroky": [
+        "Vzdálenost je 3 km 600 m = 3 600 m.",
+        "Cesta trvá 3 600 : 90 = 40 minut. (Zkouška: 40 · 90 = 3 600.)",
+        "Od 7:25 do 8:00 uplyne 35 minut, zbývá 5 minut, tedy Tomáš došel v 8:05."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_SLO_45",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 3,
+      "zadani": "Nádrž pojme 200 litrů a je v ní už 20 litrů vody. První trubkou natéká 10 litrů za minutu a druhou 8 litrů za minutu. Obě trubky pustíme ve stejnou chvíli. Za kolik minut bude nádrž plná?",
+      "odpoved": "10",
+      "reseni_kroky": [
+        "Do plné nádrže chybí 200 − 20 = 180 litrů.",
+        "Obě trubky společně přitečou za minutu 10 + 8 = 18 litrů.",
+        "Nádrž bude plná za 180 : 18 = 10 minut. Zkouška: 10 · 18 = 180."
       ],
       "cas_sekund": 240,
       "sm2_interval": 1
