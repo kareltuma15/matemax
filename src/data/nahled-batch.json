@@ -1,4 +1,278 @@
 {
-  "nazev": "5. třída — Zlomky a části celku, třetí dávka: část z celku, zbytek, o zlomek, porovnání, zlomek na kruhu a na ose, kruhový diagram (15 úloh: L1 ×4, L2 ×6, L3 ×5) — ZAPSÁNO",
-  "examples": []
+  "nazev": "5. třída — Obvod a obsah, třetí dávka: L-tvary, dlaždice, plot s bránou, rozdělený obdélník, schodovitá řada, balení materiálu (15 úloh: L1 ×4, L2 ×6, L3 ×5)",
+  "examples": [
+    {
+      "id": "P5_OBS_31",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 1,
+      "zadani": "Pozemek tvaru obdélníku měří 25 m a 12 m. Kolik metrů plotu je potřeba na oplocení celého pozemku?",
+      "odpoved": "74",
+      "reseni_kroky": [
+        "Plot vede kolem dokola, takže hledáme obvod obdélníku.",
+        "Obvod je 2 · (25 + 12) = 2 · 37 = 74 m."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_32",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 1,
+      "zadani": "Podlaha obdélníkového pokoje měří 6 m a 5 m. Kolik metrů čtverečních má podlaha?",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "Obsah obdélníku spočítáme jako délka krát šířka.",
+        "6 · 5 = 30 m²."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_33",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 1,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs3-l-mrizka.svg",
+        "width": 124,
+        "height": 124,
+        "alt": "Tvar písmene L ze 5 čtverečků"
+      },
+      "zadani": "Každý čtvereček má stranu 1 cm. Jaký je obvod vybarveného obrazce ve tvaru písmene L v centimetrech?",
+      "odpoved": "12",
+      "reseni_kroky": [
+        "Obvod je délka čáry kolem celého obrazce. Vodorovných úseček je nahoře 3, ve výřezu 2 a dole 1, dohromady 6 cm.",
+        "Svislých úseček je vlevo 3, vpravo nahoře 1 a ve výřezu 2, dohromady 6 cm. Obvod je 6 + 6 = 12 cm. (Je stejný jako obvod čtverce 3 cm × 3 cm: výřez v rohu obvod nezmění.)"
+      ],
+      "cas_sekund": 90,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_34",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 1,
+      "zadani": "Obsah čtverce je 36 cm². Kolik centimetrů měří jeho strana?",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Obsah čtverce je strana krát strana, hledáme tedy číslo, které vynásobené samo sebou dá 36.",
+        "6 · 6 = 36, takže strana měří 6 cm."
+      ],
+      "cas_sekund": 60,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_35",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 2,
+      "zadani": "Podlaha v kuchyni měří 4 m a 3 m. Chceme ji vydláždit čtvercovými dlaždicemi o straně 50 cm. Kolik dlaždic je potřeba?",
+      "odpoved": "48",
+      "reseni_kroky": [
+        "Převedeme rozměry na centimetry: 4 m = 400 cm a 3 m = 300 cm.",
+        "Po délce se vejde 400 : 50 = 8 dlaždic a po šířce 300 : 50 = 6 dlaždic.",
+        "Celkem 8 · 6 = 48 dlaždic."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_36",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 2,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs3-l-zahrada.svg",
+        "width": 328,
+        "height": 246,
+        "alt": "Zahrada tvaru L: rozměry 9 m a 7 m, ramena široká 3 m"
+      },
+      "zadani": "Zahrada má tvar písmene L (viz obrázek), obě její ramena jsou široká 3 m. Jaký je obsah zahrady v metrech čtverečních?",
+      "odpoved": "39",
+      "reseni_kroky": [
+        "Zahradu rozdělíme na dva obdélníky. Horní rameno měří 9 m krát 3 m, jeho obsah je 9 · 3 = 27 m².",
+        "Svislé rameno pod ním je široké 3 m a vysoké 7 − 3 = 4 m, jeho obsah je 3 · 4 = 12 m².",
+        "Celá zahrada má 27 + 12 = 39 m²."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_37",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 2,
+      "zadani": "Obdélník má obvod 34 cm. Jeho delší strana je o 3 cm delší než kratší strana. Jaký je obsah obdélníku v cm²?",
+      "odpoved": "70",
+      "reseni_kroky": [
+        "Součet dvou sousedních stran je 34 : 2 = 17 cm.",
+        "Kdyby byly obě strany stejně dlouhé jako kratší, měly by dohromady 17 − 3 = 14 cm, takže kratší strana je 14 : 2 = 7 cm a delší 10 cm.",
+        "Obsah je 7 · 10 = 70 cm². Zkouška: 2 · (7 + 10) = 34."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_38",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "moznosti": [
+        "1 cm × 9 cm",
+        "2 cm × 8 cm",
+        "3 cm × 7 cm",
+        "4 cm × 6 cm",
+        "5 cm × 5 cm"
+      ],
+      "spravna": 3,
+      "zadani": "Který z obdélníků (strany jsou v celých centimetrech) má obvod 20 cm a zároveň obsah 24 cm²?",
+      "odpoved": "4 cm × 6 cm",
+      "reseni_kroky": [
+        "Součet dvou sousedních stran musí být 20 : 2 = 10 cm.",
+        "Obsahy dvojic se součtem 10: 1 · 9 = 9, 2 · 8 = 16, 3 · 7 = 21, 4 · 6 = 24 a 5 · 5 = 25.",
+        "Obsah 24 cm² má obdélník 4 cm × 6 cm. Správně je D)."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_39",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "zadani": "Kolem zahrady tvaru obdélníku 18 m × 12 m chceme postavit plot. Uprostřed jedné strany bude brána široká 4 m, tam plot nebude. Jeden metr plotu stojí 250 Kč. Kolik korun zaplatíme za plot?",
+      "odpoved": "14000",
+      "reseni_kroky": [
+        "Obvod zahrady je 2 · (18 + 12) = 60 m.",
+        "Plot bude dlouhý 60 − 4 = 56 m, protože v místě brány se plot nestaví.",
+        "Cena je 56 · 250 = 14 000 Kč."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_40",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "zadani": "Čtverec o straně 8 cm rozstříhneme na dva stejné obdélníky. O kolik centimetrů je součet obvodů obou obdélníků větší než obvod čtverce?",
+      "odpoved": "16",
+      "reseni_kroky": [
+        "Obvod čtverce je 4 · 8 = 32 cm. Obdélníky mají strany 8 cm a 4 cm, každý má obvod 2 · (8 + 4) = 24 cm, oba dohromady 48 cm.",
+        "Rozdíl je 48 − 32 = 16 cm.",
+        "Střih přidal dvě nové strany dlouhé 8 cm (jednu u každého obdélníku), a to je 2 · 8 = 16 cm."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_41",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs3-rozdeleny.svg",
+        "width": 336,
+        "height": 160,
+        "alt": "Obdélník rozdělený na čtverec a menší obdélník"
+      },
+      "zadani": "Obdélník je rozdělený jednou úsečkou na čtverec a menší obdélník. Obvod čtverce je 24 cm a obvod celého velkého obdélníku je 40 cm. Jaký je obvod menšího obdélníku v centimetrech?",
+      "odpoved": "28",
+      "reseni_kroky": [
+        "Strana čtverce je 24 : 4 = 6 cm, tedy výška celého obdélníku je 6 cm.",
+        "Součet dvou sousedních stran velkého obdélníku je 40 : 2 = 20 cm, takže jeho délka je 20 − 6 = 14 cm.",
+        "Menší obdélník má jednu stranu 6 cm a druhou 14 − 6 = 8 cm. Jeho obvod je 2 · (8 + 6) = 28 cm."
+      ],
+      "cas_sekund": 270,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_42",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 3,
+      "moznosti": [
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "spravna": 2,
+      "zadani": "Kolik různých obdélníků s obvodem 24 cm existuje, když jejich strany jsou v celých centimetrech? (Čtverec se také počítá za obdélník, obdélníky 3 × 9 a 9 × 3 jsou stejné.)",
+      "odpoved": "6",
+      "reseni_kroky": [
+        "Součet dvou sousedních stran musí být 24 : 2 = 12 cm.",
+        "Dvojice (kratší, delší): 1 + 11, 2 + 10, 3 + 9, 4 + 8, 5 + 7 a 6 + 6.",
+        "Je jich 6 (poslední je čtverec). Správně je C)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_43",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 3,
+      "moznosti": [
+        "48",
+        "64",
+        "72",
+        "80",
+        "120"
+      ],
+      "spravna": 3,
+      "zadani": "Obdélníkový bazén měří 10 m a 6 m. Kolem dokola je dlažba široká 2 m. Kolik metrů čtverečních dlažby je kolem bazénu?",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "Bazén spolu s dlažbou je obdélník, který je z každé strany o 2 m delší, tedy o 4 m delší v obou rozměrech: 14 m a 10 m.",
+        "Obsah bazénu s dlažbou je 14 · 10 = 140 m², obsah samotného bazénu je 10 · 6 = 60 m².",
+        "Dlažba má 140 − 60 = 80 m². Správně je D)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_44",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 3,
+      "image": {
+        "kind": "static",
+        "url": "/obrazky/p5/obs3-schody.svg",
+        "width": 240,
+        "height": 122,
+        "alt": "První tři schodovité obrazce ze čtverečků"
+      },
+      "zadani": "Obrazce se skládají ze čtverečků o straně 1 cm do tvaru schodů (viz obrázek). Obvod každého obrazce se mění podle stejného pravidla. Jaký je obsah obrazce, jehož obvod je 28 cm?",
+      "odpoved": "28",
+      "reseni_kroky": [
+        "Obvod 1. obrazce je 4 cm, 2. obrazce 8 cm, 3. obrazce 12 cm. Každý další schod přidá 4 cm, takže obvod n-tého obrazce je 4 · n cm.",
+        "Obvod 28 cm má obrazec s pořadovým číslem 28 : 4 = 7.",
+        "Sedmý obrazec má řady 1, 2, 3, 4, 5, 6 a 7 čtverečků, dohromady 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28 čtverečků, tedy 28 cm²."
+      ],
+      "cas_sekund": 300,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_OBS_45",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 3,
+      "zadani": "Podlaha pokoje tvaru obdélníku měří 6 m a 3 m. Parkety se prodávají v balíčcích po 4 m², jeden balíček stojí 780 Kč. Parkety se prodávají jen v celých balíčcích. Kolik korun zaplatíme za parkety?",
+      "odpoved": "3900",
+      "reseni_kroky": [
+        "Obsah podlahy je 6 · 3 = 18 m².",
+        "Potřebujeme 18 : 4 = 4,5 balíčku, ale prodávají se jen celé balíčky, takže musíme koupit 5 balíčků.",
+        "Cena je 5 · 780 = 3 900 Kč."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    }
+  ]
 }

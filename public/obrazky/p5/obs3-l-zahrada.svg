@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 328 246" width="328" height="246" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Zahrada tvaru písmene L: delší rameno 9 m a 7 m, obě ramena jsou široká 3 m</title>
+  <rect x="0" y="0" width="328" height="246" fill="#ffffff"/>
+  <polygon points="44,30 278,30 278,108 122,108 122,212 44,212" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="161" y="20" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="middle">9 m</text>
+  <text x="34" y="126" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="end">7 m</text>
+  <text x="288" y="74" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="start">3 m</text>
+  <text x="83" y="234" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="middle">3 m</text>
+</svg>

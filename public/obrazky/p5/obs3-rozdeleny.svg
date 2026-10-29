@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336 160" width="336" height="160" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obdélník rozdělený jednou úsečkou na čtverec a menší obdélník</title>
+  <rect x="0" y="0" width="336" height="160" fill="#ffffff"/>
+  <polygon points="14,14 146,14 146,146 14,146" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="146,14 322,14 322,146 146,146" fill="#f6d3cc" stroke="#0D1B3E" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="80" y="85" font-size="14" font-weight="600" fill="#0D1B3E" text-anchor="middle">čtverec</text>
+  <text x="234" y="85" font-size="20" font-weight="600" fill="#0D1B3E" text-anchor="middle">?</text>
+</svg>
