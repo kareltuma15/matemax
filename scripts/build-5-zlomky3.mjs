@@ -30,7 +30,6 @@ const pie = (n, fills, labels = [], r = 86, c = 100) => {
 const KRUH8 = { dily: 8, barevne: 3 }; // vybarvené 3 z 8
 const KRUH12 = { dily: 12, modre: 5, cervene: 4 }; // zbytek bílé
 const OSA2 = { dily: 10, a: 3, b: 7 };
-const SPORT = { F: 4, L: 2, P: 1, J: 1, zaku: 48 }; // dílů z 8
 
 {
   const fills = Array.from({ length: KRUH8.dily }, (_, i) => (i < KRUH8.barevne ? BLUE_F : W0));
@@ -53,13 +52,6 @@ const SPORT = { F: 4, L: 2, P: 1, J: 1, zaku: 48 }; // dílů z 8
     body += `  <polygon points="${bx},${y - 4} ${bx - 8},${y - 24} ${bx + 8},${y - 24}" fill="#c0392b"/>\n` + text(bx, y - 30, l, { size: 16, fill: "#c0392b" }) + "\n";
   }
   write("zlo3-osa.svg", w, h, body, `Číselná osa od 0 do 1 rozdělená na ${OSA2.dily} stejných dílů, šipka A ukazuje na ${OSA2.a}. dílek a šipka B na ${OSA2.b}. dílek`);
-}
-{
-  const fills = [], lab = [];
-  const groups = [["F", SPORT.F, BLUE_F], ["L", SPORT.L, RED_F], ["P", SPORT.P, GREEN_F], ["J", SPORT.J, YELL_F]];
-  let start = 0;
-  for (const [t, k, col] of groups) { for (let i = 0; i < k; i++) fills.push(col); lab.push({ at: (2 * Math.PI * (start + 0.5)) / 8, t }); start += k; }
-  write("zlo3-sporty.svg", 200, 200, pie(8, fills, lab), `Kruhový diagram z 8 stejných dílů: F ${SPORT.F} díly, L ${SPORT.L} díly, P ${SPORT.P} díl, J ${SPORT.J} díl`);
 }
 
 const mk = (id, podtema, level, zadani, odpoved, kroky, cas, extra = {}) => ({
@@ -132,11 +124,11 @@ const ex = [
     "Dohromady je to 3 + 4 = 7 dílů a to je 28 kuliček, jeden díl je 28 : 7 = 4 kuličky.",
     "Boris má 3 · 4 = 12 kuliček (Aleš 16). Zkouška: 12 + 16 = 28. Správně je B).",
   ], 240, { moznosti: ["8", "12", "16", "20", "21"], spravna: 1 }),
-  mk("P5_ZLO_45", "p5_zlomek_obrazku", 3, "Kruhový diagram ukazuje, jaký sport si vybralo 48 žáků: F je fotbal, L florbal, P plavání a J jiný sport. Kruh je rozdělený na stejné díly. Kolik žáků vybralo florbal nebo plavání?", "18", [
-    "Kruh má 8 stejných dílů. Florbal (L) jsou 2 díly a plavání (P) jeden díl, dohromady 3 díly.",
-    "Jeden díl je 48 : 8 = 6 žáků, tři díly jsou 3 · 6 = 18 žáků.",
-    "Zkouška: fotbal 4 díly = 24, florbal 12, plavání 6, jiný sport 6 a 24 + 12 + 6 + 6 = 48.",
-  ], 210, img("/obrazky/p5/zlo3-sporty.svg", 200, 200, `Kruhový diagram z 8 stejných dílů: F ${SPORT.F} díly, L ${SPORT.L} díly, P ${SPORT.P} díl, J ${SPORT.J} díl`)),
+  mk("P5_ZLO_45", "p5_cast_celku", 3, "Z 48 žáků si vybralo sportovní kroužek. Polovina z nich chodí na fotbal, čtvrtina na florbal, osmina na plavání a ostatní na jiný sport. Kolik žáků chodí na florbal nebo na plavání?", "18", [
+    "Florbal navštěvuje čtvrtina z 48 žáků: 48 : 4 = 12. Plavání navštěvuje osmina: 48 : 8 = 6.",
+    "Florbal nebo plavání dohromady vybralo 12 + 6 = 18 žáků.",
+    "Zkouška: fotbal 24, florbal 12, plavání 6, jiný sport 48 − 24 − 12 − 6 = 6 žáků, a 24 + 12 + 6 + 6 = 48.",
+  ], 210),
 ];
 for (const e of ex) if (e.moznosti) e.odpoved = e.moznosti[e.spravna];
 
@@ -166,7 +158,7 @@ cmp("P5_ZLO_40", (60 / 3) * 2 + 60 / 4);
 { const s = []; for (let j = 4; j <= 400; j += 4) { const h = j - j / 4; if (h === 36) s.push(h + j); } ok("P5_ZLO_42", s.length === 1 && String(s[0]) === A("P5_ZLO_42"), s); }
 cmp("P5_ZLO_43", frac(OSA2.b - OSA2.a, OSA2.dily));
 { const e = ex.find((x) => x.id === "P5_ZLO_44"), s = []; for (let b = 3; b <= 300; b += 3) if (b + b + b / 3 === 28) s.push(b); ok("P5_ZLO_44", s.length === 1 && e.moznosti[e.spravna] === String(s[0]) && e.moznosti.filter((m) => Number(m) === s[0]).length === 1, s); }
-{ ok("P5_ZLO_45 díly", SPORT.F + SPORT.L + SPORT.P + SPORT.J === 8 && SPORT.zaku % 8 === 0); cmp("P5_ZLO_45", ((SPORT.L + SPORT.P) * SPORT.zaku) / 8); }
+{ const z = 48, f = z / 2, l = z / 4, p = z / 8; ok("P5_ZLO_45 zlomky", Number.isInteger(l) && Number.isInteger(p) && z - f - l - p === p); cmp("P5_ZLO_45", l + p); }
 
 for (const e of ex) {
   if (e.moznosti) {

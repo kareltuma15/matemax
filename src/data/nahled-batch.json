@@ -1,5 +1,5 @@
 {
-  "nazev": "5. třída — Grafy, tabulky a vzory, třetí dávka: piktogram, kruhový a dvojitý sloupcový graf, tabulky a pravidla, pravdivé tvrzení, špejle a čtverečky, střídavé posloupnosti (15 úloh: L1 ×4, L2 ×6, L3 ×5)",
+  "nazev": "5. třída — Grafy, tabulky a vzory, třetí dávka: piktogram, sloupcový a dvojitý sloupcový graf, tabulky a pravidla, pravdivé tvrzení, špejle a čtverečky, střídavé posloupnosti (15 úloh: L1 ×4, L2 ×6, L3 ×5) + náhrada jedné úlohy ve Zlomcích (bez kruhového diagramu)",
   "examples": [
     {
       "id": "P5_GRA_31",
@@ -85,17 +85,17 @@
       "obtiznost": 2,
       "image": {
         "kind": "static",
-        "url": "/obrazky/p5/gra3-ovoce.svg",
-        "width": 200,
-        "height": 200,
-        "alt": "Kruhový diagram z 8 stejných dílů: A 3 díly, B 2 díly, C 2 díly, D 1 díl"
+        "url": "/obrazky/p5/gra3-krouzky-obrazky.svg",
+        "width": 278,
+        "height": 220,
+        "alt": "Obrázkový graf: kreslení 4 obrázků, šachy 2 obrázků, fotbal 6 obrázků, tanec 3 obrázků; jeden obrázek znamená 5 dětí"
       },
-      "zadani": "Kruhový diagram ukazuje, jaké ovoce mají nejraději žáci jedné školy, ve všech odpovědích je dohromady 40 žáků. Kruh je rozdělený na 8 stejných dílů. A znamená jablka, B banány, C hrušky a D jahody. O kolik žáků víc má nejraději jablka než jahody?",
-      "odpoved": "10",
+      "zadani": "Obrázkový graf ukazuje, kolik dětí chodí do jednotlivých kroužků. Jeden obrázek znamená 5 dětí, každé dítě chodí jen do jednoho kroužku. O kolik dětí víc chodí na fotbal než na šachy a tanec dohromady?",
+      "odpoved": "5",
       "reseni_kroky": [
-        "Celý kruh představuje 40 žáků a je rozdělený na 8 stejných dílů, takže jeden díl představuje 40 : 8 = 5 žáků.",
-        "Jablka (A) mají 3 díly, tedy 3 · 5 = 15 žáků. Jahody (D) mají 1 díl, tedy 5 žáků.",
-        "Rozdíl je 15 − 5 = 10 žáků."
+        "Jeden obrázek znamená 5 dětí. Na fotbal chodí 6 · 5 = 30 dětí, na šachy 2 · 5 = 10 dětí a na tanec 3 · 5 = 15 dětí.",
+        "Šachy a tanec dohromady mají 10 + 15 = 25 dětí.",
+        "Na fotbal chodí o 30 − 25 = 5 dětí víc."
       ],
       "cas_sekund": 150,
       "sm2_interval": 1
@@ -219,21 +219,21 @@
     {
       "id": "P5_GRA_41",
       "tema": "p5_grafy",
-      "podtema": "p5_sloupcovy",
+      "podtema": "p5_chybi_udaj",
       "obtiznost": 3,
       "image": {
         "kind": "static",
-        "url": "/obrazky/p5/gra3-doprava.svg",
-        "width": 200,
-        "height": 200,
-        "alt": "Kruhový diagram ze 12 stejných dílů: P 4 díly, K 3 díly, A 3 díly, O 2 díly"
+        "url": "/obrazky/p5/gra3-soutez.svg",
+        "width": 320,
+        "height": 212,
+        "alt": "Sloupcový graf žáků na soutěži: 5. A 18, 5. B 22, 5. C chybí, 5. D 14"
       },
-      "zadani": "Kruhový diagram ukazuje, jak žáci jezdí do školy: P znamená pěšky, K na kole, A autobusem a O autem. Kruh je rozdělený na 12 stejných dílů. Autem jezdí do školy 10 žáků. Kolik žáků jezdí do školy na kole?",
-      "odpoved": "15",
+      "zadani": "Graf ukazuje, kolik žáků ze čtyř tříd se přihlásilo na školní soutěž, sloupec 5. C chybí. Na soutěž se přihlásilo celkem 78 žáků. Kolik žáků se přihlásilo z 5. C a o kolik jich je víc než z 5. D?",
+      "odpoved": "10",
       "reseni_kroky": [
-        "Autem (O) jezdí 2 díly kruhu a to je 10 žáků, takže jeden díl je 10 : 2 = 5 žáků.",
-        "Na kole (K) jezdí 3 díly, tedy 3 · 5 = 15 žáků.",
-        "Zkouška: celý kruh má 12 · 5 = 60 žáků."
+        "Ze tří známých sloupců přečteme 18, 22 a 14 žáků, dohromady 18 + 22 + 14 = 54.",
+        "Z 5. C se přihlásilo 78 − 54 = 24 žáků.",
+        "Z 5. D se přihlásilo 14 žáků, takže z 5. C jich je víc o 24 − 14 = 10."
       ],
       "cas_sekund": 240,
       "sm2_interval": 1
@@ -326,6 +326,21 @@
         "E) Tanec a šachy dohromady mají 12 + 6 = 18 dětí, a to je stejně jako plavání. Správně je E)."
       ],
       "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_ZLO_45",
+      "tema": "p5_zlomky",
+      "podtema": "p5_cast_celku",
+      "obtiznost": 3,
+      "zadani": "Z 48 žáků si vybralo sportovní kroužek. Polovina z nich chodí na fotbal, čtvrtina na florbal, osmina na plavání a ostatní na jiný sport. Kolik žáků chodí na florbal nebo na plavání?",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "Florbal navštěvuje čtvrtina z 48 žáků: 48 : 4 = 12. Plavání navštěvuje osmina: 48 : 8 = 6.",
+        "Florbal nebo plavání dohromady vybralo 12 + 6 = 18 žáků.",
+        "Zkouška: fotbal 24, florbal 12, plavání 6, jiný sport 48 − 24 − 12 − 6 = 6 žáků, a 24 + 12 + 6 + 6 = 48."
+      ],
+      "cas_sekund": 210,
       "sm2_interval": 1
     }
   ]

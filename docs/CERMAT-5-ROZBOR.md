@@ -22,7 +22,7 @@ Zdroj: 10 čitelných testových sešitů (2025: varianty A–D, 2026: varianty 
 | 5 | 3–4 | **Obsah a obvod** | čtvercová síť, obrazce, přepočet měřítka, rozdíl obsahů |
 | 6 | 4–5 | **Obvod a obrazce** | rovnostranné trojúhelníky, čtverce, skládání a přeskládání obrazců, rozdíl obvodů |
 | 7 | 6 | **Rýsování** | sestrojit vrcholy obdélníku, čtverce nebo trojúhelníku ze zadaných bodů a přímek, střed strany, shodná vzdálenost |
-| 8 | 4 | **Grafy a diagramy** | tři tvrzení A/N podle sloupcového nebo kruhového diagramu, často s chybějícím údajem |
+| 8 | 4 | **Grafy a diagramy** | tři tvrzení A/N podle sloupcového diagramu nebo tabulky, často s chybějícím údajem (kruhové diagramy podle nových pravidel CERMATu pro 5. třídu nepoužíváme, Karel 29. 10.) |
 | 9–12 | 4 × 2 | **Smíšené úlohy** | mince a peníze, tělesa z krychliček, osová souměrnost, čas, zlomky („o čtvrtinu více“), úseky a obvody |
 | 13 | 5 | **Přiřazování** | tři zadání, ke každému správná hodnota z šesti nabídnutých |
 | 14 | 4 | **Vzory a posloupnosti** | obrazce, které přibývají podle pravidla, pravidla hry, výměnné úlohy (desky/prkna), „uveďte všechna řešení“ |
@@ -52,7 +52,7 @@ Náročnost je vyšší, než by čekal čtvrťák: téměř každá úloha vyž
 2. **Karta s více odpověďmi:** úlohy 1–6 a 14 mají podúlohy (4.1, 4.2, 4.3) s vlastním výsledkem. Dnes umíme jen jednu odpověď. Na začátek můžeme podúlohy rozdělit na samostatné úlohy, plnohodnotná karta přijde ve druhé vlně.
 3. **Karta „přiřaď A–F“** pro úlohu typu 13 (druhá vlna).
 4. **Rýsování pro 5. třídu:** stávající karta stačí, přibudou jen nové scény (čtverec, obdélník, trojúhelník podle zadaných bodů).
-5. **Grafy a diagramy:** generátor sloupcových a kruhových grafů už máme; přibudou grafy s chybějícím údajem.
+5. **Grafy a diagramy:** sloupcové, obrázkové grafy a tabulky už máme, přibyly grafy s chybějícím údajem; kruhové diagramy pro 5. třídu nedělat.
 
 ## 5. Úrovně náročnosti pro 5. třídu
 

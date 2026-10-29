@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278 220" width="278" height="220" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Obrázkový graf: kreslení 4 obrázků, šachy 2 obrázků, fotbal 6 obrázků, tanec 3 obrázků; jeden obrázek znamená 5 dětí</title>
+  <rect x="0" y="0" width="278" height="220" fill="#ffffff"/>
+  <text x="139" y="22" font-size="14" font-weight="700" fill="#0D1B3E" text-anchor="middle">Děti v kroužcích</text>
+  <text x="74" y="66" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">kreslení</text>
+  <circle cx="98" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="154" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="182" cy="61" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="74" y="100" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">šachy</text>
+  <circle cx="98" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="95" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="74" y="134" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">fotbal</text>
+  <circle cx="98" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="154" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="182" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="210" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="238" cy="129" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="74" y="168" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="end">tanec</text>
+  <circle cx="98" cy="163" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="126" cy="163" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="154" cy="163" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <circle cx="22" cy="200" r="10" fill="#cfe3f7" stroke="#0D1B3E" stroke-width="1.8"/>
+  <text x="40" y="205" font-size="13" font-weight="700" fill="#0D1B3E" text-anchor="start">= 5 dětí</text>
+
+</svg>

@@ -9585,28 +9585,6 @@
       "sm2_interval": 1
     },
     {
-      "id": "P5_ZLO_45",
-      "tema": "p5_zlomky",
-      "podtema": "p5_zlomek_obrazku",
-      "obtiznost": 3,
-      "image": {
-        "kind": "static",
-        "url": "/obrazky/p5/zlo3-sporty.svg",
-        "width": 200,
-        "height": 200,
-        "alt": "Kruhový diagram z 8 stejných dílů: F 4 díly, L 2 díly, P 1 díl, J 1 díl"
-      },
-      "zadani": "Kruhový diagram ukazuje, jaký sport si vybralo 48 žáků: F je fotbal, L florbal, P plavání a J jiný sport. Kruh je rozdělený na stejné díly. Kolik žáků vybralo florbal nebo plavání?",
-      "odpoved": "18",
-      "reseni_kroky": [
-        "Kruh má 8 stejných dílů. Florbal (L) jsou 2 díly a plavání (P) jeden díl, dohromady 3 díly.",
-        "Jeden díl je 48 : 8 = 6 žáků, tři díly jsou 3 · 6 = 18 žáků.",
-        "Zkouška: fotbal 4 díly = 24, florbal 12, plavání 6, jiný sport 6 a 24 + 12 + 6 + 6 = 48."
-      ],
-      "cas_sekund": 210,
-      "sm2_interval": 1
-    },
-    {
       "id": "P5_OBS_31",
       "tema": "p5_obsah",
       "podtema": "p5_obvod",
