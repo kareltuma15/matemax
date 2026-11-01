@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { examples5 } from "@/data/examples";
+import { examples5, maVicOdpovedi } from "@/data/examples";
 import { diag5Question } from "@/data/diagnostika-5";
 import { createCard } from "@/lib/sm2";
 import { supabase } from "@/lib/supabase";
@@ -76,7 +76,7 @@ function pickStart(results: Vysledky, reachable: Set<string>): string | null {
 
 function Otazka({ example, cardNumber, onResult }: { example: DBExample; cardNumber: number; onResult: (correct: boolean) => void }) {
   if (example.konstrukce_scena) return <ConstructionMarkCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
-  if ((example.podulohy && example.podulohy.length > 0) || example.prirazeni) return <VicOdpovediCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
+  if (maVicOdpovedi(example)) return <VicOdpovediCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
   if (example.moznosti && example.moznosti.length > 0) return <MoznostiCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
   return <PracticeCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} consecutiveCorrect={0} noRetry onResult={(c) => onResult(c)} />;
 }

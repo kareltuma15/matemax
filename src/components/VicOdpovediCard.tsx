@@ -42,7 +42,8 @@ function Text({ ex, text }: { ex: DBExample; text: string }) {
 export default function VicOdpovediCard({ example, cardNumber, total, onResult, onSkip, videoHint = false }: Props) {
   const podulohy = example.podulohy ?? [];
   const prirazeni = example.prirazeni;
-  const pocet = prirazeni ? prirazeni.polozky.length : podulohy.length;
+  const tvrzeni = example.tvrzeni ?? [];
+  const pocet = prirazeni ? prirazeni.polozky.length : tvrzeni.length > 0 ? tvrzeni.length : podulohy.length;
 
   const [vstupy, setVstupy] = useState<string[]>(() => Array(pocet).fill(""));
   const [vybrano, setVybrano] = useState<(number | null)[]>(() => Array(pocet).fill(null));
@@ -50,19 +51,23 @@ export default function VicOdpovediCard({ example, cardNumber, total, onResult, 
 
   if (pocet === 0) return null;
 
-  const hotovo = prirazeni ? vybrano.every((v) => v !== null) : vstupy.every((v) => v.trim() !== "");
+  // U pravdy/nepravdy je ve `vybrano` 0 = ANO, 1 = NE.
+  const hotovo = prirazeni || tvrzeni.length > 0 ? vybrano.every((v) => v !== null) : vstupy.every((v) => v.trim() !== "");
   const vseSpravne = vyhodnoceno !== null && vyhodnoceno.every(Boolean);
 
   function zkontrolovat() {
     if (vyhodnoceno || !hotovo) return;
     const vysl = prirazeni
       ? prirazeni.polozky.map((p, i) => vybrano[i] === p.spravna)
-      : podulohy.map((p, i) => checkAnswer(vstupy[i], p.odpoved));
+      : tvrzeni.length > 0
+        ? tvrzeni.map((t, i) => vybrano[i] === (t.pravda ? 0 : 1))
+        : podulohy.map((p, i) => checkAnswer(vstupy[i], p.odpoved));
     setVyhodnoceno(vysl);
     if (vysl.every(Boolean)) playCorrect(); else playWrong();
   }
 
   function odpovedText(): string {
+    if (tvrzeni.length > 0) return vybrano.map((v) => (v === null ? "?" : v === 0 ? "A" : "N")).join(" ; ");
     return prirazeni
       ? vybrano.map((v, i) => `${i + 1}–${v === null ? "?" : PISMENA[v]}`).join(" ; ")
       : vstupy.join(" ; ");
@@ -91,7 +96,46 @@ export default function VicOdpovediCard({ example, cardNumber, total, onResult, 
         <Text ex={example} text={example.zadani} />
       </div>
 
-      {prirazeni ? (
+      {tvrzeni.length > 0 ? (
+        <div className="flex flex-col gap-3">
+          {tvrzeni.map((t, i) => {
+            const ok = vyhodnoceno?.[i];
+            return (
+              <div key={i} className="rounded-xl p-3 flex flex-col gap-2" data-testid={`tvrzeni-${i + 1}`}
+                style={{ border: `2px solid ${ok === undefined ? "#e2e8f0" : ok ? "#16a34a" : "#dc2626"}`, background: ok === undefined ? "#fff" : ok ? "#f0fdf4" : "#fef2f2" }}>
+                <div className="text-[15px] font-semibold flex gap-2" style={{ color: "var(--text-primary)" }}>
+                  <span className="font-black shrink-0" style={{ color: "#2E6DA4" }}>{i + 1}.</span>
+                  <Text ex={example} text={t.text} />
+                </div>
+                <div className="flex gap-2" role="group" aria-label={`Tvrzení ${i + 1}`}>
+                  {["ANO", "NE"].map((popis, j) => {
+                    const zvoleno = vybrano[i] === j;
+                    const spravna = vyhodnoceno !== null && (t.pravda ? 0 : 1) === j;
+                    let style: React.CSSProperties = { background: "#fff", border: "2px solid #cbd5e1", color: "#334155" };
+                    if (vyhodnoceno !== null && spravna) style = { background: "#16a34a", border: "2px solid #16a34a", color: "#fff" };
+                    else if (vyhodnoceno !== null && zvoleno) style = { background: "#dc2626", border: "2px solid #dc2626", color: "#fff" };
+                    else if (zvoleno) style = { background: "#2E6DA4", border: "2px solid #2E6DA4", color: "#fff" };
+                    return (
+                      <button
+                        key={j}
+                        type="button"
+                        disabled={vyhodnoceno !== null}
+                        aria-pressed={zvoleno}
+                        aria-label={`Tvrzení ${i + 1}: ${popis}`}
+                        onClick={() => setVybrano((v) => v.map((x, k) => (k === i ? j : x)))}
+                        className="flex-1 h-11 rounded-lg text-sm font-black active:scale-95 transition-all"
+                        style={style}
+                      >
+                        {popis}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : prirazeni ? (
         <>
           <ol className="flex flex-col gap-1.5 rounded-xl p-3" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }} aria-label="Nabídka odpovědí">
             {prirazeni.nabidka.map((n, i) => (

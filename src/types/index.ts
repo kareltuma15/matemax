@@ -267,6 +267,16 @@ export interface DBExample {
    * `odpoved` úlohy = např. „1–C ; 2–A ; 3–F“.
    */
   prirazeni?: Prirazeni;
+  /**
+   * Pravda / nepravda (CERMAT 5. třída, úloha 8): u každého tvrzení žák volí ANO / NE. Vykreslí VicOdpovediCard.
+   * `odpoved` úlohy = např. „A ; N ; N ; A“.
+   */
+  tvrzeni?: Tvrzeni[];
+}
+
+export interface Tvrzeni {
+  text: string;
+  pravda: boolean;
 }
 
 export interface Poduloha {

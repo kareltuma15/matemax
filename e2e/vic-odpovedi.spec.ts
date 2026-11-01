@@ -99,3 +99,39 @@ test("přiřazování: výběr jde před kontrolou změnit", async ({ page }) =>
   await expect(b).toHaveAttribute("aria-pressed", "true");
   await expect(a).toHaveAttribute("aria-pressed", "false");
 });
+
+// ───── pravda / nepravda (úloha 8) ─────
+// Úlohy P5_VIC_16–25 jsou nejdřív v dávce k schválení (src/data/nahled-batch.json), potom v databázi; /nahled?ids= najde obojí.
+test("pravda/nepravda: kontrola je zamčená, dokud nejsou všechna tvrzení označená; vše správně → Správně!", async ({ page }) => {
+  await page.goto("/nahled?ids=P5_VIC_17");
+  const k = page.getByTestId("vic-odpovedi");
+  const btn = k.getByRole("button", { name: "Zkontrolovat" });
+  await expect(btn).toBeDisabled();
+  await k.getByRole("button", { name: "Tvrzení 1: NE" }).click();
+  await k.getByRole("button", { name: "Tvrzení 2: ANO" }).click();
+  await expect(btn).toBeDisabled();
+  await k.getByRole("button", { name: "Tvrzení 3: NE" }).click();
+  await btn.click();
+  await expect(k.getByText("✓ Správně!")).toBeVisible();
+});
+
+test("pravda/nepravda: jedna chyba → 2 z 3, tlačítka se zamknou a špatné tvrzení je červené", async ({ page }) => {
+  await page.goto("/nahled?ids=P5_VIC_17");
+  const k = page.getByTestId("vic-odpovedi");
+  await k.getByRole("button", { name: "Tvrzení 1: ANO" }).click(); // správně je NE
+  await k.getByRole("button", { name: "Tvrzení 2: ANO" }).click();
+  await k.getByRole("button", { name: "Tvrzení 3: NE" }).click();
+  await k.getByRole("button", { name: "Zkontrolovat" }).click();
+  await expect(k.getByText("Správně 2 z 3")).toBeVisible();
+  await expect(k.getByRole("button", { name: "Tvrzení 2: ANO" })).toBeDisabled();
+  await expect(k.getByTestId("tvrzeni-1")).toHaveCSS("border-top-color", "rgb(220, 38, 38)");
+});
+
+test("pravda/nepravda: všech 10 úloh se vykreslí a odpověď odpovídá tvrzením", async ({ page }) => {
+  const ids = Array.from({ length: 10 }, (_, i) => `P5_VIC_${16 + i}`).join(",");
+  await page.goto(`/nahled?ids=${ids}`);
+  await expect(page.getByTestId("vic-odpovedi")).toHaveCount(10);
+  await page.getByLabel("Vypsat správné odpovědi ke kontrole").check();
+  await expect(page.getByText(/P5_VIC_16 .*správně: A ; N ; A ; A/)).toBeVisible();
+  await expect(page.getByText(/P5_VIC_17 .*správně: N ; A ; N/)).toBeVisible();
+});

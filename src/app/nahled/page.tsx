@@ -6,7 +6,7 @@
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import type { DBExample } from "@/types";
-import { allExamples } from "@/data/examples";
+import { allExamples, maVicOdpovedi } from "@/data/examples";
 import PracticeCard from "@/components/PracticeCard";
 import ComparisonCard from "@/components/ComparisonCard";
 import ConstructionCard from "@/components/ConstructionCard";
@@ -21,7 +21,7 @@ function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
   const noop = () => {};
   const common = { example: ex, cardNumber: i + 1, total, onResult: noop, onSkip: noop };
   if (ex.konstrukce_scena) return <ConstructionMarkCard {...common} />;
-  if ((ex.podulohy && ex.podulohy.length > 0) || ex.prirazeni) return <VicOdpovediCard {...common} />;
+  if (maVicOdpovedi(ex)) return <VicOdpovediCard {...common} />;
   if (ex.moznosti && ex.moznosti.length > 0) return <MoznostiCard {...common} />;
   if (ex.porovnani) return <ComparisonCard {...common} />;
   if (ex.kroky_volby && ex.kroky_volby.length > 0) return <ConstructionCard {...common} />;
@@ -32,7 +32,7 @@ function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
 function NahledPage() {
   const ids = useSearchParams().get("ids");
   const examples = ids
-    ? ids.split(",").map((id) => allExamples.find((e) => e.id === id.trim())).filter((e): e is DBExample => !!e)
+    ? ids.split(",").map((id) => allExamples.find((e) => e.id === id.trim()) ?? batchExamples.find((e) => e.id === id.trim())).filter((e): e is DBExample => !!e)
     : batchExamples;
   const [reseni, setReseni] = useState(false);
   return (

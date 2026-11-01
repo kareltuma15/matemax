@@ -43,7 +43,12 @@ export function examplesFor(trida: Trida): DBExample[] {
  * (denní výzva, boss battle, rychlý mód, CERMAT test), z nich proto nesmí losovat.
  */
 export function isPlainTyped(e: DBExample): boolean {
-  return !e.image && !(e.moznosti && e.moznosti.length > 0) && !(e.kroky_volby && e.kroky_volby.length > 0) && !e.porovnani && !e.konstrukce_scena && !(e.podulohy && e.podulohy.length > 0) && !e.prirazeni;
+  return !e.image && !(e.moznosti && e.moznosti.length > 0) && !(e.kroky_volby && e.kroky_volby.length > 0) && !e.porovnani && !e.konstrukce_scena && !maVicOdpovedi(e);
+}
+
+/** Úloha s více výsledky (podúlohy, přiřazování A–F, pravda/nepravda) — vykresluje ji VicOdpovediCard. */
+export function maVicOdpovedi(e: DBExample): boolean {
+  return !!(e.podulohy && e.podulohy.length > 0) || !!e.prirazeni || !!(e.tvrzeni && e.tvrzeni.length > 0);
 }
 
 export const plainExamples: DBExample[] = examples.filter(isPlainTyped);

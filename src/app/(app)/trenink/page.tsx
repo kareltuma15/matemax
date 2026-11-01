@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { examples, allExamples, examples5, plainExamples, plainExamplesFor } from "@/data/examples";
+import { examples, allExamples, examples5, plainExamples, plainExamplesFor, maVicOdpovedi } from "@/data/examples";
 import { useTrida } from "@/lib/trida";
 import TopicMap5 from "@/components/TopicMap5";
 import { SM2Card } from "@/types";
@@ -1126,7 +1126,7 @@ function TreningPageInner() {
           onResult={handleResult}
           onSkip={handleSkip}
         />
-      ) : (currentExample.podulohy && currentExample.podulohy.length > 0) || currentExample.prirazeni ? (
+      ) : maVicOdpovedi(currentExample) ? (
         <VicOdpovediCard
           key={currentExample.id}
           example={currentExample}

@@ -1,4 +1,335 @@
 {
-  "nazev": "5. třída — nové typy karet: podúlohy (4.1–4.3) a přiřazování A–F, 15 úloh (L1 ×4, L2 ×7, L3 ×4) — ZAPSÁNO",
-  "examples": []
+  "nazev": "5. třída — pravda / nepravda u tvrzení (úloha 8 testů), 10 úloh (L1 ×2, L2 ×4, L3 ×4)",
+  "examples": [
+    {
+      "id": "P5_VIC_16",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 1,
+      "zadani": "Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "1 m je 100 cm.",
+          "pravda": true
+        },
+        {
+          "text": "3 kg je 300 g.",
+          "pravda": false
+        },
+        {
+          "text": "2 hodiny je 120 minut.",
+          "pravda": true
+        },
+        {
+          "text": "5 dm je 50 cm.",
+          "pravda": true
+        }
+      ],
+      "odpoved": "A ; N ; A ; A",
+      "reseni_kroky": [
+        "Platí: 1 metr má 100 centimetrů.",
+        "Neplatí: 1 kg je 1 000 g, takže 3 kg je 3 000 g.",
+        "Platí: 2 · 60 = 120 minut.",
+        "Platí: 1 dm je 10 cm, takže 5 dm je 50 cm."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_17",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "zadani": "Rozhodni, zda jsou jednotlivé výpočty správně.",
+      "tvrzeni": [
+        {
+          "text": "7 · 8 = 54",
+          "pravda": false
+        },
+        {
+          "text": "45 + 38 = 83",
+          "pravda": true
+        },
+        {
+          "text": "100 − 64 = 46",
+          "pravda": false
+        }
+      ],
+      "odpoved": "N ; A ; N",
+      "reseni_kroky": [
+        "Neplatí: 7 · 8 = 56.",
+        "Platí: 45 + 38 = 83.",
+        "Neplatí: 100 − 64 = 36."
+      ],
+      "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_18",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "zadani": "Obdélník má strany 6 cm a 4 cm. Čtverec má stranu 5 cm. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Obvod obdélníku je 20 cm.",
+          "pravda": true
+        },
+        {
+          "text": "Obsah obdélníku je 24 cm².",
+          "pravda": true
+        },
+        {
+          "text": "Obvod čtverce je 25 cm.",
+          "pravda": false
+        },
+        {
+          "text": "Obsah čtverce je 25 cm².",
+          "pravda": true
+        }
+      ],
+      "odpoved": "A ; A ; N ; A",
+      "reseni_kroky": [
+        "Platí: 2 · (6 + 4) = 20 cm.",
+        "Platí: 6 · 4 = 24 cm².",
+        "Neplatí: obvod čtverce je 4 · 5 = 20 cm (25 je jeho obsah).",
+        "Platí: 5 · 5 = 25 cm²."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_19",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 2,
+      "zadani": "Ve třídě je 24 žáků. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Čtvrtina žáků je 6 žáků.",
+          "pravda": true
+        },
+        {
+          "text": "Třetina žáků je 9 žáků.",
+          "pravda": false
+        },
+        {
+          "text": "Polovina žáků je 12 žáků.",
+          "pravda": true
+        },
+        {
+          "text": "Tři osminy žáků je 8 žáků.",
+          "pravda": false
+        }
+      ],
+      "odpoved": "A ; N ; A ; N",
+      "reseni_kroky": [
+        "Platí: 24 : 4 = 6.",
+        "Neplatí: třetina je 24 : 3 = 8 žáků.",
+        "Platí: 24 : 2 = 12.",
+        "Neplatí: osmina je 24 : 8 = 3 žáci, tři osminy jsou 3 · 3 = 9 žáků, ne 8."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_20",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "zadani": "Petr má 40 korun. Jana má o 15 korun více než Petr. Marek má o polovinu méně než Petr. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Jana má 55 korun.",
+          "pravda": true
+        },
+        {
+          "text": "Marek má 25 korun.",
+          "pravda": false
+        },
+        {
+          "text": "Jana a Marek mají dohromady 75 korun.",
+          "pravda": true
+        },
+        {
+          "text": "Nejvíce peněz má Petr.",
+          "pravda": false
+        }
+      ],
+      "odpoved": "A ; N ; A ; N",
+      "reseni_kroky": [
+        "Platí: Jana má 40 + 15 = 55 korun.",
+        "Neplatí: polovina ze 40 je 20, Marek má 40 − 20 = 20 korun.",
+        "Platí: 55 + 20 = 75 korun.",
+        "Neplatí: nejvíce má Jana (55 korun), Petr má 40 korun."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_21",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Autobus odjíždí ve 14:25 a jede 1 hodinu a 50 minut. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Autobus přijede v 16:15.",
+          "pravda": true
+        },
+        {
+          "text": "Jízda trvá 100 minut.",
+          "pravda": false
+        },
+        {
+          "text": "Autobus přijede dříve než v 16:00.",
+          "pravda": false
+        }
+      ],
+      "odpoved": "A ; N ; N",
+      "reseni_kroky": [
+        "Platí: 14:25 + 1 hodina = 15:25, plus 50 minut = 16:15.",
+        "Neplatí: 60 + 50 = 110 minut, ne 100.",
+        "Neplatí: 16:15 je později než 16:00."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_22",
+      "tema": "p5_pocitani",
+      "podtema": "p5_zaokrouhlovani",
+      "obtiznost": 3,
+      "zadani": "Je dáno číslo 63 482. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Zaokrouhleno na tisíce je to 63 000.",
+          "pravda": true
+        },
+        {
+          "text": "Zaokrouhleno na stovky je to 63 500.",
+          "pravda": true
+        },
+        {
+          "text": "Zaokrouhleno na desítky je to 63 490.",
+          "pravda": false
+        },
+        {
+          "text": "Číslo je o 482 větší než 63 000.",
+          "pravda": true
+        }
+      ],
+      "odpoved": "A ; A ; N ; A",
+      "reseni_kroky": [
+        "Platí: za tisícovkou 3 je stovková číslice 4, zaokrouhlujeme dolů na 63 000.",
+        "Platí: za stovkou 4 je desítková číslice 8, zaokrouhlujeme nahoru na 63 500.",
+        "Neplatí: za desítkou 8 je jednotková číslice 2, zaokrouhlujeme dolů na 63 480.",
+        "Platí: 63 482 − 63 000 = 482."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_23",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 3,
+      "zadani": "Cyklista jede stálou rychlostí 18 km za hodinu. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Za 2 hodiny a 30 minut ujede 45 km.",
+          "pravda": true
+        },
+        {
+          "text": "Vzdálenost 9 km ujede za 20 minut.",
+          "pravda": false
+        },
+        {
+          "text": "Za 40 minut ujede 12 km.",
+          "pravda": true
+        },
+        {
+          "text": "Vzdálenost 54 km ujede za 4 hodiny.",
+          "pravda": false
+        }
+      ],
+      "odpoved": "A ; N ; A ; N",
+      "reseni_kroky": [
+        "Platí: za 2 hodiny ujede 36 km, za půl hodiny 9 km, dohromady 45 km.",
+        "Neplatí: 9 km je polovina z 18 km, takže je to půl hodiny, tedy 30 minut.",
+        "Platí: za 20 minut (třetinu hodiny) ujede 6 km, za 40 minut 12 km.",
+        "Neplatí: 54 : 18 = 3, trvá to 3 hodiny, ne 4."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_24",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "zadani": "Kvádr je složený z jednotkových krychliček. Je 4 krychličky dlouhý, 3 široký a 2 vysoký. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Kvádr je složený z 24 krychliček.",
+          "pravda": true
+        },
+        {
+          "text": "Spodní vrstva má 8 krychliček.",
+          "pravda": false
+        },
+        {
+          "text": "Když z horní vrstvy odebereme 5 krychliček, zbyde jich 19.",
+          "pravda": true
+        },
+        {
+          "text": "Kvádr má tři vrstvy.",
+          "pravda": false
+        }
+      ],
+      "odpoved": "A ; N ; A ; N",
+      "reseni_kroky": [
+        "Platí: 4 · 3 · 2 = 24 krychliček.",
+        "Neplatí: ve vrstvě je 4 · 3 = 12 krychliček, ne 8.",
+        "Platí: 24 − 5 = 19 krychliček.",
+        "Neplatí: kvádr je 2 krychličky vysoký, má tedy dvě vrstvy."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_VIC_25",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 3,
+      "zadani": "Pavel měl 60 korun. Třetinu peněz utratil za sešit a čtvrtinu peněz za pití. Rozhodni, zda jednotlivá tvrzení platí.",
+      "tvrzeni": [
+        {
+          "text": "Za sešit utratil 20 korun.",
+          "pravda": true
+        },
+        {
+          "text": "Za pití utratil 12 korun.",
+          "pravda": false
+        },
+        {
+          "text": "Dohromady utratil 35 korun.",
+          "pravda": true
+        },
+        {
+          "text": "Zbylo mu 25 korun.",
+          "pravda": true
+        }
+      ],
+      "odpoved": "A ; N ; A ; A",
+      "reseni_kroky": [
+        "Platí: 60 : 3 = 20 korun.",
+        "Neplatí: čtvrtina z 60 je 60 : 4 = 15 korun.",
+        "Platí: 20 + 15 = 35 korun.",
+        "Platí: 60 − 35 = 25 korun."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1
+    }
+  ]
 }
