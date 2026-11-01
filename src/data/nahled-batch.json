@@ -1,4 +1,519 @@
 {
-  "nazev": "5. třída — Tělesa a souměrnost, třetí dávka: stavby z krychliček, obarvené kvádry, půdorys a pohledy, souměrné doplnění podle osy a obou os, písmena, dílky kvádru (15 úloh: L1 ×4, L2 ×6, L3 ×5) — ZAPSÁNO",
-  "examples": []
+  "nazev": "5. třída — nové typy karet: podúlohy (4.1–4.3) a přiřazování A–F, 15 úloh (L1 ×4, L2 ×7, L3 ×4)",
+  "examples": [
+    {
+      "id": "P5_VIC_01",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 1,
+      "zadani": "Převeď na zadanou jednotku.",
+      "reseni_kroky": [
+        "4 m je 40 dm, plus 5 dm je 45 dm.",
+        "3 kg je 3 000 g, plus 200 g je 3 200 g.",
+        "2 hodiny je 120 minut, plus 30 minut je 150 minut."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "4 m 5 dm = □ dm",
+          "odpoved": "45",
+          "jednotka": "dm"
+        },
+        {
+          "otazka": "3 kg 200 g = □ g",
+          "odpoved": "3200",
+          "jednotka": "g"
+        },
+        {
+          "otazka": "2 h 30 min = □ min",
+          "odpoved": "150",
+          "jednotka": "min"
+        }
+      ],
+      "odpoved": "45 ; 3200 ; 150"
+    },
+    {
+      "id": "P5_VIC_02",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "zadani": "Vypočítej. Pozor na pořadí početních operací.",
+      "reseni_kroky": [
+        "Násobení se počítá dřív než sčítání: 3 · 4 = 12, 5 + 12 = 17.",
+        "Závorka se počítá první: 5 + 3 = 8, 8 · 4 = 32.",
+        "Nejdřív násobení: 2 · 6 = 12, potom 20 − 12 = 8."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "5 + 3 · 4 =",
+          "odpoved": "17"
+        },
+        {
+          "otazka": "(5 + 3) · 4 =",
+          "odpoved": "32"
+        },
+        {
+          "otazka": "20 − 2 · 6 =",
+          "odpoved": "8"
+        }
+      ],
+      "odpoved": "17 ; 32 ; 8"
+    },
+    {
+      "id": "P5_VIC_09",
+      "tema": "p5_jednotky",
+      "podtema": "p5_prevody",
+      "obtiznost": 1,
+      "zadani": "Ke každé délce (1–3) přiřaď stejnou délku z nabídky (A–F).",
+      "reseni_kroky": [
+        "2 m 5 cm je 200 cm + 5 cm = 205 cm, to je B.",
+        "25 dm je 25 · 10 = 250 cm, to je C.",
+        "5 m 2 cm je 500 cm + 2 cm = 502 cm, to je F."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "25 cm",
+          "205 cm",
+          "250 cm",
+          "2 050 cm",
+          "52 cm",
+          "502 cm"
+        ],
+        "polozky": [
+          {
+            "text": "2 m 5 cm",
+            "spravna": 1
+          },
+          {
+            "text": "25 dm",
+            "spravna": 2
+          },
+          {
+            "text": "5 m 2 cm",
+            "spravna": 5
+          }
+        ]
+      },
+      "odpoved": "1–B ; 2–C ; 3–F"
+    },
+    {
+      "id": "P5_VIC_10",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 1,
+      "zadani": "Ke každému zlomku (1–3) přiřaď jeho hodnotu z nabídky (A–F). Všude počítáme se 24 žáky.",
+      "reseni_kroky": [
+        "Polovina: 24 : 2 = 12, to je D.",
+        "Třetina: 24 : 3 = 8, to je C.",
+        "Čtvrtina je 24 : 4 = 6, tři čtvrtiny 3 · 6 = 18, to je E."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "3",
+          "6",
+          "8",
+          "12",
+          "18",
+          "4"
+        ],
+        "polozky": [
+          {
+            "text": "Polovina z 24",
+            "spravna": 3
+          },
+          {
+            "text": "Třetina z 24",
+            "spravna": 2
+          },
+          {
+            "text": "Tři čtvrtiny z 24",
+            "spravna": 4
+          }
+        ]
+      },
+      "odpoved": "1–D ; 2–C ; 3–E"
+    },
+    {
+      "id": "P5_VIC_03",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 2,
+      "zadani": "Kuba má 24 kuliček. Eva jich má o 9 víc než Kuba a Tom o 6 méně než Kuba.",
+      "reseni_kroky": [
+        "Eva: 24 + 9 = 33 kuliček.",
+        "Tom: 24 − 6 = 18 kuliček.",
+        "Dohromady: 24 + 33 + 18 = 75 kuliček."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "Kolik kuliček má Eva?",
+          "odpoved": "33"
+        },
+        {
+          "otazka": "Kolik kuliček má Tom?",
+          "odpoved": "18"
+        },
+        {
+          "otazka": "Kolik kuliček mají všichni tři dohromady?",
+          "odpoved": "75"
+        }
+      ],
+      "odpoved": "33 ; 18 ; 75"
+    },
+    {
+      "id": "P5_VIC_04",
+      "tema": "p5_zlomky",
+      "podtema": "p5_o_zlomek",
+      "obtiznost": 2,
+      "zadani": "Pizza je rozkrájená na 12 stejných kousků.",
+      "reseni_kroky": [
+        "Třetina: 12 : 3 = 4 kousky.",
+        "Čtvrtina je 12 : 4 = 3 kousky, tři čtvrtiny jsou 3 · 3 = 9 kousků.",
+        "Polovina je 12 : 2 = 6 kousků, zbude jich také 6."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "Kolik kousků je třetina pizzy?",
+          "odpoved": "4"
+        },
+        {
+          "otazka": "Kolik kousků jsou tři čtvrtiny pizzy?",
+          "odpoved": "9"
+        },
+        {
+          "otazka": "Kolik kousků zbude, když se sní polovina pizzy?",
+          "odpoved": "6"
+        }
+      ],
+      "odpoved": "4 ; 9 ; 6"
+    },
+    {
+      "id": "P5_VIC_05",
+      "tema": "p5_obsah",
+      "podtema": "p5_obsah",
+      "obtiznost": 2,
+      "zadani": "Obdélníková zahrádka je dlouhá 9 m a široká 4 m.",
+      "reseni_kroky": [
+        "Obvod: 2 · (9 + 4) = 2 · 13 = 26 m.",
+        "Obsah: 9 · 4 = 36 m².",
+        "Čtverec o obsahu 36 m² má stranu 6 m, protože 6 · 6 = 36."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "Jaký je obvod zahrádky?",
+          "odpoved": "26",
+          "jednotka": "m"
+        },
+        {
+          "otazka": "Jaký je obsah zahrádky?",
+          "odpoved": "36",
+          "jednotka": "m²"
+        },
+        {
+          "otazka": "Jak dlouhá je strana čtverce, který má stejný obsah jako zahrádka?",
+          "odpoved": "6",
+          "jednotka": "m"
+        }
+      ],
+      "odpoved": "26 ; 36 ; 6"
+    },
+    {
+      "id": "P5_VIC_06",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Film začal v 17:35 a trval 1 hodinu a 50 minut. Čas zapisuj ve tvaru hodiny:minuty.",
+      "reseni_kroky": [
+        "17:35 + 1 hodina je 18:35, plus 50 minut je 19:25.",
+        "1 hodina 50 minut je 60 + 50 = 110 minut.",
+        "Od 19:25 do 20:00 je 35 minut (do 19:30 je 5 minut, do 20:00 dalších 30)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "V kolik hodin film skončil?",
+          "odpoved": "19:25"
+        },
+        {
+          "otazka": "Kolik minut film trval?",
+          "odpoved": "110",
+          "jednotka": "min"
+        },
+        {
+          "otazka": "Za kolik minut po konci filmu je 20:00?",
+          "odpoved": "35",
+          "jednotka": "min"
+        }
+      ],
+      "odpoved": "19:25 ; 110 ; 35"
+    },
+    {
+      "id": "P5_VIC_11",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "zadani": "Ke každému výrazu (1–3) přiřaď jeho hodnotu z nabídky (A–F).",
+      "reseni_kroky": [
+        "Nejdřív násobení: 3 · 8 = 24, 2 + 24 = 26, to je C.",
+        "Nejdřív závorka: 2 + 3 = 5, 5 · 8 = 40, to je E.",
+        "Nejdřív násobení: 3 · 10 = 30, 50 − 30 = 20, to je B."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "14",
+          "20",
+          "26",
+          "32",
+          "40",
+          "48"
+        ],
+        "polozky": [
+          {
+            "text": "2 + 3 · 8",
+            "spravna": 2
+          },
+          {
+            "text": "(2 + 3) · 8",
+            "spravna": 4
+          },
+          {
+            "text": "50 − 3 · 10",
+            "spravna": 1
+          }
+        ]
+      },
+      "odpoved": "1–C ; 2–E ; 3–B"
+    },
+    {
+      "id": "P5_VIC_12",
+      "tema": "p5_obsah",
+      "podtema": "p5_obvod",
+      "obtiznost": 2,
+      "zadani": "Ke každému čtyřúhelníku (1–3) přiřaď jeho obvod z nabídky (A–F). Obvod je v centimetrech.",
+      "reseni_kroky": [
+        "Obdélník 7 × 3: 2 · (7 + 3) = 20 cm, to je B.",
+        "Obdélník 12 × 5: 2 · (12 + 5) = 34 cm, to je D.",
+        "Čtverec: 4 · 9 = 36 cm, to je E."
+      ],
+      "cas_sekund": 180,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "18 cm",
+          "20 cm",
+          "30 cm",
+          "34 cm",
+          "36 cm",
+          "45 cm"
+        ],
+        "polozky": [
+          {
+            "text": "Obdélník o stranách 7 cm a 3 cm",
+            "spravna": 1
+          },
+          {
+            "text": "Obdélník o stranách 12 cm a 5 cm",
+            "spravna": 3
+          },
+          {
+            "text": "Čtverec o straně 9 cm",
+            "spravna": 4
+          }
+        ]
+      },
+      "odpoved": "1–B ; 2–D ; 3–E"
+    },
+    {
+      "id": "P5_VIC_13",
+      "tema": "p5_jednotky",
+      "podtema": "p5_cas",
+      "obtiznost": 2,
+      "zadani": "Ke každému zadání (1–3) přiřaď správný čas z nabídky (A–F).",
+      "reseni_kroky": [
+        "8:50 + 55 minut: do 9:00 je 10 minut, zbývá 45, tedy 9:45 (A).",
+        "11:40 − 25 minut = 11:15 (E).",
+        "9:25 + 1 hodina = 10:25, plus 40 minut = 11:05 (D)."
+      ],
+      "cas_sekund": 210,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "9:45",
+          "10:15",
+          "10:30",
+          "11:05",
+          "11:15",
+          "12:00"
+        ],
+        "polozky": [
+          {
+            "text": "Kolik je hodin za 55 minut po 8:50?",
+            "spravna": 0
+          },
+          {
+            "text": "Kolik bylo hodin před 25 minutami, když je 11:40?",
+            "spravna": 4
+          },
+          {
+            "text": "Kolik je hodin za 1 hodinu a 40 minut po 9:25?",
+            "spravna": 3
+          }
+        ]
+      },
+      "odpoved": "1–A ; 2–E ; 3–D"
+    },
+    {
+      "id": "P5_VIC_07",
+      "tema": "p5_slovni",
+      "podtema": "p5_tempo",
+      "obtiznost": 3,
+      "zadani": "Pekař upeče 36 rohlíků za 12 minut. Peče stále stejným tempem.",
+      "reseni_kroky": [
+        "Za minutu upeče 36 : 12 = 3 rohlíky.",
+        "Za 20 minut upeče 20 · 3 = 60 rohlíků.",
+        "150 rohlíků upeče za 150 : 3 = 50 minut."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "Kolik rohlíků upeče za 1 minutu?",
+          "odpoved": "3"
+        },
+        {
+          "otazka": "Kolik rohlíků upeče za 20 minut?",
+          "odpoved": "60"
+        },
+        {
+          "otazka": "Za kolik minut upeče 150 rohlíků?",
+          "odpoved": "50",
+          "jednotka": "min"
+        }
+      ],
+      "odpoved": "3 ; 60 ; 50"
+    },
+    {
+      "id": "P5_VIC_08",
+      "tema": "p5_pocitani",
+      "podtema": "p5_zaokrouhlovani",
+      "obtiznost": 3,
+      "zadani": "Je dáno číslo 48 725.",
+      "reseni_kroky": [
+        "Na tisíce: za tisícovkou 8 je stovková číslice 7, zaokrouhlujeme nahoru, vyjde 49 000.",
+        "Na stovky: za stovkou 7 je desítková číslice 2, zaokrouhlujeme dolů, vyjde 48 700.",
+        "Rozdíl: 48 725 − 40 000 = 8 725."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1,
+      "podulohy": [
+        {
+          "otazka": "Zaokrouhli ho na tisíce.",
+          "odpoved": "49000"
+        },
+        {
+          "otazka": "Zaokrouhli ho na stovky.",
+          "odpoved": "48700"
+        },
+        {
+          "otazka": "O kolik je větší než číslo 40 000?",
+          "odpoved": "8725"
+        }
+      ],
+      "odpoved": "49000 ; 48700 ; 8725"
+    },
+    {
+      "id": "P5_VIC_14",
+      "tema": "p5_slovni",
+      "podtema": "p5_dva_udaje",
+      "obtiznost": 3,
+      "zadani": "Cyril našel 21 hub. Bára našla o 5 hub méně než Cyril a Anna o 8 hub více než Bára. Ke každé otázce (1–3) přiřaď správný počet z nabídky (A–F).",
+      "reseni_kroky": [
+        "Bára: 21 − 5 = 16 hub (B).",
+        "Anna: 16 + 8 = 24 hub (D).",
+        "Všichni dohromady: 21 + 16 + 24 = 61 hub (F)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "13",
+          "16",
+          "21",
+          "24",
+          "29",
+          "61"
+        ],
+        "polozky": [
+          {
+            "text": "Kolik hub našla Bára?",
+            "spravna": 1
+          },
+          {
+            "text": "Kolik hub našla Anna?",
+            "spravna": 3
+          },
+          {
+            "text": "Kolik hub našli všichni tři dohromady?",
+            "spravna": 5
+          }
+        ]
+      },
+      "odpoved": "1–B ; 2–D ; 3–F"
+    },
+    {
+      "id": "P5_VIC_15",
+      "tema": "p5_telesa",
+      "podtema": "p5_krychlicky",
+      "obtiznost": 3,
+      "zadani": "Z jednotkových krychliček se skládají tělesa. Ke každému tělesu (1–3) přiřaď počet krychliček z nabídky (A–F), které je potřeba na jeho plné složení.",
+      "reseni_kroky": [
+        "Kvádr 4 × 3 × 2: 4 · 3 = 12 krychliček ve vrstvě a 2 vrstvy, 12 · 2 = 24 (C).",
+        "Krychle 3 × 3 × 3: 9 krychliček ve vrstvě a 3 vrstvy, 9 · 3 = 27 (D).",
+        "Kvádr 5 × 2 × 3: 5 · 2 = 10 ve vrstvě a 3 vrstvy, 10 · 3 = 30 (E)."
+      ],
+      "cas_sekund": 240,
+      "sm2_interval": 1,
+      "prirazeni": {
+        "nabidka": [
+          "9",
+          "18",
+          "24",
+          "27",
+          "30",
+          "36"
+        ],
+        "polozky": [
+          {
+            "text": "Kvádr o rozměrech 4 × 3 × 2 krychličky",
+            "spravna": 2
+          },
+          {
+            "text": "Krychle o hraně 3 krychličky",
+            "spravna": 3
+          },
+          {
+            "text": "Kvádr o rozměrech 5 × 2 × 3 krychličky",
+            "spravna": 4
+          }
+        ]
+      },
+      "odpoved": "1–C ; 2–D ; 3–E"
+    }
+  ]
 }

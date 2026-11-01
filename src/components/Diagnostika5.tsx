@@ -14,6 +14,7 @@ import { usePremium } from "@/lib/premium";
 import { FREE_TOPICS_5 } from "@/lib/subscription";
 import { TEMATA_ORDER_5, TEMA_LABELS, type SM2Card, type DBExample } from "@/types";
 import MoznostiCard from "@/components/MoznostiCard";
+import VicOdpovediCard from "@/components/VicOdpovediCard";
 import PracticeCard from "@/components/PracticeCard";
 import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 
@@ -75,6 +76,7 @@ function pickStart(results: Vysledky, reachable: Set<string>): string | null {
 
 function Otazka({ example, cardNumber, onResult }: { example: DBExample; cardNumber: number; onResult: (correct: boolean) => void }) {
   if (example.konstrukce_scena) return <ConstructionMarkCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
+  if ((example.podulohy && example.podulohy.length > 0) || example.prirazeni) return <VicOdpovediCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
   if (example.moznosti && example.moznosti.length > 0) return <MoznostiCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} onResult={onResult} />;
   return <PracticeCard key={example.id} example={example} cardNumber={cardNumber} total={TOTAL_QUESTIONS} consecutiveCorrect={0} noRetry onResult={(c) => onResult(c)} />;
 }

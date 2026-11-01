@@ -36,6 +36,7 @@ import ConstructionCard from "@/components/ConstructionCard";
 import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import ComparisonCard from "@/components/ComparisonCard";
 import MoznostiCard from "@/components/MoznostiCard";
+import VicOdpovediCard from "@/components/VicOdpovediCard";
 import BossBattleCard from "@/components/BossBattleCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
@@ -1124,6 +1125,16 @@ function TreningPageInner() {
           total={sessionIds.length}
           onResult={handleResult}
           onSkip={handleSkip}
+        />
+      ) : (currentExample.podulohy && currentExample.podulohy.length > 0) || currentExample.prirazeni ? (
+        <VicOdpovediCard
+          key={currentExample.id}
+          example={currentExample}
+          cardNumber={currentIdx + 1}
+          total={sessionIds.length}
+          onResult={handleResult}
+          onSkip={handleSkip}
+          videoHint
         />
       ) : currentExample.moznosti && currentExample.moznosti.length > 0 ? (
         <MoznostiCard

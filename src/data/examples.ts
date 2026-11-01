@@ -43,7 +43,7 @@ export function examplesFor(trida: Trida): DBExample[] {
  * (denní výzva, boss battle, rychlý mód, CERMAT test), z nich proto nesmí losovat.
  */
 export function isPlainTyped(e: DBExample): boolean {
-  return !e.image && !(e.moznosti && e.moznosti.length > 0) && !(e.kroky_volby && e.kroky_volby.length > 0) && !e.porovnani && !e.konstrukce_scena;
+  return !e.image && !(e.moznosti && e.moznosti.length > 0) && !(e.kroky_volby && e.kroky_volby.length > 0) && !e.porovnani && !e.konstrukce_scena && !(e.podulohy && e.podulohy.length > 0) && !e.prirazeni;
 }
 
 export const plainExamples: DBExample[] = examples.filter(isPlainTyped);

@@ -155,7 +155,7 @@ for (const [name, list] of sets) {
     let m = text.match(/\$([^$]+)\$/);
     // výraz bez dolarů (typicky cermat-200): text za první dvojtečkou
     if (!m) { const c = text.indexOf(":"); if (c > 0) m = [null, text.slice(c + 1).replace(/[.\s]+$/, "")]; }
-    if (!m || ex.moznosti || ex.porovnani || ex.kroky_volby) { stat.prevazano++; continue; }
+    if (!m || ex.moznosti || ex.porovnani || ex.kroky_volby || ex.podulohy || ex.prirazeni) { stat.prevazano++; continue; }
     if (!/^(Vypočítej|Vypočítejte|Vyřeš|Vyřešte|Řeš|Řešte|Spočítej|Spočítejte|Vypočti)/i.test(text.trim())) { stat.prevazano++; continue; }
     let computed = null;
     try {

@@ -256,6 +256,33 @@ export interface DBExample {
    * Když je vyplněno, trénink vykreslí ConstructionMarkCard.
    */
   konstrukce_scena?: ConstructionScene;
+  /**
+   * Úloha s více výsledky (CERMAT 5. třída: 4.1, 4.2, 4.3): `zadani` je společný úvod, každá podúloha má vlastní
+   * otázku a výsledek. Úloha je správně, jen když jsou správně všechny podúlohy. Vykreslí VicOdpovediCard.
+   * `odpoved` úlohy = výsledky podúloh oddělené „ ; “ (pro kontroly a zobrazení).
+   */
+  podulohy?: Poduloha[];
+  /**
+   * Přiřazování (CERMAT 5. třída, úloha 13): k pravé straně se vybírá z nabídky A–F. Vykreslí VicOdpovediCard.
+   * `odpoved` úlohy = např. „1–C ; 2–A ; 3–F“.
+   */
+  prirazeni?: Prirazeni;
+}
+
+export interface Poduloha {
+  /** Otázka podúlohy („Kolik cm je 3 m 5 cm?“). */
+  otazka: string;
+  /** Správný výsledek (stejný zápis jako `odpoved` u běžné úlohy — vyhodnotí ho checkAnswer). */
+  odpoved: string;
+  /** Jednotka za políčkem (např. „cm“), jen jako nápověda zápisu. */
+  jednotka?: string;
+}
+
+export interface Prirazeni {
+  /** Nabídka odpovědí, pořadí = písmena A, B, C… (nejvýše 6). */
+  nabidka: string[];
+  /** Zadání k přiřazení (1., 2., 3.) a index správné položky nabídky. */
+  polozky: { text: string; spravna: number }[];
 }
 
 /** Prvek scény rýsování (souřadnice v px scény, y dolů). */
