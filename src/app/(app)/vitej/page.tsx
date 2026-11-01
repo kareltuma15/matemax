@@ -183,7 +183,7 @@ export default function VitejPage() {
           </h1>
           <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto">
             {trida === 5
-              ? "Vyber si okruh a procvičuj po malých krocích, ať jsi na přijímačky připravený."
+              ? "Nejdřív zjistíme, kde máš mezery v jednotlivých okruzích. Pak procvičuješ po malých krocích přesně to, co potřebuješ."
               : "Nejdřív zjistíme kde máš mezery — pak připravíme plán přesně pro tebe."}
           </p>
         </div>
@@ -191,7 +191,7 @@ export default function VitejPage() {
         {/* Info karty */}
         <div className="grid grid-cols-3 gap-2 w-full">
           {(trida === 5
-            ? [["📚", "8 okruhů", "5. třída"], ["🧩", "Úlohy", "jako u přijímaček"], ["🔥", "Série", "každý den"]]
+            ? [["⏱️", "15 minut", "diagnostika"], ["📚", "8 okruhů", "5. třída"], ["🎯", "Výsledek", "ihned"]]
             : [["⏱️", `${DIAGNOSTIC_MINUTES} minut`, "diagnostika"], ["📚", "9 témat", "CERMAT"], ["🎯", "Výsledek", "ihned"]]
           ).map(([icon, title, sub]) => (
             <div
@@ -208,11 +208,11 @@ export default function VitejPage() {
         {/* CTA */}
         <div className="flex flex-col gap-3 w-full">
           <Link
-            href={trida === 5 ? "/trenink" : "/diagnostika"}
+            href="/diagnostika"
             className="block w-full py-4 text-white font-black rounded-2xl text-center text-base shadow-lg"
             style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
           >
-            {trida === 5 ? "Začít trénovat →" : "Spustit diagnostiku →"}
+            Spustit diagnostiku →
           </Link>
           <button
             onClick={() => setShowModal(true)}

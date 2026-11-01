@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { TEMA_LABELS } from "@/types";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -35,12 +36,17 @@ export async function POST(req: NextRequest) {
   const cleanPodtema = podtema ? String(podtema).trim().slice(0, 100) : "";
   const cleanChybna = chybna_odpoved ? String(chybna_odpoved).trim().slice(0, 100) : "";
 
-  const prompt = `Jsi matematický tutor pro žáky 9. třídy ZŠ v České republice připravující se na přijímací zkoušky CERMAT.
+  const pata = cleanTema.startsWith("p5_");
+  const temaPopis = pata ? (TEMA_LABELS[cleanTema] ?? cleanTema) : cleanTema;
+  const komu = pata
+    ? "žáky 5. třídy ZŠ v České republice, kteří se připravují na přijímací zkoušky CERMAT na víceletá gymnázia. Piš jednoduchou češtinou, krátkými větami a tykej."
+    : "žáky 9. třídy ZŠ v České republice připravující se na přijímací zkoušky CERMAT.";
+  const prompt = `Jsi matematický tutor pro ${komu}
 
 Žák řeší matematický příklad a udělal chybu. Dej mu krátký, personalizovaný hint.
 
 Příklad: ${cleanZadani}
-Téma: ${cleanTema}${cleanPodtema ? ` (${cleanPodtema.replace(/_/g, " ")})` : ""}
+Téma: ${temaPopis}${cleanPodtema ? ` (${cleanPodtema.replace(/_/g, " ")})` : ""}
 Správná odpověď: ${cleanOdpoved}
 Žákova špatná odpověď: ${cleanChybna || "(neuvedena)"}
 

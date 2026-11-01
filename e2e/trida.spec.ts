@@ -64,3 +64,29 @@ test.describe("stránky jen pro 9. třídu", () => {
     await expect(page.getByTestId("pro-5-pripravujeme")).toHaveCount(0);
   });
 });
+
+test.describe("oddělení tříd: žák vidí jen věci pro svou třídu", () => {
+  test("5. třída: patička a hostovská stránka tréninku bez 9. třídy", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
+    await page.goto("/trenink");
+    await expect(page.getByTestId("trenink-host-5")).toBeVisible();
+    await expect(page.locator("footer")).toContainText("Matematika pro 5. třídu");
+    const text = await page.evaluate(() => document.body.innerText);
+    for (const slovo of ["Výrazy", "Rovnice", "Geometrie", "Úhly", "Grafy a logika", "9. třídu"]) expect(text, slovo).not.toContain(slovo);
+  });
+
+  test("9. třída: patička a témata beze změny, nic z 5. třídy", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("matemax-trida", "9"));
+    await page.goto("/trenink");
+    await expect(page.locator("footer")).toContainText("Matematika pro 9. třídu");
+    await expect(page.getByTestId("trenink-host-5")).toHaveCount(0);
+    const text = await page.evaluate(() => document.body.innerText);
+    for (const slovo of ["Počítání s čísly", "Jednotky, čas", "Obvod a obsah", "Tělesa a souměrnost", "5. třídu"]) expect(text, slovo).not.toContain(slovo);
+  });
+
+  test("testy nanečisto jsou jen pro 9. třídu", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
+    await page.goto("/testy-nanecisto");
+    await expect(page.getByTestId("pro-5-pripravujeme")).toBeVisible();
+  });
+});

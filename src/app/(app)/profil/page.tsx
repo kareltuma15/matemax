@@ -9,7 +9,7 @@ import { loadProgress } from "@/lib/progress";
 import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeConfig } from "@/lib/gamification";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
-import { TEMA_LABELS, TEMATA_ORDER, SM2Card } from "@/types";
+import { TEMA_LABELS, TEMATA_ORDER, TEMATA_ORDER_5, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
 import ReadinessCard from "@/components/ReadinessCard";
@@ -18,7 +18,7 @@ import ActivityHeatmap from "@/components/ActivityHeatmap";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
 import { useTrida } from "@/lib/trida";
-import { PREMIUM_TOPICS } from "@/lib/subscription";
+import { PREMIUM_TOPICS, PREMIUM_TOPICS_5 } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
@@ -40,6 +40,7 @@ const ALL_TOPICS: string[] = [...TEMATA_ORDER];
 const TOPIC_EMOJI: Record<string, string> = {
   zlomky: "🍕", vyrazy: "🔢", rovnice: "⚖️", geometrie: "📐",
   slovni_ulohy: "📝", grafy_logika: "📊", konstrukce: "📏", uhly: "🔺", souhrnne: "🏆",
+  p5_pocitani: "🔢", p5_jednotky: "⏱️", p5_slovni: "🧩", p5_zlomky: "½", p5_obsah: "▦", p5_telesa: "🧊", p5_rysovani: "📐", p5_grafy: "📊",
 };
 
 function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
@@ -207,7 +208,7 @@ export default function ProfilPage() {
   const [xp, setXp]                      = useState(0);
   const [streak, setStreak]              = useState(0);
   const [totalSolved, setTotalSolved]    = useState(0);
-  const [topicScores, setTopicScores]    = useState<TopicScore[]>([]);
+  const [allTopicScores, setTopicScores]    = useState<TopicScore[]>([]);
   const [levels, setLevels]              = useState<Record<string, Level>>({});
   const [progress, setProgress]          = useState<Record<string, Record<Level, LevelProgress>>>({});
   const [earnedBadges, setEarnedBadges]  = useState<string[]>([]);
@@ -239,6 +240,8 @@ export default function ProfilPage() {
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
   const { trida, setTrida } = useTrida();
+  // Výsledky diagnostiky jen z okruhů třídy, kterou žák má (výsledky 9. a 5. třídy jsou v jednom úložišti, ale nesmí se míchat).
+  const topicScores = allTopicScores.filter((t) => ((trida === 5 ? TEMATA_ORDER_5 : TEMATA_ORDER) as readonly string[]).includes(t.tema));
   const [soundOn, setSoundOn]             = useState(true);
   const [darkMode, setDarkMode]           = useState<Theme>("light");
 
@@ -757,13 +760,7 @@ export default function ProfilPage() {
             </div>
           )}
 
-          {trida === 5 ? (
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center" data-testid="profil-5-pripravujeme">
-              <p className="text-3xl mb-1">🚧</p>
-              <p className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>Přehled pokroku pro 5. třídu připravujeme</p>
-              <p className="text-xs text-slate-400 mt-1">Až bude hotová příprava pro 5. třídu, uvidíš tady, jak ti jdou jednotlivé okruhy.</p>
-            </div>
-          ) : (<>
+          {trida === 9 && (<>
           {/* ── SEKCE: PŘIPRAVENOST ── */}
           <div className="scroll-reveal">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost na přijímačky</p>
@@ -826,6 +823,8 @@ export default function ProfilPage() {
             )}
           </div>
 
+          </>)}
+
           {/* ── SEKCE: MISTROVSTVÍ TÉMAT ── */}
           {/* Jeden sjednocený přehled místo dřívějších tří (bary v připravenosti
               + silná/slabá karty). Bez „Procvičit" tlačítek — akce patří na
@@ -834,8 +833,8 @@ export default function ProfilPage() {
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Mistrovství témat</p>
             {topicScores.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {TEMATA_ORDER.map((tema) => {
-                  const locked = !isPremium && PREMIUM_TOPICS.has(tema);
+                {(trida === 5 ? TEMATA_ORDER_5 : TEMATA_ORDER).map((tema) => {
+                  const locked = !isPremium && (trida === 5 ? PREMIUM_TOPICS_5 : PREMIUM_TOPICS).has(tema);
                   const sc = topicScores.find((t) => t.tema === tema);
                   const diagPct = sc ? Math.round(sc.score * 100) : null;
                   const lvl = levels[tema] ?? 1;
@@ -893,7 +892,6 @@ export default function ProfilPage() {
             )}
           </div>
 
-          </>)}
           {/* ── SEKCE: TREND CHART ── */}
           {sessions.length >= 2 && (
             <div className="scroll-reveal">

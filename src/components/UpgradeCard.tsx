@@ -49,7 +49,7 @@ export default function UpgradeCard({ tema, cardNumber, total, onSkip }: Props) 
           </h3>
           <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto leading-relaxed">
             Téma <strong>{topicLabel}</strong> je dostupné jen v Premium.
-            Odemkni všech 9 témat za 99 Kč/měsíc.
+            {tema.startsWith("p5_") ? "Premium odemkne všech 8 okruhů pro 5. třídu." : "Odemkni všech 9 témat za 99 Kč/měsíc."}
           </p>
         </div>
       </div>

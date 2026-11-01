@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { useTrida } from "@/lib/trida";
 
 const STUDENT_ITEMS = [
   { href: "/",                icon: "🏠", label: "Domů" },
@@ -11,6 +12,14 @@ const STUDENT_ITEMS = [
   { href: "/vyzva",           icon: "🏆", label: "Výzva" },
   { href: "/testy-nanecisto", icon: "📝", label: "Testy" },
   { href: "/profil",          icon: "👤", label: "Profil" },
+];
+
+/** Páťák nemá Výzvu a Testy nanečisto (jsou jen pro 9. třídu), místo nich má Diagnostiku. */
+const STUDENT_ITEMS_5 = [
+  { href: "/",             icon: "🏠", label: "Domů" },
+  { href: "/trenink",      icon: "💪", label: "Trénink" },
+  { href: "/diagnostika",  icon: "🎯", label: "Diagnostika" },
+  { href: "/profil",       icon: "👤", label: "Profil" },
 ];
 
 const PARENT_NAV_ITEMS = [
@@ -21,6 +30,7 @@ const PARENT_NAV_ITEMS = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const { trida } = useTrida();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
   const isParentSection = pathname.startsWith("/rodice");
@@ -95,7 +105,7 @@ export default function BottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="max-w-2xl mx-auto flex px-2 py-1">
-        {STUDENT_ITEMS.map(({ href, icon, label }) => {
+        {(trida === 5 ? STUDENT_ITEMS_5 : STUDENT_ITEMS).map(({ href, icon, label }) => {
           const active = pathname === href;
           return (
             <Link

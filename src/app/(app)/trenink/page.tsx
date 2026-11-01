@@ -760,6 +760,24 @@ function TreningPageInner() {
     );
   }
 
+  // Host s vybranou 5. třídou: ukázkové úlohy jsou jen z 9. třídy, takže mu je nenabízíme — pošleme ho na registraci zdarma.
+  if (isGuest && trida === 5 && !temaFilter && !done) {
+    return (
+      <div className="flex flex-col gap-4" data-testid="trenink-host-5">
+        <div className="bg-white rounded-2xl border border-slate-200 p-7 text-center flex flex-col items-center gap-3">
+          <span className="text-4xl">🎒</span>
+          <h1 className="text-lg font-black" style={{ color: "var(--text-primary)" }}>Procvičování pro 5. třídu</h1>
+          <p className="text-sm text-slate-500 max-w-sm">
+            Zaregistruj se zdarma (trvá 2 minuty). Hned dostaneš krátkou diagnostiku a první tři okruhy jsou celé zdarma.
+          </p>
+          <Link href="/registrace" className="mt-1 px-5 py-3 rounded-xl text-white font-bold text-sm" style={{ background: "#0D1B3E" }}>
+            Zaregistrovat se zdarma →
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   // Guest: show topic map if no topic selected yet
   if (isGuest && !temaFilter && !done) {
     return (

@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { jenPro9 } from "@/components/JenPro9";
 import type { PublicTestSession } from "@/app/api/testy/route";
 
 function formatDate(iso: string): string {
@@ -44,7 +45,7 @@ function PaymentBanner() {
   return null;
 }
 
-export default function TestyNanecistoPage() {
+function TestyNanecistoPage() {
   const router = useRouter();
   const [sessions, setSessions] = useState<PublicTestSession[]>([]);
   const [loading, setLoading] = useState(true);
@@ -249,3 +250,5 @@ export default function TestyNanecistoPage() {
     </div>
   );
 }
+
+export default jenPro9(TestyNanecistoPage, "Testy nanečisto");
