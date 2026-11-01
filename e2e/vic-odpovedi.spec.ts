@@ -1,21 +1,17 @@
 import { test, expect, type Page } from "@playwright/test";
-import batch from "../src/data/nahled-batch.json";
-import type { DBExample } from "../src/types";
+import { examples5 } from "../src/data/examples";
 
-// Karta s více odpověďmi (podúlohy 4.1–4.3 a přiřazování A–F). Testuje se přes /nahled — stejná karta jako v tréninku.
+// Karta s více odpověďmi (podúlohy 4.1–4.3 a přiřazování A–F). Testuje se přes /nahled?ids=… — stejná karta jako v tréninku.
 // Test nic nezapisuje na server.
 
-const vic = (batch.examples as unknown as DBExample[]).filter((e) => e.id.startsWith("P5_VIC_"));
+const vic = examples5.filter((e) => e.id.startsWith("P5_VIC_"));
 
 async function karta(page: Page, id: string) {
-  await page.goto("/nahled");
-  const ex = vic.find((e) => e.id === id)!;
-  // karty v náhledu jdou za sebou v pořadí dávky; najdeme tu s naším zadáním
-  return page.getByTestId("vic-odpovedi").filter({ hasText: ex.zadani.slice(0, 30) }).first();
+  await page.goto(`/nahled?ids=${id}`);
+  return page.getByTestId("vic-odpovedi");
 }
 
 test("data: 8 úloh s podúlohami a 7 s přiřazováním, odpověď úlohy odpovídá částem", () => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu (je zapsaná v databázi)");
   expect(vic.length).toBe(15);
   for (const e of vic) {
     if (e.podulohy) expect(e.odpoved, e.id).toBe(e.podulohy.map((p) => p.odpoved).join(" ; "));
@@ -23,8 +19,12 @@ test("data: 8 úloh s podúlohami a 7 s přiřazováním, odpověď úlohy odpov
   }
 });
 
+test("všech 15 úloh se vykreslí jako karta s více odpověďmi", async ({ page }) => {
+  await page.goto(`/nahled?ids=${vic.map((e) => e.id).join(",")}`);
+  await expect(page.getByTestId("vic-odpovedi")).toHaveCount(15);
+});
+
 test("podúlohy: tlačítko Zkontrolovat je zamčené, dokud nejsou vyplněné všechny", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const k = await karta(page, "P5_VIC_03");
   const btn = k.getByRole("button", { name: "Zkontrolovat" });
   await expect(btn).toBeDisabled();
@@ -36,7 +36,6 @@ test("podúlohy: tlačítko Zkontrolovat je zamčené, dokud nejsou vyplněné v
 });
 
 test("podúlohy: všechno správně → Správně! a výsledek true", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const ex = vic.find((e) => e.id === "P5_VIC_06")!;
   const k = await karta(page, "P5_VIC_06");
   for (const [i, p] of ex.podulohy!.entries()) await k.getByLabel(`Výsledek podúlohy ${i + 1}`).fill(p.odpoved);
@@ -45,7 +44,6 @@ test("podúlohy: všechno správně → Správně! a výsledek true", async ({ p
 });
 
 test("podúlohy: jedna chyba → ukáže 2 z 3 a správný výsledek jen u chybné podúlohy", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const ex = vic.find((e) => e.id === "P5_VIC_03")!;
   const k = await karta(page, "P5_VIC_03");
   await k.getByLabel("Výsledek podúlohy 1").fill(ex.podulohy![0].odpoved);
@@ -58,7 +56,6 @@ test("podúlohy: jedna chyba → ukáže 2 z 3 a správný výsledek jen u chybn
 });
 
 test("podúlohy: čas a zaokrouhlení se čtou i s mezerou (19.25, 49 000)", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const k = await karta(page, "P5_VIC_08");
   await k.getByLabel("Výsledek podúlohy 1").fill("49 000");
   await k.getByLabel("Výsledek podúlohy 2").fill("48 700");
@@ -68,7 +65,6 @@ test("podúlohy: čas a zaokrouhlení se čtou i s mezerou (19.25, 49 000)", asy
 });
 
 test("přiřazování: všechno správně → Správně!", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const ex = vic.find((e) => e.id === "P5_VIC_11")!;
   const k = await karta(page, "P5_VIC_11");
   const btn = k.getByRole("button", { name: "Zkontrolovat" });
@@ -80,7 +76,6 @@ test("přiřazování: všechno správně → Správně!", async ({ page }) => {
 });
 
 test("přiřazování: špatně → ukáže počet správných a správné přiřazení; po vyhodnocení už nejde měnit", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const ex = vic.find((e) => e.id === "P5_VIC_13")!;
   const pol = ex.prirazeni!.polozky;
   const k = await karta(page, "P5_VIC_13");
@@ -95,7 +90,6 @@ test("přiřazování: špatně → ukáže počet správných a správné při�
 });
 
 test("přiřazování: výběr jde před kontrolou změnit", async ({ page }) => {
-  test.skip(vic.length === 0, "dávka P5_VIC už není v náhledu");
   const k = await karta(page, "P5_VIC_10");
   const a = k.getByRole("button", { name: "Položka 1: A" });
   const b = k.getByRole("button", { name: "Položka 1: B" });

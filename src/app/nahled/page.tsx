@@ -3,8 +3,10 @@
 // Náhled dávky obsahu — renderuje úlohy PŘESNĚ jako v tréninku (karta s obrázkem,
 // možnostmi, řešením). Karel odsouhlasí, pak se dávka zapíše skriptem do databáze.
 // Zdroj: src/data/nahled-batch.json. Po dokončení tématu stránku smazat.
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import type { DBExample } from "@/types";
+import { allExamples } from "@/data/examples";
 import PracticeCard from "@/components/PracticeCard";
 import ComparisonCard from "@/components/ComparisonCard";
 import ConstructionCard from "@/components/ConstructionCard";
@@ -13,7 +15,7 @@ import MoznostiCard from "@/components/MoznostiCard";
 import VicOdpovediCard from "@/components/VicOdpovediCard";
 import batch from "@/data/nahled-batch.json";
 
-const examples = (batch.examples as unknown as DBExample[]);
+const batchExamples = (batch.examples as unknown as DBExample[]);
 
 function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
   const noop = () => {};
@@ -26,12 +28,17 @@ function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
   return <PracticeCard {...common} consecutiveCorrect={0} />;
 }
 
-export default function NahledPage() {
+/** `/nahled?ids=P5_VIC_01,P5_VIC_02` ukáže úlohy z databáze podle id (kontrola hotových úloh, e2e testy karet); bez `ids` dávka k schválení. */
+function NahledPage() {
+  const ids = useSearchParams().get("ids");
+  const examples = ids
+    ? ids.split(",").map((id) => allExamples.find((e) => e.id === id.trim())).filter((e): e is DBExample => !!e)
+    : batchExamples;
   const [reseni, setReseni] = useState(false);
   return (
     <div style={{ padding: 20, maxWidth: 480, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20 }}>
       <div>
-        <h1 style={{ fontWeight: 800, color: "var(--text-primary)" }}>{batch.nazev}</h1>
+        <h1 style={{ fontWeight: 800, color: "var(--text-primary)" }}>{ids ? "Úlohy podle id" : batch.nazev}</h1>
         <p style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
           Náhled jako v tréninku. Klikni na odpověď / vyplň a uvidíš vyhodnocení i postup.
         </p>
@@ -51,5 +58,13 @@ export default function NahledPage() {
         </div>
       ))}
     </div>
+  );
+}
+
+export default function NahledStranka() {
+  return (
+    <Suspense fallback={null}>
+      <NahledPage />
+    </Suspense>
   );
 }
