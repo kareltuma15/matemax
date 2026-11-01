@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import TopicMap5 from "@/components/TopicMap5";
@@ -32,6 +33,13 @@ export default function Dashboard5({ session }: { session: Session }) {
           Do přijímaček na víceletá gymnázia zbývá <strong className="text-white">{dni} dní</strong>. Procvičuj po malých krocích, ať to stihneš v klidu.
         </p>
       </div>
+      <Link href="/diagnostika" data-testid="diagnostika-5-odkaz" className="rounded-2xl border border-blue-200 bg-blue-50 p-4 flex items-center justify-between gap-3">
+        <span>
+          <span className="block text-sm font-black" style={{ color: "#0D1B3E" }}>Zjisti, kde stojíš</span>
+          <span className="block text-xs text-slate-600 mt-0.5">Krátký test ze všech osmi okruhů, asi 15 minut. Podle něj ti ukážeme, čím začít.</span>
+        </span>
+        <span className="shrink-0 text-xs font-bold text-white px-3 py-2 rounded-lg" style={{ background: "#0D1B3E" }}>Spustit →</span>
+      </Link>
       <TopicMap5 isPremium={isPremium} onSelectTopic={(tema) => router.push(`/trenink?tema=${tema}`)} />
     </div>
   );

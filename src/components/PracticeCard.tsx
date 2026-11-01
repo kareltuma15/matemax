@@ -25,6 +25,8 @@ interface Props {
   consecutiveCorrect: number;
   onResult: (correct: boolean, userAnswer: string) => void;
   onSkip?: () => void;
+  /** Diagnostika: změřit první pokus, takže po špatné odpovědi se druhý pokus nenabízí. */
+  noRetry?: boolean;
 }
 
 const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
@@ -51,7 +53,7 @@ const MATH_KEYS = [
   { name: "backspace", label: "⌫", insert: "", aria: "Smazat poslední znak" },
 ] as const;
 
-export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult, onSkip }: Props) {
+export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult, onSkip, noRetry }: Props) {
   const [input, setInput]               = useState("");
   const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
@@ -239,7 +241,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   const progressPct = (cardNumber / total) * 100;
   const topicLabel = TEMA_LABELS[example.tema] ?? example.tema;
   const tips = getTips(example.tema);
-  const canRetry = status === "wrong" && wrongAttempts < 2;
+  const canRetry = !noRetry && status === "wrong" && wrongAttempts < 2;
 
   return (
     <>

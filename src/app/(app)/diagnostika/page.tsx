@@ -16,6 +16,8 @@ import { DIAG_WEAK_BELOW } from "@/lib/levels";
 import { usePremium } from "@/lib/premium";
 import { FREE_TOPICS, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { jenPro9 } from "@/components/JenPro9";
+import { useTrida } from "@/lib/trida";
+import Diagnostika5 from "@/components/Diagnostika5";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -567,4 +569,11 @@ function DiagResults({ start, onStart }: { start: { tema: string; label: string 
   );
 }
 
-export default jenPro9(DiagnostikaPage, "Diagnostika");
+const Diagnostika9 = jenPro9(DiagnostikaPage, "Diagnostika");
+
+/** 9. třída má adaptivní diagnostiku s vlastními otázkami, 5. třída vlastní z okruhů 5. třídy (Diagnostika5). */
+export default function DiagnostikaRozcestnik() {
+  const { trida, ready } = useTrida();
+  if (!ready) return null;
+  return trida === 5 ? <Diagnostika5 /> : <Diagnostika9 />;
+}

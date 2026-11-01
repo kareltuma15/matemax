@@ -48,7 +48,7 @@ test("registrace: třídu je nutné vybrat a volba se zapamatuje", async ({ page
 test.describe("stránky jen pro 9. třídu", () => {
   test("žák 5. třídy vidí zprávu „připravujeme“", async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
-    for (const cesta of ["/diagnostika", "/cermat-test"]) {
+    for (const cesta of ["/cermat-test"]) {
       await page.goto(cesta);
       await expect(page.getByTestId("pro-5-pripravujeme"), cesta).toBeVisible();
       await expect(page.getByRole("link", { name: /Jít procvičovat/ })).toBeVisible();
