@@ -4,7 +4,7 @@ import { examples5 } from "../src/data/examples";
 // Karta s více odpověďmi (podúlohy 4.1–4.3 a přiřazování A–F). Testuje se přes /nahled?ids=… — stejná karta jako v tréninku.
 // Test nic nezapisuje na server.
 
-const vic = examples5.filter((e) => e.id.startsWith("P5_VIC_"));
+const vic = examples5.filter((e) => e.id.startsWith("P5_VIC_") && (e.podulohy || e.prirazeni));
 
 async function karta(page: Page, id: string) {
   await page.goto(`/nahled?ids=${id}`);
