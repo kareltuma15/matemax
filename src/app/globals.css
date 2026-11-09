@@ -176,9 +176,21 @@
 body {
   background: var(--surface-1);
   color: var(--text-primary);
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
+
+/* ── Barvy okruhů (proměnné nastavuje temaStyl z lib/barvy-temat.ts) ── */
+.tema-tint      { background: var(--tema-tint); }
+.tema-tint-fill { fill: var(--tema-tint); }
+.tema-text      { color: var(--tema-barva); }
+.tema-plna      { background: var(--tema-barva); color: #fff; }
+.tema-tlacitko  { background: var(--surface-0); border-color: var(--tema-barva); color: var(--tema-barva); }
+
+[data-theme="dark"] .tema-tint      { background: color-mix(in srgb, var(--tema-barva) 32%, var(--surface-0)); }
+[data-theme="dark"] .tema-tint-fill { fill: color-mix(in srgb, var(--tema-barva) 32%, var(--surface-0)); }
+[data-theme="dark"] .tema-text      { color: color-mix(in srgb, var(--tema-barva) 40%, #fff); }
+[data-theme="dark"] .tema-tlacitko  { border-color: color-mix(in srgb, var(--tema-barva) 40%, #fff); color: color-mix(in srgb, var(--tema-barva) 40%, #fff); }
 
 /* ── Dark mode Tailwind overrides ──────────────────────────────
    Non-layered CSS wins over @layer utilities — no !important needed */

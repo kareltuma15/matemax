@@ -5,6 +5,8 @@ import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import MathDisplay from "@/components/MathDisplay";
 import MathText from "@/components/MathText";
 import { playCorrect, playWrong } from "@/lib/sound";
+import KrokyReseni from "@/components/KrokyReseni";
+import { temaStyl } from "@/lib/barvy-temat";
 
 /**
  * Porovnávání zlomků/čísel klikem na znaménko.
@@ -63,8 +65,8 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
       <div className="flex items-center gap-2 text-xs">
         <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
         <span
-          className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0"
-          style={{ background: "#eff6ff", color: "#2E6DA4" }}
+          className="tema-tint tema-text font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0"
+          style={temaStyl(example.tema)}
         >
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
@@ -150,7 +152,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
             <div className="font-bold text-sm" style={{ color: spravne ? "#166534" : "#991b1b" }}>
               {spravne ? "✓ Správně!" : `✕ Správně je ${p.znak}`}
             </div>
-            {example.reseni_kroky.length > 0 && (
+            {spravne && example.reseni_kroky.length > 0 && (
               <ol className="flex flex-col gap-1.5">
                 {example.reseni_kroky.map((krok, i) => (
                   <li key={i} className="flex gap-2 text-sm" style={{ color: "#334155" }}>
@@ -161,6 +163,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
               </ol>
             )}
           </div>
+          {!spravne && <KrokyReseni key={example.id} example={example} />}
           <button
             onClick={() => onResult(spravne, picked)}
             className="rounded-xl px-4 py-3 text-sm font-bold text-white"

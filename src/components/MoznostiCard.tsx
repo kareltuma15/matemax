@@ -8,6 +8,8 @@ import TaskImageView from "@/components/TaskImageView";
 import FitMath, { splitPrompt } from "@/components/FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "@/components/VideoLessonHint";
+import KrokyReseni from "@/components/KrokyReseni";
+import { temaStyl } from "@/lib/barvy-temat";
 
 /**
  * Výběr z možností (A–E) — formát těžších CERMAT úloh. Žák klikne na jednu
@@ -66,8 +68,8 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
       <div className="flex items-center gap-2 text-xs">
         <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
         <span
-          className="font-semibold px-2 py-0.5 rounded-full text-[11px] min-w-0 truncate"
-          style={{ background: "#eff6ff", color: "#2E6DA4" }}
+          className="tema-tint tema-text font-semibold px-2 py-0.5 rounded-full text-[11px] min-w-0 truncate"
+          style={temaStyl(example.tema)}
         >
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
@@ -147,7 +149,7 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
             <div className="font-bold text-sm" style={{ color: spravneVybrano ? "#166534" : "#991b1b" }}>
               {spravneVybrano ? "✓ Správně!" : `✕ Správně je ${PISMENA[spravna]}) ${moznosti[spravna]}`}
             </div>
-            {example.reseni_kroky.length > 0 && (
+            {spravneVybrano && example.reseni_kroky.length > 0 && (
               <ol className="flex flex-col gap-1.5">
                 {example.reseni_kroky.map((krok, i) => (
                   <li key={i} className="flex gap-2 text-sm" style={{ color: "#334155" }}>
@@ -158,6 +160,9 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
               </ol>
             )}
           </div>
+          {!spravneVybrano && (
+            <KrokyReseni key={example.id} example={example} vysledek={<>{PISMENA[spravna]}) <Text ex={example} text={moznosti[spravna]} /></>} />
+          )}
           {videoHint && !spravneVybrano && <VideoLessonHint tema={example.tema} podtema={example.podtema} />}
           <button
             onClick={() => onResult(spravneVybrano, moznosti[picked])}

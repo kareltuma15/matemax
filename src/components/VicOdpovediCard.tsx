@@ -8,6 +8,8 @@ import MathText from "@/components/MathText";
 import TaskImageView from "@/components/TaskImageView";
 import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "@/components/VideoLessonHint";
+import KrokyReseni from "@/components/KrokyReseni";
+import { temaStyl } from "@/lib/barvy-temat";
 
 /**
  * Úloha s více odpověďmi — dva tvary z CERMAT testů pro 5. třídu:
@@ -79,7 +81,7 @@ export default function VicOdpovediCard({ example, cardNumber, total, onResult, 
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-4 fade-in-up" data-testid="vic-odpovedi">
       <div className="flex items-center gap-2 text-xs">
         <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
-        <span className="font-semibold px-2 py-0.5 rounded-full text-[11px] min-w-0 truncate" style={{ background: "#eff6ff", color: "#2E6DA4" }}>
+        <span className="tema-tint tema-text font-semibold px-2 py-0.5 rounded-full text-[11px] min-w-0 truncate" style={temaStyl(example.tema)}>
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
         {podtemaLabel(example.podtema) && (
@@ -251,7 +253,7 @@ export default function VicOdpovediCard({ example, cardNumber, total, onResult, 
                 </span>
               )}
             </div>
-            {example.reseni_kroky.length > 0 && (
+            {vseSpravne && example.reseni_kroky.length > 0 && (
               <ol className="flex flex-col gap-1.5">
                 {example.reseni_kroky.map((krok, i) => (
                   <li key={i} className="flex gap-2 text-sm" style={{ color: "#334155" }}>
@@ -262,6 +264,21 @@ export default function VicOdpovediCard({ example, cardNumber, total, onResult, 
               </ol>
             )}
           </div>
+          {!vseSpravne && (
+            <KrokyReseni
+              key={example.id}
+              example={example}
+              vysledek={
+                prirazeni
+                  ? prirazeni.polozky.map((p, i) => `${i + 1}–${PISMENA[p.spravna]}`).join(", ")
+                  : tvrzeni.length > 0
+                    ? tvrzeni.map((t) => (t.pravda ? "ANO" : "NE")).join(", ")
+                    : podulohy.map((p, i) => (
+                        <span key={i}>{i > 0 && ", "}<Text ex={example} text={p.odpoved} />{p.jednotka ? ` ${p.jednotka}` : ""}</span>
+                      ))
+              }
+            />
+          )}
           {videoHint && !vseSpravne && <VideoLessonHint tema={example.tema} podtema={example.podtema} />}
           <button
             onClick={() => onResult(vseSpravne, odpovedText())}

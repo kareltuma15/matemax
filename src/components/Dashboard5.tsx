@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import TopicMap5 from "@/components/TopicMap5";
+import { HlavickaZnacky } from "@/components/HexIkona";
 import { usePremium } from "@/lib/premium";
 import { vokativ } from "@/lib/vokativ";
 
@@ -26,13 +27,13 @@ export default function Dashboard5({ session }: { session: Session }) {
 
   return (
     <div className="flex flex-col gap-4" data-testid="dashboard-5">
-      <div className="rounded-2xl p-5 text-white" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}>
-        <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#93c5fd" }}>5. třída</p>
+      <HlavickaZnacky>
+        <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#AFACFB" }}>5. třída</p>
         <h1 className="text-2xl font-black mt-1">{jmeno ? `Ahoj, ${vokativ(jmeno)}!` : "Ahoj!"}</h1>
-        <p className="text-sm mt-1" style={{ color: "#dbeafe" }}>
+        <p className="text-sm mt-1" style={{ color: "#D9D8FE" }}>
           Do přijímaček na víceletá gymnázia zbývá <strong className="text-white">{dni} dní</strong>. Procvičuj po malých krocích, ať to stihneš v klidu.
         </p>
-      </div>
+      </HlavickaZnacky>
       <Link href="/diagnostika" data-testid="diagnostika-5-odkaz" className="rounded-2xl border border-blue-200 bg-blue-50 p-4 flex items-center justify-between gap-3">
         <span>
           <span className="block text-sm font-black" style={{ color: "#0D1B3E" }}>Zjisti, kde stojíš</span>

@@ -6,6 +6,8 @@ import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import { checkAnswer, isDifferentForm } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
+import KrokyReseni from "./KrokyReseni";
+import { temaStyl } from "@/lib/barvy-temat";
 import TaskImageView from "./TaskImageView";
 import MathDisplay from "./MathDisplay";
 import FitMath, { splitPrompt } from "./FitMath";
@@ -298,8 +300,8 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           <div className="flex items-center justify-between text-xs mb-2 gap-2">
             <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
             <span
-              className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0 whitespace-nowrap"
-              style={{ background: "#eff6ff", color: "#2E6DA4" }}
+              className="tema-tint tema-text font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0 whitespace-nowrap"
+              style={temaStyl(example.tema)}
             >
               {topicLabel}
             </span>
@@ -312,7 +314,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
             <div
               className="h-3 rounded-full transition-all duration-500"
-              style={{ width: `${progressPct}%`, background: "#0D1B3E" }}
+              style={{ ...temaStyl(example.tema), width: `${progressPct}%`, background: "var(--tema-barva)" }}
             />
           </div>
         </div>
@@ -611,8 +613,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               }}
             >
               <span className="flex items-center gap-2">
-                <span className="text-base">📐</span>
-                Jak se to řeší?
+                {status === "wrong" ? "Projdeme to spolu" : <><span className="text-base">📐</span> Jak se to řeší?</>}
                 {status === "wrong" && !canRetry && !showSolution && (
                   <span
                     className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
@@ -625,7 +626,13 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
               <span className="text-slate-400 text-xs">{showSolution ? "▲ skrýt" : "▼ zobrazit"}</span>
             </button>
 
-            {showSolution && (
+            {showSolution && status === "wrong" && (
+              <div className="p-2" style={{ background: "var(--surface-0)" }}>
+                <KrokyReseni key={example.id} example={example} />
+              </div>
+            )}
+
+            {showSolution && status === "correct" && (
               <div className="px-4 pb-4 pt-2 fade-in-up" style={{ background: "#fff" }}>
                 <ol className="flex flex-col gap-0">
                   {example.reseni_kroky.map((krok, i) => (

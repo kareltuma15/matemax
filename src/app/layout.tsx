@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -8,7 +9,10 @@ import ProgressSync from "@/components/ProgressSync";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
 
-const SITE_DESCRIPTION = `Adaptivní matematický trenér pro žáky 9. třídy. ${EXAMPLES_LABEL} příkladů, chytrý algoritmus, ${DAILY_MINUTES} minut denně.`;
+// Písmo značky; latin-ext kvůli háčkům a čárkám.
+const dmSans = DM_Sans({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-dm-sans" });
+
+const SITE_DESCRIPTION =`Adaptivní matematický trenér pro žáky 9. třídy. ${EXAMPLES_LABEL} příkladů, chytrý algoritmus, ${DAILY_MINUTES} minut denně.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://matemax.matematika-snadno.cz"),
@@ -45,11 +49,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="cs" className="h-full scroll-smooth" suppressHydrationWarning>
+    <html lang="cs" className={`h-full scroll-smooth ${dmSans.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
         {/* Anti-flash: apply theme before first paint */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>

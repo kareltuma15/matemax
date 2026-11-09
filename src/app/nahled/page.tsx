@@ -13,6 +13,8 @@ import ConstructionCard from "@/components/ConstructionCard";
 import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import MoznostiCard from "@/components/MoznostiCard";
 import VicOdpovediCard from "@/components/VicOdpovediCard";
+import TopicMap5 from "@/components/TopicMap5";
+import LoggedInTopicMap from "@/components/LoggedInTopicMap";
 import batch from "@/data/nahled-batch.json";
 
 const batchExamples = (batch.examples as unknown as DBExample[]);
@@ -28,13 +30,22 @@ function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
   return <PracticeCard {...common} consecutiveCorrect={0} />;
 }
 
-/** `/nahled?ids=P5_VIC_01,P5_VIC_02` ukáže úlohy z databáze podle id (kontrola hotových úloh, e2e testy karet); bez `ids` dávka k schválení. */
+/**
+ * `/nahled?ids=P5_VIC_01,P5_VIC_02` ukáže úlohy z databáze podle id (kontrola hotových úloh, e2e testy karet); bez `ids` dávka k schválení.
+ * `/nahled?mapa=5` nebo `?mapa=9` ukáže mapu okruhů dané třídy bez přihlášení, `&premium=1` s odemčenými okruhy (kontrola vzhledu, e2e testy).
+ */
 function NahledPage() {
-  const ids = useSearchParams().get("ids");
+  const params = useSearchParams();
+  const ids = params.get("ids");
+  const mapa = params.get("mapa");
+  const premium = params.get("premium") === "1";
   const examples = ids
     ? ids.split(",").map((id) => allExamples.find((e) => e.id === id.trim()) ?? batchExamples.find((e) => e.id === id.trim())).filter((e): e is DBExample => !!e)
     : batchExamples;
   const [reseni, setReseni] = useState(false);
+  const noop = () => {};
+  if (mapa === "5") return <div className="mx-auto max-w-lg p-4"><TopicMap5 isPremium={premium} onSelectTopic={noop} /></div>;
+  if (mapa === "9") return <div className="overflow-x-hidden py-4"><LoggedInTopicMap isPremium={premium} onSelectTopic={noop} onStartMix={noop} onStartMistakes={noop} /></div>;
   return (
     <div style={{ padding: 20, maxWidth: 480, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20 }}>
       <div>

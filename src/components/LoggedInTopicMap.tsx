@@ -9,6 +9,8 @@ import { computeTrainingState, type Level } from "@/lib/levels";
 import { localLoadSessions } from "@/lib/storage";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { localDateStr, localDateDaysAgo } from "@/lib/date";
+import { temaStyl } from "@/lib/barvy-temat";
+import { HexIkona, HlavickaZnacky } from "@/components/HexIkona";
 
 interface Props {
   isPremium: boolean;
@@ -16,11 +18,6 @@ interface Props {
   onStartMix: () => void;
   onStartMistakes: () => void;
 }
-
-const EMOJI: Record<string, string> = {
-  zlomky: "🍕", vyrazy: "🔢", rovnice: "⚖️", geometrie: "📐",
-  slovni_ulohy: "📝", grafy_logika: "📊", konstrukce: "📏", uhly: "🔺", souhrnne: "🏆",
-};
 
 function useDiagScores(): Record<string, number> {
   const [scores, setScores] = useState<Record<string, number>>({});
@@ -39,13 +36,7 @@ function useDiagScores(): Record<string, number> {
   return scores;
 }
 
-function barColor(score: number): string {
-  if (score >= 70) return "#16a34a";
-  if (score >= 40) return "#d97706";
-  return "#dc2626";
-}
-
-/** Odemčené úrovně L1→L3 jako řada čipů. */
+/** Odemčené úrovně L1→L3 jako řada čipů v barvě okruhu (rodič nastavuje temaStyl). */
 function LevelChips({ level }: { level: Level }) {
   return (
     <div className="flex gap-1">
@@ -54,12 +45,8 @@ function LevelChips({ level }: { level: Level }) {
         return (
           <span
             key={l}
-            className="text-[9px] font-black px-1.5 py-0.5 rounded-full border"
-            style={
-              on
-                ? { background: "#f0fdf4", borderColor: "#bbf7d0", color: "#166534" }
-                : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#cbd5e1" }
-            }
+            className={`text-[9px] font-black px-1.5 py-0.5 rounded-full ${on ? "tema-tint tema-text" : ""}`}
+            style={on ? undefined : { background: "var(--surface-1)", color: "var(--text-muted)" }}
             title={on ? `Úroveň ${l} odemčená` : `Úroveň ${l} zamčená — trénuj níž`}
           >
             L{l}{on ? " ✓" : ""}
@@ -116,17 +103,15 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
     <div className="mx-[calc(50%-50vw)] w-screen px-4">
     <div className="mx-auto max-w-6xl flex flex-col gap-5 fade-in-up">
       {/* Header */}
-      <div className="rounded-2xl px-5 py-4" style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #1e3a6e 100%)" }}>
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg font-black text-white">🏋️ Tréninkové centrum</h1>
-          {!isPremium && (
-            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full glass-card" style={{ color: "#93c5fd" }}>
-              {freeCount} / {TEMATA_ORDER.length} zdarma
-            </span>
-          )}
-        </div>
-        <p className="text-sm text-blue-300 leading-snug mt-0.5">Vyber, jak chceš dnes trénovat.</p>
-      </div>
+      <HlavickaZnacky>
+        <h1 className="text-2xl font-extrabold text-white">Tréninkové centrum</h1>
+        <p className="text-sm leading-snug mt-1" style={{ color: "#D9D8FE" }}>Vyber, jak chceš dnes trénovat.</p>
+        {!isPremium && (
+          <span className="inline-block mt-2.5 text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ background: "rgba(175,172,251,0.22)" }}>
+            {freeCount} z {TEMATA_ORDER.length} témat zdarma
+          </span>
+        )}
+      </HlavickaZnacky>
 
       {/* Režimy tréninku */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -195,14 +180,19 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
                 <Link
                   key={tema}
                   href="/cenik"
-                  className="rounded-2xl p-3.5 flex flex-col gap-2 bg-white border border-slate-200 opacity-70 hover:opacity-100 transition-opacity"
+                  className="rounded-2xl p-3 flex items-center gap-3 bg-white border border-slate-200 card-hover"
+                  style={temaStyl(tema)}
+                  data-tema={tema}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg grayscale">🔒</span>
-                    <span className="text-sm font-bold text-slate-500 truncate">{TEMA_LABELS[tema]}</span>
-                    <span className="ml-auto text-[11px] font-bold text-slate-400 shrink-0">Premium</span>
-                  </div>
-                  <span className="text-[11px] text-slate-400">Odemkni v Premium →</span>
+                  <HexIkona tema={tema} />
+                  <span className="flex-1 min-w-0 flex flex-col gap-0.5">
+                    <span className="text-[15px] font-bold truncate" style={{ color: "var(--text-primary)" }}>{TEMA_LABELS[tema]}</span>
+                    <span className="text-xs text-slate-500">Odemkni v Premium →</span>
+                  </span>
+                  <span className="shrink-0 flex items-center gap-1 text-xs font-bold text-slate-500">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5Z" /></svg>
+                    Premium
+                  </span>
                 </Link>
               );
             }
@@ -211,19 +201,26 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
               <button
                 key={tema}
                 onClick={() => onSelectTopic(tema)}
-                className="text-left rounded-2xl p-3.5 flex flex-col gap-2 bg-white border border-slate-200 card-hover"
+                className="text-left rounded-2xl p-3 flex items-center gap-3 bg-white border border-slate-200 card-hover"
+                style={temaStyl(tema)}
+                data-tema={tema}
               >
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">{EMOJI[tema]}</span>
-                  <span className="text-sm font-bold truncate" style={{ color: "var(--text-primary)" }}>{TEMA_LABELS[tema]}</span>
-                  <span className="ml-auto text-xs font-black shrink-0" style={{ color: score > 0 ? barColor(score) : "#94a3b8" }}>
-                    {score > 0 ? `${score} %` : "—"}
+                <HexIkona tema={tema} />
+                <span className="flex-1 min-w-0 flex flex-col gap-1">
+                  <span className="flex items-center gap-1.5 min-w-0">
+                    <span className="text-[15px] font-bold truncate" style={{ color: "var(--text-primary)" }}>{TEMA_LABELS[tema]}</span>
+                    {tema === missionTema && (
+                      <span className="shrink-0 px-[7px] py-px rounded-full text-[11px] font-extrabold whitespace-nowrap" style={{ background: "#F5A623", color: "#0D1B3E" }}>Začni tady</span>
+                    )}
                   </span>
-                </div>
-                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f7" }}>
-                  <div className="h-full rounded-full" style={{ width: `${score}%`, background: barColor(score) }} />
-                </div>
-                <LevelChips level={level} />
+                  <span className="flex items-center gap-2">
+                    <span className="tema-tint flex-1 h-1.5 rounded-full overflow-hidden">
+                      <span className="block h-full rounded-full" style={{ width: `${score}%`, background: "var(--tema-barva)" }} />
+                    </span>
+                    <span className="tema-text text-xs font-bold shrink-0">{score > 0 ? `${score} %` : "—"}</span>
+                  </span>
+                  <LevelChips level={level} />
+                </span>
               </button>
             );
           })}
