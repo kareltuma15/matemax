@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Číselná osa s 10 shodnými úseky, čísla 0 u 0. dílku a 50 u 5. dílku, písmena A u 8. dílku</title>
+  <rect x="0" y="0" width="400" height="100" fill="#ffffff"/>
+  <line x1="12" y1="46" x2="388" y2="46" stroke="#0D1B3E" stroke-width="2.5"/>
+  <line x1="30" y1="37" x2="30" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="64" y1="37" x2="64" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="98" y1="37" x2="98" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="132" y1="37" x2="132" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="166" y1="37" x2="166" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="200" y1="37" x2="200" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="234" y1="37" x2="234" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="268" y1="37" x2="268" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="302" y1="37" x2="302" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="336" y1="37" x2="336" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <line x1="370" y1="37" x2="370" y2="55" stroke="#0D1B3E" stroke-width="2"/>
+  <text x="30" y="82" font-size="21" font-weight="700" fill="#0D1B3E" text-anchor="middle">0</text>
+  <text x="200" y="82" font-size="21" font-weight="700" fill="#0D1B3E" text-anchor="middle">50</text>
+  <text x="302" y="82" font-size="22" font-weight="800" fill="#c0392b" text-anchor="middle">A</text>
+</svg>

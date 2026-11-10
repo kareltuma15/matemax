@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 506 92" width="506" height="92" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Řetězec rámečků: x, pak postupně + 12, · 4, − 20, : 8, na konci 15</title>
+  <rect x="0" y="0" width="506" height="92" fill="#ffffff"/>
+  <rect x="10" y="32" width="54" height="46" fill="#fff" stroke="#0D1B3E" stroke-width="2.5"/>
+  <text x="37" y="64" font-size="28" font-weight="700" font-style="italic" fill="#0D1B3E" text-anchor="middle">x</text>
+  <line x1="70" y1="56" x2="102" y2="56" stroke="#0D1B3E" stroke-width="2.5"/>
+  <polygon points="112,56 100,50 100,62" fill="#0D1B3E"/>
+  <text x="91" y="46" font-size="22" font-weight="700" fill="#0D1B3E" text-anchor="middle">+ 12</text>
+  <rect x="118" y="32" width="54" height="46" fill="#fff" stroke="#0D1B3E" stroke-width="2.5"/>
+  <line x1="178" y1="56" x2="210" y2="56" stroke="#0D1B3E" stroke-width="2.5"/>
+  <polygon points="220,56 208,50 208,62" fill="#0D1B3E"/>
+  <text x="199" y="46" font-size="22" font-weight="700" fill="#0D1B3E" text-anchor="middle">· 4</text>
+  <rect x="226" y="32" width="54" height="46" fill="#fff" stroke="#0D1B3E" stroke-width="2.5"/>
+  <line x1="286" y1="56" x2="318" y2="56" stroke="#0D1B3E" stroke-width="2.5"/>
+  <polygon points="328,56 316,50 316,62" fill="#0D1B3E"/>
+  <text x="307" y="46" font-size="22" font-weight="700" fill="#0D1B3E" text-anchor="middle">− 20</text>
+  <rect x="334" y="32" width="54" height="46" fill="#fff" stroke="#0D1B3E" stroke-width="2.5"/>
+  <line x1="394" y1="56" x2="426" y2="56" stroke="#0D1B3E" stroke-width="2.5"/>
+  <polygon points="436,56 424,50 424,62" fill="#0D1B3E"/>
+  <text x="415" y="46" font-size="22" font-weight="700" fill="#0D1B3E" text-anchor="middle">: 8</text>
+  <rect x="442" y="32" width="54" height="46" fill="#fff" stroke="#0D1B3E" stroke-width="2.5"/>
+  <text x="469" y="64" font-size="26" font-weight="700"  fill="#0D1B3E" text-anchor="middle">15</text>
+</svg>
