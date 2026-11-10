@@ -3952,7 +3952,8 @@
         "O=2×3,14×3=18,84 cm"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_007",
@@ -3965,7 +3966,8 @@
         "S=3,14×25=78,5 cm²"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_008",
@@ -3978,7 +3980,8 @@
         "c²=9+16=25, c=5 cm"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_009",
@@ -3991,7 +3994,8 @@
         "c²=25+144=169, c=13 cm"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_010",
@@ -4030,7 +4034,8 @@
         "b²=100-36=64, b=8 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_013",
@@ -4043,7 +4048,8 @@
         "h²=100-36=64, h=8 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_014",
@@ -4056,7 +4062,8 @@
         "S=12×8/2=48 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_015",
@@ -4069,7 +4076,8 @@
         "r=7, S=3,14×49=153,86 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_016",
@@ -4082,7 +4090,8 @@
         "O=3,14×20=62,8 cm"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_017",
@@ -4173,7 +4182,8 @@
         "6²+8²=100=10²"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_024",
@@ -4186,7 +4196,8 @@
         "5²+7²=74≠64=8²"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_025",
@@ -4213,7 +4224,8 @@
         "S=6×4/2=12 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_027",
@@ -4226,7 +4238,8 @@
         "300-3,14×9=300-28,26=271,74 m²"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_028",
@@ -4239,7 +4252,8 @@
         "t²=10²-6²=64, t=8 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_031",
@@ -4278,7 +4292,8 @@
         "d²=144+25=169, d=13 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_034",
@@ -4291,7 +4306,8 @@
         "d²=225+64=289, d=17 m"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_035",
@@ -4330,7 +4346,8 @@
         "1,1²=1,21 → +21 %"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_039",
@@ -4397,7 +4414,8 @@
         "l=2×3,14×10×60/360=10,47 cm"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_044",
@@ -4410,7 +4428,8 @@
         "S=3,14×64×90/360=50,24 cm²"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_047",
@@ -4477,7 +4496,8 @@
         "S=5×12=60 cm²"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_052",
@@ -4492,12 +4512,13 @@
         "Obsah: (10 + 4) : 2 · 4 = 28 cm²."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_053",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 3,
       "zadani": "Fotka 10×15 cm se zvětší tak, že kratší strana je 25 cm. Jak dlouhá bude delší strana?",
       "odpoved": "37,5 cm",
@@ -4533,7 +4554,8 @@
         "Obvod: 3,14 · 66,04 = 207,3656 ≈ 207,37 cm."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_056",
@@ -4563,8 +4585,8 @@
     },
     {
       "id": "GEO_058",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "slovni_ulohy",
+      "podtema": "pomer_meritko",
       "obtiznost": 2,
       "zadani": "Mapu v měřítku 1:50 000. Na mapě vzdálenost 3 cm. Skutečná vzdálenost?",
       "odpoved": "1,5 km",
@@ -4611,7 +4633,8 @@
         "S=3,14×25/2=39,25 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_062",
@@ -4626,7 +4649,8 @@
         "odvěsny: 9 a 12 cm"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_063",
@@ -4641,7 +4665,8 @@
         "Kruh má větší obsah než čtverec (při stejném obvodu má největší obsah kruh)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 2
+      "sm2_interval": 2,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_064",
@@ -4658,8 +4683,8 @@
     },
     {
       "id": "GEO_065",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "vnitrni_uhly",
       "obtiznost": 3,
       "zadani": "Úhly trojúhelníku jsou v poměru 1:2:3. Jaké jsou úhly?",
       "odpoved": "30°, 60°, 90°",
@@ -4681,7 +4706,8 @@
         "100-3,14×25=100-78,5=21,5 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_067",
@@ -4694,7 +4720,8 @@
         "1500-4×78,5=1500-314=1186 cm²"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_068",
@@ -4707,7 +4734,8 @@
         "d²=144+25=169, d=13 m"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_069",
@@ -4726,8 +4754,8 @@
     },
     {
       "id": "GEO_070",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "mnohouhelnik",
       "obtiznost": 3,
       "zadani": "Pětiúhelník má vnitřní úhly 110°, 120°, 95°, 130° a x. Jaký je x?",
       "odpoved": "85°",
@@ -7708,8 +7736,8 @@
     },
     {
       "id": "GEO_073",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "kruznice_opsana",
       "obtiznost": 1,
       "zadani": "Bod P leží na kružnici. AB je průměr. Jak velký je úhel APB (Thaletova věta)?",
       "odpoved": "90°",
@@ -7721,8 +7749,8 @@
     },
     {
       "id": "GEO_076",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "mnohouhelnik",
       "obtiznost": 1,
       "zadani": "Jaký je součet vnitřních úhlů pětiúhelníku?",
       "odpoved": "540°",
@@ -7747,8 +7775,8 @@
     },
     {
       "id": "GEO_078",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "pravidelny_mnohouhelnik",
       "obtiznost": 2,
       "zadani": "Vnitřní úhel pravidelného osmiúhelníku?",
       "odpoved": "135°",
@@ -7760,8 +7788,8 @@
     },
     {
       "id": "GEO_079",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "mnohouhelnik",
       "obtiznost": 2,
       "zadani": "Kolik úhlopříček má šestiúhelník?",
       "odpoved": "9",
@@ -7773,8 +7801,8 @@
     },
     {
       "id": "GEO_080",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "pravidelny_mnohouhelnik",
       "obtiznost": 2,
       "zadani": "Vnější úhel pravidelného dvanáctiúhelníku?",
       "odpoved": "30°",
@@ -7809,7 +7837,8 @@
         "b = sqrt(13^2 - 5^2) = sqrt(169 - 25) = sqrt(144) = 12 cm"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_083",
@@ -7823,7 +7852,8 @@
         "h = sqrt(13^2 - 5^2) = sqrt(144) = 12 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_084",
@@ -7850,7 +7880,8 @@
         "S = 6 × 8 = 48 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "GEO_086",
@@ -7864,7 +7895,8 @@
         "S = pi × r^2 = 3,14 × 49 = 153,86 cm²"
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_087",
@@ -9321,8 +9353,8 @@
     },
     {
       "id": "GEO_D1",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "vnitrni_uhly",
       "obtiznost": 1,
       "zadani": "V trojúhelníku ABC je α = 60° a β = 70°. Urči velikost úhlu γ.",
       "odpoved": "50°",
@@ -9345,8 +9377,8 @@
     },
     {
       "id": "GEO_D2",
-      "tema": "geometrie",
-      "podtema": "rovinne",
+      "tema": "uhly",
+      "podtema": "vnitrni_uhly",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník má u vrcholu B úhel 35°. Urči úhel γ u vrcholu C.",
       "odpoved": "55°",
@@ -9482,7 +9514,8 @@
         "o = 31,4 cm."
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_K2",
@@ -9504,7 +9537,8 @@
         "S = 28,26 cm²."
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEO_K3",
@@ -9526,7 +9560,8 @@
         "o = 31,4 cm."
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "KOL_1",
@@ -10252,7 +10287,8 @@
         "Celkem = 36 + 9 = 45 cm². Správně je B)."
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "MOZ_3",
@@ -11238,7 +11274,8 @@
         "δ = 180° − 36° = 144°. Správně D)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_02",
@@ -11271,7 +11308,8 @@
         "δ = 180° − 30° = 150°. Správně C)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_05",
@@ -11300,7 +11338,8 @@
         "α = 65°. Správně B)."
       ],
       "cas_sekund": 130,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_06",
@@ -11329,7 +11368,8 @@
         "β = 40°. Správně B)."
       ],
       "cas_sekund": 130,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_07",
@@ -11358,7 +11398,8 @@
         "γ = 180° − 155° = 25°. Správně B)."
       ],
       "cas_sekund": 130,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_08",
@@ -11435,7 +11476,8 @@
         "α = 53°30′. Správně B)."
       ],
       "cas_sekund": 130,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB1_01",
@@ -11553,7 +11595,8 @@
         "o = 43,96 cm."
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEOB1_06",
@@ -11647,7 +11690,8 @@
         "Zahradník zaplatí 6 280 Kč."
       ],
       "cas_sekund": 100,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "GEOB2_02",
@@ -11821,7 +11865,8 @@
         "Pytel nejde koupit napůl, proto se zaokrouhlí nahoru: 5 pytlů."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "obvod_obsah"
     },
     {
       "id": "GEOB2_09",
@@ -11899,7 +11944,8 @@
         "Obsah = (10 · 12) / 2 = 60 cm². Správně je B)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_02",
@@ -11929,7 +11975,8 @@
         "16 · (rozdíl výšek) = 96, takže rozdíl výšek je 96 : 16 = 6 cm. Správně je C)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_03",
@@ -11960,7 +12007,8 @@
         "Povrch = 600 + 0 + 8 = 608 cm². Správně je D)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_04",
@@ -11990,7 +12038,8 @@
         "Objem B je o 25 % větší než objem A. Správně je B)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_05",
@@ -12020,7 +12069,8 @@
         "Objem A je o 40 % menší než objem C. Správně je C)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_06",
@@ -12042,7 +12092,8 @@
         "Povrch kvádru: S = 2 · (10 · 4 + 10 · 4 + 4 · 4) = 2 · 96 = 192 cm²."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_07",
@@ -12064,7 +12115,8 @@
         "Obsah výseče je přímo úměrný jejímu úhlu, proto 120° : 30° = 4. Bílá část je 4krát větší než šedá."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_08",
@@ -12086,7 +12138,8 @@
         "o = 24 + (1/12) · 75,36 = 24 + 6,28 = 30,28 ≈ 30,3 cm."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_09",
@@ -12108,7 +12161,8 @@
         "Nejmenší celé číslo větší než 11 je 12 cm."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_10",
@@ -12130,7 +12184,8 @@
         "Největší celé číslo menší než 29 je 28 cm."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_11",
@@ -12161,7 +12216,8 @@
         "Obvod = 46 + 0 + 6 = 52 cm. Správně je D)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_12",
@@ -12183,7 +12239,8 @@
         "Trávník: 400 − 162 = 238 m²."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GEOB3_13",
@@ -12205,7 +12262,8 @@
         "Dlažba: 20 · 20 − 314 = 400 − 314 = 86 m²."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_01",
@@ -12221,7 +12279,8 @@
         "Rozdíl: $\\dfrac{5}{6} - \\dfrac{2}{3} = \\dfrac{5}{6} - \\dfrac{4}{6} = \\dfrac{1}{6}$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_02",
@@ -12237,7 +12296,8 @@
         "Součet: $-\\dfrac{9}{14} + \\dfrac{1}{2} = -\\dfrac{9}{14} + \\dfrac{7}{14} = -\\dfrac{2}{14} = -\\dfrac{1}{7}$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_03",
@@ -12253,7 +12313,8 @@
         "Podíl: $\\dfrac{19}{24} : \\dfrac{5}{12} = \\dfrac{19}{24} \\cdot \\dfrac{12}{5} = \\dfrac{19}{10}$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_04",
@@ -12269,7 +12330,8 @@
         "Podíl: $\\dfrac{9}{4} : \\dfrac{2}{3} = \\dfrac{9}{4} \\cdot \\dfrac{3}{2} = \\dfrac{27}{8}$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_05",
@@ -12285,7 +12347,8 @@
         "$C = \\left(\\dfrac{7}{12} + \\dfrac{40}{12}\\right) : 2 = \\dfrac{47}{12} \\cdot \\dfrac{1}{2} = \\dfrac{47}{24}$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_06",
@@ -12301,7 +12364,8 @@
         "Podíl: $\\dfrac{1}{144} : \\dfrac{5}{24} = \\dfrac{1}{144} \\cdot \\dfrac{24}{5} = \\dfrac{24}{720} = \\dfrac{1}{30}$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_07",
@@ -12318,7 +12382,8 @@
         "Výsledek: $\\dfrac{6}{13} \\cdot \\dfrac{13}{6} = 1$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_08",
@@ -12334,7 +12399,8 @@
         "Součet: $\\dfrac{1}{2} + \\dfrac{3}{7} = \\dfrac{7}{14} + \\dfrac{6}{14} = \\dfrac{13}{14}$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_09",
@@ -12349,7 +12415,8 @@
         "Odečítáme záporné číslo, tedy přičítáme: $\\dfrac{3}{4} - \\left(-\\dfrac{3}{4}\\right) = \\dfrac{3}{4} + \\dfrac{3}{4} = \\dfrac{6}{4} = \\dfrac{3}{2}$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ZLO3_10",
@@ -12366,7 +12433,8 @@
         "Rozdíl: $\\dfrac{7}{10} - \\dfrac{2}{5} = \\dfrac{7}{10} - \\dfrac{4}{10} = \\dfrac{3}{10}$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_01",
@@ -12389,7 +12457,8 @@
         "$(36 - 11a)(36 + 11a)$",
         "$(6 - 121a)(6 + a)$"
       ],
-      "spravna": 2
+      "spravna": 2,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_02",
@@ -12412,7 +12481,8 @@
         "Rozdíl: 4x² − 12x + 9 − 4x² + 9 = −12x + 18. Správně je C)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_03",
@@ -12435,7 +12505,8 @@
         "−4 − 6 − 2 = −12. Správně je A)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_04",
@@ -12457,7 +12528,8 @@
         "(2025 − 2024)(2025 + 2024) = 1 · 4049 = 4049. Správně je C)."
       ],
       "cas_sekund": 100,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_05",
@@ -12480,7 +12552,8 @@
         "$12n^{2} - 2n + \\dfrac{1}{3}$",
         "$12n^{2} + \\dfrac{1}{3}$"
       ],
-      "spravna": 1
+      "spravna": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_06",
@@ -12504,7 +12577,8 @@
         "$2x + 7$",
         "$-2x^{2} + 2x + 7$"
       ],
-      "spravna": 3
+      "spravna": 3,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_07",
@@ -12528,7 +12602,8 @@
         "$\\dfrac{3^{18}}{3^{18}} = 1$. Správně je A)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_08",
@@ -12550,7 +12625,8 @@
         "289 < 300 < 324, tedy 17 < √300 < 18. Správně je B)."
       ],
       "cas_sekund": 100,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_09",
@@ -12566,7 +12642,8 @@
         "Kontrola přímým dosazením: $25 \\cdot 9 - 30 + 1 = 225 - 30 + 1 = 196$."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "VYR3_10",
@@ -12589,7 +12666,8 @@
         "$(x - 1)(x + 1)$",
         "$(x - 1)(x + 5)$"
       ],
-      "spravna": 4
+      "spravna": 4,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_01",
@@ -12606,7 +12684,8 @@
         "Zkouška: $L = \\dfrac{10}{4} - \\dfrac{13}{6} = \\dfrac{1}{3}$, $P = \\dfrac{7}{3} - 2 = \\dfrac{1}{3}$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_02",
@@ -12623,7 +12702,8 @@
         "Zkouška: $L = 0{,}5 \\cdot 12 - 0{,}2 \\cdot 49 = 6 - 9{,}8 = -3{,}8$ a $P = 1 - 0{,}3 \\cdot 16 = 1 - 4{,}8 = -3{,}8$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_03",
@@ -12640,7 +12720,8 @@
         "Zkouška: $L = \\dfrac{14}{2} - \\left(5 - \\dfrac{3}{3}\\right) = 7 - 4 = 3 = P$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_04",
@@ -12656,7 +12737,8 @@
         "Rovnice: $4x - 13 = 3x + 1$, tedy $x = 14$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_05",
@@ -12680,7 +12762,8 @@
         "rovnice má nekonečně mnoho řešení",
         "rovnice má řešení $x = -3$"
       ],
-      "spravna": 2
+      "spravna": 2,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_06",
@@ -12705,7 +12788,8 @@
         "$x = -1$, $y = 5$",
         "$x = 3$, $y = -1$"
       ],
-      "spravna": 0
+      "spravna": 0,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_07",
@@ -12730,7 +12814,8 @@
         "$x = 3$, $y = 5$",
         "$x = 8$, $y = 0$"
       ],
-      "spravna": 0
+      "spravna": 0,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_08",
@@ -12747,7 +12832,8 @@
         "Zkouška: $L = \\dfrac{8}{4} - \\dfrac{3}{3} = 1 = P$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_09",
@@ -12764,7 +12850,8 @@
         "Zkouška: $L = \\dfrac{1}{3} - \\dfrac{7}{2} = -\\dfrac{19}{6}$ a $P = \\dfrac{1}{2} - \\dfrac{11}{3} = -\\dfrac{19}{6}$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_10",
@@ -12788,7 +12875,8 @@
         "20",
         "30"
       ],
-      "spravna": 2
+      "spravna": 2,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_01",
@@ -12837,7 +12925,8 @@
         "Autobusem nebo pěšky jezdí 30 % + 30 % = 60 % třídy: 0,6 · 40 = 24 žáků. Správně je C)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_02",
@@ -12921,7 +13010,8 @@
         "0,5 hodiny je 30 minut. Správně je C)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_06",
@@ -12952,7 +13042,8 @@
         "Protože 1 a = 100 m², pozemek má 600 : 100 = 6 a. Správně je B)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_07",
@@ -12982,7 +13073,8 @@
         "Potkají se za 240 : 150 = 1,6 h = 1 h 36 min po 8:30, tedy v 10:06. Správně je D)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_08",
@@ -13005,7 +13097,8 @@
         "Průměrná rychlost = celá dráha : celý čas = 360 : 10/3 = 108 km/h. Správně je C); průměr 105 km/h z rychlostí 90 a 120 by byl chybný, protože se jelo různě dlouho."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_10",
@@ -13028,7 +13121,8 @@
         "Bazén se naplní za 8 hodin. Správně je C)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_11",
@@ -13122,7 +13216,8 @@
         "Správně je C). Odpověď 14 (=10 + 4) by byla chybná, protože počet dělníků se zvyšuje nepřímo úměrně."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO2_16",
@@ -13212,7 +13307,8 @@
         "Počet vyhrazených míst (24) se nezměnil, jen kapacita haly kolem nich vzrostla. Nárůst: 480 − 192 = 288 míst. Správně je C)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_20",
@@ -13259,7 +13355,8 @@
         "40 % je přesně dvě pětiny. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_21",
@@ -13306,7 +13403,8 @@
         "Poměr žito : pšenice = 45 : 90 = 1 : 2. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_22",
@@ -13353,7 +13451,8 @@
         "Tvrzení je nepravdivé — Ne."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_23",
@@ -13369,7 +13468,8 @@
         "Zkouška: po změně 10 + 3 = 13 chlapců a 15 − 2 = 13 dívek — souhlasí."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_24",
@@ -13385,7 +13485,8 @@
         "Celou trasu 13,5 km ujede za 13,5 : 0,25 = 54 minut."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_25",
@@ -13407,7 +13508,8 @@
         "Zbývající úsek ke rozhledně je celá délka mínus tento úsek: x − 5/6 x = 1/6 x. Správně je A)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_26",
@@ -13423,7 +13525,8 @@
         "Celkem: 20 + 5 + 9 = 34 km."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_27",
@@ -13438,7 +13541,8 @@
         "Na konci 12. sekundy (kdy nastanou akce robotů A, B i C současně: +2 +6 −8 = 0 oproti 11. sekundě) je v nádobě 24 kuliček."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_28",
@@ -13453,7 +13557,8 @@
         "V 15. sekundě nastanou akce robotů A i B zároveň (15 je dělitelné 3): +2 +6 = +8, takže hodnota vzroste z 28 na 36 — poprvé přes 30. Robot C v 15. sekundě nezasahuje (15 není dělitelné 4)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_29",
@@ -13475,7 +13580,8 @@
         "Celková částka je 800 + 90x. Správně je B)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLO3_30",
@@ -13491,7 +13597,8 @@
         "Zkouška: Tomáš 800 + 90 · 25 = 3 050 Kč, Lucie 150 · 25 = 3 750 Kč, rozdíl 700 Kč."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA2_01",
@@ -13557,7 +13664,8 @@
         "Šedých čtverců v 1.–4. obrazci: 0, 1, 9, 73. Poslední (4.) obrazec má 73 šedých čtverců."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_04",
@@ -13578,7 +13686,8 @@
         "Rozdíl je 6 − 4 = 2 dílky. Vztaženo k 7. třídám (základ 4 dílky): 2 : 4 = 0,5, což je 50 %."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_05",
@@ -13600,7 +13709,8 @@
         "Žáků 7. tříd ve volejbalovém oddílu je 6 dílků, tedy 6 · 5 = 30 žáků."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_06",
@@ -13631,7 +13741,8 @@
         "V atletickém oddílu je poměr 3 : 8. Správně je B)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_07",
@@ -13658,7 +13769,8 @@
         "3 z 40 žáků je 3 : 40 = 0,075, tedy 7,5 %. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_08",
@@ -13684,7 +13796,8 @@
         "Všech žáků je 12 : 0,3 = 40. Přesně 40, ne více než 40. Tvrzení je nepravdivé — Ne."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_09",
@@ -13711,7 +13824,8 @@
         "Do aquaparku i na turistiku se hlásí 12 žáků — stejný počet. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_10",
@@ -13737,7 +13851,8 @@
         "Dívky: 2 + 7 + 8 + 4 + 3 = 24. Počty jsou stejné. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_11",
@@ -13764,7 +13879,8 @@
         "Tvrzení je nepravdivé — Ne."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_12",
@@ -13790,7 +13906,8 @@
         "Chlapců je o 8 − 2 = 6 víc, vztaženo k dívkám (základ 2): 6 : 2 = 3, tedy o 300 % více. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_13",
@@ -13811,7 +13928,8 @@
         "Desátý obrazec má 10 řad: 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55 bílých kruhů."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_14",
@@ -13832,7 +13950,8 @@
         "Hledáme (n − 1) · (n − 1) = 225, tedy n − 1 = 15 a n = 16."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "GRA3_15",
@@ -13854,7 +13973,8 @@
         "Tmavých kruhů má (17 − 1) · (17 − 1) = 16 · 16 = 256."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "KONS1_01",
@@ -15342,7 +15462,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_02",
@@ -15485,7 +15606,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_03",
@@ -15623,7 +15745,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_04",
@@ -15749,7 +15872,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_05",
@@ -15899,7 +16023,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_06",
@@ -16062,7 +16187,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS1_05",
@@ -16682,7 +16808,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_08",
@@ -16820,7 +16947,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS3_09",
@@ -16928,7 +17056,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "KONS2_11",
@@ -17293,7 +17422,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "SOU1_04",
@@ -17400,7 +17530,8 @@
         "Kontrola: obdélník má strany 48 m a 72 m, obvod 240 m = 4 · 60 m."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_02",
@@ -17430,7 +17561,8 @@
         "3 456 : 3 600 = 0,96, tedy 96 %. Správně je C). (Při stejném obvodu má čtverec největší obsah, obdélník proto vychází menší.)"
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_03",
@@ -17459,7 +17591,8 @@
         "Šedá plocha: 100 − 78,5 = 21,5 cm², tedy 21,5 % obsahu čtverce. Správně je C). (78,5 % je podíl samotného kruhu.)"
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_04",
@@ -17492,7 +17625,8 @@
         "Hladina vystoupí o 1 728 : 1 800 = 0,96 cm. Správně je B). (Voda nepřeteče: 25,96 cm < 40 cm.)"
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_05",
@@ -17508,7 +17642,8 @@
         "Obsah: 14 · 8 = 112 cm²."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_06",
@@ -17523,7 +17658,8 @@
         "Výška klesla o 1 m, což je 1 : 4 = 25 % původní výšky."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_07",
@@ -17538,7 +17674,8 @@
         "Obsah: 16 · 12 = 192 cm²."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_08",
@@ -17570,7 +17707,8 @@
         "Kvádr má rozměry 4 × 4 × 8 cm. Povrch: 2 · (4 · 4) + 4 · (4 · 8) = 32 + 128 = 160 cm². Správně je C). (Číslo 128 je objem, ne povrch.)"
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_09",
@@ -17619,7 +17757,8 @@
         "(Průměr procent jednotlivých tříd by vyšel jen přibližně — třídy mají různé počty žáků, počítá se podíl ze součtů.)"
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_10",
@@ -17634,7 +17773,8 @@
         "Rozdíl: 120° − 100° = 20°."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_11",
@@ -17660,7 +17800,8 @@
         "16 : 240 = 1/15. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_12",
@@ -17686,7 +17827,8 @@
         "Tvrzení (232 m²) je nepravdivé — Ne."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU3_13",
@@ -17712,7 +17854,8 @@
         "64 : 16 = 4. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD1_01",
@@ -18056,7 +18199,8 @@
         "Zbývá 180 − 36 = 144 turistodnů. Turistů je teď 12 + 6 = 18, zásoba vystačí na 144 : 18 = 8 dní."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_02",
@@ -18078,7 +18222,8 @@
         "Pět pekařů za 8 hodin: 5 · 8 · 10 = 400 housek. Správně je D)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_03",
@@ -18093,7 +18238,8 @@
         "0,6 : 3 = 0,2, tedy o 20 % kratší. (Rychlost vzrostla o 25 %, doba se ale zkrátila jen o 20 % — úměra je nepřímá.)"
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_04",
@@ -18138,7 +18284,8 @@
         "Čtyři stroje potřebují 60 : 4 = 15 hodin, ne 16. Tvrzení je nepravdivé — Ne."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_05",
@@ -18183,7 +18330,8 @@
         "Osm strojů potřebuje 60 : 8 = 7,5 hodiny. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_06",
@@ -18228,7 +18376,8 @@
         "Při dvojnásobném počtu strojů se doba výroby zkrátí na polovinu (např. 3 stroje 20 h, 6 strojů 10 h). Tvrzení je nepravdivé — Ne."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_07",
@@ -18250,7 +18399,8 @@
         "Roznásobíme: 120 + 80x − 80 = 80x + 40. Správně je B). (Výraz 80x + 120 by platil, kdyby první hodina byla navíc.)"
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_08",
@@ -18265,7 +18415,8 @@
         "Zkouška: Eva 7 hodin = 600 Kč, Jana 9 hodin = 760 Kč, dohromady 1 360 Kč."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_09",
@@ -18280,7 +18431,8 @@
         "Celkem 2 + 3 = 5 hodin."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SLD3_10",
@@ -18295,7 +18447,8 @@
         "Celou práci by C udělal za 8 dní."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN1_01",
@@ -18540,7 +18693,8 @@
         "Úhel u B: 240° : 2 = 120°. Správně je C). (240° je součet obou shodných úhlů.)"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN2_04",
@@ -18676,7 +18830,8 @@
         "γ = 180° − 50° − 70° = 60°. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN2_10",
@@ -18702,7 +18857,8 @@
         "Úhel ACD má 30°, ne 25° — Ne."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN2_11",
@@ -18728,7 +18884,8 @@
         "V trojúhelníku ADC: 180° − 50° − 30° = 100°. Tvrzení je pravdivé — Ano."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN2_12",
@@ -18825,7 +18982,8 @@
         "(116° je součet α + β, 58° je jeho polovina.)"
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_02",
@@ -18848,7 +19006,8 @@
         "Úhel ACB = úhel SCB + úhel SCA = 35° + 30° = 65°."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_03",
@@ -18878,7 +19037,8 @@
         "Úhel CAE = 120° − 30° − 30° = 60°. Správně je C)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_04",
@@ -18900,7 +19060,8 @@
         "Úhel VCD = ACV − ACD = 42° − 30° = 12°."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_05",
@@ -18931,7 +19092,8 @@
         "(72° je velikost úhlů při základně.)"
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_06",
@@ -18961,7 +19123,8 @@
         "Úhly AEB a AEC jsou vedlejší: 180° − 35° = 145°. Správně je D)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_07",
@@ -18983,7 +19146,8 @@
         "Rozdíl: 240° − 80° = 160° (menší z obou úhlů je 160°, druhý je 200°)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_08",
@@ -19006,7 +19170,8 @@
         "Největší je α = 80°."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_09",
@@ -19037,7 +19202,8 @@
         "(Výsledek je vždy 90° — polovina z 180° — bez ohledu na velikost úhlu 70°.)"
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_10",
@@ -19060,7 +19226,8 @@
         "Osa o úhel β půlí: φ = 26° : 2 = 13°."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_11",
@@ -19082,7 +19249,8 @@
         "Úhly při základně AD: ω = (180° − 144°) : 2 = 18°."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_12",
@@ -19104,7 +19272,8 @@
         "Třetí úhel tohoto trojúhelníku je 180° − 90° − 55° = 35°. Úhel γ je k němu vrcholový, takže γ = 35°."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_13",
@@ -19134,7 +19303,8 @@
         "Úhel α je tupý, tedy 180° − 65° = 115°. Správně je C). (Druhé rameno druhého trojúhelníku pro výpočet nepotřebujeme.)"
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHN3_14",
@@ -19164,7 +19334,8 @@
         "V trojúhelníku ABX je úhel ABX = 180° − 48° − 64° = 68°. Úhel ABC je pravý, takže α = 90° − 68° = 22°. Správně je B)."
       ],
       "cas_sekund": 330,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_01",
@@ -19202,7 +19373,8 @@
         "Obsah vzroste o 44 %. Správně je C). (20 % je změna strany, 40 % je chyba při sčítání.)"
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_03",
@@ -19251,7 +19423,8 @@
         "45 : 30 = 1,5, obvod je o 50 % větší — Ano."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_05",
@@ -19277,7 +19450,8 @@
         "121,5 : 54 = 2,25, obsah je 2,25krát větší, tedy o 125 % — Ne."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_06",
@@ -19303,7 +19477,8 @@
         "Obsah 13,5 · 9 = 121,5 cm² — Ano."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_07",
@@ -19325,7 +19500,8 @@
         "Objem vzroste o 72,8 %. Správně je D). (72 % vznikne chybným zaokrouhlením.)"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_08",
@@ -19363,7 +19539,8 @@
         "1/5 je 30 litrů, celý objem je 5 · 30 = 150 litrů. Správně je E)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_10",
@@ -19386,7 +19563,8 @@
         "Je levnější o 100 % − 72 % = 28 %. Správně je B). (30 % vznikne sečtením slev.)"
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_11",
@@ -19465,7 +19643,8 @@
         "Helma stála původně 600 Kč: 600 · 1,25 = 750 Kč — Ano."
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_14",
@@ -19514,7 +19693,8 @@
         "Zdražilo o 10 000 − 8 000 = 2 000 Kč, ne o 2 500 Kč — Ne."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_15",
@@ -19563,7 +19743,8 @@
         "1,25 · 0,8 = 1, takže cena se vrátí na původní hodnotu — Ano."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_16",
@@ -19685,7 +19866,8 @@
         "Obvod: 2 · (6 + 8) = 28 m. Správně je B)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_23",
@@ -19714,7 +19896,8 @@
         "Zeleně je zbarvena 3/8 obsahu kola. Správně je B). (1/4 jsou modré výseče.)"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_24",
@@ -19818,7 +20001,8 @@
         "Ostatní výseče tvoří 100 % − 25 % = 75 % (6/8 = 0,75). Správně je D)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_28",
@@ -19870,7 +20054,8 @@
         "15v : 2 = 54, takže v = 108 : 15 = 7,2 cm. Správně je B)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_31",
@@ -20016,7 +20201,8 @@
         "Objem 5³ = 125 cm³. Správně je C)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU2_38",
@@ -21127,7 +21313,8 @@
         "Odečteme $c$: $a = \\dfrac{2S}{v} - c$. Správně je A)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_12",
@@ -21150,7 +21337,8 @@
         "Obě strany vydělíme $v$: $S = \\dfrac{3V}{v}$. Správně je D)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_13",
@@ -21174,7 +21362,8 @@
         "Vydělíme třemi: $a = \\dfrac{2c + b}{3}$. Správně je B)."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_16",
@@ -21191,7 +21380,8 @@
         "Obsah je $9 \\cdot 11 = 99$ cm²."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_18",
@@ -21208,7 +21398,8 @@
         "Zkouška: $3 \\cdot (3 + 4) = 21$ a $5 \\cdot 3 + 6 = 21$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_20",
@@ -21225,7 +21416,8 @@
         "Zkouška: slepic je 18, nohou $2 \\cdot 18 + 4 \\cdot 12 = 36 + 48 = 84$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_21",
@@ -21249,7 +21441,8 @@
         "Zkouška: vlevo $3 \\cdot (-1 - 1) = -6$, vpravo $2 \\cdot (-1) - 4 = -6$. Správně je B)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_22",
@@ -21270,7 +21463,8 @@
         "Rovnice nemá žádné řešení, tvrzení je nepravdivé."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_23",
@@ -21286,7 +21480,8 @@
         "Upravíme: $5x = 16$, tedy $x = \\dfrac{16}{5}$ (což je $3{,}2$)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV3_24",
@@ -21303,7 +21498,8 @@
         "Zkouška: vlevo $24 + 7 = 31$, vpravo $32 - 1 = 31$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "ROV1_01",

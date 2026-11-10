@@ -1032,7 +1032,7 @@
     },
     {
       "id": "t04_09",
-      "tema": "vyrazy",
+      "tema": "geometrie",
       "podtema": "pythagorova_veta",
       "obtiznost": 1,
       "zadani": "Pravoúhlý trojúhelník má odvěsny 6 cm a 8 cm. Vypočítejte přeponu.",
@@ -1080,7 +1080,7 @@
     },
     {
       "id": "t04_13",
-      "tema": "vyrazy",
+      "tema": "geometrie",
       "podtema": "pythagorova_veta",
       "obtiznost": 2,
       "zadani": "Kosočtverec má stranu 13 cm a kratší úhlopříčku 10 cm. Vypočítejte delší úhlopříčku.",
@@ -1182,7 +1182,7 @@
     },
     {
       "id": "t04_19",
-      "tema": "vyrazy",
+      "tema": "geometrie",
       "podtema": "pythagorova_veta",
       "obtiznost": 3,
       "zadani": "Žebřík je opřen o zeď. Spodek žebříku je 2,4 m od zdi, žebřík má délku 4 m. V jaké výšce se dotýká zdi?",
@@ -1571,7 +1571,8 @@
         "Obvod: o = 2πr = 2 × 3,14 × 7 = 43,96 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "t06_05",
@@ -1584,7 +1585,8 @@
         "S = πr² = 3,14 × 5² = 3,14 × 25 = 78,5 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "t06_06",
@@ -1637,7 +1639,8 @@
         "c = √169 = 13 cm"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "pythagoras"
     },
     {
       "id": "t06_10",
@@ -1680,7 +1683,8 @@
         "Obsah = πr² = 3,14 × 100 = 314 m²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "t06_13",
@@ -1711,7 +1715,8 @@
         "Obvod: 20 + 4 + 6,28 = 30,28 cm."
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "t06_16",
@@ -1727,7 +1732,8 @@
         "Plocha mimo: 100 − 78,5 = 21,5 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "t06_17",
@@ -1772,7 +1778,8 @@
         "Mezikruží: 200,96 − 78,5 = 122,46 cm²"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "kruh"
     },
     {
       "id": "t07_01",

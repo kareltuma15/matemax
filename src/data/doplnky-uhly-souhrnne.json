@@ -94,7 +94,8 @@
         "V trojúhelníku ABS: ASB = 180° − 25° − 25° = 130°."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_02",
@@ -109,7 +110,8 @@
         "Výsledek: 135°."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_03",
@@ -124,7 +126,8 @@
         "V trojúhelníku ACD: ADC = 180° − α − 35° = 180° − 50° − 35° = 95°."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_04",
@@ -139,7 +142,8 @@
         "AEB = 35° + 42° = 77°."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "UHL_L3_05",
@@ -154,7 +158,8 @@
         "2α = 80° → α = β = 40°."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "SOU_L1_01",

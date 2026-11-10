@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
+import { dovednostUlohy, nazevDovednosti, TESTOVE } from "@/lib/dovednosti";
 import { checkAnswer, isDifferentForm } from "@/lib/normalize";
 import { getTips } from "@/lib/tips";
 import MathText from "./MathText";
@@ -305,7 +306,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             >
               {topicLabel}
             </span>
-            {podtemaLabel(example.podtema) && (
+            {example.dovednost !== "testove" && podtemaLabel(example.podtema) && (
               <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[80px]">
                 {podtemaLabel(example.podtema)}
               </span>
@@ -580,7 +581,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             {/* Odkaz na podobné příklady — po finálním wrong */}
             {!canRetry && (
               <Link
-                href={`/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`}
+                href={dovednostUlohy(example) && dovednostUlohy(example) !== TESTOVE
+                  ? `/trenink?tema=${example.tema}&dovednost=${dovednostUlohy(example)}`
+                  : `/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
                 style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
               >
@@ -588,7 +591,11 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
                 <span>Procvičit podobné příklady</span>
                 <span className="text-xs opacity-50 ml-auto">
                   {(TEMA_LABELS[example.tema] ?? example.tema)}
-                  {podtemaLabel(example.podtema) && ` · ${podtemaLabel(example.podtema)}`}
+                  {(() => {
+                    const d = dovednostUlohy(example);
+                    const nazev = d && d !== TESTOVE ? nazevDovednosti(example.tema, d) : podtemaLabel(example.podtema);
+                    return nazev ? ` · ${nazev}` : "";
+                  })()}
                 </span>
               </Link>
             )}

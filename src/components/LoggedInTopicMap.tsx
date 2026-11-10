@@ -15,6 +15,8 @@ import { HexIkona, HlavickaZnacky } from "@/components/HexIkona";
 interface Props {
   isPremium: boolean;
   onSelectTopic: (tema: string, podtema?: string) => void;
+  /** Klik na řádek tématu: u témat s dovednostmi otevře jejich výběr. Bez něj se rovnou spustí trénink. */
+  onOpenTopic?: (tema: string) => void;
   onStartMix: () => void;
   onStartMistakes: () => void;
 }
@@ -57,7 +59,7 @@ function LevelChips({ level }: { level: Level }) {
   );
 }
 
-export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix, onStartMistakes }: Props) {
+export default function LoggedInTopicMap({ isPremium, onSelectTopic, onOpenTopic, onStartMix, onStartMistakes }: Props) {
   const diagScores = useDiagScores();
   const [levels, setLevels] = useState<Record<string, Level>>({});
   const [mistakes, setMistakes] = useState(0);
@@ -200,7 +202,7 @@ export default function LoggedInTopicMap({ isPremium, onSelectTopic, onStartMix,
             return (
               <button
                 key={tema}
-                onClick={() => onSelectTopic(tema)}
+                onClick={() => (onOpenTopic ?? onSelectTopic)(tema)}
                 className="text-left rounded-2xl p-3 flex items-center gap-3 bg-white border border-slate-200 card-hover"
                 style={temaStyl(tema)}
                 data-tema={tema}

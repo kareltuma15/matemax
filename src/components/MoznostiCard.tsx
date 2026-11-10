@@ -73,7 +73,7 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
         >
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
-        {podtemaLabel(example.podtema) && (
+        {example.dovednost !== "testove" && podtemaLabel(example.podtema) && (
           <span className="text-slate-300 text-[10px] min-w-0 truncate max-w-[90px] hidden min-[420px]:inline">
             {podtemaLabel(example.podtema)}
           </span>

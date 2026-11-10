@@ -132,7 +132,7 @@ export default function ConstructionCard({ example, cardNumber, total, onResult,
           >
             {TEMA_LABELS[example.tema] ?? example.tema}
           </span>
-          {podtemaLabel(example.podtema) && (
+          {example.dovednost !== "testove" && podtemaLabel(example.podtema) && (
             <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[90px]">
               {podtemaLabel(example.podtema)}
             </span>

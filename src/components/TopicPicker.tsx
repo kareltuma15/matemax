@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getReadiness } from "@/lib/readiness";
 import { isTopicLocked } from "@/lib/subscription";
+import { maDovednosti } from "@/lib/dovednosti";
 import { TEMA_LABELS, TEMATA_ORDER } from "@/types";
 
 /**
@@ -47,7 +48,8 @@ export default function TopicPicker({ isPremium }: { isPremium: boolean }) {
       {TEMATA_ORDER.map((tema) => {
         const locked = isTopicLocked(tema, isPremium);
         const score = scores[tema] ?? 0;
-        const href = locked ? "/cenik" : `/trenink?tema=${tema}`;
+        // Téma rozdělené na dovednosti otevře jejich výběr, ostatní rovnou trénink.
+        const href = locked ? "/cenik" : maDovednosti(tema) ? `/trenink?vyber=${tema}` : `/trenink?tema=${tema}`;
 
         return (
           <Link

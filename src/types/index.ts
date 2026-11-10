@@ -217,6 +217,11 @@ export interface DBExample {
   trida?: Trida;
   tema: string;
   podtema: string;
+  /**
+   * Dovednost uvnitř tématu, když neplyne z podtématu (viz src/lib/dovednosti.ts).
+   * `"testove"` = testový příklad ve stylu CERMAT, nepatří do žádné dovednosti.
+   */
+  dovednost?: string;
   obtiznost: 1 | 2 | 3;
   zadani: string;
   odpoved: string;

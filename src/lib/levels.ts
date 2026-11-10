@@ -1,5 +1,6 @@
 import { allExamples as examples } from "@/data/examples";
 import { localLoadCards } from "@/lib/storage";
+import { dovednostUlohy } from "@/lib/dovednosti";
 
 /**
  * Nejvyšší odemčená obtížnost (1–3) pro každé téma — pro zobrazení v tréninku.
@@ -88,6 +89,27 @@ export function computeTopicProgress(): Record<string, Record<Level, LevelProgre
     const lv = t[ex.obtiznost as Level];
     lv.total++;
     if (mastered.has(ex.id)) lv.done++;
+  }
+  return out;
+}
+
+/**
+ * Postup po dovednostech jednoho tématu (klíč dovednosti nebo „testove“ → zvládnuto/celkem).
+ * Zvládnutá úloha = poslední odpověď správně (SM-2 lastQuality ≥ 3), stejně jako u úrovní.
+ */
+export function computeDovednostProgress(tema: string, sPostupem = true): Record<string, LevelProgress> {
+  const out: Record<string, LevelProgress> = {};
+  const mastered = new Set<string>();
+  if (sPostupem && typeof window !== "undefined") {
+    for (const c of localLoadCards()) if (c.repetitions > 0 && c.lastQuality >= 3) mastered.add(c.exampleId);
+  }
+  for (const ex of examples) {
+    if (ex.tema !== tema) continue;
+    const klic = dovednostUlohy(ex);
+    if (!klic) continue;
+    const p = (out[klic] ??= { done: 0, total: 0 });
+    p.total++;
+    if (mastered.has(ex.id)) p.done++;
   }
   return out;
 }

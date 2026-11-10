@@ -354,7 +354,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
         <span className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0" style={{ background: "#eef2ff", color: "#4338ca" }}>
           {TEMA_LABELS[example.tema] ?? example.tema}
         </span>
-        {podtemaLabel(example.podtema) && (
+        {example.dovednost !== "testove" && podtemaLabel(example.podtema) && (
           <span className="text-slate-300 text-[10px] min-w-0 truncate">{podtemaLabel(example.podtema)}</span>
         )}
         <span className="ml-auto font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0" style={{ background: badge.bg, color: badge.color }}>

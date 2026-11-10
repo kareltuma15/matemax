@@ -15,6 +15,7 @@ import MoznostiCard from "@/components/MoznostiCard";
 import VicOdpovediCard from "@/components/VicOdpovediCard";
 import TopicMap5 from "@/components/TopicMap5";
 import LoggedInTopicMap from "@/components/LoggedInTopicMap";
+import TemaDovednosti from "@/components/TemaDovednosti";
 import batch from "@/data/nahled-batch.json";
 
 const batchExamples = (batch.examples as unknown as DBExample[]);
@@ -32,6 +33,7 @@ function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
 
 /**
  * `/nahled?ids=P5_VIC_01,P5_VIC_02` ukáže úlohy z databáze podle id (kontrola hotových úloh, e2e testy karet); bez `ids` dávka k schválení.
+ * `/nahled?vyber=zlomky` ukáže výběr dovedností tématu (jako po kliknutí na téma v tréninku).
  * `/nahled?mapa=5` nebo `?mapa=9` ukáže mapu okruhů dané třídy bez přihlášení, `&premium=1` s odemčenými okruhy (kontrola vzhledu, e2e testy).
  */
 function NahledPage() {
@@ -44,6 +46,8 @@ function NahledPage() {
     : batchExamples;
   const [reseni, setReseni] = useState(false);
   const noop = () => {};
+  const vyber = params.get("vyber");
+  if (vyber) return <div className="mx-auto max-w-lg p-4"><TemaDovednosti tema={vyber} onStart={noop} onBack={noop} /></div>;
   if (mapa === "5") return <div className="mx-auto max-w-lg p-4"><TopicMap5 isPremium={premium} onSelectTopic={noop} /></div>;
   if (mapa === "9") return <div className="overflow-x-hidden py-4"><LoggedInTopicMap isPremium={premium} onSelectTopic={noop} onStartMix={noop} onStartMistakes={noop} /></div>;
   return (

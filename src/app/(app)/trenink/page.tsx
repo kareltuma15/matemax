@@ -43,6 +43,8 @@ import XPProgressBar from "@/components/XPProgressBar";
 import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
 import LoggedInTopicMap from "@/components/LoggedInTopicMap";
+import TemaDovednosti from "@/components/TemaDovednosti";
+import { dovednostUlohy, maDovednosti, nazevDovednosti, TESTOVE } from "@/lib/dovednosti";
 
 // Rare modals — lazy loaded to keep initial bundle small
 const BadgeToast = dynamic(() => import("@/components/BadgeToast"), { ssr: false });
@@ -87,6 +89,8 @@ type SessionDraft = {
   wrongAnswers: WrongAnswer[];
   temaFilter: string | null;
   podtemaFilter: string | null;
+  /** Dovednost v tématu (src/lib/dovednosti.ts), "testove" = testové příklady. Starší koncepty pole nemají. */
+  dovednostFilter?: string | null;
   rezimFilter: "chyby" | "sm2" | null;
 };
 
@@ -195,18 +199,34 @@ function unlockedMaxLevel(
   return lvl;
 }
 
+/** Odemčená úroveň uvnitř výběru úloh (dovednosti): stejná pravidla jako u tématu, počítají se jen úlohy výběru. */
+function unlockedLevelInPool(pool: DBExample[], cards: SM2Card[], diag: number): 1 | 2 | 3 {
+  const obtiznost = new Map(pool.map((e) => [e.id, e.obtiznost]));
+  const correctAt: Record<number, number> = { 1: 0, 2: 0, 3: 0 };
+  for (const c of cards) {
+    const o = obtiznost.get(c.exampleId);
+    if (o !== undefined && c.lastQuality >= 3) correctAt[o]++;
+  }
+  let lvl: 1 | 2 | 3 = 1;
+  if (correctAt[1] >= UNLOCK_CORRECT || diag >= DIAG_UNLOCK_L2) lvl = 2;
+  if (lvl === 2 && correctAt[2] >= UNLOCK_CORRECT) lvl = 3;
+  return lvl;
+}
+
 function buildSession(
   cards: SM2Card[],
   temaFilter?: string | null,
   rezim?: "chyby" | "sm2" | null,
   guestOnly = false,
   podtemaFilter?: string | null,
-  trida: Trida = 9
+  trida: Trida = 9,
+  dovednostFilter?: string | null
 ): string[] {
   // Základ losování: téma určuje třídu samo (p5_ = 5. třída); bez tématu rozhoduje třída žáka.
   const zaklad = temaFilter ? (temaFilter.startsWith("p5_") ? examples5 : examples) : (trida === 5 ? examples5 : examples);
   let pool = temaFilter ? zaklad.filter((ex) => ex.tema === temaFilter) : zaklad;
   if (podtemaFilter) pool = pool.filter((ex) => ex.podtema === podtemaFilter);
+  if (dovednostFilter) pool = pool.filter((ex) => dovednostUlohy(ex) === dovednostFilter);
   if (guestOnly) pool = pool.filter((ex) => GUEST_FREE_TOPICS.has(ex.tema));
 
   // SM-2 review mode: only due cards, sorted most-overdue first
@@ -267,8 +287,21 @@ function buildSession(
 
   // Gating: neukazuj příklad nad odemčenou úrovní tématu. Pokud by tím zbylo
   // málo příkladů (nové téma bez L1 v poolu apod.), gating pro jistotu vypneme.
-  const gated = due.filter((ex) => ex.obtiznost <= maxLevel(ex.tema));
-  const workingPool = gated.length >= Math.min(SESSION_SIZE, due.length) ? gated : due;
+  let workingPool: DBExample[];
+  if (dovednostFilter === TESTOVE) {
+    // Testové příklady jsou všechny na úrovni přijímaček, úrovně se v nich nehlídají.
+    workingPool = due;
+  } else if (dovednostFilter) {
+    // Dovednost: úroveň podle zvládnutých příkladů právě v ní. Když je na odemčené úrovni příkladů málo,
+    // doplní se nejlehčí z vyšší úrovně (u celého tématu se gating při malém výběru vypne a začátečník by dostal i těžké).
+    const lvl = unlockedLevelInPool(pool, cards, diagScores[temaFilter ?? ""] ?? 0);
+    const gatedD = due.filter((ex) => ex.obtiznost <= lvl);
+    const doplnek = due.filter((ex) => ex.obtiznost > lvl).sort((a, b) => a.obtiznost - b.obtiznost);
+    workingPool = gatedD.length >= SESSION_SIZE ? gatedD : [...gatedD, ...doplnek.slice(0, SESSION_SIZE - gatedD.length)];
+  } else {
+    const gated = due.filter((ex) => ex.obtiznost <= maxLevel(ex.tema));
+    workingPool = gated.length >= Math.min(SESSION_SIZE, due.length) ? gated : due;
+  }
 
   // Výběr řídí slabina tématu (diagnostika); obtížnost řeší gating + ramp výše.
   // Odemčená úroveň má přednost: dřív se vybíralo náhodně napříč všemi odemčenými úrovněmi, takže
@@ -301,6 +334,9 @@ function TreningPageInner() {
   const router       = useRouter();
   const urlTema     = searchParams.get("tema");
   const urlPodtema  = searchParams.get("podtema");
+  const urlDovednost = searchParams.get("dovednost");
+  // ?vyber=zlomky otevře výběr dovedností v tématu (odkazy z domovské stránky)
+  const urlVyber    = searchParams.get("vyber");
   const urlRezim    = searchParams.get("rezim") as "chyby" | "sm2" | null;
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
@@ -313,6 +349,8 @@ function TreningPageInner() {
   const [diagScores, setDiagScores] = useState<Record<string, number>>({});
   const [temaFilter, setTemaFilter]     = useState<string | null>(urlTema);
   const [podtemaFilter, setPodtemaFilter] = useState<string | null>(urlPodtema);
+  const [dovednostFilter, setDovednostFilter] = useState<string | null>(urlDovednost);
+  const [vybraneTema, setVybraneTema] = useState<string | null>(urlVyber);
   const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [bossBattle, setBossBattle]     = useState<{ example: DBExample } | null>(null);
@@ -387,6 +425,7 @@ function TreningPageInner() {
         draft &&
         draft.temaFilter === urlTema &&
         (draft.podtemaFilter ?? null) === urlPodtema &&
+        (draft.dovednostFilter ?? null) === urlDovednost &&
         draft.rezimFilter === urlRezim &&
         draft.sessionIds.length > 0
       ) {
@@ -396,7 +435,7 @@ function TreningPageInner() {
         setSkipped(draft.skipped);
         setWrongAnswers(draft.wrongAnswers);
       } else if (guest ? !!urlTema : !!(urlTema || urlRezim || urlPodtema)) {
-        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest, urlPodtema, readTridaForSession()));
+        setSessionIds(buildSession(loaded, urlTema, urlRezim, guest, urlPodtema, readTridaForSession(), urlDovednost));
       }
       setHydrated(true);
     };
@@ -664,6 +703,7 @@ function TreningPageInner() {
           wrongAnswers: wasCorrect ? wrongAnswers : [...wrongAnswers, { exampleId: exId, userAnswer }],
           temaFilter,
           podtemaFilter: podtemaFilter ?? null,
+          dovednostFilter: dovednostFilter ?? null,
           rezimFilter: rezimFilter ?? null,
         });
       }
@@ -723,7 +763,7 @@ function TreningPageInner() {
   function restart(rezim?: "chyby" | "sm2" | null) {
     clearSessionDraft();
     setRezimFilter(rezim ?? null);
-    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false, podtemaFilter, trida));
+    setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false, podtemaFilter, trida, dovednostFilter));
     setCurrentIdx(0);
     setCorrect(0);
     setSkipped(0);
@@ -791,6 +831,22 @@ function TreningPageInner() {
     );
   }
 
+  // Logged-in: vybrané téma s dovednostmi → žák si vybere, co procvičí (nebo testové příklady)
+  if (!isGuest && vybraneTema && maDovednosti(vybraneTema) && !isTopicLocked(vybraneTema, isPremium) && !temaFilter && !rezimFilter && sessionIds.length === 0 && !done) {
+    return (
+      <TemaDovednosti
+        tema={vybraneTema}
+        onBack={() => setVybraneTema(null)}
+        onStart={(dovednost) => {
+          setTemaFilter(vybraneTema);
+          setPodtemaFilter(null);
+          setDovednostFilter(dovednost);
+          setSessionIds(buildSession(cards, vybraneTema, null, false, null, trida, dovednost));
+        }}
+      />
+    );
+  }
+
   // Logged-in: show topic map if no topic/rezim selected yet
   if (!isGuest && !temaFilter && !rezimFilter && sessionIds.length === 0 && !done) {
     if (trida === 5) {
@@ -811,7 +867,14 @@ function TreningPageInner() {
         onSelectTopic={(tema, podtema) => {
           setTemaFilter(tema);
           setPodtemaFilter(podtema ?? null);
+          setDovednostFilter(null);
           setSessionIds(buildSession(cards, tema, null, false, podtema ?? null, trida));
+        }}
+        onOpenTopic={(tema) => {
+          if (maDovednosti(tema)) { setVybraneTema(tema); window.scrollTo({ top: 0 }); return; }
+          setTemaFilter(tema);
+          setDovednostFilter(null);
+          setSessionIds(buildSession(cards, tema, null, false, null, trida));
         }}
         onStartMix={() => {
           setSessionIds(buildSession(cards, null, null, false, null, trida));
@@ -1106,6 +1169,9 @@ function TreningPageInner() {
           {podtemaFilter && podtemaLabel(podtemaFilter) && (
             <strong> · {podtemaLabel(podtemaFilter)}</strong>
           )}
+          {dovednostFilter && nazevDovednosti(temaFilter, dovednostFilter) && (
+            <strong data-testid="nazev-dovednosti"> · {nazevDovednosti(temaFilter, dovednostFilter)}</strong>
+          )}
         </div>
       )}
 
@@ -1117,6 +1183,9 @@ function TreningPageInner() {
           🎯 Procvičuješ slabé téma z diagnostiky
         </div>
       )}
+
+      {/* Pro e2e testy: která úloha je na řadě a z čeho se sezení skládá. */}
+      <span hidden data-testid="sezeni" data-aktualni={currentExample.id} data-ulohy={sessionIds.join(",")} />
 
       {currentExample.konstrukce_scena ? (
         <ConstructionMarkCard
