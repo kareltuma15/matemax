@@ -1,14 +1,15 @@
 import { test, expect } from "@playwright/test";
-import { examples } from "../src/data/examples";
+import { examples, examples5 } from "../src/data/examples";
 import { DOVEDNOSTI, TESTOVE, dovednostUlohy, dovednostiTematu } from "../src/lib/dovednosti";
-import { TEMATA_ORDER } from "../src/types";
+import { TEMATA_ORDER, TEMATA_ORDER_5 } from "../src/types";
 
-// Témata 9. třídy rozdělená na dovednosti + testové příklady (src/lib/dovednosti.ts, scripts/rozdel-dovednosti.mjs).
+// Témata obou tříd rozdělená na dovednosti + testové příklady (src/lib/dovednosti.ts, scripts/rozdel-dovednosti.mjs).
 
-test.describe("rozdělení úloh 9. třídy", () => {
+for (const [trida, ulohy, poradi] of [[9, examples, TEMATA_ORDER], [5, examples5, TEMATA_ORDER_5]] as const)
+test.describe(`rozdělení úloh ${trida}. třídy`, () => {
   test("každá úloha patří do dovednosti svého tématu nebo mezi testové", () => {
     const bez: string[] = [];
-    for (const e of examples) {
+    for (const e of ulohy) {
       const d = dovednostUlohy(e);
       const platne = [...dovednostiTematu(e.tema).map((x) => x.klic), TESTOVE];
       if (!d || !platne.includes(d)) bez.push(`${e.id} (${e.tema}/${e.podtema} → ${d ?? "nic"})`);
@@ -17,20 +18,20 @@ test.describe("rozdělení úloh 9. třídy", () => {
   });
 
   test("každé téma má dovednosti, každá dovednost aspoň 4 úlohy a téma testové příklady", () => {
-    for (const tema of TEMATA_ORDER) {
+    for (const tema of poradi) {
       const dov = DOVEDNOSTI[tema];
       expect(dov?.length ?? 0, tema).toBeGreaterThanOrEqual(3);
       for (const d of dov) {
-        const n = examples.filter((e) => e.tema === tema && dovednostUlohy(e) === d.klic).length;
+        const n = ulohy.filter((e) => e.tema === tema && dovednostUlohy(e) === d.klic).length;
         expect(n, `${tema}/${d.klic}`).toBeGreaterThanOrEqual(4);
       }
-      const testove = examples.filter((e) => e.tema === tema && dovednostUlohy(e) === TESTOVE).length;
+      const testove = ulohy.filter((e) => e.tema === tema && dovednostUlohy(e) === TESTOVE).length;
       expect(testove, `${tema}: testové`).toBeGreaterThanOrEqual(10);
     }
   });
 
   test("testové příklady jsou těžké (žádná úloha z úrovně 1)", () => {
-    const lehke = examples.filter((e) => dovednostUlohy(e) === TESTOVE && e.obtiznost === 1).map((e) => e.id);
+    const lehke = ulohy.filter((e) => dovednostUlohy(e) === TESTOVE && e.obtiznost === 1).map((e) => e.id);
     expect(lehke).toEqual([]);
   });
 });
@@ -64,4 +65,13 @@ test("testové příklady se otevřou bez ohledu na odemčenou úroveň", async 
   await expect(page.getByTestId("nazev-dovednosti")).toHaveText("· Testové příklady");
   const ids = (await page.getByTestId("sezeni").getAttribute("data-ulohy"))!.split(",");
   for (const id of ids) expect(dovednostUlohy(examples.find((e) => e.id === id)!), id).toBe(TESTOVE);
+});
+
+test("výběr dovedností 5. třídy: barevná hlavička, jen věci pro 5. třídu", async ({ page }) => {
+  await page.goto("/nahled?vyber=p5_zlomky");
+  const v = page.getByTestId("tema-dovednosti");
+  await expect(v.locator("[data-dovednost]")).toHaveCount(DOVEDNOSTI.p5_zlomky.length + 2);
+  await expect(v.getByRole("button", { name: /Zlomek z obrázku/ })).toBeVisible();
+  const text = await v.innerText();
+  for (const slovo of ["Násobení a dělení", "Složené zlomky", "Rovnice"]) expect(text, slovo).not.toContain(slovo);
 });

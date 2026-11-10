@@ -854,8 +854,10 @@ function TreningPageInner() {
         <TopicMap5
           isPremium={isPremium}
           onSelectTopic={(tema) => {
+            if (maDovednosti(tema)) { setVybraneTema(tema); window.scrollTo({ top: 0 }); return; }
             setTemaFilter(tema);
             setPodtemaFilter(null);
+            setDovednostFilter(null);
             setSessionIds(buildSession(cards, tema, null, false, null, 5));
           }}
         />

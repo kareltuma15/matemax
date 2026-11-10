@@ -145,7 +145,8 @@
         "Proto $\\square = 6 \\cdot 6 = 36$. Zkouška: $36 : 6 = 6$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_10",
@@ -161,7 +162,8 @@
         "Proto $\\square = 4$. Zkouška: $54 : 6 = 9$ a $100 - 9 = 91$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_11",
@@ -201,7 +203,8 @@
         "Rozdíl hodnot: $16 - 13 = 3$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_01",
@@ -362,7 +365,8 @@
         "Dvoukorunových mincí je 5 (a pětikorunových 4). Zkouška: 5 · 2 + 4 · 5 = 10 + 20 = 30 Kč."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_11",
@@ -377,7 +381,8 @@
         "Za 150 korun koupíš 625 g šunky. Zkouška: 625 g je 0,625 kg a 0,625 · 240 = 150."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_12",
@@ -392,7 +397,8 @@
         "Použili jsme mince 20, 10, 5 a 2 Kč, tedy 4 mince. Méně to nejde: se třemi mincemi vyjde třeba 35 (20 + 10 + 5) nebo 40 (20 + 10 + 10), ale 37 žádná trojice nedá."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_13",
@@ -407,7 +413,8 @@
         "Cesta do školy trvá 18 minut: 7:56 + 18 minut = 8:14 (do 8:00 jsou 4 minuty a zbývá 14)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_01",
@@ -579,7 +586,8 @@
         "Zkouška: červený položí 8 · 4 = 32 kostek, modrý 8 · 6 = 48 kostek a 32 + 48 = 80."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_12",
@@ -594,7 +602,8 @@
         "Jedna koule váží 200 : 2 = 100 g. Zkouška: 3 · 100 + 200 = 500 a 5 · 100 = 500."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_13",
@@ -609,7 +618,8 @@
         "Dnes je synovi 14 − 4 = 10 let. Zkouška: tatínkovi je 38, za 4 roky 42 a 3 · 14 = 42."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_14",
@@ -624,7 +634,8 @@
         "Zkouška: 120 − 60 = 60 Kč, třetina ze 60 je 20 Kč, 60 − 20 = 40 Kč."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_15",
@@ -639,7 +650,8 @@
         "Zkouška: 4 králíci mají 16 nohou, 5 slepic má 10 nohou, dohromady 26 nohou a 9 hlav."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_01",
@@ -688,7 +700,8 @@
         "Nahoře jsou 3, uprostřed 4 a dole 4: 3 + 4 + 4 = 11 čtverečků, tedy 11 cm²."
       ],
       "cas_sekund": 75,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_04",
@@ -709,7 +722,8 @@
         "Schody v pravém dolním rohu obvod nezvětšují: obrazec je stejně dlouhý a široký jako čtverec 3 × 3, a ten má obvod 4 · 3 = 12 cm."
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_05",
@@ -759,7 +773,8 @@
         "Obvod je jako u čtverce 4 × 4: 8 + 8 = 16 cm."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_08",
@@ -803,7 +818,8 @@
         "Vybarvených je 3 + 2 + 4 = 9 čtverečků, chybí 12 − 9 = 3. Správně je B)."
       ],
       "cas_sekund": 120,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_10",
@@ -847,7 +863,8 @@
         "Obdélník má strany 21 cm a 7 cm, obsah 21 · 7 = 147 cm². (Nebo: tři čtverce po 7 · 7 = 49 cm², 3 · 49 = 147 cm².)"
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_12",
@@ -869,7 +886,8 @@
         "Každá strana měří 2 cm: 18 · 2 = 36 cm."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_13",
@@ -890,7 +908,8 @@
         "Obvod je stejný jako u celého obdélníku: 2 · (10 + 6) = 32 cm."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_14",
@@ -904,7 +923,8 @@
         "Trojúhelník má tři stejné strany a obvod 24 cm, jedna strana měří 24 : 3 = 8 cm."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_15",
@@ -926,7 +946,8 @@
         "Jeden čtverec má 6 · 6 = 36 cm², dva čtverce mají 2 · 36 = 72 cm²."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_01",
@@ -1970,7 +1991,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_11",
@@ -2086,7 +2108,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_12",
@@ -2219,7 +2242,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_01",
@@ -2405,7 +2429,8 @@
         "Celé kapesné bylo 3 · 40 = 120 Kč. Zkouška: polovina je 60, třetina ze 60 je 20, zbude 60 − 20 = 40."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_12",
@@ -2420,7 +2445,8 @@
         "Původní cena byla 5 · 720 = 3 600 Kč. Zkouška: pětina z 3 600 je 720, 3 600 − 720 = 2 880 a 2 880 − 200 = 2 680."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_13",
@@ -2435,7 +2461,8 @@
         "Dohromady nasbírali 48 + 60 = 108 hub."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_14",
@@ -2450,7 +2477,8 @@
         "Zbývá mu 192 − 64 = 128 stran."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_15",
@@ -2473,7 +2501,8 @@
         "Celá nádoba má 6 · 4 = 24 litrů. Správně je C)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_01",
@@ -2699,7 +2728,8 @@
         "Kroužek B má 6 dílků, tedy 6 · 4 = 24 žáků."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_12",
@@ -2721,7 +2751,8 @@
         "Za čtyři dny dohromady: 60 + 85 + 45 + 90 = 280 návštěvníků."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_13",
@@ -2743,7 +2774,8 @@
         "Kontrola: 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 = 36."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_14",
@@ -2772,7 +2804,8 @@
         "A) Polovina z 20 je 10 a 20 + 10 = 30, ne 36. B) 28 + 12 = 40, ne 36. C) Třetina z 36 je 12, tvrzení platí. D) 28 − 20 = 8, ne 10. E) 96 není méně než 90. Správně je C)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_15",
@@ -2794,7 +2827,8 @@
         "Pro 9 platí 3 · 9 + 1 = 28."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_01",
@@ -3023,7 +3057,8 @@
         "Zbylo 27 − 3 = 24 krychliček."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_12",
@@ -3044,7 +3079,8 @@
         "Krychle 3 × 3 × 3 má 27 krychliček, chybí tedy 27 − 18 = 9 krychliček."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_13",
@@ -3073,7 +3109,8 @@
         "Velká krychle má 12 hran a na každé hraně je jedna taková krychlička. Správně je C) 12."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_14",
@@ -3095,7 +3132,8 @@
         "Celý obrazec má 4 · 7 = 28 čtverečků."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_15",
@@ -3125,7 +3163,8 @@
         "Z obou dílků se dá složit jen těleso E, správně je E)."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_16",
@@ -3147,7 +3186,8 @@
         "Dají se složit 3 tělesa: B, D a E."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_13",
@@ -3338,7 +3378,8 @@
         "Zkouška: $28 + 29 + 30 = 87$. Prostřední číslo je 29."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_25",
@@ -3354,7 +3395,8 @@
         "Z $\\square + 15 = 32$ vyjde $\\square = 17$. Zkouška: $(17 + 15) : 4 = 32 : 4 = 8$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_26",
@@ -3370,7 +3412,8 @@
         "Zkouška: $(32 - 14) \\cdot 6 = 18 \\cdot 6 = 108$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_27",
@@ -3393,7 +3436,8 @@
         "Hodnotu 36 má jen výraz D)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_16",
@@ -3572,7 +3616,8 @@
         "Dvacetikorunových mincí je 8 (a desetikorunové 3). Zkouška: 8 · 20 + 3 · 10 = 160 + 30 = 190 Kč."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_28",
@@ -3587,7 +3632,8 @@
         "Správný čas je 10:00, hodiny ukazují o 16 minut víc, tedy 10:16."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_29",
@@ -3610,7 +3656,8 @@
         "Dohromady 72 + 18 = 90 Kč. Správně je C)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_30",
@@ -3624,7 +3671,8 @@
         "Nakupováním strávila 25 minut, na cestě je tedy 85 − 25 = 60 minut."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_16",
@@ -3800,7 +3848,8 @@
         "Zkouška: Jana přečte za 8 dní 32 stran, Petr 24 stran a 32 + 24 = 56."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_27",
@@ -3815,7 +3864,8 @@
         "Jedno závaží váží 300 : 3 = 100 g. Zkouška: 2 · 100 + 300 = 500 a 5 · 100 = 500."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_28",
@@ -3830,7 +3880,8 @@
         "Od té doby uplynulo 5 let, takže dceři je dnes 11 + 5 = 16 let."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_29",
@@ -3845,7 +3896,8 @@
         "Jirka má teď víc o 40 − 30 = 10 Kč. (Například Jirka 50 a Pavel 80: po výměně Jirka 70 a Pavel 60.)"
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_30",
@@ -3860,7 +3912,8 @@
         "Jdou jen dva způsoby: 8 dvoukorun, nebo 2 pětikoruny a 3 dvoukoruny."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_16",
@@ -4037,7 +4090,8 @@
         "Celá cesta měří 5 · 6 = 30 km. Zkouška: za dvě hodiny ušel 3 · 6 = 18 km a 18 + 12 = 30."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_27",
@@ -4052,7 +4106,8 @@
         "Celá kniha má 6 · 20 = 120 stran. Zkouška: třetina je 40, přečetla 40 + 20 = 60 stran a zbývá 120 − 60 = 60, což je polovina."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_28",
@@ -4073,7 +4128,8 @@
         "Bílých je 12 − 8 = 4 díly, tedy 4/12. Zlomek zkrátíme čtyřmi: 4/12 = 1/3."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_29",
@@ -4096,7 +4152,8 @@
         "V barelu bylo 6 · 5 = 30 litrů. Zkouška: třetina je 10, polovina je 15 a 10 + 15 + 5 = 30. Správně je B)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_30",
@@ -4111,7 +4168,8 @@
         "Zkouška: polovina z 48 je 24, čtvrtina je 12 a 24 − 12 = 12."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_16",
@@ -4146,7 +4204,8 @@
         "V horní řadě je 5 čtverečků, v prostřední 3 a v dolní 1, dohromady 5 + 3 + 1 = 9 čtverečků, tedy 9 cm²."
       ],
       "cas_sekund": 60,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_18",
@@ -4256,7 +4315,8 @@
         "Nejmenší obvod 20 cm má obdélník 4 cm × 6 cm (nejvíc se podobá čtverci). Správně je D)."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_24",
@@ -4308,7 +4368,8 @@
         "Obvod čtverce je 4 · 6 = 24 cm. Zkouška: strana trojúhelníku je 8 cm a 3 · 8 = 24."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_27",
@@ -4330,7 +4391,8 @@
         "Útvar B má obvod tři strany čtverce a dvě strany trojúhelníku, dohromady 5 · 9 = 45 cm. Zkouška: obvod A je 4 · 9 = 36 cm a 45 − 36 = 9."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_28",
@@ -4353,7 +4415,8 @@
         "Pěšina zabírá 96 − 60 = 36 m². Správně je C)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_29",
@@ -4375,7 +4438,8 @@
         "Tmavý čtverec má obsah 36 − 18 = 18 cm², tedy přesně polovinu velkého čtverce."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_30",
@@ -4397,7 +4461,8 @@
         "Je to 19. obrazec (má 19 čtverečků)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_28",
@@ -4582,7 +4647,8 @@
         "Zkouška: $6 \\cdot 6 + 4 = 40$."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_39",
@@ -4598,7 +4664,8 @@
         "Dětí bylo $3 \\cdot 20 = 60$. Zkouška: $60 - 20 = 40$."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_40",
@@ -4614,7 +4681,8 @@
         "Palindromických čísel je $10 \\cdot 10 = 100$."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_41",
@@ -4630,7 +4698,8 @@
         "Zkouška: čísla 20 a 12 mají součin 240; po změně jsou 60 a 2 a $60 \\cdot 2 = 120$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_POC_42",
@@ -4646,7 +4715,8 @@
         "Zkouška: $15 \\cdot 4 = 60$, $60 - 12 = 48$, $48 : 6 = 8$."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_13",
@@ -5814,7 +5884,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_24",
@@ -5934,7 +6005,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_25",
@@ -6051,7 +6123,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_26",
@@ -6178,7 +6251,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_27",
@@ -6334,7 +6408,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_16",
@@ -6571,7 +6646,8 @@
         "Chlapců je v oddíle C 4, takže dívek je 9 − 4 = 5."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_27",
@@ -6601,7 +6677,8 @@
         "Všichni dohromady: 15 + 21 + 14 + 9 = 59 karet. Správně je C)."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_28",
@@ -6623,7 +6700,8 @@
         "První tmavou řadu (1 čtvereček) si dáme stranou. Zbylých 20 tmavých řad (5, 9, …, 81) a 20 bílých řad (3, 7, …, 79) tvoří dvojice, v nichž má tmavá řada vždy o 2 čtverečky víc, dohromady o 20 · 2 = 40. S první řadou je rozdíl 1 + 40 = 41. (Součty: tmavých je 861, bílých 820.)"
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_29",
@@ -6645,7 +6723,8 @@
         "Rozdíl 59 tedy znamená 59 řad. Zkouška: tmavé řady 1, 3, …, 59 mají 30 řad, bílé 29 řad, a tmavých je o 59 víc."
       ],
       "cas_sekund": 330,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_30",
@@ -6660,7 +6739,8 @@
         "Zkouška: 13. trojice začíná na 25, takže končí na 27 (25, 26, 27), a 14. trojice začíná na 27 (27, 28, 29). Na 40. místě je 27."
       ],
       "cas_sekund": 330,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_17",
@@ -6875,7 +6955,8 @@
         "Největší stavba má 5 + 6 + 3 = 14 krychliček."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_28",
@@ -6897,7 +6978,8 @@
         "Je to čtvereček číslo 2."
       ],
       "cas_sekund": 330,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_30",
@@ -6926,7 +7008,8 @@
         "Velká krychle má 6 stěn, takže jich je 6 · 4 = 24. Správně je C)."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_31",
@@ -6947,7 +7030,8 @@
         "Nejvyšší věže ve sloupcích zleva doprava jsou 2, 3 a 3. Pohled zepředu tvoří 2 + 3 + 3 = 8 čtverečků."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_31",
@@ -7114,7 +7198,8 @@
         "Zbývá mu 7 · 20 = 140 minut."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_42",
@@ -7129,7 +7214,8 @@
         "15 dm je 150 cm (1 dm má 10 cm)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_43",
@@ -7152,7 +7238,8 @@
         "Dohromady 27 + 12 = 39 korun. Správně je D)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_44",
@@ -7167,7 +7254,8 @@
         "Barbora má 6 · 10 = 60 Kč. Zkouška: Anička má 12 · 5 = 60 Kč."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_JED_45",
@@ -7182,7 +7270,8 @@
         "18:40 + 1 hodina = 19:40, k tomu 24 minut: 19:40 + 20 minut = 20:00 a ještě 4 minuty = 20:04."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_31",
@@ -7351,7 +7440,8 @@
         "Rozdíl 27 − 23 = 4 je tedy počet žáků, kteří hrají oba sporty. Zkouška: jen fotbal 11, jen volejbal 8, oba 4, žádný 3 a 11 + 8 + 4 + 3 = 26."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_42",
@@ -7366,7 +7456,8 @@
         "Dvouhlavých je 5. Zkouška: 5 · 2 + 2 · 3 = 10 + 6 = 16 hlav."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_43",
@@ -7389,7 +7480,8 @@
         "Celá nádrž (pět pětin) má 5 · 30 = 150 litrů. Zkouška: pondělí 30, zbývá 120, úterý 60, zbývá 60. Správně je C)."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_44",
@@ -7404,7 +7496,8 @@
         "Od 7:25 do 8:00 uplyne 35 minut, zbývá 5 minut, tedy Tomáš došel v 8:05."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_SLO_45",
@@ -7419,7 +7512,8 @@
         "Nádrž bude plná za 180 : 18 = 10 minut. Zkouška: 10 · 18 = 180."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_28",
@@ -8757,7 +8851,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_39",
@@ -8910,7 +9005,8 @@
             "draw": []
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_40",
@@ -9031,7 +9127,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_41",
@@ -9167,7 +9264,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_RYS_42",
@@ -9299,7 +9397,8 @@
             ]
           }
         ]
-      }
+      },
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_31",
@@ -9479,7 +9578,8 @@
         "V nádrži bylo 12 · 5 = 60 litrů. Zkouška: třetina je 20, čtvrtina 15 a 60 − 20 − 15 = 25."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_42",
@@ -9494,7 +9594,8 @@
         "Dohromady 36 + 48 = 84 korun."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_43",
@@ -9515,7 +9616,8 @@
         "Mezi nimi je 7 − 3 = 4 desetiny, tedy 4/10. Zlomek zkrátíme dvěma: 4/10 = 2/5."
       ],
       "cas_sekund": 150,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_44",
@@ -9538,7 +9640,8 @@
         "Boris má 3 · 4 = 12 kuliček (Aleš 16). Zkouška: 12 + 16 = 28. Správně je B)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_31",
@@ -9587,7 +9690,8 @@
         "Svislých úseček je vlevo 3, vpravo nahoře 1 a ve výřezu 2, dohromady 6 cm. Obvod je 6 + 6 = 12 cm. (Je stejný jako obvod čtverce 3 cm × 3 cm: výřez v rohu obvod nezmění.)"
       ],
       "cas_sekund": 90,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "sit"
     },
     {
       "id": "P5_OBS_34",
@@ -9728,7 +9832,8 @@
         "Menší obdélník má jednu stranu 6 cm a druhou 14 − 6 = 8 cm. Jeho obvod je 2 · (8 + 6) = 28 cm."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_42",
@@ -9751,7 +9856,8 @@
         "Je jich 6 (poslední je čtverec). Správně je C)."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_43",
@@ -9774,7 +9880,8 @@
         "Dlažba má 140 − 60 = 80 m². Správně je D)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_44",
@@ -9796,7 +9903,8 @@
         "Sedmý obrazec má řady 1, 2, 3, 4, 5, 6 a 7 čtverečků, dohromady 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28 čtverečků, tedy 28 cm²."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_OBS_45",
@@ -9811,7 +9919,8 @@
         "Cena je 5 · 780 = 3 900 Kč."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_31",
@@ -10048,7 +10157,8 @@
         "Z 5. D se přihlásilo 14 žáků, takže z 5. C jich je víc o 24 − 14 = 10."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_42",
@@ -10071,7 +10181,8 @@
         "Ve všech třídách je 25 + 27 + 22 = 74 žáků."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_43",
@@ -10093,7 +10204,8 @@
         "Největší celé n je 49. Řada ze 49 trojúhelníků potřebuje 2 · 49 + 1 = 99 špejlí a jedna špejle zbude."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_44",
@@ -10108,7 +10220,8 @@
         "Součet je 70 + 16 = 86."
       ],
       "cas_sekund": 270,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_GRA_45",
@@ -10138,7 +10251,8 @@
         "E) Tanec a šachy dohromady mají 12 + 6 = 18 dětí, a to je stejně jako plavání. Správně je E)."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_ZLO_45",
@@ -10153,7 +10267,8 @@
         "Zkouška: fotbal 24, florbal 12, plavání 6, jiný sport 48 − 24 − 12 − 6 = 6 žáků, a 24 + 12 + 6 + 6 = 48."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_32",
@@ -10378,7 +10493,8 @@
         "Méně než 8 krychliček nestačí, takže nejmenší stavba má 8 krychliček."
       ],
       "cas_sekund": 330,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_43",
@@ -10408,7 +10524,8 @@
         "Dohromady 4 · 4 + 4 · 2 + 4 · 1 = 16 + 8 + 4 = 28 krychliček. Správně je B)."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_44",
@@ -10430,7 +10547,8 @@
         "Obrazec bude mít 6 skupin po 4 čtverečcích, tedy 24 čtverečků. Vybarveno je 6, takže zbývá 24 − 6 = 18."
       ],
       "cas_sekund": 330,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_46",
@@ -10452,7 +10570,8 @@
         "Oba pohledy mají dohromady 9 + 7 = 16 čtverečků."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_01",
@@ -10620,7 +10739,8 @@
           "odpoved": "75"
         }
       ],
-      "odpoved": "33 ; 18 ; 75"
+      "odpoved": "33 ; 18 ; 75",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_04",
@@ -10649,7 +10769,8 @@
           "odpoved": "6"
         }
       ],
-      "odpoved": "4 ; 9 ; 6"
+      "odpoved": "4 ; 9 ; 6",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_05",
@@ -10681,7 +10802,8 @@
           "jednotka": "m"
         }
       ],
-      "odpoved": "26 ; 36 ; 6"
+      "odpoved": "26 ; 36 ; 6",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_06",
@@ -10712,7 +10834,8 @@
           "jednotka": "min"
         }
       ],
-      "odpoved": "19:25 ; 110 ; 35"
+      "odpoved": "19:25 ; 110 ; 35",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_11",
@@ -10751,7 +10874,8 @@
           }
         ]
       },
-      "odpoved": "1–C ; 2–E ; 3–B"
+      "odpoved": "1–C ; 2–E ; 3–B",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_12",
@@ -10790,7 +10914,8 @@
           }
         ]
       },
-      "odpoved": "1–B ; 2–D ; 3–E"
+      "odpoved": "1–B ; 2–D ; 3–E",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_13",
@@ -10829,7 +10954,8 @@
           }
         ]
       },
-      "odpoved": "1–A ; 2–E ; 3–D"
+      "odpoved": "1–A ; 2–E ; 3–D",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_07",
@@ -10859,7 +10985,8 @@
           "jednotka": "min"
         }
       ],
-      "odpoved": "3 ; 60 ; 50"
+      "odpoved": "3 ; 60 ; 50",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_08",
@@ -10888,7 +11015,8 @@
           "odpoved": "8725"
         }
       ],
-      "odpoved": "49000 ; 48700 ; 8725"
+      "odpoved": "49000 ; 48700 ; 8725",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_14",
@@ -10927,7 +11055,8 @@
           }
         ]
       },
-      "odpoved": "1–B ; 2–D ; 3–F"
+      "odpoved": "1–B ; 2–D ; 3–F",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_15",
@@ -10966,7 +11095,8 @@
           }
         ]
       },
-      "odpoved": "1–C ; 2–D ; 3–E"
+      "odpoved": "1–C ; 2–D ; 3–E",
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_16",
@@ -11063,7 +11193,8 @@
         "Platí: 5 · 5 = 25 cm²."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_19",
@@ -11097,7 +11228,8 @@
         "Neplatí: osmina je 24 : 8 = 3 žáci, tři osminy jsou 3 · 3 = 9 žáků, ne 8."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_20",
@@ -11131,7 +11263,8 @@
         "Neplatí: nejvíce má Jana (55 korun), Petr má 40 korun."
       ],
       "cas_sekund": 210,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_21",
@@ -11160,7 +11293,8 @@
         "Neplatí: 16:15 je později než 16:00."
       ],
       "cas_sekund": 180,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_22",
@@ -11194,7 +11328,8 @@
         "Platí: 63 482 − 63 000 = 482."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_23",
@@ -11228,7 +11363,8 @@
         "Neplatí: 54 : 18 = 3, trvá to 3 hodiny, ne 4."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_24",
@@ -11262,7 +11398,8 @@
         "Neplatí: kvádr je 2 krychličky vysoký, má tedy dvě vrstvy."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_VIC_25",
@@ -11296,7 +11433,8 @@
         "Platí: 60 − 35 = 25 korun."
       ],
       "cas_sekund": 240,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_29",
@@ -11311,7 +11449,8 @@
         "Potřeba je 6 · 3 · 2 = 36 dílků."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_45",
@@ -11326,7 +11465,8 @@
         "Potřeba je 4 · 3 · 2 = 24 dílků."
       ],
       "cas_sekund": 300,
-      "sm2_interval": 1
+      "sm2_interval": 1,
+      "dovednost": "testove"
     },
     {
       "id": "P5_TEL_23",

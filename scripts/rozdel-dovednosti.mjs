@@ -1,11 +1,11 @@
-// Rozdělí úlohy 9. třídy do dovedností (src/lib/dovednosti.ts) a vybere testové příklady.
+// Rozdělí úlohy 9. a 5. třídy do dovedností (src/lib/dovednosti.ts) a vybere testové příklady.
 //   node scripts/rozdel-dovednosti.mjs          … jen vypíše přehled, nic nezapíše
 //   node scripts/rozdel-dovednosti.mjs --zapsat … zapíše pole `dovednost` a přesuny do databáze
 // Úloha, která už pole `dovednost` má, se nepřepisuje (ruční oprava zůstane).
 import fs from "fs";
 import { DOVEDNOSTI, TESTOVE, dovednostUlohy } from "../src/lib/dovednosti.ts";
 
-const SOUBORY = ["src/data/databaze.json", "src/data/cermat-200.json", "src/data/doplnky-uhly-souhrnne.json", "src/data/konstrukce-interaktivni.json"];
+const SOUBORY = ["src/data/databaze-5.json", "src/data/databaze.json", "src/data/cermat-200.json", "src/data/doplnky-uhly-souhrnne.json", "src/data/konstrukce-interaktivni.json"];
 const zapsat = process.argv.includes("--zapsat");
 
 // Úlohy psané podle skutečných testů CERMAT (rodiny *3_ a úlohy výběru A–E / s podúlohami z rodin *2_).
@@ -15,6 +15,11 @@ const TESTOVE_NAVIC = new Set(["MOZ_2"]);
 const jeTestova = (e) =>
   TESTOVA_RODINA.test(e.id) || TESTOVE_NAVIC.has(e.id) ||
   (TESTOVY_FORMAT_RODINA.test(e.id) && ((e.moznosti?.length ?? 0) > 0 || (e.podulohy?.length ?? 0) > 0 || (e.tvrzeni?.length ?? 0) > 0));
+
+// 5. třída: úroveň 3 je úroveň skutečných testů; úlohy s více odpověďmi (formát testu) od úrovně 2 výš taky.
+const viceOdpovedi = (e) => (e.podulohy?.length ?? 0) > 0 || !!e.prirazeni || (e.tvrzeni?.length ?? 0) > 0;
+const jeTestova5 = (e) => e.obtiznost === 3 || (viceOdpovedi(e) && e.obtiznost >= 2);
+const SIT = /čtvereček|čtverečky|čtverečků|čtvercovS* sít/i;
 
 // Úlohy, které byly ve špatném tématu (podle id).
 const PRESUNY = {
@@ -46,7 +51,16 @@ for (const soubor of SOUBORY) {
   const db = JSON.parse(fs.readFileSync(soubor, "utf8"));
   let zmeneno = 0;
   for (const e of db.examples) {
-    if (String(e.tema).startsWith("p5_")) continue;
+    const pata = String(e.tema).startsWith("p5_");
+    if (pata) {
+      if (!e.dovednost) {
+        const d = jeTestova5(e) ? TESTOVE : e.tema === "p5_obsah" && SIT.test(e.zadani) ? "sit" : undefined;
+        if (d) { e.dovednost = d; zmeneno++; }
+      }
+      const k = dovednostUlohy(e) ?? "?? " + e.podtema;
+      ((statistika[e.tema] ??= {})[k] ??= [0, 0, 0])[e.obtiznost - 1]++;
+      continue;
+    }
     const cil = PRESUNY[e.id];
     if (cil && e.tema !== cil.tema) { zmeny.push(`${e.id}: ${e.tema} → ${cil.tema}`); Object.assign(e, cil); zmeneno++; }
     for (const [test, cil] of PRESUN_TEMA) if (test(e)) { zmeny.push(`${e.id}: ${e.tema} → ${cil.tema}`); Object.assign(e, cil); zmeneno++; }

@@ -17,13 +17,13 @@ interface Props {
   onBack: () => void;
 }
 
-function Pruh({ p }: { p: LevelProgress | undefined }) {
+function Pruh({ p, naBarve = false }: { p: LevelProgress | undefined; naBarve?: boolean }) {
   const done = p?.done ?? 0;
   const total = p?.total ?? 0;
   const procent = total > 0 ? Math.round((done / total) * 100) : 0;
   return (
     <span className="flex items-center gap-2">
-      <span className="tema-tint flex-1 h-1.5 rounded-full overflow-hidden">
+      <span className={`flex-1 h-1.5 rounded-full overflow-hidden ${naBarve ? "" : "tema-tint"}`} style={naBarve ? { background: "var(--surface-0)" } : undefined}>
         <span className="block h-full rounded-full" style={{ width: `${procent}%`, background: "var(--tema-barva)" }} />
       </span>
       <span className="tema-text text-xs font-bold shrink-0 tabular-nums">{done}/{total}</span>
@@ -37,6 +37,8 @@ export default function TemaDovednosti({ tema, onStart, onBack }: Props) {
   const postup = useMemo(() => computeDovednostProgress(tema, vProhlizeci), [vProhlizeci, tema]);
   const dovednosti = dovednostiTematu(tema);
   const testove = postup[TESTOVE];
+  // 5. třída má hravější vzhled (barevná hlavička a dlaždice), 9. třída klidné bílé řádky.
+  const pata = tema.startsWith("p5_");
 
   return (
     <div className="flex flex-col gap-4 fade-in-up" style={temaStyl(tema)} data-testid="tema-dovednosti" data-tema-vyber={tema}>
@@ -44,13 +46,23 @@ export default function TemaDovednosti({ tema, onStart, onBack }: Props) {
         ← Všechna témata
       </button>
 
-      <div className="flex items-center gap-3">
-        <HexIkona tema={tema} velikost={56} />
-        <div className="min-w-0">
-          <h1 className="text-2xl font-extrabold leading-tight" style={{ color: "var(--text-primary)" }}>{TEMA_LABELS[tema] ?? tema}</h1>
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Vyber, co chceš procvičit. Začneš lehčími příklady, těžší přibývají.</p>
+      {pata ? (
+        <div className="tema-plna relative overflow-hidden rounded-[20px] p-4 flex flex-col gap-1">
+          <svg aria-hidden="true" width="130" height="130" viewBox="0 0 48 48" className="absolute" style={{ right: -30, top: -30, opacity: 0.16 }}>
+            <polygon points={HEX_BODY} fill="currentColor" />
+          </svg>
+          <h1 className="relative text-[26px] font-extrabold leading-tight">{TEMA_LABELS[tema] ?? tema}</h1>
+          <p className="relative text-sm font-semibold">Co chceš procvičit? Začneš lehčími příklady.</p>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-center gap-3">
+          <HexIkona tema={tema} velikost={56} />
+          <div className="min-w-0">
+            <h1 className="text-2xl font-extrabold leading-tight" style={{ color: "var(--text-primary)" }}>{TEMA_LABELS[tema] ?? tema}</h1>
+            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Vyber, co chceš procvičit. Začneš lehčími příklady, těžší přibývají.</p>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col gap-2.5">
         {dovednosti.map((d, i) => (
@@ -58,17 +70,17 @@ export default function TemaDovednosti({ tema, onStart, onBack }: Props) {
             key={d.klic}
             type="button"
             onClick={() => onStart(d.klic)}
-            className="text-left rounded-2xl p-3 flex items-center gap-3 bg-white border border-slate-200 card-hover"
+            className={`text-left rounded-2xl p-3 flex items-center gap-3 ${pata ? "tema-tint press-scale" : "bg-white border border-slate-200 card-hover"}`}
             data-dovednost={d.klic}
           >
             <svg aria-hidden="true" width="36" height="36" viewBox="0 0 48 48" className="shrink-0">
-              <polygon points={HEX_BODY} className="tema-tint-fill" />
-              <text x="24" y="25" textAnchor="middle" dominantBaseline="central" fontSize="20" fontWeight="800" className="tema-text" fill="currentColor">{i + 1}</text>
+              {pata ? <polygon points={HEX_BODY} fill="var(--tema-barva)" /> : <polygon points={HEX_BODY} className="tema-tint-fill" />}
+              <text x="24" y="25" textAnchor="middle" dominantBaseline="central" fontSize="20" fontWeight="800" className={pata ? undefined : "tema-text"} fill={pata ? "#fff" : "currentColor"}>{i + 1}</text>
             </svg>
             <span className="flex-1 min-w-0 flex flex-col gap-1">
               <span className="text-[15px] font-bold leading-snug" style={{ color: "var(--text-primary)" }}>{d.nazev}</span>
               <span className="text-xs leading-snug" style={{ color: "var(--text-secondary)" }}>{d.popis}</span>
-              <Pruh p={postup[d.klic]} />
+              <Pruh p={postup[d.klic]} naBarve={pata} />
             </span>
           </button>
         ))}

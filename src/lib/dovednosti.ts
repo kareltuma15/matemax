@@ -81,6 +81,49 @@ export const DOVEDNOSTI: Record<string, Dovednost[]> = {
     { klic: "procenta", nazev: "Procenta, zlomky a čísla", popis: "Kombinace procent, zlomků a tabulek", podtemata: ["procenta_cisla", "procenta_slovni", "procenta_tabulka", "tabulka_procenta", "zlomky_procenta", "zlomky_slovni", "cisla_slovni", "mix"] },
     { klic: "rovnice", nazev: "Rovnice v úlohách", popis: "Slovní úlohy řešené rovnicí nebo soustavou", podtemata: ["cisla_rovnice", "rovnice_procenta", "rovnice_slovni", "rovnice_zlomky", "soustava_slovni", "zlomky_soustava"] },
   ],
+
+  // ── 5. třída ───────────────────────────────────────────────────────────────
+  // Úlohy úrovně 3 jsou na úrovni skutečných testů (docs/cermat-5), proto jsou testovými příklady.
+  p5_pocitani: [
+    { klic: "poradi", nazev: "Pořadí počítání", popis: "Co se počítá dřív, závorky", podtemata: ["poradi_operaci", "vyber_vyrazu"] },
+    { klic: "velka_cisla", nazev: "Velká čísla a zaokrouhlování", popis: "Tisíce, miliony, zaokrouhli na desítky", podtemata: ["p5_velka_cisla", "p5_zaokrouhlovani"] },
+    { klic: "doplnit", nazev: "Doplň chybějící číslo", popis: "Které číslo patří do čtverečku", podtemata: ["doplnit_cislo", "p5_logika"] },
+  ],
+  p5_jednotky: [
+    { klic: "prevody", nazev: "Převody jednotek", popis: "Metry, kilogramy, litry", podtemata: ["p5_prevody"] },
+    { klic: "cas", nazev: "Čas a hodiny", popis: "Hodiny, minuty, jízdní řád", podtemata: ["p5_cas"] },
+    { klic: "penize", nazev: "Peníze a ceny", popis: "Nákupy, mince, kolik zbude", podtemata: ["p5_ceny", "p5_mince"] },
+  ],
+  p5_slovni: [
+    { klic: "dva_udaje", nazev: "Kolik dohromady, kolik víc", popis: "Úlohy na dva a více kroků", podtemata: ["p5_dva_udaje"] },
+    { klic: "tempo", nazev: "Kolik za hodinu, za den", popis: "Robot, pekař, truhlář: stejně rychle", podtemata: ["p5_tempo"] },
+    { klic: "vek_hmotnost", nazev: "Věk a hmotnost", popis: "Kolik let bude, kolik váží jeden kus", podtemata: ["p5_vek", "p5_hmotnosti", "p5_logika"] },
+  ],
+  p5_zlomky: [
+    { klic: "obrazek", nazev: "Zlomek z obrázku", popis: "Jaká část je vybarvená, který zlomek je větší", podtemata: ["p5_zlomek_obrazku", "p5_porovnani"] },
+    { klic: "cast_celku", nazev: "Část celku", popis: "Polovina, třetina, čtvrtina z čísla", podtemata: ["p5_cast_celku"] },
+    { klic: "o_zlomek", nazev: "O zlomek víc, o zlomek míň", popis: "Zdražení o čtvrtinu, kolik zbylo", podtemata: ["p5_o_zlomek", "p5_zbytek"] },
+  ],
+  p5_obsah: [
+    { klic: "sit", nazev: "Obrazce ve čtvercové síti", popis: "Spočítej čtverečky a strany", podtemata: [] },
+    { klic: "obvod", nazev: "Obvod", popis: "Čtverec, obdélník, složené obrazce", podtemata: ["p5_obvod"] },
+    { klic: "obsah", nazev: "Obsah", popis: "Kolik čtverečních centimetrů nebo metrů", podtemata: ["p5_obsah"] },
+  ],
+  p5_telesa: [
+    { klic: "krychlicky", nazev: "Stavby z krychliček", popis: "Kolik krychliček, pohled shora, skládání", podtemata: ["p5_krychlicky", "p5_pudorys", "p5_skladani"] },
+    { klic: "kvadr", nazev: "Krychle a kvádr", popis: "Hrany, stěny, vrcholy", podtemata: ["p5_kvadr"] },
+    { klic: "soumernost", nazev: "Osová souměrnost", popis: "Je obrázek souměrný, dokresli druhou půlku", podtemata: ["p5_soumernost"] },
+  ],
+  p5_rysovani: [
+    { klic: "zaklad", nazev: "Úsečky, kolmice a rovnoběžky", podtemata: ["kolmice", "rovnobezka", "stred_usecky", "osa_usecky", "p5_cast_usecky", "p5_pruseciky", "p5_vzdalenost", "soumernost"], popis: "Střed úsečky, vzdálenost, průsečík" },
+    { klic: "kruznice", nazev: "Kružnice", popis: "Střed a poloměr, body na kružnici", podtemata: ["kruznice"] },
+    { klic: "obrazce", nazev: "Trojúhelník, čtverec, obdélník", popis: "Rýsování podle zadaných stran", podtemata: ["trojuhelnik", "ctverec", "obdelnik", "kosoctverec"] },
+  ],
+  p5_grafy: [
+    { klic: "cteni", nazev: "Čtení z grafu a tabulky", popis: "Sloupcové a obrázkové grafy", podtemata: ["p5_sloupcovy", "p5_tabulka"] },
+    { klic: "chybi", nazev: "Chybějící údaj a tvrzení", popis: "Dopočítej sloupec, rozhodni ANO/NE", podtemata: ["p5_chybi_udaj", "p5_tvrzeni"] },
+    { klic: "vzory", nazev: "Vzory a řady", popis: "Jak řada pokračuje", podtemata: ["p5_vzory"] },
+  ],
 };
 
 /** Dovednosti tématu bez testových příkladů (prázdné pole = téma ještě rozdělené není). */

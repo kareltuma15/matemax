@@ -6,6 +6,7 @@ import type { Session } from "@supabase/supabase-js";
 import TopicMap5 from "@/components/TopicMap5";
 import { HlavickaZnacky } from "@/components/HexIkona";
 import { usePremium } from "@/lib/premium";
+import { maDovednosti } from "@/lib/dovednosti";
 import { vokativ } from "@/lib/vokativ";
 
 /** První jednotný termín přijímaček na víceletá gymnázia (ověřený fakt: 14.–15. 4. 2027). */
@@ -41,7 +42,7 @@ export default function Dashboard5({ session }: { session: Session }) {
         </span>
         <span className="shrink-0 text-xs font-bold text-white px-3 py-2 rounded-lg" style={{ background: "#0D1B3E" }}>Spustit →</span>
       </Link>
-      <TopicMap5 isPremium={isPremium} onSelectTopic={(tema) => router.push(`/trenink?tema=${tema}`)} />
+      <TopicMap5 isPremium={isPremium} onSelectTopic={(tema) => router.push(maDovednosti(tema) ? `/trenink?vyber=${tema}` : `/trenink?tema=${tema}`)} />
     </div>
   );
 }
