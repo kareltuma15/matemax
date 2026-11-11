@@ -616,3 +616,10 @@ body {
 .tile-3d:active {
   transform: perspective(420px) scale(0.97);
 }
+
+/* ── Režim příkladu: během série jen zadání a odpověď ──────────────
+   Trénink nastaví <html data-priklad>, dokud je na obrazovce úloha. Horní lišta, spodní navigace
+   a patička zmizí (ovládání série je v SerieHlava), pořadí „3 / 7“ v kartě taky. */
+html[data-priklad] .app-chrome,
+html[data-priklad] .karta-poradi { display: none !important; }
+html[data-priklad] .app-main { padding-top: 0.75rem; padding-bottom: 2rem; }

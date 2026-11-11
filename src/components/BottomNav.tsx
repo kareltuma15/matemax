@@ -102,7 +102,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100"
+      className="app-chrome fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="max-w-2xl mx-auto flex px-2 py-1">

@@ -46,8 +46,8 @@ async function answer(page: Page, tema: string, level: 1 | 2 | 3, correct: boole
     await page.getByRole("button", { name: /Pokračovat/ }).last().click();
     return;
   }
-  await page.getByPlaceholder(/napiš výsledek|např\./).fill(correct ? q.odpoved : "123456789");
-  await page.getByRole("button", { name: "OK", exact: true }).click();
+  await page.getByPlaceholder("Tvoje odpověď").fill(correct ? q.odpoved : "123456789");
+  await page.getByRole("button", { name: "Zkontrolovat", exact: true }).click();
   await page.getByRole("button", { name: /Další příklad/ }).click();
 }
 

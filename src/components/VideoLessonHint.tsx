@@ -8,7 +8,7 @@ import { trackEvent } from "@/lib/analytics";
  * Po chybě nabídne videolekci k tématu úlohy (jen když nějaká veřejná existuje).
  * Otevře YouTube v nové záložce, ať žák nepřijde o rozpracovaný trénink; klepnutí se měří.
  */
-export default function VideoLessonHint({ tema, podtema }: { tema: string; podtema?: string | null }) {
+export default function VideoLessonHint({ tema, podtema, maly }: { tema: string; podtema?: string | null; /** Jen malý odkaz (karta příkladu po chybě). */ maly?: boolean }) {
   const nalez = najdiVideolekci(tema, podtema);
   if (!nalez) return null;
   const { lekce, presna } = nalez;
@@ -18,6 +18,22 @@ export default function VideoLessonHint({ tema, podtema }: { tema: string; podte
     supabase.auth.getSession().then(({ data }) => {
       trackEvent(data.session?.user.id ?? null, "videolekce_klik", { lekce: lekce.id, tema, podtema: podtema ?? null, presna }).catch(() => {});
     });
+  }
+
+  if (maly) {
+    return (
+      <a
+        href={lekce.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={zmerit}
+        data-testid="videolekce-odkaz"
+        className="text-sm font-semibold underline-offset-2 hover:underline"
+        style={{ color: "#4741B8" }}
+      >
+        ▶ Video k tématu
+      </a>
+    );
   }
 
   return (

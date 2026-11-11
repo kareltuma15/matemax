@@ -125,7 +125,7 @@ export default function ConstructionCard({ example, cardNumber, total, onResult,
       {/* Hlavička: pořadí + téma + obtížnost */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2 text-xs">
-          <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
+          <span className="karta-poradi font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
           <span
             className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0"
             style={{ background: "#eef2ff", color: "#4338ca" }}

@@ -14,6 +14,7 @@ import MathDisplay from "./MathDisplay";
 import FitMath, { splitPrompt } from "./FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "./VideoLessonHint";
+import { klavesnice } from "@/lib/klavesnice";
 
 /** Renderuje text nebo LaTeX podle typu příkladu */
 function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
@@ -32,29 +33,9 @@ interface Props {
   noRetry?: boolean;
 }
 
-const DIFFICULTY_BADGE: Record<number, { label: string; bg: string; color: string }> = {
-  1: { label: "Lehká ⭐",       bg: "#f0fdf4", color: "#166534" },
-  2: { label: "Střední ⭐⭐",   bg: "#fffbeb", color: "#92400e" },
-  3: { label: "Těžká ⭐⭐⭐",   bg: "#fef2f2", color: "#991b1b" },
-};
-
-/**
- * Znaky, které se na telefonu píšou špatně a které vyhodnocení odpovědí (normalize.ts) umí.
- * Lišta je pro všechny příklady stejná — jinak by sada tlačítek prozradila tvar odpovědi (např. záporné číslo).
- * „Mínus“ vkládá obyčejný „-“ (to vyhodnocení čte); „−“ z jiných klávesnic normalize.ts převádí také.
- */
-const MATH_KEYS = [
-  { name: "slash", label: "/", insert: "/", aria: "Zlomková čára" },
-  { name: "colon", label: ":", insert: ":", aria: "Dvojtečka (čas, poměr)" },
-  { name: "comma", label: ",", insert: ",", aria: "Desetinná čárka" },
-  { name: "minus", label: "−", insert: "-", aria: "Mínus" },
-  { name: "square", label: "²", insert: "²", aria: "Druhá mocnina" },
-  { name: "cube", label: "³", insert: "³", aria: "Třetí mocnina" },
-  { name: "degree", label: "°", insert: "°", aria: "Stupně" },
-  { name: "minute", label: "′", insert: "′", aria: "Minuty" },
-  { name: "percent", label: "%", insert: "%", aria: "Procento" },
-  { name: "backspace", label: "⌫", insert: "", aria: "Smazat poslední znak" },
-] as const;
+/** Hvězdičky obtížnosti v rohu karty (malé, ať neruší zadání). */
+const HVEZDY: Record<number, string> = { 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐" };
+const NAZEV_OBTIZNOSTI: Record<number, string> = { 1: "Lehká", 2: "Střední", 3: "Těžká" };
 
 export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult, onSkip, noRetry }: Props) {
   const [input, setInput]               = useState("");
@@ -90,17 +71,10 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     });
   }
 
-  /** Smaže výběr, nebo znak před kurzorem. */
-  function deleteBack() {
-    const el = inputRef.current;
-    const start = el?.selectionStart ?? input.length;
-    const end = el?.selectionEnd ?? input.length;
-    const from = start === end ? Math.max(0, start - 1) : start;
-    setInput(input.slice(0, from) + input.slice(end));
-    requestAnimationFrame(() => {
-      el?.focus();
-      el?.setSelectionRange(from, from);
-    });
+  /** Žák chce postup hned po první chybě: pokus tím končí (výsledek už uvidí), otevře se vysvětlení. */
+  function ukazPostup() {
+    setWrongAttempts(2);
+    setShowSolution(true);
   }
 
   useEffect(() => {
@@ -232,19 +206,22 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     }
   }
 
-  const borderColor =
-    status === "correct" ? "border-green-500" :
-    status === "wrong"   ? "border-red-400" :
-    "border-slate-200 focus-within:border-indigo-400";
-
-  const diff = DIFFICULTY_BADGE[example.obtiznost] ?? DIFFICULTY_BADGE[1];
   // „Řešte rovnici: $…$" → pokyn malým písmem a výraz vlastním řádkem (jinak se dlouhý zlomkový výraz
   // láme uprostřed věty). Krátké „Vypočítej:" / „Vyřeš:" zůstává beze změny.
   const promptSplit = example.latex ? splitPrompt(example.zadani) : null;
   const progressPct = (cardNumber / total) * 100;
   const topicLabel = TEMA_LABELS[example.tema] ?? example.tema;
+  const dovednost = dovednostUlohy(example);
+  const nazevDov = dovednost === TESTOVE
+    ? "Testový příklad"
+    : (dovednost && nazevDovednosti(example.tema, dovednost)) || podtemaLabel(example.podtema);
   const tips = getTips(example.tema);
   const canRetry = !noRetry && status === "wrong" && wrongAttempts < 2;
+  // Číselná klávesnice telefonu, klávesa navíc jen když ji úloha potřebuje (viz lib/klavesnice.ts)
+  const klav = klavesnice(String(example.odpoved), example.tema);
+  const podobne = dovednost && dovednost !== TESTOVE
+    ? `/trenink?tema=${example.tema}&dovednost=${dovednost}`
+    : `/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`;
 
   return (
     <>
@@ -271,7 +248,8 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
 
       <div
         key={cardKey}
-        className={`card-enter bg-white rounded-2xl shadow-sm border p-6 flex flex-col gap-5 relative transition-colors duration-200 ${
+        style={temaStyl(example.tema)}
+        className={`card-enter bg-white rounded-3xl shadow-sm border p-5 sm:p-6 flex flex-col gap-5 relative transition-colors duration-200 ${
           isFlipping
             ? "card-flip border-green-400"
             : shaking
@@ -296,45 +274,31 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </div>
         )}
 
-        {/* Progress bar */}
-        <div>
-          <div className="flex items-center justify-between text-xs mb-2 gap-2">
-            <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
-            <span
-              className="tema-tint tema-text font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0 whitespace-nowrap"
-              style={temaStyl(example.tema)}
-            >
-              {topicLabel}
-            </span>
-            {example.dovednost !== "testove" && podtemaLabel(example.podtema) && (
-              <span className="text-slate-300 text-[10px] shrink-0 truncate max-w-[80px]">
-                {podtemaLabel(example.podtema)}
-              </span>
-            )}
-          </div>
-          <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-            <div
-              className="h-3 rounded-full transition-all duration-500"
-              style={{ ...temaStyl(example.tema), width: `${progressPct}%`, background: "var(--tema-barva)" }}
-            />
+        {/* Pořadí v sadě: jen mimo trénink (diagnostika, náhled). V tréninku je postup série nahoře v SerieHlava. */}
+        <div className="karta-poradi flex items-center gap-3 text-xs">
+          <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
+          <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+            <div className="h-2 rounded-full transition-all duration-500" style={{ width: `${progressPct}%`, background: "var(--tema-barva)" }} />
           </div>
         </div>
 
-        {/* Difficulty badge */}
-        <div className="flex items-center justify-end">
+        {/* Téma a dovednost */}
+        <div className="flex items-center justify-between gap-2">
           <span
-            className="text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap"
-            style={{ background: diff.bg, color: diff.color }}
+            className="tema-tint tema-text font-bold px-3 py-1 rounded-full text-xs min-w-0 truncate"
+            data-testid="karta-tema"
           >
-            {diff.label}
+            {topicLabel}{nazevDov ? ` · ${nazevDov}` : ""}
+          </span>
+          <span className="text-[11px] shrink-0" title={`${NAZEV_OBTIZNOSTI[example.obtiznost] ?? ""} úloha`} aria-label={`${NAZEV_OBTIZNOSTI[example.obtiznost] ?? ""} úloha`}>
+            {HVEZDY[example.obtiznost] ?? ""}
           </span>
         </div>
 
-        {/* Question */}
-        <div className="text-center py-2">
-          <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Vypočítej</p>
+        {/* Zadání */}
+        <div>
           {example.image && (
-            <div className="mb-3">
+            <div className="mb-4">
               <TaskImageView image={example.image} />
             </div>
           )}
@@ -355,22 +319,80 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           )}
         </div>
 
-        {/* Static tip (idle only) */}
+        {/* Odpověď */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <input
+            ref={inputRef}
+            type="text"
+            inputMode={klav.inputMode}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={status !== "idle"}
+            placeholder="Tvoje odpověď"
+            aria-label="Tvoje odpověď"
+            className="w-full px-4 py-3 text-xl font-bold rounded-2xl border-2 outline-none transition-colors placeholder:font-medium placeholder:text-slate-300 disabled:opacity-100"
+            style={{
+              color: "var(--text-primary)",
+              borderColor: status === "correct" ? "#22c55e" : status === "wrong" ? "#B4232F" : "var(--tema-barva)",
+              background: status === "correct" ? "#f0fdf4" : status === "wrong" ? "#FDE8EA" : "#fff",
+            }}
+            autoComplete="off"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            enterKeyHint="done"
+          />
+
+          {/* Klávesy navíc: jen znaky, které úloha potřebuje a na klávesnici telefonu nejsou.
+              Vkládají na pozici kurzoru a nechají klávesnici otevřenou. */}
+          {status === "idle" && klav.klavesy.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Znaky navíc">
+              {klav.klavesy.map((k) => (
+                <button
+                  key={k.name}
+                  type="button"
+                  data-testid={`mathkey-${k.name}`}
+                  aria-label={k.aria}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => insertChar(k.insert)}
+                  className="min-w-12 h-11 px-3 rounded-xl border-[1.5px] border-slate-200 bg-white text-lg font-extrabold text-slate-800 press-scale"
+                >
+                  {k.label}
+                </button>
+              ))}
+              {klav.klavesy.some((k) => k.name === "minute") && (
+                <span className="text-xs text-slate-500">Zapiš např. 22°30′ nebo 22 30</span>
+              )}
+            </div>
+          )}
+
+          {status === "idle" && (
+            <button
+              type="submit"
+              disabled={!input.trim()}
+              className="w-full py-3.5 rounded-2xl text-white text-base font-extrabold transition-colors press-scale disabled:cursor-not-allowed"
+              style={{ background: input.trim() ? "#0D1B3E" : "#cbd5e1" }}
+            >
+              Zkontrolovat
+            </button>
+          )}
+        </form>
+
+        {/* Nápověda k tématu: jen malý odkaz, ať nepřebíjí hlavní akci */}
         {status === "idle" && tips.length > 0 && (
-          <div>
+          <div className="-mt-2">
             <button
               type="button"
               onClick={() => setShowTip(!showTip)}
-              className="flex items-center gap-1.5 text-sm font-medium transition-colors"
-              style={{ color: showTip ? "#0D1B3E" : "#2E6DA4" }}
+              className="text-sm font-semibold"
+              style={{ color: "#4741B8" }}
             >
-              <span className="text-base">💡</span>
-              {showTip ? "Skrýt nápovědu" : "Zobrazit nápovědu"}
+              💡 {showTip ? "Skrýt nápovědu" : "Nápověda"}
             </button>
             {showTip && (
               <div
-                className="mt-2 rounded-xl border p-4 flex flex-col gap-3 fade-in-up"
-                style={{ background: "#fffbeb", borderColor: "#fde68a" }}
+                className="mt-2 rounded-2xl p-4 flex flex-col gap-3 fade-in-up"
+                style={{ background: "#fffbeb", border: "1px solid #fde68a" }}
               >
                 {tips.map((tip, i) => (
                   <div key={i}>
@@ -387,303 +409,164 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           </div>
         )}
 
-        {/* Input */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-          <label className="text-xs font-medium text-slate-500">Tvoje odpověď</label>
-          <div className={`flex rounded-xl border-2 transition-colors ${borderColor} overflow-hidden`}>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              disabled={status !== "idle"}
-              placeholder={example.tema === "zlomky" ? "např. 5/6" : "napiš výsledek"}
-              className="flex-1 px-4 py-3 text-lg outline-none bg-transparent placeholder:text-slate-300"
-              autoComplete="off"
-              autoCapitalize="off"
-              autoCorrect="off"
-              spellCheck={false}
-              enterKeyHint="done"
-            />
-            {status === "idle" && (
+        {/* Správně */}
+        {status === "correct" && (
+          <div className="rounded-2xl p-4 flex flex-col gap-1" style={{ background: "#E2F4E9" }}>
+            <p className="text-lg font-extrabold" style={{ color: "#14753A" }}>Správně!</p>
+            {/* Žák zapsal jiný, ale rovnocenný tvar (47/12 místo 3 11/12) — pochválíme a ukážeme i druhý zápis. */}
+            {isDifferentForm(input, example.odpoved) ? (
+              <p className="text-sm" style={{ color: "#14532d" }}>
+                Dá se zapsat i jako{" "}
+                <strong><ExMath ex={example} text={example.odpoved} /></strong>
+                {" "}— u přijímaček se hodí obojí.
+              </p>
+            ) : (
+              <p className="text-sm" style={{ color: "#14532d" }}>
+                Výsledek: <strong><ExMath ex={example} text={example.odpoved} /></strong>
+              </p>
+            )}
+            {consecutiveCorrect + 1 >= 3 && (
+              <p className="text-sm font-bold text-amber-700">🔥 {consecutiveCorrect + 1} správně v řadě!</p>
+            )}
+          </div>
+        )}
+
+        {/* Špatně */}
+        {status === "wrong" && (
+          <div className="rounded-2xl p-4 flex flex-col gap-1" style={{ background: "#FDE8EA" }} data-testid="karta-chyba">
+            <p className="text-lg font-extrabold" style={{ color: "#B4232F" }}>
+              {canRetry ? "Ještě ne" : "Tentokrát ne"}
+            </p>
+            {canRetry ? (
+              <p className="text-sm" style={{ color: "#0D1B3E" }}>
+                Zkus to znovu.{example.reseni_kroky.length > 0 ? " Když si nevíš rady, projdeme to spolu po krocích." : ""}
+              </p>
+            ) : (
+              <p className="text-sm" style={{ color: "#0D1B3E" }}>
+                Správně je <strong><ExMath ex={example} text={example.odpoved} /></strong>
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Po první chybě: jedna jasná cesta */}
+        {canRetry && (
+          <div className="flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={handleRetry}
+              className="w-full py-3.5 rounded-2xl text-white text-base font-extrabold press-scale"
+              style={{ background: "#0D1B3E" }}
+            >
+              Zkusit znovu
+            </button>
+            {example.reseni_kroky.length > 0 && (
               <button
-                type="submit"
-                disabled={!input.trim()}
-                className="px-5 text-white font-semibold disabled:cursor-not-allowed transition-colors press-scale"
-                style={{ background: input.trim() ? "#2E6DA4" : "#cbd5e1" }}
+                type="button"
+                onClick={ukazPostup}
+                className="w-full py-3 rounded-2xl text-base font-bold press-scale"
+                style={{ background: "transparent", color: "#0D1B3E", border: "1.5px solid #E4E6EF" }}
               >
-                OK
+                Ukaž mi postup
               </button>
             )}
-          </div>
-          {/* Matematická lišta pro telefon: zlomek, desetinná čárka, mínus, mocniny, ° a ′ se na běžné klávesnici
-              píšou špatně. Tlačítka vkládají na pozici kurzoru a nechají klávesnici otevřenou. Na počítači
-              se skrývá (pointer-coarse = dotyková obrazovka). */}
-          {status === "idle" && (
-            <div className="hidden pointer-coarse:grid grid-cols-5 gap-1.5" role="group" aria-label="Matematické znaky">
-              {MATH_KEYS.map((k) => (
-                <button
-                  key={k.label}
-                  type="button"
-                  data-testid={`mathkey-${k.name}`}
-                  aria-label={k.aria}
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => (k.name === "backspace" ? deleteBack() : insertChar(k.insert))}
-                  className="w-full h-11 rounded-lg border border-slate-200 bg-white text-lg font-bold text-slate-700 press-scale"
-                >
-                  {k.label}
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 pt-1">
+              <VideoLessonHint tema={example.tema} podtema={example.podtema} maly />
+              {!aiHint && !aiHintLoading && !aiHintUnavailable && (
+                <button type="button" onClick={fetchAiHint} className="text-sm font-semibold hover:underline underline-offset-2" style={{ color: "#4741B8" }}>
+                  🤖 Nápověda od AI
                 </button>
-              ))}
-            </div>
-          )}
-          {/* Stupně a minuty: nápověda k zápisu (na počítači i tlačítka ° a ′; na telefonu je má lišta výše) */}
-          {status === "idle" && /′/.test(example.odpoved) && (
-            <div className="flex items-center gap-2 text-xs text-slate-500">
-              <span>Zapiš např. 22°30′ nebo 22 30</span>
-              {["°", "′"].map((ch) => (
-                <button
-                  key={ch}
-                  type="button"
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => insertChar(ch)}
-                  className="pointer-coarse:hidden w-9 h-9 rounded-lg border border-slate-200 bg-white text-lg font-bold text-slate-700 press-scale"
-                  aria-label={ch === "°" ? "Vložit znak stupně" : "Vložit znak minuty"}
-                >
-                  {ch}
-                </button>
-              ))}
-            </div>
-          )}
-        </form>
-
-        {/* Correct result */}
-        {status === "correct" && (
-          <div className="rounded-xl bg-green-50 border border-green-200 p-4 flex items-start gap-3">
-            <span className="text-xl mt-0.5">✓</span>
-            <div className="flex-1">
-              <p className="font-bold text-green-700">Správně!</p>
-              {/* Žák zapsal jiný, ale rovnocenný tvar (47/12 místo 3 11/12) —
-                  pochválíme a ukážeme i druhý zápis. Z rozdílu se stane
-                  mikrolekce místo křížku. */}
-              {isDifferentForm(input, example.odpoved) ? (
-                <p className="text-sm text-green-600">
-                  Dá se zapsat i jako{" "}
-                  <strong><ExMath ex={example} text={example.odpoved} /></strong>
-                  {" "}— u přijímaček se hodí obojí.
-                </p>
-              ) : (
-                <p className="text-sm text-green-600">
-                  Výsledek: <strong><ExMath ex={example} text={example.odpoved} /></strong>
-                </p>
               )}
-              {consecutiveCorrect + 1 >= 3 && (
-                <p className="text-sm font-semibold text-amber-600 mt-1">
-                  🔥 {consecutiveCorrect + 1} správně v řadě!
-                </p>
-              )}
+              {aiHintLoading && <span className="text-sm animate-pulse" style={{ color: "#4741B8" }}>🤖 Načítám nápovědu…</span>}
             </div>
           </div>
         )}
 
-        {/* Wrong result */}
-        {status === "wrong" && (
-          <>
-            <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-start gap-3">
-              <span className="text-xl mt-0.5">✗</span>
-              <div className="flex-1">
-                <p className="font-bold text-red-700">
-                  {canRetry ? "Není správně — zkus to ještě jednou!" : "Skoro!"}
-                </p>
-                <p className="text-sm text-red-600">
-                  Tvoje odpověď: <strong><MathText text={lastWrongInput} /></strong>
-                </p>
-                {!canRetry && (
-                  <p className="text-sm text-slate-600 mt-1">
-                    Správně: <strong className="text-slate-800"><ExMath ex={example} text={example.odpoved} /></strong>
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Retry + AI hint — po 1. špatné odpovědi */}
-            {canRetry && (
-              <div className="flex flex-col gap-2">
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={handleRetry}
-                    className="flex-1 py-3 font-bold rounded-xl transition-colors press-scale text-sm"
-                    style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-                  >
-                    🔄 Zkusit znovu
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onSkip ? onSkip() : onResult(false, lastWrongInput)}
-                    className="py-3 px-4 font-semibold rounded-xl transition-colors text-sm"
-                    style={{ background: "#f8fafc", color: "#94a3b8", border: "1px solid #e2e8f0" }}
-                  >
-                    Přeskočit →
-                  </button>
-                </div>
-
-                {/* AI hint tlačítko */}
-                {!aiHint && !aiHintLoading && !aiHintUnavailable && (
-                  <button
-                    type="button"
-                    onClick={fetchAiHint}
-                    className="w-full py-2.5 font-semibold rounded-xl transition-colors text-sm"
-                    style={{ background: "#f5f3ff", color: "#7c3aed", border: "1px solid #ddd6fe" }}
-                  >
-                    🤖 Chceš chytrý hint od AI?
-                  </button>
-                )}
-                {aiHintLoading && (
-                  <div
-                    className="w-full py-2.5 text-center text-sm rounded-xl"
-                    style={{ background: "#f5f3ff", color: "#7c3aed", border: "1px solid #ddd6fe" }}
-                  >
-                    <span className="animate-pulse">🤖 Načítám hint…</span>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* AI hint výsledek */}
-            {aiHint && (
-              <div
-                className="rounded-xl p-4 fade-in-up"
-                style={{ background: "#faf5ff", border: "1.5px solid #c4b5fd" }}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-base">🤖</span>
-                  <span className="text-xs font-bold uppercase tracking-wide" style={{ color: "#7c3aed" }}>
-                    AI hint · Claude Haiku
-                  </span>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: "#4c1d95" }}>{aiHint}</p>
-                {canRetry && (
-                  <button
-                    type="button"
-                    onClick={handleRetry}
-                    className="mt-3 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors"
-                    style={{ background: "#ede9fe", color: "#6d28d9" }}
-                  >
-                    Zkusit s hintem →
-                  </button>
-                )}
-              </div>
-            )}
-            {aiHintError && (
-              <p className="text-xs text-slate-400 text-center">Hint se nepodařilo načíst. Zkus to za chvíli.</p>
-            )}
-
-            {/* Odkaz na podobné příklady — po finálním wrong */}
-            {!canRetry && (
-              <Link
-                href={dovednostUlohy(example) && dovednostUlohy(example) !== TESTOVE
-                  ? `/trenink?tema=${example.tema}&dovednost=${dovednostUlohy(example)}`
-                  : `/trenink?tema=${example.tema}&podtema=${encodeURIComponent(example.podtema)}`}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-              >
-                <span>🔄</span>
-                <span>Procvičit podobné příklady</span>
-                <span className="text-xs opacity-50 ml-auto">
-                  {(TEMA_LABELS[example.tema] ?? example.tema)}
-                  {(() => {
-                    const d = dovednostUlohy(example);
-                    const nazev = d && d !== TESTOVE ? nazevDovednosti(example.tema, d) : podtemaLabel(example.podtema);
-                    return nazev ? ` · ${nazev}` : "";
-                  })()}
-                </span>
-              </Link>
-            )}
-          </>
+        {/* Nápověda od AI */}
+        {aiHint && (
+          <div className="rounded-2xl p-4 fade-in-up" style={{ background: "#faf5ff", border: "1.5px solid #c4b5fd" }}>
+            <p className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: "#7c3aed" }}>🤖 Nápověda od AI</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#4c1d95" }}>{aiHint}</p>
+          </div>
+        )}
+        {aiHintError && (
+          <p className="text-xs text-slate-400 text-center">Nápovědu se nepodařilo načíst. Zkus to za chvíli.</p>
         )}
 
-        {/* Po chybě nabídka videolekce k tématu (jen když nějaká veřejná je) */}
-        {status === "wrong" && <VideoLessonHint tema={example.tema} podtema={example.podtema} />}
-
-        {/* Solution steps — po 2. špatné odpovědi nebo ručně */}
-        {status !== "idle" && example.reseni_kroky.length > 0 && (
-          <div
-            className="rounded-xl border overflow-hidden"
-            style={{ borderColor: status === "wrong" ? "#bfdbfe" : "#e2e8f0" }}
-          >
-            <button
-              onClick={() => setShowSolution(!showSolution)}
-              className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold transition-colors"
-              style={{
-                background: status === "wrong" ? "#eff6ff" : "#f8fafc",
-                color: "var(--text-primary)",
-              }}
-            >
-              <span className="flex items-center gap-2">
-                {status === "wrong" ? "Projdeme to spolu" : <><span className="text-base">📐</span> Jak se to řeší?</>}
-                {status === "wrong" && !canRetry && !showSolution && (
-                  <span
-                    className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                    style={{ background: "#2E6DA4", color: "#fff" }}
-                  >
-                    NOVÉ
-                  </span>
-                )}
-              </span>
-              <span className="text-slate-400 text-xs">{showSolution ? "▲ skrýt" : "▼ zobrazit"}</span>
-            </button>
-
-            {showSolution && status === "wrong" && (
-              <div className="p-2" style={{ background: "var(--surface-0)" }}>
-                <KrokyReseni key={example.id} example={example} />
-              </div>
-            )}
-
-            {showSolution && status === "correct" && (
-              <div className="px-4 pb-4 pt-2 fade-in-up" style={{ background: "#fff" }}>
-                <ol className="flex flex-col gap-0">
+        {/* Postup řešení: po chybě (rovnou otevřený) nebo po správné odpovědi na vyžádání */}
+        {status !== "idle" && !canRetry && example.reseni_kroky.length > 0 && (
+          status === "wrong" ? (
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => setShowSolution(!showSolution)}
+                className="flex items-center justify-between text-sm font-bold"
+                style={{ color: "#0D1B3E" }}
+              >
+                <span>Projdeme to spolu</span>
+                <span className="text-slate-400 text-xs font-semibold">{showSolution ? "▲ skrýt" : "▼ zobrazit"}</span>
+              </button>
+              {showSolution && <KrokyReseni key={example.id} example={example} />}
+            </div>
+          ) : (
+            <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#E4E6EF" }}>
+              <button
+                type="button"
+                onClick={() => setShowSolution(!showSolution)}
+                className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold"
+                style={{ background: "#f8fafc", color: "var(--text-primary)" }}
+              >
+                <span>📐 Jak se to řeší?</span>
+                <span className="text-slate-400 text-xs">{showSolution ? "▲ skrýt" : "▼ zobrazit"}</span>
+              </button>
+              {showSolution && (
+                <ol className="px-4 pb-4 pt-3 flex flex-col gap-2 fade-in-up bg-white">
                   {example.reseni_kroky.map((krok, i) => (
-                    <li key={i} className="flex gap-3">
-                      <div className="flex flex-col items-center shrink-0">
-                        <span
-                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                          style={{ background: "#2E6DA4" }}
-                        >
-                          {i + 1}
-                        </span>
-                        {i < example.reseni_kroky.length - 1 && (
-                          <div className="w-0.5 flex-1 my-1" style={{ background: "#bfdbfe", minHeight: 12 }} />
-                        )}
-                      </div>
-                      <p
-                        className="text-sm leading-snug pb-3 pt-0.5"
-                        style={{ color: "#1e293b" }}
+                    <li key={i} className="tema-tint rounded-xl px-3 py-2.5 grid grid-cols-[24px_1fr] gap-2.5 text-sm leading-snug" style={{ color: "#1e293b" }}>
+                      <span
+                        className="w-6 h-6 flex items-center justify-center text-xs font-bold text-white"
+                        style={{ background: "var(--tema-barva)", clipPath: "polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)" }}
                       >
-                        <ExMath ex={example} text={krok} />
-                      </p>
+                        {i + 1}
+                      </span>
+                      <span><ExMath ex={example} text={krok} /></span>
                     </li>
                   ))}
                 </ol>
-                <div
-                  className="mt-1 pt-3 border-t text-xs font-semibold flex items-center gap-1.5"
-                  style={{ borderColor: "#e2e8f0", color: "#64748b" }}
-                >
-                  <span>✓</span>
-<span>Správná odpověď: <ExMath ex={example} text={example.odpoved} /></span>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
+          )
+        )}
+
+        {/* Po konečné chybě: malé odkazy na podobné úlohy a video */}
+        {status === "wrong" && !canRetry && (
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+            <Link href={podobne} className="text-sm font-semibold hover:underline underline-offset-2" style={{ color: "#4741B8" }}>
+              🔄 Procvičit podobné
+            </Link>
+            <VideoLessonHint tema={example.tema} podtema={example.podtema} maly />
           </div>
         )}
 
-        {/* Next button */}
+        {/* Další příklad */}
         {status !== "idle" && !canRetry && (
           <button
             onClick={() => onResult(status === "correct", status === "correct" ? input : lastWrongInput)}
-            className="w-full py-3 text-white font-semibold rounded-xl transition-colors text-base mt-1 press-scale"
-            style={{ background: "#0D1B3E" }}
+            className="w-full py-3.5 rounded-2xl text-base font-extrabold press-scale"
+            style={{ background: "#F5A623", color: "#0D1B3E" }}
           >
-            Další příklad → <span className="text-xs opacity-50 ml-1">[Enter]</span>
+            Další příklad →
+          </button>
+        )}
+
+        {/* Přeskočit: nenápadně dole, ne vedle hlavního tlačítka */}
+        {canRetry && (
+          <button
+            type="button"
+            onClick={() => onSkip ? onSkip() : onResult(false, lastWrongInput)}
+            className="self-center text-xs font-semibold text-slate-400 hover:text-slate-600"
+          >
+            Přeskočit úlohu
           </button>
         )}
       </div>

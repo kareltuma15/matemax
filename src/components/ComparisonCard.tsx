@@ -63,7 +63,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult, o
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-4 fade-in-up">
       {/* Hlavička: pořadí + téma + obtížnost */}
       <div className="flex items-center gap-2 text-xs">
-        <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
+        <span className="karta-poradi font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
         <span
           className="tema-tint tema-text font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0"
           style={temaStyl(example.tema)}

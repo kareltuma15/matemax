@@ -19,7 +19,7 @@ export default function UpgradeCard({ tema, cardNumber, total, onSkip }: Props) 
       {/* Progress */}
       <div>
         <div className="flex items-center justify-between text-xs mb-2 gap-2">
-          <span className="font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
+          <span className="karta-poradi font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
           <span
             className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0 whitespace-nowrap"
             style={{ background: "#eff6ff", color: "#2E6DA4" }}

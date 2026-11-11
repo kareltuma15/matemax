@@ -40,6 +40,7 @@ import VicOdpovediCard from "@/components/VicOdpovediCard";
 import BossBattleCard from "@/components/BossBattleCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
+import SerieHlava from "@/components/SerieHlava";
 import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
 import LoggedInTopicMap from "@/components/LoggedInTopicMap";
@@ -1119,71 +1120,29 @@ function TreningPageInner() {
         />
       )}
 
-      {/* Persistent exit button */}
-      <div className="flex items-center justify-between mb-1">
-        <button
-          type="button"
-          onClick={() => router.push("/")}
-          className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors py-1"
-        >
-          ← Ukončit trénink
-        </button>
-        <span className="text-xs text-slate-300 font-medium">
-          {currentIdx + 1} / {sessionIds.length}
-        </span>
-      </div>
+      <SerieHlava
+        tema={currentExample.tema}
+        aktualni={currentIdx}
+        celkem={sessionIds.length}
+        xp={correct * 10 + Math.max(0, currentIdx - correct - skipped)}
+        onZavrit={() => {
+          // Zpět na výběr dovednosti tématu (stejná stránka, proto plné načtení: stav série se jinak drží), jinak domů.
+          if (temaFilter && maDovednosti(temaFilter)) window.location.assign(`/trenink?vyber=${temaFilter}`);
+          else router.push("/");
+        }}
+      />
 
-      <XPProgressBar xp={xp} className="mb-3" />
-
-      {freezeUsedToday && (
-        <div
-          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
-          style={{ background: "#eff8ff", color: "#0369a1", border: "1px solid #bae6fd" }}
-        >
-          🧊 Streak zmrazen — použit freeze štít
-        </div>
+      {/* Režim série jen jedním malým řádkem, a jen když není běžný trénink tématu */}
+      {(freezeUsedToday || rezimFilter === "chyby" || rezimFilter === "sm2" || (isWeakTopic && !temaFilter)) && (
+        <p className="mb-3 text-xs font-semibold text-slate-500">
+          {freezeUsedToday ? "🧊 Streak zmrazen, použil se štít. " : ""}
+          {rezimFilter === "chyby" ? "🔄 Opakuješ chyby" : rezimFilter === "sm2" ? "📅 Opakování na dnešek" : isWeakTopic && !temaFilter ? "🎯 Procvičuješ slabé téma z diagnostiky" : ""}
+        </p>
       )}
 
-      {rezimFilter === "chyby" && (
-        <div
-          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
-          style={{ background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" }}
-        >
-          🔄 Režim opakování chyb
-        </div>
-      )}
-
-      {rezimFilter === "sm2" && (
-        <div
-          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
-          style={{ background: "#f0fdf4", color: "#16a34a", border: "1px solid #bbf7d0" }}
-        >
-          📅 SM-2 opakování — karty splatné dnes
-        </div>
-      )}
-
-      {temaFilter && (
-        <div
-          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
-          style={{ background: "#eff6ff", color: "#2E6DA4", border: "1px solid #bfdbfe" }}
-        >
-          🎯 Cílený trénink: <strong className="ml-1">{TEMA_LABELS[temaFilter] ?? temaFilter}</strong>
-          {podtemaFilter && podtemaLabel(podtemaFilter) && (
-            <strong> · {podtemaLabel(podtemaFilter)}</strong>
-          )}
-          {dovednostFilter && nazevDovednosti(temaFilter, dovednostFilter) && (
-            <strong data-testid="nazev-dovednosti"> · {nazevDovednosti(temaFilter, dovednostFilter)}</strong>
-          )}
-        </div>
-      )}
-
-      {isWeakTopic && !temaFilter && (
-        <div
-          className="mb-3 flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg w-fit"
-          style={{ background: "#fff7ed", color: "#c2410c", border: "1px solid #fed7aa" }}
-        >
-          🎯 Procvičuješ slabé téma z diagnostiky
-        </div>
+      {/* Pro e2e testy: název vybrané dovednosti (žák ho vidí na kartě úlohy). */}
+      {temaFilter && dovednostFilter && nazevDovednosti(temaFilter, dovednostFilter) && (
+        <span hidden data-testid="nazev-dovednosti">· {nazevDovednosti(temaFilter, dovednostFilter)}</span>
       )}
 
       {/* Pro e2e testy: která úloha je na řadě a z čeho se sezení skládá. */}

@@ -24,7 +24,7 @@ export default function AppMain({ children }: { children: React.ReactNode }) {
   const wide = WIDE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
   return (
-    <main className={`flex-1 w-full mx-auto px-4 py-8 pb-24 ${wide ? "max-w-6xl" : "max-w-2xl"}`}>
+    <main className={`app-main flex-1 w-full mx-auto px-4 py-8 pb-24 ${wide ? "max-w-6xl" : "max-w-2xl"}`}>
       {children}
     </main>
   );

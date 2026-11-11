@@ -97,7 +97,7 @@ export default function HeaderClient() {
   }
 
   return (
-    <header className="bg-white border-b border-slate-200 shadow-sm">
+    <header className="app-chrome bg-white border-b border-slate-200 shadow-sm">
       <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
         <Link
           href="/"
