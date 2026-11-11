@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import fs from "fs";
 import { examples, examples5, allExamples } from "../src/data/examples";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS } from "../src/types";
 import { tridaPoPrihlaseni } from "../src/lib/trida-volba";
@@ -104,4 +105,24 @@ test.describe("třída po přihlášení (nepřeteče z jiného účtu na stejn�
   test("čerstvá registrace přes Google si třídu převezme z prohlížeče a uloží k účtu", () => {
     expect(tridaPoPrihlaseni(undefined, 5, "2026-11-11T11:00:00Z", ted)).toEqual({ kUctu: 5 });
   });
+});
+
+test("domov přihlášeného páťáka má horní lištu, spodní navigaci a nic nepřetéká do stran", async ({ page, context }) => {
+  // Falešná relace jen v prohlížeči testu; ověření uživatele i data ze Supabase se podvrhnou, nic se neposílá ven.
+  const env = fs.readFileSync(".env.local", "utf8");
+  const ref = new URL(env.match(/NEXT_PUBLIC_SUPABASE_URL=(\S+)/)![1].replace(/["']/g, "")).hostname.split(".")[0];
+  const user = { id: "00000000-0000-4000-8000-000000000000", aud: "authenticated", role: "authenticated", email: "test@example.com",
+    app_metadata: {}, user_metadata: { first_name: "Karel", trida: 5 }, created_at: "2026-10-01T00:00:00Z" };
+  const relace = { access_token: "x", refresh_token: "y", token_type: "bearer", expires_in: 3600, expires_at: Math.floor(Date.now() / 1000) + 86400, user };
+  await context.addCookies([{ name: `sb-${ref}-auth-token`, value: "base64-" + Buffer.from(JSON.stringify(relace)).toString("base64url"), domain: "localhost", path: "/" }]);
+  await context.route("**/auth/v1/user**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(user) }));
+  await context.route("**/rest/v1/**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: "[]" }));
+  await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
+  await page.goto("/");
+  await expect(page.getByTestId("dashboard-5")).toBeVisible();
+  // Na mobilu je profil ve spodní navigaci, na počítači i v horní liště; stačí, že je kam kliknout.
+  await expect(page.locator('a[href="/profil"]:visible').first()).toBeVisible();
+  await expect(page.locator('a[href="/trenink"]:visible').first()).toBeVisible();
+  const sirka = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(sirka).toBeLessThanOrEqual(0);
 });

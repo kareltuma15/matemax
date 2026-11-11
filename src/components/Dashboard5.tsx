@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import TopicMap5 from "@/components/TopicMap5";
+import HeaderClient from "@/components/HeaderClient";
+import BottomNav from "@/components/BottomNav";
 import { HlavickaZnacky } from "@/components/HexIkona";
 import { usePremium } from "@/lib/premium";
 import { maDovednosti } from "@/lib/dovednosti";
@@ -18,7 +20,11 @@ function dnyDo(cil: Date): number {
   return Math.max(0, Math.ceil((cil.getTime() - dnes.getTime()) / 86400000));
 }
 
-/** Úvodní stránka přihlášeného žáka 5. třídy: pozdrav, odpočet k přijímačkám a mapa okruhů. */
+/**
+ * Úvodní stránka přihlášeného žáka 5. třídy: pozdrav, odpočet k přijímačkám a mapa okruhů.
+ * Domovská stránka běží mimo layout aplikace, takže si horní lištu, okraje a spodní navigaci kreslí sama
+ * (dřív chyběly: obsah šel až ke krajům displeje a z domova se nedalo nikam přejít).
+ */
 export default function Dashboard5({ session }: { session: Session }) {
   const router = useRouter();
   const { isPremium } = usePremium();
@@ -27,6 +33,9 @@ export default function Dashboard5({ session }: { session: Session }) {
   const dni = dnyDo(TERMIN_5);
 
   return (
+    <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: "#F8FAFF" }}>
+    <HeaderClient />
+    <main className="flex-1 w-full max-w-2xl mx-auto px-4 pt-5 pb-28">
     <div className="flex flex-col gap-4" data-testid="dashboard-5">
       <HlavickaZnacky>
         <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#AFACFB" }}>5. třída</p>
@@ -43,6 +52,9 @@ export default function Dashboard5({ session }: { session: Session }) {
         <span className="shrink-0 text-xs font-bold text-white px-3 py-2 rounded-lg" style={{ background: "#0D1B3E" }}>Spustit →</span>
       </Link>
       <TopicMap5 isPremium={isPremium} onSelectTopic={(tema) => router.push(maDovednosti(tema) ? `/trenink?vyber=${tema}` : `/trenink?tema=${tema}`)} />
+    </div>
+    </main>
+    <BottomNav />
     </div>
   );
 }
