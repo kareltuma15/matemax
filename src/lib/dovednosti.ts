@@ -87,7 +87,8 @@ export const DOVEDNOSTI: Record<string, Dovednost[]> = {
   p5_pocitani: [
     { klic: "poradi", nazev: "Pořadí počítání", popis: "Co se počítá dřív, závorky", podtemata: ["poradi_operaci", "vyber_vyrazu"] },
     { klic: "velka_cisla", nazev: "Velká čísla a zaokrouhlování", popis: "Tisíce, miliony, zaokrouhli na desítky", podtemata: ["p5_velka_cisla", "p5_zaokrouhlovani"] },
-    { klic: "doplnit", nazev: "Doplň chybějící číslo", popis: "Které číslo patří do čtverečku", podtemata: ["doplnit_cislo", "p5_logika"] },
+    { klic: "doplnit", nazev: "Doplň chybějící číslo", popis: "Číslo do čtverečku, hvězdičky, řetězec se šipkami", podtemata: ["doplnit_cislo", "p5_logika", "p5_hvezdicky", "p5_retezec"] },
+    { klic: "osa", nazev: "Číselná osa", popis: "Urči čísla podle dílků na ose", podtemata: ["p5_ciselna_osa"] },
   ],
   p5_jednotky: [
     { klic: "prevody", nazev: "Převody jednotek", popis: "Metry, kilogramy, litry", podtemata: ["p5_prevody"] },

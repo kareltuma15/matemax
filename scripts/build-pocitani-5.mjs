@@ -87,17 +87,17 @@ const hvezdicky = [
   ] },
   { s: "poc-hvezdy4.svg", a: "7*0*", op: "−", b: "*58*", r: "4620", d: 2, o: 2, kroky: [
     "Tisíce: 7 − hvězdička = 4 dá hvězdičku 3. Když se z vedlejšího místa půjčuje, je to 7 − 1 − hvězdička = 4 a hvězdička je 2. Vyzkoušíme obě.",
-    "Zkus 3: 7303 − 3583 = 3720, to nesedí.",
+    "Zkus 3: 7303 − 3583 = 3720, to není ono.",
     "Zkus 2: 7202 − 2582 = 4620 ✓ Hvězdička je 2.",
   ] },
   { s: "poc-hvezdy5.svg", a: "*5*3", op: "−", b: "2**8", r: "4*95", d: 7, o: 3, kroky: [
     "Podívej se na tisíce: hvězdička − 2 = 4 dá hvězdičku 6. Když se z vedlejšího místa půjčuje, je to hvězdička − 1 − 2 = 4 a hvězdička je 7. Vyzkoušíme obě.",
-    "Zkus 6: 6563 − 2668 = 3895, výsledek nezačíná 4, nesedí.",
+    "Zkus 6: 6563 − 2668 = 3895, výsledek nezačíná 4, to není ono.",
     "Zkus 7: 7573 − 2778 = 4795. Výsledek má tvar 4∗95 a na místě hvězdičky je opravdu 7 ✓",
   ] },
   { s: "poc-hvezdy6.svg", a: "*664", op: "−", b: "1*56", r: "6*0*", d: 8, o: 3, kroky: [
     "Tisíce: hvězdička − 1 = 6 dá hvězdičku 7. Když se z vedlejšího místa půjčuje, je to hvězdička − 1 − 1 = 6 a hvězdička je 8. Vyzkoušíme obě.",
-    "Zkus 7: 7664 − 1756 = 5908, výsledek nezačíná 6, nesedí.",
+    "Zkus 7: 7664 − 1756 = 5908, výsledek nezačíná 6, to není ono.",
     "Zkus 8: 8664 − 1856 = 6808. Výsledek má tvar 6∗0∗ a za obě hvězdičky je 8 ✓",
   ] },
 ];
