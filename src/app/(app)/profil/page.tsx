@@ -12,13 +12,12 @@ import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import { TEMA_LABELS, TEMATA_ORDER, TEMATA_ORDER_5, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
-import ReadinessCard from "@/components/ReadinessCard";
-import { computeTrainingState, computeTopicProgress, LEVEL_DONE_RATIO, type Level, type LevelProgress } from "@/lib/levels";
+import PostupPrehled from "@/components/PostupPrehled";
+import { computeTrainingState, computeTopicProgress, type Level, type LevelProgress } from "@/lib/levels";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { usePremium } from "@/lib/premium";
 import { useTrida } from "@/lib/trida";
-import { PREMIUM_TOPICS, PREMIUM_TOPICS_5 } from "@/lib/subscription";
 import { getReferralLink } from "@/lib/referral";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
@@ -36,12 +35,6 @@ const AVATAR_EMOJIS = [
 ];
 
 const ALL_TOPICS: string[] = [...TEMATA_ORDER];
-
-const TOPIC_EMOJI: Record<string, string> = {
-  zlomky: "🍕", vyrazy: "🔢", rovnice: "⚖️", geometrie: "📐",
-  slovni_ulohy: "📝", grafy_logika: "📊", konstrukce: "📏", uhly: "🔺", souhrnne: "🏆",
-  p5_pocitani: "🔢", p5_jednotky: "⏱️", p5_slovni: "🧩", p5_zlomky: "½", p5_obsah: "▦", p5_telesa: "🧊", p5_rysovani: "📐", p5_grafy: "📊",
-};
 
 function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
   const [val, setVal] = useState(0);
@@ -223,6 +216,7 @@ export default function ProfilPage() {
   const [cermatLast, setCermatLast]      = useState<CermatEntry | null>(null);
   const [notifState, setNotifState]      = useState<NotifState>("default");
   const [readinessScore, setReadinessScore] = useState(0);
+  const [cilUctu, setCilUctu] = useState<number | null>(null);
   const [certState, setCertState]        = useState<"idle" | "loading" | "done" | "error">("idle");
   const [topicsExpanded, setTopicsExpanded] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -289,6 +283,8 @@ export default function ProfilPage() {
         setFirstNameInput(fn || fullName.split(" ")[0]);
         setLastNameInput(ln || fullName.split(" ").slice(1).join(" "));
         setSelectedEmoji(meta?.avatar_emoji ?? "");
+        const cil = Number((data.session?.user.user_metadata as Record<string, unknown> | undefined)?.cil_body);
+        if (cil > 0) setCilUctu(cil);
       });
     }
 
@@ -720,6 +716,9 @@ export default function ProfilPage() {
         <div className="tab-enter lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-5 lg:items-start">
         <div className="flex flex-col gap-4">
 
+          {/* ── SEKCE: KDE JSEM A KAM SE POSOUVÁM ── odhad bodů, vývoj, cíl, všechna témata */}
+          <PostupPrehled trida={trida} isPremium={isPremium} cilUctu={cilUctu} />
+
           {/* ── SEKCE: STATISTIKY ── */}
           <div className="scroll-reveal">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Statistiky</p>
@@ -762,46 +761,26 @@ export default function ProfilPage() {
           )}
 
           {trida === 9 && (<>
-          {/* ── SEKCE: PŘIPRAVENOST ── */}
           <div className="scroll-reveal">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Připravenost na přijímačky</p>
-            <ReadinessCard compact />
-
-            {/* Kompaktní řádek: odhadované body + certifikát */}
-            {readinessScore > 0 && (() => {
-              const pts = Math.round(readinessScore / 100 * 50);
-              const clr = pts >= 38 ? "#16a34a" : pts >= 28 ? "#d97706" : "#dc2626";
-              const desc = pts >= 38 ? "Výborný výsledek · většina gymnázií od 30 b." : pts >= 28 ? "Dobrý výsledek · odborné školy od 20 b." : "Je co zlepšit — pravidelný trénink pomůže";
-              return (
-                <div className="mt-2 flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 border border-slate-100">
-                  <div className="shrink-0 text-center">
-                    <p className="text-xl font-black leading-none" style={{ color: clr }}>~{pts}</p>
-                    <p className="text-[10px] font-semibold text-slate-400">/ 50 b.</p>
-                  </div>
-                  <p className="flex-1 text-xs text-slate-500 leading-snug">{desc}</p>
-                  {readinessScore >= 60 && (
-                    isPremium ? (
-                      <button
-                        onClick={handleDownloadCertificate}
-                        disabled={certState === "loading"}
-                        className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg transition-all disabled:opacity-60"
-                        style={{ background: "#fbbf24", color: "var(--text-primary)" }}
-                      >
-                        {certState === "loading" ? "…" : certState === "done" ? "✓" : "🎓"}
-                      </button>
-                    ) : (
-                      <Link
-                        href="/cenik"
-                        className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg"
-                        style={{ background: "#fef3c7", color: "#92400e" }}
-                      >
-                        🎓 Certifikát
-                      </Link>
-                    )
-                  )}
-                </div>
-              );
-            })()}
+            {readinessScore >= 60 && (
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-slate-200">
+                <p className="flex-1 text-sm text-slate-600">Máš {readinessScore} % připravenosti. Stáhni si certifikát.</p>
+                {isPremium ? (
+                  <button
+                    onClick={handleDownloadCertificate}
+                    disabled={certState === "loading"}
+                    className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg transition-all disabled:opacity-60"
+                    style={{ background: "#fbbf24", color: "var(--text-primary)" }}
+                  >
+                    {certState === "loading" ? "…" : certState === "done" ? "✓ Staženo" : "🎓 Certifikát"}
+                  </button>
+                ) : (
+                  <Link href="/cenik" className="shrink-0 text-xs font-bold px-3 py-2 rounded-lg" style={{ background: "#fef3c7", color: "#92400e" }}>
+                    🎓 Certifikát
+                  </Link>
+                )}
+              </div>
+            )}
 
             {/* Poslední CERMAT test — pouze pokud ho žák absolvoval */}
             {cermatLast && (
@@ -825,73 +804,6 @@ export default function ProfilPage() {
           </div>
 
           </>)}
-
-          {/* ── SEKCE: MISTROVSTVÍ TÉMAT ── */}
-          {/* Jeden sjednocený přehled místo dřívějších tří (bary v připravenosti
-              + silná/slabá karty). Bez „Procvičit" tlačítek — akce patří na
-              Domů/Trénink, profil ukazuje výsledky. Úrovně L1–L3 jako v tréninku. */}
-          <div className="scroll-reveal">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Mistrovství témat</p>
-            {topicScores.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {(trida === 5 ? TEMATA_ORDER_5 : TEMATA_ORDER).map((tema) => {
-                  const locked = !isPremium && (trida === 5 ? PREMIUM_TOPICS_5 : PREMIUM_TOPICS).has(tema);
-                  const sc = topicScores.find((t) => t.tema === tema);
-                  const diagPct = sc ? Math.round(sc.score * 100) : null;
-                  const lvl = levels[tema] ?? 1;
-                  // Mistrovství = kolik příkladů tématu (L1–L3) má žák prokazatelně zvládnuto v tréninku.
-                  const tp = progress[tema];
-                  const doneAll = tp ? tp[1].done + tp[2].done + tp[3].done : 0;
-                  const totalAll = tp ? tp[1].total + tp[2].total + tp[3].total : 0;
-                  const pct = totalAll > 0 ? Math.round((doneAll / totalAll) * 100) : 0;
-                  const barCol = pct >= 70 ? "#16a34a" : "#2E6DA4";
-                  return (
-                    <div key={tema} className="bg-white rounded-2xl border border-slate-200 p-3.5 flex flex-col gap-2" style={{ opacity: locked ? 0.7 : 1 }}>
-                      <div className="flex items-center gap-2">
-                        <span className="text-base shrink-0">{locked ? "🔒" : (TOPIC_EMOJI[tema] ?? "•")}</span>
-                        <span className="text-sm font-bold truncate" style={{ color: locked ? "#94a3b8" : "#0D1B3E" }}>{TEMA_LABELS[tema] ?? tema}</span>
-                        <span className="ml-auto text-xs font-black shrink-0" style={{ color: locked ? "#94a3b8" : pct > 0 ? barCol : "#94a3b8" }}>
-                          {locked ? "Premium" : pct > 0 ? `${pct} %` : "—"}
-                        </span>
-                      </div>
-                      {!locked && (
-                        <>
-                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f7" }}>
-                            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: barCol }} />
-                          </div>
-                          <div className="flex flex-wrap gap-1">
-                            {([1, 2, 3] as const).map((l) => {
-                              const unlocked = l <= lvl;
-                              const lp = tp?.[l];
-                              const finished = !!lp && lp.total > 0 && lp.done / lp.total >= LEVEL_DONE_RATIO;
-                              const style = finished
-                                ? { background: "#f0fdf4", borderColor: "#bbf7d0", color: "#166534" }
-                                : unlocked
-                                ? { background: "#eff6ff", borderColor: "#bfdbfe", color: "#2E6DA4" }
-                                : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#cbd5e1" };
-                              return (
-                                <span key={l} className="text-[9px] font-black px-1.5 py-0.5 rounded-full border" style={style}>
-                                  {finished ? `L${l} ✓` : unlocked && lp ? `L${l} · ${lp.done}/${lp.total}` : `L${l} 🔒`}
-                                </span>
-                              );
-                            })}
-                          </div>
-                          {diagPct !== null && (
-                            <p className="text-[10px] text-slate-400">Výsledek diagnostiky: {diagPct} %</p>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 text-center text-slate-400 text-sm">
-                Nejdřív projdi diagnostický test — uvidíš mistrovství svých témat.
-                {" "}(Procenta ukazují, kolik příkladů tématu už máš zvládnuto v tréninku; úroveň je splněná od 70 % jejích příkladů.)
-              </div>
-            )}
-          </div>
 
           {/* ── SEKCE: TREND CHART ── */}
           {sessions.length >= 2 && (
@@ -1343,6 +1255,7 @@ export default function ProfilPage() {
 
           {/* Rodičovský portál */}
           <Link
+            id="rodice"
             href="/rodice/dashboard"
             className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors"
           >

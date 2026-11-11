@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { examples, allExamples, examples5, plainExamples, plainExamplesFor, maVicOdpovedi } from "@/data/examples";
 import { useTrida } from "@/lib/trida";
-import TopicMap5 from "@/components/TopicMap5";
+import TreninkTemata from "@/components/TreninkTemata";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
@@ -43,7 +43,6 @@ import XPProgressBar from "@/components/XPProgressBar";
 import SerieHlava from "@/components/SerieHlava";
 import UpgradeCard from "@/components/UpgradeCard";
 import GuestTopicMap from "@/components/GuestTopicMap";
-import LoggedInTopicMap from "@/components/LoggedInTopicMap";
 import TemaDovednosti from "@/components/TemaDovednosti";
 import { dovednostUlohy, maDovednosti, nazevDovednosti, TESTOVE } from "@/lib/dovednosti";
 
@@ -848,34 +847,16 @@ function TreningPageInner() {
     );
   }
 
-  // Logged-in: show topic map if no topic/rezim selected yet
+  // Logged-in: výběr tématu (stejná obrazovka pro obě třídy)
   if (!isGuest && !temaFilter && !rezimFilter && sessionIds.length === 0 && !done) {
-    if (trida === 5) {
-      return (
-        <TopicMap5
-          isPremium={isPremium}
-          onSelectTopic={(tema) => {
-            if (maDovednosti(tema)) { setVybraneTema(tema); window.scrollTo({ top: 0 }); return; }
-            setTemaFilter(tema);
-            setPodtemaFilter(null);
-            setDovednostFilter(null);
-            setSessionIds(buildSession(cards, tema, null, false, null, 5));
-          }}
-        />
-      );
-    }
     return (
-      <LoggedInTopicMap
+      <TreninkTemata
+        trida={trida}
         isPremium={isPremium}
-        onSelectTopic={(tema, podtema) => {
-          setTemaFilter(tema);
-          setPodtemaFilter(podtema ?? null);
-          setDovednostFilter(null);
-          setSessionIds(buildSession(cards, tema, null, false, podtema ?? null, trida));
-        }}
         onOpenTopic={(tema) => {
           if (maDovednosti(tema)) { setVybraneTema(tema); window.scrollTo({ top: 0 }); return; }
           setTemaFilter(tema);
+          setPodtemaFilter(null);
           setDovednostFilter(null);
           setSessionIds(buildSession(cards, tema, null, false, null, trida));
         }}

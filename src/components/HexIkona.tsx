@@ -5,10 +5,10 @@ import { vzhledTematu } from "@/lib/barvy-temat";
 export const HEX_BODY = "24,2 43,13 43,35 24,46 5,35 5,13";
 
 /** Ikona okruhu v šestiúhelníku v barvě okruhu. Rodič musí nastavit `temaStyl(tema)`. */
-export function HexIkona({ tema, velikost = 48 }: { tema: string; velikost?: number }) {
+export function HexIkona({ tema, velikost = 48, vypln }: { tema: string; velikost?: number; /** Výplň místo světlé barvy okruhu (např. bílá na barevném řádku). */ vypln?: string }) {
   return (
     <svg aria-hidden="true" width={velikost} height={velikost} viewBox="0 0 48 48" className="shrink-0">
-      <polygon points={HEX_BODY} className="tema-tint-fill" />
+      <polygon points={HEX_BODY} className={vypln ? undefined : "tema-tint-fill"} fill={vypln} />
       <g transform="translate(12 12)" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="tema-text">
         <path d={vzhledTematu(tema).ikona} />
       </g>

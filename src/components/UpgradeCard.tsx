@@ -57,7 +57,7 @@ export default function UpgradeCard({ tema, cardNumber, total, onSkip }: Props) 
       {/* CTAs */}
       <div className="flex flex-col gap-2">
         <Link
-          href="/cenik"
+          href="/premium"
           className="block w-full py-3.5 text-white font-black rounded-xl text-center text-base"
           style={{ background: "linear-gradient(135deg, #0D1B3E 0%, #2E6DA4 100%)" }}
         >

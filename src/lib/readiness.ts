@@ -23,6 +23,31 @@ export interface ReadinessData {
   weakest: TopicReadiness | null;
 }
 
+/** Počet příkladů na plnou připravenost v tématu (realistická příprava na CERMAT). */
+const FULL_PRACTICE = 30;
+
+type Pocty = { correct: number; total: number } | undefined;
+
+/**
+ * Připravenost v jednom tématu 0–100 z tréninku (65 %) a diagnostiky (35 %).
+ * Málo příkladů se silně krátí: plný kredit až po ~30 vyřešených. Sdílí ji domov, profil i odhad bodů.
+ */
+export function skoreTematu(g: Pocty, d: Pocty): number {
+  const n = g?.total ?? 0;
+  let score = 0;
+  if (n >= 3) {
+    const practiceAcc = (g!.correct / g!.total) * 100;
+    const diagAcc = d && d.total > 0 ? (d.correct / d.total) * 100 : practiceAcc;
+    score = (practiceAcc * 0.65 + diagAcc * 0.35) * Math.min(1, n / FULL_PRACTICE);
+  } else if (n > 0) {
+    score = (g!.correct / g!.total) * 100 * (n / FULL_PRACTICE) * 0.7;
+  } else if (d && d.total > 0) {
+    // Jen diagnostika (typicky 3–5 otázek) — silně krácené
+    score = (d.correct / d.total) * 100 * Math.min(0.30, d.total / FULL_PRACTICE);
+  }
+  return Math.round(Math.min(100, Math.max(0, score)));
+}
+
 export function getReadiness(): ReadinessData {
   if (typeof window === "undefined") return empty();
 
@@ -33,36 +58,14 @@ export function getReadiness(): ReadinessData {
     if (raw) diag = JSON.parse(raw);
   } catch { /* ignore */ }
 
-  // Minimum examples to reach full readiness credit (realistic CERMAT prep threshold)
-  const FULL_PRACTICE = 30;
-
   const topics: TopicReadiness[] = CERMAT_TOPICS.map((tema) => {
-    const g = gam.topicStats[tema];
-    const d = diag[tema];
-
-    const n = g?.total ?? 0;
-    let score = 0;
-
-    if (n >= 3) {
-      const practiceAcc = (g!.correct / g!.total) * 100;
-      const diagAcc = d && d.total > 0 ? (d.correct / d.total) * 100 : practiceAcc;
-      const rawScore = practiceAcc * 0.65 + diagAcc * 0.35;
-      // Quantity gate: fewer examples = heavily discounted readiness
-      // Need ~30 well-answered examples to reach full credit
-      const quantityFactor = Math.min(1, n / FULL_PRACTICE);
-      score = rawScore * quantityFactor;
-    } else if (n > 0) {
-      score = (g!.correct / g!.total) * 100 * (n / FULL_PRACTICE) * 0.7;
-    } else if (d && d.total > 0) {
-      // Only diagnostic (typically 3–5 questions) — heavily discounted
-      const diagAcc = (d.correct / d.total) * 100;
-      score = diagAcc * Math.min(0.30, d.total / FULL_PRACTICE);
-    }
+    const n = gam.topicStats[tema]?.total ?? 0;
+    const score = skoreTematu(gam.topicStats[tema], diag[tema]);
 
     return {
       tema,
       label: TEMA_LABELS[tema] ?? tema,
-      score: Math.round(Math.min(100, Math.max(0, score))),
+      score,
       practiced: n,
     };
   });
