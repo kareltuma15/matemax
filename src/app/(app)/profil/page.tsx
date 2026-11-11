@@ -505,6 +505,7 @@ export default function ProfilPage() {
       "matemax-diag-done", "matemax-diag-results", "matemax-today",
       "matemax-streak-milestones", "matemax-freeze-used", "matemax-first-session-done",
       "matemax-session-history", "matemax-session-draft", "matemax-progress-milestones",
+      "matemax-trida", // jinak by si další účet na stejném zařízení převzal třídu toho předchozího
     ];
     keysToRemove.forEach((k) => localStorage.removeItem(k));
     // Hydratační značka — bez smazání by se postup po přepnutí účtu neobnovil

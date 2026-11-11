@@ -48,6 +48,7 @@ export default function BottomNav() {
 
   async function handleParentSignOut() {
     if (supabase) await supabase.auth.signOut();
+    try { localStorage.removeItem("matemax-trida"); } catch { /* soukromé okno */ }
     router.push("/");
   }
 

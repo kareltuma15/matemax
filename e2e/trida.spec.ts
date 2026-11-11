@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { examples, examples5, allExamples } from "../src/data/examples";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS } from "../src/types";
+import { tridaPoPrihlaseni } from "../src/lib/trida-volba";
 import { isTopicLocked, FREE_TOPICS_5, PREMIUM_TOPICS_5 } from "../src/lib/subscription";
 
 // 5. třída: vlastní témata a úlohy, které se nikdy nesmí promíchat s 9. třídou.
@@ -88,5 +89,19 @@ test.describe("oddělení tříd: žák vidí jen věci pro svou třídu", () =>
     await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
     await page.goto("/testy-nanecisto");
     await expect(page.getByTestId("pro-5-pripravujeme")).toBeVisible();
+  });
+});
+
+test.describe("třída po přihlášení (nepřeteče z jiného účtu na stejném zařízení)", () => {
+  const ted = Date.parse("2026-11-11T12:00:00Z");
+  test("třída z účtu vždy vyhraje", () => {
+    expect(tridaPoPrihlaseni(5, 9, "2025-01-01T00:00:00Z", ted)).toEqual({ doProhlizece: 5 });
+    expect(tridaPoPrihlaseni("9", 5, "2025-01-01T00:00:00Z", ted)).toEqual({ doProhlizece: 9 });
+  });
+  test("starší účet bez třídy je 9. třída, i když prohlížeč pamatuje 5. třídu po jiném účtu", () => {
+    expect(tridaPoPrihlaseni(undefined, 5, "2026-10-01T00:00:00Z", ted)).toEqual({ doProhlizece: 9 });
+  });
+  test("čerstvá registrace přes Google si třídu převezme z prohlížeče a uloží k účtu", () => {
+    expect(tridaPoPrihlaseni(undefined, 5, "2026-11-11T11:00:00Z", ted)).toEqual({ kUctu: 5 });
   });
 });

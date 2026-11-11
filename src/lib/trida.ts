@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Trida } from "@/types";
+import { isTrida, tridaPoPrihlaseni } from "@/lib/trida-volba";
+
+export { isTrida, tridaPoPrihlaseni };
 
 /**
  * Třída, pro kterou žák procvičuje (5. nebo 9.). Zdroj pravdy je u přihlášeného uživatele
@@ -12,10 +15,6 @@ import type { Trida } from "@/types";
 
 export const TRIDA_KEY = "matemax-trida";
 const EVENT = "matemax-trida-zmena";
-
-export function isTrida(v: unknown): v is Trida {
-  return v === 5 || v === 9;
-}
 
 /** Třída uložená v prohlížeči, nebo null, když ještě nebyla zvolena. */
 export function readLocalTrida(): Trida | null {
@@ -40,6 +39,8 @@ function subscribe(cb: () => void): () => void {
 
 const noopSubscribe = () => () => {};
 
+
+
 /**
  * Aktuální třída + `ready` (až po načtení v prohlížeči — do té doby se hodnota neví, takže stránky,
  * které se podle třídy liší, nemají nic blikat). `setTrida` uloží volbu i k účtu.
@@ -54,11 +55,12 @@ export function useTrida(): { trida: Trida; ready: boolean; setTrida: (t: Trida)
     let zruseno = false;
     supabase.auth.getSession().then(({ data }) => {
       if (zruseno) return;
-      const z = Number((data.session?.user.user_metadata as Record<string, unknown> | undefined)?.trida);
+      const user = data.session?.user;
+      if (!user) return;
       const lokalni = readLocalTrida();
-      if (isTrida(z) && z !== lokalni) saveLocalTrida(z);
-      // účet třídu nemá, ale v prohlížeči je zvolená (např. po registraci přes Google) → zapíšeme ji k účtu
-      else if (!isTrida(z) && lokalni && data.session) supabase!.auth.updateUser({ data: { trida: lokalni } }).catch(() => {});
+      const krok = tridaPoPrihlaseni((user.user_metadata as Record<string, unknown> | undefined)?.trida, lokalni, user.created_at, Date.now());
+      if (krok.doProhlizece && krok.doProhlizece !== lokalni) saveLocalTrida(krok.doProhlizece);
+      if (krok.kUctu) supabase!.auth.updateUser({ data: { trida: krok.kUctu } }).catch(() => {});
     });
     return () => { zruseno = true; };
   }, []);
