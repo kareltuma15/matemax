@@ -68,3 +68,42 @@ test("Premium: pro tebe, pro rodiče, srovnání a cena 99 Kč", async ({ page }
   await expect(page.getByTestId("srovnani").locator("tbody tr")).toHaveCount(6);
   await expect(page.getByRole("button", { name: /Pokračovat k platbě · 99 Kč/ })).toBeVisible();
 });
+
+// Úpravy po Karlových poznámkách (11. 11. 2026): interaktivita, Testy s doporučením, týdenní e-mail rodičům.
+
+test("report pro rodiče: odhad bodů, posun, cíl, všechna témata a tip; jména se escapují", async () => {
+  const { buildReportHtml } = await import("../src/lib/report-rodice");
+  const temata = Object.entries(BODY_TEMAT[9]).map(([tema, max]) => ({ tema, label: tema, max, body: max / 2 }));
+  const html = buildReportHtml({
+    childName: "Tom<b>", weekDate: "16. listopadu 2026", weekTotal: 40, lastWeekTotal: 30, streak: 3, accuracy: 70,
+    odhad: { trida: 9, celkem: 25, max: 50, bezDat: false, cil: 32, temata, nejvicBodu: { label: "Slovní úlohy", chybi: 5 }, tydny: [{ d: "2026-11-09", b: 22 }], zmena: 3 },
+  });
+  expect(html).toContain("Odhad bodů u přijímaček");
+  expect(html).toContain(">25<");
+  expect(html).toContain("+3 body od minulého týdne");
+  expect(html).toContain("chybí ještě 7 bodů");
+  expect(html).toContain("Slovní úlohy");
+  expect(html).not.toContain("Tom<b>");
+  for (const t of temata) expect(html).toContain(`>${t.tema}<`);
+
+  const nic = buildReportHtml({
+    childName: "Ema", weekDate: "x", weekTotal: 0, lastWeekTotal: 0, streak: 0, accuracy: null,
+    odhad: { trida: 5, celkem: 0, max: 50, bezDat: true, cil: null, temata: [], nejvicBodu: null, tydny: [], zmena: null },
+  });
+  expect(nic).toContain("Odhad bodů zatím nemáme");
+});
+
+test("tlačítka mají kurzor ruky a Testy doporučí diagnostiku nováčkovi, potom cvičný test", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("matemax-trida", "9"));
+  await page.goto("/testy");
+  await expect(page.getByTestId("testy-diagnostika").getByTestId("testy-doporuceno")).toBeVisible();
+  await page.evaluate(() => localStorage.setItem("matemax-diag-done", "1"));
+  await page.reload();
+  await expect(page.getByTestId("testy-cermat").getByTestId("testy-doporuceno")).toBeVisible();
+  await expect(page.getByTestId("testy-diagnostika")).toContainText("Hotovo");
+
+  await page.goto("/nahled?mapa=9");
+  const tema = page.locator("button[data-tema]").first();
+  await expect(tema).toBeVisible();
+  expect(await tema.evaluate((el) => getComputedStyle(el).cursor)).toBe("pointer");
+});

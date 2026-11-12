@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { loadProgress } from "@/lib/progress";
 import { supabase } from "@/lib/supabase";
 import { usePremium } from "@/lib/premium";
+import { STUDENT_ITEMS, jeAktivni } from "@/lib/navigace";
 
 export default function HeaderClient() {
   const pathname = usePathname();
@@ -98,10 +99,10 @@ export default function HeaderClient() {
 
   return (
     <header className="app-chrome bg-white border-b border-slate-200 shadow-sm">
-      <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+      <div className="max-w-2xl lg:max-w-6xl mx-auto px-4 lg:px-8 py-3 flex items-center gap-3 lg:gap-8">
         <Link
           href="/"
-          className="flex items-center gap-3 flex-1 min-w-0"
+          className="flex items-center gap-3 flex-1 lg:flex-none min-w-0"
         >
           <div
             className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base select-none shrink-0"
@@ -115,7 +116,30 @@ export default function HeaderClient() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Počítač: hlavní navigace nahoře (na telefonu je dole) */}
+        {authReady && userEmail && (
+          <nav className="hidden lg:flex items-center gap-1 flex-1" aria-label="Hlavní navigace">
+            {STUDENT_ITEMS.map(({ href, label, ikona, sekce }) => {
+              const active = jeAktivni(pathname, href, sekce);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold transition-colors ${active ? "" : "hover:bg-slate-100"}`}
+                  style={active ? { background: "#EEF0F8", color: "#0D1B3E" } : { color: "#5F6982" }}
+                >
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={ikona} />
+                  </svg>
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
+        )}
+
+        <div className="flex items-center gap-2 shrink-0 lg:ml-auto">
           {/* Streak */}
           <div className="flex items-center gap-1 bg-orange-50 border border-orange-200 rounded-lg px-2.5 py-1">
             <span className="text-base leading-none">🔥</span>
@@ -147,7 +171,7 @@ export default function HeaderClient() {
               </span>
             ) : (
               <Link
-                href="/cenik"
+                href="/premium"
                 className="text-[11px] font-black px-2.5 py-1 rounded-lg hidden sm:flex items-center gap-1 transition-colors hover:opacity-90"
                 style={{ background: "#0D1B3E", color: "#fff" }}
               >
@@ -162,7 +186,7 @@ export default function HeaderClient() {
               <Link
                 href="/profil"
                 title={userEmail}
-                className="text-xs font-semibold px-2.5 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:flex items-center gap-1"
+                className="text-xs font-semibold px-2.5 py-1 rounded-lg hover:bg-slate-100 transition-colors hidden sm:flex lg:hidden items-center gap-1"
                 style={{ color: "#2E6DA4" }}
               >
                 <span>👤</span>

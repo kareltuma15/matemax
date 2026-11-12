@@ -3,6 +3,7 @@ import { pragueDateStr } from "@/lib/date";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { allExamples as examples } from "@/data/examples";
+import { odhadDitete } from "@/lib/odhad-server";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -155,6 +156,9 @@ export async function GET(req: NextRequest) {
 
   const weakestTopic = topicTable[0] ?? null;
 
+  // Odhad bodů u přijímaček (stejný výpočet jako v profilu žáka) + vývoj z pondělních reportů
+  const odhad = authUser?.user ? await odhadDitete(supabaseAdmin, authUser.user, pragueDateStr(new Date())) : null;
+
   return NextResponse.json({
     linked: true,
     childId,
@@ -170,5 +174,6 @@ export async function GET(req: NextRequest) {
     topicTable,
     weakestTopic,
     weeklyActivity,
+    odhad,
   });
 }

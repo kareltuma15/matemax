@@ -5,22 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-/**
- * Spodní navigace žáka, stejná pro 5. i 9. třídu. Položka svítí i na podstránkách
- * (např. Testy na diagnostice, Trénink na výzvě a rychlém módu).
- */
-const STUDENT_ITEMS = [
-  { href: "/",        label: "Domů",    ikona: "M3 11l9-7l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z", sekce: [] as string[] },
-  { href: "/trenink", label: "Trénink", ikona: "M4 19h16M6 15V9M10 15V5M14 15v-4M18 15V7", sekce: ["/vyzva", "/rychly-mod", "/studijni-plan"] },
-  { href: "/testy",   label: "Testy",   ikona: "M7 3h10v18H7ZM10 8h4M10 12h4M10 16h2", sekce: ["/diagnostika", "/cermat-test", "/testy-nanecisto", "/test"] },
-  { href: "/profil",  label: "Profil",  ikona: "M12 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0", sekce: [] as string[] },
-];
+import { STUDENT_ITEMS, jeAktivni } from "@/lib/navigace";
 
-function jeAktivni(pathname: string, href: string, sekce: string[]): boolean {
-  if (href === "/") return pathname === "/";
-  return [href, ...sekce].some((p) => pathname === p || pathname.startsWith(p + "/"));
-}
-
+/** Spodní navigace žáka na telefonu (na počítači jsou stejné odkazy v horní liště). */
 const PARENT_NAV_ITEMS = [
   { href: "/rodice/dashboard",  icon: "📊", label: "Přehled" },
   { href: "/rodice/propojeni",  icon: "🔗", label: "Propojení" },
@@ -100,7 +87,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="app-chrome fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100"
+      className="app-chrome lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="max-w-xl mx-auto grid grid-cols-4 gap-1 px-1.5 pt-1.5 pb-2">

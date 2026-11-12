@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { SkeletonLine } from "@/components/Skeleton";
+import OdhadRodic from "@/components/OdhadRodic";
+import type { OdhadDitete } from "@/lib/odhad-server";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -30,6 +32,7 @@ type DashboardData = {
   topicTable?: TopicRow[];
   weakestTopic?: TopicRow | null;
   weeklyActivity?: { date: string; count: number }[];
+  odhad?: OdhadDitete | null;
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -374,6 +377,8 @@ export default function RodiceDashboard() {
           Mobil zůstává jedním sloupcem. */}
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-5 lg:items-start">
       <div className="flex flex-col gap-5">
+
+      {data.odhad && <OdhadRodic odhad={data.odhad} jmeno={childName ?? "Dítě"} />}
 
       {/* ── STATS GRID ───────────────────────────────────────────────── */}
       <div>

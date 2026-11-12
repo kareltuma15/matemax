@@ -623,3 +623,66 @@ body {
 html[data-priklad] .app-chrome,
 html[data-priklad] .karta-poradi { display: none !important; }
 html[data-priklad] .app-main { padding-top: 0.75rem; padding-bottom: 2rem; }
+
+/* ── Interaktivita a plochy (redesign 11/2026) ─────────────────────────────
+   Tailwind 4 dává tlačítkům výchozí šipku: všechno klikací má mít ruku.
+   .mm-karta = bílá plocha se stínem (na šedém pozadí .mm-pozadi je vidět, kde končí),
+   .mm-klik = klikací karta: při najetí myší se zvedne, zvýrazní okraj barvou tématu a posune šipku. */
+button:not(:disabled), [role="button"], summary, label[for], select,
+input[type="checkbox"], input[type="radio"], input[type="range"] { cursor: pointer; }
+
+.mm-pozadi { background: #EEF1F8; }
+[data-theme="dark"] .mm-pozadi { background: var(--surface-1); }
+
+.mm-karta {
+  background: #fff;
+  border: 1px solid #E1E4EE;
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(13, 27, 62, .04), 0 8px 20px -12px rgba(13, 27, 62, .14);
+}
+[data-theme="dark"] .mm-karta { background: var(--surface-0); border-color: var(--border-color); }
+
+.mm-klik {
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background-color .16s ease, filter .16s ease;
+}
+.mm-sipka { transition: transform .16s ease, color .16s ease; }
+@media (hover: hover) {
+  .mm-klik:hover {
+    transform: translateY(-2px);
+    border-color: var(--tema-barva, #5B55D6);
+    box-shadow: 0 2px 4px rgba(13, 27, 62, .06), 0 16px 32px -14px rgba(13, 27, 62, .30);
+  }
+  .mm-klik:hover .mm-sipka { transform: translateX(4px); color: var(--tema-barva, #5B55D6); }
+  .mm-tlacitko:hover { filter: brightness(1.06); box-shadow: 0 8px 18px -8px rgba(13, 27, 62, .45); }
+  .mm-obrys:hover { border-color: var(--tema-barva, #5B55D6) !important; background: #F6F5FF; }
+  .mm-odkaz:hover { text-decoration: underline; text-underline-offset: 3px; }
+}
+.mm-klik:active { transform: translateY(0) scale(.99); }
+.mm-klik:focus-visible, .mm-tlacitko:focus-visible, .mm-obrys:focus-visible {
+  outline: 3px solid #8D89E8;
+  outline-offset: 2px;
+}
+.mm-tlacitko { transition: filter .16s ease, box-shadow .16s ease, transform .1s ease; }
+.mm-tlacitko:active { transform: scale(.98); }
+.mm-obrys { transition: border-color .16s ease, background-color .16s ease; }
+[data-theme="dark"] .mm-obrys:hover { background: var(--surface-2); }
+
+/* Domov: sloupce týdne na počítači mají výšku podle počtu příkladů (--v) */
+@media (min-width: 1024px) {
+  i[data-vyska] { height: var(--v) !important; }
+}
+
+/* Široká plocha uvnitř úzkého rámu stránky (trénink: výběr témat je na počítači široký, karta příkladu úzká) */
+@media (min-width: 1024px) {
+  .mm-siroke {
+    width: min(64rem, calc(100vw - 4rem));
+    max-width: none !important;
+    margin-left: calc(50% - min(32rem, calc(50vw - 2rem))) !important;
+  }
+}
+
+/* Klikací řádek v kartě (témata v profilu): podbarví se barvou tématu */
+.mm-radek { transition: background-color .15s ease; cursor: pointer; }
+@media (hover: hover) { .mm-radek:hover { background: var(--tema-tint, #F3F4F9); } }
+.mm-radek:focus-visible { outline: 3px solid #8D89E8; outline-offset: 1px; }

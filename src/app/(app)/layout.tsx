@@ -5,7 +5,7 @@ import AppFooter from "@/components/AppFooter";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: "#F8FAFF" }}>
+    <div className="min-h-screen flex flex-col overflow-x-hidden mm-pozadi">
       <HeaderClient />
       <AppMain>{children}</AppMain>
       <AppFooter />

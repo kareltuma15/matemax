@@ -15,6 +15,7 @@ import MoznostiCard from "@/components/MoznostiCard";
 import VicOdpovediCard from "@/components/VicOdpovediCard";
 import TreninkTemata from "@/components/TreninkTemata";
 import PostupPrehled from "@/components/PostupPrehled";
+import OdhadRodic from "@/components/OdhadRodic";
 import TemaDovednosti from "@/components/TemaDovednosti";
 import batch from "@/data/nahled-batch.json";
 
@@ -49,9 +50,18 @@ function NahledPage() {
   const noop = () => {};
   const vyber = params.get("vyber");
   if (vyber) return <div className="mx-auto max-w-lg p-4"><TemaDovednosti tema={vyber} onStart={noop} onBack={noop} /></div>;
+  // ?rodic=1: odhad bodů, jak ho vidí rodič v rodičovském přehledu (ukázková data)
+  if (params.get("rodic") === "1") {
+    const t = [["zlomky", "Zlomky", 4.9, 6], ["vyrazy", "Výrazy", 3.6, 6], ["rovnice", "Rovnice", 2.9, 6], ["geometrie", "Geometrie", 3.2, 9], ["slovni_ulohy", "Slovní úlohy", 3, 10], ["grafy_logika", "Grafy a logika", 3.5, 5], ["konstrukce", "Konstrukční úlohy", 0.4, 4], ["uhly", "Úhly", 1.8, 4]] as const;
+    return (
+      <div className="mx-auto max-w-2xl p-4">
+        <OdhadRodic jmeno="Tomáš" odhad={{ trida: 9, celkem: 23, max: 50, bezDat: false, cil: 32, temata: t.map(([tema, label, body, max]) => ({ tema, label, body, max })), nejvicBodu: { label: "Slovní úlohy", chybi: 7 }, tydny: [{ d: "2026-10-19", b: 15 }, { d: "2026-10-26", b: 17 }, { d: "2026-11-02", b: 19 }, { d: "2026-11-09", b: 21 }], zmena: 2 }} />
+      </div>
+    );
+  }
   const postup = params.get("postup");
   if (postup === "5" || postup === "9") {
-    return <div className="mx-auto max-w-lg p-4"><PostupPrehled trida={postup === "5" ? 5 : 9} isPremium={premium} /></div>;
+    return <div className="mx-auto max-w-3xl p-4"><PostupPrehled trida={postup === "5" ? 5 : 9} isPremium={premium} /></div>;
   }
   if (mapa === "5" || mapa === "9") {
     return <div className="mx-auto max-w-lg p-4"><TreninkTemata trida={mapa === "5" ? 5 : 9} isPremium={premium} onOpenTopic={noop} onStartMix={noop} onStartMistakes={noop} /></div>;

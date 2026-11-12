@@ -17,14 +17,14 @@ import { usePathname } from "next/navigation";
  * tréninkové centrum), takže si šířku řídí sám — centrum se rozšíří přes
  * celou plochu, session zůstane úzká.
  */
-const WIDE_PREFIXES = ["/profil", "/rodice/dashboard"];
+const WIDE_PREFIXES = ["/profil", "/rodice/dashboard", "/testy"];
 
 export default function AppMain({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "";
   const wide = WIDE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
   return (
-    <main className={`app-main flex-1 w-full mx-auto px-4 py-8 pb-24 ${wide ? "max-w-6xl" : "max-w-2xl"}`}>
+    <main className={`app-main flex-1 w-full mx-auto px-4 py-8 pb-24 lg:pb-12 ${wide ? "max-w-6xl" : "max-w-2xl"}`}>
       {children}
     </main>
   );
