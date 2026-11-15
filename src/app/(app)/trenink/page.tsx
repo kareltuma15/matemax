@@ -59,6 +59,8 @@ import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
 import { pickMission, snapshotReadiness } from "@/lib/mise";
 import { getReadiness } from "@/lib/readiness";
+import DoporuceniPoTestu from "@/components/DoporuceniPoTestu";
+import { nactiPlan, type PlanPoTestu } from "@/lib/plan-po-testu";
 
 /** Třída z prohlížeče pro první sestavení sezení (hook se v tu chvíli ještě nemusel načíst). */
 function readTridaForSession(): Trida {
@@ -338,6 +340,9 @@ function TreningPageInner() {
   // ?vyber=zlomky otevře výběr dovedností v tématu (odkazy z domovské stránky)
   const urlVyber    = searchParams.get("vyber");
   const urlRezim    = searchParams.get("rezim") as "chyby" | "sm2" | null;
+  // ?doporuceni=<data>.<podpis> = doporučení po testu nanečisto z appky Vyhodnocení testů, ?plan=1 = uložený plán
+  const urlDoporuceni = searchParams.get("doporuceni");
+  const urlPlan       = searchParams.get("plan") === "1";
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
@@ -359,6 +364,20 @@ function TreningPageInner() {
   const [progressMilestone, setProgressMilestone] = useState<{ count: number; xpBonus: number } | null>(null);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
+  const [doporuceniNeplatne, setDoporuceniNeplatne] = useState(false);
+  const [planPoTestu, setPlanPoTestu] = useState<PlanPoTestu | null>(null);
+  const oznacNeplatne = useCallback(() => setDoporuceniNeplatne(true), []);
+
+  useEffect(() => {
+    if (!urlPlan) return;
+    let zruseno = false;
+    (async () => {
+      const uid = supabase ? (await supabase.auth.getSession()).data.session?.user.id ?? null : null;
+      const p = await nactiPlan(uid);
+      if (!zruseno) { if (p) setPlanPoTestu(p); else setDoporuceniNeplatne(true); }
+    })();
+    return () => { zruseno = true; };
+  }, [urlPlan]);
 
   const { isPremium } = usePremium();
   const { trida } = useTrida();
@@ -423,6 +442,7 @@ function TreningPageInner() {
       const draft = loadSessionDraft();
       if (
         draft &&
+        !urlDoporuceni && !urlPlan &&
         draft.temaFilter === urlTema &&
         (draft.podtemaFilter ?? null) === urlPodtema &&
         (draft.dovednostFilter ?? null) === urlDovednost &&
@@ -801,6 +821,21 @@ function TreningPageInner() {
     );
   }
 
+  // Doporučení po testu nanečisto (odkaz z appky Vyhodnocení testů) nebo uložený plán
+  if ((urlDoporuceni || (urlPlan && planPoTestu)) && !doporuceniNeplatne && isGuest !== null && sessionIds.length === 0 && !done && !temaFilter && !rezimFilter) {
+    return (
+      <DoporuceniPoTestu
+        token={urlDoporuceni ?? undefined}
+        plan={urlDoporuceni ? undefined : planPoTestu ?? undefined}
+        isGuest={!!isGuest}
+        isPremium={isPremium}
+        tridaZaka={trida}
+        onStart={(ids) => { setSessionIds(ids); window.scrollTo({ top: 0 }); }}
+        onNeplatne={oznacNeplatne}
+      />
+    );
+  }
+
   // Host s vybranou 5. třídou: ukázkové úlohy jsou jen z 9. třídy, takže mu je nenabízíme — pošleme ho na registraci zdarma.
   if (isGuest && trida === 5 && !temaFilter && !done) {
     return (
@@ -822,12 +857,19 @@ function TreningPageInner() {
   // Guest: show topic map if no topic selected yet
   if (isGuest && !temaFilter && !done) {
     return (
+      <>
+      {doporuceniNeplatne && (
+        <p className="mb-4 rounded-2xl px-4 py-3 text-sm font-semibold" style={{ background: "#FFF6E5", border: "1px solid #F8D9A0", color: "#5C4A1F" }} data-testid="doporuceni-neplatne">
+          Odkaz na doporučení už neplatí, vyber si téma.
+        </p>
+      )}
       <GuestTopicMap
         onSelectTopic={(tema) => {
           setTemaFilter(tema);
           setSessionIds(buildSession(cards, tema, null, true));
         }}
       />
+      </>
     );
   }
 
@@ -850,6 +892,12 @@ function TreningPageInner() {
   // Logged-in: výběr tématu (stejná obrazovka pro obě třídy)
   if (!isGuest && !temaFilter && !rezimFilter && sessionIds.length === 0 && !done) {
     return (
+      <>
+      {doporuceniNeplatne && (
+        <p className="max-w-xl mx-auto w-full mb-4 rounded-2xl px-4 py-3 text-sm font-semibold" style={{ background: "#FFF6E5", border: "1px solid #F8D9A0", color: "#5C4A1F" }} data-testid="doporuceni-neplatne">
+          Odkaz na doporučení už neplatí, vyber si téma.
+        </p>
+      )}
       <TreninkTemata
         trida={trida}
         isPremium={isPremium}
@@ -868,6 +916,7 @@ function TreningPageInner() {
           setSessionIds(buildSession(cards, null, "chyby", false, null, trida));
         }}
       />
+      </>
     );
   }
 

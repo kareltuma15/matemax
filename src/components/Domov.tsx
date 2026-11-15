@@ -20,6 +20,8 @@ import { isTopicLocked } from "@/lib/subscription";
 import { maDovednosti } from "@/lib/dovednosti";
 import { computeDovednostProgress } from "@/lib/levels";
 import { dnesniTrenink, type DnesniTrenink } from "@/lib/dnesni-trenink";
+import { nactiOdkaz, nactiPlan, jeSplneny, oznacSplneny, postupPlanu, type PlanPoTestu } from "@/lib/plan-po-testu";
+import { nazevTematu, kratkeDatum } from "@/lib/doporuceni";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
@@ -122,6 +124,20 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
   const [temata, setTemata] = useState<TemaPostup[]>([]);
   const [vzkaz, setVzkaz] = useState<{ id: string; text: string } | null>(null);
   const [nacteno, setNacteno] = useState(false);
+  const [plan, setPlan] = useState<PlanPoTestu | null>(null);
+  const [cekajiciOdkaz, setCekajiciOdkaz] = useState<string | null>(null);
+
+  // Plán po testu nanečisto (uložené doporučení) a odkaz na doporučení, který čeká z doby před přihlášením
+  useEffect(() => {
+    let zruseno = false;
+    setCekajiciOdkaz(nactiOdkaz());
+    nactiPlan(session.user.id).then((p) => {
+      if (zruseno || !p) return;
+      if (jeSplneny(p)) { if (!p.splneno) oznacSplneny(p, session.user.id); return; }
+      setPlan(p);
+    });
+    return () => { zruseno = true; };
+  }, [session.user.id]);
 
   // Data z prohlížeče (a po obnově ze serveru znovu: ProgressSync pošle matemax-progress-update)
   useEffect(() => {
@@ -227,6 +243,39 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
                 <p className="text-sm text-amber-900 leading-relaxed">{vzkaz.text}</p>
                 <button type="button" onClick={vzkazPrecten} className="mt-1.5 text-xs font-semibold text-amber-700 underline">Označit jako přečteno</button>
               </div>
+            </div>
+          )}
+
+          {cekajiciOdkaz && !plan && (
+            <Link href={`/trenink?doporuceni=${encodeURIComponent(cekajiciOdkaz)}`} className="mm-karta mm-klik p-4 flex items-center gap-3" style={{ ["--tema-barva" as string]: "#A66300", background: "#FFF6E5", borderColor: "#F3D9A0" }} data-testid="domov-doporuceni-odkaz">
+              <span className="text-2xl" aria-hidden>📋</span>
+              <span className="flex-1 min-w-0">
+                <b className="block" style={{ color: "#0D1B3E" }}>Máš doporučení po testu nanečisto</b>
+                <span className="text-sm" style={{ color: "#5C4A1F" }}>Podívej se, která témata potrénovat.</span>
+              </span>
+              <span className="mm-sipka text-2xl" style={{ color: "#A66300" }} aria-hidden>›</span>
+            </Link>
+          )}
+
+          {plan && (
+            <div className="mm-karta p-4 lg:p-5 flex flex-col gap-3" style={{ border: "2px solid #F5A623" }} data-testid="domov-plan">
+              <span className="text-xs font-extrabold uppercase tracking-wider" style={{ color: "#A66300" }}>
+                Plán po {plan.doporuceni.test.n}. testu nanečisto ({kratkeDatum(plan.doporuceni.test.d)})
+              </span>
+              <b className="text-[17px] lg:text-[19px] leading-snug" style={{ color: "#0D1B3E" }}>
+                {plan.doporuceni.top.map((t) => nazevTematu(t)).join(", ")}
+              </b>
+              <div className="flex flex-wrap gap-2">
+                {postupPlanu(plan).map((p) => (
+                  <span key={p.k} className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ ...temaStyl(p.k), background: "var(--tema-tint)", color: "var(--tema-barva)" }}>
+                    {TEMA_LABELS[p.k] ?? p.k}: {Math.min(p.pribylo, p.cil)} / {p.cil} správně
+                  </span>
+                ))}
+              </div>
+              {plan.doporuceni.dalsi && <span className="text-sm" style={{ color: "#5F6982" }}>Další test {kratkeDatum(plan.doporuceni.dalsi)}</span>}
+              <Link href="/trenink?plan=1" className="w-full lg:w-auto lg:self-start lg:px-8 py-3 rounded-2xl text-center font-extrabold mm-tlacitko" style={{ background: "#F5A623", color: "#0D1B3E" }}>
+                Trénovat podle plánu →
+              </Link>
             </div>
           )}
 
