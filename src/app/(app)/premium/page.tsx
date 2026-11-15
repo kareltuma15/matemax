@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { usePremium } from "@/lib/premium";
 import { useTrida } from "@/lib/trida";
+import { mer } from "@/components/Mereni";
 
 /**
  * Premium = proč se vyplatí. Rozdělené na Pro tebe a Pro rodiče, ať důvod koupit vidí žák i rodič,
@@ -17,12 +18,14 @@ export default function PremiumPage() {
   const { isPremium } = usePremium();
   const { trida, ready } = useTrida();
   const [stav, setStav] = useState<"idle" | "loading" | "error">("idle");
+  useEffect(() => { mer("premium_zobrazeno"); }, []);
 
   async function zaplatit() {
     if (!supabase) { router.push("/registrace?next=/premium"); return; }
     const { data } = await supabase.auth.getSession();
     if (!data.session) { router.push("/prihlaseni?next=/premium"); return; }
     setStav("loading");
+    mer("platba_start");
     try {
       const res = await fetch("/api/stripe/create-checkout", { method: "POST", headers: { Authorization: `Bearer ${data.session.access_token}` } });
       if (!res.ok) throw new Error("checkout");

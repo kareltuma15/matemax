@@ -8,6 +8,7 @@ import { reportDbError } from "@/lib/db-error";
 import { PENDING_REF_KEY } from "@/lib/referral";
 import { saveLocalTrida } from "@/lib/trida";
 import type { Trida } from "@/types";
+import { mer } from "@/components/Mereni";
 
 export default function RegistraceForm() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function RegistraceForm() {
     if (!supabase) return;
     if (trida) saveLocalTrida(trida);
     setGoogleLoading(true);
+    mer("registrace_google");
     const ref = searchParams.get("ref");
     const next = ref ? `/vitej?ref=${encodeURIComponent(ref)}` : "/vitej";
     await supabase.auth.signInWithOAuth({
@@ -88,6 +90,7 @@ export default function RegistraceForm() {
     }
 
     saveLocalTrida(trida);
+    mer("registrace_odeslana", { c: `trida-${trida}` });
 
     if (data.user) {
       const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
