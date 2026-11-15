@@ -9,10 +9,10 @@ import { buildReportHtml } from "@/lib/report-rodice";
 // Týdenní e-mail rodičům s ověřeným propojením: odhad bodů u přijímaček, vývoj po týdnech, témata, tip.
 
 /**
- * Odesílání je vypnuté, dokud Karel neschválí podobu e-mailu (zákaznický e-mail jde jen přes schválení).
- * Do té doby cron jen spočítá a zapíše týdenní odhad dětí, ať má první e-mail s čím srovnávat.
+ * Odesílání schválil Karel 15. 11. 2026 (podoba e-mailu i to, že jde jen rodičům dětí s Premium).
+ * Cron každé pondělí také zapíše týdenní odhad dětí (i bez Premium), ať má e-mail s čím srovnávat.
  */
-const ODESILAT = false;
+const ODESILAT = true;
 
 /** Report pro rodiče je podle ceníku a obrazovky Premium výhoda Premium. */
 const JEN_PREMIUM = true;
