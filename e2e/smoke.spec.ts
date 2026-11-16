@@ -130,3 +130,25 @@ test("bezpečnostní hlavičky jsou nastavené", async ({ request }) => {
   expect(h["x-content-type-options"]).toBe("nosniff");
   expect(h["referrer-policy"]).toBe("strict-origin-when-cross-origin");
 });
+
+// Měření úvodní stránky (16. 11. 2026): při odchodu se pošle, jak dlouho tam návštěvník byl, kam doscrolloval a kolikrát klikl.
+test("úvodní stránka: měření pošle odchod s časem, scrollem a poslední sekcí", async ({ page }) => {
+  const udalosti: Record<string, unknown>[] = [];
+  await page.route("**/api/t", async (route) => {
+    try { udalosti.push(JSON.parse(route.request().postData() ?? "{}")); } catch { /* ignoruj */ }
+    await route.fulfill({ status: 204 });
+  });
+  await page.goto("/");
+  await expect(page.locator('[data-sekce="uvod"]')).toBeVisible();
+  await page.mouse.wheel(0, 2500);
+  await page.waitForTimeout(400);
+  await page.locator('a[href^="/registrace"]').first().click();
+  await page.waitForURL(/registrace/);
+  await expect.poll(() => udalosti.find((u) => u.e === "odchod")).toBeTruthy();
+  const odchod = udalosti.find((u) => u.e === "odchod")!;
+  expect(odchod.p_).toBe("/");
+  expect(Number(odchod.h)).toBeGreaterThan(0);
+  expect(Number(odchod.k)).toBeGreaterThanOrEqual(1);
+  expect(typeof odchod.sk).toBe("string");
+  expect(udalosti.some((u) => u.e === "klik")).toBe(true);
+});

@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { mer } from "@/components/Mereni";
 import { supabase } from "@/lib/supabase";
 import { getSmartRedirect } from "@/lib/smart-redirect";
 import { hydrateFromRemote } from "@/lib/storage";
@@ -21,6 +22,8 @@ function PrihlaseniForm() {
   const [email, setEmail]         = useState("");
   const [password, setPassword]   = useState("");
   const [error, setError]         = useState<string | null>(null);
+  // Měření: na čem se lidé v registraci / přihlášení zaseknou (jen naše texty chyb, žádné údaje)
+  useEffect(() => { if (error) mer("formular_chyba", { c: error.slice(0, 80) }); }, [error]);
   const [loading, setLoading]     = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 

@@ -15,6 +15,7 @@ interface Data {
   zarizeni: { k: string; n: number }[];
   trychtyr: { krok: string; n: number }[];
   trenink: { tyden: string; zaku: number; dniNaZaka: number; prikladuNaZaka: number; uspesnost: number | null }[];
+  uvod: { zobrazeni: number; navstevniku: number; odesliHned: number; bezKliku: number; medianSekund: number | null; scroll: { min: number; podil: number }[]; posledniSekce: { k: string; n: number }[]; kliky: { k: string; n: number }[]; pokracovali: number; formular: { k: string; n: number }[]; chyby: { k: string; n: number }[] };
   odmeny: { zaku: number; ziskano: number; utraceno: number; truhel: number; odmen: number } | null;
 }
 
@@ -108,6 +109,45 @@ export default function NavstevnostPage() {
                 );
               })}
             </div>
+          </div>
+
+          <div className="mm-karta p-4 flex flex-col gap-3" data-testid="uvodni-stranka">
+            <div>
+              <b className="text-sm" style={{ color: "#0D1B3E" }}>Úvodní stránka: co lidé dělají (za {data.dni} dní)</b>
+              <p className="text-xs mt-0.5" style={{ color: "#5F6982" }}>Měří se od 16. 11. 2026: jak dlouho tam návštěvník byl, kam doscrolloval, na co klikl a jestli šel dál. Bez cookies a bez osobních údajů.</p>
+            </div>
+            {data.uvod.zobrazeni === 0 ? <p className="text-sm" style={{ color: "#8A93AA" }}>Zatím žádná data.</p> : (
+              <>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  {[
+                    ["Zobrazení", String(data.uvod.zobrazeni)],
+                    ["Odešli do 10 s bez kliknutí", `${data.uvod.odesliHned} (${Math.round((data.uvod.odesliHned / data.uvod.zobrazeni) * 100)} %)`],
+                    ["Typicky zůstali", data.uvod.medianSekund === null ? "–" : `${data.uvod.medianSekund} s`],
+                    ["Šli dál v appce", `${data.uvod.pokracovali} z ${data.uvod.navstevniku}`],
+                  ].map(([l, v]) => (
+                    <div key={l} className="rounded-xl p-3" style={{ background: "#F5F6FB" }}><p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#8A93AA" }}>{l}</p><p className="text-xl font-black tabular-nums" style={{ color: "#0D1B3E" }}>{v}</p></div>
+                  ))}
+                </div>
+                <div>
+                  <p className="text-xs font-bold" style={{ color: "#33405F" }}>Kam až doscrollovali</p>
+                  <div className="flex flex-col gap-1 mt-1.5">
+                    {data.uvod.scroll.map((x) => (
+                      <div key={x.min} className="grid grid-cols-[70px_1fr_44px] gap-2 items-center text-sm">
+                        <span style={{ color: "#5F6982" }}>{x.min === 90 ? "až dolů" : `${x.min} %`}</span>
+                        <span className="h-3.5 rounded" style={{ background: "#EEF0F6" }}><span className="block h-full rounded" style={{ width: `${Math.max(1, x.podil)}%`, background: "#5B55D6" }} /></span>
+                        <b className="tabular-nums text-right" style={{ color: "#0D1B3E" }}>{x.podil} %</b>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid lg:grid-cols-2 gap-3">
+                  <Seznam nadpis="Poslední sekce, kterou viděli" polozky={data.uvod.posledniSekce} />
+                  <Seznam nadpis="Na co klikli na úvodní stránce" polozky={data.uvod.kliky} />
+                  <Seznam nadpis="Začali vyplňovat formulář" polozky={data.uvod.formular} />
+                  <Seznam nadpis="Chyby v registraci a přihlášení" polozky={data.uvod.chyby} />
+                </div>
+              </>
+            )}
           </div>
 
           <div className="mm-karta p-4" data-testid="trenink-tydny">

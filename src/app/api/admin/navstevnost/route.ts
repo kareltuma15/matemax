@@ -6,7 +6,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
  * Návštěvnost a trychtýř pro admina (Karel): z analytics_events (měření bez cookies) a z účtů.
  * Vrací jen souhrny (počty), žádné e-maily ani jednotlivé návštěvníky.
  */
-type Ev = { event_name: string; created_at: string; user_id: string | null; properties: Record<string, string | undefined> | null };
+type Ev = { event_name: string; created_at: string; user_id: string | null; properties: Record<string, string | undefined> & { sekund?: number; scroll?: number; kliku?: number } | null };
 
 export async function GET(req: NextRequest) {
   const auth = await requireAdmin(req);
@@ -106,8 +106,29 @@ export async function GET(req: NextRequest) {
     odmen: sb.reduce((x, s) => x + (s.mam?.length ?? 0), 0),
   };
 
+  // Úvodní stránka: co návštěvníci dělají (od 16. 11. 2026, událost odchod)
+  const odchody = ev.filter((e) => e.event_name === "odchod" && p(e).cesta === "/");
+  const sek = odchody.map((e) => p(e).sekund ?? 0).sort((a, b) => a - b);
+  const median = sek.length ? sek[Math.floor(sek.length / 2)] : null;
+  const scrollPodil = (min: number) => odchody.length ? Math.round((odchody.filter((e) => (p(e).scroll ?? 0) >= min).length / odchody.length) * 100) : 0;
+  const navUvod = new Set(navstevy.filter((e) => p(e).cesta === "/").map((e) => p(e).v).filter(Boolean));
+  const pokracovali = new Set(navstevy.filter((e) => p(e).cesta !== "/" && navUvod.has(p(e).v)).map((e) => p(e).v)).size;
+  const uvod = {
+    zobrazeni: odchody.length,
+    navstevniku: navUvod.size,
+    odesliHned: odchody.filter((e) => (p(e).sekund ?? 0) < 10 && !(p(e).kliku)).length,
+    bezKliku: odchody.filter((e) => !(p(e).kliku)).length,
+    medianSekund: median,
+    scroll: [25, 50, 75, 90].map((min) => ({ min, podil: scrollPodil(min) })),
+    posledniSekce: pocitej(odchody, (e) => p(e).sekce ?? "úplně nahoře", false),
+    kliky: pocitej(ev.filter((e) => e.event_name === "klik" && p(e).cesta === "/"), (e) => p(e).text || p(e).cil, false),
+    pokracovali,
+    formular: pocitej(ev.filter((e) => e.event_name === "formular_start"), (e) => p(e).cesta),
+    chyby: pocitej(ev.filter((e) => e.event_name === "formular_chyba"), (e) => `${p(e).cesta}: ${p(e).cil}`, false),
+  };
+
   return NextResponse.json({
-    dni,
+    dni, uvod,
     trenink, odmeny,
     mereniOd: navstevy[0]?.created_at ?? null,
     souhrn: { navstevniku: unik(navstevy), stranek: navstevy.length, novychUctu: uzivatele.length },

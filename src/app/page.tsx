@@ -478,7 +478,7 @@ export default function LandingPage() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden hero-animated">
+      <section data-sekce="uvod" className="relative overflow-hidden hero-animated">
         {/* Parallax math symboly — pohybují se pomaleji než obsah */}
         <div className="hero-parallax-layer absolute inset-0">
           {MATH_SYMBOLS.map(({ symbol, top, left, size, delay, opacity }) => (
@@ -574,7 +574,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── DEMO — dvousloupcový layout na desktopu ───────────────── */}
-      <section className="py-12 scroll-reveal" style={{ background: "#f8fafc" }}>
+      <section data-sekce="zkus-priklad" className="py-12 scroll-reveal" style={{ background: "#f8fafc" }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="md:grid md:grid-cols-2 md:gap-14 md:items-center">
             {/* Levý sloupec — text (jen desktop) */}
@@ -618,7 +618,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── ČÍSLA — count-up animace ─────────────────────────────────── */}
-      <section className="bg-gray-50 border-y border-gray-200 scroll-reveal">
+      <section data-sekce="cisla" className="bg-gray-50 border-y border-gray-200 scroll-reveal">
         <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
             <div className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
@@ -646,7 +646,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── JAK TO FUNGUJE — step connectors ─────────────────────────── */}
-      <section id="jak-to-funguje" className="max-w-5xl mx-auto px-6 py-20">
+      <section data-sekce="jak-to-funguje" id="jak-to-funguje" className="max-w-5xl mx-auto px-6 py-20">
         <div className="text-center mb-14 scroll-reveal">
           <Badge>Jak to funguje</Badge>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
@@ -698,7 +698,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── APP MOCKUP — 3D tilt ─────────────────────────────────────── */}
-      <section className="bg-gradient-to-b from-gray-50 to-white py-16">
+      <section data-sekce="ukazka" className="bg-gradient-to-b from-gray-50 to-white py-16">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="scroll-reveal">
@@ -769,7 +769,7 @@ export default function LandingPage() {
 
       {/* ── PRO RODIČE (rodič) ───────────────────────────────────────── */}
       {isRodic && (
-      <section id="pro-rodice" className="py-20" style={{ background: "linear-gradient(180deg, #f0f7ff 0%, #fff 100%)" }}>
+      <section data-sekce="pro-rodice" id="pro-rodice" className="py-20" style={{ background: "linear-gradient(180deg, #f0f7ff 0%, #fff 100%)" }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12 scroll-reveal">
             <Badge>Pro rodiče</Badge>
@@ -844,7 +844,7 @@ export default function LandingPage() {
 
       {/* ── SROVNÁNÍ S ALTERNATIVAMI (rodič) ──────────────────────────── */}
       {isRodic && (
-      <section className="py-16" style={{ background: "#f8fafc" }}>
+      <section data-sekce="srovnani" className="py-16" style={{ background: "#f8fafc" }}>
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10 scroll-reveal">
             <Badge>Srovnání</Badge>
@@ -890,7 +890,7 @@ export default function LandingPage() {
       )}
 
       {/* ── CENÍK ────────────────────────────────────────────────────── */}
-      <section id="cena" className="max-w-4xl mx-auto px-6 py-20">
+      <section data-sekce="cenik" id="cena" className="max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12 scroll-reveal">
           <Badge>Ceník</Badge>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
@@ -942,7 +942,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────────── */}
-      <section className="bg-gray-50 py-20">
+      <section data-sekce="otazky" className="bg-gray-50 py-20">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-12 scroll-reveal">
             <Badge>FAQ</Badge>
@@ -959,7 +959,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FINAL CTA ────────────────────────────────────────────────── */}
-      <section className="py-20 text-center" style={{ background: "#0D1B3E" }}>
+      <section data-sekce="zaver" className="py-20 text-center" style={{ background: "#0D1B3E" }}>
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-5xl mb-4">🚀</div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-white">
