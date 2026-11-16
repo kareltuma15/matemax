@@ -142,7 +142,7 @@ test("úvodní stránka: měření pošle odchod s časem, scrollem a poslední 
   await expect(page.locator('[data-sekce="uvod"]')).toBeVisible();
   await page.mouse.wheel(0, 2500);
   await page.waitForTimeout(400);
-  await page.locator('a[href^="/registrace"]').first().click();
+  await page.locator('a[href^="/registrace"]:visible').first().click();
   await page.waitForURL(/registrace/);
   await expect.poll(() => udalosti.find((u) => u.e === "odchod")).toBeTruthy();
   const odchod = udalosti.find((u) => u.e === "odchod")!;
