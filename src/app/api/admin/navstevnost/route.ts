@@ -68,8 +68,47 @@ export async function GET(req: NextRequest) {
     { krok: "Začali platit", n: vSet((e) => e.event_name === "platba_start") },
   ];
 
+  // Trénink po týdnech (ověření, že odměny pomáhají): dny tréninku a příklady na žáka, úspěšnost.
+  // Z tabulky sessions (jeden řádek = dokončený trénink). Jen souhrny, žádné jednotlivé účty.
+  const tydnu = 8;
+  const pondeli = (d: Date) => { const x = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())); x.setUTCDate(x.getUTCDate() - ((x.getUTCDay() + 6) % 7)); return x; };
+  const prvniPondeli = pondeli(new Date(Date.now() - (tydnu - 1) * 7 * 86400000));
+  const odData = prvniPondeli.toISOString().slice(0, 10);
+  const [{ data: sesRows }, sbirkaRes] = await Promise.all([
+    supabaseAdmin.from("sessions").select("user_id, date, total, correct").gte("date", odData).limit(20000),
+    supabaseAdmin.from("user_sbirka").select("state").limit(5000),
+  ]);
+  const trenink = Array.from({ length: tydnu }, (_, i) => {
+    const od = new Date(prvniPondeli.getTime() + i * 7 * 86400000);
+    const doo = new Date(od.getTime() + 6 * 86400000);
+    const a = od.toISOString().slice(0, 10), b = doo.toISOString().slice(0, 10);
+    const radky = (sesRows ?? []).filter((r) => r.date >= a && r.date <= b);
+    const zaci = new Map<string, Set<string>>();
+    for (const r of radky) { const s = zaci.get(r.user_id) ?? new Set<string>(); s.add(r.date); zaci.set(r.user_id, s); }
+    const n = zaci.size;
+    const prikladu = radky.reduce((x, r) => x + (r.total ?? 0), 0);
+    const spravne = radky.reduce((x, r) => x + (r.correct ?? 0), 0);
+    return {
+      tyden: a,
+      zaku: n,
+      dniNaZaka: n ? Math.round(([...zaci.values()].reduce((x, s) => x + s.size, 0) / n) * 10) / 10 : 0,
+      prikladuNaZaka: n ? Math.round(prikladu / n) : 0,
+      uspesnost: prikladu ? Math.round((spravne / prikladu) * 100) : null,
+    };
+  });
+  type Sb = { ziskano?: number; utraceno?: number; otevreno?: number; mam?: string[] };
+  const sb = (sbirkaRes.error ? [] : (sbirkaRes.data ?? [])).map((r) => r.state as Sb);
+  const odmeny = sbirkaRes.error ? null : {
+    zaku: sb.length,
+    ziskano: sb.reduce((x, s) => x + (s.ziskano ?? 0), 0),
+    utraceno: sb.reduce((x, s) => x + (s.utraceno ?? 0), 0),
+    truhel: sb.reduce((x, s) => x + (s.otevreno ?? 0), 0),
+    odmen: sb.reduce((x, s) => x + (s.mam?.length ?? 0), 0),
+  };
+
   return NextResponse.json({
     dni,
+    trenink, odmeny,
     mereniOd: navstevy[0]?.created_at ?? null,
     souhrn: { navstevniku: unik(navstevy), stranek: navstevy.length, novychUctu: uzivatele.length },
     poDnech, zdroje, stranky, kliky, zarizeni, trychtyr,

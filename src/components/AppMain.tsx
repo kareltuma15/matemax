@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
  * tréninkové centrum), takže si šířku řídí sám — centrum se rozšíří přes
  * celou plochu, session zůstane úzká.
  */
-const WIDE_PREFIXES = ["/profil", "/rodice/dashboard", "/testy"];
+const WIDE_PREFIXES = ["/profil", "/rodice/dashboard", "/testy", "/sbirka"];
 
 export default function AppMain({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "";

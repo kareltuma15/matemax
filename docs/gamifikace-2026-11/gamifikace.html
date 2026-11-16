@@ -1,0 +1,1000 @@
+<title>Sbírka MateMax</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: dlouhá stránka. Nahoře přepínač třídy a 6 živých telefonů (Hexík u příkladu, šatník, vzhled appky, profil, truhly, růst), pod nimi učení, „jen my“, obsah podle třídy, ceny, rozhodnutí a etapy. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --text:#0D1B3E; --tlumene:#5F6982; --linka:#E1E4EE;
+  --navy:#0D1B3E; --zlata:#F5A623; --fialova:#5B55D6; --levandule:#EBEAFE; --mata:#1F9D55;
+  --bezna:#8A93AA; --neobvykla:#2E6DA4; --vzacna:#8E3FA8; --legenda:#E08A00;
+  --hra:"Baloo 2","DM Sans",system-ui,sans-serif; --telo:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --telefon:#0D1B3E;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1226; --plocha:#151F3B; --text:#EEF1FB; --tlumene:#A5ADC6; --linka:#27325A; --levandule:#262A5E; --telefon:#05080F; color-scheme:dark;}}
+:root[data-theme="dark"]{--bg:#0B1226; --plocha:#151F3B; --text:#EEF1FB; --tlumene:#A5ADC6; --linka:#27325A; --levandule:#262A5E; --telefon:#05080F; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--telo);font-size:15px;line-height:1.55;margin:0}
+.obal{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--hra);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,54px);font-weight:800}
+h2{font-size:clamp(24px,3vw,32px);font-weight:800}
+h3{font-size:19px;font-weight:700}
+p{margin:0}
+.stitek{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--fialova)}
+.uvod{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:center}
+.uvod p.lead{font-size:18px;color:var(--tlumene);max-width:62ch;margin-top:12px}
+.shrnuti{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{padding:6px 12px;border-radius:999px;background:var(--plocha);border:1px solid var(--linka);font-weight:700;font-size:13px}
+.chip.novy{border-color:var(--zlata)}
+.karta{background:var(--plocha);border:1px solid var(--linka);border-radius:20px;padding:20px}
+.sekce{display:flex;flex-direction:column;gap:16px}
+.sekce>header p{color:var(--tlumene);max-width:72ch;margin-top:6px}
+.hlava-proto{display:flex;flex-wrap:wrap;gap:16px;align-items:end;justify-content:space-between}
+.prepinac{display:inline-flex;background:var(--plocha);border:1px solid var(--linka);border-radius:14px;padding:4px;gap:4px}
+.prepinac button{appearance:none;border:0;background:transparent;color:var(--text);font:800 14px var(--telo);padding:9px 16px;border-radius:10px;cursor:pointer}
+.prepinac button[aria-pressed="true"]{background:var(--navy);color:#fff}
+:root[data-theme="dark"] .prepinac button[aria-pressed="true"]{background:var(--fialova)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .prepinac button[aria-pressed="true"]{background:var(--fialova)}}
+.reset{appearance:none;background:none;border:0;color:var(--tlumene);font:700 13px var(--telo);text-decoration:underline;cursor:pointer;padding:4px}
+.maskot-box{display:flex;align-items:center;justify-content:center;gap:10px}
+.maskot-box .hx{width:min(180px,44%)}
+
+/* telefony */
+.telefony{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px}
+.tel{background:var(--telefon);border-radius:34px;padding:10px;box-shadow:0 24px 50px -24px rgba(13,27,62,.55);display:flex;flex-direction:column}
+.tel>.scr{flex:1}
+.tel .popis{color:#C9C7F5;font-size:12.5px;text-align:center;padding:8px 6px 2px}
+
+/* obrazovka: všechno přes proměnné vzhledu appky */
+.scr,.swatch{--s-pozadi:#F3F4FA;--s-karta:#fff;--s-text:#0D1B3E;--s-tlum:#5F6982;--s-linka:#E4E6EF;--s-akcent:#5B55D6;--s-akcent-t:#fff;--s-lista:#fff}
+.scr{background:var(--s-pozadi);color:var(--s-text);border-radius:26px;min-height:560px;overflow:hidden;display:flex;flex-direction:column;position:relative;isolation:isolate;transition:background .4s,color .4s}
+.scr::before,.swatch::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0}
+.scr>*{position:relative;z-index:1}
+.scr>.efekty{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
+.lista{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;background:var(--s-lista);border-bottom:1px solid var(--s-linka);font-weight:800;font-size:13px}
+.pocitadla{display:flex;gap:6px}
+.poc{padding:3px 8px;border-radius:9px;font-size:12px;font-weight:800;display:flex;gap:4px;align-items:center;background:color-mix(in srgb,var(--s-akcent) 14%,transparent);color:var(--s-text)}
+.krystal-ico{width:12px;height:12px;display:inline-block;flex:none;background:linear-gradient(135deg,#7FD3FF,#2E6DA4);clip-path:polygon(50% 0,100% 38%,80% 100%,20% 100%,0 38%)}
+.obsah{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
+.k{background:var(--s-karta);border:1px solid var(--s-linka);border-radius:16px;padding:12px}
+.tlum{color:var(--s-tlum)}
+.mini{font-size:12px}
+.tl{appearance:none;border:0;border-radius:14px;padding:12px 14px;font-family:var(--telo);font-weight:800;font-size:15px;cursor:pointer;transition:filter .15s,transform .1s}
+.tl:hover{filter:brightness(1.07)}.tl:active{transform:scale(.98)}
+.tl:focus-visible,.pol:focus-visible,.moz:focus-visible{outline:3px solid #8D89E8;outline-offset:2px}
+.tl.akcent{background:var(--s-akcent);color:var(--s-akcent-t)}
+.tl.zlate{background:var(--zlata);color:#0D1B3E}
+.tl.obrys{background:var(--s-karta);color:var(--s-text);border:1.5px solid var(--s-linka)}
+.tl.male{padding:7px 10px;font-size:12.5px;border-radius:11px}
+.tl[disabled]{opacity:.55;cursor:not-allowed;filter:none}
+
+/* příklad */
+.zadani{font-family:var(--hra);font-size:21px;font-weight:800;line-height:1.2;margin:4px 0 12px}
+.moznosti-p{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.moz{appearance:none;background:var(--s-karta);border:1.5px solid var(--s-linka);color:var(--s-text);border-radius:14px;padding:12px 8px;font:800 17px var(--telo);cursor:pointer;transition:transform .1s,background .2s}
+.moz:hover:not([disabled]){border-color:var(--s-akcent)}
+.moz.ok{background:#1F9D55;border-color:#1F9D55;color:#fff}
+.moz.spatne{background:#D64550;border-color:#D64550;color:#fff}
+.moz[disabled]{cursor:default}
+.postup{font-size:13px;background:color-mix(in srgb,var(--s-akcent) 10%,var(--s-karta));border:1px solid var(--s-linka);border-radius:12px;padding:10px;display:none;gap:8px;flex-direction:column}
+.postup.vid{display:flex}
+.serie{display:flex;gap:5px;align-items:center;font-size:12px;font-weight:800}
+.serie i{width:12px;height:12px;border-radius:50%;background:var(--s-linka)}
+.serie i.on{background:linear-gradient(#FFB45C,#F07A1A)}
+.hx-misto{position:absolute;right:8px;bottom:8px;width:112px;z-index:3}
+.bublina{position:absolute;right:122px;bottom:52px;max-width:150px;background:var(--s-karta);color:var(--s-text);border:1.5px solid var(--s-linka);border-radius:14px 14px 4px 14px;padding:8px 10px;font-size:13px;font-weight:800;line-height:1.25;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .2s,transform .2s;z-index:3;box-shadow:0 8px 18px -10px rgba(0,0,0,.35)}
+.bublina.vid{opacity:1;transform:none}
+.plus{position:absolute;right:46px;bottom:126px;font:800 16px var(--hra);color:#1E8FE0;display:flex;gap:4px;align-items:center;opacity:0;z-index:4;pointer-events:none}
+.plus.jede{animation:plus 1s ease-out}
+@keyframes plus{0%{opacity:0;transform:translateY(8px)}20%{opacity:1}100%{opacity:0;transform:translateY(-30px)}}
+
+/* Hexík a reakce */
+.hx{display:block;animation:idle 3.2s ease-in-out infinite;transform-origin:50% 80%}
+.hx svg{display:block;width:100%;height:auto;overflow:visible}
+@keyframes idle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(1.5deg)}}
+.hx.r-jasot{animation:jasot .8s ease}
+@keyframes jasot{0%{transform:none}30%{transform:translateY(-30px) scale(1.06,.95)}55%{transform:translateY(0) scale(1.1,.88)}75%{transform:translateY(-12px)}100%{transform:none}}
+.hx.r-radost{animation:jasot .7s ease 2}
+.hx.r-povzbud{animation:povzbud 1.1s ease}
+@keyframes povzbud{0%,100%{transform:none}20%{transform:rotate(-9deg) translateY(2px)}45%{transform:rotate(7deg)}70%{transform:rotate(-4deg)}}
+.hx.r-tanec{animation:tanec 1.6s ease-in-out}
+@keyframes tanec{0%,100%{transform:none}12%{transform:translateX(-12px) rotate(-12deg) scale(1,.95)}25%{transform:translateX(0) translateY(-10px)}37%{transform:translateX(12px) rotate(12deg) scale(1,.95)}50%{transform:translateY(-10px)}62%{transform:translateX(-12px) rotate(-12deg)}75%{transform:translateY(-14px) scale(1.05)}87%{transform:translateX(12px) rotate(12deg)}}
+.hx.r-salto{animation:salto 1.1s cubic-bezier(.4,0,.3,1)}
+@keyframes salto{0%{transform:none}20%{transform:translateY(6px) scale(1.08,.9)}55%{transform:translateY(-46px) rotate(-200deg)}85%{transform:translateY(0) rotate(-360deg) scale(1.05,.92)}100%{transform:rotate(-360deg)}}
+.hx.r-teleport{animation:teleport 1.2s ease}
+@keyframes teleport{0%{transform:none;opacity:1;filter:none}35%{transform:scale(.15,1.6);opacity:0;filter:blur(3px) brightness(2)}55%{transform:translateX(-60px) scale(.15,1.6);opacity:0}75%{transform:translateX(0) scale(1.15,.85);opacity:1;filter:brightness(1.6)}100%{transform:none;filter:none}}
+.hx.r-disco{animation:disco 1.8s ease-in-out}
+@keyframes disco{0%{transform:none;filter:none}25%{transform:rotate(180deg) scale(1.1);filter:hue-rotate(90deg) saturate(1.6)}50%{transform:rotate(360deg) translateY(-18px);filter:hue-rotate(180deg) saturate(1.8)}75%{transform:rotate(540deg) scale(1.1);filter:hue-rotate(270deg) saturate(1.6)}100%{transform:rotate(720deg);filter:none}}
+svg.svit-cyan{filter:drop-shadow(0 0 6px #3DF5FF)}
+svg.svit-zlato{filter:drop-shadow(0 0 10px #F5C542)}
+.aura{transform-origin:130px 130px;animation:tocka 9s linear infinite}
+@keyframes tocka{to{transform:rotate(360deg)}}
+.trpyt{animation:trpyt 1.6s ease-in-out infinite alternate}
+@keyframes trpyt{from{opacity:.25}to{opacity:1}}
+
+/* efekty */
+.p{position:absolute;left:var(--x);top:var(--y);pointer-events:none}
+.p-jiskra{width:8px;height:8px;border-radius:50%;background:#FFD54A;box-shadow:0 0 10px #FFB300;animation:radial .85s ease-out forwards}
+.p-hvezda{font-size:20px;line-height:1;color:#FFC93C;text-shadow:0 0 8px rgba(255,180,0,.8);animation:radial 1.1s ease-out forwards}
+@keyframes radial{from{transform:translate(-50%,-50%) scale(1);opacity:1}to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.35) rotate(140deg);opacity:0}}
+.p-konfeta{width:7px;height:12px;border-radius:2px;background:var(--c);animation:pad 1.7s cubic-bezier(.3,.6,.6,1) forwards}
+@keyframes pad{from{transform:translate(0,0) rotate(0)}to{transform:translate(var(--dx),600px) rotate(var(--rot))}}
+.p-bublina{width:var(--s);height:var(--s);border-radius:50%;border:2px solid rgba(110,190,255,.95);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.9) 0 18%,rgba(190,230,255,.25) 20%);animation:stoupa 1.9s ease-out forwards;opacity:0}
+@keyframes stoupa{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(var(--dx),-440px);opacity:0}}
+.p-plamen{width:var(--s);height:calc(var(--s)*1.3);border-radius:50% 50% 45% 45%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#FFF3A0,#FFB000 40%,#FF5A1F 75%);filter:blur(.6px);animation:hori 1.4s ease-out forwards;opacity:0}
+@keyframes hori{0%{transform:translate(0,0) scale(1);opacity:0}12%{opacity:1}100%{transform:translate(var(--dx),-210px) scale(.15);opacity:0}}
+.p-flash{inset:0;left:0;top:0;background:#fff;animation:flash .5s ease-out forwards}
+@keyframes flash{0%{opacity:0}10%{opacity:.8}28%{opacity:.08}42%{opacity:.6}100%{opacity:0}}
+.p-blesk{width:40px;animation:blik .7s steps(1) forwards}
+.p-blesk svg{width:100%;height:auto;filter:drop-shadow(0 0 8px #FFE14D)}
+@keyframes blik{0%{opacity:1}20%{opacity:0}35%{opacity:1}60%{opacity:1}61%{opacity:0}100%{opacity:0}}
+.p-duha{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,transparent 50%,#FF5A5F 51% 57%,#FFB13B 57% 63%,#FFE14D 63% 69%,#3DD68C 69% 75%,#4DA3FF 75% 81%,#9A6BFF 81% 87%,transparent 88%);animation:duhaKruh 1.2s ease-out forwards}
+@keyframes duhaKruh{from{transform:translate(-50%,-50%) scale(.2);opacity:1}to{transform:translate(-50%,-50%) scale(7);opacity:0}}
+
+/* šatník a obchod */
+.zalozky{display:flex;gap:6px}
+.zalozky button{flex:1;appearance:none;font:800 12px var(--telo);padding:7px 6px;border-radius:10px;border:1px solid var(--s-linka);background:var(--s-karta);color:var(--s-text);cursor:pointer}
+.zalozky button[aria-pressed="true"]{background:var(--s-akcent);color:var(--s-akcent-t);border-color:var(--s-akcent)}
+.mrizka-pol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mrizka-pol.tri{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pol{--r:var(--bezna);appearance:none;text-align:left;background:var(--s-karta);border:1.5px solid var(--s-linka);border-radius:14px;padding:7px;cursor:pointer;color:var(--s-text);display:flex;flex-direction:column;gap:4px;font:700 12.5px/1.25 var(--telo);min-width:0}
+.pol[aria-pressed="true"]{border-color:var(--s-akcent);box-shadow:0 0 0 2px color-mix(in srgb,var(--s-akcent) 35%,transparent)}
+.pol .vzp{height:4px;border-radius:4px;background:var(--r)}
+.pol .st{font-size:11px;color:var(--s-tlum);font-weight:700;display:flex;gap:4px;align-items:center}
+.pol .st.nas{color:#1F9D55}
+.pol .vizual{display:flex;align-items:center;justify-content:center;min-height:46px}
+.pol .ikona{font-size:28px;line-height:1}
+.mini-hx{display:block}
+.mini-hx svg{width:100%;height:auto;display:block;overflow:visible}
+.zamek{opacity:.6}
+.stage{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px}
+.stage .hx{width:128px}
+.oznaceni{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#F5A623;color:#0D1B3E}
+.vzacnost{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;color:#fff;white-space:nowrap}
+
+/* vzhledy appky (platí pro telefon i náhled) */
+.swatch{display:block;height:52px;width:100%;border-radius:10px;background:var(--s-pozadi);position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.08);isolation:isolate}
+.swatch i{position:absolute;z-index:1;display:block}
+.swatch i:first-child{left:8px;right:8px;top:9px;height:15px;border-radius:5px;background:var(--s-karta);border:1px solid var(--s-linka)}
+.swatch i:last-child{left:8px;bottom:8px;width:42%;height:11px;border-radius:5px;background:var(--s-akcent)}
+[data-vzhled="louka"]{--s-pozadi:linear-gradient(180deg,#EAF8E4,#D7F0CF);--s-karta:#fff;--s-text:#17351F;--s-tlum:#4D6B55;--s-linka:#CBE6C3;--s-akcent:#2F9E44;--s-akcent-t:#fff;--s-lista:#F6FCF3}
+[data-vzhled="bonbon"]{--s-pozadi:linear-gradient(180deg,#FFE7F2,#EFE3FF);--s-karta:#fff;--s-text:#4A1C3B;--s-tlum:#86597C;--s-linka:#F2D0E4;--s-akcent:#E0569B;--s-akcent-t:#fff;--s-lista:#FFF5FA}
+[data-vzhled="ocean"]{--s-pozadi:linear-gradient(180deg,#DDF2FF,#B9E0F8);--s-karta:rgba(255,255,255,.88);--s-text:#0B2A45;--s-tlum:#436683;--s-linka:#B8D7EC;--s-akcent:#0E7BC4;--s-akcent-t:#fff;--s-lista:rgba(255,255,255,.75)}
+[data-vzhled="grafit"]{--s-pozadi:#1C2230;--s-karta:#262E3F;--s-text:#EEF1FB;--s-tlum:#A3ACC2;--s-linka:#353E54;--s-akcent:#8D89E8;--s-akcent-t:#0D1B3E;--s-lista:#202737}
+[data-vzhled="vesmir"]{--s-pozadi:radial-gradient(circle at 30% 0%,#2E3485,#0B1030 72%);--s-karta:rgba(255,255,255,.09);--s-text:#EEF1FB;--s-tlum:#B9BEE0;--s-linka:rgba(255,255,255,.16);--s-akcent:#F5A623;--s-akcent-t:#0D1B3E;--s-lista:rgba(11,16,48,.55)}
+[data-vzhled="vesmir"]::before{background-image:radial-gradient(1.6px 1.6px at 12% 18%,#fff,transparent),radial-gradient(1.2px 1.2px at 30% 64%,#fff,transparent),radial-gradient(2px 2px at 52% 30%,#FFE9A8,transparent),radial-gradient(1.4px 1.4px at 70% 80%,#fff,transparent),radial-gradient(1.8px 1.8px at 86% 22%,#fff,transparent),radial-gradient(1.2px 1.2px at 92% 56%,#CFE3FF,transparent),radial-gradient(1.5px 1.5px at 8% 86%,#fff,transparent),radial-gradient(1.3px 1.3px at 42% 92%,#fff,transparent);animation:trpyt 2.4s ease-in-out infinite alternate}
+[data-vzhled="mesto"]{--s-pozadi:linear-gradient(180deg,#1B0B33,#2D0B4E 60%,#120626);--s-karta:rgba(22,8,44,.78);--s-text:#FBEFFF;--s-tlum:#CDB0E8;--s-linka:rgba(255,61,139,.38);--s-akcent:#FF3D8B;--s-akcent-t:#fff;--s-lista:rgba(18,6,38,.7)}
+[data-vzhled="mesto"]::before{background:radial-gradient(80% 45% at 50% 0%,rgba(255,61,139,.35),transparent 70%),repeating-linear-gradient(90deg,rgba(61,245,255,.24) 0 1px,transparent 1px 26px) bottom/100% 34% no-repeat,repeating-linear-gradient(0deg,rgba(255,61,139,.3) 0 1px,transparent 1px 14px) bottom/100% 34% no-repeat}
+.scr[data-vzhled="mesto"] .k,.scr[data-vzhled="mesto"] .moz{box-shadow:0 0 0 1px rgba(61,245,255,.22),0 0 18px -6px rgba(255,61,139,.7)}
+[data-vzhled="aurora"]{--s-pozadi:#061A24;--s-karta:rgba(255,255,255,.08);--s-text:#EAFBF6;--s-tlum:#A7D4CB;--s-linka:rgba(255,255,255,.15);--s-akcent:#3DF5B0;--s-akcent-t:#062018;--s-lista:rgba(6,26,36,.55)}
+[data-vzhled="aurora"]::before{inset:-20%;background:radial-gradient(45% 30% at 25% 20%,rgba(61,245,176,.55),transparent 70%),radial-gradient(40% 32% at 75% 28%,rgba(141,110,255,.55),transparent 70%),radial-gradient(35% 25% at 50% 70%,rgba(61,200,255,.3),transparent 70%);filter:blur(10px);animation:aurora 7s ease-in-out infinite alternate}
+@keyframes aurora{0%{transform:translateX(-8%) scaleY(1)}100%{transform:translateX(8%) scaleY(1.25)}}
+[data-vzhled="duha"]{--s-pozadi:linear-gradient(120deg,#FFD6E8,#FFF1C9,#D6F5E3,#D6E8FF,#EBD6FF,#FFD6E8);--s-karta:rgba(255,255,255,.9);--s-text:#2A1F4D;--s-tlum:#64578A;--s-linka:#E3D9F5;--s-akcent:#7A4DFF;--s-akcent-t:#fff;--s-lista:rgba(255,255,255,.75)}
+.scr[data-vzhled="duha"],.swatch[data-vzhled="duha"]{background-size:400% 400%;animation:duhaJede 9s linear infinite alternate}
+@keyframes duhaJede{from{background-position:0% 50%}to{background-position:100% 50%}}
+.scr[data-vzhled="vesmir"] .k,.scr[data-vzhled="aurora"] .k{backdrop-filter:blur(6px)}
+
+/* pozadí hlavičky profilu */
+.banner,.thumb{position:relative;overflow:hidden;isolation:isolate;display:block}
+.banner::before,.banner::after,.thumb::before,.thumb::after{content:"";position:absolute;pointer-events:none}
+.banner{height:122px}
+.thumb{height:42px;border-radius:9px;border:1px solid rgba(0,0,0,.08)}
+[data-pozadi="tyrkys"]{background:linear-gradient(135deg,#2EC4B6,#5BC0EB)}
+[data-pozadi="mraky"]{background:radial-gradient(circle at 18% 72%,#fff 0 12%,transparent 13%),radial-gradient(circle at 30% 62%,#fff 0 15%,transparent 16%),radial-gradient(circle at 42% 74%,#fff 0 11%,transparent 12%),radial-gradient(circle at 74% 38%,#fff 0 10%,transparent 11%),radial-gradient(circle at 85% 44%,#fff 0 12%,transparent 13%),linear-gradient(#6EC1F2,#C4E9FF)}
+[data-pozadi="dzungle"]{background:radial-gradient(ellipse 28% 62% at 8% 100%,#2F9E44 0 60%,transparent 61%),radial-gradient(ellipse 24% 55% at 34% 0%,#3CB45A 0 60%,transparent 61%),radial-gradient(ellipse 30% 62% at 68% 100%,#1F7A3A 0 60%,transparent 61%),radial-gradient(ellipse 22% 52% at 93% 8%,#57C46F 0 60%,transparent 61%),linear-gradient(#0F5132,#1B7A4A)}
+[data-pozadi="podmori"]{background:linear-gradient(#1287C9,#0A3D6B)}
+[data-pozadi="podmori"]::after{left:0;right:0;top:0;height:200%;background-image:radial-gradient(circle at 18% 20%,rgba(255,255,255,.6) 0 3px,transparent 4px),radial-gradient(circle at 58% 35%,rgba(255,255,255,.5) 0 5px,transparent 6px),radial-gradient(circle at 82% 12%,rgba(255,255,255,.55) 0 2px,transparent 3px),radial-gradient(circle at 38% 44%,rgba(255,255,255,.4) 0 4px,transparent 5px),radial-gradient(circle at 70% 70%,rgba(255,255,255,.5) 0 3px,transparent 4px),radial-gradient(circle at 12% 80%,rgba(255,255,255,.45) 0 4px,transparent 5px),radial-gradient(circle at 46% 92%,rgba(255,255,255,.5) 0 2px,transparent 3px);animation:bublinky 5s linear infinite}
+[data-pozadi="podmori"]::before{left:0;right:0;bottom:0;height:34%;background:radial-gradient(ellipse 8% 100% at 15% 100%,#1B9E6B 0 60%,transparent 61%),radial-gradient(ellipse 6% 80% at 24% 100%,#23B57C 0 60%,transparent 61%),radial-gradient(ellipse 7% 100% at 80% 100%,#1B9E6B 0 60%,transparent 61%);z-index:1}
+@keyframes bublinky{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+[data-pozadi="ohnostroj"]{background:linear-gradient(#0B1030,#2A2F7A)}
+[data-pozadi="ohnostroj"]::before,[data-pozadi="ohnostroj"]::after{width:46%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,transparent 28%,#FF5A9E 29% 33%,transparent 34% 50%,#FFD54A 51% 55%,transparent 56% 70%,#7FE3FF 71% 73%,transparent 74%);animation:boom 2.4s ease-out infinite}
+[data-pozadi="ohnostroj"]::before{left:6%;top:-8%}
+[data-pozadi="ohnostroj"]::after{left:52%;top:18%;animation-delay:1.2s;filter:hue-rotate(120deg)}
+@keyframes boom{0%{transform:scale(.1);opacity:1}70%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+[data-pozadi="generalka"]{background:repeating-linear-gradient(135deg,rgba(245,166,35,.2) 0 10px,transparent 10px 22px),linear-gradient(135deg,#0D1B3E,#2A2F7A)}
+[data-pozadi="generalka"]::after{content:"★ GENERÁLKA";right:10px;top:8px;font:800 13px var(--hra);color:#F5C542;letter-spacing:.12em}
+.thumb[data-pozadi="generalka"]::after{font-size:7.5px;right:4px;top:3px;letter-spacing:.06em}
+[data-pozadi="mrizka"]{background:repeating-linear-gradient(0deg,rgba(61,245,255,.2) 0 1px,transparent 1px 16px),repeating-linear-gradient(90deg,rgba(61,245,255,.2) 0 1px,transparent 1px 16px),linear-gradient(135deg,#0D1B3E,#1E2A52)}
+[data-pozadi="zapad"]{background:linear-gradient(#FF7E5F 0%,#FEB47B 45%,#8E5BB5 100%)}
+[data-pozadi="zapad"]::before{left:58%;top:16%;width:24%;aspect-ratio:1;border-radius:50%;background:#FFE29A;opacity:.95}
+[data-pozadi="zapad"]::after{left:0;right:0;bottom:0;height:56%;background:#3B2A5E;clip-path:polygon(0 100%,0 55%,14% 25%,28% 60%,44% 8%,60% 55%,72% 30%,86% 62%,100% 32%,100% 100%)}
+[data-pozadi="synthwave"]{background:linear-gradient(#14082B 0%,#3A0F5E 56%,#14082B 56.5%)}
+[data-pozadi="synthwave"]::before{left:50%;top:8%;width:36%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:repeating-linear-gradient(180deg,transparent 0 55%,#3A0F5E 55% 58%,transparent 58% 64%,#3A0F5E 64% 68%,transparent 68% 75%,#3A0F5E 75% 80%,transparent 80%),linear-gradient(#FFD34D,#FF3D8B)}
+.thumb[data-pozadi="synthwave"]::before{clip-path:none;height:60%;aspect-ratio:auto;width:24%;border-radius:50% 50% 0 0}
+.banner[data-pozadi="synthwave"]::before{clip-path:none;height:60px;width:120px;aspect-ratio:auto;border-radius:60px 60px 0 0;top:8px}
+[data-pozadi="synthwave"]::after{left:-20%;right:-20%;bottom:0;height:44%;background:repeating-linear-gradient(90deg,rgba(61,245,255,.7) 0 1px,transparent 1px 22px),repeating-linear-gradient(0deg,rgba(255,61,139,.75) 0 1px,transparent 1px 12px);transform:perspective(110px) rotateX(55deg);transform-origin:bottom;animation:mrizkaJede 1s linear infinite}
+@keyframes mrizkaJede{from{background-position:0 0,0 0}to{background-position:0 0,0 12px}}
+[data-pozadi="polarni"]{background:#071A24}
+[data-pozadi="polarni"]::before{inset:-30%;background:radial-gradient(40% 30% at 30% 40%,rgba(61,245,176,.7),transparent 70%),radial-gradient(35% 30% at 70% 45%,rgba(141,110,255,.7),transparent 70%);filter:blur(8px);animation:aurora 6s ease-in-out infinite alternate}
+[data-pozadi="polarni"]::after{inset:0;background-image:radial-gradient(1.4px 1.4px at 14% 20%,#fff,transparent),radial-gradient(1.2px 1.2px at 60% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 86% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 70%,#fff,transparent);animation:trpyt 2s ease-in-out infinite alternate}
+
+/* profil */
+.profil-hlava{position:relative}
+.profil-hx{position:absolute;left:14px;bottom:-34px;width:86px;height:86px;border-radius:24px;background:var(--s-karta);border:3px solid var(--s-karta);box-shadow:0 8px 18px -8px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:2}
+.profil-hx .hx{width:70px}
+.profil-jmeno{padding:40px 14px 0;display:flex;justify-content:space-between;align-items:end;gap:8px}
+.trofeje{display:flex;flex-wrap:wrap;gap:6px}
+.trofej{font-size:11.5px;font-weight:800;padding:4px 8px;border-radius:9px;background:color-mix(in srgb,var(--s-akcent) 12%,var(--s-karta));border:1px solid var(--s-linka)}
+.trofej.zlata{background:#FFF3D6;color:#7A4B00;border-color:#F3D9A0}
+.kod{display:none;gap:6px}
+.kod.vid{display:flex}
+.kod input{flex:1;min-width:0;font:700 14px var(--telo);padding:8px 10px;border-radius:10px;border:1.5px solid var(--s-linka);background:var(--s-karta);color:var(--s-text);text-transform:uppercase}
+
+/* truhla */
+.scena{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(circle at 50% 38%,#2A2F7A,#0D1B3E 70%);color:#fff;padding:14px;text-align:center}
+.vyber-truhly{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.vyber-truhly button{font:700 12px var(--telo);padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+.vyber-truhly button[aria-pressed="true"]{background:#F5A623;color:#0D1B3E;border-color:#F5A623}
+.truhla{width:140px;height:112px;position:relative;cursor:pointer;transition:transform .2s;--v1:#C98A3D;--v2:#9A5E22;--t1:#B47432;--t2:#7C4818;--o:#F5C66B}
+.truhla.dop{--v1:#3CD6C6;--v2:#178A93;--t1:#22AFAF;--t2:#0E5E72;--o:#B6FFF4;filter:drop-shadow(0 0 16px rgba(61,245,220,.6))}
+.truhla:hover{transform:translateY(-3px) rotate(-1deg)}
+.truhla .vika{position:absolute;left:0;right:0;top:0;height:44px;border-radius:18px 18px 6px 6px;background:linear-gradient(var(--v1),var(--v2));border:4px solid var(--o);transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.truhla .telo{position:absolute;left:0;right:0;bottom:0;height:72px;border-radius:6px 6px 18px 18px;background:linear-gradient(var(--t1),var(--t2));border:4px solid var(--o)}
+.truhla .zamek-t{position:absolute;left:50%;top:32px;width:26px;height:30px;margin-left:-13px;border-radius:7px;background:var(--o);border:3px solid var(--t2);z-index:2}
+.truhla.otevrena .vika{transform:rotateX(70deg) translateY(-24px)}
+.truhla.tres{animation:tres .5s ease-in-out}
+@keyframes tres{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+.zare{position:absolute;inset:-60px;border-radius:50%;opacity:0;transition:opacity .4s;pointer-events:none}
+.odhaleni{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:142px;justify-content:center;width:100%}
+.odhaleni .vizual-velky{width:84px}
+.odhaleni .swatch,.odhaleni .thumb{width:140px}
+.sance-radek{font-size:11.5px;color:#C9C7F5}
+.plan-r{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--s-linka)}
+.plan-r:last-child{border-bottom:0}
+.pruh{height:7px;border-radius:999px;background:color-mix(in srgb,var(--s-text) 10%,transparent);overflow:hidden;grid-column:1/-1}
+.pruh i{display:block;height:100%;border-radius:999px;background:var(--s-akcent)}
+
+/* růst */
+input[type=range]{width:100%;accent-color:var(--s-akcent)}
+.etapy-hx{display:flex;flex-direction:column}
+.etapa-r{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:center;font-size:12.5px;padding:6px 0;border-bottom:1px dashed var(--s-linka)}
+.etapa-r:last-child{border-bottom:0}
+.etapa-r .z{width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;background:color-mix(in srgb,var(--s-text) 8%,transparent);color:var(--s-tlum);font-size:12px}
+.etapa-r.ok .z{background:#E2F4E9;color:#14753A}
+
+/* stránka pod telefony */
+.tab{width:100%;border-collapse:collapse;font-size:14px}
+.tab th,.tab td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--linka);vertical-align:top}
+.tab th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tlumene)}
+.tab td.c{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+.posuv{overflow-x:auto}
+.dve{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pravidla{display:grid;gap:12px;padding:0;margin:0;list-style:none}
+.pravidla li{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.pravidla li b{display:block}
+.pravidla .z{width:28px;height:28px;border-radius:9px;background:var(--levandule);color:var(--fialova);display:flex;align-items:center;justify-content:center;font-weight:800}
+.jen-my .karta{display:flex;flex-direction:column;gap:8px}
+.jen-my .cislo{font:800 40px/1 var(--hra);color:var(--zlata)}
+.jen-my p{color:var(--tlumene)}
+.tecka{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:1px}
+.seznam-pol{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13.5px}
+.rozhodnuti{display:grid;gap:12px}
+.rozh{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.moznosti{display:flex;flex-wrap:wrap;gap:8px}
+.moznost{padding:8px 12px;border-radius:12px;border:1px solid var(--linka);font-size:13.5px;background:var(--bg)}
+.moznost.dop{border-color:var(--zlata);background:color-mix(in srgb,var(--zlata) 14%,var(--plocha))}
+.moznost.dop::after{content:" · doporučuju";font-weight:800;color:var(--legenda)}
+.etapy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.etapa ul{margin:8px 0 0;padding-left:18px;color:var(--tlumene)}
+.potvrzeno{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.potvrzeno li{display:flex;gap:10px;align-items:baseline}
+.potvrzeno li::before{content:"✓";font-weight:800;color:var(--mata)}
+@media (max-width:860px){.uvod,.dve,.tri,.etapy{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+
+<div class="obal">
+
+  <section class="uvod">
+    <div>
+      <span class="stitek">Návrh herního systému · MateMax · 2. verze</span>
+      <h1>Hexík, vzhledy a truhly</h1>
+      <p class="lead">Hexík je vlastní avatar žáka a je u každého příkladu. Za správnou odpověď zajásá, za sérii tři v řadě zatančí a po chybě povzbudí. Z truhel a za krystaly se sbírá to, co děti chtějí ukázat: podoby Hexíka, oslavy, efekty, vzhled celé appky a pozadí profilu. Páťáci dostanou roztomilé věci, deváťáci cool.</p>
+      <div class="shrnuti">
+        <span class="chip novy">Hexík u každého příkladu</span>
+        <span class="chip novy">Oslavy a efekty za krystaly</span>
+        <span class="chip novy">Vzhled appky od běžného po legendární</span>
+        <span class="chip novy">Vlastní pozadí profilu</span>
+        <span class="chip novy">Truhla doporučení</span>
+        <span class="chip">Jiný obsah pro 5. a 9. třídu</span>
+        <span class="chip">Šance vždy vidět, nikdy za peníze</span>
+      </div>
+    </div>
+    <div class="maskot-box" aria-hidden="true">
+      <span class="hx" id="hx-uvod-5"></span>
+      <span class="hx" id="hx-uvod-9" style="animation-delay:-1.6s"></span>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-proto">
+    <div class="hlava-proto">
+      <header>
+        <span class="stitek">Živý prototyp</span>
+        <h2 id="h-proto">Vyzkoušej si to</h2>
+        <p style="color:var(--tlumene);max-width:72ch;margin-top:6px">Odpovídej na příklady a sleduj Hexíka. V šatníku kup oslavu nebo efekt, ve vzhledu přepni celou appku, v truhlách otevři Truhlu doporučení. Všechno spolu souvisí: co nasadíš, uvidíš hned u příkladu i v profilu.</p>
+      </header>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <div class="prepinac" role="group" aria-label="Třída">
+          <button type="button" data-trida="5">5. třída</button>
+          <button type="button" data-trida="9">9. třída</button>
+        </div>
+        <button type="button" class="reset" id="reset">Začít znovu</button>
+      </div>
+    </div>
+
+    <div class="telefony">
+      <!-- 1. příklad s Hexíkem -->
+      <div class="tel">
+        <div class="scr" id="scr-priklad">
+          <div class="lista"><span id="pr-tema"></span><span class="pocitadla"><span class="poc">🔥 <span id="pr-serie-c">0</span></span><span class="poc"><i class="krystal-ico"></i><span class="krystaly-stav"></span></span></span></div>
+          <div class="obsah" style="padding-bottom:130px">
+            <div class="k">
+              <p class="mini tlum" id="pr-cislo"></p>
+              <p class="zadani" id="pr-zadani"></p>
+              <div class="moznosti-p" id="pr-moznosti"></div>
+            </div>
+            <div class="postup" id="pr-postup" aria-live="polite"></div>
+            <div class="serie" aria-label="Série správných odpovědí"><span>Série</span><i></i><i></i><i></i><span class="tlum" style="font-weight:700" id="pr-serie-t">3 v řadě = oslava</span></div>
+            <span class="plus" id="pr-plus">+2 <i class="krystal-ico"></i></span>
+            <div class="bublina" id="pr-bublina" aria-live="polite"></div>
+            <div class="hx-misto"><span class="hx" id="hx-priklad"></span></div>
+          </div>
+          <div class="efekty"></div>
+        </div>
+        <p class="popis">1 · Hexík u příkladu: jásá, tančí, povzbudí</p>
+      </div>
+
+      <!-- 2. šatník -->
+      <div class="tel">
+        <div class="scr" id="scr-satnik">
+          <div class="lista"><span>Šatník Hexíka</span><span class="poc"><i class="krystal-ico"></i><span class="krystaly-stav"></span></span></div>
+          <div class="obsah">
+            <div class="k stage">
+              <span class="hx" id="hx-satnik"></span>
+              <span class="mini tlum" id="sat-popis"></span>
+            </div>
+            <div class="zalozky" role="group" aria-label="Druh">
+              <button type="button" data-zal="podoba">Podoba</button>
+              <button type="button" data-zal="oslava">Oslava série</button>
+              <button type="button" data-zal="efekt">Efekt</button>
+            </div>
+            <div class="mrizka-pol tri" id="sat-mrizka"></div>
+            <button type="button" class="tl akcent" id="sat-akce"></button>
+          </div>
+          <div class="efekty"></div>
+        </div>
+        <p class="popis">2 · Šatník: podoby, oslavy a efekty</p>
+      </div>
+
+      <!-- 3. vzhled appky -->
+      <div class="tel">
+        <div class="scr" id="scr-vzhled">
+          <div class="lista"><span>Vzhled appky</span><span id="vz-naznak"></span></div>
+          <div class="obsah">
+            <p class="mini tlum">Klepni a vyzkoušej. Změní se celá appka, i ostatní telefony.</p>
+            <div class="mrizka-pol" id="vz-mrizka"></div>
+            <button type="button" class="tl akcent" id="vz-akce"></button>
+          </div>
+          <div class="efekty"></div>
+        </div>
+        <p class="popis">3 · Vzhled appky: od běžného po legendární</p>
+      </div>
+
+      <!-- 4. profil -->
+      <div class="tel">
+        <div class="scr" id="scr-profil">
+          <div class="profil-hlava">
+            <span class="banner" id="pf-banner"></span>
+            <div class="profil-hx"><span class="hx" id="hx-profil"></span></div>
+          </div>
+          <div class="profil-jmeno">
+            <div><p style="font:800 19px var(--hra)">Tvůj profil</p><p class="mini tlum" id="pf-etapa"></p></div>
+            <div style="text-align:right"><p class="mini tlum">Odhad bodů</p><p style="font:800 22px/1 var(--hra)" id="pf-odhad"></p></div>
+          </div>
+          <div class="obsah">
+            <div class="trofeje" id="pf-trofeje"></div>
+            <div class="k" style="display:flex;flex-direction:column;gap:8px">
+              <p style="font-weight:800;font-size:13px">Pozadí hlavičky</p>
+              <div class="mrizka-pol tri" id="pf-mrizka"></div>
+              <button type="button" class="tl akcent male" id="pf-akce"></button>
+            </div>
+            <button type="button" class="tl obrys male" id="pf-kod-btn">Mám kód z testu nanečisto</button>
+            <div class="kod" id="pf-kod"><input id="pf-kod-in" maxlength="8" placeholder="Kód z učebny" aria-label="Kód z testu nanečisto"><button type="button" class="tl zlate male" id="pf-kod-ok">Uplatnit</button></div>
+          </div>
+          <div class="efekty"></div>
+        </div>
+        <p class="popis">4 · Profil: vlastní pozadí, Hexík a trofeje</p>
+      </div>
+
+      <!-- 5. truhly -->
+      <div class="tel">
+        <div class="scr" id="scr-truhly">
+          <div class="lista"><span>Truhly</span><span class="poc"><i class="krystal-ico"></i><span class="krystaly-stav"></span></span></div>
+          <div class="scena">
+            <div class="vyber-truhly" role="group" aria-label="Druh truhly">
+              <button type="button" data-truhla="denni">Denní</button>
+              <button type="button" data-truhla="krystal">Krystalová · 100</button>
+              <button type="button" data-truhla="dop">Doporučení</button>
+            </div>
+            <div class="truhla" id="truhla-obr" role="button" tabindex="0" aria-label="Otevřít truhlu">
+              <div class="zare" id="zare"></div>
+              <div class="vika"></div><div class="telo"></div><div class="zamek-t"></div>
+            </div>
+            <div class="odhaleni" id="odhaleni" aria-live="polite"></div>
+            <button type="button" class="tl zlate" id="otevrit"></button>
+            <p class="sance-radek" id="sance"></p>
+          </div>
+          <div class="obsah" style="flex:none">
+            <div class="k" id="plan-box"></div>
+          </div>
+        </div>
+        <p class="popis">5 · Truhly: nová Truhla doporučení</p>
+      </div>
+
+      <!-- 6. růst podle odhadu -->
+      <div class="tel">
+        <div class="scr" id="scr-rust">
+          <div class="lista"><span>Hexík roste s tebou</span><span class="poc" id="rust-etapa"></span></div>
+          <div class="obsah">
+            <div class="k stage"><span class="hx" id="hx-rust"></span></div>
+            <div class="k">
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800"><span>Odhad bodů u přijímaček</span><span id="rust-body"></span></div>
+              <input type="range" min="0" max="50" step="1" id="rust-slider" aria-label="Odhad bodů">
+              <p class="mini tlum" id="rust-dalsi"></p>
+            </div>
+            <div class="k etapy-hx" id="rust-etapy"></div>
+          </div>
+          <div class="efekty"></div>
+        </div>
+        <p class="popis">6 · Hexík vypadá podle odhadu bodů</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-uceni">
+    <header>
+      <span class="stitek">Tvoje otázka</span>
+      <h2 id="h-uceni">Donutí odměny žáky trénovat?</h2>
+      <p>Ano, souhlasím. Plamínek, truhly a sbírání dokážou dítě dostat k tréninku i ve dny, kdy se mu nechce. Riziko je jinde: děti si rychle najdou nejkratší cestu k odměně. Když bude krystal za každý příklad, budou klikat lehké příklady a hádat. Proto odměnu dáváme jen za to, co opravdu posouvá k přijímačkám.</p>
+    </header>
+    <div class="dve">
+      <div class="karta">
+        <ul class="pravidla">
+          <li><span class="z">1</span><span><b>Krystal jen za správnou odpověď na tvé úrovni</b>Příklad pod tvou úrovní dá 1 krystal místo 2. Odpověď naslepo za pár sekund u delší úlohy nedá nic.</span></li>
+          <li><span class="z">2</span><span><b>Nejvíc za to, co posouvá</b>Růst odhadu bodů, splněné doporučené téma, opravená stará chyba. Truhla doporučení má nejlepší šance ze všech.</span></li>
+          <li><span class="z">3</span><span><b>Denní strop 250 krystalů</b>Kvůli odměnám se nevyplatí sedět u appky hodiny. Odměna roste s pravidelností.</span></li>
+          <li><span class="z">4</span><span><b>Všechno je jen vzhled</b>Podoba Hexíka ani efekt v testu nepomůžou, takže se nedá „koupit“ výsledek. Za peníze nejde nic.</span></li>
+        </ul>
+      </div>
+      <div class="karta" style="display:flex;flex-direction:column;gap:10px">
+        <h3>Ověříme to čísly</h3>
+        <p style="color:var(--tlumene)">Po 1. etapě přidám do adminu tři čísla a porovnáme je s dneškem:</p>
+        <ul class="potvrzeno">
+          <li>Kolik dní v týdnu žák trénuje</li>
+          <li>Kolik příkladů vyřeší za týden</li>
+          <li>Kolik procent odpovědí má správně</li>
+        </ul>
+        <p style="color:var(--tlumene)">Když porostou první dvě a třetí nespadne, odměny fungují. Kdyby přibylo příkladů a padala úspěšnost, žáci honí krystaly a pravidla upravíme.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce jen-my" aria-labelledby="h-jenmy">
+    <header>
+      <span class="stitek">Co nikdo jiný nemá</span>
+      <h2 id="h-jenmy">Odměny, které jdou získat jen v MateMaxu</h2>
+      <p>Truhly a diamanty umí každá appka. My máme skutečné testy nanečisto v učebně, odhad bodů a úlohy z přijímaček. Tohle žádná online appka zkopírovat nemůže.</p>
+    </header>
+    <div class="tri">
+      <div class="karta"><span class="cislo">1</span><h3>Generálka z učebny</h3><p>Na testu nanečisto dostane každý žák kód. V profilu si odemkne pozadí „Generálka“, které jde získat jen tam a jen ten den. Za lepší výsledek v dalším testu dostane legendární odměnu. Děti z testů tak přijdou do MateMaxu a mají důvod přijít na další test.</p></div>
+      <div class="karta"><span class="cislo">2</span><h3>Hexík podle odhadu bodů</h3><p>Hexík neroste za odehrané minuty, ale podle odhadu bodů u přijímaček. Nováček ve 14 bodech vypadá jinak než Mistr přijímaček ve 43. Kamarádům tím žák ukazuje, jak je připravený, a podobu mu nikdo nevezme.</p></div>
+      <div class="karta"><span class="cislo">3</span><h3>Boss týdne z CERMAT</h3><p>Jednou týdně opravdová úloha z minulých přijímaček. Kdo ji vyřeší, má trofej v profilu a 100 krystalů. Bossy v appce už jsou, jen je napojíme na skutečné úlohy.</p></div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-tridy">
+    <header>
+      <span class="stitek">Obsah podle třídy</span>
+      <h2 id="h-tridy">Stejná pravidla, jiné odměny</h2>
+      <p>Krystaly, truhly a šance jsou pro obě třídy stejné. Liší se obsah: páťák vidí jen věci pro 5. třídu, deváťák jen pro 9., jako všude v appce.</p>
+    </header>
+    <div class="karta posuv"><table class="tab" id="tab-tridy"></table></div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-ceny">
+    <header>
+      <span class="stitek">Krystaly a šance</span>
+      <h2 id="h-ceny">Za co krystaly, kolik co stojí</h2>
+      <p>Běžný den tréninku dá asi 60 až 80 krystalů: 7 příkladů, denní trénink a dvě mise. Legendární věci nejdou koupit, jen vylosovat nebo vybojovat.</p>
+    </header>
+    <div class="dve">
+      <div class="karta posuv">
+        <table class="tab">
+          <thead><tr><th>Za co</th><th>Odměna</th></tr></thead>
+          <tbody>
+            <tr><td>Správná odpověď na tvé úrovni</td><td class="c">+2 (těžší +4, lehčí +1)</td></tr>
+            <tr><td>Dokončený denní trénink</td><td class="c">+10 a denní truhla</td></tr>
+            <tr><td>Denní mise (3 za den)</td><td class="c">+15 každá</td></tr>
+            <tr><td>Odhad bodů stoupl o 1 bod</td><td class="c">+30</td></tr>
+            <tr><td>Splněné doporučené téma</td><td class="c">Truhla doporučení</td></tr>
+            <tr><td>5 dní tréninku v týdnu</td><td class="c">zlatá truhla</td></tr>
+            <tr><td>Boss týdne</td><td class="c">trofej a +100</td></tr>
+            <tr><td>Test nanečisto</td><td class="c">kód Generálka</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="karta posuv">
+        <table class="tab">
+          <thead><tr><th>Vzácnost</th><th>Cena</th><th>Běžným tréninkem</th></tr></thead>
+          <tbody>
+            <tr><td><span class="vzacnost" style="background:var(--bezna)">běžná</span></td><td class="c">150</td><td>asi za 2 dny</td></tr>
+            <tr><td><span class="vzacnost" style="background:var(--neobvykla)">neobvyklá</span></td><td class="c">400</td><td>asi za týden</td></tr>
+            <tr><td><span class="vzacnost" style="background:var(--vzacna)">vzácná</span></td><td class="c">900</td><td>asi za 2 týdny</td></tr>
+            <tr><td><span class="vzacnost" style="background:var(--legenda)">legendární</span></td><td class="c">nejde koupit</td><td>jen z truhel, za zlepšení v testu nanečisto</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="karta posuv">
+      <table class="tab">
+        <thead><tr><th>Truhla</th><th>Kdy</th><th>Běžná</th><th>Neobvyklá</th><th>Vzácná</th><th>Legendární</th></tr></thead>
+        <tbody id="tab-sance"></tbody>
+      </table>
+      <p style="color:var(--tlumene);font-size:13.5px;margin-top:10px">Pojistka: vzácná nebo lepší nejpozději v 10. truhle, legendární nejpozději ve 30. Věc, kterou už máš, se vrátí jako krystaly.</p>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-ferovost">
+    <header>
+      <span class="stitek">Pravidla</span>
+      <h2 id="h-ferovost">Férové k dětem, ať tomu rodiče věří</h2>
+    </header>
+    <div class="karta">
+      <ul class="pravidla">
+        <li><span class="z">1</span><span><b>Nic se nekupuje</b>Krystaly, truhly ani odměny nejdou koupit za peníze. Premium nedává lepší šance, jen víc témat k tréninku.</span></li>
+        <li><span class="z">2</span><span><b>Šance jsou vidět</b>Přímo u každé truhly, žádné triky typu „skoro jsi to měl“.</span></li>
+        <li><span class="z">3</span><span><b>Hexík se nikdy nesměje</b>Po chybě povzbudí a ukáže postup. Za chybu se nic nebere.</span></li>
+        <li><span class="z">4</span><span><b>Bez tlaku</b>Žádné odpočty a „poslední šance“. Podoba Hexíka zůstane, i když odhad na chvíli klesne.</span></li>
+        <li><span class="z">5</span><span><b>Rodič ví, co se děje</b>Pondělní report ukáže krystaly a odměny vedle odhadu bodů.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-rozhodnuti">
+    <header>
+      <span class="stitek">Na tobě</span>
+      <h2 id="h-rozhodnuti">Co je potvrzené a co ještě rozhodnout</h2>
+    </header>
+    <div class="karta">
+      <ul class="potvrzeno">
+        <li>Stejná pravidla pro obě třídy, obsah odměn podle třídy</li>
+        <li>Hexík u příkladu s reakcemi je první etapa</li>
+        <li>Odměny z testů nanečisto: kód v učebně a odměna za zlepšení</li>
+      </ul>
+    </div>
+    <div class="rozhodnuti">
+      <div class="karta rozh"><h3>Album samolepek</h3><div class="moznosti"><span class="moznost dop">Jen pro 5. třídu, až ve 3. etapě, se zvířátky a Hexíkovými kamarády</span><span class="moznost">Vynechat úplně</span><span class="moznost">Pro obě třídy</span></div></div>
+      <div class="karta rozh"><h3>Grafika Hexíka a podob</h3><div class="moznosti"><span class="moznost dop">Nakreslím je sám, jako v tomhle návrhu, a průběžně vylepším</span><span class="moznost">Necháš je nakreslit ilustrátorem</span></div></div>
+      <div class="karta rozh"><h3>Hlasování na testu nanečisto</h3><div class="moznosti"><span class="moznost dop">Připravím kartičku se 4 odměnami, žáci zakroužkují, co chtějí</span><span class="moznost">Nehlasovat</span></div></div>
+      <div class="karta rozh"><h3>Jména</h3><div class="moznosti"><span class="moznost dop">Krystaly a Hexík</span><span class="moznost">Diamanty</span><span class="moznost">Navrhneš jiná</span></div></div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-plan">
+    <header>
+      <span class="stitek">Stavba</span>
+      <h2 id="h-plan">Plán po etapách</h2>
+      <p>Každá etapa je užitečná sama o sobě. Od tebe stačí schválení a jedno spuštění SQL pro uložení odměn na serveru.</p>
+    </header>
+    <div class="etapy">
+      <div class="karta etapa"><h3>1 · Hexík u příkladu</h3><ul><li>Hexík u každého příkladu s jásotem, oslavou série a povzbuzením</li><li>Krystaly za správné odpovědi a odhad, denní strop</li><li>Šatník: podoby, oslavy, efekty</li><li>Denní a krystalová truhla, šance, pojistka</li><li>Tři čísla v adminu</li></ul><p style="margin-top:8px;font-weight:700">asi 2,5 dne</p></div>
+      <div class="karta etapa"><h3>2 · Vzhledy a profil</h3><ul><li>Vzhledy appky od klasiku po legendární</li><li>Pozadí hlavičky v profilu</li><li>Truhla doporučení (po sloučení propojení s Vyhodnocením testů)</li><li>Mise, plamínek a zlatá truhla</li><li>Odměny v reportu rodičům</li></ul><p style="margin-top:8px;font-weight:700">asi 2 dny</p></div>
+      <div class="karta etapa"><h3>3 · Jen MateMax</h3><ul><li>Kódy Generálka na testu nanečisto (krok i v appce Vyhodnocení testů)</li><li>Hexík roste s odhadem bodů</li><li>Boss týdne ze skutečné úlohy CERMAT</li><li>Album pro 5. třídu, pokud ho chceš</li></ul><p style="margin-top:8px;font-weight:700">asi 2,5 dne</p></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const VZ = { bezna:{n:"běžná",c:"#8A93AA"}, neobvykla:{n:"neobvyklá",c:"#2E6DA4"}, vzacna:{n:"vzácná",c:"#8E3FA8"}, legenda:{n:"legendární",c:"#E08A00"} };
+  const TYP = { podoba:"Podoba Hexíka", oslava:"Oslava série", efekt:"Efekt správné odpovědi", vzhled:"Vzhled appky", pozadi:"Pozadí profilu" };
+  // [typ, klíč, název, vzácnost, cena]  cena 0 = zdarma, null = jen z truhel, "test" = jen na testu nanečisto
+  const KAT = {
+    5: [
+      ["podoba","klasik","Hexík","bezna",0],["podoba","kocicka","Kočičí Hexík","neobvykla",400],["podoba","robutek","Robůtek","neobvykla",400],["podoba","dracek","Dráček","vzacna",900],["podoba","jednorozec","Jednorožec","legenda",null],
+      ["oslava","radost","Radost","bezna",0],["oslava","tanec","Taneček","neobvykla",400],["oslava","kotrmelec","Kotrmelec","vzacna",900],["oslava","piruetka","Duhová piruetka","legenda",null],
+      ["efekt","jiskry","Jiskry","bezna",0],["efekt","konfety","Konfety","neobvykla",400],["efekt","bubliny","Bubliny","neobvykla",400],["efekt","hvezdy","Hvězdičky","vzacna",900],["efekt","duha","Duha","legenda",null],
+      ["vzhled","klasik","Klasik","bezna",0],["vzhled","louka","Louka","bezna",150],["vzhled","bonbon","Bonbon","neobvykla",400],["vzhled","ocean","Oceán","neobvykla",400],["vzhled","vesmir","Vesmír","vzacna",900],["vzhled","duha","Duhový","legenda",null],
+      ["pozadi","tyrkys","Tyrkys","bezna",0],["pozadi","mraky","Mraky","bezna",150],["pozadi","dzungle","Džungle","neobvykla",400],["pozadi","podmori","Podmoří","vzacna",900],["pozadi","ohnostroj","Ohňostroj","legenda",null],["pozadi","generalka","Generálka","legenda","test"]
+    ],
+    9: [
+      ["podoba","klasik","Hexík","bezna",0],["podoba","neon","Neon","neobvykla",400],["podoba","street","Streetwear","neobvykla",400],["podoba","kyber","Kyber","vzacna",900],["podoba","zlaty","Zlatý Hexík","legenda",null],
+      ["oslava","radost","Radost","bezna",0],["oslava","tanec","Taneček","neobvykla",400],["oslava","salto","Salto","vzacna",900],["oslava","teleport","Teleport","vzacna",900],["oslava","disco","Disco","legenda",null],
+      ["efekt","jiskry","Jiskry","bezna",0],["efekt","konfety","Konfety","neobvykla",400],["efekt","blesky","Blesky","vzacna",900],["efekt","ohen","Ohnivá stopa","legenda",null],
+      ["vzhled","klasik","Klasik","bezna",0],["vzhled","grafit","Grafit","bezna",150],["vzhled","ocean","Oceán","neobvykla",400],["vzhled","mesto","Noční město","vzacna",900],["vzhled","vesmir","Vesmír","vzacna",900],["vzhled","aurora","Aurora","legenda",null],
+      ["pozadi","tyrkys","Tyrkys","bezna",0],["pozadi","mrizka","Mřížka","bezna",150],["pozadi","zapad","Západ slunce","neobvykla",400],["pozadi","synthwave","Synthwave","vzacna",900],["pozadi","polarni","Polární záře","legenda",null],["pozadi","generalka","Generálka","legenda","test"]
+    ]
+  };
+  const POLOZKY = {};
+  for (const t of [5, 9]) POLOZKY[t] = KAT[t].map(([typ, klic, nazev, vz, cena]) => ({ id:`${t}-${typ}-${klic}`, trida:t, typ, klic, nazev, vz, cena }));
+  const najdi = id => POLOZKY[id[0] === "5" ? 5 : 9].find(p => p.id === id);
+  const ANIM = { radost:"radost", tanec:"tanec", kotrmelec:"salto", salto:"salto", teleport:"teleport", disco:"disco", piruetka:"disco" };
+  const IKONA = { radost:"🙌", tanec:"💃", kotrmelec:"🤸", salto:"🤸", teleport:"🌀", disco:"🪩", piruetka:"🌈", jiskry:"✨", konfety:"🎊", bubliny:"🫧", hvezdy:"⭐", duha:"🌈", blesky:"⚡", ohen:"🔥" };
+  const SANCE = {
+    denni:{ n:"Denní", kdy:"za denní trénink, zdarma", bezna:.62, neobvykla:.28, vzacna:.08, legenda:.02 },
+    krystal:{ n:"Krystalová", kdy:"za 100 krystalů", bezna:.62, neobvykla:.28, vzacna:.08, legenda:.02 },
+    dop:{ n:"Doporučení", kdy:"za splněné doporučené téma", bezna:0, neobvykla:.50, vzacna:.38, legenda:.12 },
+    zlata:{ n:"Zlatá", kdy:"za 5 dní tréninku v týdnu", bezna:0, neobvykla:.60, vzacna:.32, legenda:.08 }
+  };
+  const VRACENI = { bezna:50, neobvykla:120, vzacna:300, legenda:600 };
+  const ETAPY = [ {od:0,n:"Nováček",d:"základní Hexík"}, {od:15,n:"Učeň",d:"hvězdička"}, {od:25,n:"Zkušený",d:"šála"}, {od:35,n:"Expert",d:"zlatá aura"}, {od:43,n:"Mistr přijímaček",d:"koruna"} ];
+  const etapa = b => ETAPY.reduce((a, e, i) => b >= e.od ? i + 1 : a, 1);
+
+  const TXT = {
+    5: { ok:["Jupí!","Paráda!","Správně!","To je ono!"], serie:["Tři v řadě, hurá!","Jsi hvězda!"], chyba:["Nevadí, zkusíme to spolu.","Skoro! Mrkni na postup."],
+         plan:[["Zlomky a části celku",10],["Jednotky, čas a peníze",6],["Obvod a obsah",3]],
+         priklady:[
+           {t:"Jednotky, čas a peníze", q:"Kolik minut je 2 h 15 min?", m:["125","135","215","150"], ok:1, p:"2 h = 120 min. 120 + 15 = 135 min."},
+           {t:"Počítání s čísly", q:"Kolik je 4 · 25 + 30?", m:["130","220","104","160"], ok:0, p:"Nejdřív násobíme: 4 · 25 = 100. Pak 100 + 30 = 130."},
+           {t:"Zlomky a části celku", q:"Tabulka čokolády má 12 dílků. Jakou část tvoří 3 dílky?", m:["1/3","1/4","3/4","1/12"], ok:1, p:"3 z 12 je 3/12. Zkrátíme třemi: 1/4."},
+           {t:"Obvod a obsah", q:"Jaký obvod má čtverec se stranou 7 cm?", m:["14 cm","49 cm","28 cm","21 cm"], ok:2, p:"Čtverec má 4 stejné strany: 4 · 7 = 28 cm."}
+         ] },
+    9: { ok:["Pecka!","Jo!","Přesně tak.","Čistá práce."], serie:["Tři v řadě, jedeš!","Neudržitelný!"], chyba:["Klídek, mrkni na postup.","To dáme. Koukni, kde to ujelo."],
+         plan:[["Zlomky",10],["Slovní úlohy · pohyb",6],["Geometrie",3]],
+         priklady:[
+           {t:"Zlomky", q:"2/3 + 1/6 = ?", m:["3/9","5/6","1/2","3/6"], ok:1, p:"Společný jmenovatel 6: 2/3 = 4/6. 4/6 + 1/6 = 5/6."},
+           {t:"Rovnice", q:"Řeš rovnici 3x − 7 = 11", m:["x = 6","x = 4/3","x = 18","x = 3"], ok:0, p:"3x = 11 + 7 = 18, tedy x = 18 : 3 = 6."},
+           {t:"Slovní úlohy", q:"Kolik je 15 % z 240?", m:["24","32","36","40"], ok:2, p:"10 % z 240 je 24, 5 % je 12. Dohromady 24 + 12 = 36."},
+           {t:"Geometrie", q:"Odvěsny pravoúhlého trojúhelníku mají 6 cm a 8 cm. Jak dlouhá je přepona?", m:["14 cm","10 cm","12 cm","9 cm"], ok:1, p:"c² = 6² + 8² = 36 + 64 = 100, takže c = 10 cm."}
+         ] }
+  };
+
+  /* ---------- Hexík (SVG) ---------- */
+  const PODOBY = {
+    klasik:{o:"#AFACFB",i:"#C9C7F5",oci:"kulate",tvare:true},
+    kocicka:{o:"#F6B26B",i:"#FBD3A6",oci:"kulate",tvare:true,usi:true,vousy:true,hlava:true},
+    robutek:{o:"#9FB3C8",i:"#D6E1EC",oci:"ctverec",antena:true,srouby:true,hlava:true},
+    dracek:{o:"#5FC489",i:"#A8E3BC",oci:"kulate",tvare:true,rohy:true,kridla:true,hlava:true},
+    jednorozec:{o:"#F7C6E0",i:"#FFE6F2",oci:"kulate",tvare:true,roh:true,hriva:true,hlava:true},
+    neon:{o:"#1A1446",i:"#241C5E",oci:"neon",obrys:"#3DF5FF",svit:"svit-cyan",usta:"#3DF5FF"},
+    street:{o:"#5B55D6",i:"#7C77EA",oci:"lidi",ksiltovka:true,hlava:true},
+    kyber:{o:"#2B3A55",i:"#3E5273",oci:"visor",usta:"#9FB3C8",rovna:true},
+    zlaty:{o:"url(#hxZlato)",i:"#FFE08A",oci:"kulate",trpyt:true,svit:"svit-zlato"}
+  };
+  function hvezda(cx, cy, r1, r2){ let s = ""; for (let i = 0; i < 10; i++){ const r = i % 2 ? r2 : r1, a = -Math.PI/2 + i * Math.PI/5; s += `${(cx + r*Math.cos(a)).toFixed(1)},${(cy + r*Math.sin(a)).toFixed(1)} `; } return s.trim(); }
+  function hexikSvg(klic, st){
+    const P = PODOBY[klic] || PODOBY.klasik; const N = "#0D1B3E";
+    let zad = "", pred = "";
+    const defs = `<defs><linearGradient id="hxZlato" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset=".55" stop-color="#F5B623"/><stop offset="1" stop-color="#D97E00"/></linearGradient></defs>`;
+    if (st >= 4) zad += `<circle class="aura" cx="130" cy="130" r="126" fill="none" stroke="#F5A623" stroke-width="5" stroke-dasharray="7 13" opacity=".75"/>`;
+    if (P.kridla) zad += `<path d="M40 120 L0 86 L14 128 L-2 150 L40 156 Z" fill="${P.o}"/><path d="M220 120 L260 86 L246 128 L262 150 L220 156 Z" fill="${P.o}"/>`;
+    if (P.hriva) zad += `<circle cx="74" cy="44" r="16" fill="#FF9AC8"/><circle cx="52" cy="64" r="14" fill="#B79CFF"/><circle cx="38" cy="90" r="12" fill="#8ED1FF"/><circle cx="96" cy="30" r="13" fill="#FFD36E"/>`;
+    if (P.usi) zad += `<polygon points="50,68 60,4 110,36" fill="${P.o}"/><polygon points="64,56 68,22 98,40" fill="#F7A3C0"/><polygon points="210,68 200,4 150,36" fill="${P.o}"/><polygon points="196,56 192,22 162,40" fill="#F7A3C0"/>`;
+    if (P.rohy) zad += `<polygon points="94,42 88,2 116,30" fill="#F5C542" stroke="#D99A00" stroke-width="3"/><polygon points="166,42 172,2 144,30" fill="#F5C542" stroke="#D99A00" stroke-width="3"/>`;
+    if (P.antena) zad += `<line x1="130" y1="24" x2="130" y2="-4" stroke="#6F8299" stroke-width="6"/><circle cx="130" cy="-10" r="9" fill="#FF5A5F"/>`;
+    const telo = `<polygon points="130,22 226,76 226,184 130,238 34,184 34,76" fill="${P.o}" ${P.obrys ? `stroke="${P.obrys}" stroke-width="5" stroke-linejoin="round"` : ""}/><polygon points="130,40 210,86 210,174 130,220 50,174 50,86" fill="${P.i}"/>`;
+    let oci = "";
+    if (P.oci === "kulate") oci = `<ellipse cx="102" cy="122" rx="15" ry="19" fill="${N}"/><ellipse cx="158" cy="122" rx="15" ry="19" fill="${N}"/><circle cx="107" cy="115" r="5" fill="#fff"/><circle cx="163" cy="115" r="5" fill="#fff"/>`;
+    if (P.oci === "lidi") oci = `<ellipse cx="102" cy="124" rx="15" ry="17" fill="${N}"/><ellipse cx="158" cy="124" rx="15" ry="17" fill="${N}"/><rect x="84" y="104" width="36" height="16" fill="${P.i}"/><rect x="140" y="104" width="36" height="16" fill="${P.i}"/><line x1="84" y1="120" x2="120" y2="117" stroke="${N}" stroke-width="5" stroke-linecap="round"/><line x1="140" y1="117" x2="176" y2="120" stroke="${N}" stroke-width="5" stroke-linecap="round"/><circle cx="106" cy="128" r="4" fill="#fff"/><circle cx="162" cy="128" r="4" fill="#fff"/>`;
+    if (P.oci === "ctverec") oci = `<rect x="86" y="106" width="32" height="32" rx="7" fill="${N}"/><rect x="142" y="106" width="32" height="32" rx="7" fill="${N}"/><rect x="92" y="111" width="9" height="9" rx="2" fill="#7FE3FF"/><rect x="148" y="111" width="9" height="9" rx="2" fill="#7FE3FF"/>`;
+    if (P.oci === "neon") oci = `<ellipse cx="102" cy="122" rx="14" ry="18" fill="#3DF5FF"/><ellipse cx="158" cy="122" rx="14" ry="18" fill="#3DF5FF"/><ellipse cx="102" cy="122" rx="6" ry="9" fill="#1A1446"/><ellipse cx="158" cy="122" rx="6" ry="9" fill="#1A1446"/>`;
+    if (P.oci === "visor") oci = `<rect x="64" y="104" width="132" height="38" rx="19" fill="#FF3D8B"/><rect x="80" y="111" width="46" height="7" rx="3.5" fill="rgba(255,255,255,.65)"/><rect x="134" y="111" width="14" height="7" rx="3.5" fill="rgba(255,255,255,.45)"/>`;
+    const usta = P.rovna ? `<path d="M110 172 L150 172" stroke="${P.usta}" stroke-width="7" stroke-linecap="round"/>` : `<path d="M108 162 Q130 180 152 162" stroke="${P.usta || N}" stroke-width="7" fill="none" stroke-linecap="round"/>`;
+    let doplnky = "";
+    if (P.tvare) doplnky += `<ellipse cx="80" cy="156" rx="12" ry="7" fill="#F7A3C0" opacity=".75"/><ellipse cx="180" cy="156" rx="12" ry="7" fill="#F7A3C0" opacity=".75"/>`;
+    if (P.vousy) doplnky += `<path d="M66 160 L36 154 M66 168 L36 174 M194 160 L224 154 M194 168 L224 174" stroke="${N}" stroke-width="3" stroke-linecap="round"/>`;
+    if (P.srouby) doplnky += `<circle cx="42" cy="130" r="7" fill="#6F8299"/><circle cx="218" cy="130" r="7" fill="#6F8299"/>`;
+    if (P.roh) pred += `<polygon points="117,30 130,-22 143,30" fill="url(#hxZlato)" stroke="#D99A00" stroke-width="2.5"/><path d="M121 14 L139 8 M124 0 L136 -4" stroke="#D99A00" stroke-width="2.5"/>`;
+    if (P.ksiltovka) pred += `<path d="M54 84 Q130 -4 206 84 Q130 62 54 84 Z" fill="${N}"/><path d="M200 78 Q240 70 254 90 Q226 98 198 92 Z" fill="#232F55"/><circle cx="130" cy="50" r="10" fill="#F5A623"/>`;
+    if (P.trpyt) pred += `<polygon class="trpyt" points="${hvezda(56,58,10,4)}" fill="#fff"/><polygon class="trpyt" style="animation-delay:.6s" points="${hvezda(210,96,8,3)}" fill="#fff"/><polygon class="trpyt" style="animation-delay:1.1s" points="${hvezda(196,206,9,3.5)}" fill="#fff"/>`;
+    if (st >= 2) pred += `<polygon points="${hvezda(178,198,14,6)}" fill="#F5A623" stroke="#C77700" stroke-width="2"/>`;
+    if (st >= 3) pred += `<path d="M58 186 Q130 216 202 186 L196 206 Q130 232 64 206 Z" fill="#E0565B"/><rect x="164" y="198" width="18" height="40" rx="6" fill="#C7373D"/>`;
+    let svit = P.svit || "";
+    if (st >= 5) { if (!P.hlava) pred += `<path d="M86 44 L96 6 L114 30 L130 -6 L146 30 L164 6 L174 44 Z" fill="#F5C542" stroke="#D99A00" stroke-width="3" stroke-linejoin="round"/><circle cx="130" cy="30" r="5" fill="#E0565B"/>`; else svit = "svit-zlato"; }
+    return `<svg viewBox="-6 -30 272 276" class="${svit}" aria-hidden="true">${defs}${zad}${telo}${oci}${usta}${doplnky}${pred}</svg>`;
+  }
+
+  /* ---------- stav ---------- */
+  const vychozi = () => {
+    const s = { trida:9, krystaly:760, mam:{}, nas:{5:{},9:{}}, odhad:{5:22,9:31}, bezVz:0, bezLeg:0, denni:false, dopK:1, plan:{5:1,9:1}, serie:0, pr:{5:0,9:0}, zal:"oslava", vyb:{}, nahledVzhled:null, nahledPozadi:null, truhla:"dop", generalka:false };
+    for (const t of [5, 9]) for (const p of POLOZKY[t]) { if (p.cena === 0) { s.mam[p.id] = true; s.nas[t][p.typ] = p.id; } }
+    return s;
+  };
+  let S = vychozi();
+  try { const u = JSON.parse(localStorage.getItem("sbirka-proto-v2") || "null"); if (u && u.mam && u.nas) S = Object.assign(S, u); } catch (e) {}
+  const uloz = () => { try { localStorage.setItem("sbirka-proto-v2", JSON.stringify(S)); } catch (e) {} };
+  const el = id => document.getElementById(id);
+  const T = () => S.trida;
+  const pol = typ => POLOZKY[T()].filter(p => p.typ === typ);
+  const nas = typ => najdi(S.nas[T()][typ]);
+  const st = () => etapa(S.odhad[T()]);
+
+  function stavPolozky(p){
+    if (S.nas[p.trida][p.typ] === p.id) return "nas";
+    if (S.mam[p.id]) return "mam";
+    if (p.cena === "test") return "test";
+    if (p.cena === null) return "truhla";
+    return "koupit";
+  }
+  function stavText(p){
+    const s = stavPolozky(p);
+    if (s === "nas") return `<span class="st nas">✓ Nasazeno</span>`;
+    if (s === "mam") return `<span class="st">Máš</span>`;
+    if (s === "test") return `<span class="st">🎟 Jen na testu</span>`;
+    if (s === "truhla") return `<span class="st">🎁 Jen z truhly</span>`;
+    return `<span class="st"><i class="krystal-ico"></i>${p.cena}</span>`;
+  }
+  function akceButton(btn, p){
+    if (!p) { btn.disabled = true; btn.textContent = "Vyber si"; return; }
+    const s = stavPolozky(p);
+    btn.disabled = s === "nas" || s === "test" || s === "truhla" || (s === "koupit" && S.krystaly < p.cena);
+    btn.textContent = s === "nas" ? "Nasazeno" : s === "mam" ? `Nasadit: ${p.nazev}` : s === "test" ? "Získáš jen kódem z testu nanečisto" : s === "truhla" ? "Legendární: jen z truhel" : S.krystaly < p.cena ? `Chybí ${p.cena - S.krystaly} krystalů` : `Koupit za ${p.cena} krystalů`;
+    btn.dataset.id = p.id;
+  }
+  function proved(id){
+    const p = najdi(id); if (!p) return false;
+    const s = stavPolozky(p);
+    if (s === "koupit" && S.krystaly >= p.cena) { S.krystaly -= p.cena; S.mam[p.id] = true; }
+    if (S.mam[p.id]) { S.nas[p.trida][p.typ] = p.id; if (p.typ === "vzhled") S.nahledVzhled = null; if (p.typ === "pozadi") S.nahledPozadi = null; uloz(); return true; }
+    return false;
+  }
+  function vizual(p, sirka){
+    if (p.typ === "podoba") return `<span class="mini-hx" style="width:${sirka || 52}px">${hexikSvg(p.klic, 1)}</span>`;
+    if (p.typ === "vzhled") return `<span class="swatch" data-vzhled="${p.klic}"><i></i><i></i></span>`;
+    if (p.typ === "pozadi") return `<span class="thumb" data-pozadi="${p.klic}"></span>`;
+    return `<span class="ikona" style="${sirka ? `font-size:${sirka * .6}px` : ""}">${IKONA[p.klic] || "✨"}</span>`;
+  }
+  function dlazdice(p, vybrana){
+    return `<button type="button" class="pol" style="--r:${VZ[p.vz].c}" data-pol="${p.id}" aria-pressed="${vybrana}"><span class="vzp"></span><span class="vizual">${vizual(p)}</span><span>${p.nazev}</span>${stavText(p)}</button>`;
+  }
+
+  /* ---------- reakce a efekty ---------- */
+  const R_TRIDY = ["r-jasot","r-radost","r-povzbud","r-tanec","r-salto","r-teleport","r-disco"];
+  function reaguj(hx, a){ hx.classList.remove(...R_TRIDY); void hx.offsetWidth; hx.classList.add("r-" + a); }
+  document.addEventListener("animationend", e => { const t = e.target; if (t.classList && t.classList.contains("hx") && e.animationName !== "idle") t.classList.remove(...R_TRIDY); });
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const BARVY = ["#FF5A5F","#FFB13B","#FFE14D","#3DD68C","#4DA3FF","#9A6BFF","#FF7AC6"];
+  function efekt(scr, typ, zdroj, sila){
+    sila = sila || 1;
+    const vrstva = scr.querySelector(".efekty"); if (!vrstva) return;
+    const r = vrstva.getBoundingClientRect();
+    let ox = r.width / 2, oy = r.height / 2;
+    if (zdroj) { const o = zdroj.getBoundingClientRect(); ox = o.left - r.left + o.width / 2; oy = o.top - r.top + o.height / 2; }
+    const pridej = (cls, styl, ms, html) => { const s = document.createElement("span"); s.className = "p " + cls; s.setAttribute("style", styl); if (html) s.innerHTML = html; vrstva.appendChild(s); setTimeout(() => s.remove(), ms); };
+    const n = k => Math.round(k * sila);
+    if (typ === "jiskry" || typ === "hvezdy") {
+      for (let i = 0; i < n(typ === "jiskry" ? 18 : 12); i++) { const a = rnd(0, Math.PI * 2), d = rnd(45, 120); pridej(typ === "jiskry" ? "p-jiskra" : "p-hvezda", `--x:${ox}px;--y:${oy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-delay:${rnd(0,.12)}s`, 1400, typ === "hvezdy" ? "★" : ""); }
+    } else if (typ === "konfety") {
+      for (let i = 0; i < n(36); i++) pridej("p-konfeta", `--x:${rnd(0, r.width)}px;--y:-14px;--dx:${rnd(-70,70)}px;--rot:${rnd(-600,600)}deg;--c:${BARVY[i % BARVY.length]};animation-delay:${rnd(0,.3)}s;animation-duration:${rnd(1.3,2.1)}s`, 2600);
+    } else if (typ === "bubliny") {
+      for (let i = 0; i < n(18); i++) pridej("p-bublina", `--x:${rnd(8, r.width - 30)}px;--y:${r.height - 10}px;--s:${rnd(12,28)}px;--dx:${rnd(-30,30)}px;animation-delay:${rnd(0,.5)}s`, 2600);
+    } else if (typ === "blesky") {
+      pridej("p-flash", "", 600);
+      const bolt = `<svg viewBox="0 0 40 90"><polygon points="24,0 4,46 18,46 8,90 38,34 22,34 34,0" fill="#FFE14D" stroke="#FFB300" stroke-width="2"/></svg>`;
+      for (let i = 0; i < n(3); i++) pridej("p-blesk", `--x:${rnd(10, r.width - 50)}px;--y:${rnd(10, r.height * .45)}px;animation-delay:${i * .08}s`, 900, bolt);
+    } else if (typ === "ohen") {
+      for (let i = 0; i < n(30); i++) pridej("p-plamen", `--x:${rnd(-6, r.width)}px;--y:${r.height - 14}px;--s:${rnd(12,26)}px;--dx:${rnd(-24,24)}px;animation-delay:${rnd(0,.45)}s`, 2000);
+      for (let i = 0; i < n(10); i++) { const a = rnd(Math.PI, Math.PI * 2), d = rnd(40, 90); pridej("p-jiskra", `--x:${ox}px;--y:${oy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;background:#FF8A00`, 1200); }
+    } else if (typ === "duha") {
+      pridej("p-duha", `--x:${ox}px;--y:${oy}px`, 1300);
+      for (let i = 0; i < n(8); i++) { const a = rnd(0, Math.PI * 2), d = rnd(50, 110); pridej("p-hvezda", `--x:${ox}px;--y:${oy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;color:${BARVY[i % BARVY.length]}`, 1400, "★"); }
+    }
+  }
+
+  /* ---------- 1 · příklad ---------- */
+  let ceka = false, bublinaT = null;
+  function bublina(text){ const b = el("pr-bublina"); b.textContent = text; b.classList.add("vid"); clearTimeout(bublinaT); bublinaT = setTimeout(() => b.classList.remove("vid"), 1900); }
+  function vykresliPriklad(){
+    const sada = TXT[T()].priklady, i = S.pr[T()] % sada.length, x = sada[i];
+    el("pr-tema").textContent = x.t;
+    el("pr-cislo").textContent = `Příklad ${i + 1} z ${sada.length}`;
+    el("pr-zadani").textContent = x.q;
+    el("pr-moznosti").innerHTML = x.m.map((m, j) => `<button type="button" class="moz" data-moz="${j}">${m}</button>`).join("");
+    el("pr-postup").classList.remove("vid"); el("pr-postup").innerHTML = "";
+    vykresliSerii();
+  }
+  function vykresliSerii(){
+    const v = S.serie % 3 === 0 && S.serie > 0 ? 3 : S.serie % 3;
+    document.querySelectorAll(".serie i").forEach((d, j) => d.classList.toggle("on", j < v));
+    el("pr-serie-c").textContent = S.serie;
+  }
+  function odpovez(j){
+    if (ceka) return;
+    const sada = TXT[T()].priklady, x = sada[S.pr[T()] % sada.length];
+    const tlac = el("pr-moznosti").querySelectorAll(".moz");
+    tlac.forEach(b => b.disabled = true);
+    const hx = el("hx-priklad"), scr = el("scr-priklad");
+    const ef = nas("efekt").klic;
+    if (j === x.ok) {
+      tlac[j].classList.add("ok");
+      S.serie++; S.krystaly += 2;
+      const p = el("pr-plus"); p.classList.remove("jede"); void p.offsetWidth; p.classList.add("jede");
+      if (S.serie % 3 === 0) { reaguj(hx, ANIM[nas("oslava").klic] || "radost"); efekt(scr, ef, hx, 1.7); bublina(TXT[T()].serie[(S.serie / 3) % 2]); }
+      else { reaguj(hx, "jasot"); efekt(scr, ef, hx, 1); bublina(TXT[T()].ok[Math.floor(Math.random() * 4)]); }
+      ceka = true; uloz(); vykresliSerii(); vykresliKrystaly();
+      setTimeout(() => { S.pr[T()]++; ceka = false; uloz(); vykresliPriklad(); }, 1500);
+    } else {
+      tlac[j].classList.add("spatne"); tlac[x.ok].classList.add("ok");
+      S.serie = 0; reaguj(hx, "povzbud"); bublina(TXT[T()].chyba[Math.floor(Math.random() * 2)]);
+      const po = el("pr-postup"); po.innerHTML = `<span><b>Postup:</b> ${x.p}</span><button type="button" class="tl akcent male" id="pr-dalsi">Další příklad</button>`; po.classList.add("vid");
+      uloz(); vykresliSerii();
+    }
+  }
+
+  /* ---------- 2 · šatník ---------- */
+  function vykresliSatnik(){
+    const zal = S.zal, seznam = pol(zal);
+    const vybId = S.vyb[T() + zal] || S.nas[T()][zal];
+    const vyb = najdi(vybId);
+    document.querySelectorAll("[data-zal]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.zal === zal)));
+    el("sat-mrizka").innerHTML = seznam.map(p => dlazdice(p, p.id === vybId)).join("");
+    const podoba = zal === "podoba" ? vyb.klic : nas("podoba").klic;
+    el("hx-satnik").innerHTML = hexikSvg(podoba, st());
+    el("sat-popis").innerHTML = `<span class="vzacnost" style="background:${VZ[vyb.vz].c}">${VZ[vyb.vz].n}</span> ${TYP[vyb.typ]}: <b>${vyb.nazev}</b>`;
+    akceButton(el("sat-akce"), vyb);
+  }
+  function predvedSatnik(p){
+    const hx = el("hx-satnik"), scr = el("scr-satnik");
+    if (p.typ === "oslava") reaguj(hx, ANIM[p.klic]);
+    else if (p.typ === "efekt") { reaguj(hx, "jasot"); efekt(scr, p.klic, hx, 1.2); }
+    else reaguj(hx, "jasot");
+  }
+
+  /* ---------- 3 · vzhled ---------- */
+  function aktivniVzhled(){ return S.nahledVzhled && najdi(S.nahledVzhled) && najdi(S.nahledVzhled).trida === T() ? najdi(S.nahledVzhled) : nas("vzhled"); }
+  function vykresliVzhled(){
+    const akt = aktivniVzhled();
+    document.querySelectorAll(".scr").forEach(s => { if (akt.klic === "klasik") s.removeAttribute("data-vzhled"); else s.setAttribute("data-vzhled", akt.klic); });
+    el("vz-mrizka").innerHTML = pol("vzhled").map(p => dlazdice(p, p.id === akt.id)).join("");
+    const naz = stavPolozky(akt) === "nas" ? "" : `<span class="oznaceni">Náhled</span>`;
+    el("vz-naznak").innerHTML = naz;
+    akceButton(el("vz-akce"), akt);
+  }
+
+  /* ---------- 4 · profil ---------- */
+  function aktivniPozadi(){ return S.nahledPozadi && najdi(S.nahledPozadi) && najdi(S.nahledPozadi).trida === T() ? najdi(S.nahledPozadi) : nas("pozadi"); }
+  function vykresliProfil(){
+    const akt = aktivniPozadi();
+    el("pf-banner").setAttribute("data-pozadi", akt.klic);
+    el("hx-profil").innerHTML = hexikSvg(nas("podoba").klic, st());
+    const b = S.odhad[T()], e = ETAPY[st() - 1];
+    el("pf-odhad").textContent = `${b} / 50`;
+    el("pf-etapa").textContent = `Hexík · ${e.n}`;
+    const gen = S.mam[`${T()}-pozadi-generalka`];
+    el("pf-trofeje").innerHTML = `<span class="trofej">🔥 Série 14 dní</span><span class="trofej">🏆 Boss týdne ×2</span>${gen ? `<span class="trofej zlata">🎟 Generálka</span>` : ""}<span class="trofej">🎁 ${Object.keys(S.mam).filter(k => k[0] === String(T()) && najdi(k).cena !== 0).length} odměn</span>`;
+    el("pf-mrizka").innerHTML = pol("pozadi").map(p => `<button type="button" class="pol" style="--r:${VZ[p.vz].c};padding:5px" data-pol="${p.id}" aria-pressed="${p.id === akt.id}" title="${p.nazev}"><span class="thumb" data-pozadi="${p.klic}"></span><span style="font-size:11px">${p.nazev}</span>${stavText(p)}</button>`).join("");
+    akceButton(el("pf-akce"), akt);
+    el("pf-kod-btn").style.display = gen ? "none" : "";
+  }
+
+  /* ---------- 5 · truhly ---------- */
+  function vykresliTruhly(){
+    const d = S.truhla, sn = SANCE[d];
+    document.querySelectorAll("[data-truhla]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.truhla === d)));
+    el("truhla-obr").classList.toggle("dop", d === "dop");
+    const btn = el("otevrit");
+    if (d === "denni") { btn.textContent = S.denni ? "Dnes už otevřená" : "Otevřít zdarma"; btn.disabled = S.denni; }
+    else if (d === "krystal") { btn.textContent = S.krystaly >= 100 ? "Otevřít za 100 krystalů" : `Chybí ${100 - S.krystaly} krystalů`; btn.disabled = S.krystaly < 100; }
+    else { btn.textContent = S.dopK > 0 ? `Otevřít Truhlu doporučení (${S.dopK})` : "Nejdřív splň doporučené téma"; btn.disabled = S.dopK < 1; }
+    const proc = v => Math.round(v * 100) + " %";
+    el("sance").textContent = `Šance: ${sn.bezna ? `běžná ${proc(sn.bezna)} · ` : ""}neobvyklá ${proc(sn.neobvykla)} · vzácná ${proc(sn.vzacna)} · legendární ${proc(sn.legenda)}. Vzácná nejpozději za ${10 - S.bezVz}.`;
+    const plan = TXT[T()].plan, hotovo = S.plan[T()];
+    el("plan-box").innerHTML = `<p style="font-weight:800;font-size:13px;margin-bottom:4px">Plán po testu nanečisto</p>` + plan.map(([n, v], i) => {
+      const val = i < hotovo ? 10 : v;
+      return `<div class="plan-r"><span>${n}</span><b style="font-size:12px">${i < hotovo ? "✓ splněno" : `${val}/10`}</b><span class="pruh"><i style="width:${val * 10}%"></i></span></div>`;
+    }).join("") + (hotovo < plan.length ? `<button type="button" class="tl obrys male" id="plan-dotren" style="margin-top:8px;width:100%">Dotrénovat další téma (ukázka)</button>` : `<p class="mini tlum" style="margin-top:6px">Plán splněný. Další truhly přinese nový test nanečisto.</p>`);
+  }
+  function losuj(druh){
+    const sn = SANCE[druh];
+    let vz;
+    if (S.bezLeg >= 29) vz = "legenda";
+    else if (S.bezVz >= 9) vz = Math.random() < .15 ? "legenda" : "vzacna";
+    else { const r = Math.random(); vz = r < sn.legenda ? "legenda" : r < sn.legenda + sn.vzacna ? "vzacna" : r < sn.legenda + sn.vzacna + sn.neobvykla ? "neobvykla" : "bezna"; }
+    const pool = POLOZKY[T()].filter(p => p.vz === vz && p.cena !== 0 && p.cena !== "test");
+    const nove = pool.filter(p => !S.mam[p.id]);
+    const p = (nove.length ? nove : pool)[Math.floor(Math.random() * (nove.length || pool.length))];
+    return { p, vz, nova: nove.length > 0 };
+  }
+  function otevri(){
+    const btn = el("otevrit"); if (btn.disabled) return;
+    const d = S.truhla;
+    if (d === "krystal") S.krystaly -= 100;
+    if (d === "denni") S.denni = true;
+    if (d === "dop") S.dopK--;
+    const t = el("truhla-obr"); t.classList.remove("otevrena"); t.classList.add("tres");
+    el("odhaleni").innerHTML = `<p style="font-size:14px;color:#D9D8FE">…</p>`;
+    btn.disabled = true;
+    setTimeout(() => {
+      t.classList.remove("tres"); t.classList.add("otevrena");
+      const { p, vz, nova } = losuj(d);
+      S.bezVz = (vz === "vzacna" || vz === "legenda") ? 0 : S.bezVz + 1;
+      S.bezLeg = vz === "legenda" ? 0 : S.bezLeg + 1;
+      const bonus = 10 + Math.floor(Math.random() * 21);
+      let text;
+      if (nova) { S.mam[p.id] = true; S.krystaly += bonus; text = `Nové! · +${bonus} krystalů`; }
+      else { S.krystaly += VRACENI[vz] + bonus; text = `Už máš: vráceno ${VRACENI[vz] + bonus} krystalů`; }
+      const z = el("zare"); z.style.background = `radial-gradient(circle, ${VZ[vz].c}aa, transparent 60%)`; z.style.opacity = 1; setTimeout(() => z.style.opacity = 0, 900);
+      el("odhaleni").innerHTML = `<span class="vizual-velky" style="display:flex;justify-content:center">${vizual(p, 84)}</span><span class="vzacnost" style="background:${VZ[vz].c}">${VZ[vz].n}</span><b>${p.nazev}</b><span style="font-size:12px;color:#D9D8FE">${TYP[p.typ]} · ${text}</span>${nova ? `<button type="button" class="tl akcent male" data-nasad="${p.id}" style="--s-akcent:#F5A623;--s-akcent-t:#0D1B3E">Nasadit</button>` : ""}`;
+      uloz(); vykresliVse();
+    }, 650);
+  }
+
+  /* ---------- 6 · růst ---------- */
+  function vykresliRust(){
+    const b = S.odhad[T()], s = st();
+    el("hx-rust").innerHTML = hexikSvg(nas("podoba").klic, s);
+    el("rust-slider").value = b;
+    el("rust-body").textContent = `${b} z 50 b.`;
+    el("rust-etapa").textContent = ETAPY[s - 1].n;
+    const dalsi = ETAPY[s];
+    el("rust-dalsi").textContent = dalsi ? `Další podoba: ${dalsi.n} od ${dalsi.od} bodů (chybí ${dalsi.od - b} b.)` : "Nejvyšší podoba. Takhle vypadá připravený žák.";
+    el("rust-etapy").innerHTML = ETAPY.map((e, i) => `<div class="etapa-r ${i < s ? "ok" : ""}"><span class="z">${i < s ? "✓" : i + 1}</span><span><b>${e.n}</b> · ${e.d}</span><span class="mini tlum">od ${e.od} b.</span></div>`).join("");
+  }
+
+  /* ---------- společné ---------- */
+  function vykresliKrystaly(){ document.querySelectorAll(".krystaly-stav").forEach(n => n.textContent = S.krystaly); }
+  function vykresliVse(){
+    document.querySelectorAll("[data-trida]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.trida === T())));
+    el("hx-priklad").innerHTML = hexikSvg(nas("podoba").klic, st());
+    vykresliKrystaly(); vykresliSerii(); vykresliSatnik(); vykresliVzhled(); vykresliProfil(); vykresliTruhly(); vykresliRust();
+  }
+
+  document.addEventListener("click", e => {
+    const t = e.target;
+    const tr = t.closest("[data-trida]"); if (tr) { S.trida = +tr.dataset.trida; S.serie = 0; ceka = false; uloz(); vykresliPriklad(); vykresliVse(); el("odhaleni").innerHTML = `<p style="font-size:14px;color:#D9D8FE">Klepni na truhlu</p>`; return; }
+    const mz = t.closest("[data-moz]"); if (mz && !mz.disabled) { odpovez(+mz.dataset.moz); return; }
+    if (t.closest("#pr-dalsi")) { S.pr[T()]++; uloz(); vykresliPriklad(); return; }
+    const zl = t.closest("[data-zal]"); if (zl) { S.zal = zl.dataset.zal; uloz(); vykresliSatnik(); return; }
+    const pl = t.closest("[data-pol]");
+    if (pl) {
+      const p = najdi(pl.dataset.pol);
+      if (p.typ === "vzhled") { S.nahledVzhled = p.id; vykresliVzhled(); return; }
+      if (p.typ === "pozadi") { S.nahledPozadi = p.id; vykresliProfil(); return; }
+      S.vyb[T() + p.typ] = p.id; vykresliSatnik(); predvedSatnik(p); return;
+    }
+    const ak = t.closest("#sat-akce,#vz-akce,#pf-akce");
+    if (ak && ak.dataset.id) { if (proved(ak.dataset.id)) { const p = najdi(ak.dataset.id); vykresliVse(); if (p.typ === "oslava" || p.typ === "efekt" || p.typ === "podoba") predvedSatnik(p); else efekt(ak.closest(".scr"), "jiskry", ak, .8); } return; }
+    const ns = t.closest("[data-nasad]"); if (ns) { proved(ns.dataset.nasad); ns.remove(); vykresliVse(); return; }
+    const vt = t.closest("[data-truhla]"); if (vt) { S.truhla = vt.dataset.truhla; uloz(); vykresliTruhly(); return; }
+    if (t.closest("#plan-dotren")) { S.plan[T()]++; S.dopK++; S.truhla = "dop"; uloz(); vykresliTruhly(); return; }
+    if (t.closest("#pf-kod-btn")) { el("pf-kod").classList.add("vid"); el("pf-kod-in").focus(); return; }
+    if (t.closest("#pf-kod-ok")) { uplatniKod(); return; }
+    if (t.closest("#reset")) { S = vychozi(); uloz(); vykresliPriklad(); vykresliVse(); el("odhaleni").innerHTML = `<p style="font-size:14px;color:#D9D8FE">Klepni na truhlu</p>`; return; }
+  });
+  function uplatniKod(){
+    const v = el("pf-kod-in").value.trim();
+    if (v.length < 4) { el("pf-kod-in").focus(); return; }
+    const id = `${T()}-pozadi-generalka`;
+    S.mam[id] = true; S.nas[T()].pozadi = id; S.nahledPozadi = null; uloz();
+    el("pf-kod").classList.remove("vid"); vykresliVse();
+    efekt(el("scr-profil"), "jiskry", el("pf-banner"), 1.6);
+  }
+  el("pf-kod-in").addEventListener("keydown", e => { if (e.key === "Enter") uplatniKod(); });
+  el("otevrit").addEventListener("click", otevri);
+  el("truhla-obr").addEventListener("click", otevri);
+  el("truhla-obr").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); otevri(); } });
+  el("rust-slider").addEventListener("input", e => {
+    const pred = st(); S.odhad[T()] = +e.target.value; uloz();
+    vykresliRust(); el("hx-priklad").innerHTML = hexikSvg(nas("podoba").klic, st()); vykresliProfil();
+    if (st() > pred) { reaguj(el("hx-rust"), "radost"); efekt(el("scr-rust"), "hvezdy", el("hx-rust"), 1); }
+  });
+
+  /* ---------- tabulky pod telefony ---------- */
+  const radek = typ => {
+    const bunka = t => `<div class="seznam-pol">${POLOZKY[t].filter(p => p.typ === typ).map(p => `<span><i class="tecka" style="background:${VZ[p.vz].c}"></i>${p.nazev}</span>`).join("")}</div>`;
+    return `<tr><td><b>${TYP[typ]}</b></td><td>${bunka(5)}</td><td>${bunka(9)}</td></tr>`;
+  };
+  el("tab-tridy").innerHTML = `<thead><tr><th></th><th>5. třída · roztomilé</th><th>9. třída · cool</th></tr></thead><tbody>${["podoba","oslava","efekt","vzhled","pozadi"].map(radek).join("")}<tr><td><b>Jak mluví Hexík</b></td><td>„Jupí!“, „Nevadí, zkusíme to spolu.“</td><td>„Pecka!“, „Klídek, mrkni na postup.“</td></tr><tr><td><b>Album samolepek</b></td><td>zvířátka a Hexíkovi kamarádi (3. etapa)</td><td>není</td></tr></tbody>`;
+  el("tab-sance").innerHTML = ["denni","krystal","dop","zlata"].map(k => { const s = SANCE[k]; const c = v => v ? Math.round(v * 100) + " %" : "–"; return `<tr><td><b>${s.n}</b></td><td>${s.kdy}</td><td class="c">${c(s.bezna)}</td><td class="c">${c(s.neobvykla)}</td><td class="c">${c(s.vzacna)}</td><td class="c">${c(s.legenda)}</td></tr>`; }).join("");
+  el("hx-uvod-5").innerHTML = hexikSvg("kocicka", 3);
+  el("hx-uvod-9").innerHTML = hexikSvg("street", 4);
+
+  el("odhaleni").innerHTML = `<p style="font-size:14px;color:#D9D8FE">Klepni na truhlu</p>`;
+  vykresliPriklad(); vykresliVse();
+})();
+</script>

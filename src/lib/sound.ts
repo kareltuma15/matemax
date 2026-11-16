@@ -127,12 +127,20 @@ function synthLevelUp() {
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
+/** Událost pro Hexíka u příkladu: zazní i při vypnutém zvuku (zvuk = okamžik vyhodnocení odpovědi). */
+export const ODPOVED_EVENT = "matemax-odpoved";
+function ohlasOdpoved(spravne: boolean) {
+  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent(ODPOVED_EVENT, { detail: { spravne } }));
+}
+
 export function playCorrect() {
+  ohlasOdpoved(true);
   if (!isSoundEnabled()) return;
   if (!tryPlayMp3("/sounds/correct.mp3")) synthCorrect();
 }
 
 export function playWrong() {
+  ohlasOdpoved(false);
   if (!isSoundEnabled()) return;
   if (!tryPlayMp3("/sounds/wrong.mp3")) synthWrong();
 }

@@ -14,6 +14,8 @@ interface Data {
   kliky: { k: string; n: number }[];
   zarizeni: { k: string; n: number }[];
   trychtyr: { krok: string; n: number }[];
+  trenink: { tyden: string; zaku: number; dniNaZaka: number; prikladuNaZaka: number; uspesnost: number | null }[];
+  odmeny: { zaku: number; ziskano: number; utraceno: number; truhel: number; odmen: number } | null;
 }
 
 function Seznam({ nadpis, polozky }: { nadpis: string; polozky: { k: string; n: number }[] }) {
@@ -106,6 +108,32 @@ export default function NavstevnostPage() {
                 );
               })}
             </div>
+          </div>
+
+          <div className="mm-karta p-4" data-testid="trenink-tydny">
+            <b className="text-sm" style={{ color: "#0D1B3E" }}>Trénink po týdnech (pomáhají odměny?)</b>
+            <p className="text-xs mt-0.5" style={{ color: "#5F6982" }}>Odměny fungují, když rostou dny a příklady na žáka a úspěšnost nespadne. Odměny (Hexík, krystaly, truhly) běží od 16. 11. 2026.</p>
+            <div className="overflow-x-auto mt-3">
+              <table className="w-full text-sm">
+                <thead><tr className="text-left text-xs uppercase tracking-wider" style={{ color: "#8A93AA" }}><th className="py-1.5 pr-3">Týden od</th><th className="pr-3">Žáků</th><th className="pr-3">Dní na žáka</th><th className="pr-3">Příkladů na žáka</th><th>Úspěšnost</th></tr></thead>
+                <tbody>
+                  {data.trenink.map((t) => (
+                    <tr key={t.tyden} className="border-t" style={{ borderColor: "#EEF0F6", color: "#33405F" }}>
+                      <td className="py-1.5 pr-3">{new Date(t.tyden + "T12:00:00").toLocaleDateString("cs-CZ")}</td>
+                      <td className="pr-3 tabular-nums font-bold" style={{ color: "#0D1B3E" }}>{t.zaku}</td>
+                      <td className="pr-3 tabular-nums">{t.zaku ? t.dniNaZaka.toLocaleString("cs-CZ") : "–"}</td>
+                      <td className="pr-3 tabular-nums">{t.zaku ? t.prikladuNaZaka : "–"}</td>
+                      <td className="tabular-nums">{t.uspesnost === null ? "–" : `${t.uspesnost} %`}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs mt-3" style={{ color: "#5F6982" }}>
+              {data.odmeny
+                ? `Odměny celkem: ${data.odmeny.zaku} žáků se zálohou, získáno ${data.odmeny.ziskano} krystalů, utraceno ${data.odmeny.utraceno}, otevřeno ${data.odmeny.truhel} truhel, ${data.odmeny.odmen} odměn.`
+                : "Záloha odměn na serveru zatím není zapnutá (čeká na spuštění SQL)."}
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-3">

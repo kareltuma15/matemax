@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { hydrateFromRemote } from "@/lib/storage";
+import { obnovSbirku, zalohujSbirku } from "@/lib/sbirka-sync";
+import { SBIRKA_EVENT } from "@/lib/sbirka";
 
 /**
  * Obnoví postup ze serveru po přihlášení (nález #17).
@@ -22,14 +24,27 @@ export default function ProgressSync() {
   useEffect(() => {
     if (!supabase) return;
     let cancelled = false;
+    let userId: string | null = null;
+    let casovac: ReturnType<typeof setTimeout> | null = null;
 
-    async function run(userId: string) {
+    // Sbírka (krystaly, odměny): každou změnu po chvíli zazálohuj na server
+    const naZmenuSbirky = () => {
+      if (!userId) return;
+      if (casovac) clearTimeout(casovac);
+      const uid = userId;
+      casovac = setTimeout(() => { void zalohujSbirku(uid); }, 4000);
+    };
+    window.addEventListener(SBIRKA_EVENT, naZmenuSbirky);
+
+    async function run(uid: string) {
+      userId = uid;
       // Jednou za relaci prohlížeče a uživatele. Klíč maže odhlášení,
       // takže přepnutí účtu obnovu spustí znovu.
-      if (sessionStorage.getItem(HYDRATED_KEY) === userId) return;
-      const res = await hydrateFromRemote(userId);
+      if (sessionStorage.getItem(HYDRATED_KEY) === uid) return;
+      const res = await hydrateFromRemote(uid);
+      await obnovSbirku(uid).catch(() => {});
       if (cancelled) return;
-      sessionStorage.setItem(HYDRATED_KEY, userId);
+      sessionStorage.setItem(HYDRATED_KEY, uid);
       if (res) {
         // Ať se přepočítá hlavička (XP/streak) i dlaždice na dashboardu
         window.dispatchEvent(new Event("matemax-progress-update"));
@@ -42,9 +57,15 @@ export default function ProgressSync() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" && session) run(session.user.id);
+      if (event === "SIGNED_OUT") { userId = null; if (casovac) clearTimeout(casovac); }
     });
 
-    return () => { cancelled = true; subscription.unsubscribe(); };
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+      window.removeEventListener(SBIRKA_EVENT, naZmenuSbirky);
+      if (casovac) clearTimeout(casovac);
+    };
   }, []);
 
   return null;

@@ -125,19 +125,9 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
       setXpLabel("+10 XP");
       setIsFlipping(true);
       playCorrect();
-      // Small confetti burst on every correct answer
-      import("canvas-confetti").then(({ default: c }) => c({
-        particleCount: 35,
-        spread: 52,
-        origin: { y: 0.6 },
-        startVelocity: 22,
-        gravity: 1.3,
-        colors: ["#2E6DA4", "#0D1B3E", "#fbbf24", "#22c55e", "#ffffff"],
-      }));
+      // Efekt správné odpovědi kreslí Hexík u příkladu (nasazený efekt ze Sbírky), tady jen text série.
       const newConsec = consecutiveCorrect + 1;
       if (newConsec >= 5) {
-        // Extra large burst for combo ≥5
-        import("canvas-confetti").then(({ default: c }) => c({ particleCount: 80, spread: 70, origin: { y: 0.45 } }));
         setComboText(`🔥 ${newConsec} v řadě!`);
       } else if (newConsec >= 3) {
         setComboText("+combo! 🔥");
