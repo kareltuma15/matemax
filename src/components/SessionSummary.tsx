@@ -6,6 +6,10 @@ import Link from "next/link";
 import { DBExample, TEMA_LABELS } from "@/types";
 import { allExamples as examples } from "@/data/examples";
 import MathText from "./MathText";
+import BossKarta from "./hexik/BossKarta";
+import { useTrida } from "@/lib/trida";
+import { loadProgress } from "@/lib/progress";
+import { urovenZXP, dalsiVelkaOdmena } from "@/lib/urovne";
 import MathDisplay from "./MathDisplay";
 
 function ExMath({ ex, text }: { ex: DBExample; text: string }) {
@@ -175,6 +179,10 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
   const pct = effectiveTotal > 0 ? Math.round((correct / effectiveTotal) * 100) : 0;
   const animPct     = useCountUp(pct);
   const animXp      = useCountUp(xpEarned);
+  const { trida } = useTrida();
+  const [xpTed] = useState(() => loadProgress().xp ?? 0);
+  const urovenTed = urovenZXP(xpTed);
+  const dalsiOdmena = dalsiVelkaOdmena(trida, urovenTed.n);
   const animCorrect = useCountUp(correct);
   const animStreak  = useCountUp(streak);
   const [shareState, setShareState] = useState<"idle" | "loading" | "copied" | "error">("idle");
@@ -274,7 +282,7 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
             <span className="text-3xl" aria-hidden="true">{boss !== "uz" && boss.vyhra ? "🏆" : "👾"}</span>
             <div className="flex-1 min-w-0">
               <p className="font-black text-sm">
-                {boss === "uz" ? "Bosse jsi tento týden už vyzval." : boss.vyhra ? `Boss týdne poražen! +${boss.krystaly} krystalů a trofej` : "Tentokrát boss vyhrál."}
+                {boss === "uz" ? "Bosse tohoto týdne už máš za sebou." : boss.vyhra ? `Boss týdne poražen! +${boss.krystaly} krystalů, +50 XP a trofej` : "Tentokrát boss vyhrál."}
               </p>
               <p className="text-xs" style={{ opacity: 0.8 }}>
                 {boss === "uz" ? "Za opakování už odměna není. Nový boss bude v pondělí." : boss.vyhra ? "Na trofej se podívej ve Sbírce." : "Projdi si řešení. Nový boss bude v pondělí."}
@@ -305,6 +313,18 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
             </div>
           );
         })()}
+
+        {/* XP úroveň: kolik zbývá do další a co za ni bude */}
+        <a href="/sbirka?tab=urovne" className="rounded-xl p-3.5 border flex items-center gap-3" style={{ background: "#F3F4FB", borderColor: "#E1E3F0" }} data-testid="souhrn-uroven">
+          <span className="w-11 h-11 rounded-xl grid place-items-center font-black text-white shrink-0" style={{ background: "#5B55D6" }}>{urovenTed.n}</span>
+          <span className="flex-1 min-w-0">
+            <b className="block text-sm" style={{ color: "#0D1B3E" }}>Úroveň {urovenTed.n} · do další {urovenTed.do - xpTed} XP</b>
+            <span className="block h-1.5 rounded-full overflow-hidden mt-1.5" style={{ background: "#E1E3F0" }}><i className="block h-full rounded-full" style={{ width: `${Math.max(3, Math.round(urovenTed.podil * 100))}%`, background: "#F5A623" }} /></span>
+            <span className="block text-xs mt-1" style={{ color: "#5F6982" }}>{dalsiOdmena ? <>Za každou úroveň krystaly, na úrovni {dalsiOdmena.n}: <b>{dalsiOdmena.vec ? dalsiOdmena.vec.nazev : "legendární truhla"}</b></> : "Za každou úroveň krystaly."}</span>
+          </span>
+        </a>
+
+        {boss === undefined && <BossKarta trida={trida} jenCeka />}
 
         {/* Topics practiced */}
         {topics.length > 0 && (

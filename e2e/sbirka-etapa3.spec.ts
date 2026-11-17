@@ -161,6 +161,9 @@ test("Boss týdne v tréninku: jedna úloha a po odpovědi výsledek v souhrnu",
   test.setTimeout(60_000);
   await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); }, stav({}));
   await page.goto("/trenink?boss=1");
+  // Úvodní obrazovka bosse (převzatá ze starého bosse na konci tréninku tématu)
+  await expect(page.getByTestId("boss-uvod")).toContainText("+50 XP", { timeout: 20_000 });
+  await page.getByTestId("boss-bojovat").click();
   await expect(page.getByTestId("sezeni")).toBeAttached({ timeout: 20_000 });
   const boss = bossTydne(9, new Date().toLocaleDateString("sv-SE"))!;
   await expect(page.getByTestId("sezeni")).toHaveAttribute("data-aktualni", boss.id);

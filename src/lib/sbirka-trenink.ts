@@ -6,6 +6,8 @@ import type { Trida } from "@/types";
 import { localDateStr } from "./date";
 import { loadGamification } from "./gamification";
 import { spocitejOdhad } from "./odhad-vypocet";
+import { loadProgress } from "./progress";
+import { zapisUroven, UROVEN_EVENT, type OdmenaUrovne } from "./urovne";
 import {
   upravSbirku, zapisOdpoved, krystalyZaOdpoved, pripis, dokoncenyTrenink, zapocitejOdhad,
   misePriOdpovedi, splnMise, ziskejDoporuceni, novaZvladnutaTemata,
@@ -85,4 +87,16 @@ export function odmenaZaKonecTreninku(
   ohlasKrystaly(r.krystaly);
   ohlasMise(r.mise);
   return { ...r, odhad: odmenaZaOdhad(trida), doporuceni };
+}
+
+/**
+ * Připíše odměny za nově dosažené XP úrovně (krystaly, věc za úroveň, legendární truhla) a ohlásí je.
+ * Volá se po každé změně XP v tréninku a při otevření Domova a Sbírky (zpětně i za starší XP).
+ */
+export function zkontrolujUroven(trida: Trida): OdmenaUrovne[] {
+  if (typeof window === "undefined") return [];
+  const xp = loadProgress().xp ?? 0;
+  const nove = upravSbirku((s) => zapisUroven(s, trida, xp));
+  if (nove.length > 0) window.dispatchEvent(new CustomEvent(UROVEN_EVENT, { detail: { urovne: nove } }));
+  return nove;
 }

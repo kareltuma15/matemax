@@ -8,7 +8,7 @@
 interface Podoba {
   o: string; i: string;
   oci: "kulate" | "lidi" | "ctverec" | "neon" | "visor";
-  tvare?: boolean; usi?: boolean; vousy?: boolean; antena?: boolean; srouby?: boolean;
+  tvare?: boolean; usi?: boolean; vousy?: boolean; antena?: boolean; srouby?: boolean; tykadla?: boolean; pruhy?: boolean;
   rohy?: boolean; kridla?: boolean; roh?: boolean; hriva?: boolean; ksiltovka?: boolean;
   plamen?: boolean; trpyt?: boolean; rovna?: boolean;
   /** Sezónní doplňky: vánoční čepice, zimní kulich, šála přes tělo, zlatá medaile. */
@@ -45,6 +45,13 @@ const PODOBY: Record<string, Podoba> = {
   street: { o: "#5B55D6", i: "#7C77EA", oci: "lidi", ksiltovka: true, hlava: true },
   kyber: { o: "#2B3A55", i: "#3E5273", oci: "visor", usta: "#9FB3C8", rovna: true },
   zlaty: { o: "url(#hxZlato)", i: "#FFE08A", oci: "kulate", trpyt: true, svit: "hx-svit-zlato" },
+  // za XP úrovně (nejdou koupit ani vylosovat)
+  vcelka: { o: "#F7C531", i: "#FFE68A", oci: "kulate", tvare: true, tykadla: true, pruhy: true, hlava: true },
+  kralovsky: { o: "#8E5BD6", i: "#CDB6F4", oci: "kulate", tvare: true, trpyt: true, svit: "hx-svit-zlato" },
+  duhovy: { o: "url(#hxDuha)", i: "#FFF4FB", oci: "kulate", tvare: true, trpyt: true, svit: "hx-svit-zlato" },
+  toxic: { o: "#1C2B12", i: "#2E4A1A", oci: "lidi", obrys: "#A6FF3D", usta: "#A6FF3D", svit: "hx-svit-cyan" },
+  chrom: { o: "url(#hxChrom)", i: "#E6ECF3", oci: "visor", rovna: true, usta: "#6F8299" },
+  diamant: { o: "url(#hxDiamant)", i: "#E9FBFF", oci: "kulate", obrys: "#BFF4FF", trpyt: true, svit: "hx-svit-cyan" },
 };
 
 function hvezda(cx: number, cy: number, r1: number, r2: number): string {
@@ -60,12 +67,16 @@ export function hexikSvg(klic: string, etapa = 1): string {
   const P = PODOBY[klic] ?? PODOBY.klasik;
   const N = "#0D1B3E";
   let zad = "", pred = "";
-  const defs = `<defs><linearGradient id="hxZlato" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset=".55" stop-color="#F5B623"/><stop offset="1" stop-color="#D97E00"/></linearGradient></defs>`;
+  const defs = `<defs><linearGradient id="hxZlato" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset=".55" stop-color="#F5B623"/><stop offset="1" stop-color="#D97E00"/></linearGradient>`
+    + `<linearGradient id="hxDuha" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7AB8"/><stop offset=".25" stop-color="#FFC94D"/><stop offset=".5" stop-color="#6EE7A8"/><stop offset=".75" stop-color="#6FB6FF"/><stop offset="1" stop-color="#B07CFF"/></linearGradient>`
+    + `<linearGradient id="hxChrom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F7FB"/><stop offset=".45" stop-color="#9AA8BA"/><stop offset=".55" stop-color="#5E6C80"/><stop offset="1" stop-color="#C9D3DF"/></linearGradient>`
+    + `<linearGradient id="hxDiamant" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6FDFF"/><stop offset=".35" stop-color="#7FE3FF"/><stop offset=".6" stop-color="#B9A8FF"/><stop offset="1" stop-color="#5CC8F0"/></linearGradient></defs>`;
   if (etapa >= 4) zad += `<circle class="hx-aura" cx="130" cy="130" r="126" fill="none" stroke="#F5A623" stroke-width="5" stroke-dasharray="7 13" opacity=".75"/>`;
   if (P.kridla) zad += `<path d="M40 120 L0 86 L14 128 L-2 150 L40 156 Z" fill="${P.o}"/><path d="M220 120 L260 86 L246 128 L262 150 L220 156 Z" fill="${P.o}"/>`;
   if (P.hriva) zad += `<circle cx="74" cy="44" r="16" fill="#FF9AC8"/><circle cx="52" cy="64" r="14" fill="#B79CFF"/><circle cx="38" cy="90" r="12" fill="#8ED1FF"/><circle cx="96" cy="30" r="13" fill="#FFD36E"/>`;
   if (P.usi) zad += `<polygon points="50,68 60,4 110,36" fill="${P.o}"/><polygon points="64,56 68,22 98,40" fill="#F7A3C0"/><polygon points="210,68 200,4 150,36" fill="${P.o}"/><polygon points="196,56 192,22 162,40" fill="#F7A3C0"/>`;
   if (P.rohy) zad += `<polygon points="94,42 88,2 116,30" fill="#F5C542" stroke="#D99A00" stroke-width="3"/><polygon points="166,42 172,2 144,30" fill="#F5C542" stroke="#D99A00" stroke-width="3"/>`;
+  if (P.tykadla) zad += `<path d="M108 34 Q98 6 82 -4 M152 34 Q162 6 178 -4" stroke="${N}" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="80" cy="-6" r="10" fill="${N}"/><circle cx="180" cy="-6" r="10" fill="${N}"/>`;
   if (P.antena) zad += `<line x1="130" y1="24" x2="130" y2="-4" stroke="#6F8299" stroke-width="6"/><circle cx="130" cy="-10" r="9" fill="#FF5A5F"/>`;
   if (P.plamen) zad += `<path d="M104 40 Q96 10 118 -6 Q116 14 130 18 Q128 -8 150 -18 Q146 8 160 16 Q170 4 168 -6 Q186 18 160 42 Z" fill="#FFB000"/><path d="M116 40 Q112 22 126 12 Q126 26 138 28 Q138 14 150 6 Q150 26 158 40 Z" fill="#FFE066"/>`;
   const telo = `<polygon points="130,22 226,76 226,184 130,238 34,184 34,76" fill="${P.o}" ${P.obrys ? `stroke="${P.obrys}" stroke-width="5" stroke-linejoin="round"` : ""}/><polygon points="130,40 210,86 210,174 130,220 50,174 50,86" fill="${P.i}"/>`;
@@ -80,6 +91,7 @@ export function hexikSvg(klic: string, etapa = 1): string {
     : `<path d="M108 162 Q130 180 152 162" stroke="${P.usta ?? N}" stroke-width="7" fill="none" stroke-linecap="round"/>`;
   let doplnky = "";
   if (P.tvare) doplnky += `<ellipse cx="80" cy="156" rx="12" ry="7" fill="#F7A3C0" opacity=".75"/><ellipse cx="180" cy="156" rx="12" ry="7" fill="#F7A3C0" opacity=".75"/>`;
+  if (P.pruhy) doplnky += `<polygon points="67.4,184 192.6,184 175.2,194 84.8,194" fill="${N}" opacity=".85"/><polygon points="98.7,202 161.3,202 147.4,210 112.6,210" fill="${N}" opacity=".85"/>`;
   if (P.vousy) doplnky += `<path d="M66 160 L36 154 M66 168 L36 174 M194 160 L224 154 M194 168 L224 174" stroke="${N}" stroke-width="3" stroke-linecap="round"/>`;
   if (P.srouby) doplnky += `<circle cx="42" cy="130" r="7" fill="#6F8299"/><circle cx="218" cy="130" r="7" fill="#6F8299"/>`;
   if (P.roh) pred += `<polygon points="117,30 130,-22 143,30" fill="url(#hxZlato)" stroke="#D99A00" stroke-width="2.5"/><path d="M121 14 L139 8 M124 0 L136 -4" stroke="#D99A00" stroke-width="2.5"/>`;

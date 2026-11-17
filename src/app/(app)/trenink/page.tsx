@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { examples, allExamples, examples5, plainExamples, plainExamplesFor, maVicOdpovedi } from "@/data/examples";
+import { examples, allExamples, examples5, maVicOdpovedi } from "@/data/examples";
 import { useTrida } from "@/lib/trida";
 import TreninkTemata from "@/components/TreninkTemata";
 import { SM2Card } from "@/types";
@@ -37,7 +37,6 @@ import ConstructionMarkCard from "@/components/ConstructionMarkCard";
 import ComparisonCard from "@/components/ComparisonCard";
 import MoznostiCard from "@/components/MoznostiCard";
 import VicOdpovediCard from "@/components/VicOdpovediCard";
-import BossBattleCard from "@/components/BossBattleCard";
 import SessionSummary, { WrongAnswer } from "@/components/SessionSummary";
 import XPProgressBar from "@/components/XPProgressBar";
 import SerieHlava from "@/components/SerieHlava";
@@ -50,7 +49,7 @@ import { dovednostUlohy, maDovednosti, nazevDovednosti, TESTOVE } from "@/lib/do
 const BadgeToast = dynamic(() => import("@/components/BadgeToast"), { ssr: false });
 const AchievementOverlay = dynamic(() => import("@/components/AchievementOverlay"), { ssr: false });
 const FirstSessionModal = dynamic(() => import("@/components/FirstSessionModal"), { ssr: false });
-const LevelUpModal = dynamic(() => import("@/components/LevelUpModal"), { ssr: false });
+const UrovenModal = dynamic(() => import("@/components/hexik/UrovenModal"), { ssr: false });
 const StreakMilestoneModal = dynamic(() => import("@/components/StreakMilestoneModal"), { ssr: false });
 const ProgressMilestoneModal = dynamic(() => import("@/components/ProgressMilestoneModal"), { ssr: false });
 const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr: false });
@@ -59,7 +58,9 @@ import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
 import { pickMission, snapshotReadiness, MASTERED } from "@/lib/mise";
 import HexikParta from "@/components/hexik/HexikParta";
-import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad, MISE_EVENT } from "@/lib/sbirka-trenink";
+import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad, zkontrolujUroven, MISE_EVENT } from "@/lib/sbirka-trenink";
+import { UROVEN_EVENT, type OdmenaUrovne } from "@/lib/urovne";
+import { nactiSbirku, stavBosse, ZA_BOSSE, XP_ZA_BOSSE } from "@/lib/sbirka";
 import { odmenaZaBosse } from "@/lib/sbirka-test";
 import { bossTydne } from "@/lib/boss";
 import { ODPOVED_EVENT } from "@/lib/sound";
@@ -70,14 +71,6 @@ import { nactiPlan, type PlanPoTestu } from "@/lib/plan-po-testu";
 /** Třída z prohlížeče pro první sestavení sezení (hook se v tu chvíli ještě nemusel načíst). */
 function readTridaForSession(): Trida {
   try { return Number(localStorage.getItem("matemax-trida")) === 5 ? 5 : 9; } catch { return 9; }
-}
-
-function pickBossExample(tema: string, usedIds: Set<string>): DBExample | null {
-  const hard = [...plainExamples, ...plainExamplesFor(5)].filter(
-    (ex) => ex.tema === tema && ex.obtiznost === 3 && !usedIds.has(ex.id)
-  );
-  if (hard.length === 0) return null;
-  return hard[Math.floor(Math.random() * hard.length)];
 }
 
 const STREAK_MILESTONES: Record<number, number> = { 7: 50, 14: 100, 30: 200, 60: 350, 100: 500 };
@@ -359,6 +352,8 @@ function TreningPageInner() {
   const bossIdRef     = useRef<string | null>(null);
   const [bossVysledek, setBossVysledek] = useState<{ vyhra: boolean; krystaly: number } | "uz" | null>(null);
   const bossHotovoRef = useRef(false);
+  // Úvodní obrazovka bosse (dřív ji měl starý boss na konci tréninku tématu, teď patří Bossovi týdne)
+  const [bossZacal, setBossZacal] = useState(false);
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
@@ -374,8 +369,6 @@ function TreningPageInner() {
   const [vybraneTema, setVybraneTema] = useState<string | null>(urlVyber);
   const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
-  const [bossBattle, setBossBattle]     = useState<{ example: DBExample } | null>(null);
-  const [bossShown, setBossShown]       = useState(false);
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
   const [progressMilestone, setProgressMilestone] = useState<{ count: number; xpBonus: number } | null>(null);
   const [isGuest, setIsGuest]       = useState<boolean | null>(null);
@@ -403,7 +396,9 @@ function TreningPageInner() {
   const [gamState, setGamState]         = useState<GamificationState | null>(null);
   const [badgeQueue, setBadgeQueue]     = useState<string[]>([]);
   const [showFirstSession, setShowFirstSession] = useState(false);
-  const [levelUpData, setLevelUpData]   = useState<ReturnType<typeof getLevelFromXP> | null>(null);
+  // Nové XP úrovně v tomto tréninku: oslava až na konci, během příkladů nic nevyskakuje
+  const [noveUrovne, setNoveUrovne]     = useState<OdmenaUrovne[]>([]);
+  const [urovneVidel, setUrovneVidel]   = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const sessionStartRef                 = useRef(new Date());
   // Odpovědi tohoto tréninku po tématech (souhrn do tabulky procvicovani, viz lib/vysledky.ts)
@@ -415,7 +410,12 @@ function TreningPageInner() {
   useEffect(() => {
     const naMise = (e: Event) => { misePocetRef.current += (e as CustomEvent<{ ids: string[] }>).detail?.ids?.length ?? 0; };
     window.addEventListener(MISE_EVENT, naMise);
-    return () => window.removeEventListener(MISE_EVENT, naMise);
+    const naUroven = (e: Event) => {
+      const u = (e as CustomEvent<{ urovne: OdmenaUrovne[] }>).detail?.urovne ?? [];
+      if (u.length) setNoveUrovne((prev) => [...prev, ...u]);
+    };
+    window.addEventListener(UROVEN_EVENT, naUroven);
+    return () => { window.removeEventListener(MISE_EVENT, naMise); window.removeEventListener(UROVEN_EVENT, naUroven); };
   }, []);
   const consecutiveCorrectRef           = useRef(0);
   // Sbírka: kdy se karta ukázala a za jak dlouho žák odpověděl (tip naslepo nedá krystal), krystaly za trénink
@@ -664,10 +664,13 @@ function TreningPageInner() {
         setWrongAnswers((prev) => [...prev, { exampleId: exId, userAnswer }]);
       }
 
-      // Boss týdne: první odpověď rozhodne (jeden pokus za týden)
+      // Boss týdne: první odpověď rozhodne (jeden pokus za týden). Výhra = krystaly, trofej a XP.
+      let bossXp = 0;
       if (urlBoss && exId === bossIdRef.current && !bossHotovoRef.current) {
         bossHotovoRef.current = true;
-        setBossVysledek(odmenaZaBosse(wasCorrect) ?? "uz");
+        const vysl = odmenaZaBosse(wasCorrect);
+        setBossVysledek(vysl ?? "uz");
+        if (vysl?.vyhra) bossXp = XP_ZA_BOSSE;
       }
 
       // Sbírka: krystaly za odpověď (podle úrovně žáka v tématu, ne za tip naslepo)
@@ -682,7 +685,7 @@ function TreningPageInner() {
       // XP
       const p = loadProgress();
       const xpAction = wasCorrect ? "example_correct_first_try" : "example_incorrect";
-      const xpDelta = calculateXP(xpAction, p.streak);
+      const xpDelta = calculateXP(xpAction, p.streak) + bossXp;
       const newP = recordActivity(p, wasCorrect, xpDelta);
       saveProgress(newP);
       setXp(newP.xp);
@@ -766,7 +769,6 @@ function TreningPageInner() {
       const newLevel = getLevelFromXP(newP.xp);
       if (oldLevel.key !== newLevel.key) {
         newBadges.push(...checkBadgesOnLevelUp(newGam, newLevel.key));
-        setLevelUpData(newLevel);
       }
 
       const uniqueNew = [...new Set(newBadges.filter((id) => !newGam.earnedBadges.includes(id)))];
@@ -786,6 +788,8 @@ function TreningPageInner() {
 
       saveGamification(finalGam);
       setGamState(finalGam);
+      // Odměny za nové XP úrovně (připíšou se hned, oslava na konci tréninku)
+      zkontrolujUroven(trida);
       enqueueBadges(uniqueNew, setBadgeQueue);
 
       if (wasCorrect) setCorrect((n) => n + 1);
@@ -1064,45 +1068,6 @@ function TreningPageInner() {
     );
   }
 
-  // Boss Battle — spustí se při první session s temaFilter (jednou za session)
-  if (done && temaFilter && !bossShown) {
-    if (!bossBattle) {
-      const usedIds = new Set(sessionIds);
-      const boss = pickBossExample(temaFilter, usedIds);
-      if (boss) {
-        setBossBattle({ example: boss });
-        return null; // re-render with bossBattle set
-      }
-      setBossShown(true); // no hard examples, skip boss
-    } else {
-      return (
-        <div className="max-w-lg mx-auto">
-          <BossBattleCard
-            example={bossBattle.example}
-            tema={temaFilter}
-            temaLabel={TEMA_LABELS[temaFilter] ?? temaFilter}
-            onComplete={(won) => {
-              setBossShown(true);
-              setBossBattle(null);
-              if (won) {
-                // +50 XP bonus za boss
-                const p = loadProgress();
-                const newP = recordActivity(p, false, 50);
-                saveProgress(newP);
-                setXp(newP.xp);
-                // Track boss defeats
-                try {
-                  const prev = parseInt(localStorage.getItem("matemax-bosses-defeated") ?? "0", 10);
-                  localStorage.setItem("matemax-bosses-defeated", String(prev + 1));
-                } catch { /* ignore */ }
-              }
-            }}
-          />
-        </div>
-      );
-    }
-  }
-
   if (done) {
     const progress = loadProgress();
     const practiceTopics = [...new Set(
@@ -1114,7 +1079,7 @@ function TreningPageInner() {
   ? <AchievementOverlay key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
   : <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
 )}
-        {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
+        
         {streakMilestone && (
           <StreakMilestoneModal
             streak={streakMilestone.streak}
@@ -1152,6 +1117,9 @@ function TreningPageInner() {
             }}
           />
         )}
+        {noveUrovne.length > 0 && !urovneVidel && (
+          <UrovenModal urovne={noveUrovne} trida={trida} onClose={() => setUrovneVidel(true)} />
+        )}
         <SessionSummary
           correct={correct}
           total={sessionIds.length - skipped}
@@ -1178,6 +1146,35 @@ function TreningPageInner() {
 
   const currentExample = allExamples.find((ex) => ex.id === sessionIds[currentIdx]);
   if (!currentExample) return null;
+
+  // Boss týdne: úvodní obrazovka před soubojem (jeden pokus za týden, bez časového limitu)
+  if (urlBoss && !bossZacal && currentIdx === 0) {
+    const uz = stavBosse(nactiSbirku(), localDateStr()) !== "ceka";
+    return (
+      <div className="max-w-lg mx-auto">
+        <div className="rounded-3xl flex flex-col items-center text-center gap-5 p-8 text-white" style={{ background: "radial-gradient(circle at 50% 15%, #5B3FD6, #1F1A4A 70%)" }} data-testid="boss-uvod">
+          <div className="text-6xl animate-bounce" aria-hidden="true">👾</div>
+          <div>
+            <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "#C9C7F5" }}>Boss týdne · {TEMA_LABELS[currentExample.tema] ?? currentExample.tema}</p>
+            <h2 className="text-2xl font-black leading-tight">{uz ? "Bosse tohoto týdne už máš za sebou." : "Zvládneš těžkou úlohu ve stylu přijímaček?"}</h2>
+          </div>
+          {!uz && (
+            <div className="rounded-2xl px-5 py-3 text-sm font-semibold" style={{ background: "rgba(255,255,255,.1)", color: "#E6E4FF" }}>
+              Jeden pokus za týden · bez časového limitu · výhra: trofej, +{ZA_BOSSE} krystalů a +{XP_ZA_BOSSE} XP
+            </div>
+          )}
+          {uz ? (
+            <Link href="/sbirka" className="w-full py-4 font-black text-lg rounded-2xl mm-tlacitko" style={{ background: "#F5A623", color: "#0D1B3E" }}>Zpět do Sbírky</Link>
+          ) : (
+            <button type="button" onClick={() => setBossZacal(true)} className="w-full py-4 font-black text-lg rounded-2xl mm-tlacitko" style={{ background: "#F5A623", color: "#0D1B3E" }} data-testid="boss-bojovat">
+              ⚔️ Bojovat
+            </button>
+          )}
+          <p className="text-xs" style={{ color: "#C9C7F5" }}>Tip: Klidně si vezmi papír a tužku. Počítá se první odpověď.</p>
+        </div>
+      </div>
+    );
+  }
   const isWeakTopic = (diagScores[currentExample.tema] ?? 1) < DIAG_WEAK_BELOW;
 
   function handleSkip() {
@@ -1206,7 +1203,7 @@ function TreningPageInner() {
   ? <AchievementOverlay key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
   : <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
 )}
-        {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
+        
         <XPProgressBar xp={xp} className="mb-3" />
         <UpgradeCard
           tema={currentExample.tema}
@@ -1224,7 +1221,7 @@ function TreningPageInner() {
   ? <AchievementOverlay key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
   : <BadgeToast key={currentToast} badgeId={currentToast} onDismiss={dismissToast} />
 )}
-      {levelUpData && <LevelUpModal level={levelUpData} onClose={() => setLevelUpData(null)} />}
+      
       {streakMilestone && (
         <StreakMilestoneModal
           streak={streakMilestone.streak}

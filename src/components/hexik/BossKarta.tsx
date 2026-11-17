@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { useSbirka } from "@/lib/use-sbirka";
 import { localDateStr } from "@/lib/date";
-import { stavBosse, ZA_BOSSE } from "@/lib/sbirka";
+import { stavBosse, ZA_BOSSE, XP_ZA_BOSSE } from "@/lib/sbirka";
 import { bossTydne } from "@/lib/boss";
 import { temaLabel, type Trida } from "@/types";
 
 /** Boss týdne ve Sbírce: těžká úloha ve stylu CERMAT, jeden pokus za týden, výhra = trofej a +100 krystalů. */
-export default function BossKarta({ trida }: { trida: Trida }) {
+/** `jenCeka`: ukázat jen když boss čeká na souboj (Domov, souhrn tréninku). */
+export default function BossKarta({ trida, jenCeka = false }: { trida: Trida; jenCeka?: boolean }) {
   const { stav, nacteno } = useSbirka();
   const den = localDateStr();
   const boss = bossTydne(trida, den);
   if (!nacteno || !boss) return null;
   const st = stavBosse(stav, den);
   const porazeno = stav.boss?.porazeno.length ?? 0;
+  if (jenCeka && st !== "ceka") return null;
 
   return (
     <section
@@ -30,7 +32,7 @@ export default function BossKarta({ trida }: { trida: Trida }) {
           {st === "porazen" ? "Poražen! Nový boss přijde v pondělí." : st === "prohra" ? "Tentokrát vyhrál boss." : "Těžká úloha ve stylu přijímaček"}
         </p>
         <p className="text-xs mt-0.5" style={{ color: "#D9D8FE" }}>
-          {st === "ceka" ? `Jeden pokus za týden. Výhra: trofej a +${ZA_BOSSE} krystalů.` : st === "prohra" ? "Nový pokus dostaneš s novým bossem v pondělí." : `Poražených bossů celkem: ${porazeno}.`}
+          {st === "ceka" ? `Jeden pokus za týden. Výhra: trofej, +${ZA_BOSSE} krystalů a +${XP_ZA_BOSSE} XP.` : st === "prohra" ? "Nový pokus dostaneš s novým bossem v pondělí." : `Poražených bossů celkem: ${porazeno}.`}
         </p>
       </div>
       {st === "ceka" && (

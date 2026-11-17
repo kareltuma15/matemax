@@ -12,7 +12,9 @@ import { reportDbError } from "@/lib/db-error";
 import { usePremium } from "@/lib/premium";
 import { vokativ } from "@/lib/vokativ";
 import { getDaysUntilCermat } from "@/lib/cermat-date";
-import { getLevelFromXP } from "@/lib/gamification";
+import { urovenZXP, dalsiVelkaOdmena } from "@/lib/urovne";
+import { krystaly } from "@/lib/sbirka";
+import { useSbirka } from "@/lib/use-sbirka";
 import { localLoadSessions } from "@/lib/storage";
 import { localDateStr, localDateDaysAgo } from "@/lib/date";
 import { temaStyl } from "@/lib/barvy-temat";
@@ -21,7 +23,9 @@ import { maDovednosti } from "@/lib/dovednosti";
 import { computeDovednostProgress } from "@/lib/levels";
 import { dnesniTrenink, type DnesniTrenink } from "@/lib/dnesni-trenink";
 import { nactiOdkaz, nactiPlan, jeSplneny, oznacSplneny, postupPlanu, type PlanPoTestu } from "@/lib/plan-po-testu";
-import { odmenaZaDoporuceni } from "@/lib/sbirka-trenink";
+import { odmenaZaDoporuceni, zkontrolujUroven } from "@/lib/sbirka-trenink";
+import BossKarta from "@/components/hexik/BossKarta";
+import HexikUvod from "@/components/hexik/HexikUvod";
 import DenniMise from "@/components/hexik/DenniMise";
 import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
@@ -113,10 +117,13 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
   const meta = (session.user.user_metadata ?? {}) as Record<string, string>;
   const jmeno = meta.first_name || (meta.full_name ?? meta.name ?? "").split(" ")[0] || emailNaJmeno(session.user.email ?? "");
   const dni = trida === 5 ? dnyDo(TERMIN_5) : getDaysUntilCermat();
-  const uroven = getLevelFromXP(xp);
-  const xpDalsi = uroven.xp_max === null ? null : uroven.xp_max + 1;
-  const xpPodil = xpDalsi === null ? 100 : Math.round(((xp - uroven.xp_min) / (xpDalsi - uroven.xp_min)) * 100);
+  const uroven = urovenZXP(xp);
+  const dalsiOdmena = dalsiVelkaOdmena(trida, uroven.n);
+  const { stav: sbirka, nacteno: sbirkaNactena } = useSbirka();
   const g5 = trida === 5;
+
+  // Odměny za XP úrovně (i zpětně za XP z doby před herním systémem)
+  useEffect(() => { zkontrolujUroven(trida); }, [trida, xp]);
 
   const [diagHotova, setDiagHotova] = useState(diagDone);
   const [trenink, setTrenink] = useState<DnesniTrenink | null>(null);
@@ -223,18 +230,24 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
               <p className="text-sm lg:text-base" style={{ color: "#D9D8FE" }}>{jmeno ? `Ahoj, ${vokativ(jmeno)}!` : "Ahoj!"}</p>
               <div className="hidden lg:flex gap-2 shrink-0 mr-16">
                 <span className="px-3 py-1.5 rounded-xl text-sm font-bold" style={{ background: "rgba(255,255,255,.1)" }}>🔥 {streak} {streak === 1 ? "den" : streak >= 2 && streak <= 4 ? "dny" : "dní"} v řadě</span>
-                <span className="px-3 py-1.5 rounded-xl text-sm font-bold" style={{ background: "rgba(255,255,255,.1)" }}>⚡ {xp} XP</span>
+                <Link href="/sbirka" className="px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1.5" style={{ background: "rgba(255,255,255,.1)" }} data-testid="domov-krystaly"><i className="hx-krystal" aria-hidden="true" /> {sbirkaNactena ? krystaly(sbirka) : "…"} krystalů</Link>
               </div>
             </div>
             <h1 className="text-2xl lg:text-[32px] font-extrabold leading-tight mt-0.5">Do přijímaček zbývá {dni} dní</h1>
             <div className="mt-3 lg:mt-5 flex flex-col gap-1.5">
               <div className="flex justify-between text-[13px]" style={{ color: "#D9D8FE" }}>
-                <b className="text-white">Úroveň {uroven.id} · {uroven.label}</b>
-                <span className="tabular-nums">{xpDalsi === null ? `${xp} XP` : `${xp} / ${xpDalsi} XP`}</span>
+                <b className="text-white" data-testid="domov-uroven">Úroveň {uroven.n} · {uroven.hodnost.label}</b>
+                <span className="tabular-nums">{xp} / {uroven.do} XP</span>
               </div>
               <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,.18)" }}>
-                <i className="block h-full rounded-full" style={{ width: `${Math.max(3, Math.min(100, xpPodil))}%`, background: "#F5A623" }} />
+                <i className="block h-full rounded-full" style={{ width: `${Math.max(3, Math.min(100, Math.round(uroven.podil * 100)))}%`, background: "#F5A623" }} />
               </div>
+              <Link href="/sbirka?tab=urovne" className="text-[13px] flex items-center gap-1.5 flex-wrap" style={{ color: "#D9D8FE" }} data-testid="domov-dalsi-odmena">
+                <span className="lg:hidden flex items-center gap-1 font-bold text-white"><i className="hx-krystal" aria-hidden="true" /> {sbirkaNactena ? krystaly(sbirka) : "…"}</span>
+                <span className="lg:hidden" aria-hidden="true">·</span>
+                <span>Za novou úroveň krystaly{dalsiOdmena ? <>, na úrovni {dalsiOdmena.n} <b className="text-white">{dalsiOdmena.vec ? dalsiOdmena.vec.nazev : "legendární truhla"}</b></> : ""}</span>
+                <span aria-hidden="true">›</span>
+              </Link>
             </div>
           </HlavickaZnacky>
 
@@ -437,7 +450,9 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
             </div>
           </div>
 
+          <HexikUvod trida={trida} />
           <DenniMise streak={streak} odkaz />
+          <BossKarta trida={trida} jenCeka />
 
           {isPremium ? (
             <div className="mm-karta p-4 lg:p-5 flex flex-col gap-2.5">

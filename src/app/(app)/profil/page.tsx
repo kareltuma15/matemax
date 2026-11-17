@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { loadProgress } from "@/lib/progress";
-import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeConfig } from "@/lib/gamification";
+import { loadGamification, getAllBadges, getLevelFromXP, BadgeConfig } from "@/lib/gamification";
+import { urovenZXP } from "@/lib/urovne";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import PropojeniVysledky from "@/components/PropojeniVysledky";
@@ -559,10 +560,10 @@ export default function ProfilPage() {
   }
 
   const level = getLevelFromXP(xp);
-  const toNext = xpToNextLevel(xp);
-  const levelXP = xp - level.xp_min;
-  const levelTotal = level.xp_max !== null ? level.xp_max + 1 - level.xp_min : null;
-  const pct = levelTotal !== null ? Math.min(100, Math.round((levelXP / levelTotal) * 100)) : 100;
+  // Číslovaná XP úroveň (stejná jako na Domově a ve Sbírce), hodnost zůstává podle původních hranic
+  const urovenXP = urovenZXP(xp);
+  const toNext: number | null = urovenXP.do - xp;
+  const pct = Math.min(100, Math.round(urovenXP.podil * 100));
 
   const initials = email ? email[0].toUpperCase() : "?";
 
@@ -649,7 +650,7 @@ export default function ProfilPage() {
                   style={{ background: "rgba(253,224,71,0.18)", border: "1px solid rgba(253,224,71,0.4)" }}
                 >
                   <span className="text-sm">{level.icon_emoji}</span>
-                  <span className="text-xs font-bold" style={{ color: "#fde047" }}>{level.rank_title}</span>
+                  <span className="text-xs font-bold" style={{ color: "#fde047" }}>Úroveň {urovenXP.n} · {level.rank_title}</span>
                 </span>
                 <span
                   className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-white"

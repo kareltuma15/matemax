@@ -27,8 +27,13 @@ export interface Odmena {
   vz: Vzacnost;
   /** 0 = má každý od začátku, null = nejde koupit (jen z truhel). */
   cena: number | null;
-  /** Odkud jinak než z truhel: "test" = jen za test nanečisto (v truhlách nepadá). */
-  zdroj?: "test";
+  /**
+   * Odkud jinak než z truhel (v truhlách pak nepadá a nejde koupit):
+   * "test" = jen za test nanečisto, "uroven" = dostane ji každý, kdo dosáhne XP úrovně `uroven`.
+   */
+  zdroj?: "test" | "uroven";
+  /** U odměny za úroveň: číslo XP úrovně, na které se odemkne. */
+  uroven?: number;
   /** Sezónní věc: koupit a vylosovat jde jen v sezóně, co žák jednou má, zůstává mu. */
   sezona?: SezonaId;
 }
@@ -80,8 +85,8 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
   pozadi: "Pozadí profilu",
 };
 
-// [typ, klíč, název, vzácnost, cena, zdroj nebo sezóna?]
-type Radek = [TypOdmeny, string, string, Vzacnost, number | null, ("test" | SezonaId)?];
+// [typ, klíč, název, vzácnost, cena, zdroj nebo sezóna?]  „u10“ = odměna za XP úroveň 10
+type Radek = [TypOdmeny, string, string, Vzacnost, number | null, ("test" | SezonaId | `u${number}`)?];
 const KATALOG: Record<Trida, Radek[]> = {
   5: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -130,6 +135,16 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["podoba", "sampion", "Šampion", "vzacna", 900, "finis"],
     ["efekt", "medaile", "Medaile", "neobvykla", 400, "finis"],
     ["pozadi", "cil", "Cílová páska", "neobvykla", 400, "finis"],
+    // za XP úrovně
+    ["efekt", "notky", "Notičky", "bezna", null, "u3"],
+    ["pozadi", "duhova", "Duhová louka", "neobvykla", null, "u5"],
+    ["podoba", "vcelka", "Včelka", "neobvykla", null, "u8"],
+    ["vzhled", "les", "Kouzelný les", "neobvykla", null, "u10"],
+    ["efekt", "motylci", "Motýlci", "vzacna", null, "u13"],
+    ["pozadi", "zamek", "Zámek v oblacích", "vzacna", null, "u16"],
+    ["podoba", "kralovsky", "Královský Hexík", "vzacna", null, "u20"],
+    ["vzhled", "vata", "Cukrová vata", "vzacna", null, "u25"],
+    ["podoba", "duhovy", "Duhový Hexík", "legenda", null, "u30"],
   ],
   9: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -179,11 +194,26 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["podoba", "finisher", "Finišer", "neobvykla", 400, "finis"],
     ["efekt", "medaile", "Medaile", "neobvykla", 400, "finis"],
     ["pozadi", "cil", "Cílová páska", "vzacna", 900, "finis"],
+    // za XP úrovně
+    ["efekt", "binar", "Binárka", "bezna", null, "u3"],
+    ["pozadi", "beton", "Beton", "neobvykla", null, "u5"],
+    ["podoba", "toxic", "Toxic", "neobvykla", null, "u8"],
+    ["vzhled", "karbon", "Karbon", "neobvykla", null, "u10"],
+    ["efekt", "rakety", "Rakety", "vzacna", null, "u13"],
+    ["pozadi", "neonulice", "Neonová ulice", "vzacna", null, "u16"],
+    ["podoba", "chrom", "Chrom", "vzacna", null, "u20"],
+    ["vzhled", "lava", "Láva", "vzacna", null, "u25"],
+    ["podoba", "diamant", "Diamantový Hexík", "legenda", null, "u30"],
   ],
 };
 
 const zKatalogu = (t: Trida) => KATALOG[t].map(([typ, klic, nazev, vz, cena, extra]): Odmena =>
-  ({ id: `${t}-${typ}-${klic}`, trida: t, typ, klic, nazev, vz, cena, ...(extra === "test" ? { zdroj: "test" as const } : extra ? { sezona: extra } : {}) }));
+  ({
+    id: `${t}-${typ}-${klic}`, trida: t, typ, klic, nazev, vz, cena,
+    ...(extra === "test" ? { zdroj: "test" as const }
+      : extra?.startsWith("u") ? { zdroj: "uroven" as const, uroven: Number(extra.slice(1)) }
+      : extra ? { sezona: extra as SezonaId } : {}),
+  }));
 
 export const ODMENY: Record<Trida, Odmena[]> = { 5: zKatalogu(5), 9: zKatalogu(9) };
 
@@ -199,11 +229,11 @@ export const ANIMACE_OSLAVY: Record<string, string> = {
 };
 
 /** Tmavé vzhledy: obsah appky leží na světlém listu, aby texty mimo karty zůstaly čitelné. */
-export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora", "matrix"]);
+export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora", "matrix", "karbon", "lava"]);
 
 export const IKONA_ODMENY: Record<string, string> = {
   radost: "🙌", poskok: "🦘", tanec: "💃", kotrmelec: "🤸", salto: "🤸", teleport: "🌀", disco: "🪩", piruetka: "🌈",
-  jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥", vlocky: "❄️", medaile: "🥇",
+  jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥", vlocky: "❄️", medaile: "🥇", notky: "🎵", motylci: "🦋", binar: "💾", rakety: "🚀",
 };
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
@@ -231,7 +261,7 @@ export const TRUHLY: Truhla[] = [
     sance: { bezna: 0, neobvykla: 0.5, vzacna: 0.38, legenda: 0.12 }, bonus: [20, 50] },
   { id: "generalka", nazev: "Truhla Generálka", jak: "Za každý test nanečisto (kód z učebny nebo výsledek v appce)", cena: null,
     sance: { bezna: 0, neobvykla: 0.4, vzacna: 0.45, legenda: 0.15 }, bonus: [40, 90] },
-  { id: "legendarni", nazev: "Legendární truhla", jak: "Za zlepšení v testu nanečisto oproti minulému", cena: null,
+  { id: "legendarni", nazev: "Legendární truhla", jak: "Za zlepšení v testu nanečisto a za 10., 20. a 30. XP úroveň", cena: null,
     sance: { bezna: 0, neobvykla: 0, vzacna: 0, legenda: 1 }, bonus: [50, 100] },
   { id: "sezonni", nazev: "Sezónní truhla", jak: "Jen v sezóně, padají z ní jen sezónní věci", cena: 250,
     sance: { bezna: 0, neobvykla: 0.55, vzacna: 0.35, legenda: 0.1 }, bonus: [10, 30] },
@@ -319,6 +349,8 @@ export interface SbirkaStav {
   testy: Record<string, number | null>;
   /** Dokončené sady: id → den (bonus krystalů se připíše jen jednou). */
   sady: Record<string, string>;
+  /** Nejvyšší XP úroveň, za kterou už žák dostal krystaly a truhly (věci za úroveň se doplňují podle třídy). */
+  uroven: number;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
 }
@@ -332,7 +364,7 @@ export function vychoziStav(): SbirkaStav {
     denniOdemcena: null, denniOtevrena: null, dnyTreninku: [], zlataOtevrena: null,
     bezVzacne: 0, bezLegendy: 0, otevreno: 0, maxOdhad: {}, dny: {},
     naroky: {}, otevrenoNaroku: {}, mise: { d: "", hotove: [], serie: 0, maxSerie: 0, tezke: 0 },
-    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, sady: {}, t: 0,
+    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, sady: {}, uroven: 1, t: 0,
   };
 }
 
@@ -469,7 +501,7 @@ export function dostupnostTruhly(s: SbirkaStav, id: TruhlaId, den: string): Dost
   }
   if ((NAROKOVE_TRUHLY as string[]).includes(id)) {
     if (naroku(s, id as NarokTruhla) > 0) return { ok: true };
-    return { ok: false, proc: id === "doporuceni" ? "Zvládni doporučené téma." : id === "generalka" ? "Napiš test nanečisto." : "Zlepši se v dalším testu nanečisto." };
+    return { ok: false, proc: id === "doporuceni" ? "Zvládni doporučené téma." : id === "generalka" ? "Napiš test nanečisto." : "Zlepši se v testu nanečisto nebo dosáhni 10. úrovně." };
   }
   if (id === "zlata") {
     if (s.zlataOtevrena === pondeli(den)) return { ok: false, proc: "Tento týden už otevřená." };
@@ -595,6 +627,7 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
       const x = a.sady?.[k], y = b.sady?.[k];
       return [k, !x ? y! : !y ? x : x < y ? x : y];
     })),
+    uroven: Math.max(a.uroven ?? 1, b.uroven ?? 1),
     t: Math.max(a.t, b.t),
   };
 }
@@ -672,6 +705,8 @@ export function zapocitejTest(s: SbirkaStav, trida: Trida, den: string, body: nu
 // ── Boss týdne ──────────────────────────────────────────────────────────────
 
 export const ZA_BOSSE = 100;
+/** Za poraženého bosse týdne i XP (dřív je dával starý boss na konci tréninku tématu). */
+export const XP_ZA_BOSSE = 50;
 
 /** Boss týdne: těžký testový příklad (3. úroveň) stejný pro všechny žáky třídy po celý týden. */
 export function vyberBosse<T extends { id: string }>(kandidati: T[], den: string): T | null {
@@ -725,6 +760,9 @@ export const TROFEJE: Trofej[] = [
   { id: "mistr", nazev: "Mistr přijímaček", popis: "Dotáhni odhad bodů na 43.", ikona: "👑", splneno: (s) => Object.values(s.maxOdhad).some((b) => (b ?? 0) >= 43) },
   { id: "prvni_sada", nazev: "První sada", popis: "Dokonči celou sadu.", ikona: "📚", splneno: (s) => Object.keys(s.sady ?? {}).length >= 1 },
   { id: "sberatel_sad", nazev: "Sběratel sad", popis: "Dokonči tři sady.", ikona: "🗂️", splneno: (s) => Object.keys(s.sady ?? {}).length >= 3 },
+  { id: "uroven_10", nazev: "Desítka", popis: "Dosáhni 10. XP úrovně.", ikona: "🔟", splneno: (s) => (s.uroven ?? 1) >= 10 },
+  { id: "uroven_20", nazev: "Vytrvalec", popis: "Dosáhni 20. XP úrovně.", ikona: "💪", splneno: (s) => (s.uroven ?? 1) >= 20 },
+  { id: "uroven_30", nazev: "Legenda MateMaxu", popis: "Dosáhni 30. XP úrovně.", ikona: "🏆", splneno: (s) => (s.uroven ?? 1) >= 30 },
   { id: "sezonni", nazev: "Sezónní sběratel", popis: "Získej věc ze sezóny.", ikona: "🎄", splneno: (s) => s.mam.some((id) => !!najdiOdmenu(id)?.sezona) },
 ];
 

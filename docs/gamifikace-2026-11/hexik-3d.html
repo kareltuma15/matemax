@@ -1,0 +1,672 @@
+<title>Hexík ve 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Layout: živá 3D scéna s ovládáním nahoře (to je teze), pod ní názor, přínosy, rizika a plán v klidných kartách. */
+:root {
+  --bg: #F3F4FB;
+  --surface: #FFFFFF;
+  --ink: #0D1B3E;
+  --muted: #5F6982;
+  --line: #E1E3F0;
+  --violet: #5B55D6;
+  --lav: #AFACFB;
+  --amber: #F5A623;
+  --chip: #ECEBFD;
+  --chip-on: #0D1B3E;
+  --chip-on-ink: #FFFFFF;
+  --f-display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --f-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0A1030; --surface: #131B42; --ink: #ECEEFF; --muted: #A4AACB; --line: #263066;
+  --violet: #8D88F5; --lav: #AFACFB; --amber: #F7B544; --chip: #1E2758; --chip-on: #AFACFB; --chip-on-ink: #0D1B3E; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0A1030; --surface: #131B42; --ink: #ECEEFF; --muted: #A4AACB; --line: #263066;
+  --violet: #8D88F5; --lav: #AFACFB; --amber: #F7B544; --chip: #1E2758; --chip-on: #AFACFB; --chip-on-ink: #0D1B3E; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; display: flex; flex-direction: column; gap: 36px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 700; }
+h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 600; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--violet); }
+.lead { color: var(--muted); max-width: 62ch; font-size: 17px; }
+header { display: flex; flex-direction: column; gap: 10px; }
+
+/* Scéna */
+.lab { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.stage { position: relative; border-radius: 28px; overflow: hidden; height: 540px; color: #fff; isolation: isolate; }
+.stage[data-pozadi="studio"] { background: radial-gradient(circle at 50% 38%, #4A3FA8 0%, #1F2F66 48%, #0D1B3E 100%); }
+.stage[data-pozadi="vesmir"] { background:
+  radial-gradient(1.5px 1.5px at 12% 22%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 30% 70%, #fff 50%, transparent 51%),
+  radial-gradient(1.5px 1.5px at 72% 18%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 86% 62%, #fff 50%, transparent 51%),
+  radial-gradient(1px 1px at 55% 40%, #cfd8ff 50%, transparent 51%), radial-gradient(2px 2px at 90% 88%, #fff 50%, transparent 51%),
+  radial-gradient(1px 1px at 8% 84%, #fff 50%, transparent 51%), radial-gradient(circle at 75% 20%, rgba(124,58,237,.45), transparent 45%),
+  linear-gradient(180deg, #070A24, #1B1150); }
+.stage[data-pozadi="vanoce"] { background:
+  radial-gradient(3px 3px at 15% 20%, rgba(255,255,255,.9) 50%, transparent 51%), radial-gradient(2px 2px at 40% 12%, rgba(255,255,255,.8) 50%, transparent 51%),
+  radial-gradient(3px 3px at 80% 30%, rgba(255,255,255,.9) 50%, transparent 51%), radial-gradient(2px 2px at 65% 55%, rgba(255,255,255,.7) 50%, transparent 51%),
+  radial-gradient(2px 2px at 22% 60%, rgba(255,255,255,.7) 50%, transparent 51%), radial-gradient(3px 3px at 90% 75%, rgba(255,255,255,.8) 50%, transparent 51%),
+  linear-gradient(160deg, #8E1B1F, #3B0F1A 55%, #123B24); }
+#scena { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; }
+#scena:active { cursor: grabbing; }
+.stage-top { position: absolute; top: 14px; left: 16px; right: 16px; display: flex; justify-content: space-between; gap: 8px; pointer-events: none; font-size: 13px; }
+.pill { background: rgba(255,255,255,.14); backdrop-filter: blur(6px); border-radius: 999px; padding: 5px 12px; font-weight: 700; }
+.bublina { position: absolute; left: 50%; top: 64px; transform: translateX(-50%) scale(.9); background: #fff; color: #0D1B3E; font-family: var(--f-display); font-weight: 600; font-size: 18px; border-radius: 18px; padding: 8px 16px; opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; white-space: nowrap; max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis; }
+.bublina.on { opacity: 1; transform: translateX(-50%) scale(1); }
+.stage-hint { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; font-size: 13px; color: rgba(255,255,255,.75); pointer-events: none; }
+.bez3d { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; }
+.bez3d[hidden] { display: none; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+.grp { display: flex; flex-direction: column; gap: 8px; }
+.grp-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.grp-h b { font-family: var(--f-display); font-weight: 600; font-size: 16px; }
+.grp-h span { font-size: 12px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 14px; font-weight: 700; border: 0; border-radius: 12px; padding: 7px 11px; background: var(--chip); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: transform .12s; }
+.chip:hover { transform: translateY(-1px); }
+.chip:focus-visible, .tanec:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.chip[aria-pressed="true"] { background: var(--chip-on); color: var(--chip-on-ink); }
+.dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.12); }
+.slot { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); width: 100%; margin-top: 2px; }
+.tance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.tanec { font: inherit; text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 14px; padding: 8px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.tanec:hover { border-color: var(--violet); }
+.tanec b { font-family: var(--f-display); font-weight: 600; font-size: 15px; }
+.tanec small { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.vz { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 1px 6px; border-radius: 6px; color: #fff; align-self: flex-start; margin-top: 3px; }
+.pocet { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+.pocet b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Text */
+.verdict { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.verdict .say { display: flex; flex-direction: column; gap: 12px; }
+.verdict .say p { max-width: 62ch; }
+.timeline { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 0; }
+.tl { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding-block: 12px; border-bottom: 1px dashed var(--line); }
+.tl:last-child { border-bottom: 0; }
+.tl b { font-family: var(--f-display); font-weight: 600; }
+.tl .kdy { font-size: 13px; font-weight: 700; color: var(--violet); }
+.tl p { font-size: 14px; color: var(--muted); }
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.card p { font-size: 14px; color: var(--muted); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.list { display: flex; flex-direction: column; gap: 12px; }
+.row { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; font-size: 15px; }
+.row i { font-style: normal; width: 26px; height: 26px; border-radius: 9px; display: grid; place-items: center; font-weight: 700; font-size: 14px; background: var(--chip); color: var(--violet); }
+.row span b { color: var(--ink); }
+.row span { color: var(--muted); }
+.plan { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.plan .card .n { font-family: var(--f-display); font-size: 30px; font-weight: 700; color: var(--lav); line-height: 1; }
+.plan .card .h { font-size: 13px; font-weight: 700; color: var(--violet); }
+section { display: flex; flex-direction: column; gap: 16px; }
+
+@media (max-width: 900px) {
+  .lab, .verdict, .two { grid-template-columns: minmax(0, 1fr); }
+  .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stage { height: 420px; }
+}
+@media (max-width: 560px) {
+  .grid4, .plan { grid-template-columns: minmax(0, 1fr); }
+  .stage { height: 380px; }
+  .tl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { .chip, .bublina { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">MateMax · herní systém · návrh</p>
+    <h1>Hexík ve 3D</h1>
+    <p class="lead">Živá ukázka, ne obrázek. Hexíka tu nekreslil grafik, je celý složený z kódu a běží přímo v prohlížeči i na telefonu. Otoč ho prstem, převleč ho a pusť mu taneček.</p>
+  </header>
+
+  <div class="lab">
+    <div class="stage" id="stage" data-pozadi="studio">
+      <canvas id="scena" aria-label="3D Hexík, táhni pro otočení, klepni pro jásot"></canvas>
+      <div class="stage-top"><span class="pill" id="info-podoba">Klasik</span><span class="pill" id="info-xp">Úroveň 7 · 1 240 XP</span></div>
+      <div class="bublina" id="bublina" aria-live="polite"></div>
+      <p class="stage-hint">Táhni do strany pro otočení · klepni na Hexíka</p>
+      <div class="bez3d" id="bez3d" hidden><p>Tohle zařízení 3D nezobrazí. V appce by se tu ukázal dnešní 2D Hexík.</p></div>
+    </div>
+
+    <div class="panel">
+      <div class="grp">
+        <div class="grp-h"><b>Rychlé ukázky</b><span>obsah podle třídy</span></div>
+        <div class="chips">
+          <button class="chip" type="button" id="preset-5">🦊 Páťák: roztomilý</button>
+          <button class="chip" type="button" id="preset-9">😎 Deváťák: cool</button>
+          <button class="chip" type="button" id="preset-leg">✨ Legendární</button>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-h"><b>Podoba a materiál</b><span>3D umí lesk, sklo i svit</span></div>
+        <div class="chips" id="podoby"></div>
+      </div>
+      <div class="grp">
+        <div class="grp-h"><b>Doplňky na sloty</b><span>kombinují se</span></div>
+        <div class="chips" id="doplnky"></div>
+      </div>
+      <div class="grp">
+        <div class="grp-h"><b>Tanečky</b><span>nový druh odměny</span></div>
+        <div class="tance" id="tance"></div>
+      </div>
+      <div class="grp">
+        <div class="grp-h"><b>Pozadí</b></div>
+        <div class="chips" id="pozadi"></div>
+      </div>
+      <p class="pocet" id="pocet"></p>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <div class="say">
+      <p class="eyebrow">Můj názor</p>
+      <h2>Jde to a pro nás je to levnější, než to vypadá. Spuštění kvůli tomu ale nezdržujme.</h2>
+      <p>Hexík je geometrický tvar, takže ho nepotřebujeme modelovat v grafickém programu. Celá ukázka nahoře je kód: tělo, oči, ruce, doplňky i tanečky. Nový doplněk jsou desítky řádků, nový taneček jedna funkce. Nemusíme kvůli tomu najímat 3D grafika.</p>
+      <p>Doporučuju herní systém pustit teď ve 2D, aby běžel už o Vánocích. 3D Hexíka pak vydat s lednovou sezónou Zima jako velkou novinku „Hexík ožil“. Dostaneme druhou vlnu pozornosti a do té doby v datech uvidíme, jestli odměny děti opravdu přivádějí k tréninku.</p>
+    </div>
+    <div class="timeline" aria-label="Časová osa">
+      <div class="tl"><span class="kdy">teď</span><div><b>Herní systém ve 2D</b><p>Sjednocení bosse, XP úrovně s odměnami, uvítání Hexíka. Ven do 1. 12.</p></div></div>
+      <div class="tl"><span class="kdy">prosinec</span><div><b>Stavba 3D Hexíka</b><p>Vedle ostrého provozu, ve vedlejší větvi. Převod všech dnešních podob.</p></div></div>
+      <div class="tl"><span class="kdy">7. 1.</span><div><b>Hexík ožil</b><p>Start sezóny Zima: 3D Hexík, tanečky a doplňky na sloty, post a e-mail rodičům.</p></div></div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Co 3D přidá</h2>
+    <div class="grid4">
+      <div class="card"><h3>Tanečky</h3><p>Nový druh odměny, který ve 2D nejde. Hodí se jako odměna za XP úrovně: každá úroveň odemkne taneček nebo doplněk.</p></div>
+      <div class="card"><h3>Doplňky na sloty</h3><p>Místo pevných podob se skládá hlava, oči a krk, později ruce a záda. Z pár věcí vznikají stovky kombinací a každé dítě má svého Hexíka.</p></div>
+      <div class="card"><h3>Materiály</h3><p>Zlato, které se leskne, průsvitný krystal, neon, který svítí. Legendární věc pozná každý na první pohled.</p></div>
+      <div class="card"><h3>Hra s Hexíkem</h3><p>Dá se otáčet a reaguje na klepnutí. Děti si ho budou ukazovat, a to je nejlepší reklama.</p></div>
+    </div>
+  </section>
+
+  <div class="two">
+    <section>
+      <h2>Procvičování zůstává na prvním místě</h2>
+      <div class="list">
+        <div class="row"><i>✓</i><span><b>Velký 3D Hexík jen tam, kde se neučí:</b> Sbírka, šatník, oslava po tréninku, nová úroveň a otevírání truhly.</span></div>
+        <div class="row"><i>✓</i><span><b>V příkladu jen krátká reakce</b> (jásot, „nevadí“) v malém okénku. Příklad je pořád hlavní věc na obrazovce.</span></div>
+        <div class="row"><i>✓</i><span><b>Tanečky a doplňky se získávají jen učením:</b> XP úrovně, mise, Boss týdne, test nanečisto. Nic za peníze.</span></div>
+      </div>
+    </section>
+    <section>
+      <h2>Rizika a jak je řešíme</h2>
+      <div class="list">
+        <div class="row"><i>1</i><span><b>Rychlost appky:</b> 3D knihovna má kolem 150 kB a načte se jen na stránkách, kde je Hexík ve 3D. Trénink se nezpomalí.</span></div>
+        <div class="row"><i>2</i><span><b>Slabé telefony a baterie:</b> co 3D nezvládne, dostane dnešního 2D Hexíka. Animace stojí, když stránka není vidět.</span></div>
+        <div class="row"><i>3</i><span><b>Co už děti mají:</b> všechny dnešní podoby převedu do 3D, nikdo o nic nepřijde. Obrázky do e-mailu se vyfotí přímo z 3D, takže budou sedět.</span></div>
+        <div class="row"><i>4</i><span><b>Složité kousky</b> jako křídla dráčka nebo hříva jednorožce jsou v kódu pracnější. Na prémiové věci se dá později přizvat 3D grafik, appka jeho model načte stejně.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Plán stavby</h2>
+    <div class="plan">
+      <div class="card"><span class="n">1</span><span class="h">odhad 3 dny</span><h3>Hexík ve Sbírce a šatníku</h3><p>3D model, převod dnešních podob, doplňky na sloty a tanečky jako nový typ odměny navázaný na XP úrovně.</p></div>
+      <div class="card"><span class="n">2</span><span class="h">odhad 2 dny</span><h3>Oslavy ve 3D</h3><p>Po tréninku, při nové úrovni a při otevírání truhly. Malá reakce v příkladu a záloha 2D pro slabá zařízení.</p></div>
+      <div class="card"><span class="n">3</span><span class="h">volitelně, později</span><h3>Prémiové kousky</h3><p>Grafik pro složité doplňky a 3D odměny do sezónního pasu, až rozhodneš o jeho ceně.</p></div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var reduce = false;
+  try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+
+  /* ---------- Data ---------- */
+  var PODOBY = [
+    { id: "klasik", nazev: "Klasik", o: "#AFACFB", i: "#C9C7F5", tvare: true },
+    { id: "mata", nazev: "Máta", o: "#5FD0AA", i: "#B3EEDA", tvare: true },
+    { id: "malina", nazev: "Malina", o: "#F27BA5", i: "#F9BCD2", tvare: true },
+    { id: "lisak", nazev: "Lišák", o: "#F08C3A", i: "#FFE3C7", tvare: true, usi: true },
+    { id: "neon", nazev: "Neon", o: "#1A1446", i: "#241C5E", neon: true },
+    { id: "krystal", nazev: "Krystal", o: "#8FE3FF", i: "#E2F8FF", sklo: true, tvare: true },
+    { id: "zlaty", nazev: "Zlatý", o: "#F5B623", i: "#FFE08A", kov: true }
+  ];
+  var DOPLNKY = [
+    { id: "cepice", nazev: "Vánoční čepice", slot: "hlava" },
+    { id: "koruna", nazev: "Koruna", slot: "hlava" },
+    { id: "ksiltovka", nazev: "Kšiltovka", slot: "hlava" },
+    { id: "sluchatka", nazev: "Sluchátka", slot: "hlava" },
+    { id: "bryle", nazev: "Brýle", slot: "oči" },
+    { id: "motylek", nazev: "Motýlek", slot: "krk" },
+    { id: "medaile", nazev: "Medaile", slot: "krk" }
+  ];
+  var VZ = { "Běžný": "#8A93AA", "Neobvyklý": "#2FA36B", "Vzácný": "#2E6DA4", "Legendární": "#D97E00" };
+  var TANCE = [
+    { id: "jasot", nazev: "Jásot", kdy: "správná odpověď", vz: "Běžný", dur: 1.2, text: "Správně! +2 krystaly" },
+    { id: "smutek", nazev: "Nevadí", kdy: "po chybě", vz: "Běžný", dur: 2.4, text: "Nevadí, ukážu ti postup." },
+    { id: "mavani", nazev: "Mávání", kdy: "uvítání", vz: "Běžný", dur: 2.0, text: "Ahoj! Jdeme trénovat?" },
+    { id: "tanec", nazev: "Taneček", kdy: "za úroveň 3", vz: "Neobvyklý", dur: 3.0, text: "Trénink dokončen!" },
+    { id: "robot", nazev: "Robot", kdy: "za úroveň 6", vz: "Vzácný", dur: 3.2, text: "Denní mise: 3 ze 3" },
+    { id: "piruetka", nazev: "Piruetka", kdy: "Boss týdne", vz: "Vzácný", dur: 1.5, text: "Boss poražen! +100 krystalů" },
+    { id: "salto", nazev: "Hvězdné salto", kdy: "legendární, z truhel", vz: "Legendární", dur: 1.9, text: "Nový bod v odhadu!" }
+  ];
+  var POZADI = [{ id: "studio", nazev: "Studio" }, { id: "vesmir", nazev: "Vesmír" }, { id: "vanoce", nazev: "Vánoční noc" }];
+
+  /* ---------- UI ---------- */
+  var stav = { podoba: "klasik", sloty: { hlava: null, "oči": null, krk: null } };
+  var elPodoby = document.getElementById("podoby"), elDopl = document.getElementById("doplnky"), elTance = document.getElementById("tance"), elPoz = document.getElementById("pozadi");
+  var stage = document.getElementById("stage");
+
+  function chip(text, onClick, extra) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", "false");
+    if (extra) b.appendChild(extra);
+    b.appendChild(document.createTextNode(text));
+    b.addEventListener("click", onClick);
+    return b;
+  }
+  PODOBY.forEach(function (p) {
+    var d = document.createElement("span"); d.className = "dot";
+    d.style.background = p.kov ? "linear-gradient(135deg,#FFE07A,#D97E00)" : p.sklo ? "linear-gradient(135deg,#E2F8FF,#5CC8F0)" : p.neon ? "radial-gradient(#3DF5FF 30%,#1A1446 34%)" : p.o;
+    var b = chip(p.nazev, function () { nastavPodobu(p.id); }, d); b.dataset.podoba = p.id; elPodoby.appendChild(b);
+  });
+  var slotyPoradi = ["hlava", "oči", "krk"];
+  slotyPoradi.forEach(function (s) {
+    var l = document.createElement("span"); l.className = "slot"; l.textContent = s; elDopl.appendChild(l);
+    DOPLNKY.filter(function (d) { return d.slot === s; }).forEach(function (d) {
+      var b = chip(d.nazev, function () { prepniDoplnek(d.id); }); b.dataset.doplnek = d.id; elDopl.appendChild(b);
+    });
+  });
+  TANCE.forEach(function (t) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "tanec";
+    b.innerHTML = "<b></b><small></small><span class='vz'></span>";
+    b.querySelector("b").textContent = t.nazev; b.querySelector("small").textContent = t.kdy;
+    var v = b.querySelector(".vz"); v.textContent = t.vz; v.style.background = VZ[t.vz];
+    b.addEventListener("click", function () { spust(t.id); });
+    elTance.appendChild(b);
+  });
+  POZADI.forEach(function (p) {
+    var b = chip(p.nazev, function () { stage.dataset.pozadi = p.id; obnovUI(); }); b.dataset.pozadi = p.id; elPoz.appendChild(b);
+  });
+  (function () {
+    var nSloty = slotyPoradi.reduce(function (a, s) { return a * (DOPLNKY.filter(function (d) { return d.slot === s; }).length + 1); }, 1);
+    document.getElementById("pocet").innerHTML = "Jen z téhle ukázky: <b>" + PODOBY.length + "</b> podob × doplňky ve <b>3</b> slotech = <b>" + (PODOBY.length * nSloty) + "</b> různých Hexíků. Dnes má každá podoba pevný vzhled.";
+  })();
+
+  function obnovUI() {
+    elPodoby.querySelectorAll("[data-podoba]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.podoba === stav.podoba)); });
+    elDopl.querySelectorAll("[data-doplnek]").forEach(function (b) {
+      var d = DOPLNKY.filter(function (x) { return x.id === b.dataset.doplnek; })[0];
+      b.setAttribute("aria-pressed", String(stav.sloty[d.slot] === d.id));
+    });
+    elPoz.querySelectorAll("[data-pozadi]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.pozadi === stage.dataset.pozadi)); });
+    var p = PODOBY.filter(function (x) { return x.id === stav.podoba; })[0];
+    var dop = slotyPoradi.map(function (s) { return stav.sloty[s]; }).filter(Boolean).map(function (id) { return DOPLNKY.filter(function (d) { return d.id === id; })[0].nazev.toLowerCase(); });
+    document.getElementById("info-podoba").textContent = p.nazev + (dop.length ? " + " + dop.join(", ") : "");
+  }
+
+  /* ---------- 3D ---------- */
+  var canvas = document.getElementById("scena");
+  var renderer;
+  try {
+    if (!window.THREE) throw new Error("three");
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+  } catch (e) {
+    document.getElementById("bez3d").hidden = false;
+    window.nastavPodobu = function () {};
+    return;
+  }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+  function C(h) { return new THREE.Color(h).convertSRGBToLinear(); }
+
+  // Jednoduché prostředí pro odlesky (zlato, sklo)
+  (function () {
+    var pm = new THREE.PMREMGenerator(renderer);
+    var es = new THREE.Scene();
+    var g = new THREE.SphereGeometry(10, 32, 16), pos = g.attributes.position, cols = [];
+    var dol = C("#262B5A"), nah = C("#FFFFFF");
+    for (var i = 0; i < pos.count; i++) {
+      var k = Math.max(0, pos.getY(i) / 10) * 0.85 + 0.12;
+      var c = dol.clone().lerp(nah, k); cols.push(c.r, c.g, c.b);
+    }
+    g.setAttribute("color", new THREE.Float32BufferAttribute(cols, 3));
+    es.add(new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide })));
+    var pl = new THREE.Mesh(new THREE.PlaneGeometry(7, 3), new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide }));
+    pl.position.set(4, 6, 5); pl.lookAt(0, 0, 0); es.add(pl);
+    var pl2 = new THREE.Mesh(new THREE.PlaneGeometry(4, 6), new THREE.MeshBasicMaterial({ color: 0xB9A8FF, side: THREE.DoubleSide }));
+    pl2.position.set(-6, 2, -3); pl2.lookAt(0, 0, 0); es.add(pl2);
+    scene.environment = pm.fromScene(es, 0.04).texture;
+  })();
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x3a3f6b, 0.5));
+  var key = new THREE.DirectionalLight(0xffffff, 0.85); key.position.set(2.5, 4, 4); scene.add(key);
+  var rim = new THREE.DirectionalLight(0xb9a8ff, 0.8); rim.position.set(-3, 2.5, -3); scene.add(rim);
+  var svit = new THREE.PointLight(0x3df5ff, 0, 5); svit.position.set(0, 0.2, 1.6); scene.add(svit);
+
+  function hex(R, rr) {
+    var pts = [], s = new THREE.Shape(), i;
+    for (i = 0; i < 6; i++) { var a = Math.PI / 2 + i * Math.PI / 3; pts.push(new THREE.Vector2(R * Math.cos(a), R * Math.sin(a))); }
+    for (i = 0; i < 6; i++) {
+      var p = pts[i], a1 = p.clone().lerp(pts[(i + 5) % 6], rr), a2 = p.clone().lerp(pts[(i + 1) % 6], rr);
+      if (i === 0) s.moveTo(a1.x, a1.y); else s.lineTo(a1.x, a1.y);
+      s.quadraticCurveTo(p.x, p.y, a2.x, a2.y);
+    }
+    s.closePath();
+    return s;
+  }
+
+  var bodyMat = new THREE.MeshPhysicalMaterial({ color: C("#AFACFB"), roughness: 0.42, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.4 });
+  var innerMat = new THREE.MeshStandardMaterial({ color: C("#C9C7F5"), roughness: 0.6, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 });
+  var eyeMat = new THREE.MeshStandardMaterial({ color: C("#0D1B3E"), roughness: 0.18 });
+  var whiteMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  var cheekMat = new THREE.MeshBasicMaterial({ color: C("#F7A3C0"), transparent: true, opacity: 0.85, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+  var mouthMat = new THREE.MeshStandardMaterial({ color: C("#0D1B3E"), roughness: 0.4 });
+
+  var root = new THREE.Group(); scene.add(root);
+  var hips = new THREE.Group(); hips.position.y = -1.22; root.add(hips);
+  var body = new THREE.Group(); body.position.y = 1.22; hips.add(body);
+
+  var bodyGeo = new THREE.ExtrudeGeometry(hex(1, 0.2), { depth: 0.55, bevelEnabled: true, bevelThickness: 0.18, bevelSize: 0.12, bevelSegments: 5, curveSegments: 10 });
+  bodyGeo.translate(0, 0, -0.275);
+  body.add(new THREE.Mesh(bodyGeo, bodyMat));
+  var inner = new THREE.Mesh(new THREE.ShapeGeometry(hex(0.83, 0.2), 10), innerMat); inner.position.z = 0.462; body.add(inner);
+
+  var eyes = [];
+  [-1, 1].forEach(function (sx) {
+    var g = new THREE.Group(); g.position.set(sx * 0.27, 0.1, 0.45);
+    var e = new THREE.Mesh(new THREE.SphereGeometry(0.13, 24, 16), eyeMat); e.scale.set(1, 1.25, 0.45); g.add(e);
+    var h = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 8), whiteMat); h.position.set(0.045, 0.065, 0.055); g.add(h);
+    g.userData.bx = sx * 0.27; body.add(g); eyes.push(g);
+  });
+  var mouth = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.034, 10, 28, Math.PI), mouthMat);
+  mouth.rotation.z = Math.PI; mouth.position.set(0, -0.24, 0.47); body.add(mouth);
+  var cheeks = new THREE.Group();
+  [-1, 1].forEach(function (sx) { var c = new THREE.Mesh(new THREE.CircleGeometry(0.085, 20), cheekMat); c.position.set(sx * 0.5, -0.14, 0.466); cheeks.add(c); });
+  body.add(cheeks);
+
+  var ears = new THREE.Group();
+  var pinkMat = new THREE.MeshStandardMaterial({ color: C("#F7A3C0"), roughness: 0.6 });
+  [-1, 1].forEach(function (sx) {
+    var g = new THREE.Group(); g.position.set(sx * 0.52, 0.88, 0); g.rotation.z = -sx * 0.42;
+    g.add(new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.56, 20), bodyMat));
+    var inn = new THREE.Mesh(new THREE.ConeGeometry(0.13, 0.36, 16), pinkMat); inn.position.set(0, -0.04, 0.12); g.add(inn);
+    ears.add(g);
+  });
+  body.add(ears);
+
+  function ruka(sx) {
+    var pivot = new THREE.Group(); pivot.position.set(sx * 1.0, -0.12, 0);
+    var a = new THREE.Mesh(new THREE.SphereGeometry(0.17, 20, 14), bodyMat); a.scale.set(0.8, 1.7, 0.8); a.position.y = -0.26; pivot.add(a);
+    body.add(pivot); return pivot;
+  }
+  var armL = ruka(-1), armR = ruka(1);
+  [-1, 1].forEach(function (sx) {
+    var f = new THREE.Mesh(new THREE.SphereGeometry(0.22, 20, 14), bodyMat); f.scale.set(1.15, 0.55, 1.35); f.position.set(sx * 0.4, -1.27, 0.08); root.add(f);
+  });
+
+  // Měkký stín a světlo na zemi
+  var stin = (function () {
+    var cv = document.createElement("canvas"); cv.width = cv.height = 128;
+    var x = cv.getContext("2d"), gr = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, "rgba(0,0,0,.55)"); gr.addColorStop(0.45, "rgba(0,0,0,.25)"); gr.addColorStop(1, "rgba(0,0,0,0)");
+    x.fillStyle = gr; x.fillRect(0, 0, 128, 128);
+    var m = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthWrite: false }));
+    m.rotation.x = -Math.PI / 2; m.position.y = -1.4; scene.add(m); return m;
+  })();
+  var podium = new THREE.Mesh(new THREE.CylinderGeometry(1.7, 1.85, 0.12, 64), new THREE.MeshStandardMaterial({ color: C("#FFFFFF"), transparent: true, opacity: 0.08, roughness: 0.9 }));
+  podium.position.y = -1.47; scene.add(podium);
+
+  /* Doplňky */
+  function std(h, o) { var m = new THREE.MeshStandardMaterial({ color: C(h), roughness: 0.5 }); if (o) for (var k in o) m[k] = o[k]; return m; }
+  var zlato = std("#F5B623", { metalness: 0.95, roughness: 0.22 });
+  var D = {};
+  (function () {
+    var g = new THREE.Group(); g.position.set(0.05, 1.02, 0); g.rotation.z = -0.28;
+    var c = new THREE.Mesh(new THREE.ConeGeometry(0.44, 0.95, 28), std("#D93A3A")); c.position.y = 0.48; g.add(c);
+    var b = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.11, 12, 32), std("#FFFFFF", { roughness: 0.9 })); b.rotation.x = Math.PI / 2; b.position.y = 0.02; g.add(b);
+    var p = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 12), std("#FFFFFF", { roughness: 0.9 })); p.position.y = 0.98; g.add(p);
+    D.cepice = g;
+  })();
+  (function () {
+    var g = new THREE.Group(); g.position.set(0, 1.02, 0);
+    var ring = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.42, 0.22, 32, 1, true), zlato); ring.material.side = THREE.DoubleSide; g.add(ring);
+    for (var i = 0; i < 6; i++) {
+      var a = i / 6 * Math.PI * 2;
+      var sp = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.24, 10), zlato); sp.position.set(Math.sin(a) * 0.38, 0.22, Math.cos(a) * 0.38); g.add(sp);
+      if (i % 2 === 0) { var gem = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 8), std(i === 0 ? "#E5484D" : "#3DA5FF", { roughness: 0.1 })); gem.position.set(Math.sin(a) * 0.41, 0, Math.cos(a) * 0.41); g.add(gem); }
+    }
+    D.koruna = g;
+  })();
+  (function () {
+    var g = new THREE.Group(); g.position.set(0, 0.86, 0);
+    var mat = std("#5B55D6");
+    var top = new THREE.Mesh(new THREE.SphereGeometry(0.56, 28, 14, 0, Math.PI * 2, 0, Math.PI / 2), mat); top.scale.set(1, 0.72, 0.95); g.add(top);
+    var brim = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.045, 28, 1, false, -Math.PI / 2, Math.PI), std("#F5A623")); brim.scale.set(1.2, 1, 1.5); brim.position.set(0, 0.02, 0.42); g.add(brim);
+    var btn = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), std("#F5A623")); btn.position.y = 0.41; g.add(btn);
+    D.ksiltovka = g;
+  })();
+  (function () {
+    var g = new THREE.Group(); g.position.set(0, 0.3, 0);
+    var tm = std("#1E2230", { roughness: 0.3, metalness: 0.4 });
+    var band = new THREE.Mesh(new THREE.TorusGeometry(1.06, 0.06, 10, 40, Math.PI), tm); g.add(band);
+    [-1, 1].forEach(function (sx) {
+      var cup = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.2, 28), tm); cup.rotation.z = Math.PI / 2; cup.position.x = sx * 1.08; g.add(cup);
+      var led = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.03, 24), new THREE.MeshBasicMaterial({ color: 0x3df5ff })); led.rotation.z = Math.PI / 2; led.position.x = sx * 1.19; g.add(led);
+    });
+    D.sluchatka = g;
+  })();
+  (function () {
+    var g = new THREE.Group(); g.position.set(0, 0.11, 0.53);
+    var m = std("#111522", { roughness: 0.08, metalness: 0.6 });
+    [-1, 1].forEach(function (sx) {
+      var l = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.22, 0.05), m); l.position.x = sx * 0.27; g.add(l);
+      var shine = new THREE.Mesh(new THREE.PlaneGeometry(0.08, 0.16), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 })); shine.position.set(sx * 0.27 - 0.08, 0.01, 0.03); shine.rotation.z = -0.5; g.add(shine);
+    });
+    var br = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.04, 0.04), m); br.position.y = 0.05; g.add(br);
+    D.bryle = g;
+  })();
+  (function () {
+    var g = new THREE.Group(); g.position.set(0, -0.6, 0.5);
+    var m = std("#E5484D", { roughness: 0.45 });
+    [-1, 1].forEach(function (sx) { var c = new THREE.Mesh(new THREE.ConeGeometry(0.13, 0.22, 16), m); c.rotation.z = sx * Math.PI / 2; c.position.x = sx * 0.12; c.scale.z = 0.5; g.add(c); });
+    var k = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), m); g.add(k);
+    D.motylek = g;
+  })();
+  (function () {
+    var g = new THREE.Group(); g.position.set(0, -0.05, 0.47);
+    var stuha = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.04, 8, 36, Math.PI), std("#2E6DA4")); stuha.rotation.z = Math.PI; g.add(stuha);
+    var disk = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.05, 32), zlato); disk.rotation.x = Math.PI / 2; disk.position.set(0, -0.56, 0.02); g.add(disk);
+    D.medaile = g;
+  })();
+  Object.keys(D).forEach(function (k) { D[k].visible = false; body.add(D[k]); });
+
+  /* Konfety */
+  var konfety = [], KB = ["#F5A623", "#5B55D6", "#3DF5FF", "#F27BA5", "#5FD0AA", "#FFFFFF"];
+  var kGeo = new THREE.PlaneGeometry(0.07, 0.12);
+  for (var ki = 0; ki < 80; ki++) {
+    var km = new THREE.Mesh(kGeo, new THREE.MeshBasicMaterial({ color: C(KB[ki % KB.length]), side: THREE.DoubleSide, transparent: true }));
+    km.visible = false; km.userData = { v: new THREE.Vector3(), s: new THREE.Vector3(), life: 0 }; scene.add(km); konfety.push(km);
+  }
+  function davka(n, sila, zlate) {
+    var used = 0;
+    for (var i = 0; i < konfety.length && used < n; i++) {
+      var k = konfety[i]; if (k.visible) continue;
+      used++; k.visible = true; k.userData.life = 0;
+      k.position.set((Math.random() - 0.5) * 0.6, root.position.y + 0.9, (Math.random() - 0.5) * 0.4);
+      var a = Math.random() * Math.PI * 2, r = (0.6 + Math.random()) * sila;
+      k.userData.v.set(Math.cos(a) * r, (2.2 + Math.random() * 1.6) * sila, Math.sin(a) * r * 0.6);
+      k.userData.s.set(Math.random() * 8, Math.random() * 8, Math.random() * 8);
+      k.material.color.copy(C(zlate ? (Math.random() < 0.7 ? "#F5B623" : "#FFFFFF") : KB[i % KB.length]));
+      k.scale.setScalar(zlate ? 1.4 : 1);
+    }
+  }
+
+  /* Podoba a doplňky */
+  function nastavPodobu(id) {
+    var P = PODOBY.filter(function (x) { return x.id === id; })[0]; stav.podoba = id;
+    bodyMat.color.copy(C(P.o));
+    bodyMat.metalness = P.kov ? 0.95 : 0;
+    bodyMat.roughness = P.kov ? 0.2 : P.sklo ? 0.04 : 0.42;
+    bodyMat.clearcoat = P.sklo ? 1 : 0.35;
+    bodyMat.transparent = !!P.sklo; bodyMat.opacity = P.sklo ? 0.62 : 1;
+    bodyMat.emissive.copy(P.neon ? C("#0B0730") : new THREE.Color(0));
+    innerMat.color.copy(C(P.i)); innerMat.metalness = P.kov ? 0.8 : 0; innerMat.roughness = P.kov ? 0.3 : 0.6;
+    innerMat.transparent = !!P.sklo; innerMat.opacity = P.sklo ? 0.55 : 1;
+    innerMat.emissive.copy(P.neon ? C("#1C1260") : new THREE.Color(0));
+    var e = P.neon ? C("#3DF5FF") : C("#0D1B3E");
+    eyeMat.color.copy(e); eyeMat.emissive.copy(P.neon ? e : new THREE.Color(0)); eyeMat.emissiveIntensity = P.neon ? 1.3 : 0;
+    mouthMat.color.copy(e); mouthMat.emissive.copy(P.neon ? e : new THREE.Color(0)); mouthMat.emissiveIntensity = P.neon ? 1.3 : 0;
+    cheeks.visible = !!P.tvare; ears.visible = !!P.usi && stav.sloty.hlava !== "cepice" && stav.sloty.hlava !== "ksiltovka";
+    svit.intensity = P.neon ? 1.6 : 0;
+    obnovUI();
+  }
+  function prepniDoplnek(id) {
+    var d = DOPLNKY.filter(function (x) { return x.id === id; })[0];
+    stav.sloty[d.slot] = stav.sloty[d.slot] === id ? null : id;
+    Object.keys(D).forEach(function (k) { D[k].visible = slotyPoradi.some(function (s) { return stav.sloty[s] === k; }); });
+    nastavPodobu(stav.podoba);
+    if (stav.sloty[d.slot] === id) spust("jasot", true);
+  }
+  function nastavSloty(o) {
+    stav.sloty = { hlava: o.hlava || null, "oči": o.oci || null, krk: o.krk || null };
+    Object.keys(D).forEach(function (k) { D[k].visible = slotyPoradi.some(function (s) { return stav.sloty[s] === k; }); });
+  }
+  document.getElementById("preset-5").addEventListener("click", function () { nastavSloty({ krk: "motylek" }); nastavPodobu("lisak"); stage.dataset.pozadi = "studio"; obnovUI(); spust("tanec"); });
+  document.getElementById("preset-9").addEventListener("click", function () { nastavSloty({ hlava: "sluchatka", oci: "bryle" }); nastavPodobu("neon"); stage.dataset.pozadi = "vesmir"; obnovUI(); spust("robot"); });
+  document.getElementById("preset-leg").addEventListener("click", function () { nastavSloty({ hlava: "koruna", krk: "medaile" }); nastavPodobu("zlaty"); obnovUI(); spust("salto"); });
+
+  /* Animace */
+  var akce = null, bubCas = 0;
+  var bub = document.getElementById("bublina");
+  function spust(id, tichy) {
+    var t = TANCE.filter(function (x) { return x.id === id; })[0];
+    akce = { id: id, start: cas, dur: t.dur, davka: false };
+    if (!tichy) { bub.textContent = t.text; bub.classList.add("on"); bubCas = cas + Math.max(1.6, t.dur); }
+    if (id === "jasot") davka(26, 1, false);
+  }
+  function cl(v) { return Math.max(0, Math.min(1, v)); }
+  function ease(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+  var ROBOT = { l: [0.25, 1.57, 1.57, 0.25, 0.25, 2.9, 1.57, 0.25], r: [0.25, 0.25, 1.57, 1.57, 2.9, 0.25, 1.57, 0.25], y: [0, 0, 0.6, 0.6, -0.6, -0.6, 0, 0], z: [0, 0.08, 0, -0.08, 0, 0.08, 0, 0] };
+
+  function poza(t) {
+    var P = { y: 0, sy: 1, rY: 0, rZ: 0, rX: 0, aL: 0.25, aR: 0.25, usta: 1, lx: 0, ly: 0 };
+    if (!reduce) { P.y = 0.035 * Math.sin(t * 2.2); P.sy = 1 + 0.018 * Math.sin(t * 2.2 + 1.2); P.aL = P.aR = 0.25 + 0.05 * Math.sin(t * 2.2); }
+    if (akce) {
+      var p = cl((t - akce.start) / akce.dur), e = Math.min(1, p / 0.12, (1 - p) / 0.12), s, h, b, q;
+      switch (akce.id) {
+        case "jasot":
+          s = (p * 2) % 1; h = 4 * s * (1 - s);
+          P.y = h * 0.55 * e + P.y * (1 - e);
+          P.sy = 1 + 0.12 * h - 0.16 * e * (Math.exp(-Math.pow(s / 0.09, 2)) + Math.exp(-Math.pow((1 - s) / 0.09, 2)));
+          P.aL = P.aR = 0.25 + 2.3 * e + 0.18 * Math.sin(t * 22) * e;
+          break;
+        case "tanec":
+          b = p * 6 * Math.PI;
+          P.rY = 0.5 * Math.sin(b) * e; P.rZ = 0.1 * Math.sin(b * 2) * e;
+          P.y = 0.14 * Math.abs(Math.sin(b)) * e; P.sy = 1 - 0.06 * Math.abs(Math.cos(b)) * e;
+          P.aL = 0.3 + 1.8 * Math.max(0, Math.sin(b)) * e; P.aR = 0.3 + 1.8 * Math.max(0, -Math.sin(b)) * e;
+          if (p > 0.85 && !akce.davka) { akce.davka = true; davka(30, 1, false); }
+          break;
+        case "robot":
+          var i = Math.min(7, Math.floor(p * 8)), j = Math.max(0, i - 1), k = Math.min(1, ((p * 8) % 1) * 6);
+          P.aL = ROBOT.l[j] + (ROBOT.l[i] - ROBOT.l[j]) * k; P.aR = ROBOT.r[j] + (ROBOT.r[i] - ROBOT.r[j]) * k;
+          P.rY = ROBOT.y[j] + (ROBOT.y[i] - ROBOT.y[j]) * k; P.rZ = ROBOT.z[j] + (ROBOT.z[i] - ROBOT.z[j]) * k;
+          P.y = 0.04 * (1 - k); P.sy = 1 - 0.04 * (1 - k);
+          break;
+        case "piruetka":
+          q = ease(cl((p - 0.1) / 0.8));
+          P.rY = q * Math.PI * 2; P.y = Math.sin(p * Math.PI) * 0.7;
+          P.aL = P.aR = 0.25 + 1.3 * Math.sin(p * Math.PI); P.sy = 1 + 0.08 * Math.sin(p * Math.PI);
+          if (p > 0.9 && !akce.davka) { akce.davka = true; davka(34, 1.1, false); }
+          break;
+        case "mavani":
+          P.aR = 0.25 + 2.4 * e + 0.4 * Math.sin(p * Math.PI * 10) * e; P.rZ = -0.07 * e; P.lx = 0.4 * e;
+          break;
+        case "salto":
+          P.y = Math.sin(p * Math.PI) * 1.4;
+          q = ease(cl((p - 0.15) / 0.65)); P.rX = -q * Math.PI * 2;
+          P.aL = P.aR = 0.25 + 2.4 * Math.sin(p * Math.PI);
+          P.sy = p < 0.12 ? 1 - 0.25 * Math.sin(p / 0.12 * Math.PI) : 1 + 0.1 * Math.sin(p * Math.PI);
+          if (p > 0.5 && !akce.davka) { akce.davka = true; davka(70, 1.35, true); }
+          break;
+        case "smutek":
+          var d = p < 0.6 ? Math.min(1, p / 0.15) : Math.max(0, 1 - (p - 0.6) / 0.22);
+          P.sy = 1 - 0.12 * d; P.y *= (1 - d); P.aL = P.aR = 0.25 - 0.2 * d; P.rZ = 0.06 * d;
+          P.usta = 1 - 2 * d; P.ly = -0.7 * d;
+          if (p > 0.82) P.y += 0.12 * Math.sin((p - 0.82) / 0.18 * Math.PI);
+          break;
+      }
+      if (p >= 1) akce = null;
+    }
+    return P;
+  }
+
+  /* Ovládání otáčení */
+  var drag = false, lastX = 0, moved = 0, userRot = 0, vel = 0, posledni = -10, look = { x: 0, y: 0 };
+  canvas.addEventListener("pointerdown", function (e) { drag = true; lastX = e.clientX; moved = 0; try { canvas.setPointerCapture(e.pointerId); } catch (x) {} posledni = cas; });
+  canvas.addEventListener("pointermove", function (e) {
+    var r = canvas.getBoundingClientRect();
+    look.x = cl((e.clientX - r.left) / r.width) * 2 - 1; look.y = -(cl((e.clientY - r.top) / r.height) * 2 - 1);
+    if (!drag) return;
+    var dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+    userRot += dx * 0.012; vel = dx * 0.012; posledni = cas;
+  });
+  function konec() { if (drag && moved < 6) spust("jasot"); drag = false; }
+  canvas.addEventListener("pointerup", konec);
+  canvas.addEventListener("pointercancel", function () { drag = false; });
+  canvas.addEventListener("pointerleave", function () { look.x = 0; look.y = 0; });
+
+  function velikost() {
+    var w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    var z = w < 520 ? 9.6 : 8.4;
+    camera.position.set(0, 0.45, z); camera.lookAt(0, 0.15, 0); camera.updateProjectionMatrix();
+  }
+  if (window.ResizeObserver) new ResizeObserver(velikost).observe(stage); else window.addEventListener("resize", velikost);
+  velikost();
+
+  var clock = new THREE.Clock(), cas = 0, mrk = 2.5, mrkStart = -1;
+  function snimek() {
+    var dt = Math.min(0.05, clock.getDelta()); cas += dt;
+    var P = poza(cas);
+    if (!drag) {
+      userRot += vel; vel *= 0.9;
+      if (cas - posledni > 3.5) { var cil = Math.round(userRot / (Math.PI * 2)) * Math.PI * 2; userRot += (cil - userRot) * 0.04; }
+    }
+    root.position.y = P.y; root.rotation.set(P.rX, userRot + P.rY, 0);
+    var sx = 1 / Math.sqrt(P.sy); hips.scale.set(sx, P.sy, sx);
+    body.rotation.z = P.rZ;
+    armL.rotation.z = -P.aL; armR.rotation.z = P.aR;
+    mouth.scale.y = P.usta; mouth.position.y = -0.24 - (1 - P.usta) * 0.05;
+    if (cas > mrk) { mrkStart = cas; mrk = cas + 2.5 + Math.random() * 2.5; }
+    var bl = mrkStart > 0 && cas - mrkStart < 0.16 ? 1 - 0.9 * Math.sin((cas - mrkStart) / 0.16 * Math.PI) : 1;
+    eyes.forEach(function (g) { g.scale.y = bl; g.position.x = g.userData.bx + (P.lx + look.x * 0.6) * 0.05; g.position.y = 0.1 + (P.ly + look.y * 0.5) * 0.05; });
+    var ss = Math.max(0.45, 1 - P.y * 0.35); stin.scale.set(ss, ss, ss); stin.material.opacity = ss;
+    if (stav.podoba === "neon") svit.intensity = 1.4 + 0.3 * Math.sin(cas * 3);
+    konfety.forEach(function (k) {
+      if (!k.visible) return;
+      var u = k.userData; u.life += dt; u.v.y -= 6 * dt;
+      k.position.addScaledVector(u.v, dt); k.rotation.x += u.s.x * dt; k.rotation.y += u.s.y * dt;
+      k.material.opacity = cl(1.8 - u.life);
+      if (u.life > 1.8 || k.position.y < -1.5) k.visible = false;
+    });
+    if (bubCas && cas > bubCas) { bub.classList.remove("on"); bubCas = 0; }
+    renderer.render(scene, camera);
+    requestAnimationFrame(snimek);
+  }
+  nastavPodobu("klasik");
+  stage.dataset.pozadi = "studio"; obnovUI();
+  requestAnimationFrame(snimek);
+  setTimeout(function () { spust("mavani"); }, 600);
+})();
+</script>

@@ -69,6 +69,19 @@ export function spustEfekt(typ: string, zdroj?: Element | null, sila = 1): void 
     case "medaile":
       kolem("hx-p-hvezda", 12, 50, 120, 1500, () => "★", (i) => `color:${["#F5C542", "#FFE07A", "#E0A400"][i % 3]}`);
       break;
+    case "notky":
+      kolem("hx-p-hvezda", 12, 50, 130, 1600, (i) => ["♪", "♫", "♩"][i % 3], (i) => `color:${["#7A4DFF", "#FF5A9E", "#2E9BFF"][i % 3]}`);
+      break;
+    case "motylci":
+      kolem("hx-p-hvezda", 10, 60, 150, 1900, () => "🦋", () => "font-size:22px");
+      break;
+    case "binar":
+      kolem("hx-p-hvezda", 18, 45, 140, 1400, (i) => (i % 2 ? "1" : "0"), () => "color:#3DFF8F;font-family:ui-monospace,monospace;font-weight:700;text-shadow:0 0 6px #1AFF6E");
+      break;
+    case "rakety":
+      kolem("hx-p-hvezda", 7, 80, 170, 1600, () => "🚀", () => "font-size:24px");
+      kolem("hx-p-jiskra", 10, 30, 80, 1100, undefined, () => "background:#FFB13B");
+      break;
     case "pixely":
       kolem("hx-p-pixel", 22, 40, 130, 1300, undefined, (i) => `background:${BARVY[i % BARVY.length]}`);
       break;
