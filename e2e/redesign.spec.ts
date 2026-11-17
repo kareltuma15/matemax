@@ -34,6 +34,14 @@ test("Testy 9. třídy: diagnostika, cvičný test a test nanečisto; u každéh
   await expect(page.getByTestId("testy-cermat")).toContainText("Zdarma");
   await expect(page.getByTestId("testy-nanecisto")).toContainText("Zvlášť");
   await expect(page.getByTestId("testy-nanecisto")).toContainText("16 úloh");
+  // test nanečisto: v gymnáziu (přihláška na webu) a online z domova (stránka v MateMaxu) jsou dvě různé věci
+  await expect(page.getByTestId("nanecisto-gymnazium").getByRole("link", { name: /Termíny a přihláška/ }))
+    .toHaveAttribute("href", "https://www.matematika-snadno.cz/prijimacky-nanecisto");
+  await expect(page.getByTestId("nanecisto-online").getByRole("link", { name: /Online termíny/ }))
+    .toHaveAttribute("href", "/testy-nanecisto");
+  await page.getByTestId("nanecisto-online").getByRole("link").click();
+  await expect(page.getByRole("heading", { name: "Online testy nanečisto" })).toBeVisible();
+  await expect(page.getByTestId("nanecisto-odkaz-gymnazium")).toHaveAttribute("href", "https://www.matematika-snadno.cz/prijimacky-nanecisto");
 });
 
 test("Testy 5. třídy: jen věci pro 5. třídu", async ({ page }) => {
@@ -44,8 +52,11 @@ test("Testy 5. třídy: jen věci pro 5. třídu", async ({ page }) => {
   await expect(page.getByTestId("testy-cermat")).toContainText("Zdarma");
   await expect(page.getByTestId("testy-cermat")).not.toContainText("25 minut");
   // test nanečisto: stejné soboty jako 9. třída, přihláška na webu
-  await expect(page.getByTestId("testy-nanecisto").getByRole("link", { name: /Termíny a přihláška/ }))
+  await expect(page.getByTestId("nanecisto-gymnazium").getByRole("link", { name: /Termíny a přihláška/ }))
     .toHaveAttribute("href", "https://www.matematika-snadno.cz/prijimacky-nanecisto");
+  // online termíny jsou zatím jen pro 9. třídu
+  await expect(page.getByTestId("nanecisto-online")).toContainText("Pro 5. třídu připravujeme");
+  await expect(page.getByTestId("nanecisto-online").getByRole("link")).toHaveCount(0);
   await expect(page.getByTestId("testy-nanecisto")).toContainText("14 úloh");
 });
 

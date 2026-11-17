@@ -20,6 +20,18 @@ interface Polozka {
   tlacitko?: string;
   stav?: string;
   testid: string;
+  /** Víc cest v jednom kroku (test nanečisto: v gymnáziu, nebo online z domova) */
+  moznosti?: Moznost[];
+}
+
+interface Moznost {
+  nazev: string;
+  popis: string;
+  href?: string;
+  tlacitko?: string;
+  /** místo tlačítka, když možnost zatím není */
+  pripravujeme?: string;
+  testid: string;
 }
 
 interface CvicnyVysledek { date: string; score: number; total: number; pct: number }
@@ -70,16 +82,38 @@ export default function TestyPage() {
     ikona: "🏫",
     nazev: "Test nanečisto",
     popis: g5
-      ? "Celý test jako u přijímaček na víceleté gymnázium. Píše se naostro v učebně."
-      : "Celý test jako u přijímaček. Píše se naostro v učebně.",
+      ? "Celý test jako u přijímaček na víceleté gymnázium, naostro na papír. Vyber si, kde ho napíšeš."
+      : "Celý test jako u přijímaček, naostro na papír. Vyber si, kde ho napíšeš.",
     fakta: g5 ? ["14 úloh", "70 minut", "50 bodů"] : ["16 úloh", "70 minut", "50 bodů"],
     stitek: "Zvlášť",
     barva: "#A66300",
     tint: "#FDF0DA",
-    // Páťáci píšou ve stejné soboty v učebně; přihláška je na webu (Karel 17. 11.)
-    href: g5 ? TESTY_NANECISTO_WEB : "/testy-nanecisto",
-    tlacitko: "Termíny a přihláška",
     testid: "testy-nanecisto",
+    // Dvě různé věci (Karel 17. 11.): sobotní test v učebně gymnázia (přihláška na webu, stejné soboty pro 5. i 9. třídu)
+    // a online test z domova (vlastní stránka v MateMaxu; termíny zatím jen pro 9. třídu).
+    moznosti: [
+      {
+        nazev: "🏫 V gymnáziu",
+        popis: "V sobotu v učebně Gymnázia Týn nad Vltavou.",
+        href: TESTY_NANECISTO_WEB,
+        tlacitko: "Termíny a přihláška",
+        testid: "nanecisto-gymnazium",
+      },
+      g5
+        ? {
+            nazev: "🏠 Online z domova",
+            popis: "Zadání v appce, vyplníš doma na papír a nahraješ fotky.",
+            pripravujeme: "Pro 5. třídu připravujeme",
+            testid: "nanecisto-online",
+          }
+        : {
+            nazev: "🏠 Online z domova",
+            popis: "Zadání v appce, vyplníš doma na papír a nahraješ fotky.",
+            href: "/testy-nanecisto",
+            tlacitko: "Online termíny",
+            testid: "nanecisto-online",
+          },
+    ],
   };
   const polozky: Polozka[] = g5
     ? [
@@ -169,6 +203,30 @@ export default function TestyPage() {
                 </ul>
                 {p.stav && <p className="text-sm font-bold" style={{ color: p.stav.startsWith("✓") ? "#14753A" : p.barva }}>{p.stav}</p>}
                 <div className="flex-1" />
+                {p.moznosti && (
+                  <div className="flex flex-col gap-2">
+                    {p.moznosti.map((m) => (
+                      <div key={m.testid} className="rounded-xl p-3 flex flex-col gap-2" style={{ border: "1.5px solid #E4E6EF" }} data-testid={m.testid}>
+                        <div>
+                          <b className="text-sm" style={{ color: "#0D1B3E" }}>{m.nazev}</b>
+                          <p className="text-xs mt-0.5" style={{ color: "#5F6982" }}>{m.popis}</p>
+                        </div>
+                        {m.href && m.tlacitko ? (
+                          <Link
+                            href={m.href}
+                            {...(m.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
+                            className="mm-obrys w-full py-2.5 rounded-xl text-center text-sm font-extrabold"
+                            style={{ color: p.barva, border: `1.5px solid ${p.barva}` }}
+                          >
+                            {m.tlacitko} →
+                          </Link>
+                        ) : m.pripravujeme ? (
+                          <span className="text-xs font-bold" style={{ color: "#8A93A8" }}>{m.pripravujeme}</span>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {p.href && p.tlacitko ? (
                   <Link
                     href={p.href}

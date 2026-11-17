@@ -114,13 +114,29 @@ function TestyNanecistoPage() {
         <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#93c5fd" }}>
           Online z domova
         </div>
-        <h1 className="text-2xl font-black text-white mb-2">Testy nanečisto</h1>
+        <h1 className="text-2xl font-black text-white mb-2">Online testy nanečisto</h1>
         <p className="text-sm" style={{ color: "#cbd5e1" }}>
           Vyzkoušej si přijímačky jako v ostrém termínu — stáhneš zadání, vyplníš
           záznamový arch a do 48 hodin dostaneš osobní zpětnou vazbu od Karla,
           téma po tématu.
         </p>
       </div>
+
+      {/* Sobotní testy v učebně jsou jiná věc s přihláškou na webu (Karel 17. 11.) */}
+      <a
+        href="https://www.matematika-snadno.cz/prijimacky-nanecisto"
+        target="_blank"
+        rel="noopener"
+        className="mm-karta rounded-2xl p-4 flex items-center gap-3 text-sm"
+        style={{ background: "#FDF0DA", color: "#0D1B3E" }}
+        data-testid="nanecisto-odkaz-gymnazium"
+      >
+        <span className="text-2xl" aria-hidden>🏫</span>
+        <span className="flex-1">
+          <b>Chceš psát v učebně?</b> Testy nanečisto v sobotu v Gymnáziu Týn nad Vltavou mají přihlášku na webu.
+        </span>
+        <span className="font-extrabold" style={{ color: "#A66300" }}>→</span>
+      </a>
 
       <Suspense fallback={null}>
         <PaymentBanner />
@@ -251,4 +267,4 @@ function TestyNanecistoPage() {
   );
 }
 
-export default jenPro9(TestyNanecistoPage, "Testy nanečisto");
+export default jenPro9(TestyNanecistoPage, "Online testy nanečisto");
