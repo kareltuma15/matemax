@@ -747,6 +747,7 @@ svg.hx-svit-zlato { filter: drop-shadow(0 0 10px #F5C542); }
 .hx-truhla.hx-otevrena .hx-vika { transform: rotateX(70deg) translateY(-20px); }
 .hx-truhla.hx-tres { animation: hx-tres .5s ease-in-out; }
 @keyframes hx-tres { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
+.hx-truhla[data-druh="doporuceni"] { --v1:#6EE7B7; --v2:#0F9F6E; --t1:#34C38F; --t2:#0B6E4F; --o:#D1FAE5; filter: drop-shadow(0 0 12px rgba(52,195,143,.5)); }
 .hx-truhla[data-druh="krystalova"] { --v1:#7FC8F5; --v2:#2E6DA4; --t1:#4E9BD6; --t2:#1F4F80; --o:#CFEAFF; }
 .hx-truhla[data-druh="velka"] { --v1:#B07BE0; --v2:#6A3CA8; --t1:#8E5BC8; --t2:#4E2A84; --o:#E6D2FF; }
 .hx-truhla[data-druh="mistrovska"] { --v1:#3B3F6E; --v2:#1A1C3D; --t1:#2A2D57; --t2:#12132B; --o:#F5C542; filter: drop-shadow(0 0 14px rgba(245,197,66,.55)); }
@@ -759,4 +760,115 @@ svg.hx-svit-zlato { filter: drop-shadow(0 0 10px #F5C542); }
 
 @media (prefers-reduced-motion: reduce) {
   .hx, .hx-aura, .hx-trpyt, .hx-truhla { animation: none !important; }
+}
+
+/* ── Sbírka 2. etapa: vzhled appky a pozadí profilu ──────────────────────────
+   Vzhled nastaví <html data-vzhled="…"> (VzhledAppky + skript v hlavičce, ať to při načtení nebliká).
+   Mění scénu za appkou a barvu proužku pod lištou. Karty zůstávají bílé, takže se nic nerozbije;
+   u tmavých scén leží obsah na světlém listu, aby nadpisy mimo karty zůstaly čitelné. */
+html[data-vzhled] .mm-pozadi { position: relative; isolation: isolate; background: transparent; }
+html[data-vzhled] .mm-pozadi::before,
+html[data-vzhled] .mm-pozadi::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+html[data-vzhled] .mm-pozadi::before { background: var(--vz-pozadi); }
+html[data-vzhled] header.app-chrome { box-shadow: inset 0 -3px 0 var(--vz-akcent); }
+html[data-vzhled-tmavy] .mm-pozadi > main {
+  background: rgba(238, 241, 248, .95);
+  border-radius: 28px;
+  margin-top: 12px;
+  margin-bottom: 84px;
+  width: calc(100% - 16px);
+  box-shadow: 0 20px 60px -30px rgba(0, 0, 0, .6);
+}
+@media (min-width: 1024px) { html[data-vzhled-tmavy] .mm-pozadi > main { margin-top: 20px; margin-bottom: 24px; } }
+html[data-vzhled-tmavy] footer.app-chrome { color: rgba(255, 255, 255, .7) !important; }
+
+html[data-vzhled="louka"] { --vz-pozadi: linear-gradient(180deg, #EAF8E4, #D7F0CF); --vz-akcent: #2F9E44; }
+html[data-vzhled="bonbon"] { --vz-pozadi: linear-gradient(180deg, #FFE7F2, #EFE3FF); --vz-akcent: #E0569B; }
+html[data-vzhled="ocean"] { --vz-pozadi: linear-gradient(180deg, #DDF2FF, #B9E0F8); --vz-akcent: #0E7BC4; }
+html[data-vzhled="duha"] { --vz-pozadi: linear-gradient(120deg, #FFD6E8, #FFF1C9, #D6F5E3, #D6E8FF, #EBD6FF, #FFD6E8); --vz-akcent: #7A4DFF; }
+html[data-vzhled="duha"] .mm-pozadi::before { background-size: 400% 400%; animation: vzDuha 14s linear infinite alternate; }
+html[data-vzhled="grafit"] { --vz-pozadi: #1C2230; --vz-akcent: #8D89E8; }
+html[data-vzhled="vesmir"] { --vz-pozadi: radial-gradient(circle at 30% 0%, #2E3485, #0B1030 72%); --vz-akcent: #F5A623; }
+html[data-vzhled="vesmir"] .mm-pozadi::after {
+  background-image: radial-gradient(1.6px 1.6px at 12% 18%, #fff, transparent), radial-gradient(1.2px 1.2px at 30% 64%, #fff, transparent),
+    radial-gradient(2px 2px at 52% 30%, #FFE9A8, transparent), radial-gradient(1.4px 1.4px at 70% 80%, #fff, transparent),
+    radial-gradient(1.8px 1.8px at 86% 22%, #fff, transparent), radial-gradient(1.2px 1.2px at 92% 56%, #CFE3FF, transparent),
+    radial-gradient(1.5px 1.5px at 8% 86%, #fff, transparent), radial-gradient(1.3px 1.3px at 42% 92%, #fff, transparent);
+  background-size: 420px 420px;
+  animation: vzTrpyt 2.4s ease-in-out infinite alternate;
+}
+html[data-vzhled="mesto"] { --vz-pozadi: linear-gradient(180deg, #1B0B33, #2D0B4E 60%, #120626); --vz-akcent: #FF3D8B; }
+html[data-vzhled="mesto"] .mm-pozadi::after {
+  background: radial-gradient(80% 45% at 50% 0%, rgba(255, 61, 139, .35), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(61, 245, 255, .24) 0 1px, transparent 1px 26px) bottom / 100% 34% no-repeat,
+    repeating-linear-gradient(0deg, rgba(255, 61, 139, .3) 0 1px, transparent 1px 14px) bottom / 100% 34% no-repeat;
+}
+html[data-vzhled="aurora"] { --vz-pozadi: #061A24; --vz-akcent: #3DF5B0; }
+html[data-vzhled="aurora"] .mm-pozadi::after {
+  inset: -20%;
+  background: radial-gradient(45% 30% at 25% 20%, rgba(61, 245, 176, .55), transparent 70%),
+    radial-gradient(40% 32% at 75% 28%, rgba(141, 110, 255, .55), transparent 70%),
+    radial-gradient(35% 25% at 50% 70%, rgba(61, 200, 255, .3), transparent 70%);
+  filter: blur(10px);
+  animation: vzAurora 9s ease-in-out infinite alternate;
+}
+@keyframes vzDuha { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@keyframes vzTrpyt { from { opacity: .3; } to { opacity: 1; } }
+@keyframes vzAurora { 0% { transform: translateX(-8%) scaleY(1); } 100% { transform: translateX(8%) scaleY(1.25); } }
+
+/* Náhled vzhledu v šatníku */
+.mm-swatch { --vz-pozadi: #EEF1F8; --vz-akcent: #5B55D6; display: block; height: 56px; width: 100%; border-radius: 12px; background: var(--vz-pozadi); position: relative; overflow: hidden; border: 1px solid rgba(0, 0, 0, .08); }
+.mm-swatch i { position: absolute; display: block; }
+.mm-swatch i:first-child { left: 8px; right: 8px; top: 10px; height: 16px; border-radius: 5px; background: #fff; }
+.mm-swatch i:last-child { left: 8px; bottom: 9px; width: 42%; height: 11px; border-radius: 5px; background: var(--vz-akcent, #5B55D6); }
+.mm-swatch[data-vz="louka"] { --vz-pozadi: linear-gradient(180deg, #EAF8E4, #D7F0CF); --vz-akcent: #2F9E44; }
+.mm-swatch[data-vz="bonbon"] { --vz-pozadi: linear-gradient(180deg, #FFE7F2, #EFE3FF); --vz-akcent: #E0569B; }
+.mm-swatch[data-vz="ocean"] { --vz-pozadi: linear-gradient(180deg, #DDF2FF, #B9E0F8); --vz-akcent: #0E7BC4; }
+.mm-swatch[data-vz="duha"] { --vz-pozadi: linear-gradient(120deg, #FFD6E8, #FFF1C9, #D6F5E3, #D6E8FF, #EBD6FF); --vz-akcent: #7A4DFF; }
+.mm-swatch[data-vz="grafit"] { --vz-pozadi: #1C2230; --vz-akcent: #8D89E8; }
+.mm-swatch[data-vz="vesmir"] { --vz-pozadi: radial-gradient(circle at 30% 0%, #2E3485, #0B1030 72%); --vz-akcent: #F5A623; }
+.mm-swatch[data-vz="mesto"] { --vz-pozadi: linear-gradient(180deg, #1B0B33, #2D0B4E 60%, #120626); --vz-akcent: #FF3D8B; }
+.mm-swatch[data-vz="aurora"] { --vz-pozadi: radial-gradient(60% 50% at 30% 30%, rgba(61, 245, 176, .6), transparent 70%), radial-gradient(50% 50% at 75% 40%, rgba(141, 110, 255, .6), transparent 70%), #061A24; --vz-akcent: #3DF5B0; }
+
+/* Pozadí hlavičky v profilu a ve Sbírce (klasik = původní vzhled, atribut se nenastaví) */
+.mm-banner { position: relative; overflow: hidden; isolation: isolate; }
+.mm-banner[data-pozadi]::before, .mm-banner[data-pozadi]::after { content: ""; position: absolute; pointer-events: none; z-index: -1; }
+.mm-banner[data-pozadi] { text-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+.mm-banner[data-pozadi="tyrkys"] { background: linear-gradient(135deg, #2EC4B6, #5BC0EB); }
+.mm-banner[data-pozadi="mraky"] { background: radial-gradient(circle at 18% 72%, #fff 0 12%, transparent 13%), radial-gradient(circle at 30% 62%, #fff 0 15%, transparent 16%), radial-gradient(circle at 74% 38%, #fff 0 10%, transparent 11%), radial-gradient(circle at 85% 44%, #fff 0 12%, transparent 13%), linear-gradient(#4FA9E8, #8ECFF5); }
+.mm-banner[data-pozadi="dzungle"] { background: radial-gradient(ellipse 28% 62% at 8% 100%, #2F9E44 0 60%, transparent 61%), radial-gradient(ellipse 24% 55% at 34% 0%, #3CB45A 0 60%, transparent 61%), radial-gradient(ellipse 30% 62% at 68% 100%, #1F7A3A 0 60%, transparent 61%), radial-gradient(ellipse 22% 52% at 93% 8%, #57C46F 0 60%, transparent 61%), linear-gradient(#0F5132, #1B7A4A); }
+.mm-banner[data-pozadi="podmori"] { background: linear-gradient(#1287C9, #0A3D6B); }
+.mm-banner[data-pozadi="podmori"]::after { left: 0; right: 0; top: 0; height: 200%; background-image: radial-gradient(circle at 18% 20%, rgba(255, 255, 255, .6) 0 3px, transparent 4px), radial-gradient(circle at 58% 35%, rgba(255, 255, 255, .5) 0 5px, transparent 6px), radial-gradient(circle at 82% 12%, rgba(255, 255, 255, .55) 0 2px, transparent 3px), radial-gradient(circle at 38% 44%, rgba(255, 255, 255, .4) 0 4px, transparent 5px), radial-gradient(circle at 70% 70%, rgba(255, 255, 255, .5) 0 3px, transparent 4px), radial-gradient(circle at 12% 80%, rgba(255, 255, 255, .45) 0 4px, transparent 5px); animation: vzBublinky 6s linear infinite; }
+.mm-banner[data-pozadi="ohnostroj"] { background: linear-gradient(#0B1030, #2A2F7A); }
+.mm-banner[data-pozadi="ohnostroj"]::before, .mm-banner[data-pozadi="ohnostroj"]::after { width: 46%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, transparent 28%, #FF5A9E 29% 33%, transparent 34% 50%, #FFD54A 51% 55%, transparent 56% 70%, #7FE3FF 71% 73%, transparent 74%); animation: vzBoom 2.4s ease-out infinite; }
+.mm-banner[data-pozadi="ohnostroj"]::before { left: 6%; top: -8%; }
+.mm-banner[data-pozadi="ohnostroj"]::after { left: 52%; top: 18%; animation-delay: 1.2s; filter: hue-rotate(120deg); }
+.mm-banner[data-pozadi="mrizka"] { background: repeating-linear-gradient(0deg, rgba(61, 245, 255, .2) 0 1px, transparent 1px 16px), repeating-linear-gradient(90deg, rgba(61, 245, 255, .2) 0 1px, transparent 1px 16px), linear-gradient(135deg, #0D1B3E, #1E2A52); }
+.mm-banner[data-pozadi="zapad"] { background: linear-gradient(#FF7E5F 0%, #FEB47B 45%, #8E5BB5 100%); }
+.mm-banner[data-pozadi="zapad"]::before { left: 62%; top: 12%; width: 90px; aspect-ratio: 1; border-radius: 50%; background: #FFE29A; opacity: .95; }
+.mm-banner[data-pozadi="zapad"]::after { left: 0; right: 0; bottom: 0; height: 46%; background: #3B2A5E; clip-path: polygon(0 100%, 0 55%, 14% 25%, 28% 60%, 44% 8%, 60% 55%, 72% 30%, 86% 62%, 100% 32%, 100% 100%); }
+.mm-banner[data-pozadi="synthwave"] { background: linear-gradient(#14082B 0%, #3A0F5E 60%, #14082B 60.5%); }
+.mm-banner[data-pozadi="synthwave"]::before { left: 50%; top: 10%; height: 90px; width: 180px; transform: translateX(-50%); border-radius: 90px 90px 0 0; background: repeating-linear-gradient(180deg, transparent 0 55%, #3A0F5E 55% 58%, transparent 58% 64%, #3A0F5E 64% 68%, transparent 68% 75%, #3A0F5E 75% 80%, transparent 80%), linear-gradient(#FFD34D, #FF3D8B); }
+.mm-banner[data-pozadi="synthwave"]::after { left: -20%; right: -20%; bottom: 0; height: 40%; background: repeating-linear-gradient(90deg, rgba(61, 245, 255, .7) 0 1px, transparent 1px 22px), repeating-linear-gradient(0deg, rgba(255, 61, 139, .75) 0 1px, transparent 1px 12px); transform: perspective(110px) rotateX(55deg); transform-origin: bottom; animation: vzMrizka 1s linear infinite; }
+.mm-banner[data-pozadi="polarni"] { background: #071A24; }
+.mm-banner[data-pozadi="polarni"]::before { inset: -30%; background: radial-gradient(40% 30% at 30% 40%, rgba(61, 245, 176, .7), transparent 70%), radial-gradient(35% 30% at 70% 45%, rgba(141, 110, 255, .7), transparent 70%); filter: blur(8px); animation: vzAurora 6s ease-in-out infinite alternate; }
+.mm-banner[data-pozadi="polarni"]::after { inset: 0; background-image: radial-gradient(1.4px 1.4px at 14% 20%, #fff, transparent), radial-gradient(1.2px 1.2px at 60% 14%, #fff, transparent), radial-gradient(1.6px 1.6px at 86% 30%, #fff, transparent), radial-gradient(1.2px 1.2px at 36% 70%, #fff, transparent); animation: vzTrpyt 2s ease-in-out infinite alternate; }
+@keyframes vzBublinky { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@keyframes vzBoom { 0% { transform: scale(.1); opacity: 1; } 70% { opacity: 1; } 100% { transform: scale(1.25); opacity: 0; } }
+@keyframes vzMrizka { from { background-position: 0 0, 0 0; } to { background-position: 0 0, 0 12px; } }
+
+/* Náhled pozadí v šatníku (miniatura) */
+.mm-banner.mm-nahled { height: 56px; border-radius: 12px; border: 1px solid rgba(0, 0, 0, .08); }
+.mm-banner.mm-nahled:not([data-pozadi]) { background: linear-gradient(135deg, #0D1B3E, #7c3aed 45%, #00B4D8); }
+.mm-banner.mm-nahled[data-pozadi="zapad"]::before { width: 18px; left: 64%; top: 14%; }
+.mm-banner.mm-nahled[data-pozadi="synthwave"]::before { height: 22px; width: 44px; top: 6px; }
+
+/* Plamínek denních misí: roste se sérií dní */
+.mm-plamen { display: inline-block; width: var(--s, 28px); height: calc(var(--s, 28px) * 1.3); border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%; background: radial-gradient(circle at 50% 70%, #FFF3A0, #FFB000 40%, #FF5A1F 75%); animation: vzPlamen 1.2s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+.mm-plamen[data-zhasnuty] { background: radial-gradient(circle at 50% 70%, #E4E6EF, #B8BED0 60%); animation: none; }
+@keyframes vzPlamen { from { transform: scale(1, 1) rotate(-2deg); } to { transform: scale(1.06, 1.12) rotate(2deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-vzhled] .mm-pozadi::before, html[data-vzhled] .mm-pozadi::after,
+  .mm-banner[data-pozadi]::before, .mm-banner[data-pozadi]::after, .mm-plamen { animation: none !important; }
 }

@@ -15,7 +15,7 @@
 import type { Trida } from "@/types";
 import { localDateStr } from "./date";
 
-export type TypOdmeny = "podoba" | "oslava" | "efekt";
+export type TypOdmeny = "podoba" | "oslava" | "efekt" | "vzhled" | "pozadi";
 export type Vzacnost = "bezna" | "neobvykla" | "vzacna" | "legenda";
 
 export interface Odmena {
@@ -40,6 +40,8 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
   podoba: "Podoba Hexíka",
   oslava: "Oslava série",
   efekt: "Efekt správné odpovědi",
+  vzhled: "Vzhled appky",
+  pozadi: "Pozadí profilu",
 };
 
 // [typ, klíč, název, vzácnost, cena]
@@ -65,6 +67,18 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["efekt", "bubliny", "Bubliny", "neobvykla", 400],
     ["efekt", "hvezdy", "Hvězdičky", "vzacna", 900],
     ["efekt", "duha", "Duha", "legenda", null],
+    ["vzhled", "klasik", "Klasik", "bezna", 0],
+    ["vzhled", "louka", "Louka", "bezna", 150],
+    ["vzhled", "bonbon", "Bonbon", "neobvykla", 400],
+    ["vzhled", "ocean", "Oceán", "neobvykla", 400],
+    ["vzhled", "vesmir", "Vesmír", "vzacna", 900],
+    ["vzhled", "duha", "Duhový", "legenda", null],
+    ["pozadi", "klasik", "Klasik", "bezna", 0],
+    ["pozadi", "tyrkys", "Tyrkys", "bezna", 150],
+    ["pozadi", "mraky", "Mraky", "bezna", 150],
+    ["pozadi", "dzungle", "Džungle", "neobvykla", 400],
+    ["pozadi", "podmori", "Podmoří", "vzacna", 900],
+    ["pozadi", "ohnostroj", "Ohňostroj", "legenda", null],
   ],
   9: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -86,6 +100,18 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["efekt", "konfety", "Konfety", "neobvykla", 400],
     ["efekt", "blesky", "Blesky", "vzacna", 900],
     ["efekt", "ohen", "Ohnivá stopa", "legenda", null],
+    ["vzhled", "klasik", "Klasik", "bezna", 0],
+    ["vzhled", "grafit", "Grafit", "bezna", 150],
+    ["vzhled", "ocean", "Oceán", "neobvykla", 400],
+    ["vzhled", "mesto", "Noční město", "vzacna", 900],
+    ["vzhled", "vesmir", "Vesmír", "vzacna", 900],
+    ["vzhled", "aurora", "Aurora", "legenda", null],
+    ["pozadi", "klasik", "Klasik", "bezna", 0],
+    ["pozadi", "tyrkys", "Tyrkys", "bezna", 150],
+    ["pozadi", "mrizka", "Mřížka", "bezna", 150],
+    ["pozadi", "zapad", "Západ slunce", "neobvykla", 400],
+    ["pozadi", "synthwave", "Synthwave", "vzacna", 900],
+    ["pozadi", "polarni", "Polární záře", "legenda", null],
   ],
 };
 
@@ -105,6 +131,9 @@ export const ANIMACE_OSLAVY: Record<string, string> = {
   teleport: "teleport", disco: "disco", piruetka: "disco",
 };
 
+/** Tmavé vzhledy: obsah appky leží na světlém listu, aby texty mimo karty zůstaly čitelné. */
+export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora"]);
+
 export const IKONA_ODMENY: Record<string, string> = {
   radost: "🙌", poskok: "🦘", tanec: "💃", kotrmelec: "🤸", salto: "🤸", teleport: "🌀", disco: "🪩", piruetka: "🌈",
   jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥",
@@ -112,7 +141,7 @@ export const IKONA_ODMENY: Record<string, string> = {
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
 
-export type TruhlaId = "denni" | "krystalova" | "velka" | "mistrovska" | "zlata";
+export type TruhlaId = "denni" | "doporuceni" | "krystalova" | "velka" | "mistrovska" | "zlata";
 export interface Truhla {
   id: TruhlaId;
   nazev: string;
@@ -128,6 +157,8 @@ export interface Truhla {
 export const TRUHLY: Truhla[] = [
   { id: "denni", nazev: "Denní truhla", jak: "Zdarma jednou denně za dokončený trénink", cena: null,
     sance: { bezna: 0.62, neobvykla: 0.28, vzacna: 0.08, legenda: 0.02 }, bonus: [10, 30] },
+  { id: "doporuceni", nazev: "Truhla doporučení", jak: "Za zvládnuté doporučené téma nebo splněný plán po testu", cena: null,
+    sance: { bezna: 0, neobvykla: 0.5, vzacna: 0.38, legenda: 0.12 }, bonus: [20, 50] },
   { id: "krystalova", nazev: "Krystalová truhla", jak: "Kdykoli za krystaly", cena: 100,
     sance: { bezna: 0.62, neobvykla: 0.28, vzacna: 0.08, legenda: 0.02 }, bonus: [5, 20] },
   { id: "velka", nazev: "Velká truhla", jak: "Aspoň neobvyklá odměna", cena: 350,
@@ -169,7 +200,11 @@ export function krystalyZaOdpoved(spravne: boolean, obtiznost: number, uroven: n
 
 // ── Stav ────────────────────────────────────────────────────────────────────
 
-export interface DenStat { n: number; ok: number }
+/** n odpovědí, ok správně, m splněných misí, tr otevřených truhel (pro týdenní e-mail rodičům). */
+export interface DenStat { n: number; ok: number; m?: number; tr?: number }
+
+/** Dnešní mise: postup se počítá jen pro dnešek. */
+export interface MiseStav { d: string; hotove: string[]; serie: number; maxSerie: number; tezke: number }
 
 export interface SbirkaStav {
   v: 1;
@@ -193,6 +228,10 @@ export interface SbirkaStav {
   maxOdhad: Partial<Record<Trida, number>>;
   /** Statistika po dnech (posledních 60) pro admin a ověření, že odměny pomáhají. */
   dny: Record<string, DenStat>;
+  /** Za co už žák Truhlu doporučení dostal (klíče „tema:…“, „plan:…“) a kolik jich otevřel. */
+  doporuceniKlice: string[];
+  doporuceniOtevreno: number;
+  mise: MiseStav;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
 }
@@ -204,7 +243,8 @@ export function vychoziStav(): SbirkaStav {
   return {
     v: 1, ziskano: 0, utraceno: 0, mam: [], nasazeno: {}, dnes: { d: "", k: 0 },
     denniOdemcena: null, denniOtevrena: null, dnyTreninku: [], zlataOtevrena: null,
-    bezVzacne: 0, bezLegendy: 0, otevreno: 0, maxOdhad: {}, dny: {}, t: 0,
+    bezVzacne: 0, bezLegendy: 0, otevreno: 0, maxOdhad: {}, dny: {},
+    doporuceniKlice: [], doporuceniOtevreno: 0, mise: { d: "", hotove: [], serie: 0, maxSerie: 0, tezke: 0 }, t: 0,
   };
 }
 
@@ -257,7 +297,7 @@ export function pripis(s: SbirkaStav, n: number, den: string): { s: SbirkaStav; 
 /** Zapíše odpověď do denní statistiky (počítá se každá odpověď, i bez krystalů). */
 export function zapisOdpoved(s: SbirkaStav, spravne: boolean, den: string): SbirkaStav {
   const d = s.dny[den] ?? { n: 0, ok: 0 };
-  const dny = { ...s.dny, [den]: { n: d.n + 1, ok: d.ok + (spravne ? 1 : 0) } };
+  const dny = { ...s.dny, [den]: { ...d, n: d.n + 1, ok: d.ok + (spravne ? 1 : 0) } };
   const klice = Object.keys(dny).sort();
   for (const k of klice.slice(0, Math.max(0, klice.length - 60))) delete dny[k];
   return { ...s, dny };
@@ -309,6 +349,10 @@ export function dostupnostTruhly(s: SbirkaStav, id: TruhlaId, den: string): Dost
     if (s.denniOdemcena !== den) return { ok: false, proc: "Dokonči dnešní trénink." };
     return { ok: true };
   }
+  if (id === "doporuceni") {
+    if (doporuceniKOtevreni(s) <= 0) return { ok: false, proc: "Zvládni doporučené téma." };
+    return { ok: true };
+  }
   if (id === "zlata") {
     if (s.zlataOtevrena === pondeli(den)) return { ok: false, proc: "Tento týden už otevřená." };
     const n = dnuTentoTyden(s, den);
@@ -340,6 +384,9 @@ export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: str
   if (t.cena !== null) dalsi.utraceno += t.cena;
   if (id === "denni") dalsi.denniOtevrena = den;
   if (id === "zlata") dalsi.zlataOtevrena = pondeli(den);
+  if (id === "doporuceni") dalsi.doporuceniOtevreno = (s.doporuceniOtevreno ?? 0) + 1;
+  const dd = s.dny[den] ?? { n: 0, ok: 0 };
+  dalsi.dny = { ...s.dny, [den]: { ...dd, tr: (dd.tr ?? 0) + 1 } };
 
   const vz = losujVzacnost(s, t, rnd);
   dalsi.bezVzacne = vz === "vzacna" || vz === "legenda" ? 0 : s.bezVzacne + 1;
@@ -377,8 +424,12 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
   const dny: Record<string, DenStat> = { ...a.dny };
   for (const [d, x] of Object.entries(b.dny ?? {})) {
     const y = dny[d];
-    dny[d] = !y || x.n > y.n ? x : y;
+    dny[d] = !y ? x : { n: Math.max(x.n, y.n), ok: Math.max(x.ok, y.ok), m: Math.max(x.m ?? 0, y.m ?? 0), tr: Math.max(x.tr ?? 0, y.tr ?? 0) };
   }
+  const ma = a.mise ?? vychoziStav().mise, mb = b.mise ?? vychoziStav().mise;
+  const mise: MiseStav = ma.d === mb.d
+    ? { d: ma.d, hotove: [...new Set([...ma.hotove, ...mb.hotove])], serie: Math.max(ma.serie, mb.serie), maxSerie: Math.max(ma.maxSerie, mb.maxSerie), tezke: Math.max(ma.tezke, mb.tezke) }
+    : (ma.d > mb.d ? ma : mb);
   const pozdeji = (x: string | null, y: string | null) => (!x ? y : !y ? x : x > y ? x : y);
   const dnes = a.dnes.d === b.dnes.d ? { d: a.dnes.d, k: Math.max(a.dnes.k, b.dnes.k) } : (a.dnes.d > b.dnes.d ? a.dnes : b.dnes);
   const maxOdhad: Partial<Record<Trida, number>> = { ...a.maxOdhad };
@@ -402,6 +453,9 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
     otevreno: Math.max(a.otevreno, b.otevreno),
     maxOdhad,
     dny,
+    doporuceniKlice: [...new Set([...(a.doporuceniKlice ?? []), ...(b.doporuceniKlice ?? [])])],
+    doporuceniOtevreno: Math.max(a.doporuceniOtevreno ?? 0, b.doporuceniOtevreno ?? 0),
+    mise,
     t: Math.max(a.t, b.t),
   };
 }
@@ -420,4 +474,104 @@ export const ETAPY_HEXIKA = [
 export function etapaHexika(maxOdhad: number | undefined): number {
   const b = maxOdhad ?? 0;
   return ETAPY_HEXIKA.reduce((a, e, i) => (b >= e.od ? i + 1 : a), 1);
+}
+
+// ── Truhla doporučení ───────────────────────────────────────────────────────
+
+export function doporuceniKOtevreni(s: SbirkaStav): number {
+  return Math.max(0, (s.doporuceniKlice ?? []).length - (s.doporuceniOtevreno ?? 0));
+}
+
+/**
+ * Žák splnil doporučení (téma přes práh zvládnutí v tréninku, splněný plán po testu nanečisto).
+ * Za každé doporučení jen jednou. Vrací true, když přibyla nová truhla.
+ */
+export function ziskejDoporuceni(s: SbirkaStav, klic: string): { s: SbirkaStav; vysledek: boolean } {
+  const klice = s.doporuceniKlice ?? [];
+  if (klice.includes(klic)) return { s, vysledek: false };
+  return { s: { ...s, doporuceniKlice: [...klice, klic] }, vysledek: true };
+}
+
+/** Témata, která během tréninku přešla přes práh zvládnutí (před → po). */
+export function novaZvladnutaTemata(pred: Record<string, number> | null, po: Record<string, number>, prah: number): string[] {
+  if (!pred) return [];
+  return Object.entries(po).filter(([t, v]) => v >= prah && (pred[t] ?? 0) < prah).map(([t]) => t);
+}
+
+// ── Denní mise ──────────────────────────────────────────────────────────────
+
+export const ZA_MISI = 15;
+export type MiseId = "trenink" | "spravne10" | "spravne20" | "serie5" | "tezke3";
+
+export const MISE: Record<MiseId, { text: string; cil: number; ikona: string }> = {
+  trenink: { text: "Dokonči dnešní trénink", cil: 1, ikona: "🏁" },
+  spravne10: { text: "Odpověz správně na 10 příkladů", cil: 10, ikona: "✅" },
+  spravne20: { text: "Odpověz správně na 20 příkladů", cil: 20, ikona: "💪" },
+  serie5: { text: "Dej 5 správně v řadě", cil: 5, ikona: "🔥" },
+  tezke3: { text: "Vyřeš správně 3 příklady 2. nebo 3. úrovně", cil: 3, ikona: "⛰️" },
+};
+
+const DVOJICE_MISI: [MiseId, MiseId][] = [
+  ["spravne10", "serie5"], ["serie5", "tezke3"], ["spravne10", "tezke3"], ["spravne20", "serie5"], ["tezke3", "spravne20"],
+];
+
+/** Tři mise na den: vždy dokončit trénink a k tomu dvě, které se střídají podle data. */
+export function dnesniMise(den: string): MiseId[] {
+  const [y, m, d] = den.split("-").map(Number);
+  const cislo = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+  return ["trenink", ...DVOJICE_MISI[cislo % DVOJICE_MISI.length]];
+}
+
+function miseDnes(s: SbirkaStav, den: string): MiseStav {
+  return s.mise && s.mise.d === den ? s.mise : { d: den, hotove: [], serie: 0, maxSerie: 0, tezke: 0 };
+}
+
+export function jeMiseHotova(s: SbirkaStav, id: MiseId, den: string): boolean {
+  return miseDnes(s, den).hotove.includes(id);
+}
+
+export function postupMise(s: SbirkaStav, id: MiseId, den: string): number {
+  const m = miseDnes(s, den);
+  switch (id) {
+    case "trenink": return s.denniOdemcena === den ? 1 : 0;
+    case "spravne10": case "spravne20": return s.dny[den]?.ok ?? 0;
+    case "serie5": return m.maxSerie;
+    case "tezke3": return m.tezke;
+  }
+}
+
+/** Odpověď posune postup misí (série, těžší příklady). */
+export function misePriOdpovedi(s: SbirkaStav, spravne: boolean, obtiznost: number, den: string): SbirkaStav {
+  const m = miseDnes(s, den);
+  const serie = spravne ? m.serie + 1 : 0;
+  return { ...s, mise: { ...m, serie, maxSerie: Math.max(m.maxSerie, serie), tezke: m.tezke + (spravne && obtiznost >= 2 ? 1 : 0) } };
+}
+
+/** Odškrtne splněné mise a připíše za každou krystaly (v rámci denního stropu). */
+export function splnMise(s: SbirkaStav, den: string): { s: SbirkaStav; vysledek: { nove: MiseId[]; krystaly: number } } {
+  const m = miseDnes(s, den);
+  const nove = dnesniMise(den).filter((id) => !m.hotove.includes(id) && postupMise(s, id, den) >= MISE[id].cil);
+  if (nove.length === 0) return { s: { ...s, mise: m }, vysledek: { nove, krystaly: 0 } };
+  const dd = s.dny[den] ?? { n: 0, ok: 0 };
+  const r = pripis({ ...s, mise: { ...m, hotove: [...m.hotove, ...nove] }, dny: { ...s.dny, [den]: { ...dd, m: (dd.m ?? 0) + nove.length } } }, nove.length * ZA_MISI, den);
+  return { s: r.s, vysledek: { nove, krystaly: r.vysledek } };
+}
+
+// ── Týden pro e-mail rodičům ────────────────────────────────────────────────
+
+export interface TydenSbirky { dnyTreninku: number; mise: number; truhly: number; krystaly: number; odmen: number }
+
+/** Souhrn týdne (od pondělí do dne) ze zálohy Sbírky na serveru. Bez zálohy null. */
+export function tydenSbirky(s: Partial<SbirkaStav> | null | undefined, den: string): TydenSbirky | null {
+  if (!s || !s.t) return null;
+  const st = { ...vychoziStav(), ...s };
+  const po = pondeli(den);
+  const dny = Object.entries(st.dny).filter(([d]) => d >= po && d <= den).map(([, x]) => x);
+  return {
+    dnyTreninku: new Set(st.dnyTreninku.filter((d) => d >= po && d <= den)).size,
+    mise: dny.reduce((a, x) => a + (x.m ?? 0), 0),
+    truhly: dny.reduce((a, x) => a + (x.tr ?? 0), 0),
+    krystaly: krystaly(st),
+    odmen: st.mam.length,
+  };
 }

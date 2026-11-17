@@ -7,6 +7,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import PwaSetup from "@/components/PwaSetup";
 import ProgressSync from "@/components/ProgressSync";
 import Mereni from "@/components/Mereni";
+import VzhledAppky from "@/components/hexik/VzhledAppky";
+import { VZHLED_SCRIPT } from "@/lib/vzhled-script";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
 
@@ -54,11 +56,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Anti-flash: apply theme before first paint */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        {/* Vzhled appky ze Sbírky (Hexík) ještě před prvním vykreslením */}
+        <script dangerouslySetInnerHTML={{ __html: VZHLED_SCRIPT }} />
       </head>
       <body className="min-h-full" style={{ background: "var(--surface-1)", color: "var(--text-primary)" }}>
         <PwaSetup />
         <ProgressSync />
         <Mereni />
+        <VzhledAppky />
         {children}
         {/* Měření návštěvnosti a rychlosti bez cookies a bez osobních údajů (zapnuté ve Vercelu u projektu) */}
         <Analytics />

@@ -22,6 +22,7 @@ function ukazka(trida: 5 | 9, varianta: "data" | "prvni" | "bez"): ReportData {
     lastWeekTotal: varianta === "bez" ? 0 : 38,
     streak: varianta === "bez" ? 0 : 5,
     accuracy: varianta === "bez" ? null : 72,
+    odmeny: varianta === "bez" ? null : { dnyTreninku: 5, mise: 9, truhly: 3, krystaly: 420, odmen: 6 },
     odhad: {
       trida, celkem, max: 50, bezDat: varianta === "bez", cil: varianta === "data" ? 32 : null, temata,
       nejvicBodu: { label: rezerva.label, chybi: Math.round(rezerva.max - rezerva.body) },

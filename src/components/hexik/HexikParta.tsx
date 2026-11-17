@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Hexik from "./Hexik";
 import { useSbirka } from "@/lib/use-sbirka";
-import { nasazena, krystaly, etapaHexika, ANIMACE_OSLAVY } from "@/lib/sbirka";
+import { nasazena, krystaly, etapaHexika, ANIMACE_OSLAVY, MISE, type MiseId } from "@/lib/sbirka";
 import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import { ODPOVED_EVENT } from "@/lib/sound";
-import { KRYSTALY_EVENT } from "@/lib/sbirka-trenink";
+import { KRYSTALY_EVENT, MISE_EVENT } from "@/lib/sbirka-trenink";
 import type { Trida } from "@/types";
 
 const TEXTY: Record<Trida, { ok: string[]; serie: string[]; chyba: string[] }> = {
@@ -46,10 +46,10 @@ export default function HexikParta({ trida }: { trida: Trida }) {
   useEffect(() => { nas.current = { oslava, efekt, trida }; }, [oslava, efekt, trida]);
 
   useEffect(() => {
-    const rekni = (t: string) => {
+    const rekni = (t: string, ms = 2000) => {
       setBublina(t);
       if (bublinaCas.current) clearTimeout(bublinaCas.current);
-      bublinaCas.current = setTimeout(() => setBublina(null), 2000);
+      bublinaCas.current = setTimeout(() => setBublina(null), ms);
     };
     const naOdpoved = (e: Event) => {
       const spravne = (e as CustomEvent<{ spravne: boolean }>).detail?.spravne;
@@ -75,11 +75,22 @@ export default function HexikParta({ trida }: { trida: Trida }) {
       const n = (e as CustomEvent<{ n: number }>).detail?.n ?? 0;
       if (n > 0) setPlus({ n, klic: Date.now() });
     };
+    // Splněná mise přebije běžnou hlášku (přijde hned po vyhodnocení odpovědi)
+    const naMise = (e: Event) => {
+      const ids = (e as CustomEvent<{ ids: MiseId[] }>).detail?.ids ?? [];
+      if (!ids.length) return;
+      window.setTimeout(() => {
+        reaguj(hxRef.current, ANIMACE_OSLAVY[nas.current.oslava] ?? "radost");
+        rekni(`Mise splněna: ${MISE[ids[0]].text}!`, 3200);
+      }, 350);
+    };
     window.addEventListener(ODPOVED_EVENT, naOdpoved);
     window.addEventListener(KRYSTALY_EVENT, naKrystaly);
+    window.addEventListener(MISE_EVENT, naMise);
     return () => {
       window.removeEventListener(ODPOVED_EVENT, naOdpoved);
       window.removeEventListener(KRYSTALY_EVENT, naKrystaly);
+      window.removeEventListener(MISE_EVENT, naMise);
       if (bublinaCas.current) clearTimeout(bublinaCas.current);
     };
   }, []);

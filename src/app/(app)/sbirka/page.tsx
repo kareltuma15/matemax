@@ -1,9 +1,11 @@
 "use client";
 
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Hexik from "@/components/hexik/Hexik";
+import DenniMise from "@/components/hexik/DenniMise";
+import { loadProgress } from "@/lib/progress";
 import { useTrida } from "@/lib/trida";
 import { useSbirka } from "@/lib/use-sbirka";
 import { localDateStr } from "@/lib/date";
@@ -11,7 +13,7 @@ import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import {
   ODMENY, TRUHLY, VZACNOST, TYP_NAZEV, IKONA_ODMENY, ANIMACE_OSLAVY, ETAPY_HEXIKA, DENNI_STROP,
   POJISTKA_VZACNA, krystaly, maOdmenu, nasazena, etapaHexika, dostupnostTruhly, otevriTruhlu,
-  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU,
+  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, doporuceniKOtevreni, TMAVE_VZHLEDY, ZA_MISI,
   type Odmena, type TypOdmeny, type TruhlaId, type VysledekTruhly, type SbirkaStav,
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
@@ -24,6 +26,8 @@ function Krystal({ className = "" }: { className?: string }) {
 
 function Vizual({ o, velikost = 52 }: { o: Odmena; velikost?: number }) {
   if (o.typ === "podoba") return <Hexik podoba={o.klic} staticky style={{ width: velikost }} />;
+  if (o.typ === "vzhled") return <span className="mm-swatch" data-vz={o.klic} style={{ width: velikost * 1.6, height: velikost }} aria-hidden="true"><i /><i /></span>;
+  if (o.typ === "pozadi") return <span className="mm-banner mm-nahled block" data-pozadi={o.klic === "klasik" ? undefined : o.klic} style={{ width: velikost * 1.6, height: velikost }} aria-hidden="true" />;
   return <span style={{ fontSize: velikost * 0.62, lineHeight: 1 }} aria-hidden="true">{IKONA_ODMENY[o.klic] ?? "✨"}</span>;
 }
 
@@ -53,6 +57,8 @@ function Sbirka() {
   const nahledRef = useRef<HTMLSpanElement>(null);
   const odhaleniRef = useRef<HTMLDivElement>(null);
   const den = localDateStr();
+  // Série dní z prohlížeče (na serveru 0; vykresluje se až po načtení Sbírky)
+  const [streak] = useState(() => loadProgress().streak);
 
   const etapa = etapaHexika(stav.maxOdhad[trida]);
   const etapaInfo = ETAPY_HEXIKA[etapa - 1];
@@ -64,6 +70,23 @@ function Sbirka() {
   const vyb = (vybrana && seznam.find((o) => o.id === vybrana)) || nasazena(stav, trida, typ);
   const vybStav = stavOdmeny(stav, vyb, trida);
   const nahledPodoba = typ === "podoba" ? vyb.klic : podoba.klic;
+  const pozadi = nasazena(stav, trida, "pozadi");
+  const nahledPozadi = typ === "pozadi" ? vyb.klic : pozadi.klic;
+  const nasazenyVzhled = nasazena(stav, trida, "vzhled").klic;
+  const nahledVzhled = zalozka === "satnik" && typ === "vzhled" ? vyb.klic : nasazenyVzhled;
+
+  // Vzhled appky se v šatníku zkouší naživo na celé appce; po odchodu ze záložky se vrátí nasazený.
+  useEffect(() => {
+    if (!nacteno || nahledVzhled === nasazenyVzhled) return;
+    const d = document.documentElement;
+    const nastav = (k: string) => {
+      if (k === "klasik") { d.removeAttribute("data-vzhled"); d.removeAttribute("data-vzhled-tmavy"); return; }
+      d.setAttribute("data-vzhled", k);
+      if (TMAVE_VZHLEDY.has(k)) d.setAttribute("data-vzhled-tmavy", ""); else d.removeAttribute("data-vzhled-tmavy");
+    };
+    nastav(nahledVzhled);
+    return () => nastav(nasazenyVzhled);
+  }, [nahledVzhled, nasazenyVzhled, nacteno]);
 
   function predved(o: Odmena) {
     if (o.typ === "oslava") reaguj(nahledRef.current, ANIMACE_OSLAVY[o.klic] ?? "radost");
@@ -94,7 +117,12 @@ function Sbirka() {
   return (
     <div className="flex flex-col gap-5" data-testid="sbirka">
       {/* Hlavička: Hexík, krystaly, etapa */}
-      <section className="rounded-3xl p-5 lg:p-7 text-white flex flex-col sm:flex-row gap-5 items-center" style={{ background: "linear-gradient(140deg,#1F2F66,#0D1B3E 70%)" }}>
+      <section
+        className="mm-banner rounded-3xl p-5 lg:p-7 text-white flex flex-col sm:flex-row gap-5 items-center"
+        style={pozadi.klic === "klasik" ? { background: "linear-gradient(140deg,#1F2F66,#0D1B3E 70%)" } : undefined}
+        data-pozadi={pozadi.klic === "klasik" ? undefined : pozadi.klic}
+        data-testid="sbirka-hlavicka"
+      >
         <Hexik podoba={podoba.klic} etapa={etapa} className="w-28 lg:w-36 shrink-0" />
         <div className="flex-1 min-w-0 text-center sm:text-left">
           <p className="text-xs font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>Tvůj Hexík · {etapaInfo.nazev}</p>
@@ -130,12 +158,13 @@ function Sbirka() {
 
       {zalozka === "truhly" && (
         <section className="flex flex-col gap-3">
+          <DenniMise streak={streak} />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {TRUHLY.map((t) => {
               const d = dostupnostTruhly(stav, t.id, den);
               const pct = (v: number) => `${Math.round(v * 100)} %`;
               const sance = (Object.keys(t.sance) as (keyof typeof t.sance)[]).filter((k) => t.sance[k] > 0);
-              const zlataInfo = t.id === "zlata" ? ` · tento týden ${Math.min(dnuTentoTyden(stav, den), DNU_PRO_ZLATOU)}/${DNU_PRO_ZLATOU}` : "";
+              const zlataInfo = t.id === "zlata" ? ` · tento týden ${Math.min(dnuTentoTyden(stav, den), DNU_PRO_ZLATOU)}/${DNU_PRO_ZLATOU}` : t.id === "doporuceni" && doporuceniKOtevreni(stav) > 0 ? ` · čeká ${doporuceniKOtevreni(stav)}` : "";
               return (
                 <div key={t.id} className="mm-karta p-4 flex flex-col gap-3" data-testid={`truhla-${t.id}`}>
                   <div className="flex items-center gap-3">
@@ -164,7 +193,8 @@ function Sbirka() {
           </div>
           <div className="mm-karta p-4 text-sm flex flex-col gap-1.5" style={{ color: "#33405F" }}>
             <p><b>Pojistka:</b> vzácná nebo lepší odměna nejpozději za {Math.max(1, POJISTKA_VZACNA - stav.bezVzacne)} {POJISTKA_VZACNA - stav.bezVzacne === 1 ? "truhlu" : "truhel"}. Věc, kterou už máš, se vrátí jako krystaly.</p>
-            <p><b>Krystaly získáš za učení:</b> správná odpověď 2 (těžký příklad 4, lehčí než tvoje úroveň 1), dokončený trénink 10 a denní truhla, každý nový bod v odhadu 30. Za den nejvýš {DENNI_STROP} krystalů za učení.</p>
+            <p><b>Krystaly získáš za učení:</b> správná odpověď 2 (těžký příklad 4, lehčí než tvoje úroveň 1), dokončený trénink 10 a denní truhla, každá denní mise {ZA_MISI}, každý nový bod v odhadu 30. Za den nejvýš {DENNI_STROP} krystalů za učení.</p>
+            <p><b>Truhla doporučení:</b> dostaneš ji, když v tréninku dotáhneš doporučené téma do zvládnutí, nebo když splníš plán po testu nanečisto.</p>
             <p>Nic se nekupuje za peníze. Legendární věci jsou jen v truhlách.</p>
           </div>
         </section>
@@ -173,7 +203,18 @@ function Sbirka() {
       {zalozka === "satnik" && (
         <section className="grid gap-4 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] items-start">
           <div className="mm-karta p-5 flex flex-col items-center gap-3 lg:sticky lg:top-24">
-            <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} className="w-36" />
+            {typ === "pozadi" ? (
+              <div
+                className="mm-banner w-full rounded-2xl flex items-center justify-center py-3"
+                style={nahledPozadi === "klasik" ? { background: "linear-gradient(135deg,#0D1B3E,#7c3aed 45%,#00B4D8)" } : undefined}
+                data-pozadi={nahledPozadi === "klasik" ? undefined : nahledPozadi}
+                data-testid="satnik-nahled-pozadi"
+              >
+                <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} className="w-28" />
+              </div>
+            ) : (
+              <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} className="w-36" />
+            )}
             <p className="text-sm text-center" style={{ color: "#5F6982" }}>
               <span className="inline-block rounded-full px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-white mr-1" style={{ background: VZACNOST[vyb.vz].barva }}>{VZACNOST[vyb.vz].nazev}</span>
               {TYP_NAZEV[vyb.typ]}: <b style={{ color: "var(--text-primary)" }}>{vyb.nazev}</b>
@@ -193,23 +234,24 @@ function Sbirka() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <div className="flex gap-2" role="tablist" aria-label="Druh odměny">
-              {(["podoba", "oslava", "efekt"] as TypOdmeny[]).map((t) => (
+            <div className="flex flex-wrap gap-2" role="tablist" aria-label="Druh odměny">
+              {(["podoba", "oslava", "efekt", "vzhled", "pozadi"] as TypOdmeny[]).map((t) => (
                 <button
                   key={t}
                   type="button"
                   role="tab"
                   aria-selected={typ === t}
                   onClick={() => { setTyp(t); setVybrana(null); }}
-                  className={`flex-1 rounded-xl px-3 py-2 text-sm font-extrabold ${typ === t ? "text-white" : "mm-obrys"}`}
+                  className={`flex-1 min-w-[30%] sm:min-w-0 rounded-xl px-3 py-2 text-sm font-extrabold ${typ === t ? "text-white" : "mm-obrys"}`}
                   style={typ === t ? { background: "#5B55D6" } : undefined}
+                  data-testid={`typ-${t}`}
                 >
-                  {t === "podoba" ? "Podoba" : t === "oslava" ? "Oslava série" : "Efekt"}
+                  {t === "podoba" ? "Podoba" : t === "oslava" ? "Oslava série" : t === "efekt" ? "Efekt" : t === "vzhled" ? "Vzhled appky" : "Pozadí"}
                 </button>
               ))}
             </div>
             <p className="text-xs" style={{ color: "#5F6982" }}>
-              {typ === "podoba" ? "Jak Hexík vypadá u příkladů a v profilu." : typ === "oslava" ? "Co Hexík udělá, když máš tři správně v řadě." : "Co vyletí, když odpovíš správně."}
+              {typ === "podoba" ? "Jak Hexík vypadá u příkladů a v profilu." : typ === "oslava" ? "Co Hexík udělá, když máš tři správně v řadě." : typ === "efekt" ? "Co vyletí, když odpovíš správně." : typ === "vzhled" ? "Klepni a vyzkoušej: změní se pozadí celé appky. Nasadit ho můžeš, až ho máš." : "Pozadí hlavičky v profilu a tady ve Sbírce."}
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5" data-testid="satnik-mrizka">
               {seznam.map((o) => {

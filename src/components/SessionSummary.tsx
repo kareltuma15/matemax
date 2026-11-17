@@ -40,7 +40,7 @@ interface Props {
   onRestart: () => void;
   onRestartChyby?: () => void;
   /** Sbírka: krystaly za tento trénink a jestli se právě odemkla denní/zlatá truhla. */
-  odmena?: { krystaly: number; denni: boolean; zlata: boolean } | null;
+  odmena?: { krystaly: number; denni: boolean; zlata: boolean; doporuceni?: boolean; mise?: number } | null;
 }
 
 function useCountUp(target: number, duration = 900): number {
@@ -263,20 +263,26 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
         </div>
 
         {/* Sbírka: krystaly a odemčená truhla */}
-        {odmena && (odmena.krystaly > 0 || odmena.denni || odmena.zlata) && (
-          <div className="rounded-xl p-3.5 border flex items-center gap-3" style={{ background: "#FFF6E5", borderColor: "#F3D9A0" }} data-testid="souhrn-odmena">
-            <span className="text-3xl" aria-hidden="true">{odmena.denni || odmena.zlata ? "🎁" : "💎"}</span>
-            <div className="flex-1 min-w-0">
-              <p className="font-black text-sm" style={{ color: "#0D1B3E" }}>
-                +{odmena.krystaly} krystalů{odmena.zlata ? " · zlatá truhla odemčená!" : odmena.denni ? " · denní truhla odemčená" : ""}
-              </p>
-              <p className="text-xs" style={{ color: "#7A5A1A" }}>Za krystaly koupíš Hexíkovi podoby, oslavy a efekty.</p>
+        {odmena && (odmena.krystaly > 0 || odmena.denni || odmena.zlata || odmena.doporuceni) && (() => {
+          const truhla = odmena.denni || odmena.zlata || odmena.doporuceni;
+          const co = odmena.doporuceni ? " · Truhla doporučení za zvládnuté téma!" : odmena.zlata ? " · zlatá truhla odemčená!" : odmena.denni ? " · denní truhla odemčená" : "";
+          return (
+            <div className="rounded-xl p-3.5 border flex items-center gap-3" style={{ background: "#FFF6E5", borderColor: "#F3D9A0" }} data-testid="souhrn-odmena">
+              <span className="text-3xl" aria-hidden="true">{truhla ? "🎁" : "💎"}</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-black text-sm" style={{ color: "#0D1B3E" }}>+{odmena.krystaly} krystalů{co}</p>
+                <p className="text-xs" style={{ color: "#7A5A1A" }}>
+                  {odmena.mise && odmena.mise > 0
+                    ? `Splněné mise: ${odmena.mise}. Za krystaly koupíš Hexíkovi podoby, oslavy, efekty i vzhled appky.`
+                    : "Za krystaly koupíš Hexíkovi podoby, oslavy, efekty i vzhled appky."}
+                </p>
+              </div>
+              <a href={truhla ? "/sbirka" : "/sbirka?tab=satnik"} className="mm-tlacitko shrink-0 rounded-xl px-3 py-2 text-sm font-extrabold" style={{ background: "#F5A623", color: "#0D1B3E" }} data-testid="souhrn-truhla">
+                {truhla ? "Otevřít" : "Hexík"}
+              </a>
             </div>
-            <a href={odmena.denni || odmena.zlata ? "/sbirka" : "/sbirka?tab=satnik"} className="mm-tlacitko shrink-0 rounded-xl px-3 py-2 text-sm font-extrabold" style={{ background: "#F5A623", color: "#0D1B3E" }} data-testid="souhrn-truhla">
-              {odmena.denni || odmena.zlata ? "Otevřít" : "Hexík"}
-            </a>
-          </div>
-        )}
+          );
+        })()}
 
         {/* Topics practiced */}
         {topics.length > 0 && (

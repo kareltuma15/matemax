@@ -8,24 +8,39 @@ import { loadGamification } from "./gamification";
 import { spocitejOdhad } from "./odhad-vypocet";
 import {
   upravSbirku, zapisOdpoved, krystalyZaOdpoved, pripis, dokoncenyTrenink, zapocitejOdhad,
-  type OdmenaZaTrenink,
+  misePriOdpovedi, splnMise, ziskejDoporuceni, novaZvladnutaTemata,
+  type OdmenaZaTrenink, type MiseId,
 } from "./sbirka";
 
 export const KRYSTALY_EVENT = "matemax-krystaly";
+/** Splněná denní mise (detail: { ids }) — Hexík u příkladu ji ohlásí. */
+export const MISE_EVENT = "matemax-mise";
 
 function ohlasKrystaly(n: number) {
   if (n > 0 && typeof window !== "undefined") window.dispatchEvent(new CustomEvent(KRYSTALY_EVENT, { detail: { n } }));
 }
 
-/** Zapíše odpověď a připíše krystaly. Vrací, kolik se připsalo. */
+function ohlasMise(ids: MiseId[]) {
+  if (ids.length > 0 && typeof window !== "undefined") window.dispatchEvent(new CustomEvent(MISE_EVENT, { detail: { ids } }));
+}
+
+/** Zapíše odpověď a připíše krystaly (za odpověď i za právě splněné mise). Vrací, kolik se připsalo. */
 export function odmenaZaOdpoved(a: { spravne: boolean; obtiznost: number; uroven: number; ms: number | null; vyber: boolean }): number {
   const den = localDateStr();
-  const n = upravSbirku((s) => {
-    const zapsano = zapisOdpoved(s, a.spravne, den);
-    return pripis(zapsano, krystalyZaOdpoved(a.spravne, a.obtiznost, a.uroven, a.ms, a.vyber), den);
+  const { n, mise } = upravSbirku((s) => {
+    const zapsano = misePriOdpovedi(zapisOdpoved(s, a.spravne, den), a.spravne, a.obtiznost, den);
+    const r = pripis(zapsano, krystalyZaOdpoved(a.spravne, a.obtiznost, a.uroven, a.ms, a.vyber), den);
+    const m = splnMise(r.s, den);
+    return { s: m.s, vysledek: { n: r.vysledek + m.vysledek.krystaly, mise: m.vysledek.nove } };
   });
   ohlasKrystaly(n);
+  ohlasMise(mise);
   return n;
+}
+
+/** Splněné doporučení (zvládnuté téma, plán po testu) přidá Truhlu doporučení. Vrací true, když je nová. */
+export function odmenaZaDoporuceni(klic: string): boolean {
+  return upravSbirku((s) => ziskejDoporuceni(s, klic));
 }
 
 function aktualniOdhad(trida: Trida): number | null {
@@ -47,12 +62,27 @@ export function odmenaZaOdhad(trida: Trida): number {
   return n;
 }
 
-export interface OdmenaKonec extends OdmenaZaTrenink { odhad: number }
+export interface OdmenaKonec extends OdmenaZaTrenink { odhad: number; mise: MiseId[]; doporuceni: boolean }
 
-/** Konec tréninku: krystaly za dokončení (jednou denně), denní a zlatá truhla, rekord odhadu. */
-export function odmenaZaKonecTreninku(trida: Trida, odpovezeno: number): OdmenaKonec {
-  if (odpovezeno < 5) return { krystaly: 0, denniNove: false, zlataNove: false, odhad: odmenaZaOdhad(trida) };
-  const r = upravSbirku((s) => dokoncenyTrenink(s, localDateStr()));
+/**
+ * Konec tréninku: krystaly za dokončení (jednou denně), denní a zlatá truhla, mise, rekord odhadu
+ * a Truhla doporučení za každé téma, které se v tomto tréninku dostalo přes práh zvládnutí.
+ */
+export function odmenaZaKonecTreninku(
+  trida: Trida,
+  odpovezeno: number,
+  pripravenost?: { pred: Record<string, number> | null; po: Record<string, number>; prah: number },
+): OdmenaKonec {
+  const den = localDateStr();
+  const zvladnuta = pripravenost ? novaZvladnutaTemata(pripravenost.pred, pripravenost.po, pripravenost.prah) : [];
+  const doporuceni = zvladnuta.map((t) => odmenaZaDoporuceni(`tema:${t}`)).some(Boolean);
+  if (odpovezeno < 5) return { krystaly: 0, denniNove: false, zlataNove: false, odhad: odmenaZaOdhad(trida), mise: [], doporuceni };
+  const r = upravSbirku((s) => {
+    const t = dokoncenyTrenink(s, den);
+    const m = splnMise(t.s, den);
+    return { s: m.s, vysledek: { ...t.vysledek, krystaly: t.vysledek.krystaly + m.vysledek.krystaly, mise: m.vysledek.nove } };
+  });
   ohlasKrystaly(r.krystaly);
-  return { ...r, odhad: odmenaZaOdhad(trida) };
+  ohlasMise(r.mise);
+  return { ...r, odhad: odmenaZaOdhad(trida), doporuceni };
 }

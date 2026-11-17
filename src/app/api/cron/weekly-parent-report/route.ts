@@ -4,6 +4,7 @@ import { pragueDateStr } from "@/lib/date";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { odhadDitete, ulozTydenniOdhad } from "@/lib/odhad-server";
 import { buildReportHtml } from "@/lib/report-rodice";
+import { tydenSbirky, type SbirkaStav } from "@/lib/sbirka";
 
 // Každé pondělí 06:00 UTC (≈ 08:00 SEČ) přes Vercel Cron.
 // Týdenní e-mail rodičům s ověřeným propojením: odhad bodů u přijímaček, vývoj po týdnech, témata, tip.
@@ -16,6 +17,8 @@ const ODESILAT = true;
 
 /** Report pro rodiče je podle ceníku a obrazovky Premium výhoda Premium. */
 const JEN_PREMIUM = true;
+// Blok „Odměny za učení“ (Hexíkova Sbírka) v e-mailu: zapnout až po Karlově schválení návrhu.
+const ODMENY_V_REPORTU = false;
 
 function krestniJmeno(user: User | null | undefined): string {
   const meta = (user?.user_metadata ?? {}) as Record<string, unknown>;
@@ -102,8 +105,16 @@ async function handler() {
         }
       }
 
+      // Odměny za učení z Hexíkovy Sbírky za uplynulý týden (cron běží v pondělí, týden končí včera).
+      // Vypnuto, dokud Karel neschválí nový blok e-mailu (návrh v MS Dashboardu).
+      let odmeny = null;
+      if (ODMENY_V_REPORTU) {
+        const { data: sb } = await supabaseAdmin.from("user_sbirka").select("state").eq("user_id", child.id).maybeSingle();
+        odmeny = tydenSbirky((sb?.state ?? null) as Partial<SbirkaStav> | null, pragueDateStr(new Date(Date.now() - 86400000)));
+      }
+
       const childName = krestniJmeno(child);
-      const html = buildReportHtml({ childName, weekDate, weekTotal, lastWeekTotal, streak, accuracy, odhad });
+      const html = buildReportHtml({ childName, weekDate, weekTotal, lastWeekTotal, streak, accuracy, odhad, odmeny });
 
       if (!ODESILAT) { pripraveno++; continue; }
 

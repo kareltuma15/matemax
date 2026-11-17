@@ -24,6 +24,9 @@ import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 import ShareButton from "@/components/ShareButton";
+import Hexik from "@/components/hexik/Hexik";
+import { useSbirka } from "@/lib/use-sbirka";
+import { nasazena, etapaHexika } from "@/lib/sbirka";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -235,6 +238,8 @@ export default function ProfilPage() {
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
   const { isPremium, trialDaysLeft } = usePremium();
   const { trida, setTrida } = useTrida();
+  const { stav: sbirka } = useSbirka();
+  const pozadiKlic = nasazena(sbirka, trida, "pozadi").klic;
   // Výsledky diagnostiky jen z okruhů třídy, kterou žák má (výsledky 9. a 5. třídy jsou v jednom úložišti, ale nesmí se míchat).
   const topicScores = allTopicScores.filter((t) => ((trida === 5 ? TEMATA_ORDER_5 : TEMATA_ORDER) as readonly string[]).includes(t.tema));
   const [soundOn, setSoundOn]             = useState(true);
@@ -596,7 +601,12 @@ export default function ProfilPage() {
     <div className="flex flex-col gap-4">
 
       {/* ── HERO PLAYER CARD ── */}
-      <div className="hero-animated rounded-2xl overflow-hidden">
+      {/* Pozadí hlavičky si žák vybírá ve Sbírce (Hexík → Šatník → Pozadí); klasik = původní přechod */}
+      <div
+        className={`${pozadiKlic === "klasik" ? "hero-animated " : ""}mm-banner rounded-2xl overflow-hidden`}
+        data-pozadi={pozadiKlic === "klasik" ? undefined : pozadiKlic}
+        data-testid="profil-hlavicka"
+      >
         <div className="px-5 pt-6 pb-5">
           {/* Top row: avatar + info */}
           <div className="flex items-center gap-4">
@@ -664,6 +674,9 @@ export default function ProfilPage() {
                 />
               </div>
             </div>
+            <Link href="/sbirka" className="shrink-0 hidden min-[380px]:block" title="Tvůj Hexík" data-testid="profil-hexik">
+              <Hexik podoba={nasazena(sbirka, trida, "podoba").klic} etapa={etapaHexika(sbirka.maxOdhad[trida])} staticky className="w-16 sm:w-20" />
+            </Link>
           </div>
 
         </div>

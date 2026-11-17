@@ -21,6 +21,8 @@ import { maDovednosti } from "@/lib/dovednosti";
 import { computeDovednostProgress } from "@/lib/levels";
 import { dnesniTrenink, type DnesniTrenink } from "@/lib/dnesni-trenink";
 import { nactiOdkaz, nactiPlan, jeSplneny, oznacSplneny, postupPlanu, type PlanPoTestu } from "@/lib/plan-po-testu";
+import { odmenaZaDoporuceni } from "@/lib/sbirka-trenink";
+import DenniMise from "@/components/hexik/DenniMise";
 import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
@@ -133,7 +135,8 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
     setCekajiciOdkaz(nactiOdkaz());
     nactiPlan(session.user.id).then((p) => {
       if (zruseno || !p) return;
-      if (jeSplneny(p)) { if (!p.splneno) oznacSplneny(p, session.user.id); return; }
+      // Splněný plán po testu = Truhla doporučení (za každý plán jednou)
+      if (jeSplneny(p)) { odmenaZaDoporuceni(`plan:${p.ulozeno}`); if (!p.splneno) oznacSplneny(p, session.user.id); return; }
       setPlan(p);
     });
     return () => { zruseno = true; };
@@ -433,6 +436,8 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
               {streak > 0 && <span className="text-xs font-bold lg:mt-2" style={{ color: "#C2410C" }}>🔥 {streak} {streak === 1 ? "den" : streak <= 4 ? "dny" : "dní"} v řadě</span>}
             </div>
           </div>
+
+          <DenniMise streak={streak} odkaz />
 
           {isPremium ? (
             <div className="mm-karta p-4 lg:p-5 flex flex-col gap-2.5">

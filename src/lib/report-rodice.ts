@@ -4,6 +4,7 @@
  * Ceny ani nic dalšího prodejního tu není, jen pokrok dítěte.
  */
 import type { OdhadDitete } from "./odhad-server";
+import type { TydenSbirky } from "./sbirka";
 
 export interface ReportData {
   childName: string;
@@ -13,6 +14,8 @@ export interface ReportData {
   streak: number;
   accuracy: number | null;
   odhad: OdhadDitete;
+  /** Odměny za učení z Hexíkovy Sbírky (dny tréninku, mise, truhly). null = blok se nezobrazí. */
+  odmeny?: TydenSbirky | null;
   appUrl?: string;
 }
 
@@ -80,6 +83,27 @@ function radkyTemat(o: OdhadDitete): string {
       </td></tr></table>
     </td></tr>`;
   }).join("");
+}
+
+function sklonuj(n: number, jedna: string, dve: string, pet: string): string {
+  return n === 1 ? jedna : n >= 2 && n <= 4 ? dve : pet;
+}
+
+/** Odměny za učení: co dítě tento týden vybojovalo u Hexíka. Jen fakta z appky, nic prodejního. */
+function odmenyBlok(r: ReportData, jmeno: string): string {
+  const o = r.odmeny;
+  if (!o || (o.dnyTreninku === 0 && o.mise === 0 && o.truhly === 0)) return "";
+  const casti = [
+    `${o.dnyTreninku} ${sklonuj(o.dnyTreninku, "den", "dny", "dní")} tréninku`,
+    `${o.mise} ${sklonuj(o.mise, "splněná denní mise", "splněné denní mise", "splněných denních misí")}`,
+    `${o.truhly} ${sklonuj(o.truhly, "otevřená truhla", "otevřené truhly", "otevřených truhel")}`,
+  ];
+  return `<tr><td style="padding:0 32px 18px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#F1F0FF;border:1px solid #DCD9FB;border-radius:14px;"><tr><td style="padding:14px 18px;">
+              <p style="margin:0 0 4px;font-size:12px;font-weight:800;color:${VIOLET};text-transform:uppercase;letter-spacing:0.05em;">🏆 Odměny za učení</p>
+              <p style="margin:0;font-size:14px;color:${NAVY};line-height:1.6;">${casti.join(" · ")}. Odměny dostává ${jmeno} jen za správné odpovědi a dokončené tréninky, nic se za ně neplatí.</p>
+            </td></tr></table>
+          </td></tr>`;
 }
 
 export function buildReportHtml(r: ReportData): string {
@@ -180,6 +204,8 @@ export function buildReportHtml(r: ReportData): string {
             <p style="font-size:11px;font-weight:800;color:#8A93AA;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 2px;">Body podle témat</p>
             <table width="100%" cellpadding="0" cellspacing="0">${radkyTemat(o)}</table>
           </td></tr>`}
+
+          ${odmenyBlok(r, jmeno)}
 
           <tr><td style="padding:0 32px 26px;">
             <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFF6E5;border:1px solid #F8D9A0;border-radius:14px;"><tr><td style="padding:16px 18px;">

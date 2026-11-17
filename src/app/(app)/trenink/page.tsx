@@ -57,9 +57,9 @@ const FeedbackModal = dynamic(() => import("@/components/FeedbackModal"), { ssr:
 import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
-import { pickMission, snapshotReadiness } from "@/lib/mise";
+import { pickMission, snapshotReadiness, MASTERED } from "@/lib/mise";
 import HexikParta from "@/components/hexik/HexikParta";
-import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad } from "@/lib/sbirka-trenink";
+import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad, MISE_EVENT } from "@/lib/sbirka-trenink";
 import { ODPOVED_EVENT } from "@/lib/sound";
 import { getReadiness } from "@/lib/readiness";
 import DoporuceniPoTestu from "@/components/DoporuceniPoTestu";
@@ -403,13 +403,20 @@ function TreningPageInner() {
   const odpovediRef                     = useRef<{ tema: string; dovednost?: string; ok: boolean }[]>([]);
   // Snímek připravenosti před tréninkem — pro posun „před → po" v souhrnu
   const readinessBeforeRef              = useRef<Record<string, number> | null>(null);
+  const misePocetRef                    = useRef(0);
+  // Mise splněné během tréninku (ohlašuje je Sbírka událostí) pro souhrn na konci
+  useEffect(() => {
+    const naMise = (e: Event) => { misePocetRef.current += (e as CustomEvent<{ ids: string[] }>).detail?.ids?.length ?? 0; };
+    window.addEventListener(MISE_EVENT, naMise);
+    return () => window.removeEventListener(MISE_EVENT, naMise);
+  }, []);
   const consecutiveCorrectRef           = useRef(0);
   // Sbírka: kdy se karta ukázala a za jak dlouho žák odpověděl (tip naslepo nedá krystal), krystaly za trénink
   const kartaStartRef                   = useRef(0);
   const vyhodnocenoMsRef                = useRef<number | null>(null);
   const krystalySezeniRef               = useRef(0);
   const odhadZakladRef                  = useRef(false);
-  const [odmenaKonec, setOdmenaKonec]   = useState<{ krystaly: number; denni: boolean; zlata: boolean } | null>(null);
+  const [odmenaKonec, setOdmenaKonec]   = useState<{ krystaly: number; denni: boolean; zlata: boolean; doporuceni: boolean; mise: number } | null>(null);
 
   useEffect(() => {
     kartaStartRef.current = Date.now();
@@ -527,8 +534,8 @@ function TreningPageInner() {
     clearSessionDraft();
 
     // Sbírka: dokončený trénink (krystaly jednou denně, denní a zlatá truhla, rekord odhadu)
-    const odm = odmenaZaKonecTreninku(trida, answered);
-    setOdmenaKonec({ krystaly: krystalySezeniRef.current + odm.krystaly + odm.odhad, denni: odm.denniNove, zlata: odm.zlataNove });
+    const odm = odmenaZaKonecTreninku(trida, answered, { pred: readinessBeforeRef.current, po: snapshotReadiness(), prah: MASTERED });
+    setOdmenaKonec({ krystaly: krystalySezeniRef.current + odm.krystaly + odm.odhad, denni: odm.denniNove, zlata: odm.zlataNove, doporuceni: odm.doporuceni, mise: misePocetRef.current });
 
     // Feedback after 5th session (once per account)
     try {
@@ -845,6 +852,7 @@ function TreningPageInner() {
     setWrongAnswers([]);
     consecutiveCorrectRef.current = 0;
     krystalySezeniRef.current = 0;
+    misePocetRef.current = 0;
     setOdmenaKonec(null);
     sessionStartRef.current = new Date();
     odpovediRef.current = [];
