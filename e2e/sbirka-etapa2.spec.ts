@@ -97,10 +97,10 @@ test.describe("2. etapa: pravidla", () => {
   });
 
   test("sloučení zařízení: doporučení i mise se neztratí", () => {
-    const a = s0({ doporuceniKlice: ["tema:zlomky"], doporuceniOtevreno: 1, mise: { d: DEN, hotove: ["serie5"], serie: 2, maxSerie: 5, tezke: 1 }, dny: { [DEN]: { n: 4, ok: 3, m: 1 } }, t: 1 });
-    const b = s0({ doporuceniKlice: ["plan:x"], doporuceniOtevreno: 0, mise: { d: DEN, hotove: ["trenink"], serie: 0, maxSerie: 1, tezke: 3 }, dny: { [DEN]: { n: 6, ok: 2, tr: 2 } }, t: 2 });
+    const a = s0({ naroky: { doporuceni: ["tema:zlomky"] }, otevrenoNaroku: { doporuceni: 1 }, mise: { d: DEN, hotove: ["serie5"], serie: 2, maxSerie: 5, tezke: 1 }, dny: { [DEN]: { n: 4, ok: 3, m: 1 } }, t: 1 });
+    const b = s0({ naroky: { doporuceni: ["plan:x"] }, otevrenoNaroku: { doporuceni: 0 }, mise: { d: DEN, hotove: ["trenink"], serie: 0, maxSerie: 1, tezke: 3 }, dny: { [DEN]: { n: 6, ok: 2, tr: 2 } }, t: 2 });
     const m = slucSbirku(a, b);
-    expect(m.doporuceniKlice.sort()).toEqual(["plan:x", "tema:zlomky"]);
+    expect([...(m.naroky.doporuceni ?? [])].sort()).toEqual(["plan:x", "tema:zlomky"]);
     expect(doporuceniKOtevreni(m)).toBe(1);
     expect(m.mise.hotove.sort()).toEqual(["serie5", "trenink"]);
     expect(m.mise.tezke).toBe(3);
@@ -176,7 +176,7 @@ test("Sbírka: denní mise s plamínkem a Truhla doporučení, když na ni má �
   await page.addInitScript((s) => {
     localStorage.setItem("matemax-trida", "5");
     localStorage.setItem("matemax-sbirka", s);
-  }, stav({ doporuceniKlice: ["tema:p5_zlomky"] }));
+  }, stav({ naroky: { doporuceni: ["tema:p5_zlomky"] } }));
   await page.goto("/sbirka");
   await expect(page.getByTestId("denni-mise")).toBeVisible();
   await expect(page.getByTestId("mise-trenink")).toBeVisible();

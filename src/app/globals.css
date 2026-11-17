@@ -872,3 +872,32 @@ html[data-vzhled="aurora"] .mm-pozadi::after {
   html[data-vzhled] .mm-pozadi::before, html[data-vzhled] .mm-pozadi::after,
   .mm-banner[data-pozadi]::before, .mm-banner[data-pozadi]::after, .mm-plamen { animation: none !important; }
 }
+
+/* ── Sbírka 3. etapa: nové vzhledy, pozadí a truhly z testu nanečisto ──────── */
+html[data-vzhled="zmrzlina"] { --vz-pozadi: linear-gradient(180deg, #FFF4E0, #FFE3EC 50%, #E3F4FF); --vz-akcent: #F28C38; }
+html[data-vzhled="matrix"] { --vz-pozadi: #04140B; --vz-akcent: #3DFF8F; }
+html[data-vzhled="matrix"] .mm-pozadi::after {
+  background: repeating-linear-gradient(90deg, rgba(61, 255, 143, .16) 0 2px, transparent 2px 22px),
+    linear-gradient(180deg, transparent, rgba(61, 255, 143, .12) 50%, transparent);
+  background-size: 100% 100%, 100% 260px;
+  animation: vzMatrix 6s linear infinite;
+}
+@keyframes vzMatrix { from { background-position: 0 0, 0 -260px; } to { background-position: 0 0, 0 100vh; } }
+.mm-swatch[data-vz="zmrzlina"] { --vz-pozadi: linear-gradient(180deg, #FFF4E0, #FFE3EC 50%, #E3F4FF); --vz-akcent: #F28C38; }
+.mm-swatch[data-vz="matrix"] { --vz-pozadi: repeating-linear-gradient(90deg, rgba(61, 255, 143, .25) 0 2px, transparent 2px 10px), #04140B; --vz-akcent: #3DFF8F; }
+
+.mm-banner[data-pozadi="pohadka"] { background: linear-gradient(160deg, #FFB3D9, #C3A6FF 55%, #8FB8FF); }
+.mm-banner[data-pozadi="pohadka"]::before { left: 6%; bottom: 0; width: 120px; height: 70px; background: #fff; opacity: .55; clip-path: polygon(0 100%, 0 40%, 12% 40%, 12% 20%, 22% 20%, 22% 40%, 38% 40%, 38% 0, 50% 0, 50% 40%, 66% 40%, 66% 20%, 76% 20%, 76% 40%, 100% 40%, 100% 100%); }
+.mm-banner[data-pozadi="pohadka"]::after { inset: 0; background-image: radial-gradient(2px 2px at 20% 25%, #fff, transparent), radial-gradient(1.6px 1.6px at 55% 15%, #fff, transparent), radial-gradient(2.2px 2.2px at 80% 35%, #FFF6B0, transparent), radial-gradient(1.4px 1.4px at 40% 60%, #fff, transparent), radial-gradient(1.8px 1.8px at 90% 70%, #fff, transparent); animation: vzTrpyt 1.8s ease-in-out infinite alternate; }
+.mm-banner.mm-nahled[data-pozadi="pohadka"]::before { width: 40px; height: 24px; }
+.mm-banner[data-pozadi="stadion"] { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .07) 0 34px, transparent 34px 68px), linear-gradient(#0B3D1E, #17803A); }
+.mm-banner[data-pozadi="stadion"]::before { inset: 0; background: radial-gradient(30% 50% at 8% 0%, rgba(255, 255, 255, .55), transparent 70%), radial-gradient(30% 50% at 92% 0%, rgba(255, 255, 255, .55), transparent 70%); }
+.mm-banner[data-pozadi="stadion"]::after { left: 50%; top: 50%; width: 90px; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 3px solid rgba(255, 255, 255, .35); }
+.mm-banner.mm-nahled[data-pozadi="stadion"]::after { width: 26px; border-width: 2px; }
+.mm-banner[data-pozadi="generalka"] { background: repeating-linear-gradient(135deg, rgba(245, 166, 35, .2) 0 10px, transparent 10px 22px), linear-gradient(135deg, #0D1B3E, #2A2F7A); }
+.mm-banner[data-pozadi="generalka"]::after { content: "★ GENERÁLKA"; right: 14px; top: 10px; font-weight: 800; font-size: 13px; color: #F5C542; letter-spacing: .12em; z-index: 0; }
+.mm-banner.mm-nahled[data-pozadi="generalka"]::after { font-size: 7px; right: 5px; top: 4px; letter-spacing: .06em; }
+
+.hx-truhla[data-druh="generalka"] { --v1:#3A4A8C; --v2:#1B2559; --t1:#2A3878; --t2:#141C47; --o:#F5C542; filter: drop-shadow(0 0 12px rgba(245,197,66,.45)); }
+.hx-truhla[data-druh="legendarni"] { --v1:#FFB347; --v2:#E0561B; --t1:#F57C1F; --t2:#A33A0B; --o:#FFF1C4; filter: drop-shadow(0 0 16px rgba(255,140,40,.7)); }
+@media (prefers-reduced-motion: reduce) { html[data-vzhled="matrix"] .mm-pozadi::after { animation: none !important; } }

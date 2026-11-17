@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import type { AdminUser } from "@/app/api/admin/users/route";
 import type { AdminUserDetail } from "@/app/api/admin/user-detail/route";
 import { TEMA_LABELS } from "@/types";
+import AdminKodGeneralka from "@/components/AdminKodGeneralka";
 import { nazevTematu } from "@/lib/doporuceni";
 
 interface Stats {
@@ -280,6 +281,8 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
+
+      <AdminKodGeneralka token={token} />
 
       {/* Stats grid */}
       {stats && (

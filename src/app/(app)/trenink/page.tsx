@@ -60,6 +60,8 @@ import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
 import { pickMission, snapshotReadiness, MASTERED } from "@/lib/mise";
 import HexikParta from "@/components/hexik/HexikParta";
 import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad, MISE_EVENT } from "@/lib/sbirka-trenink";
+import { odmenaZaBosse } from "@/lib/sbirka-test";
+import { bossTydne } from "@/lib/boss";
 import { ODPOVED_EVENT } from "@/lib/sound";
 import { getReadiness } from "@/lib/readiness";
 import DoporuceniPoTestu from "@/components/DoporuceniPoTestu";
@@ -352,6 +354,11 @@ function TreningPageInner() {
   // ?doporuceni=<data>.<podpis> = doporučení po testu nanečisto z appky Vyhodnocení testů, ?plan=1 = uložený plán
   const urlDoporuceni = searchParams.get("doporuceni");
   const urlPlan       = searchParams.get("plan") === "1";
+  // ?boss=1 = Boss týdne ze Sbírky: jedna těžká úloha, jeden pokus za týden
+  const urlBoss       = searchParams.get("boss") === "1";
+  const bossIdRef     = useRef<string | null>(null);
+  const [bossVysledek, setBossVysledek] = useState<{ vyhra: boolean; krystaly: number } | "uz" | null>(null);
+  const bossHotovoRef = useRef(false);
 
   const [cards, setCards]           = useState<SM2Card[]>([]);
   const [sessionIds, setSessionIds] = useState<string[]>([]);
@@ -479,7 +486,7 @@ function TreningPageInner() {
       const draft = loadSessionDraft();
       if (
         draft &&
-        !urlDoporuceni && !urlPlan &&
+        !urlDoporuceni && !urlPlan && !urlBoss &&
         draft.temaFilter === urlTema &&
         (draft.podtemaFilter ?? null) === urlPodtema &&
         (draft.dovednostFilter ?? null) === urlDovednost &&
@@ -491,6 +498,9 @@ function TreningPageInner() {
         setCorrect(draft.correct);
         setSkipped(draft.skipped);
         setWrongAnswers(draft.wrongAnswers);
+      } else if (urlBoss) {
+        const boss = bossTydne(readTridaForSession(), localDateStr());
+        if (boss) { bossIdRef.current = boss.id; setSessionIds([boss.id]); }
       } else if (guest ? !!urlTema : !!(urlTema || urlRezim || urlPodtema)) {
         setSessionIds(buildSession(loaded, urlTema, urlRezim, guest, urlPodtema, readTridaForSession(), urlDovednost));
       }
@@ -652,6 +662,12 @@ function TreningPageInner() {
 
       if (!wasCorrect) {
         setWrongAnswers((prev) => [...prev, { exampleId: exId, userAnswer }]);
+      }
+
+      // Boss týdne: první odpověď rozhodne (jeden pokus za týden)
+      if (urlBoss && exId === bossIdRef.current && !bossHotovoRef.current) {
+        bossHotovoRef.current = true;
+        setBossVysledek(odmenaZaBosse(wasCorrect) ?? "uz");
       }
 
       // Sbírka: krystaly za odpověď (podle úrovně žáka v tématu, ne za tip naslepo)
@@ -902,7 +918,7 @@ function TreningPageInner() {
   }
 
   // Host s vybranou 5. třídou: ukázkové úlohy jsou jen z 9. třídy, takže mu je nenabízíme — pošleme ho na registraci zdarma.
-  if (isGuest && trida === 5 && !temaFilter && !done) {
+  if (isGuest && trida === 5 && !temaFilter && !done && !urlBoss) {
     return (
       <div className="flex flex-col gap-4" data-testid="trenink-host-5">
         <div className="bg-white rounded-2xl border border-slate-200 p-7 text-center flex flex-col items-center gap-3">
@@ -920,7 +936,7 @@ function TreningPageInner() {
   }
 
   // Guest: show topic map if no topic selected yet
-  if (isGuest && !temaFilter && !done) {
+  if (isGuest && !temaFilter && !done && !urlBoss) {
     return (
       <>
       {doporuceniNeplatne && (
@@ -1148,6 +1164,7 @@ function TreningPageInner() {
           topicShift={computeTopicShift(readinessBeforeRef.current, practiceTopics)}
           nextTopic={pickMission(isPremium)}
           odmena={odmenaKonec}
+          boss={urlBoss ? bossVysledek : undefined}
           onRestart={() => restart()}
           onRestartChyby={
             cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2)

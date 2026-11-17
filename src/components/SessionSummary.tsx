@@ -41,6 +41,8 @@ interface Props {
   onRestartChyby?: () => void;
   /** Sbírka: krystaly za tento trénink a jestli se právě odemkla denní/zlatá truhla. */
   odmena?: { krystaly: number; denni: boolean; zlata: boolean; doporuceni?: boolean; mise?: number } | null;
+  /** Boss týdne: výsledek pokusu, "uz" = tento týden už bojoval (bez odměny). */
+  boss?: { vyhra: boolean; krystaly: number } | "uz" | null;
 }
 
 function useCountUp(target: number, duration = 900): number {
@@ -167,7 +169,7 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
   });
 }
 
-export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby, odmena = null }: Props) {
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby, odmena = null, boss }: Props) {
   // Skipped examples count against score — 3 správně ze 7 celkových = 43 %, ne 100 %
   const effectiveTotal = total + skipped;
   const pct = effectiveTotal > 0 ? Math.round((correct / effectiveTotal) * 100) : 0;
@@ -261,6 +263,26 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
             <p className="text-xl font-black text-orange-500">🔥 {animStreak} dní</p>
           </div>
         </div>
+
+        {/* Boss týdne */}
+        {boss !== undefined && boss !== null && (
+          <div
+            className="rounded-xl p-4 border flex items-center gap-3"
+            style={boss !== "uz" && boss.vyhra ? { background: "#1F1A4A", borderColor: "#3B2F8A", color: "#fff" } : { background: "#F3F4F9", borderColor: "#E4E6EF", color: "#0D1B3E" }}
+            data-testid="souhrn-boss"
+          >
+            <span className="text-3xl" aria-hidden="true">{boss !== "uz" && boss.vyhra ? "🏆" : "👾"}</span>
+            <div className="flex-1 min-w-0">
+              <p className="font-black text-sm">
+                {boss === "uz" ? "Bosse jsi tento týden už vyzval." : boss.vyhra ? `Boss týdne poražen! +${boss.krystaly} krystalů a trofej` : "Tentokrát boss vyhrál."}
+              </p>
+              <p className="text-xs" style={{ opacity: 0.8 }}>
+                {boss === "uz" ? "Za opakování už odměna není. Nový boss bude v pondělí." : boss.vyhra ? "Na trofej se podívej ve Sbírce." : "Projdi si řešení. Nový boss bude v pondělí."}
+              </p>
+            </div>
+            <a href="/sbirka?tab=trofeje" className="mm-tlacitko shrink-0 rounded-xl px-3 py-2 text-sm font-extrabold" style={{ background: "#F5A623", color: "#0D1B3E" }}>Sbírka</a>
+          </div>
+        )}
 
         {/* Sbírka: krystaly a odemčená truhla */}
         {odmena && (odmena.krystaly > 0 || odmena.denni || odmena.zlata || odmena.doporuceni) && (() => {

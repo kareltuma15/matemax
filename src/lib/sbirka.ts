@@ -27,6 +27,8 @@ export interface Odmena {
   vz: Vzacnost;
   /** 0 = má každý od začátku, null = nejde koupit (jen z truhel). */
   cena: number | null;
+  /** Odkud jinak než z truhel: "test" = jen za test nanečisto (v truhlách nepadá). */
+  zdroj?: "test";
 }
 
 export const VZACNOST: Record<Vzacnost, { nazev: string; barva: string }> = {
@@ -44,15 +46,17 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
   pozadi: "Pozadí profilu",
 };
 
-// [typ, klíč, název, vzácnost, cena]
-type Radek = [TypOdmeny, string, string, Vzacnost, number | null];
+// [typ, klíč, název, vzácnost, cena, zdroj?]
+type Radek = [TypOdmeny, string, string, Vzacnost, number | null, "test"?];
 const KATALOG: Record<Trida, Radek[]> = {
   5: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
     ["podoba", "mata", "Mátový Hexík", "bezna", 150],
     ["podoba", "malina", "Malinový Hexík", "bezna", 150],
     ["podoba", "citron", "Citronový Hexík", "bezna", 150],
+    ["podoba", "boruvka", "Borůvkový Hexík", "bezna", 150],
     ["podoba", "kocicka", "Kočičí Hexík", "neobvykla", 400],
+    ["podoba", "lisak", "Lišáček", "neobvykla", 400],
     ["podoba", "robutek", "Robůtek", "neobvykla", 400],
     ["podoba", "dracek", "Dráček", "vzacna", 900],
     ["podoba", "jednorozec", "Jednorožec", "legenda", null],
@@ -71,6 +75,7 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["vzhled", "louka", "Louka", "bezna", 150],
     ["vzhled", "bonbon", "Bonbon", "neobvykla", 400],
     ["vzhled", "ocean", "Oceán", "neobvykla", 400],
+    ["vzhled", "zmrzlina", "Zmrzlina", "neobvykla", 400],
     ["vzhled", "vesmir", "Vesmír", "vzacna", 900],
     ["vzhled", "duha", "Duhový", "legenda", null],
     ["pozadi", "klasik", "Klasik", "bezna", 0],
@@ -78,16 +83,21 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["pozadi", "mraky", "Mraky", "bezna", 150],
     ["pozadi", "dzungle", "Džungle", "neobvykla", 400],
     ["pozadi", "podmori", "Podmoří", "vzacna", 900],
+    ["pozadi", "pohadka", "Pohádka", "vzacna", 900],
     ["pozadi", "ohnostroj", "Ohňostroj", "legenda", null],
+    ["pozadi", "generalka", "Generálka", "legenda", null, "test"],
   ],
   9: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
     ["podoba", "grafit", "Grafitový Hexík", "bezna", 150],
     ["podoba", "mata", "Mátový Hexík", "bezna", 150],
     ["podoba", "ohnivy", "Ohnivý Hexík", "bezna", 150],
+    ["podoba", "ledovy", "Ledový Hexík", "bezna", 150],
     ["podoba", "neon", "Neon", "neobvykla", 400],
     ["podoba", "street", "Streetwear", "neobvykla", 400],
+    ["podoba", "maskac", "Maskáč", "neobvykla", 400],
     ["podoba", "kyber", "Kyber", "vzacna", 900],
+    ["podoba", "ninja", "Ninja", "vzacna", 900],
     ["podoba", "zlaty", "Zlatý Hexík", "legenda", null],
     ["oslava", "radost", "Radost", "bezna", 0],
     ["oslava", "poskok", "Poskok", "bezna", 150],
@@ -105,20 +115,23 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["vzhled", "ocean", "Oceán", "neobvykla", 400],
     ["vzhled", "mesto", "Noční město", "vzacna", 900],
     ["vzhled", "vesmir", "Vesmír", "vzacna", 900],
+    ["vzhled", "matrix", "Matrix", "vzacna", 900],
     ["vzhled", "aurora", "Aurora", "legenda", null],
     ["pozadi", "klasik", "Klasik", "bezna", 0],
     ["pozadi", "tyrkys", "Tyrkys", "bezna", 150],
     ["pozadi", "mrizka", "Mřížka", "bezna", 150],
     ["pozadi", "zapad", "Západ slunce", "neobvykla", 400],
     ["pozadi", "synthwave", "Synthwave", "vzacna", 900],
+    ["pozadi", "stadion", "Stadion", "neobvykla", 400],
     ["pozadi", "polarni", "Polární záře", "legenda", null],
+    ["pozadi", "generalka", "Generálka", "legenda", null, "test"],
   ],
 };
 
-export const ODMENY: Record<Trida, Odmena[]> = {
-  5: KATALOG[5].map(([typ, klic, nazev, vz, cena]) => ({ id: `5-${typ}-${klic}`, trida: 5, typ, klic, nazev, vz, cena })),
-  9: KATALOG[9].map(([typ, klic, nazev, vz, cena]) => ({ id: `9-${typ}-${klic}`, trida: 9, typ, klic, nazev, vz, cena })),
-};
+const zKatalogu = (t: Trida) => KATALOG[t].map(([typ, klic, nazev, vz, cena, zdroj]): Odmena =>
+  ({ id: `${t}-${typ}-${klic}`, trida: t, typ, klic, nazev, vz, cena, ...(zdroj ? { zdroj } : {}) }));
+
+export const ODMENY: Record<Trida, Odmena[]> = { 5: zKatalogu(5), 9: zKatalogu(9) };
 
 export function najdiOdmenu(id: string): Odmena | undefined {
   const t: Trida = id.startsWith("5-") ? 5 : 9;
@@ -132,7 +145,7 @@ export const ANIMACE_OSLAVY: Record<string, string> = {
 };
 
 /** Tmavé vzhledy: obsah appky leží na světlém listu, aby texty mimo karty zůstaly čitelné. */
-export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora"]);
+export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora", "matrix"]);
 
 export const IKONA_ODMENY: Record<string, string> = {
   radost: "🙌", poskok: "🦘", tanec: "💃", kotrmelec: "🤸", salto: "🤸", teleport: "🌀", disco: "🪩", piruetka: "🌈",
@@ -141,7 +154,10 @@ export const IKONA_ODMENY: Record<string, string> = {
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
 
-export type TruhlaId = "denni" | "doporuceni" | "krystalova" | "velka" | "mistrovska" | "zlata";
+export type TruhlaId = "denni" | "doporuceni" | "generalka" | "legendarni" | "krystalova" | "velka" | "mistrovska" | "zlata";
+/** Truhly, na které vzniká nárok za splněný úkol (každý úkol má vlastní klíč, nárok jen jednou). */
+export type NarokTruhla = "doporuceni" | "generalka" | "legendarni";
+export const NAROKOVE_TRUHLY: NarokTruhla[] = ["doporuceni", "generalka", "legendarni"];
 export interface Truhla {
   id: TruhlaId;
   nazev: string;
@@ -159,6 +175,10 @@ export const TRUHLY: Truhla[] = [
     sance: { bezna: 0.62, neobvykla: 0.28, vzacna: 0.08, legenda: 0.02 }, bonus: [10, 30] },
   { id: "doporuceni", nazev: "Truhla doporučení", jak: "Za zvládnuté doporučené téma nebo splněný plán po testu", cena: null,
     sance: { bezna: 0, neobvykla: 0.5, vzacna: 0.38, legenda: 0.12 }, bonus: [20, 50] },
+  { id: "generalka", nazev: "Truhla Generálka", jak: "Za každý test nanečisto (kód z učebny nebo výsledek v appce)", cena: null,
+    sance: { bezna: 0, neobvykla: 0.4, vzacna: 0.45, legenda: 0.15 }, bonus: [40, 90] },
+  { id: "legendarni", nazev: "Legendární truhla", jak: "Za zlepšení v testu nanečisto oproti minulému", cena: null,
+    sance: { bezna: 0, neobvykla: 0, vzacna: 0, legenda: 1 }, bonus: [50, 100] },
   { id: "krystalova", nazev: "Krystalová truhla", jak: "Kdykoli za krystaly", cena: 100,
     sance: { bezna: 0.62, neobvykla: 0.28, vzacna: 0.08, legenda: 0.02 }, bonus: [5, 20] },
   { id: "velka", nazev: "Velká truhla", jak: "Aspoň neobvyklá odměna", cena: 350,
@@ -228,10 +248,19 @@ export interface SbirkaStav {
   maxOdhad: Partial<Record<Trida, number>>;
   /** Statistika po dnech (posledních 60) pro admin a ověření, že odměny pomáhají. */
   dny: Record<string, DenStat>;
-  /** Za co už žák Truhlu doporučení dostal (klíče „tema:…“, „plan:…“) a kolik jich otevřel. */
-  doporuceniKlice: string[];
-  doporuceniOtevreno: number;
+  /**
+   * Nároky na truhly za splněné úkoly: za co už je žák dostal (klíče „tema:…“, „plan:…“, „gen:2026-12-12“,
+   * „zlepseni:…“) a kolik jich otevřel. K otevření = počet klíčů − otevřeno.
+   */
+  naroky: Partial<Record<NarokTruhla, string[]>>;
+  otevrenoNaroku: Partial<Record<NarokTruhla, number>>;
   mise: MiseStav;
+  /** Boss týdne: pondělí týdnů, kdy žák bojoval, a kdy vyhrál. */
+  boss: { pokusy: string[]; porazeno: string[] };
+  /** Získané trofeje: id → den získání. */
+  trofeje: Record<string, string>;
+  /** Výsledky testů nanečisto, které žák uplatnil (den → body, null = body neznáme). */
+  testy: Record<string, number | null>;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
 }
@@ -244,7 +273,8 @@ export function vychoziStav(): SbirkaStav {
     v: 1, ziskano: 0, utraceno: 0, mam: [], nasazeno: {}, dnes: { d: "", k: 0 },
     denniOdemcena: null, denniOtevrena: null, dnyTreninku: [], zlataOtevrena: null,
     bezVzacne: 0, bezLegendy: 0, otevreno: 0, maxOdhad: {}, dny: {},
-    doporuceniKlice: [], doporuceniOtevreno: 0, mise: { d: "", hotove: [], serie: 0, maxSerie: 0, tezke: 0 }, t: 0,
+    naroky: {}, otevrenoNaroku: {}, mise: { d: "", hotove: [], serie: 0, maxSerie: 0, tezke: 0 },
+    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, t: 0,
   };
 }
 
@@ -278,11 +308,26 @@ export function ulozSbirku(s: SbirkaStav): void {
   window.dispatchEvent(new Event(SBIRKA_EVENT));
 }
 
-/** Načte, upraví a uloží stav jedním krokem. */
+/** Nově získané trofeje (detail: { ids }) — stránka je ohlásí. */
+export const TROFEJ_EVENT = "matemax-trofej";
+
+/** Načte, upraví a uloží stav jedním krokem. Při každé změně doplní nově splněné trofeje. */
 export function upravSbirku<T>(fn: (s: SbirkaStav) => { s: SbirkaStav; vysledek: T }): T {
   const { s, vysledek } = fn(nactiSbirku());
-  ulozSbirku({ ...s, t: Date.now() });
+  const tr = zapisTrofeje(s, localDateStr());
+  ulozSbirku({ ...tr.s, t: Date.now() });
+  if (tr.vysledek.length > 0) window.dispatchEvent(new CustomEvent(TROFEJ_EVENT, { detail: { ids: tr.vysledek } }));
   return vysledek;
+}
+
+/** Dopočítá trofeje pro stav, který se od jejich zavedení nezměnil (volá se při otevření Sbírky). */
+export function zkontrolujTrofeje(): void {
+  if (typeof window === "undefined") return;
+  const s = nactiSbirku();
+  const tr = zapisTrofeje(s, localDateStr());
+  if (tr.vysledek.length === 0) return;
+  ulozSbirku({ ...tr.s, t: Date.now() });
+  window.dispatchEvent(new CustomEvent(TROFEJ_EVENT, { detail: { ids: tr.vysledek } }));
 }
 
 // ── Čisté operace (testované v e2e/sbirka.spec.ts) ──────────────────────────
@@ -349,9 +394,9 @@ export function dostupnostTruhly(s: SbirkaStav, id: TruhlaId, den: string): Dost
     if (s.denniOdemcena !== den) return { ok: false, proc: "Dokonči dnešní trénink." };
     return { ok: true };
   }
-  if (id === "doporuceni") {
-    if (doporuceniKOtevreni(s) <= 0) return { ok: false, proc: "Zvládni doporučené téma." };
-    return { ok: true };
+  if ((NAROKOVE_TRUHLY as string[]).includes(id)) {
+    if (naroku(s, id as NarokTruhla) > 0) return { ok: true };
+    return { ok: false, proc: id === "doporuceni" ? "Zvládni doporučené téma." : id === "generalka" ? "Napiš test nanečisto." : "Zlepši se v dalším testu nanečisto." };
   }
   if (id === "zlata") {
     if (s.zlataOtevrena === pondeli(den)) return { ok: false, proc: "Tento týden už otevřená." };
@@ -384,7 +429,10 @@ export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: str
   if (t.cena !== null) dalsi.utraceno += t.cena;
   if (id === "denni") dalsi.denniOtevrena = den;
   if (id === "zlata") dalsi.zlataOtevrena = pondeli(den);
-  if (id === "doporuceni") dalsi.doporuceniOtevreno = (s.doporuceniOtevreno ?? 0) + 1;
+  if ((NAROKOVE_TRUHLY as string[]).includes(id)) {
+    const n = id as NarokTruhla;
+    dalsi.otevrenoNaroku = { ...(s.otevrenoNaroku ?? {}), [n]: (s.otevrenoNaroku?.[n] ?? 0) + 1 };
+  }
   const dd = s.dny[den] ?? { n: 0, ok: 0 };
   dalsi.dny = { ...s.dny, [den]: { ...dd, tr: (dd.tr ?? 0) + 1 } };
 
@@ -392,7 +440,7 @@ export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: str
   dalsi.bezVzacne = vz === "vzacna" || vz === "legenda" ? 0 : s.bezVzacne + 1;
   dalsi.bezLegendy = vz === "legenda" ? 0 : s.bezLegendy + 1;
 
-  const pool = ODMENY[trida].filter((o) => o.vz === vz && o.cena !== 0);
+  const pool = ODMENY[trida].filter((o) => o.vz === vz && o.cena !== 0 && !o.zdroj);
   const nove = pool.filter((o) => !dalsi.mam.includes(o.id));
   const vyber = nove.length ? nove : pool;
   const odmena = vyber.length ? vyber[Math.floor(rnd() * vyber.length) % vyber.length] : null;
@@ -453,9 +501,18 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
     otevreno: Math.max(a.otevreno, b.otevreno),
     maxOdhad,
     dny,
-    doporuceniKlice: [...new Set([...(a.doporuceniKlice ?? []), ...(b.doporuceniKlice ?? [])])],
-    doporuceniOtevreno: Math.max(a.doporuceniOtevreno ?? 0, b.doporuceniOtevreno ?? 0),
+    naroky: Object.fromEntries(NAROKOVE_TRUHLY.map((n) => [n, [...new Set([...(a.naroky?.[n] ?? []), ...(b.naroky?.[n] ?? [])])]])),
+    otevrenoNaroku: Object.fromEntries(NAROKOVE_TRUHLY.map((n) => [n, Math.max(a.otevrenoNaroku?.[n] ?? 0, b.otevrenoNaroku?.[n] ?? 0)])),
     mise,
+    boss: {
+      pokusy: [...new Set([...(a.boss?.pokusy ?? []), ...(b.boss?.pokusy ?? [])])].sort().slice(-60),
+      porazeno: [...new Set([...(a.boss?.porazeno ?? []), ...(b.boss?.porazeno ?? [])])].sort(),
+    },
+    trofeje: Object.fromEntries([...new Set([...Object.keys(a.trofeje ?? {}), ...Object.keys(b.trofeje ?? {})])].map((k) => {
+      const x = a.trofeje?.[k], y = b.trofeje?.[k];
+      return [k, !x ? y! : !y ? x : x < y ? x : y];
+    })),
+    testy: { ...(a.testy ?? {}), ...Object.fromEntries(Object.entries(b.testy ?? {}).map(([d, v]) => [d, v ?? a.testy?.[d] ?? null])) },
     t: Math.max(a.t, b.t),
   };
 }
@@ -476,20 +533,122 @@ export function etapaHexika(maxOdhad: number | undefined): number {
   return ETAPY_HEXIKA.reduce((a, e, i) => (b >= e.od ? i + 1 : a), 1);
 }
 
-// ── Truhla doporučení ───────────────────────────────────────────────────────
+// ── Nároky na truhly (doporučení, Generálka, legendární za zlepšení) ────────
 
-export function doporuceniKOtevreni(s: SbirkaStav): number {
-  return Math.max(0, (s.doporuceniKlice ?? []).length - (s.doporuceniOtevreno ?? 0));
+/** Kolik truhel daného druhu čeká na otevření. */
+export function naroku(s: SbirkaStav, t: NarokTruhla): number {
+  return Math.max(0, (s.naroky?.[t] ?? []).length - (s.otevrenoNaroku?.[t] ?? 0));
 }
+
+/** Přidá nárok na truhlu za úkol s klíčem `klic` (každý úkol jen jednou). Vrací true, když je nový. */
+export function ziskejNarok(s: SbirkaStav, t: NarokTruhla, klic: string): { s: SbirkaStav; vysledek: boolean } {
+  const klice = s.naroky?.[t] ?? [];
+  if (klice.includes(klic)) return { s, vysledek: false };
+  return { s: { ...s, naroky: { ...(s.naroky ?? {}), [t]: [...klice, klic] } }, vysledek: true };
+}
+
+export const doporuceniKOtevreni = (s: SbirkaStav) => naroku(s, "doporuceni");
 
 /**
  * Žák splnil doporučení (téma přes práh zvládnutí v tréninku, splněný plán po testu nanečisto).
  * Za každé doporučení jen jednou. Vrací true, když přibyla nová truhla.
  */
 export function ziskejDoporuceni(s: SbirkaStav, klic: string): { s: SbirkaStav; vysledek: boolean } {
-  const klice = s.doporuceniKlice ?? [];
-  if (klice.includes(klic)) return { s, vysledek: false };
-  return { s: { ...s, doporuceniKlice: [...klice, klic] }, vysledek: true };
+  return ziskejNarok(s, "doporuceni", klic);
+}
+
+// ── Test nanečisto (Generálka) ──────────────────────────────────────────────
+
+export interface OdmenaZaTest { novy: boolean; zlepseni: boolean; pozadi: boolean }
+
+/**
+ * Žák napsal test nanečisto ze dne `den` (ověřeno kódem z učebny, výsledkem z appky Vyhodnocení
+ * nebo podepsaným odkazem na doporučení). Za každý test Truhla Generálka, za první test pozadí Generálka
+ * a za lepší výsledek než v předchozím testu Legendární truhla.
+ */
+export function zapocitejTest(s: SbirkaStav, trida: Trida, den: string, body: number | null = null): { s: SbirkaStav; vysledek: OdmenaZaTest } {
+  const testy = { ...(s.testy ?? {}) };
+  const znamy = den in testy;
+  if (body !== null || !znamy) testy[den] = body ?? testy[den] ?? null;
+  let dalsi: SbirkaStav = { ...s, testy };
+  const g = ziskejNarok(dalsi, "generalka", `gen:${den}`);
+  dalsi = g.s;
+  const idPozadi = `${trida}-pozadi-generalka`;
+  const pozadi = !dalsi.mam.includes(idPozadi);
+  if (pozadi) dalsi = { ...dalsi, mam: [...dalsi.mam, idPozadi] };
+  // Zlepšení: body tohoto testu > body nejbližšího staršího testu se známými body
+  let zlepseni = false;
+  const ted = testy[den];
+  if (ted !== null && ted !== undefined) {
+    const starsi = Object.entries(testy).filter(([d, b]) => d < den && b !== null).sort(([a], [b]) => (a < b ? 1 : -1))[0];
+    if (starsi && ted > (starsi[1] as number)) zlepseni = ziskejNarok(dalsi, "legendarni", `zlepseni:${den}`).vysledek;
+    if (zlepseni) dalsi = ziskejNarok(dalsi, "legendarni", `zlepseni:${den}`).s;
+  }
+  return { s: dalsi, vysledek: { novy: g.vysledek, zlepseni, pozadi } };
+}
+
+// ── Boss týdne ──────────────────────────────────────────────────────────────
+
+export const ZA_BOSSE = 100;
+
+/** Boss týdne: těžký testový příklad (3. úroveň) stejný pro všechny žáky třídy po celý týden. */
+export function vyberBosse<T extends { id: string }>(kandidati: T[], den: string): T | null {
+  if (kandidati.length === 0) return null;
+  const po = pondeli(den);
+  const [y, m, d] = po.split("-").map(Number);
+  const tyden = Math.floor(Date.UTC(y, m - 1, d) / (7 * 86400000));
+  const serazene = [...kandidati].sort((a, b) => (a.id < b.id ? -1 : 1));
+  return serazene[(tyden * 7919) % serazene.length];
+}
+
+export type StavBosse = "ceka" | "porazen" | "prohra";
+
+export function stavBosse(s: SbirkaStav, den: string): StavBosse {
+  const po = pondeli(den);
+  if (s.boss?.porazeno.includes(po)) return "porazen";
+  if (s.boss?.pokusy.includes(po)) return "prohra";
+  return "ceka";
+}
+
+/** Jeden pokus za týden. Výhra = +100 krystalů (mimo denní strop) a trofej. */
+export function bojSBossem(s: SbirkaStav, den: string, spravne: boolean): { s: SbirkaStav; vysledek: { vyhra: boolean; krystaly: number } | null } {
+  if (stavBosse(s, den) !== "ceka") return { s, vysledek: null };
+  const po = pondeli(den);
+  const boss = { pokusy: [...(s.boss?.pokusy ?? []), po].slice(-60), porazeno: [...(s.boss?.porazeno ?? []), ...(spravne ? [po] : [])] };
+  return { s: { ...s, boss, ziskano: s.ziskano + (spravne ? ZA_BOSSE : 0) }, vysledek: { vyhra: spravne, krystaly: spravne ? ZA_BOSSE : 0 } };
+}
+
+// ── Trofeje ─────────────────────────────────────────────────────────────────
+
+export interface Trofej { id: string; nazev: string; popis: string; ikona: string; splneno: (s: SbirkaStav) => boolean }
+
+const dnuSeVsemiMisemi = (s: SbirkaStav) => Object.values(s.dny).filter((d) => (d.m ?? 0) >= 3).length;
+const maLegendu = (s: SbirkaStav) => s.mam.some((id) => najdiOdmenu(id)?.vz === "legenda" && !najdiOdmenu(id)?.zdroj);
+
+/** Trofeje se nedají koupit ani vylosovat, jen vybojovat. Přibývají s dalšími etapami. */
+export const TROFEJE: Trofej[] = [
+  { id: "prvni_truhla", nazev: "První truhla", popis: "Otevři svou první truhlu.", ikona: "🎁", splneno: (s) => s.otevreno >= 1 },
+  { id: "splneny_den", nazev: "Splněný den", popis: "Splň za jeden den všechny tři mise.", ikona: "✅", splneno: (s) => dnuSeVsemiMisemi(s) >= 1 },
+  { id: "tyden_misi", nazev: "Týden misí", popis: "Splň všechny mise v sedmi různých dnech.", ikona: "📅", splneno: (s) => dnuSeVsemiMisemi(s) >= 7 },
+  { id: "zlaty_tyden", nazev: "Zlatý týden", popis: "Otevři zlatou truhlu za 5 dní tréninku v týdnu.", ikona: "🏅", splneno: (s) => !!s.zlataOtevrena },
+  { id: "sberatel", nazev: "Sběratel", popis: "Měj 10 věcí ve sbírce.", ikona: "🧺", splneno: (s) => s.mam.length >= 10 },
+  { id: "velky_sberatel", nazev: "Velký sběratel", popis: "Měj 25 věcí ve sbírce.", ikona: "🏛️", splneno: (s) => s.mam.length >= 25 },
+  { id: "legendarni_nalez", nazev: "Legendární nález", popis: "Získej legendární věc z truhly.", ikona: "🌟", splneno: maLegendu },
+  { id: "premozitel", nazev: "Přemožitel bosse", popis: "Poraz bosse týdne.", ikona: "⚔️", splneno: (s) => (s.boss?.porazeno.length ?? 0) >= 1 },
+  { id: "lovec_bossu", nazev: "Lovec bossů", popis: "Poraz bosse v pěti různých týdnech.", ikona: "🐉", splneno: (s) => (s.boss?.porazeno.length ?? 0) >= 5 },
+  { id: "generalka", nazev: "Generálka", popis: "Napiš test nanečisto.", ikona: "🏫", splneno: (s) => Object.keys(s.testy ?? {}).length >= 1 },
+  { id: "ostrileny", nazev: "Ostřílený", popis: "Napiš tři testy nanečisto.", ikona: "🎯", splneno: (s) => Object.keys(s.testy ?? {}).length >= 3 },
+  { id: "zlepseni", nazev: "Jdu nahoru", popis: "V testu nanečisto získej víc bodů než minule.", ikona: "📈", splneno: (s) => (s.naroky?.legendarni ?? []).some((k) => k.startsWith("zlepseni:")) },
+  { id: "zkuseny_hexik", nazev: "Zkušený Hexík", popis: "Dotáhni odhad bodů na 25.", ikona: "🧣", splneno: (s) => Object.values(s.maxOdhad).some((b) => (b ?? 0) >= 25) },
+  { id: "mistr", nazev: "Mistr přijímaček", popis: "Dotáhni odhad bodů na 43.", ikona: "👑", splneno: (s) => Object.values(s.maxOdhad).some((b) => (b ?? 0) >= 43) },
+];
+
+/** Doplní nově splněné trofeje. Volá se při každé změně stavu (upravSbirku). */
+export function zapisTrofeje(s: SbirkaStav, den: string): { s: SbirkaStav; vysledek: string[] } {
+  const mam = s.trofeje ?? {};
+  const nove = TROFEJE.filter((t) => !mam[t.id] && t.splneno(s)).map((t) => t.id);
+  if (nove.length === 0) return { s, vysledek: [] };
+  return { s: { ...s, trofeje: { ...mam, ...Object.fromEntries(nove.map((id) => [id, den])) } }, vysledek: nove };
 }
 
 /** Témata, která během tréninku přešla přes práh zvládnutí (před → po). */

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Hexik from "./Hexik";
 import { useSbirka } from "@/lib/use-sbirka";
-import { nasazena, krystaly, etapaHexika, ANIMACE_OSLAVY, MISE, type MiseId } from "@/lib/sbirka";
+import { nasazena, krystaly, etapaHexika, ANIMACE_OSLAVY, MISE, TROFEJE, TROFEJ_EVENT, type MiseId } from "@/lib/sbirka";
 import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import { ODPOVED_EVENT } from "@/lib/sound";
 import { KRYSTALY_EVENT, MISE_EVENT } from "@/lib/sbirka-trenink";
@@ -87,10 +87,17 @@ export default function HexikParta({ trida }: { trida: Trida }) {
     window.addEventListener(ODPOVED_EVENT, naOdpoved);
     window.addEventListener(KRYSTALY_EVENT, naKrystaly);
     window.addEventListener(MISE_EVENT, naMise);
+    const naTrofej = (e: Event) => {
+      const t = TROFEJE.find((x) => x.id === (e as CustomEvent<{ ids: string[] }>).detail?.ids?.[0]);
+      if (!t) return;
+      window.setTimeout(() => { reaguj(hxRef.current, "radost"); rekni(`${t.ikona} Nová trofej: ${t.nazev}!`, 3500); }, 700);
+    };
+    window.addEventListener(TROFEJ_EVENT, naTrofej);
     return () => {
       window.removeEventListener(ODPOVED_EVENT, naOdpoved);
       window.removeEventListener(KRYSTALY_EVENT, naKrystaly);
       window.removeEventListener(MISE_EVENT, naMise);
+      window.removeEventListener(TROFEJ_EVENT, naTrofej);
       if (bublinaCas.current) clearTimeout(bublinaCas.current);
     };
   }, []);

@@ -7,6 +7,7 @@ import { temaStyl } from "@/lib/barvy-temat";
 import { isTopicLocked } from "@/lib/subscription";
 import { maDovednosti, dovednostUlohy } from "@/lib/dovednosti";
 import { examplesFor } from "@/data/examples";
+import { zapocitejTestZOdkazu } from "@/lib/sbirka-test";
 import { nazevTematu, proc, kratkeDatum, sestavDoporucenouSadu, tridaDoporuceni, type Doporuceni } from "@/lib/doporuceni";
 import { ulozOdkaz, ulozPlan, zapomenOdkaz, type PlanPoTestu } from "@/lib/plan-po-testu";
 import type { DBExample, Trida } from "@/types";
@@ -43,6 +44,8 @@ export default function DoporuceniPoTestu({ token, plan, isGuest, isPremium, tri
         if (v.ok && v.doporuceni) {
           setD(v.doporuceni);
           if (isGuest) ulozOdkaz(token);
+          // Podepsaný odkaz = žák test nanečisto opravdu psal → Truhla Generálka (za každý test jednou)
+          zapocitejTestZOdkazu(tridaDoporuceni(v.doporuceni), v.doporuceni.test.d);
         } else {
           zapomenOdkaz();
           onNeplatne();

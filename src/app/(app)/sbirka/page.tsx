@@ -5,6 +5,10 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Hexik from "@/components/hexik/Hexik";
 import DenniMise from "@/components/hexik/DenniMise";
+import BossKarta from "@/components/hexik/BossKarta";
+import TestNanecistoKarta from "@/components/hexik/TestNanecistoKarta";
+import Trofeje from "@/components/hexik/Trofeje";
+import { nactiTestyZVysledku } from "@/lib/sbirka-test";
 import { loadProgress } from "@/lib/progress";
 import { useTrida } from "@/lib/trida";
 import { useSbirka } from "@/lib/use-sbirka";
@@ -13,12 +17,12 @@ import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import {
   ODMENY, TRUHLY, VZACNOST, TYP_NAZEV, IKONA_ODMENY, ANIMACE_OSLAVY, ETAPY_HEXIKA, DENNI_STROP,
   POJISTKA_VZACNA, krystaly, maOdmenu, nasazena, etapaHexika, dostupnostTruhly, otevriTruhlu,
-  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, doporuceniKOtevreni, TMAVE_VZHLEDY, ZA_MISI,
+  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, TMAVE_VZHLEDY, ZA_MISI, type NarokTruhla,
   type Odmena, type TypOdmeny, type TruhlaId, type VysledekTruhly, type SbirkaStav,
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
 
-type Zalozka = "truhly" | "satnik";
+type Zalozka = "truhly" | "satnik" | "trofeje";
 
 function Krystal({ className = "" }: { className?: string }) {
   return <i className={`hx-krystal ${className}`} aria-hidden="true" />;
@@ -34,6 +38,7 @@ function Vizual({ o, velikost = 52 }: { o: Odmena; velikost?: number }) {
 function stavOdmeny(s: SbirkaStav, o: Odmena, trida: Trida) {
   if (nasazena(s, trida, o.typ).id === o.id) return "nasazeno" as const;
   if (maOdmenu(s, o)) return "mam" as const;
+  if (o.zdroj === "test") return "test" as const;
   if (o.cena === null) return "truhla" as const;
   return "koupit" as const;
 }
@@ -50,7 +55,27 @@ function Sbirka() {
   const { trida } = useTrida();
   const { stav, nacteno } = useSbirka();
   const params = useSearchParams();
-  const [zalozka, setZalozka] = useState<Zalozka>(params.get("tab") === "satnik" ? "satnik" : "truhly");
+  const tabParam = params.get("tab");
+  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "trofeje" ? tabParam : "truhly");
+  const [novaTrofej, setNovaTrofej] = useState<string | null>(null);
+
+  // Výsledky testů nanečisto z appky Vyhodnocení (propojený účet) → Truhla Generálka a za zlepšení Legendární truhla
+  useEffect(() => { zkontrolujTrofeje(); nactiTestyZVysledku().catch(() => {}); }, []);
+
+  // Nová trofej: krátké ohlášení nahoře
+  useEffect(() => {
+    let cas: ReturnType<typeof setTimeout> | null = null;
+    const na = (e: Event) => {
+      const id = (e as CustomEvent<{ ids: string[] }>).detail?.ids?.[0];
+      const t = TROFEJE.find((x) => x.id === id);
+      if (!t) return;
+      setNovaTrofej(`${t.ikona} Nová trofej: ${t.nazev}`);
+      if (cas) clearTimeout(cas);
+      cas = setTimeout(() => setNovaTrofej(null), 3500);
+    };
+    window.addEventListener(TROFEJ_EVENT, na);
+    return () => { window.removeEventListener(TROFEJ_EVENT, na); if (cas) clearTimeout(cas); };
+  }, []);
   const [typ, setTyp] = useState<TypOdmeny>("podoba");
   const [vybrana, setVybrana] = useState<string | null>(null);
   const [otevirani, setOtevirani] = useState<{ id: TruhlaId; faze: "tres" | "hotovo"; vysledek: VysledekTruhly | null } | null>(null);
@@ -140,7 +165,7 @@ function Sbirka() {
       </section>
 
       <div className="flex gap-2" role="tablist" aria-label="Sbírka">
-        {(["truhly", "satnik"] as Zalozka[]).map((z) => (
+        {(["truhly", "satnik", "trofeje"] as Zalozka[]).map((z) => (
           <button
             key={z}
             type="button"
@@ -151,7 +176,7 @@ function Sbirka() {
             style={zalozka === z ? { background: "#0D1B3E" } : undefined}
             data-testid={`zalozka-${z}`}
           >
-            {z === "truhly" ? "🎁 Truhly" : "👕 Šatník"}
+            {z === "truhly" ? "🎁 Truhly" : z === "satnik" ? "👕 Šatník" : "🏆 Trofeje"}
           </button>
         ))}
       </div>
@@ -159,12 +184,14 @@ function Sbirka() {
       {zalozka === "truhly" && (
         <section className="flex flex-col gap-3">
           <DenniMise streak={streak} />
+          <BossKarta trida={trida} />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {TRUHLY.map((t) => {
               const d = dostupnostTruhly(stav, t.id, den);
               const pct = (v: number) => `${Math.round(v * 100)} %`;
               const sance = (Object.keys(t.sance) as (keyof typeof t.sance)[]).filter((k) => t.sance[k] > 0);
-              const zlataInfo = t.id === "zlata" ? ` · tento týden ${Math.min(dnuTentoTyden(stav, den), DNU_PRO_ZLATOU)}/${DNU_PRO_ZLATOU}` : t.id === "doporuceni" && doporuceniKOtevreni(stav) > 0 ? ` · čeká ${doporuceniKOtevreni(stav)}` : "";
+              const cekaNaroku = (NAROKOVE_TRUHLY as string[]).includes(t.id) ? naroku(stav, t.id as NarokTruhla) : 0;
+              const zlataInfo = t.id === "zlata" ? ` · tento týden ${Math.min(dnuTentoTyden(stav, den), DNU_PRO_ZLATOU)}/${DNU_PRO_ZLATOU}` : cekaNaroku > 0 ? ` · čeká ${cekaNaroku}` : "";
               return (
                 <div key={t.id} className="mm-karta p-4 flex flex-col gap-3" data-testid={`truhla-${t.id}`}>
                   <div className="flex items-center gap-3">
@@ -191,11 +218,12 @@ function Sbirka() {
               );
             })}
           </div>
+          <TestNanecistoKarta trida={trida} />
           <div className="mm-karta p-4 text-sm flex flex-col gap-1.5" style={{ color: "#33405F" }}>
             <p><b>Pojistka:</b> vzácná nebo lepší odměna nejpozději za {Math.max(1, POJISTKA_VZACNA - stav.bezVzacne)} {POJISTKA_VZACNA - stav.bezVzacne === 1 ? "truhlu" : "truhel"}. Věc, kterou už máš, se vrátí jako krystaly.</p>
             <p><b>Krystaly získáš za učení:</b> správná odpověď 2 (těžký příklad 4, lehčí než tvoje úroveň 1), dokončený trénink 10 a denní truhla, každá denní mise {ZA_MISI}, každý nový bod v odhadu 30. Za den nejvýš {DENNI_STROP} krystalů za učení.</p>
             <p><b>Truhla doporučení:</b> dostaneš ji, když v tréninku dotáhneš doporučené téma do zvládnutí, nebo když splníš plán po testu nanečisto.</p>
-            <p>Nic se nekupuje za peníze. Legendární věci jsou jen v truhlách.</p>
+            <p>Nic se nekupuje za peníze. Legendární věci jsou jen v truhlách a pozadí Generálka jen za test nanečisto. Trofeje se dají jen vybojovat.</p>
           </div>
         </section>
       )}
@@ -222,12 +250,12 @@ function Sbirka() {
             <button
               type="button"
               onClick={akce}
-              disabled={vybStav === "nasazeno" || vybStav === "truhla" || (vybStav === "koupit" && krystaly(stav) < (vyb.cena ?? 0))}
+              disabled={vybStav === "nasazeno" || vybStav === "truhla" || vybStav === "test" || (vybStav === "koupit" && krystaly(stav) < (vyb.cena ?? 0))}
               className="mm-tlacitko w-full rounded-2xl py-3 font-extrabold text-white disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
               style={{ background: "#5B55D6" }}
               data-testid="satnik-akce"
             >
-              {vybStav === "nasazeno" ? "Nasazeno" : vybStav === "mam" ? "Nasadit" : vybStav === "truhla" ? "Legendární: jen z truhel" :
+              {vybStav === "nasazeno" ? "Nasazeno" : vybStav === "mam" ? "Nasadit" : vybStav === "truhla" ? "Legendární: jen z truhel" : vybStav === "test" ? "Jen za test nanečisto" :
                 krystaly(stav) < (vyb.cena ?? 0) ? `Chybí ${(vyb.cena ?? 0) - krystaly(stav)} krystalů` : <>Koupit za {vyb.cena} <Krystal /></>}
             </button>
             <button type="button" onClick={() => predved(vyb)} className="text-sm font-bold underline" style={{ color: "#5B55D6" }}>Vyzkoušet</button>
@@ -270,7 +298,7 @@ function Sbirka() {
                     <span className="flex items-center justify-center h-14"><Vizual o={o} /></span>
                     <span className="text-[13px] font-bold leading-tight" style={{ color: "var(--text-primary)" }}>{o.nazev}</span>
                     <span className="text-[11px] font-bold flex items-center gap-1" style={{ color: st === "nasazeno" ? "#1F9D55" : "#5F6982" }}>
-                      {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "truhla" ? "🎁 Jen z truhly" : <><Krystal /> {o.cena}</>}
+                      {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "truhla" ? "🎁 Jen z truhly" : st === "test" ? "🏫 Za test nanečisto" : <><Krystal /> {o.cena}</>}
                     </span>
                   </button>
                 );
@@ -278,6 +306,14 @@ function Sbirka() {
             </div>
           </div>
         </section>
+      )}
+
+      {zalozka === "trofeje" && <Trofeje trida={trida} />}
+
+      {novaTrofej && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[70] rounded-2xl px-4 py-2.5 font-extrabold shadow-lg" style={{ background: "#0D1B3E", color: "#FFE08A" }} role="status" data-testid="nova-trofej">
+          {novaTrofej}
+        </div>
       )}
 
       {/* Otevírání truhly */}
