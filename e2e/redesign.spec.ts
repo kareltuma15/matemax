@@ -43,6 +43,9 @@ test("Testy 5. třídy: jen věci pro 5. třídu", async ({ page }) => {
   await expect(page.getByTestId("testy-cermat")).toContainText("70 minut");
   await expect(page.getByTestId("testy-cermat")).toContainText("Zdarma");
   await expect(page.getByTestId("testy-cermat")).not.toContainText("25 minut");
+  // test nanečisto: stejné soboty jako 9. třída, přihláška na webu
+  await expect(page.getByTestId("testy-nanecisto").getByRole("link", { name: /Termíny a přihláška/ }))
+    .toHaveAttribute("href", "https://www.matematika-snadno.cz/prijimacky-nanecisto");
   await expect(page.getByTestId("testy-nanecisto")).toContainText("14 úloh");
 });
 

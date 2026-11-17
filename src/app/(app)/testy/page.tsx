@@ -24,6 +24,8 @@ interface Polozka {
 
 interface CvicnyVysledek { date: string; score: number; total: number; pct: number }
 
+const TESTY_NANECISTO_WEB = "https://www.matematika-snadno.cz/prijimacky-nanecisto";
+
 /**
  * Testy = ověř se. Tři kroky (u 5. třídy dva), každý jinou barvou a s tím, co obnáší:
  * 1. diagnostika (kde jsem), 2. cvičný test na čas, 3. test nanečisto jako generálka.
@@ -74,8 +76,9 @@ export default function TestyPage() {
     stitek: "Zvlášť",
     barva: "#A66300",
     tint: "#FDF0DA",
-    href: g5 ? undefined : "/testy-nanecisto",
-    tlacitko: g5 ? undefined : "Termíny a přihláška",
+    // Páťáci píšou ve stejné soboty v učebně; přihláška je na webu (Karel 17. 11.)
+    href: g5 ? TESTY_NANECISTO_WEB : "/testy-nanecisto",
+    tlacitko: "Termíny a přihláška",
     testid: "testy-nanecisto",
   };
   const polozky: Polozka[] = g5
@@ -169,6 +172,7 @@ export default function TestyPage() {
                 {p.href && p.tlacitko ? (
                   <Link
                     href={p.href}
+                    {...(p.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
                     className={`w-full py-3 rounded-2xl text-center font-extrabold ${doporucena ? "mm-tlacitko text-white" : "mm-obrys"}`}
                     style={doporucena ? { background: p.barva } : { color: "#0D1B3E", border: "1.5px solid #E4E6EF" }}
                   >
