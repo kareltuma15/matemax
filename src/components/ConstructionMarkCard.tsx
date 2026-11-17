@@ -29,6 +29,11 @@ interface Props {
   total: number;
   onResult: (correct: boolean, userAnswer: string) => void;
   onSkip?: () => void;
+  /**
+   * Cvičný test: žádná kontrola ani řešení, karta jen při každé změně značek tiše řekne,
+   * jestli by byly správně (null = nic neoznačeno). Výsledek se ukáže až po odevzdání testu.
+   */
+  vTestu?: (ok: boolean | null) => void;
 }
 
 const NAVY = "#0D1B3E";
@@ -121,7 +126,7 @@ function Element({ el, w, h, color, sw, dashed, u }: { el: SceneElement; w: numb
   }
 }
 
-export default function ConstructionMarkCard({ example, cardNumber, total, onResult, onSkip }: Props) {
+export default function ConstructionMarkCard({ example, cardNumber, total, onResult, onSkip, vTestu }: Props) {
   const scene = example.konstrukce_scena!;
   const svgRef = useRef<SVGSVGElement>(null);
   const idRef = useRef(1);
@@ -295,11 +300,24 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
   function clearAll() { setItems([]); setPending(null); setRefLine(null); setLastR(null); }
   function resetZoom() { setZoom(1); setCenter({ x: W / 2, y: H / 2 }); }
 
-  function check() {
+  function vyhodnot() {
     const pts = markers.map((m) => m.p);
-    const r = scene.locus
+    return scene.locus
       ? matchLocus(pts, shapesOf(scene.locus.shapes), scene.locus.count, scene.tolerance, 40)
       : matchMarkers(pts, scene.targets, scene.tolerance);
+  }
+
+  // Cvičný test: po každé změně značek tiše nahlásit, jestli by byly správně.
+  const vTestuRef = useRef(vTestu);
+  useEffect(() => { vTestuRef.current = vTestu; });
+  useEffect(() => {
+    if (!vTestuRef.current) return;
+    vTestuRef.current(markers.length === 0 ? null : vyhodnot().ok);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- vyhodnot závisí jen na značkách a scéně
+  }, [markers, scene]);
+
+  function check() {
+    const r = vyhodnot();
     setResult(r);
     setNotice(null);
     if (r.ok) playCorrect(); else playWrong();
@@ -348,8 +366,8 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
 
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-4 fade-in-up">
-      {/* Hlavička */}
-      <div className="flex items-center gap-2 text-xs">
+      {/* Hlavička (v testu ji kreslí test sám) */}
+      {!vTestu && <div className="flex items-center gap-2 text-xs">
         <span className="karta-poradi font-semibold text-slate-500 shrink-0">{cardNumber} / {total}</span>
         <span className="font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0" style={{ background: "#eef2ff", color: "#4338ca" }}>
           {TEMA_LABELS[example.tema] ?? example.tema}
@@ -360,7 +378,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
         <span className="ml-auto font-semibold px-2 py-0.5 rounded-full text-[11px] shrink-0" style={{ background: badge.bg, color: badge.color }}>
           {badge.label}
         </span>
-      </div>
+      </div>}
 
       {/* Zadání */}
       <div className="rounded-xl p-4" style={{ background: "#eef2ff", border: "1px solid #c7d2fe" }}>
@@ -519,8 +537,16 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
         </svg>
       </div>
 
+      {vTestu && (
+        <div className="text-xs font-semibold" style={{ color: markers.length ? "#166534" : "#64748b" }} data-testid="rys-v-testu">
+          {markers.length
+            ? `Označeno ${markers.length === 1 ? "1 bod" : markers.length < 5 ? `${markers.length} body` : `${markers.length} bodů`}. Výsledek uvidíš po odevzdání testu.`
+            : "Až budeš mít hotovo, označ výsledek nástrojem „Označit bod“."}
+        </div>
+      )}
+
       {/* Kontrola */}
-      {!checked && (
+      {!checked && !vTestu && (
         <div className="flex flex-col gap-2">
           <button
             type="button"

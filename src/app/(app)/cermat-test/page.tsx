@@ -10,7 +10,8 @@ import { TEMA_LABELS } from "@/types";
 import { supabase } from "@/lib/supabase";
 import { trackEvent } from "@/lib/analytics";
 import { localDateStr } from "@/lib/date";
-import { jenPro9 } from "@/components/JenPro9";
+import { useTrida } from "@/lib/trida";
+import CvicnyTest5 from "@/components/CvicnyTest5";
 
 const TEST_SIZE = 15;
 const TEST_SECONDS = 25 * 60; // 25 minutes
@@ -475,4 +476,9 @@ function CermatTestPage() {
   );
 }
 
-export default jenPro9(CermatTestPage, "CERMAT test");
+/** 9. třída: krátký test 15 úloh na 25 minut; 5. třída: celý cvičný test ve formátu přijímaček (CvicnyTest5). */
+export default function CvicnyTestRozcestnik() {
+  const { trida, ready } = useTrida();
+  if (!ready) return null;
+  return trida === 5 ? <CvicnyTest5 /> : <CermatTestPage />;
+}

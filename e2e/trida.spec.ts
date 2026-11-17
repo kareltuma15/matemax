@@ -48,13 +48,12 @@ test("registrace: třídu je nutné vybrat a volba se zapamatuje", async ({ page
 });
 
 test.describe("stránky jen pro 9. třídu", () => {
-  test("žák 5. třídy vidí zprávu „připravujeme“", async ({ page }) => {
+  test("žák 5. třídy dostane na cvičném testu vlastní test (14 úloh, 70 minut), ne test 9. třídy", async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
-    for (const cesta of ["/cermat-test"]) {
-      await page.goto(cesta);
-      await expect(page.getByTestId("pro-5-pripravujeme"), cesta).toBeVisible();
-      await expect(page.getByRole("link", { name: /Jít procvičovat/ })).toBeVisible();
-    }
+    await page.goto("/cermat-test");
+    await expect(page.getByTestId("cvicny-test-5")).toBeVisible();
+    await expect(page.getByTestId("pro-5-pripravujeme")).toHaveCount(0);
+    await expect(page.getByText("Simulace CERMAT testu")).toHaveCount(0);
   });
 
   test("žák 9. třídy (i bez volby) vidí stránky beze změny", async ({ page }) => {

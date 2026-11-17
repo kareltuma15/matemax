@@ -40,7 +40,9 @@ test("Testy 5. třídy: jen věci pro 5. třídu", async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
   await page.goto("/testy");
   await expect(page.getByTestId("testy-diagnostika")).toContainText("osmi okruhů");
-  await expect(page.getByTestId("testy-cermat")).toHaveCount(0);
+  await expect(page.getByTestId("testy-cermat")).toContainText("70 minut");
+  await expect(page.getByTestId("testy-cermat")).toContainText("Zdarma");
+  await expect(page.getByTestId("testy-cermat")).not.toContainText("25 minut");
   await expect(page.getByTestId("testy-nanecisto")).toContainText("14 úloh");
 });
 

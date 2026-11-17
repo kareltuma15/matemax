@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTrida } from "@/lib/trida";
+import { nactiHistorii5, type VysledekCvicnehoTestu5 } from "@/components/CvicnyTest5";
 
 type Stitek = "Zdarma" | "Zvlášť";
 
@@ -33,11 +34,13 @@ export default function TestyPage() {
   const { trida, ready } = useTrida();
   const [diagHotova, setDiagHotova] = useState(false);
   const [cvicny, setCvicny] = useState<CvicnyVysledek | null>(null);
+  const [cvicny5, setCvicny5] = useState<VysledekCvicnehoTestu5 | null>(null);
   useEffect(() => {
     try {
       setDiagHotova(localStorage.getItem("matemax-diag-done") === "1");
       const h = JSON.parse(localStorage.getItem("cermat-test-history") ?? "[]") as CvicnyVysledek[];
       if (Array.isArray(h) && h[0]) setCvicny(h[0]);
+      setCvicny5(nactiHistorii5()[0] ?? null);
     } catch { /* soukromé okno */ }
   }, []);
 
@@ -76,7 +79,24 @@ export default function TestyPage() {
     testid: "testy-nanecisto",
   };
   const polozky: Polozka[] = g5
-    ? [diagnostika, nanecisto]
+    ? [
+        diagnostika,
+        {
+          krok: "Zkoušej na čas",
+          ikona: "⏱️",
+          nazev: "Cvičný test",
+          popis: "Celý test jako u přijímaček na víceleté gymnázium, ale doma v appce. Body i řešení uvidíš hned po odevzdání.",
+          fakta: ["14 úloh", "70 minut", "50 bodů"],
+          stitek: "Zdarma",
+          barva: "#2E6DA4",
+          tint: "#E4EEF7",
+          href: "/cermat-test",
+          tlacitko: cvicny5 ? "Zkusit znovu" : "Spustit cvičný test",
+          stav: cvicny5 ? `Naposledy ${cvicny5.body} z ${cvicny5.max} bodů` : undefined,
+          testid: "testy-cermat",
+        },
+        nanecisto,
+      ]
     : [
         diagnostika,
         {
@@ -96,21 +116,19 @@ export default function TestyPage() {
         nanecisto,
       ];
 
-  // Co je teď na řadě: bez diagnostiky diagnostika, potom cvičný test (u 5. třídy po diagnostice nic nevnucujeme)
-  const doporuceno = !diagHotova ? "testy-diagnostika" : g5 ? null : "testy-cermat";
+  // Co je teď na řadě: bez diagnostiky diagnostika, potom cvičný test
+  const doporuceno = !diagHotova ? "testy-diagnostika" : "testy-cermat";
 
   return (
     <div className="flex flex-col gap-5 max-w-xl lg:max-w-5xl mx-auto w-full" data-testid="testy">
       <div>
         <h1 className="text-[26px] lg:text-[32px] font-extrabold leading-tight" style={{ color: "#0D1B3E" }}>Testy</h1>
         <p className="text-sm lg:text-base mt-1" style={{ color: "#5F6982" }}>
-          {g5
-            ? "Dva kroky: zjisti, kde jsi, a před přijímačkami si napiš celý test nanečisto."
-            : "Tři kroky k přijímačkám: zjisti, kde jsi, zkoušej na čas a nakonec si napiš celý test nanečisto."}
+          Tři kroky k přijímačkám: zjisti, kde jsi, zkoušej na čas a nakonec si napiš celý test nanečisto.
         </p>
       </div>
 
-      <div className={`grid gap-4 ${g5 ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
+      <div className="grid gap-4 lg:grid-cols-3">
         {polozky.map((p, i) => {
           const doporucena = p.testid === doporuceno;
           return (
