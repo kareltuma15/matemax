@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { bezpecnyNext, navratPoRegistraci } from "@/lib/bezpecny-next";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -43,12 +44,12 @@ export async function GET(request: NextRequest) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: user.email, firstName }),
           }).catch(() => {});
-          // New user → onboarding
-          return NextResponse.redirect(`${origin}/vitej`);
+          // New user → onboarding (kdo přišel z doporučení po testu nebo z propojení, vrátí se rovnou tam)
+          return NextResponse.redirect(`${origin}${navratPoRegistraci(next) ?? "/vitej"}`);
         }
       }
       // Returning user: honor explicit ?next= param; otherwise let client do smart redirect
-      const destination = next !== "/trenink" ? next : "/?login=1";
+      const destination = next !== "/trenink" ? (bezpecnyNext(next) ?? "/?login=1") : "/?login=1";
       return NextResponse.redirect(`${origin}${destination}`);
     }
   }

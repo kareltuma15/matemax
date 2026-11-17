@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import type { AdminUser } from "@/app/api/admin/users/route";
 import type { AdminUserDetail } from "@/app/api/admin/user-detail/route";
 import { TEMA_LABELS } from "@/types";
+import { nazevTematu } from "@/lib/doporuceni";
 
 interface Stats {
   totalUsers: number;
@@ -74,6 +75,15 @@ function UserDetailPanel({ detail }: { detail: AdminUserDetail | "chyba" | undef
         <div>Úroveň: <b>{detail.xp ? `${LEVEL_LABELS[detail.xp.level] ?? detail.xp.level} (${detail.xp.total} XP, série ${detail.xp.streak})` : "—"}</b></div>
         <div>Odznaky: <b>{detail.badges}</b> · Opakovací karty: <b>{detail.cards}</b></div>
         <div>Onboarding: <b>{detail.onboarding ?? "—"}</b> · Propojení s rodičem: <b>{detail.parentLinks}</b></div>
+        <div>Testy nanečisto: <b>{detail.vysledky?.propojeno ? `propojeno od ${detail.vysledky.propojeno.slice(0, 10)}` : "nepropojeno"}</b></div>
+        {detail.vysledky?.plan && (
+          <div>Plán po {detail.vysledky.plan.test}: <b>{detail.vysledky.plan.temata.join(", ")}</b>{detail.vysledky.plan.splneno ? " · splněno" : ""}</div>
+        )}
+        {(detail.vysledky?.testy ?? []).map((t) => (
+          <div key={t.d} className="mt-1" style={{ color: "#64748b" }}>
+            {t.n}. test {t.d}{t.celkem ? ` · ${t.celkem.pts} / ${t.celkem.max} b.` : ""}: {t.temata.map((x) => `${nazevTematu(x)} ${x.pts}/${x.max}`).join(", ")}
+          </div>
+        ))}
         {detail.events.length > 0 && (
           <div className="mt-2" style={{ color: "#64748b" }}>
             Poslední akce: {detail.events.slice(0, 4).map((e) => `${EVENT_LABELS[e.name] ?? e.name} (${e.at.slice(0, 10)})`).join(", ")}

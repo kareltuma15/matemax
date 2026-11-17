@@ -8,7 +8,7 @@ import TreninkTemata from "@/components/TreninkTemata";
 import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
-import { remoteLogSession, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, remoteSyncGamification, localSaveSession } from "@/lib/storage";
+import { remoteLogSession, remoteLogProcvicovani, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, remoteSyncGamification, localSaveSession } from "@/lib/storage";
 import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
 import { reportDbError } from "@/lib/db-error";
@@ -399,6 +399,8 @@ function TreningPageInner() {
   const [levelUpData, setLevelUpData]   = useState<ReturnType<typeof getLevelFromXP> | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const sessionStartRef                 = useRef(new Date());
+  // Odpovědi tohoto tréninku po tématech (souhrn do tabulky procvicovani, viz lib/vysledky.ts)
+  const odpovediRef                     = useRef<{ tema: string; dovednost?: string; ok: boolean }[]>([]);
   // Snímek připravenosti před tréninkem — pro posun „před → po" v souhrnu
   const readinessBeforeRef              = useRef<Record<string, number> | null>(null);
   const consecutiveCorrectRef           = useRef(0);
@@ -577,6 +579,9 @@ function TreningPageInner() {
       const p = loadProgress();
       try {
         await remoteLogSession({ user_id: uid, date: localDateStr(), xp_earned: xpEarned, correct, total: answered });
+        const odpovedi = odpovediRef.current;
+        odpovediRef.current = [];
+        await remoteLogProcvicovani(uid, odpovedi, sessionStartRef.current);
         const level = getLevelFromXP(p.xp);
         await remoteSyncXP(uid, p.xp, level.key, p.freezeCount ?? 0, p.streak ?? 0);
         await remoteSyncBadges(uid, gamState.earnedBadges);
@@ -630,6 +635,7 @@ function TreningPageInner() {
 
       const exId = sessionIds[currentIdx];
       const example = allExamples.find((ex) => ex.id === exId);
+      if (example) odpovediRef.current.push({ tema: example.tema, ...(example.dovednost ? { dovednost: example.dovednost } : {}), ok: wasCorrect });
       const existing = cards.find((c) => c.exampleId === exId) ?? createCard(exId);
       const quality: 0 | 1 | 2 | 3 | 4 | 5 = wasCorrect ? 4 : 1;
       const updated = reviewCard(existing, quality);
@@ -841,6 +847,7 @@ function TreningPageInner() {
     krystalySezeniRef.current = 0;
     setOdmenaKonec(null);
     sessionStartRef.current = new Date();
+    odpovediRef.current = [];
   }
 
   // Badge toast queue: show one at a time

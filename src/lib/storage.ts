@@ -2,6 +2,7 @@
 import { supabase } from "./supabase";
 import { reportDbError } from "./db-error";
 import { localDateStr } from "./date";
+import { temataTreninku } from "./vysledky";
 import { SM2Card, UserProgress } from "@/types";
 import { loadGamification, saveGamification, GamificationState } from "./gamification";
 
@@ -71,6 +72,20 @@ export async function remoteLogSession(data: SessionRow): Promise<void> {
   if (!supabase) return;
   const { error } = await supabase.from("sessions").insert(data);
   reportDbError("sessions.insert", error);
+}
+
+/** Souhrn dokončeného tréninku po tématech a dovednostech (tabulka procvicovani). Jen počty a čas. */
+export async function remoteLogProcvicovani(
+  userId: string,
+  odpovedi: { tema: string; dovednost?: string; ok: boolean }[],
+  zacatek: Date,
+): Promise<void> {
+  if (!supabase || odpovedi.length === 0) return;
+  const sekund = Math.min(86400, Math.max(0, Math.round((Date.now() - zacatek.getTime()) / 1000)));
+  const { error } = await supabase.from("procvicovani").insert({
+    user_id: userId, datum: localDateStr(), sekund, temata: temataTreninku(odpovedi),
+  });
+  reportDbError("procvicovani.insert", error);
 }
 
 export async function remoteSaveSM2Card(data: SM2Row): Promise<void> {

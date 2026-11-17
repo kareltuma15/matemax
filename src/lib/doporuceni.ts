@@ -137,3 +137,11 @@ export function sestavDoporucenouSadu(
   });
   return vysledek;
 }
+
+/** Kolik dní zbývá do data „YYYY-MM-DD“ podle kalendáře žáka (0 = dnes, záporné = už bylo). */
+export function dniDo(d: string, dnes: Date = new Date()): number {
+  const [r, m, den] = d.split("-").map(Number);
+  const cil = Date.UTC(r, m - 1, den);
+  const ted = Date.UTC(dnes.getFullYear(), dnes.getMonth(), dnes.getDate());
+  return Math.round((cil - ted) / 86400000);
+}

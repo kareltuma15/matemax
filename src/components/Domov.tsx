@@ -21,7 +21,7 @@ import { maDovednosti } from "@/lib/dovednosti";
 import { computeDovednostProgress } from "@/lib/levels";
 import { dnesniTrenink, type DnesniTrenink } from "@/lib/dnesni-trenink";
 import { nactiOdkaz, nactiPlan, jeSplneny, oznacSplneny, postupPlanu, type PlanPoTestu } from "@/lib/plan-po-testu";
-import { nazevTematu, kratkeDatum } from "@/lib/doporuceni";
+import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
@@ -272,7 +272,18 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
                   </span>
                 ))}
               </div>
-              {plan.doporuceni.dalsi && <span className="text-sm" style={{ color: "#5F6982" }}>Další test {kratkeDatum(plan.doporuceni.dalsi)}</span>}
+              {plan.doporuceni.dalsi && (() => {
+                const zbyva = dniDo(plan.doporuceni.dalsi);
+                const nejslabsi = [...plan.doporuceni.top].sort((a, b) => a.pts / a.max - b.pts / b.max)[0];
+                // Pár dní před dalším testem připomeneme opakování nejslabšího tématu (jen v appce).
+                return zbyva >= 0 && zbyva <= 3 ? (
+                  <span className="text-sm font-bold px-3 py-2 rounded-xl" style={{ background: "#FFF6E5", color: "#7A4A00" }} data-testid="domov-plan-pripominka">
+                    {zbyva === 0 ? "Dnes je další test nanečisto." : zbyva === 1 ? "Zítra je další test nanečisto." : `Za ${zbyva} dny je další test nanečisto.`} Zopakuj si hlavně {nazevTematu(nejslabsi).toLowerCase()}.
+                  </span>
+                ) : (
+                  <span className="text-sm" style={{ color: "#5F6982" }}>Další test {kratkeDatum(plan.doporuceni.dalsi)}</span>
+                );
+              })()}
               <Link href="/trenink?plan=1" className="w-full lg:w-auto lg:self-start lg:px-8 py-3 rounded-2xl text-center font-extrabold mm-tlacitko" style={{ background: "#F5A623", color: "#0D1B3E" }}>
                 Trénovat podle plánu →
               </Link>

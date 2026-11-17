@@ -81,7 +81,15 @@ export async function nactiPlan(userId: string | null): Promise<PlanPoTestu | nu
   if (error || !data) return lokal;
   const d = normalizujDoporuceni(data.doporuceni);
   if (!d) return lokal;
-  const server: PlanPoTestu = { doporuceni: d, zaklad: (data.zaklad ?? {}) as Record<string, number>, ulozeno: data.ulozeno_at as string, splneno: data.splneno_at as string | null };
+  let zaklad = (data.zaklad ?? {}) as Record<string, number>;
+  // Plán, který sestavil server z výsledku testu (propojení s Vyhodnocením testů): postup se počítá
+  // od chvíle, kdy ho žák poprvé uvidí, protože správné odpovědi po tématech zná jen jeho prohlížeč.
+  if (zaklad._novy) {
+    zaklad = spravneTed();
+    const { error: e } = await supabase.from("plan_po_testu").update({ zaklad }).eq("user_id", userId);
+    reportDbError("plan_po_testu.zaklad", e);
+  }
+  const server: PlanPoTestu = { doporuceni: d, zaklad, ulozeno: data.ulozeno_at as string, splneno: data.splneno_at as string | null };
   const vysledek = lokal && lokal.ulozeno > server.ulozeno ? lokal : server;
   try { localStorage.setItem(KLIC_PLAN, JSON.stringify(vysledek)); } catch { /* nic */ }
   return vysledek;

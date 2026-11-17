@@ -9,6 +9,7 @@ import { PENDING_REF_KEY } from "@/lib/referral";
 import { saveLocalTrida } from "@/lib/trida";
 import type { Trida } from "@/types";
 import { mer } from "@/components/Mereni";
+import { navratPoRegistraci } from "@/lib/bezpecny-next";
 
 export default function RegistraceForm() {
   const router = useRouter();
@@ -24,6 +25,9 @@ export default function RegistraceForm() {
   const [loading, setLoading]       = useState(false);
   const [done, setDone]             = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  // Přišel z doporučení po testu nebo z propojení s Testy nanečisto → po registraci rovnou zpátky
+  const pokracovat = navratPoRegistraci(searchParams.get("next"));
+  const prihlaseniHref = pokracovat ? `/prihlaseni?next=${encodeURIComponent(pokracovat)}` : "/prihlaseni";
 
   useEffect(() => {
     const ref = searchParams.get("ref");
@@ -36,7 +40,7 @@ export default function RegistraceForm() {
     setGoogleLoading(true);
     mer("registrace_google");
     const ref = searchParams.get("ref");
-    const next = ref ? `/vitej?ref=${encodeURIComponent(ref)}` : "/vitej";
+    const next = pokracovat ?? (ref ? `/vitej?ref=${encodeURIComponent(ref)}` : "/vitej");
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
@@ -112,7 +116,7 @@ export default function RegistraceForm() {
         )
         .then(({ error }) => reportDbError("user_onboarding.registered", error));
 
-      router.push("/vitej");
+      router.push(pokracovat ?? "/vitej");
     } else {
       setDone(true);
     }
@@ -130,7 +134,7 @@ export default function RegistraceForm() {
           </p>
         </div>
         <Link
-          href="/prihlaseni"
+          href={prihlaseniHref}
           className="w-full py-3 text-white font-semibold rounded-xl text-sm text-center"
           style={{ background: "#0D1B3E" }}
         >
@@ -270,7 +274,7 @@ export default function RegistraceForm() {
 
       <div className="text-center text-sm text-slate-400">
         Máš účet?{" "}
-        <Link href="/prihlaseni" className="font-semibold" style={{ color: "#2E6DA4" }}>
+        <Link href={prihlaseniHref} className="font-semibold" style={{ color: "#2E6DA4" }}>
           Přihlásit se
         </Link>
       </div>

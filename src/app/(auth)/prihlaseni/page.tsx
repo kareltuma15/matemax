@@ -7,6 +7,7 @@ import { mer } from "@/components/Mereni";
 import { supabase } from "@/lib/supabase";
 import { getSmartRedirect } from "@/lib/smart-redirect";
 import { hydrateFromRemote } from "@/lib/storage";
+import { bezpecnyNext, navratPoRegistraci } from "@/lib/bezpecny-next";
 
 export default function PrihlaseniPage() {
   return (
@@ -30,7 +31,7 @@ function PrihlaseniForm() {
   async function handleGoogleLogin() {
     if (!supabase) return;
     setGoogleLoading(true);
-    const next = searchParams.get("next") ?? "/trenink";
+    const next = bezpecnyNext(searchParams.get("next")) ?? "/trenink";
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
@@ -67,7 +68,7 @@ function PrihlaseniForm() {
       setLoading(false);
       const next = searchParams.get("next");
       // Explicit ?next= param (e.g. from protected route) takes priority; otherwise smart redirect
-      const destination = next && next.startsWith("/") ? next : getSmartRedirect();
+      const destination = bezpecnyNext(next) ?? getSmartRedirect();
       // Full page reload needed so server components + proxy see the fresh session cookie
       window.location.href = destination;
     } catch (err) {
@@ -153,7 +154,7 @@ function PrihlaseniForm() {
 
       <div className="text-center text-sm text-slate-400">
         Nemáš účet?{" "}
-        <Link href="/registrace" className="font-semibold" style={{ color: "#2E6DA4" }}>
+        <Link href={(() => { const n = navratPoRegistraci(searchParams.get("next")); return n ? `/registrace?next=${encodeURIComponent(n)}` : "/registrace"; })()} className="font-semibold" style={{ color: "#2E6DA4" }}>
           Registrovat se
         </Link>
       </div>

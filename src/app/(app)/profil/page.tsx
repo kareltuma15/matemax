@@ -9,6 +9,7 @@ import { loadProgress } from "@/lib/progress";
 import { loadGamification, getAllBadges, getLevelFromXP, xpToNextLevel, BadgeConfig } from "@/lib/gamification";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
+import PropojeniVysledky from "@/components/PropojeniVysledky";
 import { TEMA_LABELS, TEMATA_ORDER, TEMATA_ORDER_5, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import BadgeGrid from "@/components/BadgeGrid";
@@ -1253,6 +1254,9 @@ export default function ProfilPage() {
               </form>
             )}
           </div>
+
+          {/* Propojení s Testy nanečisto (appka Vyhodnocení testů) */}
+          <PropojeniVysledky />
 
           {/* Rodičovský portál */}
           <Link
