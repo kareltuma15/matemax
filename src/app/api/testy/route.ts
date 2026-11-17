@@ -20,8 +20,10 @@ export interface PublicTestSession {
 // GET — publikované termíny + zbývající kapacita.
 // Auth header je volitelný — s ním vrací i stav přihlášení žáka a jeho
 // už proběhlé termíny (aby se dostal do místnosti nahrát arch a pro výsledky).
+// ?trida=5 vrátí vypsané termíny pro 5. třídu, jinak pro 9. třídu (třídy se nemíchají).
 export async function GET(req: Request) {
   if (!supabaseAdmin) return NextResponse.json({ error: "Not configured" }, { status: 503 });
+  const trida = new URL(req.url).searchParams.get("trida") === "5" ? 5 : 9;
 
   const nowIso = new Date().toISOString();
 
@@ -45,13 +47,20 @@ export async function GET(req: Request) {
     }
   }
 
-  // Nadcházející publikované termíny
-  const { data: upcoming, error } = await supabaseAdmin
-    .from("online_test_sessions")
-    .select("id, title, scheduled_at, duration_minutes, price_czk, capacity")
-    .eq("is_published", true)
-    .gte("scheduled_at", nowIso)
-    .order("scheduled_at", { ascending: true });
+  // Nadcházející publikované termíny pro danou třídu
+  const nadchazejici = (sTridou: boolean) => {
+    const q = supabaseAdmin!
+      .from("online_test_sessions")
+      .select("id, title, scheduled_at, duration_minutes, price_czk, capacity")
+      .eq("is_published", true)
+      .gte("scheduled_at", nowIso);
+    return (sTridou ? q.eq("trida", trida) : q).order("scheduled_at", { ascending: true });
+  };
+  let { data: upcoming, error } = await nadchazejici(true);
+  // Před migrací (sloupec trida chybí) jsou všechny termíny pro 9. třídu
+  if (error?.code === "42703") {
+    ({ data: upcoming, error } = trida === 9 ? await nadchazejici(false) : { data: [], error: null });
+  }
 
   if (error) {
     console.error("testy GET error:", error);

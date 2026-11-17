@@ -54,9 +54,9 @@ test("Testy 5. třídy: jen věci pro 5. třídu", async ({ page }) => {
   // test nanečisto: stejné soboty jako 9. třída, přihláška na webu
   await expect(page.getByTestId("nanecisto-gymnazium").getByRole("link", { name: /Termíny a přihláška/ }))
     .toHaveAttribute("href", "https://www.matematika-snadno.cz/prijimacky-nanecisto");
-  // online termíny jsou zatím jen pro 9. třídu
-  await expect(page.getByTestId("nanecisto-online")).toContainText("Pro 5. třídu připravujeme");
-  await expect(page.getByTestId("nanecisto-online").getByRole("link")).toHaveCount(0);
+  // online test z domova má i 5. třída (termíny zvlášť)
+  await expect(page.getByTestId("nanecisto-online").getByRole("link", { name: /Online termíny/ }))
+    .toHaveAttribute("href", "/testy-nanecisto");
   await expect(page.getByTestId("testy-nanecisto")).toContainText("14 úloh");
 });
 

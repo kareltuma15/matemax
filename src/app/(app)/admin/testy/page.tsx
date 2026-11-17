@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import type { AdminTestSession } from "@/app/api/admin/testy/route";
 
 const EMPTY_FORM = {
+  trida: 9 as 5 | 9,
   title: "",
   date: "",
   time: "10:00",
@@ -122,6 +123,7 @@ export default function AdminTestyPage() {
           duration_minutes: Number(form.duration_minutes),
           capacity: Number(form.capacity),
           price_czk: Number(form.price_czk),
+          trida: form.trida,
         }),
       });
       const j = await res.json();
@@ -233,6 +235,24 @@ export default function AdminTestyPage() {
           style={{ background: "#fff", border: "1px solid #e2e8f0" }}
         >
           <div className="font-bold" style={{ color: "var(--text-primary)" }}>Nový termín</div>
+          <div className="flex gap-2" role="radiogroup" aria-label="Pro kterou třídu">
+            {([9, 5] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                role="radio"
+                aria-checked={form.trida === t}
+                onClick={() => setForm({ ...form, trida: t })}
+                className="flex-1 rounded-lg px-3 py-2 text-sm font-bold"
+                style={form.trida === t
+                  ? { background: "#2E6DA4", color: "#fff" }
+                  : { background: "#f1f5f9", color: "#64748b" }}
+                data-testid={`admin-trida-${t}`}
+              >
+                {t}. třída
+              </button>
+            ))}
+          </div>
           <input
             type="text"
             placeholder="Název — např. Test nanečisto #1 — září 2026"
@@ -317,7 +337,15 @@ export default function AdminTestyPage() {
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="font-bold" style={{ color: "var(--text-primary)" }}>{s.title}</div>
+                <div className="font-bold" style={{ color: "var(--text-primary)" }}>
+                  <span
+                    className="mr-2 rounded-md px-1.5 py-0.5 text-[11px] font-extrabold align-middle"
+                    style={(s.trida ?? 9) === 5 ? { background: "#FDF0DA", color: "#A66300" } : { background: "#E4EEF7", color: "#2E6DA4" }}
+                  >
+                    {s.trida ?? 9}. tř.
+                  </span>
+                  {s.title}
+                </div>
                 <div className="text-xs" style={{ color: "#94a3b8" }}>
                   {formatDateTime(s.scheduled_at)} · {s.duration_minutes} min · {s.price_czk} Kč
                 </div>

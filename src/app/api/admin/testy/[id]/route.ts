@@ -27,6 +27,7 @@ export async function PATCH(
   if (Number.isInteger(body.capacity) && body.capacity > 0) update.capacity = body.capacity;
   if (Number.isInteger(body.price_czk) && body.price_czk >= 0) update.price_czk = body.price_czk;
   if (typeof body.is_published === "boolean") update.is_published = body.is_published;
+  if (body.trida === 5 || body.trida === 9) update.trida = body.trida;
 
   if (Object.keys(update).length === 0) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });

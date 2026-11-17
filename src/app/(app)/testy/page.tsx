@@ -90,7 +90,7 @@ export default function TestyPage() {
     tint: "#FDF0DA",
     testid: "testy-nanecisto",
     // Dvě různé věci (Karel 17. 11.): sobotní test v učebně gymnázia (přihláška na webu, stejné soboty pro 5. i 9. třídu)
-    // a online test z domova (vlastní stránka v MateMaxu; termíny zatím jen pro 9. třídu).
+    // a online test z domova (vlastní stránka v MateMaxu; termíny zvlášť pro 5. a 9. třídu).
     moznosti: [
       {
         nazev: "🏫 V gymnáziu",
@@ -99,20 +99,13 @@ export default function TestyPage() {
         tlacitko: "Termíny a přihláška",
         testid: "nanecisto-gymnazium",
       },
-      g5
-        ? {
-            nazev: "🏠 Online z domova",
-            popis: "Zadání v appce, vyplníš doma na papír a nahraješ fotky.",
-            pripravujeme: "Pro 5. třídu připravujeme",
-            testid: "nanecisto-online",
-          }
-        : {
-            nazev: "🏠 Online z domova",
-            popis: "Zadání v appce, vyplníš doma na papír a nahraješ fotky.",
-            href: "/testy-nanecisto",
-            tlacitko: "Online termíny",
-            testid: "nanecisto-online",
-          },
+      {
+        nazev: "🏠 Online z domova",
+        popis: "Zadání v appce, vyplníš doma na papír a nahraješ fotky.",
+        href: "/testy-nanecisto",
+        tlacitko: "Online termíny",
+        testid: "nanecisto-online",
+      },
     ],
   };
   const polozky: Polozka[] = g5

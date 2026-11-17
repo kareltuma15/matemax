@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { jenPro9 } from "@/components/JenPro9";
+import { useTrida } from "@/lib/trida";
 import type { PublicTestSession } from "@/app/api/testy/route";
 
 function formatDate(iso: string): string {
@@ -45,8 +45,11 @@ function PaymentBanner() {
   return null;
 }
 
-function TestyNanecistoPage() {
+/** Online testy nanečisto z domova. Termíny jsou zvlášť pro 5. a 9. třídu, žák vidí jen ty své. */
+export default function TestyNanecistoPage() {
   const router = useRouter();
+  const { trida, ready } = useTrida();
+  const g5 = trida === 5;
   const [sessions, setSessions] = useState<PublicTestSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -54,6 +57,7 @@ function TestyNanecistoPage() {
   const [checkingOut, setCheckingOut] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!ready) return;
     async function load() {
       try {
         let headers: Record<string, string> = {};
@@ -64,7 +68,7 @@ function TestyNanecistoPage() {
             headers = { Authorization: `Bearer ${data.session.access_token}` };
           }
         }
-        const res = await fetch("/api/testy", { headers });
+        const res = await fetch(`/api/testy?trida=${g5 ? 5 : 9}`, { headers });
         if (!res.ok) { setError("Nepodařilo se načíst termíny."); return; }
         const j = await res.json();
         setSessions(j.sessions ?? []);
@@ -75,7 +79,7 @@ function TestyNanecistoPage() {
       }
     }
     load();
-  }, []);
+  }, [ready, g5]);
 
   async function handleEnroll(sessionId: string) {
     if (!loggedIn) {
@@ -112,11 +116,11 @@ function TestyNanecistoPage() {
       {/* Hero */}
       <div className="rounded-2xl p-6" style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}>
         <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#93c5fd" }}>
-          Online z domova
+          Online z domova · {g5 ? "5. třída" : "9. třída"}
         </div>
         <h1 className="text-2xl font-black text-white mb-2">Online testy nanečisto</h1>
         <p className="text-sm" style={{ color: "#cbd5e1" }}>
-          Vyzkoušej si přijímačky jako v ostrém termínu — stáhneš zadání, vyplníš
+          Vyzkoušej si {g5 ? "přijímačky na víceleté gymnázium" : "přijímačky"} jako v ostrém termínu — stáhneš zadání, vyplníš
           záznamový arch a do 48 hodin dostaneš osobní zpětnou vazbu od Karla,
           téma po tématu.
         </p>
@@ -267,4 +271,4 @@ function TestyNanecistoPage() {
   );
 }
 
-export default jenPro9(TestyNanecistoPage, "Online testy nanečisto");
+

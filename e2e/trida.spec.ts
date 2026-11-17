@@ -85,10 +85,26 @@ test.describe("oddělení tříd: žák vidí jen věci pro svou třídu", () =>
     for (const slovo of ["Počítání s čísly", "Jednotky, čas", "Obvod a obsah", "Tělesa a souměrnost", "5. třídu"]) expect(text, slovo).not.toContain(slovo);
   });
 
-  test("testy nanečisto jsou jen pro 9. třídu", async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem("matemax-trida", "5"));
-    await page.goto("/testy-nanecisto");
-    await expect(page.getByTestId("pro-5-pripravujeme")).toBeVisible();
+  test("online testy nanečisto: každá třída vidí jen své termíny a může si je koupit", async ({ page }) => {
+    const dotazy: string[] = [];
+    await page.route("**/api/testy?**", async (route) => {
+      const t = new URL(route.request().url()).searchParams.get("trida");
+      dotazy.push(t ?? "");
+      await route.fulfill({ json: { sessions: [{
+        id: "x", title: t === "5" ? "Online test pro 5. třídu" : "Online test pro 9. třídu",
+        scheduled_at: "2030-01-12T09:00:00Z", duration_minutes: 70, price_czk: 250, capacity: 30, remaining: 30, enrolled: false, past: false,
+      }] } });
+    });
+    for (const t of ["5", "9"]) {
+      await page.addInitScript((t) => localStorage.setItem("matemax-trida", t), t);
+      await page.goto("/testy-nanecisto");
+      await expect(page.getByRole("heading", { name: "Online testy nanečisto" })).toBeVisible();
+      await expect(page.getByText(`Online z domova · ${t}. třída`)).toBeVisible();
+      await expect(page.getByText(`Online test pro ${t}. třídu`)).toBeVisible();
+      await expect(page.getByText(`Online test pro ${t === "5" ? 9 : 5}. třídu`)).toHaveCount(0);
+      await expect(page.getByRole("button", { name: "Přihlásit se" })).toBeVisible();
+    }
+    expect(dotazy).toEqual(["5", "9"]);
   });
 });
 

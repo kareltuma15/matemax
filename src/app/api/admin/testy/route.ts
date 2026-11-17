@@ -14,6 +14,8 @@ export interface AdminTestSession {
   rozbor_pdf_url: string | null;
   is_published: boolean;
   created_at: string;
+  /** 5 nebo 9; před migrací 20261118 sloupec chybí = 9. třída */
+  trida?: number;
   paid_count: number;
 }
 
@@ -61,6 +63,7 @@ export async function POST(req: Request) {
   if (!body) return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
 
   const { title, scheduled_at, duration_minutes, capacity, price_czk } = body;
+  const trida = body.trida === 5 ? 5 : 9;
 
   if (!title || typeof title !== "string" || !title.trim()) {
     return NextResponse.json({ error: "Chybí název termínu" }, { status: 400 });
@@ -81,12 +84,17 @@ export async function POST(req: Request) {
       duration_minutes: Number(duration_minutes) || 60,
       capacity: Number(capacity) || 30,
       price_czk: price,
+      // 9 je výchozí hodnota sloupce; posíláme jen 5, aby šel vytvořit termín 9. třídy i před migrací
+      ...(trida === 5 ? { trida } : {}),
     })
     .select()
     .single();
 
   if (error) {
     console.error("admin/testy POST error:", error);
+    if (trida === 5 && (error.code === "42703" || error.code === "PGRST204")) {
+      return NextResponse.json({ error: "Termíny pro 5. třídu potřebují úpravu databáze (migrace online_testy_trida)." }, { status: 500 });
+    }
     return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 
