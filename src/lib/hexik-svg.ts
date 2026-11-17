@@ -11,6 +11,8 @@ interface Podoba {
   tvare?: boolean; usi?: boolean; vousy?: boolean; antena?: boolean; srouby?: boolean;
   rohy?: boolean; kridla?: boolean; roh?: boolean; hriva?: boolean; ksiltovka?: boolean;
   plamen?: boolean; trpyt?: boolean; rovna?: boolean;
+  /** Sezónní doplňky: vánoční čepice, zimní kulich, šála přes tělo, zlatá medaile. */
+  cepice?: boolean; kulich?: boolean; medaile?: boolean;
   obrys?: string; usta?: string; svit?: string;
   /** Má něco na hlavě (koruna se pak nekreslí, místo ní zlatá záře). */
   hlava?: boolean;
@@ -26,6 +28,13 @@ const PODOBY: Record<string, Podoba> = {
   ledovy: { o: "#7CC9F0", i: "#D9F2FF", oci: "lidi", obrys: "#E8F8FF", svit: "hx-svit-cyan" },
   maskac: { o: "#5E7148", i: "#8FA170", oci: "lidi", ksiltovka: true, hlava: true },
   ninja: { o: "#1E2230", i: "#2F3547", oci: "visor", usta: "#E5484D", rovna: true },
+  // sezónní
+  skritek: { o: "#3FA45B", i: "#9BDCAA", oci: "kulate", tvare: true, cepice: true, hlava: true },
+  santa: { o: "#D93A3A", i: "#F4A3A3", oci: "lidi", cepice: true, hlava: true },
+  snehulak: { o: "#E8F1FA", i: "#FFFFFF", oci: "kulate", tvare: true, kulich: true, hlava: true },
+  yeti: { o: "#B9D6F2", i: "#E6F2FF", oci: "lidi", kulich: true, hlava: true },
+  sampion: { o: "#F5A623", i: "#FFE0A3", oci: "kulate", tvare: true, medaile: true },
+  finisher: { o: "#2E6DA4", i: "#8CC0EA", oci: "lidi", medaile: true },
   grafit: { o: "#4A5468", i: "#8C97AE", oci: "kulate" },
   ohnivy: { o: "#FF7A3D", i: "#FFBE8A", oci: "lidi", plamen: true, hlava: true },
   kocicka: { o: "#F6B26B", i: "#FBD3A6", oci: "kulate", tvare: true, usi: true, vousy: true, hlava: true },
@@ -74,6 +83,9 @@ export function hexikSvg(klic: string, etapa = 1): string {
   if (P.vousy) doplnky += `<path d="M66 160 L36 154 M66 168 L36 174 M194 160 L224 154 M194 168 L224 174" stroke="${N}" stroke-width="3" stroke-linecap="round"/>`;
   if (P.srouby) doplnky += `<circle cx="42" cy="130" r="7" fill="#6F8299"/><circle cx="218" cy="130" r="7" fill="#6F8299"/>`;
   if (P.roh) pred += `<polygon points="117,30 130,-22 143,30" fill="url(#hxZlato)" stroke="#D99A00" stroke-width="2.5"/><path d="M121 14 L139 8 M124 0 L136 -4" stroke="#D99A00" stroke-width="2.5"/>`;
+  if (P.cepice) pred += `<path d="M70 46 Q96 -10 150 -10 Q200 -8 222 30 Q196 12 180 24 L190 46 Z" fill="#E5383B"/><rect x="58" y="34" width="144" height="22" rx="11" fill="#fff"/><circle cx="222" cy="32" r="13" fill="#fff"/>`;
+  if (P.kulich) pred += `<path d="M66 52 Q130 -24 194 52 Z" fill="#2E6DA4"/><rect x="60" y="42" width="140" height="18" rx="9" fill="#E5383B"/><path d="M84 42 L92 26 M112 42 L116 18 M148 42 L144 18 M176 42 L168 26" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="130" cy="6" r="14" fill="#fff"/>`;
+  if (P.medaile) pred += `<path d="M108 176 L118 214 L130 204 L142 214 L152 176" fill="#2E6DA4"/><circle cx="130" cy="222" r="18" fill="url(#hxZlato)" stroke="#D99A00" stroke-width="3"/><polygon points="${hvezda(130, 222, 9, 4)}" fill="#fff"/>`;
   if (P.ksiltovka) pred += `<path d="M54 84 Q130 -4 206 84 Q130 62 54 84 Z" fill="${N}"/><path d="M200 78 Q240 70 254 90 Q226 98 198 92 Z" fill="#232F55"/><circle cx="130" cy="50" r="10" fill="#F5A623"/>`;
   if (P.trpyt) pred += `<polygon class="hx-trpyt" points="${hvezda(56, 58, 10, 4)}" fill="#fff"/><polygon class="hx-trpyt" style="animation-delay:.6s" points="${hvezda(210, 96, 8, 3)}" fill="#fff"/><polygon class="hx-trpyt" style="animation-delay:1.1s" points="${hvezda(196, 206, 9, 3.5)}" fill="#fff"/>`;
   if (etapa >= 2) pred += `<polygon points="${hvezda(178, 198, 14, 6)}" fill="#F5A623" stroke="#C77700" stroke-width="2"/>`;

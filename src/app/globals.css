@@ -901,3 +901,33 @@ html[data-vzhled="matrix"] .mm-pozadi::after {
 .hx-truhla[data-druh="generalka"] { --v1:#3A4A8C; --v2:#1B2559; --t1:#2A3878; --t2:#141C47; --o:#F5C542; filter: drop-shadow(0 0 12px rgba(245,197,66,.45)); }
 .hx-truhla[data-druh="legendarni"] { --v1:#FFB347; --v2:#E0561B; --t1:#F57C1F; --t2:#A33A0B; --o:#FFF1C4; filter: drop-shadow(0 0 16px rgba(255,140,40,.7)); }
 @media (prefers-reduced-motion: reduce) { html[data-vzhled="matrix"] .mm-pozadi::after { animation: none !important; } }
+
+/* ── Sbírka: sezónní vzhledy a pozadí ─────────────────────────────────────── */
+html[data-vzhled="snezeni"] { --vz-pozadi: linear-gradient(180deg, #DCEBFA, #F4F8FD 60%, #FFFFFF); --vz-akcent: #D93A3A; }
+html[data-vzhled="snezeni"] .mm-pozadi::after {
+  background-image: radial-gradient(3px 3px at 10% 10%, #fff, transparent), radial-gradient(2.5px 2.5px at 30% 40%, #fff, transparent),
+    radial-gradient(3.5px 3.5px at 55% 20%, #fff, transparent), radial-gradient(2px 2px at 75% 60%, #fff, transparent),
+    radial-gradient(3px 3px at 90% 30%, #fff, transparent), radial-gradient(2.5px 2.5px at 45% 80%, #fff, transparent);
+  background-size: 320px 320px;
+  filter: drop-shadow(0 0 1px rgba(90, 140, 200, .9));
+  animation: vzSnih 12s linear infinite;
+}
+@keyframes vzSnih { from { background-position: 0 0; } to { background-position: 40px 320px; } }
+.mm-swatch[data-vz="snezeni"] { --vz-pozadi: radial-gradient(2px 2px at 20% 30%, #fff, transparent), radial-gradient(2px 2px at 70% 60%, #fff, transparent), linear-gradient(180deg, #BFD8F2, #EEF5FC); --vz-akcent: #D93A3A; }
+
+.mm-banner[data-pozadi="vanoce"] { background: linear-gradient(#0B2A4A, #123E66); }
+.mm-banner[data-pozadi="vanoce"]::before { right: 8%; bottom: 0; width: 90px; height: 110px; background: linear-gradient(#2F9E44, #1F7A3A); clip-path: polygon(50% 0, 72% 30%, 62% 30%, 84% 60%, 70% 60%, 100% 92%, 0 92%, 30% 60%, 16% 60%, 38% 30%, 28% 30%); }
+.mm-banner[data-pozadi="vanoce"]::after { inset: 0; background-image: radial-gradient(3px 3px at 12% 20%, #fff, transparent), radial-gradient(2px 2px at 30% 60%, #fff, transparent), radial-gradient(3px 3px at 50% 30%, #fff, transparent), radial-gradient(2px 2px at 70% 15%, #FFE07A, transparent), radial-gradient(2.5px 2.5px at 85% 70%, #fff, transparent), radial-gradient(2px 2px at 20% 85%, #fff, transparent); background-size: 220px 160px; animation: vzSnih 9s linear infinite; }
+.mm-banner.mm-nahled[data-pozadi="vanoce"]::before { width: 26px; height: 36px; }
+.mm-banner[data-pozadi="ledove"] { background: linear-gradient(135deg, #A8E0FF, #E8F7FF 50%, #9CC9F0); }
+.mm-banner[data-pozadi="ledove"]::before { left: 0; right: 0; bottom: 0; height: 45%; background: #CDEBFF; clip-path: polygon(0 100%, 0 40%, 8% 70%, 16% 20%, 24% 60%, 34% 10%, 44% 55%, 52% 25%, 62% 65%, 72% 15%, 82% 60%, 90% 30%, 100% 55%, 100% 100%); }
+.mm-banner[data-pozadi="ledove"]::after { inset: 0; background-image: radial-gradient(2px 2px at 25% 25%, #fff, transparent), radial-gradient(2.5px 2.5px at 65% 35%, #fff, transparent), radial-gradient(2px 2px at 85% 15%, #fff, transparent); animation: vzTrpyt 2s ease-in-out infinite alternate; }
+.mm-banner[data-pozadi="ledove"] { text-shadow: 0 1px 4px rgba(10, 40, 80, .6); }
+.mm-banner[data-pozadi="cil"] { background: linear-gradient(135deg, #0D1B3E, #2E6DA4); }
+.mm-banner[data-pozadi="cil"]::before { right: 0; top: 0; bottom: 0; width: 28%; background: conic-gradient(#fff 25%, #0D1B3E 0 50%, #fff 0 75%, #0D1B3E 0) 0 0 / 24px 24px; opacity: .85; }
+.mm-banner[data-pozadi="cil"]::after { left: 0; right: 28%; top: 54%; height: 6px; background: #E5383B; box-shadow: 0 0 12px rgba(229, 56, 59, .8); }
+.mm-banner.mm-nahled[data-pozadi="cil"]::before { background-size: 10px 10px; }
+
+.hx-truhla[data-druh="sezonni"] { --v1:#E5383B; --v2:#9B1C1F; --t1:#2F9E44; --t2:#1B6A2D; --o:#FFE07A; filter: drop-shadow(0 0 12px rgba(229,56,59,.45)); }
+.mm-sezona-stitek { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: #FDECEC; color: #B4232F; }
+@media (prefers-reduced-motion: reduce) { html[data-vzhled="snezeni"] .mm-pozadi::after, .mm-banner[data-pozadi="vanoce"]::after { animation: none !important; } }

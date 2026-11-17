@@ -63,6 +63,12 @@ export function spustEfekt(typ: string, zdroj?: Element | null, sila = 1): void 
     case "srdicka":
       kolem("hx-p-hvezda", 12, 45, 120, 1500, () => "♥", (i) => `color:${["#FF5A9E", "#FF7AC6", "#FF4D6D"][i % 3]}`);
       break;
+    case "vlocky":
+      kolem("hx-p-hvezda", 16, 50, 140, 1700, () => "❄", (i) => `color:${["#9AD4FF", "#FFFFFF", "#C7E6FF"][i % 3]};text-shadow:0 0 4px #5AA9E6`);
+      break;
+    case "medaile":
+      kolem("hx-p-hvezda", 12, 50, 120, 1500, () => "★", (i) => `color:${["#F5C542", "#FFE07A", "#E0A400"][i % 3]}`);
+      break;
     case "pixely":
       kolem("hx-p-pixel", 22, 40, 130, 1300, undefined, (i) => `background:${BARVY[i % BARVY.length]}`);
       break;

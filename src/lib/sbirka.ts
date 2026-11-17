@@ -29,6 +29,40 @@ export interface Odmena {
   cena: number | null;
   /** Odkud jinak než z truhel: "test" = jen za test nanečisto (v truhlách nepadá). */
   zdroj?: "test";
+  /** Sezónní věc: koupit a vylosovat jde jen v sezóně, co žák jednou má, zůstává mu. */
+  sezona?: SezonaId;
+}
+
+// ── Sezóny ──────────────────────────────────────────────────────────────────
+
+export type SezonaId = "vanoce" | "zima" | "finis";
+export interface Sezona { id: SezonaId; nazev: string; ikona: string; od: string; do: string; truhla: string }
+
+/** Sezóny podle kalendáře (MM-DD, Vánoce přecházejí přes Nový rok). */
+export const SEZONY: Sezona[] = [
+  { id: "vanoce", nazev: "Vánoce", ikona: "🎄", od: "12-01", do: "01-06", truhla: "Vánoční truhla" },
+  { id: "zima", nazev: "Zima", ikona: "❄️", od: "01-07", do: "02-28", truhla: "Zimní truhla" },
+  { id: "finis", nazev: "Finiš před přijímačkami", ikona: "🏁", od: "03-01", do: "04-30", truhla: "Truhla finiše" },
+];
+
+function vSezone(z: Sezona, den: string): boolean {
+  const md = den.slice(5);
+  return z.od <= z.do ? md >= z.od && md <= z.do : md >= z.od || md <= z.do;
+}
+
+export function aktualniSezona(den: string): Sezona | null {
+  return SEZONY.find((z) => vSezone(z, den)) ?? null;
+}
+
+/** Poslední den sezóny jako datum (pro „jen do 6. 1.“). */
+export function konecSezony(z: Sezona, den: string): string {
+  const rok = Number(den.slice(0, 4)) + (z.od > z.do && den.slice(5) >= z.od ? 1 : 0);
+  return `${rok}-${z.do}`;
+}
+
+/** Jde věc teď koupit nebo vylosovat? (Nesezónní vždy, sezónní jen ve své sezóně.) */
+export function jeVNabidce(o: Odmena, den: string): boolean {
+  return !o.sezona || aktualniSezona(den)?.id === o.sezona;
 }
 
 export const VZACNOST: Record<Vzacnost, { nazev: string; barva: string }> = {
@@ -46,8 +80,8 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
   pozadi: "Pozadí profilu",
 };
 
-// [typ, klíč, název, vzácnost, cena, zdroj?]
-type Radek = [TypOdmeny, string, string, Vzacnost, number | null, "test"?];
+// [typ, klíč, název, vzácnost, cena, zdroj nebo sezóna?]
+type Radek = [TypOdmeny, string, string, Vzacnost, number | null, ("test" | SezonaId)?];
 const KATALOG: Record<Trida, Radek[]> = {
   5: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -86,6 +120,16 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["pozadi", "pohadka", "Pohádka", "vzacna", 900],
     ["pozadi", "ohnostroj", "Ohňostroj", "legenda", null],
     ["pozadi", "generalka", "Generálka", "legenda", null, "test"],
+    // sezónní
+    ["podoba", "skritek", "Vánoční skřítek", "neobvykla", 400, "vanoce"],
+    ["efekt", "vlocky", "Vločky", "bezna", 150, "vanoce"],
+    ["vzhled", "snezeni", "Sněžení", "neobvykla", 400, "vanoce"],
+    ["pozadi", "vanoce", "Vánoční noc", "vzacna", 900, "vanoce"],
+    ["podoba", "snehulak", "Sněhulák", "neobvykla", 400, "zima"],
+    ["pozadi", "ledove", "Ledové království", "vzacna", 900, "zima"],
+    ["podoba", "sampion", "Šampion", "vzacna", 900, "finis"],
+    ["efekt", "medaile", "Medaile", "neobvykla", 400, "finis"],
+    ["pozadi", "cil", "Cílová páska", "neobvykla", 400, "finis"],
   ],
   9: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -125,11 +169,21 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["pozadi", "stadion", "Stadion", "neobvykla", 400],
     ["pozadi", "polarni", "Polární záře", "legenda", null],
     ["pozadi", "generalka", "Generálka", "legenda", null, "test"],
+    // sezónní
+    ["podoba", "santa", "Santa", "neobvykla", 400, "vanoce"],
+    ["efekt", "vlocky", "Vločky", "bezna", 150, "vanoce"],
+    ["vzhled", "snezeni", "Sněžení", "neobvykla", 400, "vanoce"],
+    ["pozadi", "vanoce", "Vánoční noc", "legenda", null, "vanoce"],
+    ["podoba", "yeti", "Yeti", "vzacna", 900, "zima"],
+    ["pozadi", "ledove", "Ledové království", "neobvykla", 400, "zima"],
+    ["podoba", "finisher", "Finišer", "neobvykla", 400, "finis"],
+    ["efekt", "medaile", "Medaile", "neobvykla", 400, "finis"],
+    ["pozadi", "cil", "Cílová páska", "vzacna", 900, "finis"],
   ],
 };
 
-const zKatalogu = (t: Trida) => KATALOG[t].map(([typ, klic, nazev, vz, cena, zdroj]): Odmena =>
-  ({ id: `${t}-${typ}-${klic}`, trida: t, typ, klic, nazev, vz, cena, ...(zdroj ? { zdroj } : {}) }));
+const zKatalogu = (t: Trida) => KATALOG[t].map(([typ, klic, nazev, vz, cena, extra]): Odmena =>
+  ({ id: `${t}-${typ}-${klic}`, trida: t, typ, klic, nazev, vz, cena, ...(extra === "test" ? { zdroj: "test" as const } : extra ? { sezona: extra } : {}) }));
 
 export const ODMENY: Record<Trida, Odmena[]> = { 5: zKatalogu(5), 9: zKatalogu(9) };
 
@@ -149,12 +203,12 @@ export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora", "ma
 
 export const IKONA_ODMENY: Record<string, string> = {
   radost: "🙌", poskok: "🦘", tanec: "💃", kotrmelec: "🤸", salto: "🤸", teleport: "🌀", disco: "🪩", piruetka: "🌈",
-  jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥",
+  jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥", vlocky: "❄️", medaile: "🥇",
 };
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
 
-export type TruhlaId = "denni" | "doporuceni" | "generalka" | "legendarni" | "krystalova" | "velka" | "mistrovska" | "zlata";
+export type TruhlaId = "denni" | "doporuceni" | "generalka" | "legendarni" | "sezonni" | "krystalova" | "velka" | "mistrovska" | "zlata";
 /** Truhly, na které vzniká nárok za splněný úkol (každý úkol má vlastní klíč, nárok jen jednou). */
 export type NarokTruhla = "doporuceni" | "generalka" | "legendarni";
 export const NAROKOVE_TRUHLY: NarokTruhla[] = ["doporuceni", "generalka", "legendarni"];
@@ -179,6 +233,8 @@ export const TRUHLY: Truhla[] = [
     sance: { bezna: 0, neobvykla: 0.4, vzacna: 0.45, legenda: 0.15 }, bonus: [40, 90] },
   { id: "legendarni", nazev: "Legendární truhla", jak: "Za zlepšení v testu nanečisto oproti minulému", cena: null,
     sance: { bezna: 0, neobvykla: 0, vzacna: 0, legenda: 1 }, bonus: [50, 100] },
+  { id: "sezonni", nazev: "Sezónní truhla", jak: "Jen v sezóně, padají z ní jen sezónní věci", cena: 250,
+    sance: { bezna: 0, neobvykla: 0.55, vzacna: 0.35, legenda: 0.1 }, bonus: [10, 30] },
   { id: "krystalova", nazev: "Krystalová truhla", jak: "Kdykoli za krystaly", cena: 100,
     sance: { bezna: 0.62, neobvykla: 0.28, vzacna: 0.08, legenda: 0.02 }, bonus: [5, 20] },
   { id: "velka", nazev: "Velká truhla", jak: "Aspoň neobvyklá odměna", cena: 350,
@@ -261,6 +317,8 @@ export interface SbirkaStav {
   trofeje: Record<string, string>;
   /** Výsledky testů nanečisto, které žák uplatnil (den → body, null = body neznáme). */
   testy: Record<string, number | null>;
+  /** Dokončené sady: id → den (bonus krystalů se připíše jen jednou). */
+  sady: Record<string, string>;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
 }
@@ -274,7 +332,7 @@ export function vychoziStav(): SbirkaStav {
     denniOdemcena: null, denniOtevrena: null, dnyTreninku: [], zlataOtevrena: null,
     bezVzacne: 0, bezLegendy: 0, otevreno: 0, maxOdhad: {}, dny: {},
     naroky: {}, otevrenoNaroku: {}, mise: { d: "", hotove: [], serie: 0, maxSerie: 0, tezke: 0 },
-    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, t: 0,
+    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, sady: {}, t: 0,
   };
 }
 
@@ -311,23 +369,38 @@ export function ulozSbirku(s: SbirkaStav): void {
 /** Nově získané trofeje (detail: { ids }) — stránka je ohlásí. */
 export const TROFEJ_EVENT = "matemax-trofej";
 
-/** Načte, upraví a uloží stav jedním krokem. Při každé změně doplní nově splněné trofeje. */
+/** Nově dokončené sady (detail: { ids, krystaly }) — stránka je ohlásí. */
+export const SADA_EVENT = "matemax-sada";
+
+/** Sady a trofeje se dopočítávají po každé změně stavu (nejdřív sady, protože z nich jsou i trofeje). */
+function dopocitej(s: SbirkaStav): { s: SbirkaStav; sady: string[]; bonus: number; trofeje: string[] } {
+  const den = localDateStr();
+  const sd = zapisSady(s, den);
+  const tr = zapisTrofeje(sd.s, den);
+  return { s: tr.s, sady: sd.vysledek.ids, bonus: sd.vysledek.krystaly, trofeje: tr.vysledek };
+}
+
+function ohlas(d: { sady: string[]; bonus: number; trofeje: string[] }) {
+  if (d.sady.length > 0) window.dispatchEvent(new CustomEvent(SADA_EVENT, { detail: { ids: d.sady, krystaly: d.bonus } }));
+  if (d.trofeje.length > 0) window.dispatchEvent(new CustomEvent(TROFEJ_EVENT, { detail: { ids: d.trofeje } }));
+}
+
+/** Načte, upraví a uloží stav jedním krokem. Při každé změně doplní dokončené sady a nově splněné trofeje. */
 export function upravSbirku<T>(fn: (s: SbirkaStav) => { s: SbirkaStav; vysledek: T }): T {
   const { s, vysledek } = fn(nactiSbirku());
-  const tr = zapisTrofeje(s, localDateStr());
-  ulozSbirku({ ...tr.s, t: Date.now() });
-  if (tr.vysledek.length > 0) window.dispatchEvent(new CustomEvent(TROFEJ_EVENT, { detail: { ids: tr.vysledek } }));
+  const d = dopocitej(s);
+  ulozSbirku({ ...d.s, t: Date.now() });
+  ohlas(d);
   return vysledek;
 }
 
-/** Dopočítá trofeje pro stav, který se od jejich zavedení nezměnil (volá se při otevření Sbírky). */
+/** Dopočítá sady a trofeje pro stav, který se od jejich zavedení nezměnil (volá se při otevření Sbírky). */
 export function zkontrolujTrofeje(): void {
   if (typeof window === "undefined") return;
-  const s = nactiSbirku();
-  const tr = zapisTrofeje(s, localDateStr());
-  if (tr.vysledek.length === 0) return;
-  ulozSbirku({ ...tr.s, t: Date.now() });
-  window.dispatchEvent(new CustomEvent(TROFEJ_EVENT, { detail: { ids: tr.vysledek } }));
+  const d = dopocitej(nactiSbirku());
+  if (d.sady.length === 0 && d.trofeje.length === 0) return;
+  ulozSbirku({ ...d.s, t: Date.now() });
+  ohlas(d);
 }
 
 // ── Čisté operace (testované v e2e/sbirka.spec.ts) ──────────────────────────
@@ -404,6 +477,7 @@ export function dostupnostTruhly(s: SbirkaStav, id: TruhlaId, den: string): Dost
     if (n < DNU_PRO_ZLATOU) return { ok: false, proc: `Trénuj ${DNU_PRO_ZLATOU} dní v týdnu (zatím ${n}).` };
     return { ok: true };
   }
+  if (id === "sezonni" && !aktualniSezona(den)) return { ok: false, proc: "Sezóna právě neběží." };
   if (t.cena !== null && krystaly(s) < t.cena) return { ok: false, proc: `Chybí ${t.cena - krystaly(s)} krystalů.` };
   return { ok: true };
 }
@@ -440,7 +514,11 @@ export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: str
   dalsi.bezVzacne = vz === "vzacna" || vz === "legenda" ? 0 : s.bezVzacne + 1;
   dalsi.bezLegendy = vz === "legenda" ? 0 : s.bezLegendy + 1;
 
-  const pool = ODMENY[trida].filter((o) => o.vz === vz && o.cena !== 0 && !o.zdroj);
+  // V běžných truhlách padá všechno, co je teď v nabídce (sezónní věci jen v sezóně);
+  // sezónní truhla dává jen věci aktuální sezóny (když v losované vzácnosti žádná není, bere jakoukoli sezónní).
+  const sez = aktualniSezona(den)?.id;
+  const vNabidce = ODMENY[trida].filter((o) => o.cena !== 0 && !o.zdroj && jeVNabidce(o, den) && (id !== "sezonni" || o.sezona === sez));
+  const pool = vNabidce.filter((o) => o.vz === vz).length > 0 || id !== "sezonni" ? vNabidce.filter((o) => o.vz === vz) : vNabidce;
   const nove = pool.filter((o) => !dalsi.mam.includes(o.id));
   const vyber = nove.length ? nove : pool;
   const odmena = vyber.length ? vyber[Math.floor(rnd() * vyber.length) % vyber.length] : null;
@@ -454,9 +532,9 @@ export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: str
   return { s: dalsi, vysledek: { odmena, vz, nova, krystaly: k } };
 }
 
-export function kupOdmenu(s: SbirkaStav, id: string): { s: SbirkaStav; vysledek: boolean } {
+export function kupOdmenu(s: SbirkaStav, id: string, den: string = localDateStr()): { s: SbirkaStav; vysledek: boolean } {
   const o = najdiOdmenu(id);
-  if (!o || maOdmenu(s, o) || o.cena === null || krystaly(s) < o.cena) return { s, vysledek: false };
+  if (!o || maOdmenu(s, o) || o.cena === null || krystaly(s) < o.cena || !jeVNabidce(o, den)) return { s, vysledek: false };
   return { s: { ...s, utraceno: s.utraceno + o.cena, mam: [...s.mam, o.id] }, vysledek: true };
 }
 
@@ -513,6 +591,10 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
       return [k, !x ? y! : !y ? x : x < y ? x : y];
     })),
     testy: { ...(a.testy ?? {}), ...Object.fromEntries(Object.entries(b.testy ?? {}).map(([d, v]) => [d, v ?? a.testy?.[d] ?? null])) },
+    sady: Object.fromEntries([...new Set([...Object.keys(a.sady ?? {}), ...Object.keys(b.sady ?? {})])].map((k) => {
+      const x = a.sady?.[k], y = b.sady?.[k];
+      return [k, !x ? y! : !y ? x : x < y ? x : y];
+    })),
     t: Math.max(a.t, b.t),
   };
 }
@@ -641,6 +723,9 @@ export const TROFEJE: Trofej[] = [
   { id: "zlepseni", nazev: "Jdu nahoru", popis: "V testu nanečisto získej víc bodů než minule.", ikona: "📈", splneno: (s) => (s.naroky?.legendarni ?? []).some((k) => k.startsWith("zlepseni:")) },
   { id: "zkuseny_hexik", nazev: "Zkušený Hexík", popis: "Dotáhni odhad bodů na 25.", ikona: "🧣", splneno: (s) => Object.values(s.maxOdhad).some((b) => (b ?? 0) >= 25) },
   { id: "mistr", nazev: "Mistr přijímaček", popis: "Dotáhni odhad bodů na 43.", ikona: "👑", splneno: (s) => Object.values(s.maxOdhad).some((b) => (b ?? 0) >= 43) },
+  { id: "prvni_sada", nazev: "První sada", popis: "Dokonči celou sadu.", ikona: "📚", splneno: (s) => Object.keys(s.sady ?? {}).length >= 1 },
+  { id: "sberatel_sad", nazev: "Sběratel sad", popis: "Dokonči tři sady.", ikona: "🗂️", splneno: (s) => Object.keys(s.sady ?? {}).length >= 3 },
+  { id: "sezonni", nazev: "Sezónní sběratel", popis: "Získej věc ze sezóny.", ikona: "🎄", splneno: (s) => s.mam.some((id) => !!najdiOdmenu(id)?.sezona) },
 ];
 
 /** Doplní nově splněné trofeje. Volá se při každé změně stavu (upravSbirku). */
@@ -732,5 +817,53 @@ export function tydenSbirky(s: Partial<SbirkaStav> | null | undefined, den: stri
     truhly: dny.reduce((a, x) => a + (x.tr ?? 0), 0),
     krystaly: krystaly(st),
     odmen: st.mam.length,
+  };
+}
+
+// -- Sady ----------------------------------------------------------------------
+
+export interface Sada { id: string; trida: Trida; nazev: string; ikona: string; polozky: string[]; bonus: number; sezona?: SezonaId }
+
+const sada = (trida: Trida, id: string, nazev: string, ikona: string, bonus: number, polozky: string[], sezona?: SezonaId): Sada =>
+  ({ id: `${trida}-${id}`, trida, nazev, ikona, bonus, polozky: polozky.map((p) => `${trida}-${p}`), ...(sezona ? { sezona } : {}) });
+
+/**
+ * Sady: kdo nasbírá všechny věci sady, dostane jednou bonus krystalů (mimo denní strop) a sada se mu
+ * v Sbírce zlatě orámuje. Věci se sbírají běžně (truhly, nákup), sada nic neodemyká navíc.
+ */
+export const SADY: Record<Trida, Sada[]> = {
+  5: [
+    sada(5, "ovoce", "Ovocný košík", "\u{1F353}", 200, ["podoba-mata", "podoba-malina", "podoba-citron", "podoba-boruvka"]),
+    sada(5, "zviratka", "Zvířátka", "\u{1F43E}", 400, ["podoba-kocicka", "podoba-lisak", "podoba-dracek", "podoba-jednorozec"]),
+    sada(5, "more", "Pod mořem", "\u{1F420}", 300, ["vzhled-ocean", "pozadi-podmori", "efekt-bubliny"]),
+    sada(5, "pohadka", "Pohádka", "\u{1F3F0}", 500, ["pozadi-pohadka", "vzhled-duha", "oslava-piruetka", "efekt-duha"]),
+    sada(5, "vanoce", "Vánoce", "\u{1F384}", 300, ["podoba-skritek", "efekt-vlocky", "vzhled-snezeni", "pozadi-vanoce"], "vanoce"),
+    sada(5, "zima", "Zima", "❄️", 250, ["podoba-snehulak", "pozadi-ledove"], "zima"),
+    sada(5, "finis", "Finiš", "\u{1F3C1}", 300, ["podoba-sampion", "efekt-medaile", "pozadi-cil"], "finis"),
+  ],
+  9: [
+    sada(9, "kyber", "Kyber", "\u{1F916}", 400, ["podoba-neon", "podoba-kyber", "vzhled-matrix", "pozadi-mrizka"]),
+    sada(9, "ulice", "Ulice", "\u{1F6F9}", 400, ["podoba-street", "podoba-maskac", "vzhled-mesto", "pozadi-synthwave"]),
+    sada(9, "ohen", "Oheň", "\u{1F525}", 500, ["podoba-ohnivy", "efekt-ohen", "efekt-blesky", "pozadi-zapad"]),
+    sada(9, "led", "Led", "\u{1F9CA}", 500, ["podoba-ledovy", "vzhled-aurora", "pozadi-polarni"]),
+    sada(9, "vanoce", "Vánoce", "\u{1F384}", 300, ["podoba-santa", "efekt-vlocky", "vzhled-snezeni", "pozadi-vanoce"], "vanoce"),
+    sada(9, "zima", "Zima", "❄️", 250, ["podoba-yeti", "pozadi-ledove"], "zima"),
+    sada(9, "finis", "Finiš", "\u{1F3C1}", 300, ["podoba-finisher", "efekt-medaile", "pozadi-cil"], "finis"),
+  ],
+};
+
+export function postupSady(s: SbirkaStav, sd: Sada): { mam: number; z: number } {
+  return { mam: sd.polozky.filter((id) => s.mam.includes(id)).length, z: sd.polozky.length };
+}
+
+/** Připíše bonus za nově dokončené sady (obě třídy, každou sadu jednou). */
+export function zapisSady(s: SbirkaStav, den: string): { s: SbirkaStav; vysledek: { ids: string[]; krystaly: number } } {
+  const hotove = s.sady ?? {};
+  const nove = [...SADY[5], ...SADY[9]].filter((sd) => !hotove[sd.id] && sd.polozky.every((id) => s.mam.includes(id)));
+  if (nove.length === 0) return { s, vysledek: { ids: [], krystaly: 0 } };
+  const bonus = nove.reduce((a, sd) => a + sd.bonus, 0);
+  return {
+    s: { ...s, ziskano: s.ziskano + bonus, sady: { ...hotove, ...Object.fromEntries(nove.map((sd) => [sd.id, den])) } },
+    vysledek: { ids: nove.map((sd) => sd.id), krystaly: bonus },
   };
 }

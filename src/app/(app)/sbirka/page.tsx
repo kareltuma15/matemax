@@ -8,6 +8,9 @@ import DenniMise from "@/components/hexik/DenniMise";
 import BossKarta from "@/components/hexik/BossKarta";
 import TestNanecistoKarta from "@/components/hexik/TestNanecistoKarta";
 import Trofeje from "@/components/hexik/Trofeje";
+import Sady from "@/components/hexik/Sady";
+import SezonaPruh from "@/components/hexik/SezonaPruh";
+import OdmenaVizual from "@/components/hexik/OdmenaVizual";
 import { nactiTestyZVysledku } from "@/lib/sbirka-test";
 import { loadProgress } from "@/lib/progress";
 import { useTrida } from "@/lib/trida";
@@ -15,30 +18,26 @@ import { useSbirka } from "@/lib/use-sbirka";
 import { localDateStr } from "@/lib/date";
 import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import {
-  ODMENY, TRUHLY, VZACNOST, TYP_NAZEV, IKONA_ODMENY, ANIMACE_OSLAVY, ETAPY_HEXIKA, DENNI_STROP,
+  ODMENY, TRUHLY, VZACNOST, TYP_NAZEV, ANIMACE_OSLAVY, ETAPY_HEXIKA, DENNI_STROP,
   POJISTKA_VZACNA, krystaly, maOdmenu, nasazena, etapaHexika, dostupnostTruhly, otevriTruhlu,
-  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, TMAVE_VZHLEDY, ZA_MISI, type NarokTruhla,
+  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, SADY, SADA_EVENT, SEZONY, aktualniSezona, konecSezony, jeVNabidce, TMAVE_VZHLEDY, ZA_MISI, type NarokTruhla,
   type Odmena, type TypOdmeny, type TruhlaId, type VysledekTruhly, type SbirkaStav,
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
 
-type Zalozka = "truhly" | "satnik" | "trofeje";
+type Zalozka = "truhly" | "satnik" | "sady" | "trofeje";
 
 function Krystal({ className = "" }: { className?: string }) {
   return <i className={`hx-krystal ${className}`} aria-hidden="true" />;
 }
 
-function Vizual({ o, velikost = 52 }: { o: Odmena; velikost?: number }) {
-  if (o.typ === "podoba") return <Hexik podoba={o.klic} staticky style={{ width: velikost }} />;
-  if (o.typ === "vzhled") return <span className="mm-swatch" data-vz={o.klic} style={{ width: velikost * 1.6, height: velikost }} aria-hidden="true"><i /><i /></span>;
-  if (o.typ === "pozadi") return <span className="mm-banner mm-nahled block" data-pozadi={o.klic === "klasik" ? undefined : o.klic} style={{ width: velikost * 1.6, height: velikost }} aria-hidden="true" />;
-  return <span style={{ fontSize: velikost * 0.62, lineHeight: 1 }} aria-hidden="true">{IKONA_ODMENY[o.klic] ?? "✨"}</span>;
-}
+const Vizual = OdmenaVizual;
 
-function stavOdmeny(s: SbirkaStav, o: Odmena, trida: Trida) {
+function stavOdmeny(s: SbirkaStav, o: Odmena, trida: Trida, den: string) {
   if (nasazena(s, trida, o.typ).id === o.id) return "nasazeno" as const;
   if (maOdmenu(s, o)) return "mam" as const;
   if (o.zdroj === "test") return "test" as const;
+  if (!jeVNabidce(o, den)) return "mimo" as const;
   if (o.cena === null) return "truhla" as const;
   return "koupit" as const;
 }
@@ -56,25 +55,34 @@ function Sbirka() {
   const { stav, nacteno } = useSbirka();
   const params = useSearchParams();
   const tabParam = params.get("tab");
-  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "trofeje" ? tabParam : "truhly");
-  const [novaTrofej, setNovaTrofej] = useState<string | null>(null);
+  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "trofeje" || tabParam === "sady" ? tabParam : "truhly");
+  // Ohlášení nahoře (dokončená sada, nová trofej) jdou po sobě, nepřepisují se
+  const [fronta, setFronta] = useState<string[]>([]);
+  const novaTrofej = fronta[0] ?? null;
+  useEffect(() => {
+    if (!novaTrofej) return;
+    const cas = setTimeout(() => setFronta((f) => f.slice(1)), 3500);
+    return () => clearTimeout(cas);
+  }, [novaTrofej]);
 
   // Výsledky testů nanečisto z appky Vyhodnocení (propojený účet) → Truhla Generálka a za zlepšení Legendární truhla
   useEffect(() => { zkontrolujTrofeje(); nactiTestyZVysledku().catch(() => {}); }, []);
 
-  // Nová trofej: krátké ohlášení nahoře
   useEffect(() => {
-    let cas: ReturnType<typeof setTimeout> | null = null;
     const na = (e: Event) => {
-      const id = (e as CustomEvent<{ ids: string[] }>).detail?.ids?.[0];
-      const t = TROFEJE.find((x) => x.id === id);
-      if (!t) return;
-      setNovaTrofej(`${t.ikona} Nová trofej: ${t.nazev}`);
-      if (cas) clearTimeout(cas);
-      cas = setTimeout(() => setNovaTrofej(null), 3500);
+      const ids = (e as CustomEvent<{ ids: string[] }>).detail?.ids ?? [];
+      const texty = ids.map((id) => TROFEJE.find((x) => x.id === id)).filter(Boolean).map((t) => `${t!.ikona} Nová trofej: ${t!.nazev}`);
+      if (texty.length) setFronta((f) => [...f, ...texty]);
+    };
+    const naSadu = (e: Event) => {
+      const det = (e as CustomEvent<{ ids: string[]; krystaly: number }>).detail;
+      const texty = (det?.ids ?? []).map((id) => [...SADY[5], ...SADY[9]].find((x) => x.id === id)).filter(Boolean)
+        .map((sd) => `${sd!.ikona} Sada ${sd!.nazev} je kompletní! +${sd!.bonus} krystalů`);
+      if (texty.length) setFronta((f) => [...f, ...texty]);
     };
     window.addEventListener(TROFEJ_EVENT, na);
-    return () => { window.removeEventListener(TROFEJ_EVENT, na); if (cas) clearTimeout(cas); };
+    window.addEventListener(SADA_EVENT, naSadu);
+    return () => { window.removeEventListener(TROFEJ_EVENT, na); window.removeEventListener(SADA_EVENT, naSadu); };
   }, []);
   const [typ, setTyp] = useState<TypOdmeny>("podoba");
   const [vybrana, setVybrana] = useState<string | null>(null);
@@ -93,7 +101,7 @@ function Sbirka() {
 
   const seznam = ODMENY[trida].filter((o) => o.typ === typ);
   const vyb = (vybrana && seznam.find((o) => o.id === vybrana)) || nasazena(stav, trida, typ);
-  const vybStav = stavOdmeny(stav, vyb, trida);
+  const vybStav = stavOdmeny(stav, vyb, trida, den);
   const nahledPodoba = typ === "podoba" ? vyb.klic : podoba.klic;
   const pozadi = nasazena(stav, trida, "pozadi");
   const nahledPozadi = typ === "pozadi" ? vyb.klic : pozadi.klic;
@@ -165,28 +173,30 @@ function Sbirka() {
       </section>
 
       <div className="flex gap-2" role="tablist" aria-label="Sbírka">
-        {(["truhly", "satnik", "trofeje"] as Zalozka[]).map((z) => (
+        {(["truhly", "satnik", "sady", "trofeje"] as Zalozka[]).map((z) => (
           <button
             key={z}
             type="button"
             role="tab"
             aria-selected={zalozka === z}
             onClick={() => setZalozka(z)}
-            className={`flex-1 sm:flex-none rounded-2xl px-5 py-2.5 font-extrabold ${zalozka === z ? "text-white" : "mm-obrys"}`}
+            className={`flex-1 sm:flex-none rounded-2xl px-2 sm:px-5 py-2.5 text-sm sm:text-base font-extrabold ${zalozka === z ? "text-white" : "mm-obrys"}`}
             style={zalozka === z ? { background: "#0D1B3E" } : undefined}
             data-testid={`zalozka-${z}`}
           >
-            {z === "truhly" ? "🎁 Truhly" : z === "satnik" ? "👕 Šatník" : "🏆 Trofeje"}
+            {z === "truhly" ? "🎁 Truhly" : z === "satnik" ? "👕 Šatník" : z === "sady" ? "📚 Sady" : "🏆 Trofeje"}
           </button>
         ))}
       </div>
+
+      {(zalozka === "truhly" || zalozka === "satnik") && <SezonaPruh trida={trida} />}
 
       {zalozka === "truhly" && (
         <section className="flex flex-col gap-3">
           <DenniMise streak={streak} />
           <BossKarta trida={trida} />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {TRUHLY.map((t) => {
+            {TRUHLY.filter((t) => t.id !== "sezonni" || !!aktualniSezona(den)).map((t) => {
               const d = dostupnostTruhly(stav, t.id, den);
               const pct = (v: number) => `${Math.round(v * 100)} %`;
               const sance = (Object.keys(t.sance) as (keyof typeof t.sance)[]).filter((k) => t.sance[k] > 0);
@@ -197,7 +207,7 @@ function Sbirka() {
                   <div className="flex items-center gap-3">
                     <span className="hx-truhla hx-mala shrink-0" data-druh={t.id}><span className="hx-vika" /><span className="hx-telo" /><span className="hx-zamek" /></span>
                     <div className="min-w-0">
-                      <p className="font-black text-lg leading-tight" style={{ color: "var(--text-primary)" }}>{t.nazev}</p>
+                      <p className="font-black text-lg leading-tight" style={{ color: "var(--text-primary)" }}>{t.id === "sezonni" ? aktualniSezona(den)?.truhla ?? t.nazev : t.nazev}</p>
                       <p className="text-xs" style={{ color: "#5F6982" }}>{t.jak}{zlataInfo}</p>
                     </div>
                   </div>
@@ -250,12 +260,12 @@ function Sbirka() {
             <button
               type="button"
               onClick={akce}
-              disabled={vybStav === "nasazeno" || vybStav === "truhla" || vybStav === "test" || (vybStav === "koupit" && krystaly(stav) < (vyb.cena ?? 0))}
+              disabled={vybStav === "nasazeno" || vybStav === "truhla" || vybStav === "test" || vybStav === "mimo" || (vybStav === "koupit" && krystaly(stav) < (vyb.cena ?? 0))}
               className="mm-tlacitko w-full rounded-2xl py-3 font-extrabold text-white disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
               style={{ background: "#5B55D6" }}
               data-testid="satnik-akce"
             >
-              {vybStav === "nasazeno" ? "Nasazeno" : vybStav === "mam" ? "Nasadit" : vybStav === "truhla" ? "Legendární: jen z truhel" : vybStav === "test" ? "Jen za test nanečisto" :
+              {vybStav === "nasazeno" ? "Nasazeno" : vybStav === "mam" ? "Nasadit" : vybStav === "truhla" ? "Legendární: jen z truhel" : vybStav === "test" ? "Jen za test nanečisto" : vybStav === "mimo" ? "Jen v sezóně" :
                 krystaly(stav) < (vyb.cena ?? 0) ? `Chybí ${(vyb.cena ?? 0) - krystaly(stav)} krystalů` : <>Koupit za {vyb.cena} <Krystal /></>}
             </button>
             <button type="button" onClick={() => predved(vyb)} className="text-sm font-bold underline" style={{ color: "#5B55D6" }}>Vyzkoušet</button>
@@ -283,7 +293,8 @@ function Sbirka() {
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5" data-testid="satnik-mrizka">
               {seznam.map((o) => {
-                const st = stavOdmeny(stav, o, trida);
+                const st = stavOdmeny(stav, o, trida, den);
+                const z = o.sezona ? SEZONY.find((x) => x.id === o.sezona) : null;
                 return (
                   <button
                     key={o.id}
@@ -295,10 +306,11 @@ function Sbirka() {
                     data-testid={`odmena-${o.klic}`}
                   >
                     <span className="h-1 rounded-full" style={{ background: VZACNOST[o.vz].barva }} />
-                    <span className="flex items-center justify-center h-14"><Vizual o={o} /></span>
+                    {z && <span className="mm-sezona-stitek self-start" data-testid={`sezonni-${o.klic}`}>{z.ikona} {st === "mimo" ? `od ${Number(z.od.slice(3))}. ${Number(z.od.slice(0, 2))}.` : `do ${Number(konecSezony(z, den).slice(8))}. ${Number(konecSezony(z, den).slice(5, 7))}.`}</span>}
+                    <span className="flex items-center justify-center h-14" style={st === "mimo" ? { filter: "grayscale(.8)", opacity: 0.55 } : undefined}><Vizual o={o} /></span>
                     <span className="text-[13px] font-bold leading-tight" style={{ color: "var(--text-primary)" }}>{o.nazev}</span>
                     <span className="text-[11px] font-bold flex items-center gap-1" style={{ color: st === "nasazeno" ? "#1F9D55" : "#5F6982" }}>
-                      {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "truhla" ? "🎁 Jen z truhly" : st === "test" ? "🏫 Za test nanečisto" : <><Krystal /> {o.cena}</>}
+                      {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "mimo" ? "Jen v sezóně" : st === "truhla" ? "🎁 Jen z truhly" : st === "test" ? "🏫 Za test nanečisto" : <><Krystal /> {o.cena}</>}
                     </span>
                   </button>
                 );
@@ -308,6 +320,7 @@ function Sbirka() {
         </section>
       )}
 
+      {zalozka === "sady" && <Sady trida={trida} />}
       {zalozka === "trofeje" && <Trofeje trida={trida} />}
 
       {novaTrofej && (
