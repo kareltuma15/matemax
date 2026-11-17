@@ -5,7 +5,7 @@
  * `etapa` 1–5 přidává doplňky podle nejvyššího odhadu bodů: hvězdička, šála, zlatá aura, koruna.
  */
 
-interface Podoba {
+export interface Podoba {
   o: string; i: string;
   oci: "kulate" | "lidi" | "ctverec" | "neon" | "visor";
   tvare?: boolean; usi?: boolean; vousy?: boolean; antena?: boolean; srouby?: boolean; tykadla?: boolean; pruhy?: boolean;
@@ -53,6 +53,11 @@ const PODOBY: Record<string, Podoba> = {
   chrom: { o: "url(#hxChrom)", i: "#E6ECF3", oci: "visor", rovna: true, usta: "#6F8299" },
   diamant: { o: "url(#hxDiamant)", i: "#E9FBFF", oci: "kulate", obrys: "#BFF4FF", trpyt: true, svit: "hx-svit-cyan" },
 };
+
+/** Nastavení podoby (barvy, oči, doplňky) — stejné čte i 3D Hexík (lib/hexik3d). */
+export function podobaHexika(klic: string): Podoba {
+  return PODOBY[klic] ?? PODOBY.klasik;
+}
 
 function hvezda(cx: number, cy: number, r1: number, r2: number): string {
   let s = "";

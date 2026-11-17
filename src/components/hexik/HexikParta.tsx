@@ -109,7 +109,7 @@ export default function HexikParta({ trida }: { trida: Trida }) {
       className="relative flex items-center gap-2 mb-2 h-14 lg:fixed lg:z-30 lg:top-28 lg:left-[calc(50%+22rem)] lg:mb-0 lg:h-auto lg:flex-col-reverse lg:items-start lg:gap-1.5"
       data-testid="hexik-parta"
     >
-      <Hexik ref={hxRef} podoba={podoba} etapa={etapa} className="w-12 shrink-0 lg:w-32" />
+      <Hexik ref={hxRef} podoba={podoba} etapa={etapa} d3="setrne" className="w-12 shrink-0 lg:w-32" />
       <div className="flex-1 min-w-0 lg:flex-none lg:max-w-[220px]">
         <p
           className={`hx-bublina inline-block max-w-full rounded-2xl rounded-bl-md lg:rounded-bl-2xl lg:rounded-br-md px-3 py-1.5 text-sm font-bold shadow-sm border ${bublina ? "hx-vid" : ""}`}

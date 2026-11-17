@@ -35,7 +35,7 @@ export default function UrovenModal({ urovne, trida, onClose }: { urovne: Odmena
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay" style={{ background: "rgba(13,27,62,.7)" }} onClick={onClose} data-testid="uroven-modal">
       <div className="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl modal-spring" style={{ background: "#fff" }} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="uroven-nadpis">
         <div className="px-6 pt-6 pb-5 text-center text-white flex flex-col items-center gap-1" style={{ background: "radial-gradient(circle at 50% 20%, #5B55D6, #1F2F66 70%)" }}>
-          <Hexik podoba={nasazena(stav, trida, "podoba").klic} etapa={etapaHexika(stav.maxOdhad[trida])} className="w-24 hx-r-jasot" />
+          <Hexik podoba={nasazena(stav, trida, "podoba").klic} etapa={etapaHexika(stav.maxOdhad[trida])} d3 className="w-24" />
           <p className="text-xs font-extrabold uppercase tracking-widest mt-1" style={{ color: "#C9C7F5" }}>{novaHodnost ? `Nová hodnost: ${hodnost.label}` : hodnost.label}</p>
           <h2 id="uroven-nadpis" className="text-3xl font-black">Úroveň {posledni.n}!</h2>
           {urovne.length > 1 && <p className="text-sm" style={{ color: "#D9D8FE" }}>Skok o {urovne.length} {urovne.length <= 4 ? "úrovně" : "úrovní"} v jednom tréninku!</p>}

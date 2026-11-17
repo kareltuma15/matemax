@@ -123,6 +123,8 @@ export function reaguj(el: HTMLElement | null, animace: string): void {
   el.classList.remove(...REAKCE);
   void el.offsetWidth;
   el.classList.add("hx-r-" + animace);
+  // 3D Hexík (components/hexik/Hexik.tsx) zahraje stejnou reakci jako 3D taneček
+  el.dispatchEvent(new CustomEvent("hx-reakce", { detail: animace }));
   const konec = (e: AnimationEvent) => {
     if (e.target !== el) return;
     el.classList.remove(...REAKCE);

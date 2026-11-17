@@ -166,7 +166,7 @@ function Sbirka() {
         data-pozadi={pozadi.klic === "klasik" ? undefined : pozadi.klic}
         data-testid="sbirka-hlavicka"
       >
-        <Hexik podoba={podoba.klic} etapa={etapa} className="w-28 lg:w-36 shrink-0" />
+        <Hexik podoba={podoba.klic} etapa={etapa} d3 otacet className="w-28 lg:w-36 shrink-0" />
         <div className="flex-1 min-w-0 text-center sm:text-left">
           <p className="text-xs font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>Tvůj Hexík · {etapaInfo.nazev}</p>
           <h1 className="text-3xl lg:text-4xl font-black mt-1 flex items-center gap-2 justify-center sm:justify-start" data-testid="sbirka-krystaly">
@@ -266,10 +266,10 @@ function Sbirka() {
                 data-pozadi={nahledPozadi === "klasik" ? undefined : nahledPozadi}
                 data-testid="satnik-nahled-pozadi"
               >
-                <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} className="w-28" />
+                <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet className="w-28" />
               </div>
             ) : (
-              <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} className="w-36" />
+              <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet className="w-36" />
             )}
             <p className="text-sm text-center" style={{ color: "#5F6982" }}>
               <span className="inline-block rounded-full px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-white mr-1" style={{ background: VZACNOST[vyb.vz].barva }}>{VZACNOST[vyb.vz].nazev}</span>
