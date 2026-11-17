@@ -90,7 +90,7 @@ export default function BottomNav() {
       className="app-chrome lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      <div className="max-w-xl mx-auto grid grid-cols-4 gap-1 px-1.5 pt-1.5 pb-2">
+      <div className="max-w-xl mx-auto grid grid-cols-5 gap-1 px-1.5 pt-1.5 pb-2">
         {STUDENT_ITEMS.map(({ href, label, ikona, sekce }) => {
           const active = jeAktivni(pathname, href, sekce);
           return (

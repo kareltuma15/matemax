@@ -7,6 +7,7 @@ export const STUDENT_ITEMS = [
   { href: "/",        label: "Domů",    ikona: "M3 11l9-7l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z", sekce: [] as string[] },
   { href: "/trenink", label: "Trénink", ikona: "M4 19h16M6 15V9M10 15V5M14 15v-4M18 15V7", sekce: ["/vyzva", "/rychly-mod", "/studijni-plan"] },
   { href: "/testy",   label: "Testy",   ikona: "M7 3h10v18H7ZM10 8h4M10 12h4M10 16h2", sekce: ["/diagnostika", "/cermat-test", "/testy-nanecisto", "/test"] },
+  { href: "/sbirka",  label: "Hexík",   ikona: "M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5ZM9.5 10.5h.01M14.5 10.5h.01M9.5 14q2.5 2 5 0", sekce: [] as string[] },
   { href: "/profil",  label: "Profil",  ikona: "M12 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0", sekce: [] as string[] },
 ];
 

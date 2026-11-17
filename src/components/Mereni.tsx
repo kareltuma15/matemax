@@ -1,0 +1,110 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
+
+/**
+ * Měření návštěvnosti bez cookies: každá stránka (navsteva) a proklik na důležité cesty
+ * (registrace, přihlášení, diagnostika, trénink, Premium…) nebo na prvek s data-mereni.
+ * Posílá jen cestu, odkud návštěvník přišel a utm parametry; nic se neukládá v prohlížeči.
+ *
+ * Veřejné stránky (úvodní, registrace, přihlášení…) měří i chování: jak dlouho tam návštěvník byl,
+ * kam až doscrolloval, kterou sekci (data-sekce) viděl naposledy a kolikrát klikl (událost „odchod“),
+ * všechny kliky na tlačítka a odkazy a první klepnutí do formuláře (formular_start).
+ */
+const DULEZITE = /^\/(registrace|vitej|prihlaseni|diagnostika|trenink|premium|cenik|testy|rodice|matemax|jak-to-funguje)(\/|\?|$)/;
+const VEREJNE = /^\/($|registrace|prihlaseni|vitej|cenik|jak-to-funguje|zapomenute-heslo)/;
+
+export function mer(e: string, data: Record<string, string | number | undefined> = {}): void {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const telo = JSON.stringify({
+      e, p: window.location.pathname, r: document.referrer || undefined,
+      us: q.get("utm_source") ?? undefined, um: q.get("utm_medium") ?? undefined, uc: q.get("utm_campaign") ?? undefined,
+      ...data,
+    });
+    if (navigator.sendBeacon) navigator.sendBeacon("/api/t", new Blob([telo], { type: "text/plain" }));
+    else fetch("/api/t", { method: "POST", body: telo, keepalive: true }).catch(() => {});
+  } catch { /* měření nesmí nic rozbít */ }
+}
+
+interface Pobyt { cesta: string; od: number; scroll: number; kliky: number; sekce: string | undefined; odeslano: boolean; formular: boolean }
+
+export default function Mereni() {
+  const pathname = usePathname();
+  const posledni = useRef<string | null>(null);
+  const pobyt = useRef<Pobyt | null>(null);
+
+  // Odchod ze stránky (zavření, přepnutí jinam, přechod na jinou stránku appky)
+  function odesliOdchod() {
+    const p = pobyt.current;
+    if (!p || p.odeslano) return;
+    p.odeslano = true;
+    const s = Math.round((Date.now() - p.od) / 1000);
+    mer("odchod", { p_: p.cesta, s, h: p.scroll, k: p.kliky, sk: p.sekce });
+  }
+
+  useEffect(() => {
+    if (!pathname || posledni.current === pathname) return;
+    posledni.current = pathname;
+    odesliOdchod();
+    pobyt.current = null;
+    if (pathname.startsWith("/admin") || pathname.startsWith("/nahled")) return;
+    mer("navsteva");
+    if (VEREJNE.test(pathname)) pobyt.current = { cesta: pathname, od: Date.now(), scroll: 0, kliky: 0, sekce: undefined, odeslano: false, formular: false };
+  }, [pathname]);
+
+  useEffect(() => {
+    function klik(ev: MouseEvent) {
+      const p = pobyt.current;
+      if (p) p.kliky += 1;
+      const el = (ev.target as HTMLElement | null)?.closest<HTMLElement>("a[href], button, [data-mereni]");
+      if (!el) return;
+      const vlastni = el.getAttribute("data-mereni");
+      const href = el.getAttribute("href") ?? "";
+      const text = (el.innerText || el.getAttribute("aria-label") || "").trim().replace(/\s+/g, " ").slice(0, 50);
+      let cil = vlastni ?? "";
+      if (!vlastni) {
+        if (href.startsWith("/") && DULEZITE.test(href)) cil = href.split("#")[0].slice(0, 120);
+        else if (p) cil = href ? href.split("?")[0].slice(0, 120) : `tlačítko`; // na veřejných stránkách měříme každý klik
+        else return;
+      }
+      mer("klik", { c: cil, x: text });
+    }
+    function scroll() {
+      const p = pobyt.current;
+      if (!p) return;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 100;
+      if (pct > p.scroll) p.scroll = Math.min(100, pct);
+      const sekce = Array.from(document.querySelectorAll<HTMLElement>("[data-sekce]"));
+      for (const s of sekce) {
+        const r = s.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.6 && r.bottom > 0) p.sekce = s.dataset.sekce;
+      }
+    }
+    function fokus(ev: FocusEvent) {
+      const p = pobyt.current;
+      const t = ev.target as HTMLElement | null;
+      if (!p || p.formular || !t || !/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
+      p.formular = true;
+      mer("formular_start", { c: t.getAttribute("name") ?? t.getAttribute("type") ?? t.tagName.toLowerCase() });
+    }
+    function skryti() { if (document.visibilityState === "hidden") odesliOdchod(); }
+    document.addEventListener("click", klik, { capture: true });
+    window.addEventListener("scroll", scroll, { passive: true });
+    document.addEventListener("focusin", fokus);
+    document.addEventListener("visibilitychange", skryti);
+    window.addEventListener("pagehide", odesliOdchod);
+    return () => {
+      document.removeEventListener("click", klik, { capture: true });
+      window.removeEventListener("scroll", scroll);
+      document.removeEventListener("focusin", fokus);
+      document.removeEventListener("visibilitychange", skryti);
+      window.removeEventListener("pagehide", odesliOdchod);
+    };
+  }, []);
+
+  return null;
+}

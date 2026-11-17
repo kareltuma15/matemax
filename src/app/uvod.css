@@ -1,0 +1,90 @@
+/* Úvodní stránka pro nepřihlášené (src/components/uvod/UvodHost.tsx). Vše pod .mmu, ať se nic nepere s appkou. */
+.mmu { font-family: var(--font-dm-sans), "DM Sans", system-ui, sans-serif; color: #0D1B3E; background: #fff; line-height: 1.5; overflow-x: hidden; }
+.mmu a { text-decoration: none; }
+.mmu .u-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+.mmu .u-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
+.mmu .u-h2 { margin: 14px 0 0; font-size: 44px; line-height: 1.1; font-weight: 900; letter-spacing: -.02em; text-wrap: balance; }
+.mmu .u-lead { margin: 14px auto 0; font-size: 18px; color: #4A5470; max-width: 640px; }
+.mmu .u-tl { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; padding: 16px 26px; font-weight: 800; font-size: 17px; min-height: 54px; box-sizing: border-box; transition: transform .15s, box-shadow .15s; }
+.mmu .u-tl:hover { transform: translateY(-2px); }
+.mmu .u-tr { appearance: none; border: 0; border-radius: 999px; padding: 11px 18px; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; min-height: 46px; transition: background .15s, color .15s; }
+.mmu .u-tr:focus-visible, .mmu .u-moz:focus-visible, .mmu .u-tl:focus-visible { outline: 3px solid #7FD8EE; outline-offset: 2px; }
+.mmu .u-moz { appearance: none; border: 2px solid #E1E4EE; background: #fff; border-radius: 14px; padding: 14px 8px; font: inherit; font-weight: 800; font-size: 20px; color: #0D1B3E; cursor: pointer; min-height: 56px; transition: border-color .15s, transform .15s; }
+.mmu .u-moz:not(:disabled):hover { border-color: #2E6DA4; transform: translateY(-1px); }
+.mmu .u-moz:disabled { cursor: default; }
+.mmu .u-hero { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 40px; align-items: center; }
+.mmu .u-g2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 56px; align-items: center; }
+.mmu .u-g3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+.mmu .u-g4 { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
+.mmu .u-g5 { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 16px; }
+.mmu .u-g6 { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 16px; }
+.mmu .u-kroky { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; align-items: stretch; }
+.mmu .u-sip { display: flex; align-items: center; justify-content: center; color: #B8C0D4; }
+.mmu .u-karta { background: #fff; border-radius: 22px; box-shadow: 0 1px 2px rgba(13,27,62,.06), 0 12px 32px rgba(13,27,62,.08); transition: transform .25s, box-shadow .25s; }
+.mmu .u-ukazka { overflow: hidden; }
+.mmu .u-ukazka:hover { transform: translateY(-6px) rotate(-.4deg); box-shadow: 0 2px 4px rgba(13,27,62,.06), 0 24px 48px rgba(13,27,62,.14); }
+.mmu .u-ukazka-obr { height: 230px; box-sizing: border-box; position: relative; }
+.mmu .u-ukazka h3 { margin: 0; font-size: 20px; font-weight: 900; }
+.mmu .u-ukazka p { margin: 6px 0 0; color: #5F6982; }
+.mmu .u-tema { border-radius: 20px; padding: 20px; transition: transform .2s; }
+.mmu .u-tema:hover { transform: translateY(-4px); }
+.mmu .u-sym { position: absolute; color: #fff; font-weight: 900; user-select: none; pointer-events: none; animation: u-plav 7s ease-in-out infinite; }
+@keyframes u-plav { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes u-gr { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.mmu .u-hero-bg { background: linear-gradient(120deg,#1B4F9C 0%,#2E6DA4 30%,#0AA3D1 62%,#1C6FB8 85%,#1B4F9C 100%); background-size: 220% 220%; animation: u-gr 16s ease infinite; }
+.mmu details.u-faq { background: #fff; border-radius: 16px; padding: 0 22px; border: 1px solid #E5E9F2; }
+.mmu details.u-faq summary { cursor: pointer; list-style: none; font-weight: 800; font-size: 17px; padding: 18px 0; display: flex; justify-content: space-between; gap: 12px; }
+.mmu details.u-faq summary::-webkit-details-marker { display: none; }
+.mmu details.u-faq summary span:last-child { color: #2E6DA4; font-size: 22px; line-height: 1; transition: transform .2s; }
+.mmu details.u-faq[open] summary span:last-child { transform: rotate(45deg); }
+.mmu details.u-faq p { margin: 0 0 18px; color: #4A5470; }
+.mmu .u-tab { width: 100%; border-collapse: collapse; font-size: 15px; }
+.mmu .u-tab td, .mmu .u-tab th { padding: 15px 16px; border-top: 1px solid #EEF1F6; text-align: center; }
+.mmu .u-tab td:first-child, .mmu .u-tab th:first-child { text-align: left; font-weight: 700; }
+.mmu .u-tab tbody tr:nth-child(even) { background: #FAFBFD; }
+.mmu .u-ano, .mmu .u-ne { display: inline-flex; width: 26px; height: 26px; border-radius: 50%; align-items: center; justify-content: center; font-weight: 900; font-size: 14px; }
+.mmu .u-ano { background: #22C55E; color: #fff; }
+.mmu .u-ne { background: #EEF1F6; color: #9AA3B8; }
+.mmu .u-nav-a { color: #4A5470; font-weight: 700; font-size: 15px; }
+.mmu .u-nav-a:hover { color: #0D1B3E; }
+.mmu .u-sekce { padding-top: 96px; padding-bottom: 96px; }
+.mmu .u-hx-kruh { width: 38px; height: 38px; border-radius: 50%; background: #1E3A8A; border: 2px solid #7FE3F5; padding: 3px; box-sizing: border-box; }
+.mmu .u-hx-kruh + .u-hx-kruh { margin-left: -10px; }
+
+/* Koláž v úvodu */
+.mmu .u-kolaz { position: relative; height: 580px; color: #0D1B3E; }
+.mmu .u-km { position: absolute; top: 70px; left: 40px; width: 360px; padding: 22px; transform: rotate(-3deg); border-radius: 28px; box-shadow: 0 30px 60px rgba(5,15,45,.45); }
+.mmu .u-kh { position: absolute; left: -8px; bottom: 28px; display: flex; align-items: flex-end; gap: 6px; }
+.mmu .u-kh-hx { width: 118px; height: 118px; filter: drop-shadow(0 12px 18px rgba(0,0,0,.3)); }
+.mmu .u-kh-bublina { background: #fff; color: #0D1B3E; font-weight: 800; font-size: 15px; padding: 10px 14px; border-radius: 16px 16px 16px 4px; margin-bottom: 70px; box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+.mmu .u-md { position: absolute; }
+
+@media (max-width: 900px) {
+  .mmu .u-hero, .mmu .u-g2 { grid-template-columns: minmax(0,1fr); gap: 36px; }
+  .mmu .u-g3, .mmu .u-kroky { grid-template-columns: minmax(0,1fr); gap: 16px; }
+  .mmu .u-sip { display: none; }
+  .mmu .u-g4 { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+  .mmu .u-g6 { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+  .mmu .u-g5 { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .mmu .u-skryt { display: none !important; }
+  .mmu .u-h1 { font-size: 40px !important; }
+  .mmu .u-h2 { font-size: 32px; }
+  .mmu .u-sekce { padding-top: 64px; padding-bottom: 64px; }
+  .mmu .u-kolaz { height: auto; padding-bottom: 8px; }
+  .mmu .u-km { position: relative; left: auto; top: auto; width: auto; transform: rotate(-1.5deg); }
+  .mmu .u-md { display: none !important; }
+  .mmu .u-kh { position: relative; left: auto; bottom: auto; margin-top: -14px; }
+  .mmu .u-kh-hx { width: 92px; height: 92px; }
+  .mmu .u-kh-bublina { margin-bottom: 40px; }
+  .mmu .u-autor { grid-template-columns: minmax(0,1fr) !important; padding: 26px !important; gap: 16px !important; }
+  .mmu .u-autor > svg { width: 96px; height: 96px; }
+  .mmu .u-tab { font-size: 13px; }
+  .mmu .u-tab td, .mmu .u-tab th { padding: 12px 8px; }
+}
+@media (max-width: 420px) {
+  .mmu .u-wrap { padding: 0 16px; }
+  .mmu .u-tr { padding: 10px 14px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mmu .u-hero-bg, .mmu .u-sym { animation: none; }
+}

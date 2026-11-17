@@ -247,6 +247,13 @@ export default function AdminPage() {
           </div>
           <div className="flex items-center gap-2">
             <Link
+              href="/admin/navstevnost"
+              className="rounded-xl px-3 py-2 text-xs font-bold"
+              style={{ background: "#F5A623", color: "#0D1B3E" }}
+            >
+              📈 Návštěvnost
+            </Link>
+            <Link
               href="/admin/testy"
               className="rounded-xl px-3 py-2 text-xs font-bold"
               style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}

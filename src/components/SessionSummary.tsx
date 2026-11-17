@@ -39,6 +39,8 @@ interface Props {
   nextTopic?: { tema: string; label: string } | null;
   onRestart: () => void;
   onRestartChyby?: () => void;
+  /** Sbírka: krystaly za tento trénink a jestli se právě odemkla denní/zlatá truhla. */
+  odmena?: { krystaly: number; denni: boolean; zlata: boolean } | null;
 }
 
 function useCountUp(target: number, duration = 900): number {
@@ -165,7 +167,7 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
   });
 }
 
-export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby }: Props) {
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby, odmena = null }: Props) {
   // Skipped examples count against score — 3 správně ze 7 celkových = 43 %, ne 100 %
   const effectiveTotal = total + skipped;
   const pct = effectiveTotal > 0 ? Math.round((correct / effectiveTotal) * 100) : 0;
@@ -259,6 +261,22 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
             <p className="text-xl font-black text-orange-500">🔥 {animStreak} dní</p>
           </div>
         </div>
+
+        {/* Sbírka: krystaly a odemčená truhla */}
+        {odmena && (odmena.krystaly > 0 || odmena.denni || odmena.zlata) && (
+          <div className="rounded-xl p-3.5 border flex items-center gap-3" style={{ background: "#FFF6E5", borderColor: "#F3D9A0" }} data-testid="souhrn-odmena">
+            <span className="text-3xl" aria-hidden="true">{odmena.denni || odmena.zlata ? "🎁" : "💎"}</span>
+            <div className="flex-1 min-w-0">
+              <p className="font-black text-sm" style={{ color: "#0D1B3E" }}>
+                +{odmena.krystaly} krystalů{odmena.zlata ? " · zlatá truhla odemčená!" : odmena.denni ? " · denní truhla odemčená" : ""}
+              </p>
+              <p className="text-xs" style={{ color: "#7A5A1A" }}>Za krystaly koupíš Hexíkovi podoby, oslavy a efekty.</p>
+            </div>
+            <a href={odmena.denni || odmena.zlata ? "/sbirka" : "/sbirka?tab=satnik"} className="mm-tlacitko shrink-0 rounded-xl px-3 py-2 text-sm font-extrabold" style={{ background: "#F5A623", color: "#0D1B3E" }} data-testid="souhrn-truhla">
+              {odmena.denni || odmena.zlata ? "Otevřít" : "Hexík"}
+            </a>
+          </div>
+        )}
 
         {/* Topics practiced */}
         {topics.length > 0 && (

@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import PwaSetup from "@/components/PwaSetup";
 import ProgressSync from "@/components/ProgressSync";
+import Mereni from "@/components/Mereni";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { EXAMPLES_LABEL, DAILY_MINUTES } from "@/lib/site-stats";
 
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full" style={{ background: "var(--surface-1)", color: "var(--text-primary)" }}>
         <PwaSetup />
         <ProgressSync />
+        <Mereni />
         {children}
         {/* Měření návštěvnosti a rychlosti bez cookies a bez osobních údajů (zapnuté ve Vercelu u projektu) */}
         <Analytics />

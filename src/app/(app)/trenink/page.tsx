@@ -58,6 +58,9 @@ import { isTopicLocked, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
 import { pickMission, snapshotReadiness } from "@/lib/mise";
+import HexikParta from "@/components/hexik/HexikParta";
+import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad } from "@/lib/sbirka-trenink";
+import { ODPOVED_EVENT } from "@/lib/sound";
 import { getReadiness } from "@/lib/readiness";
 import DoporuceniPoTestu from "@/components/DoporuceniPoTestu";
 import { nactiPlan, type PlanPoTestu } from "@/lib/plan-po-testu";
@@ -199,6 +202,12 @@ function unlockedMaxLevel(
   if (correctAt[1] >= UNLOCK_CORRECT || diag >= DIAG_UNLOCK_L2) lvl = 2;
   if (lvl === 2 && correctAt[2] >= UNLOCK_CORRECT) lvl = 3;
   return lvl;
+}
+
+let EX_BY_ID: Map<string, DBExample> | null = null;
+function exById(): Map<string, DBExample> {
+  if (!EX_BY_ID) EX_BY_ID = new Map(allExamples.map((e) => [e.id, e]));
+  return EX_BY_ID;
 }
 
 /** Odemčená úroveň uvnitř výběru úloh (dovednosti): stejná pravidla jako u tématu, počítají se jen úlohy výběru. */
@@ -393,6 +402,25 @@ function TreningPageInner() {
   // Snímek připravenosti před tréninkem — pro posun „před → po" v souhrnu
   const readinessBeforeRef              = useRef<Record<string, number> | null>(null);
   const consecutiveCorrectRef           = useRef(0);
+  // Sbírka: kdy se karta ukázala a za jak dlouho žák odpověděl (tip naslepo nedá krystal), krystaly za trénink
+  const kartaStartRef                   = useRef(0);
+  const vyhodnocenoMsRef                = useRef<number | null>(null);
+  const krystalySezeniRef               = useRef(0);
+  const odhadZakladRef                  = useRef(false);
+  const [odmenaKonec, setOdmenaKonec]   = useState<{ krystaly: number; denni: boolean; zlata: boolean } | null>(null);
+
+  useEffect(() => {
+    kartaStartRef.current = Date.now();
+    vyhodnocenoMsRef.current = null;
+  }, [currentIdx, sessionIds]);
+
+  useEffect(() => {
+    const naOdpoved = () => {
+      if (vyhodnocenoMsRef.current === null) vyhodnocenoMsRef.current = Date.now() - kartaStartRef.current;
+    };
+    window.addEventListener(ODPOVED_EVENT, naOdpoved);
+    return () => window.removeEventListener(ODPOVED_EVENT, naOdpoved);
+  }, []);
 
   useEffect(() => {
     setTemaFilter(urlTema);
@@ -467,6 +495,13 @@ function TreningPageInner() {
     }
   }, []);
 
+  useEffect(() => {
+    if (sessionIds.length > 0 && !odhadZakladRef.current) {
+      odhadZakladRef.current = true;
+      odmenaZaOdhad(trida);
+    }
+  }, [sessionIds, trida]);
+
   // Supabase sync when session ends + first session detection
   useEffect(() => {
     if (!done || !gamState) return;
@@ -488,6 +523,10 @@ function TreningPageInner() {
 
     // Session complete — clear draft
     clearSessionDraft();
+
+    // Sbírka: dokončený trénink (krystaly jednou denně, denní a zlatá truhla, rekord odhadu)
+    const odm = odmenaZaKonecTreninku(trida, answered);
+    setOdmenaKonec({ krystaly: krystalySezeniRef.current + odm.krystaly + odm.odhad, denni: odm.denniNove, zlata: odm.zlataNove });
 
     // Feedback after 5th session (once per account)
     try {
@@ -601,6 +640,15 @@ function TreningPageInner() {
       if (!wasCorrect) {
         setWrongAnswers((prev) => [...prev, { exampleId: exId, userAnswer }]);
       }
+
+      // Sbírka: krystaly za odpověď (podle úrovně žáka v tématu, ne za tip naslepo)
+      krystalySezeniRef.current += odmenaZaOdpoved({
+        spravne: wasCorrect,
+        obtiznost: example?.obtiznost ?? 1,
+        uroven: example ? unlockedMaxLevel(example.tema, cards, exById(), diagScores) : 1,
+        ms: vyhodnocenoMsRef.current,
+        vyber: !!(example?.moznosti?.length || example?.porovnani),
+      });
 
       // XP
       const p = loadProgress();
@@ -790,6 +838,8 @@ function TreningPageInner() {
     setDone(false);
     setWrongAnswers([]);
     consecutiveCorrectRef.current = 0;
+    krystalySezeniRef.current = 0;
+    setOdmenaKonec(null);
     sessionStartRef.current = new Date();
   }
 
@@ -1082,6 +1132,7 @@ function TreningPageInner() {
           wrongAnswers={wrongAnswers}
           topicShift={computeTopicShift(readinessBeforeRef.current, practiceTopics)}
           nextTopic={pickMission(isPremium)}
+          odmena={odmenaKonec}
           onRestart={() => restart()}
           onRestartChyby={
             cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2)
@@ -1161,6 +1212,8 @@ function TreningPageInner() {
           else router.push("/");
         }}
       />
+
+      <HexikParta trida={trida} />
 
       {/* Režim série jen jedním malým řádkem, a jen když není běžný trénink tématu */}
       {(freezeUsedToday || rezimFilter === "chyby" || rezimFilter === "sm2" || (isWeakTopic && !temaFilter)) && (
