@@ -431,6 +431,14 @@ export interface SbirkaStav {
   comboRekord: number;
   /** Adventní kalendář (lib/kalendar.ts). */
   advent?: AdventStav;
+  /** Odznaky na profilu: už odměněný stupeň medaile (lib/odznaky.ts). */
+  odznaky?: Record<string, number>;
+  /** Příklady, které žák pokazil a později vyřešil správně. */
+  napraveno?: number;
+  /** Pondělí týdnů, kdy žák trénoval aspoň 5 dní. */
+  tydny5?: string[];
+  /** Nejdelší série dní s tréninkem. */
+  maxSerieDni?: number;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
 }
@@ -588,6 +596,7 @@ export function dokoncenyTrenink(s: SbirkaStav, den: string): { s: SbirkaStav; v
   let k = 0;
   if (prvniDnes) { const r = pripis(dalsi, ZA_TRENINK, den); dalsi = r.s; k = r.vysledek; }
   const ted = dnuTentoTyden(dalsi, den);
+  if (ted >= DNU_PRO_ZLATOU && !(dalsi.tydny5 ?? []).includes(pondeli(den))) dalsi = { ...dalsi, tydny5: [...(dalsi.tydny5 ?? []), pondeli(den)].sort() };
   const zlataNove = predTim < DNU_PRO_ZLATOU && ted >= DNU_PRO_ZLATOU && dalsi.zlataOtevrena !== pondeli(den);
   return { s: dalsi, vysledek: { krystaly: k, denniNove: prvniDnes && dalsi.denniOtevrena !== den, zlataNove } };
 }
@@ -741,6 +750,10 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
     })),
     uroven: Math.max(a.uroven ?? 1, b.uroven ?? 1),
     comboRekord: Math.max(a.comboRekord ?? 0, b.comboRekord ?? 0),
+    odznaky: Object.fromEntries([...new Set([...Object.keys(a.odznaky ?? {}), ...Object.keys(b.odznaky ?? {})])].map((k) => [k, Math.max(a.odznaky?.[k] ?? -1, b.odznaky?.[k] ?? -1)])),
+    napraveno: Math.max(a.napraveno ?? 0, b.napraveno ?? 0),
+    tydny5: [...new Set([...(a.tydny5 ?? []), ...(b.tydny5 ?? [])])].sort(),
+    maxSerieDni: Math.max(a.maxSerieDni ?? 0, b.maxSerieDni ?? 0),
     ...(a.advent || b.advent ? { advent: slucAdvent(a.advent, b.advent) } : {}),
     t: Math.max(a.t, b.t),
   };

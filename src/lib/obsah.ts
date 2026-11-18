@@ -19,6 +19,7 @@ import { KRONIKA, dnyMezi, type OblastId, type ZapisKroniky, type Kronika } from
 export { KRONIKA, dnyMezi, type OblastId, type ZapisKroniky, type Kronika };
 import { ODMENY, TROFEJE, SADY, TRUHLY, SEZONY, TYP_NAZEV, type TypOdmeny } from "./sbirka";
 import { dovednostiTematu, dovednostUlohy, TESTOVE, TESTOVE_NAZEV } from "./dovednosti";
+import { stavOdznaku } from "./odznaky";
 import { temaLabel, TEMATA_ORDER_5, type DBExample, type Trida } from "@/types";
 
 // ── Oblasti a limity ────────────────────────────────────────────────────────
@@ -53,7 +54,10 @@ export const KLICE_POCTU: Record<string, OblastId> = {
 };
 
 const realneOdmeny = (t: Trida) => ODMENY[t].filter((o) => o.klic !== "nic");
-const odznaky = (gamData as { badges: unknown[] }).badges;
+// Odznaky na profilu = 3D medaile za učení (lib/odznaky.ts), obě třídy
+const pocetMedaili = (t: Trida) => stavOdznaku({ trida: t, karty: [], maxSerie: 0, tydny5: 0, vyreseno: 0, napraveno: 0, perfektni: 0, diagnostika: {}, testu: 0, rustOdhadu: 0, generalek: 0, stareOdznaky: [] }).length;
+const odznaky = { get length() { return pocetMedaili(9) + pocetMedaili(5); } };
+void gamData;
 
 export function pocty(): Record<string, number> {
   return {

@@ -43,7 +43,7 @@ test.describe("Obsah a odměny", () => {
 
   test("návrh úkolu je ve formátu kokpitu a shrnutí nemá data o žácích", () => {
     const zle = cerstvost("2026-11-18").filter((x) => x.stav === "zle");
-    expect(zle.map((x) => x.oblast)).toEqual(expect.arrayContaining(["odznaky", "vyzvy"]));
+    expect(zle.map((x) => x.oblast)).toEqual(expect.arrayContaining(["vyzvy"]));
     for (const c of zle) {
       const n = navrhUkolu(c);
       expect(n.description).toMatch(/^CO: [^\n]+\nKROKY: 1\) [^\n]+\nHOTOVO KDYŽ: [^\n]+\nČAS: asi \d+ h$/);
@@ -73,7 +73,7 @@ test("stránka Obsah a odměny v administraci ukáže semafor, témata i kroniku
   await context.route("**/rest/v1/**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: "[]" }));
   await page.route("**/api/admin/obsah", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(prehledObsahu("2026-11-18")) }));
   await page.goto("/admin/obsah");
-  await expect(page.getByTestId("obsah-semafor-odznaky")).toHaveAttribute("data-stav", "zle");
+  await expect(page.getByTestId("obsah-semafor-vyzvy")).toHaveAttribute("data-stav", "zle");
   await expect(page.getByTestId("obsah-semafor-odmeny")).toHaveAttribute("data-stav", /ok|ceka/);
   await page.getByTestId("obsah-tema-konstrukce").click();
   await expect(page.getByText("Trojúhelníky", { exact: false }).first()).toBeVisible();

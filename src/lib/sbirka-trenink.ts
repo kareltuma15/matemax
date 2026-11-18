@@ -15,6 +15,7 @@ import {
 } from "./sbirka";
 import { krokComba, COMBO_EVENT, type StavComba, type DetailComba } from "./combo";
 import { zapocitejTreninkAdvent } from "./kalendar";
+import { noveStupne, type StavMedaile } from "./odznaky";
 
 export const KRYSTALY_EVENT = "matemax-krystaly";
 /** Splněná denní mise (detail: { ids }) — Hexík u příkladu ji ohlásí. */
@@ -29,10 +30,11 @@ function ohlasMise(ids: MiseId[]) {
 }
 
 /** Zapíše odpověď a připíše krystaly (za odpověď i za právě splněné mise). Vrací, kolik se připsalo. */
-export function odmenaZaOdpoved(a: { spravne: boolean; obtiznost: number; uroven: number; ms: number | null; vyber: boolean }): number {
+export function odmenaZaOdpoved(a: { spravne: boolean; obtiznost: number; uroven: number; ms: number | null; vyber: boolean; napraveno?: boolean }): number {
   const den = localDateStr();
   const { n, mise } = upravSbirku((s) => {
-    const zapsano = misePriOdpovedi(zapisOdpoved(s, a.spravne, den), a.spravne, a.obtiznost, den);
+    const s0 = a.napraveno && a.spravne ? { ...s, napraveno: (s.napraveno ?? 0) + 1 } : s;
+    const zapsano = misePriOdpovedi(zapisOdpoved(s0, a.spravne, den), a.spravne, a.obtiznost, den);
     const r = pripis(zapsano, krystalyZaOdpoved(a.spravne, a.obtiznost, a.uroven, a.ms, a.vyber), den);
     const m = splnMise(r.s, den);
     return { s: m.s, vysledek: { n: r.vysledek + m.vysledek.krystaly, mise: m.vysledek.nove } };
@@ -61,6 +63,20 @@ export function odmenaZaCombo(c: StavComba, spravne: boolean, rychlyTip: boolean
     window.dispatchEvent(new CustomEvent(COMBO_EVENT, { detail }));
   }
   return { stav, krystaly };
+}
+
+/**
+ * Odznaky na profilu: připíše krystaly za nové stupně medailí a uloží je jako odměněné.
+ * Vrací nové medaile (pro oslavu). Krystaly za odznaky nepodléhají dennímu stropu.
+ */
+export function odmenaZaOdznaky(medaile: StavMedaile[], maxSerie: number): { nove: StavMedaile[]; krystaly: number } {
+  const r = upravSbirku((s) => {
+    const n = noveStupne(medaile, s.odznaky ?? {});
+    const dalsi = { ...s, odznaky: n.odmeneno, ziskano: s.ziskano + n.krystaly, maxSerieDni: Math.max(s.maxSerieDni ?? 0, maxSerie) };
+    return { s: dalsi, vysledek: { nove: n.nove, krystaly: n.krystaly } };
+  });
+  ohlasKrystaly(r.krystaly);
+  return r;
 }
 
 /** Splněné doporučení (zvládnuté téma, plán po testu) přidá Truhlu doporučení. Vrací true, když je nová. */

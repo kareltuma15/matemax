@@ -681,7 +681,9 @@ function TreningPageInner() {
 
       // Sbírka: krystaly za odpověď (podle úrovně žáka v tématu, ne za tip naslepo)
       const vyber = !!(example?.moznosti?.length || example?.porovnani);
+      const predtim = cards.find((c) => c.exampleId === exId);
       krystalySezeniRef.current += odmenaZaOdpoved({
+        napraveno: !!predtim && predtim.lastQuality < 3,
         spravne: wasCorrect,
         obtiznost: example?.obtiznost ?? 1,
         uroven: example ? unlockedMaxLevel(example.tema, cards, exById(), diagScores) : 1,

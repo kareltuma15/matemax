@@ -13,7 +13,7 @@ import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import PropojeniVysledky from "@/components/PropojeniVysledky";
 import { TEMA_LABELS, TEMATA_ORDER, TEMATA_ORDER_5, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
-import BadgeGrid from "@/components/BadgeGrid";
+import MedailovaStena, { NejblizsiMedaileKarta } from "@/components/odznaky/MedailovaStena";
 import PostupPrehled from "@/components/PostupPrehled";
 import { computeTrainingState, computeTopicProgress, type Level, type LevelProgress } from "@/lib/levels";
 import ActivityHeatmap from "@/components/ActivityHeatmap";
@@ -885,33 +885,8 @@ export default function ProfilPage() {
           )}
 
           </>)}
-          {/* Nejbližší cíl (odznak) */}
-          {nextBadge && earnedBadges.length < allBadges.length && (
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nejbližší cíl</p>
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 card-hover">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "#f8fafc", border: "2px solid #e2e8f0" }}>{nextBadge.icon_emoji}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-black text-slate-800 leading-tight">{nextBadge.label}</p>
-                    <p className="text-xs font-black shrink-0" style={{ color: "#2E6DA4" }}>+{nextBadge.xp_reward} XP</p>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-0.5">{nextBadge.description}</p>
-                  {nextBadgeProgress && (
-                    <>
-                      <div className="flex justify-between text-[10px] text-slate-400 mt-1.5 mb-0.5">
-                        <span>Pokrok</span>
-                        <span>{nextBadgeProgress.current} / {nextBadgeProgress.target}</span>
-                      </div>
-                      <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                        <div className="h-1.5 rounded-full transition-all duration-700" style={{ width: `${Math.min(100, Math.round((nextBadgeProgress.current / nextBadgeProgress.target) * 100))}%`, background: "linear-gradient(90deg, #2E6DA4, #00B4D8)" }} />
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Nejbližší medaile (odznaky za učení) */}
+          <NejblizsiMedaileKarta trida={trida} />
 
           {/* Pozvi kamaráda */}
           {userId && (
@@ -1020,42 +995,10 @@ export default function ProfilPage() {
         </div>
       )}
 
-      {/* ── TAB: ODZNAKY ── */}
+      {/* ── TAB: ODZNAKY (3D medaile za učení) ── */}
       {activeTab === "odznaky" && (
-        <div className="tab-enter flex flex-col gap-4">
-          {earnedBadges.length === allBadges.length && allBadges.length > 0 ? (
-            <div
-              className="rounded-2xl p-4 text-center"
-              style={{ background: "#fefce8", border: "2px solid #fde047" }}
-            >
-              <p className="text-2xl mb-1">🏆</p>
-              <p className="text-sm font-black" style={{ color: "#713f12" }}>Všechny odznaky získány!</p>
-            </div>
-          ) : (
-            nextBadge && (
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-4">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 border-2"
-                  style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}
-                >
-                  {nextBadge.icon_emoji}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-0.5">Další cíl</p>
-                  <p className="text-sm font-black text-slate-800 leading-tight">
-                    {nextBadge.icon_emoji} {nextBadge.label}
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">{nextBadge.description}</p>
-                </div>
-                <div className="shrink-0 text-right">
-                  <p className="text-xs font-black" style={{ color: "#2E6DA4" }}>+{nextBadge.xp_reward} XP</p>
-                </div>
-              </div>
-            )
-          )}
-          <div className="bg-white rounded-2xl border border-slate-200 p-5">
-            <BadgeGrid earnedBadgeIds={earnedBadges} />
-          </div>
+        <div className="tab-enter">
+          <MedailovaStena trida={trida} />
         </div>
       )}
 

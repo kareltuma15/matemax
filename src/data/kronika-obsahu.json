@@ -8,13 +8,24 @@
     "truhly": 9,
     "trofeje": 23,
     "sady": 14,
-    "odznaky": 37,
+    "odznaky": 47,
     "cvicne_testy": 2,
     "diagnostika": 2,
     "videolekce": 2,
     "vyzvy": 30
   },
   "zapisy": [
+    {
+      "datum": "2026-11-18",
+      "oblast": "odznaky",
+      "popis": "Odznaky na profilu jako 3D medaile za učení: 24 medailí pro 9. třídu, 23 pro 5. třídu, stupně bronz, stříbro, zlato, diamant, krystaly za nový stupeň",
+      "novinka": {
+        "nadpis": "Odznaky jako 3D medaile",
+        "text": "Medaile za každé téma a za pravidelnost, pilnost i testy. Každá roste přes bronz, stříbro a zlato až do diamantu.",
+        "vizual": "hexik",
+        "odkaz": "/profil"
+      }
+    },
     {
       "datum": "2026-11-18",
       "oblast": "odmeny",
