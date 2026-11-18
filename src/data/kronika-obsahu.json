@@ -1,0 +1,35 @@
+{
+  "_info": "Kronika novinek MateMaxu (viz src/lib/obsah.ts). Při každé změně obsahu přidej zápis a přepiš stav. datum = den nasazení naostro, null = hotové a čeká na nasazení. Test e2e/obsah.spec.ts hlídá, že stav sedí s kódem.",
+  "stav": {
+    "priklady9": 1211,
+    "priklady5": 397,
+    "odmeny5": 72,
+    "odmeny9": 73,
+    "truhly": 9,
+    "trofeje": 20,
+    "sady": 14,
+    "odznaky": 37,
+    "cvicne_testy": 2,
+    "diagnostika": 2,
+    "videolekce": 2,
+    "vyzvy": 30
+  },
+  "zapisy": [
+    { "datum": null, "oblast": "odmeny", "popis": "Herní systém: 145 odměn (+107), 3D Hexík s doplňky na hlavu, oči a krk, tanečky za úrovně, 30 XP úrovní, 3D otevírání truhel, Hexík radí, sezóny a sady" },
+    { "datum": "2026-11-17", "oblast": "testy", "popis": "Cvičný test pro 5. třídu: 14 úloh, 70 minut, 50 bodů ve formátu přijímaček" },
+    { "datum": "2026-11-16", "oblast": "odmeny", "popis": "Sbírka, 1. etapa: 38 odměn, krystaly, šatník a truhly v pěti stupních" },
+    { "datum": "2026-11-11", "oblast": "priklady5", "popis": "+18 úloh: hvězdičky, řetězec operací a číselná osa" },
+    { "datum": "2026-11-10", "oblast": "priklady9", "popis": "+10 úloh, témata rozdělená na dovednosti a testové příklady" },
+    { "datum": "2026-11-09", "oblast": "priklady5", "popis": "+14 úloh: pravda / nepravda a úlohy bez písemného dělení dvojciferným" },
+    { "datum": "2026-11-01", "oblast": "priklady5", "popis": "+15 úloh s podúlohami a přiřazováním" },
+    { "datum": "2026-11-01", "oblast": "diagnostika", "popis": "Diagnostika pro 5. třídu: 8 okruhů, adaptivně L2, pak L3 nebo L1" },
+    { "datum": "2026-10-30", "oblast": "priklady5", "popis": "Celá 5. třída od 26. 10.: 8 okruhů, 354 úloh" },
+    { "datum": "2026-10-24", "oblast": "videolekce", "popis": "Nabídka videolekce po chybě: 2 lekce ke zlomkům" },
+    { "datum": "2026-10-23", "oblast": "priklady9", "popis": "+5 úloh" },
+    { "datum": "2026-10-21", "oblast": "priklady9", "popis": "+22 úloh" },
+    { "datum": "2026-10-02", "oblast": "diagnostika", "popis": "Úprava diagnostiky 9. třídy" },
+    { "datum": "2026-06-15", "oblast": "odznaky", "popis": "Odznaky po sjednocení témat na 9 (37 odznaků)" },
+    { "datum": "2026-05-06", "oblast": "vyzvy", "popis": "Denní výzva: 30 dní úloh a týdenní výzva s žebříčkem" },
+    { "datum": "2026-05-06", "oblast": "testy", "popis": "CERMAT trénink pro 9. třídu" }
+  ]
+}

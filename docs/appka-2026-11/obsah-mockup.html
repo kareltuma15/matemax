@@ -1,0 +1,243 @@
+<title>Obsah a odměny MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap">
+<style>
+/* Layout: mockup admin stránky MateMaxu. Nahoře semafor čerstvosti, pod ním příklady, odměny, kronika; na konci karta pro MS Dashboard a návrh fungování. */
+:root{
+  --bg:#EEF1F7; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#5B6682; --linka:#DFE4EE; --navy:#0D1B3E;
+  --ok:#1F9D63; --ok-bg:#E3F5EC; --pozor:#C27A00; --pozor-bg:#FFF2DA; --zle:#D0453A; --zle-bg:#FDE7E5; --info:#3E7BD6; --info-bg:#E5EEFC;
+  --l1:#9FD3B5; --l2:#5FA8E8; --l3:#2B4C9B; --amber:#F5A623;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A1226; --plocha:#121C36; --fg:#EEF2FB; --tl:#A3AECB; --linka:#26324F;
+  --ok:#4CC08A; --ok-bg:#12301F; --pozor:#FFB23E; --pozor-bg:#3A2A0C; --zle:#FF7A6E; --zle-bg:#3B1714; --info:#7AA8F2; --info-bg:#142645;
+  --l1:#3F8F66; --l2:#3F7FC4; --l3:#9DB8F5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1226; --plocha:#121C36; --fg:#EEF2FB; --tl:#A3AECB; --linka:#26324F;
+  --ok:#4CC08A; --ok-bg:#12301F; --pozor:#FFB23E; --pozor-bg:#3A2A0C; --zle:#FF7A6E; --zle-bg:#3B1714; --info:#7AA8F2; --info-bg:#142645;
+  --l1:#3F8F66; --l2:#3F7FC4; --l3:#9DB8F5; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.5}
+.obal{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px;display:grid;gap:28px}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.3rem;font-weight:800}
+h3{font-size:1rem;font-weight:800}
+p{margin:0}
+.stitek{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tl)}
+.mock{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#E9EEFA;border-radius:14px;padding:10px 14px;font-size:.9rem}
+.mock b{color:var(--amber)}
+.mock code{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.1);padding:2px 6px;border-radius:6px}
+.hlava{display:grid;gap:6px}
+.hlava p{color:var(--tl);max-width:72ch}
+.adm-nav{display:flex;flex-wrap:wrap;gap:6px}
+.adm-nav span{padding:6px 12px;border-radius:999px;border:1px solid var(--linka);background:var(--plocha);font-weight:700;font-size:.85rem;color:var(--tl)}
+.adm-nav span.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:16px;padding:18px;display:grid;gap:14px;min-width:0}
+.blok-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.blok-h p{color:var(--tl);font-size:.88rem}
+.semafor{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.sv{border:1px solid var(--linka);border-radius:12px;padding:12px 14px;display:grid;gap:4px;background:var(--plocha);position:relative}
+.sv::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 4px 4px 0;background:var(--c)}
+.sv .r1{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.sv .n{font-weight:800}
+.sv .cis{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.sv .kdy{font-size:.85rem;color:var(--tl)}
+.pill{font-size:.72rem;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;color:var(--c);background:var(--cb)}
+.ok{--c:var(--ok);--cb:var(--ok-bg)} .pozor{--c:var(--pozor);--cb:var(--pozor-bg)} .zle{--c:var(--zle);--cb:var(--zle-bg)} .info{--c:var(--info);--cb:var(--info-bg)}
+.dva{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.dva>*{min-width:0}
+@media (max-width:860px){.dva{grid-template-columns:1fr}}
+.posuv{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.88rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linka);vertical-align:middle;white-space:nowrap}
+th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tl);font-weight:800}
+td.r,th.r{text-align:right}
+tfoot td{font-weight:800;border-bottom:0}
+td:has(>.bar){width:150px;min-width:110px}
+.bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--linka)}
+.bar i{display:block;height:100%}
+.legenda{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--tl)}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.malo{color:var(--pozor);font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--linka);border-radius:999px;padding:4px 10px;font-size:.82rem}
+.chip b{font-variant-numeric:tabular-nums}
+.kronika{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.kronika li{display:grid;grid-template-columns:78px 120px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--linka);align-items:baseline}
+.kronika li:last-child{border-bottom:0}
+.kronika .d{font-weight:800;font-variant-numeric:tabular-nums}
+.kronika .t{font-size:.75rem;font-weight:800}
+@media (max-width:560px){.kronika li{grid-template-columns:70px 1fr}.kronika li .t{grid-column:2}.kronika li .co{grid-column:1 / -1}}
+.dash{background:#F7F5F0;color:#1B1B1B;border-radius:16px;padding:16px;display:grid;gap:10px;border:1px solid #E4DED2}
+.dash .dh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dash .dh b{font-size:1rem}
+.dash .dh small{color:#6B6458}
+.dash ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.dash li{display:flex;justify-content:space-between;gap:8px;font-size:.88rem;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:8px;flex:none}
+.ukol{background:#fff;border:1px dashed #C9BFA9;border-radius:10px;padding:10px 12px;font-size:.85rem}
+.kroky{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+.krok{border:1px solid var(--linka);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.krok .kn{font-weight:800}
+.krok p{color:var(--tl);font-size:.9rem}
+.rozh{margin:0;padding-left:20px;display:grid;gap:8px}
+.pata{color:var(--tl);font-size:.82rem;text-align:center}
+</style>
+
+<div class="obal">
+
+  <div class="mock"><span><b>Mockup</b> · nová sekce v administraci MateMaxu <code>/admin/obsah</code></span><span>Čísla jsou skutečná, spočítaná z kódu appky 18. 11. 2026</span></div>
+
+  <div class="hlava">
+    <div class="adm-nav"><span>Žáci</span><span>Návštěvnost</span><span>Testy</span><span class="on">Obsah a odměny</span></div>
+    <h1>Obsah a odměny</h1>
+    <p>Co v appce je, kolik toho je a kdy naposledy něco přibylo. Počítá se samo z kódu, který běží naostro. Semafor ukazuje, kde už dlouho nic nového nevyšlo.</p>
+  </div>
+
+  <section class="blok">
+    <div class="blok-h"><h2>Čerstvost</h2><p>Zelená do limitu, oranžová blízko limitu, červená po limitu. Limity si nastavíš.</p></div>
+    <div class="semafor">
+      <div class="sv ok"><div class="r1"><span class="n">Příklady 9. třída</span><span class="pill">před 8 dny</span></div><div class="cis">1 211</div><div class="kdy">Naposledy +10 úloh, 10. 11. · limit 21 dní</div></div>
+      <div class="sv ok"><div class="r1"><span class="n">Příklady 5. třída</span><span class="pill">před 7 dny</span></div><div class="cis">397</div><div class="kdy">Naposledy +18 úloh, 11. 11. · limit 21 dní</div></div>
+      <div class="sv info"><div class="r1"><span class="n">Odměny na Hexíka</span><span class="pill">čeká na nasazení</span></div><div class="cis">38 <small style="font-size:.9rem;color:var(--tl)">→ 145</small></div><div class="kdy">V appce od 16. 11., dalších 107 připraveno · limit 30 dní</div></div>
+      <div class="sv zle"><div class="r1"><span class="n">Odznaky na profilu</span><span class="pill">před 156 dny</span></div><div class="cis">37</div><div class="kdy">Naposledy změna 15. 6. · limit 90 dní</div></div>
+      <div class="sv ok"><div class="r1"><span class="n">Cvičné testy</span><span class="pill">včera</span></div><div class="cis">2</div><div class="kdy">Nový cvičný test 5. třídy, 17. 11. · limit 60 dní</div></div>
+      <div class="sv ok"><div class="r1"><span class="n">Diagnostika</span><span class="pill">před 17 dny</span></div><div class="cis">2</div><div class="kdy">5. třída od 1. 11., 9. třída upravena 2. 10. · limit 60 dní</div></div>
+      <div class="sv pozor"><div class="r1"><span class="n">Videolekce po chybě</span><span class="pill">před 25 dny</span></div><div class="cis">3</div><div class="kdy">Jen zlomky, od 24. 10. · limit 30 dní</div></div>
+      <div class="sv zle"><div class="r1"><span class="n">Denní a týdenní výzva</span><span class="pill">před 196 dny</span></div><div class="cis">30</div><div class="kdy">Úlohy denní výzvy, naposledy 6. 5. · limit 90 dní</div></div>
+      <div class="sv info"><div class="r1"><span class="n">Další sezóna</span><span class="pill">za 13 dní</span></div><div class="cis">Vánoce</div><div class="kdy">1. 12. – 6. 1. · 11 sezónních věcí na každou třídu</div></div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <div class="blok-h"><h2>Příklady podle témat</h2>
+      <div class="legenda"><span><i style="background:var(--l1)"></i>1. úroveň</span><span><i style="background:var(--l2)"></i>2. úroveň</span><span><i style="background:var(--l3)"></i>3. úroveň</span></div></div>
+    <div class="dva">
+      <div class="posuv">
+        <h3 style="margin-bottom:6px">9. třída · 1 211 úloh</h3>
+        <table>
+          <thead><tr><th>Téma</th><th class="r">Úloh</th><th>Úrovně 1 / 2 / 3</th><th class="r">Testové</th></tr></thead>
+          <tbody>
+            <tr><td>Slovní úlohy</td><td class="r">269</td><td><div class="bar" style="width:100%"><i style="width:27%;background:var(--l1)"></i><i style="width:47%;background:var(--l2)"></i><i style="width:26%;background:var(--l3)"></i></div></td><td class="r">29</td></tr>
+            <tr><td>Výrazy</td><td class="r">169</td><td><div class="bar" style="width:63%"><i style="width:27%;background:var(--l1)"></i><i style="width:34%;background:var(--l2)"></i><i style="width:39%;background:var(--l3)"></i></div></td><td class="r">10</td></tr>
+            <tr><td>Geometrie</td><td class="r">156</td><td><div class="bar" style="width:58%"><i style="width:30%;background:var(--l1)"></i><i style="width:50%;background:var(--l2)"></i><i style="width:20%;background:var(--l3)"></i></div></td><td class="r">14</td></tr>
+            <tr><td>Rovnice</td><td class="r">136</td><td><div class="bar" style="width:51%"><i style="width:32%;background:var(--l1)"></i><i style="width:40%;background:var(--l2)"></i><i style="width:28%;background:var(--l3)"></i></div></td><td class="r">20</td></tr>
+            <tr><td>Zlomky</td><td class="r">134</td><td><div class="bar" style="width:50%"><i style="width:29%;background:var(--l1)"></i><i style="width:40%;background:var(--l2)"></i><i style="width:31%;background:var(--l3)"></i></div></td><td class="r">10</td></tr>
+            <tr><td>Grafy a logika</td><td class="r">112</td><td><div class="bar" style="width:42%"><i style="width:32%;background:var(--l1)"></i><i style="width:35%;background:var(--l2)"></i><i style="width:33%;background:var(--l3)"></i></div></td><td class="r">13</td></tr>
+            <tr><td>Úhly</td><td class="r">108</td><td><div class="bar" style="width:40%"><i style="width:35%;background:var(--l1)"></i><i style="width:39%;background:var(--l2)"></i><i style="width:26%;background:var(--l3)"></i></div></td><td class="r">26</td></tr>
+            <tr><td>Souhrnné</td><td class="r">88</td><td><div class="bar" style="width:33%"><i style="width:24%;background:var(--l1)"></i><i style="width:52%;background:var(--l2)"></i><i style="width:24%;background:var(--l3)"></i></div></td><td class="r">28</td></tr>
+            <tr><td>Konstrukční úlohy</td><td class="r malo">39</td><td><div class="bar" style="width:15%"><i style="width:31%;background:var(--l1)"></i><i style="width:44%;background:var(--l2)"></i><i style="width:25%;background:var(--l3)"></i></div></td><td class="r">10</td></tr>
+          </tbody>
+          <tfoot><tr><td>Celkem</td><td class="r">1 211</td><td>355 / 515 / 341</td><td class="r">160</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="posuv">
+        <h3 style="margin-bottom:6px">5. třída · 397 úloh</h3>
+        <table>
+          <thead><tr><th>Okruh</th><th class="r">Úloh</th><th>Úrovně 1 / 2 / 3</th><th class="r">Testové</th></tr></thead>
+          <tbody>
+            <tr><td>Počítání s čísly</td><td class="r">65</td><td><div class="bar" style="width:100%"><i style="width:32%;background:var(--l1)"></i><i style="width:37%;background:var(--l2)"></i><i style="width:31%;background:var(--l3)"></i></div></td><td class="r">21</td></tr>
+            <tr><td>Jednotky, čas a peníze</td><td class="r">50</td><td><div class="bar" style="width:77%"><i style="width:32%;background:var(--l1)"></i><i style="width:42%;background:var(--l2)"></i><i style="width:26%;background:var(--l3)"></i></div></td><td class="r">16</td></tr>
+            <tr><td>Slovní úlohy a úvaha</td><td class="r">50</td><td><div class="bar" style="width:77%"><i style="width:24%;background:var(--l1)"></i><i style="width:40%;background:var(--l2)"></i><i style="width:36%;background:var(--l3)"></i></div></td><td class="r">20</td></tr>
+            <tr><td>Zlomky a části celku</td><td class="r">49</td><td><div class="bar" style="width:75%"><i style="width:27%;background:var(--l1)"></i><i style="width:41%;background:var(--l2)"></i><i style="width:32%;background:var(--l3)"></i></div></td><td class="r">18</td></tr>
+            <tr><td>Obvod a obsah</td><td class="r">48</td><td><div class="bar" style="width:74%"><i style="width:25%;background:var(--l1)"></i><i style="width:44%;background:var(--l2)"></i><i style="width:31%;background:var(--l3)"></i></div></td><td class="r">18</td></tr>
+            <tr><td>Tělesa a souměrnost</td><td class="r">48</td><td><div class="bar" style="width:74%"><i style="width:25%;background:var(--l1)"></i><i style="width:37%;background:var(--l2)"></i><i style="width:38%;background:var(--l3)"></i></div></td><td class="r">18</td></tr>
+            <tr><td>Grafy, tabulky a vzory</td><td class="r">45</td><td><div class="bar" style="width:69%"><i style="width:27%;background:var(--l1)"></i><i style="width:40%;background:var(--l2)"></i><i style="width:33%;background:var(--l3)"></i></div></td><td class="r">15</td></tr>
+            <tr><td>Rýsování</td><td class="r malo">42</td><td><div class="bar" style="width:65%"><i style="width:26%;background:var(--l1)"></i><i style="width:43%;background:var(--l2)"></i><i style="width:31%;background:var(--l3)"></i></div></td><td class="r">13</td></tr>
+          </tbody>
+          <tfoot><tr><td>Celkem</td><td class="r">397</td><td>109 / 160 / 128</td><td class="r">139</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="dva">
+      <div><div class="stitek" style="margin-bottom:6px">Druhy úloh · 9. třída</div><div class="chips"><span class="chip">Psaná odpověď <b>925</b></span><span class="chip">S obrázkem <b>137</b></span><span class="chip">Výběr A–E <b>101</b></span><span class="chip">Rýsování <b>39</b></span><span class="chip">Porovnání <b>9</b></span></div></div>
+      <div><div class="stitek" style="margin-bottom:6px">Druhy úloh · 5. třída</div><div class="chips"><span class="chip">Psaná odpověď <b>177</b></span><span class="chip">S obrázkem <b>109</b></span><span class="chip">Výběr A–E <b>44</b></span><span class="chip">Rýsování <b>42</b></span><span class="chip">Více odpovědí <b>25</b></span></div></div>
+    </div>
+    <p style="font-size:.85rem;color:var(--tl)">Oranžově jsou témata s nejméně úlohami. V hotové sekci půjde kliknout na téma a uvidíš jeho dovednosti, podtémata a ty s málo úlohami.</p>
+  </section>
+
+  <section class="blok">
+    <div class="blok-h"><h2>Odměny</h2><p>V appce 38 · po nasazení herního systému 145</p></div>
+    <div class="posuv">
+      <table>
+        <thead><tr><th>Druh</th><th class="r">5. třída</th><th class="r">9. třída</th><th>Naposledy přibylo</th></tr></thead>
+        <tbody>
+          <tr><td>Podoby Hexíka</td><td class="r">16</td><td class="r">17</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Doplňky na hlavu</td><td class="r">7</td><td class="r">7</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Doplňky na oči</td><td class="r">3</td><td class="r">3</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Doplňky na krk</td><td class="r">3</td><td class="r">3</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Tanečky a oslavy</td><td class="r">10</td><td class="r">11</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Efekty správné odpovědi</td><td class="r">10</td><td class="r">9</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Vzhled appky</td><td class="r">10</td><td class="r">10</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Pozadí profilu</td><td class="r">13</td><td class="r">13</td><td>ve větvi, čeká na nasazení</td></tr>
+          <tr><td>Odznaky na profilu</td><td class="r" colspan="2" style="text-align:center">37 společných</td><td><span class="pill zle">15. 6.</span></td></tr>
+        </tbody>
+        <tfoot><tr><td>Celkem odměn pro Hexíka</td><td class="r">72</td><td class="r">73</td><td></td></tr></tfoot>
+      </table>
+    </div>
+    <div class="chips"><span class="chip">Truhly <b>9</b></span><span class="chip">Trofeje <b>20</b></span><span class="chip">Sady <b>14</b></span><span class="chip">Sezóny <b>3</b></span><span class="chip">XP úrovně s věcí <b>14 z 30</b></span><span class="chip">Legendární věci <b>9 + 10</b></span><span class="chip">Sezónní věci <b>11 + 11</b></span></div>
+  </section>
+
+  <section class="blok">
+    <div class="blok-h"><h2>Kronika novinek</h2><p>Co a kdy vyšlo naostro. Zapisuje se samo při každé změně obsahu.</p></div>
+    <ul class="kronika">
+      <li><span class="d">čeká</span><span class="t" style="color:var(--info)">Odměny</span><span class="co">Herní systém: +107 odměn, 3D Hexík, úrovně, Hexík radí, 3D truhly</span></li>
+      <li><span class="d">17. 11.</span><span class="t" style="color:var(--ok)">Testy</span><span class="co">Cvičný test pro 5. třídu (14 úloh, 70 minut, 50 bodů) a online testy nanečisto i pro páťáky</span></li>
+      <li><span class="d">16. 11.</span><span class="t" style="color:var(--info)">Odměny</span><span class="co">Sbírka 1. etapa: 38 odměn, krystaly, šatník, truhly v pěti stupních</span></li>
+      <li><span class="d">11. 11.</span><span class="t">Příklady 5.</span><span class="co">+18 úloh: hvězdičky, řetězec operací, číselná osa</span></li>
+      <li><span class="d">10. 11.</span><span class="t">Příklady 9.</span><span class="co">+10 úloh, obě třídy rozdělené na dovednosti a testové příklady</span></li>
+      <li><span class="d">9. 11.</span><span class="t">Příklady 5.</span><span class="co">+14 úloh: pravda / nepravda a úlohy bez písemného dělení</span></li>
+      <li><span class="d">1. 11.</span><span class="t" style="color:var(--ok)">Testy</span><span class="co">Diagnostika pro 5. třídu, +15 úloh s podúlohami a přiřazováním</span></li>
+      <li><span class="d">26.–30. 10.</span><span class="t">Příklady 5.</span><span class="co">Celá 5. třída: 8 okruhů, přes 300 úloh</span></li>
+      <li><span class="d">24. 10.</span><span class="t" style="color:var(--pozor)">Videolekce</span><span class="co">Nabídka videolekce po chybě (3 lekce ke zlomkům)</span></li>
+      <li><span class="d">23. 10.</span><span class="t">Příklady 9.</span><span class="co">+10 úloh</span></li>
+    </ul>
+  </section>
+
+  <section class="blok">
+    <div class="blok-h"><h2>V MS Dashboardu jen krátká karta</h2><p>Kokpit si stáhne shrnutí a ozve se, když něco zčervená.</p></div>
+    <div class="dva">
+      <div class="dash">
+        <div class="dh"><b>MateMax · čerstvost obsahu</b><small>dnes 6:00</small></div>
+        <ul>
+          <li><span><i class="dot" style="background:#1F9D63"></i>Příklady 9. / 5. třída</span><span>1 211 / 397 · před 7 dny</span></li>
+          <li><span><i class="dot" style="background:#3E7BD6"></i>Odměny na Hexíka</span><span>38, čeká 107</span></li>
+          <li><span><i class="dot" style="background:#C27A00"></i>Videolekce</span><span>3 · před 25 dny</span></li>
+          <li><span><i class="dot" style="background:#D0453A"></i>Odznaky na profilu</span><span>37 · před 156 dny</span></li>
+          <li><span><i class="dot" style="background:#D0453A"></i>Denní a týdenní výzva</span><span>30 · před 196 dny</span></li>
+        </ul>
+        <div class="ukol"><b>Navržený úkol:</b> Odznaky na profilu jsou 156 dní beze změny. Navrhnout 5 nových odznaků navázaných na herní systém? · odhad 3 h</div>
+      </div>
+      <div style="display:grid;gap:10px;align-content:start">
+        <p>Karta ukazuje jen semafor a odkaz do administrace. Když něco přejde přes limit, kokpit založí návrh úkolu, ty ho jen schválíš nebo odmítneš.</p>
+        <p style="color:var(--tl)">Přes kokpit jdou jen počty a data, žádné údaje o žácích. Stejně jako u počtu registrací, které kokpit tahá od října.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>Jak bych to postavil</h2>
+    <div class="kroky">
+      <div class="krok"><span class="kn">Domov dat: administrace MateMaxu</span><p>Příklady, odměny i testy jsou v kódu appky. Sekce Obsah a odměny je počítá přímo odtud, takže čísla nikdy nezastarají a nikdo je nemusí ručně přepisovat.</p></div>
+      <div class="krok"><span class="kn">Kronika novinek</span><p>Soubor s datem a popisem každé novinky. Doplním ho zpětně z historie a pak při každé práci na obsahu. Hlídá to test: přibude odměna nebo příklad bez zápisu v kronice a test spadne.</p></div>
+      <div class="krok"><span class="kn">Krátká karta v MS Dashboardu</span><p>Kokpit si jednou denně stáhne shrnutí z MateMaxu a ukáže semafor. Přes limit navrhne úkol. Tohle je druhý krok, potřebuje úpravu i v kokpitu.</p></div>
+      <div class="krok"><span class="kn">Shrnutí do souboru</span><p>Na konci každé práce vznikne aktuální přehled jako soubor v projektu. Pošlu ti ho, nebo ho dám k hlášení v kokpitu.</p></div>
+    </div>
+    <div>
+      <div class="stitek" style="margin-bottom:8px">Potřebuju od tebe</div>
+      <ol class="rozh">
+        <li>Souhlasíš s tím, že hlavní přehled bude v administraci MateMaxu a v kokpitu jen krátká karta?</li>
+        <li>Sedí limity? Příklady 21 dní, odměny 30, videolekce 30, testy a diagnostika 60, odznaky a výzvy 90.</li>
+        <li>Má kokpit při překročení limitu sám navrhovat úkol, nebo stačí červená tečka?</li>
+      </ol>
+    </div>
+    <p style="color:var(--tl);font-size:.88rem">Odhad: sekce v administraci s kronikou a hlídacím testem asi 1 den, karta v kokpitu asi půl dne.</p>
+  </section>
+
+  <p class="pata">Mockup · data z kódu a historie změn appky ke 18. 11. 2026</p>
+</div>

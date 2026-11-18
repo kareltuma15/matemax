@@ -271,6 +271,13 @@ export default function AdminPage() {
             >
               📝 Testy
             </Link>
+            <Link
+              href="/admin/obsah"
+              className="rounded-xl px-3 py-2 text-xs font-bold"
+              style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
+            >
+              🗂️ Obsah a odměny
+            </Link>
             <button
               onClick={handleRefresh}
               className="rounded-xl px-3 py-2 text-xs font-bold"
