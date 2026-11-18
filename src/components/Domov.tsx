@@ -26,6 +26,7 @@ import { nactiOdkaz, nactiPlan, jeSplneny, oznacSplneny, postupPlanu, type PlanP
 import { odmenaZaDoporuceni, zkontrolujUroven } from "@/lib/sbirka-trenink";
 import BossKarta from "@/components/hexik/BossKarta";
 import HexikUvod from "@/components/hexik/HexikUvod";
+import HexikRadi from "@/components/hexik/HexikRadi";
 import DenniMise from "@/components/hexik/DenniMise";
 import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
@@ -451,6 +452,7 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
           </div>
 
           <HexikUvod trida={trida} />
+          <HexikRadi trida={trida} trenink={trenink} />
           <DenniMise streak={streak} odkaz />
           <BossKarta trida={trida} jenCeka />
 
