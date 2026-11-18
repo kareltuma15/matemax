@@ -47,6 +47,8 @@ interface Props {
   odmena?: { krystaly: number; denni: boolean; zlata: boolean; doporuceni?: boolean; mise?: number } | null;
   /** Boss týdne: výsledek pokusu, "uz" = tento týden už bojoval (bez odměny). */
   boss?: { vyhra: boolean; krystaly: number } | "uz" | null;
+  /** Combo: nejdelší v tomto tréninku a osobní rekord. */
+  combo?: { max: number; rekord: number } | null;
 }
 
 function useCountUp(target: number, duration = 900): number {
@@ -173,7 +175,7 @@ async function buildShareBlob(pct: number, correct: number, total: number, strea
   });
 }
 
-export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby, odmena = null, boss }: Props) {
+export default function SessionSummary({ correct, total, skipped = 0, xpEarned, streak, topics, rezim, wrongAnswers = [], topicShift = null, nextTopic = null, onRestart, onRestartChyby, odmena = null, boss, combo = null }: Props) {
   // Skipped examples count against score — 3 správně ze 7 celkových = 43 %, ne 100 %
   const effectiveTotal = total + skipped;
   const pct = effectiveTotal > 0 ? Math.round((correct / effectiveTotal) * 100) : 0;
@@ -289,6 +291,17 @@ export default function SessionSummary({ correct, total, skipped = 0, xpEarned, 
               </p>
             </div>
             <a href="/sbirka?tab=trofeje" className="mm-tlacitko shrink-0 rounded-xl px-3 py-2 text-sm font-extrabold" style={{ background: "#F5A623", color: "#0D1B3E" }}>Sbírka</a>
+          </div>
+        )}
+
+        {/* Combo: nejdelší série správných odpovědí a rekord */}
+        {combo && combo.max >= 3 && (
+          <div className="rounded-xl p-3.5 border flex items-center gap-3" style={{ background: "#FFF4EA", borderColor: "#F6D9BE" }} data-testid="souhrn-combo">
+            <span className="w-11 h-11 rounded-xl grid place-items-center font-black text-white shrink-0 text-lg" style={{ background: "linear-gradient(135deg,#FF9A3D,#FF5E3A)" }}>{combo.max}</span>
+            <span className="min-w-0">
+              <b className="block text-sm" style={{ color: "#0D1B3E" }}>{combo.max >= combo.rekord ? `Nový rekord: ${combo.max} správně za sebou! 🔥` : `Nejdelší combo dnes: ${combo.max}`}</b>
+              <span className="block text-xs mt-0.5" style={{ color: "#5F6982" }}>{combo.max >= combo.rekord ? "Překonáš ho příště?" : `Tvůj rekord je ${combo.rekord}. Zkusíš ho překonat?`}</span>
+            </span>
           </div>
         )}
 

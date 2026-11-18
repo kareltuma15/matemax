@@ -408,6 +408,8 @@ export interface SbirkaStav {
   sady: Record<string, string>;
   /** Nejvyšší XP úroveň, za kterou už žák dostal krystaly a truhly (věci za úroveň se doplňují podle třídy). */
   uroven: number;
+  /** Nejdelší combo (správně za sebou v jednom tréninku). */
+  comboRekord: number;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
 }
@@ -421,7 +423,7 @@ export function vychoziStav(): SbirkaStav {
     denniOdemcena: null, denniOtevrena: null, dnyTreninku: [], zlataOtevrena: null,
     bezVzacne: 0, bezLegendy: 0, otevreno: 0, maxOdhad: {}, dny: {},
     naroky: {}, otevrenoNaroku: {}, mise: { d: "", hotove: [], serie: 0, maxSerie: 0, tezke: 0 },
-    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, sady: {}, uroven: 1, t: 0,
+    boss: { pokusy: [], porazeno: [] }, trofeje: {}, testy: {}, sady: {}, uroven: 1, comboRekord: 0, t: 0,
   };
 }
 
@@ -695,6 +697,7 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
       return [k, !x ? y! : !y ? x : x < y ? x : y];
     })),
     uroven: Math.max(a.uroven ?? 1, b.uroven ?? 1),
+    comboRekord: Math.max(a.comboRekord ?? 0, b.comboRekord ?? 0),
     t: Math.max(a.t, b.t),
   };
 }
@@ -831,6 +834,8 @@ export const TROFEJE: Trofej[] = [
   { id: "uroven_20", nazev: "Vytrvalec", popis: "Dosáhni 20. XP úrovně.", ikona: "💪", splneno: (s) => (s.uroven ?? 1) >= 20 },
   { id: "uroven_30", nazev: "Legenda MateMaxu", popis: "Dosáhni 30. XP úrovně.", ikona: "🏆", splneno: (s) => (s.uroven ?? 1) >= 30 },
   { id: "sezonni", nazev: "Sezónní sběratel", popis: "Získej věc ze sezóny.", ikona: "🎄", splneno: (s) => s.mam.some((id) => !!najdiOdmenu(id)?.sezona) },
+  { id: "combo_10", nazev: "Ohnivé combo", popis: "Odpověz správně 10× za sebou.", ikona: "🔥", splneno: (s) => (s.comboRekord ?? 0) >= 10 },
+  { id: "combo_25", nazev: "Nezastavitelný", popis: "Odpověz správně 25× za sebou.", ikona: "⚡", splneno: (s) => (s.comboRekord ?? 0) >= 25 },
 ];
 
 /** Doplní nově splněné trofeje. Volá se při každé změně stavu (upravSbirku). */

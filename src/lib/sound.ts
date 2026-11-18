@@ -154,3 +154,32 @@ export function playBossWin() {
   if (!isSoundEnabled()) return;
   if (!tryPlayMp3("/sounds/boss-win.mp3")) synthLevelUp(); // same fanfare as fallback
 }
+
+// ─── Combo v tréninku ─────────────────────────────────────────────────────────
+
+const PENTATONIKA = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1567.98, 1760];
+
+/** Krátký tón, který s combem stoupá (od 3 v řadě), a jemná vibrace. */
+export function playCombo(n: number) {
+  if (!isSoundEnabled()) return;
+  vibruj(14);
+  if (n < 3) return;
+  const ctx = getCtx();
+  if (!ctx) return;
+  const f = PENTATONIKA[Math.min(n - 3, PENTATONIKA.length - 1)];
+  synthNote(ctx, f, 0.32, 0.18, 0.09, "triangle");
+}
+
+/** Fanfára na milníku comba (10, 15, 20…) a silnější vibrace. */
+export function playComboMilnik() {
+  if (!isSoundEnabled()) return;
+  vibruj([30, 40, 70]);
+  const ctx = getCtx();
+  if (!ctx) return;
+  [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => synthNote(ctx, f, 0.3 + i * 0.07, 0.35, 0.13, "triangle"));
+}
+
+/** Vibrace (jen Android; iPhone ji webovým stránkám nedovolí). Řídí se vypínačem zvuku. */
+function vibruj(vzor: number | number[]) {
+  try { if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(vzor); } catch { /* bez vibrace */ }
+}

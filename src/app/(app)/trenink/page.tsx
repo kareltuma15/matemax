@@ -58,9 +58,10 @@ import { usePremium } from "@/lib/premium";
 import { TEMA_LABELS, podtemaLabel, DBExample, Trida } from "@/types";
 import { pickMission, snapshotReadiness, MASTERED } from "@/lib/mise";
 import HexikParta from "@/components/hexik/HexikParta";
-import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad, zkontrolujUroven, MISE_EVENT } from "@/lib/sbirka-trenink";
+import { odmenaZaOdpoved, odmenaZaKonecTreninku, odmenaZaOdhad, zkontrolujUroven, odmenaZaCombo, MISE_EVENT } from "@/lib/sbirka-trenink";
+import { VYCHOZI_COMBO, type StavComba } from "@/lib/combo";
 import { UROVEN_EVENT, type OdmenaUrovne } from "@/lib/urovne";
-import { nactiSbirku, stavBosse, ZA_BOSSE, XP_ZA_BOSSE } from "@/lib/sbirka";
+import { nactiSbirku, stavBosse, ZA_BOSSE, XP_ZA_BOSSE, MIN_MS_VYBER } from "@/lib/sbirka";
 import { odmenaZaBosse } from "@/lib/sbirka-test";
 import { bossTydne } from "@/lib/boss";
 import { ODPOVED_EVENT } from "@/lib/sound";
@@ -423,12 +424,17 @@ function TreningPageInner() {
   const vyhodnocenoMsRef                = useRef<number | null>(null);
   const krystalySezeniRef               = useRef(0);
   const odhadZakladRef                  = useRef(false);
+  /** Combo: správně za sebou v tomto tréninku (lib/combo.ts). */
+  const comboRef                        = useRef<StavComba>(VYCHOZI_COMBO);
   const [odmenaKonec, setOdmenaKonec]   = useState<{ krystaly: number; denni: boolean; zlata: boolean; doporuceni: boolean; mise: number } | null>(null);
 
   useEffect(() => {
     kartaStartRef.current = Date.now();
     vyhodnocenoMsRef.current = null;
   }, [currentIdx, sessionIds]);
+
+  // Nový trénink = combo od nuly
+  useEffect(() => { comboRef.current = VYCHOZI_COMBO; }, [sessionIds]);
 
   useEffect(() => {
     const naOdpoved = () => {
@@ -674,13 +680,19 @@ function TreningPageInner() {
       }
 
       // Sbírka: krystaly za odpověď (podle úrovně žáka v tématu, ne za tip naslepo)
+      const vyber = !!(example?.moznosti?.length || example?.porovnani);
       krystalySezeniRef.current += odmenaZaOdpoved({
         spravne: wasCorrect,
         obtiznost: example?.obtiznost ?? 1,
         uroven: example ? unlockedMaxLevel(example.tema, cards, exById(), diagScores) : 1,
         ms: vyhodnocenoMsRef.current,
-        vyber: !!(example?.moznosti?.length || example?.porovnani),
+        vyber,
       });
+      // Combo: správně za sebou (rychlý tip u výběru combo nezvedne), krystaly za milník
+      const rychlyTip = vyber && vyhodnocenoMsRef.current !== null && vyhodnocenoMsRef.current < MIN_MS_VYBER;
+      const combo = odmenaZaCombo(comboRef.current, wasCorrect, rychlyTip);
+      comboRef.current = combo.stav;
+      krystalySezeniRef.current += combo.krystaly;
 
       // XP
       const p = loadProgress();
@@ -1133,6 +1145,7 @@ function TreningPageInner() {
           nextTopic={pickMission(isPremium)}
           odmena={odmenaKonec}
           boss={urlBoss ? bossVysledek : undefined}
+          combo={{ max: comboRef.current.max, rekord: nactiSbirku().comboRekord ?? 0 }}
           onRestart={() => restart()}
           onRestartChyby={
             cards.some((c) => c.repetitions > 0 && c.lastQuality <= 2)

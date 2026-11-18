@@ -13,6 +13,7 @@ import {
   misePriOdpovedi, splnMise, ziskejDoporuceni, novaZvladnutaTemata,
   type OdmenaZaTrenink, type MiseId,
 } from "./sbirka";
+import { krokComba, COMBO_EVENT, type StavComba, type DetailComba } from "./combo";
 
 export const KRYSTALY_EVENT = "matemax-krystaly";
 /** Splněná denní mise (detail: { ids }) — Hexík u příkladu ji ohlásí. */
@@ -38,6 +39,27 @@ export function odmenaZaOdpoved(a: { spravne: boolean; obtiznost: number; uroven
   ohlasKrystaly(n);
   ohlasMise(mise);
   return n;
+}
+
+/**
+ * Combo v tréninku: posune combo, připíše krystaly za milník (do denního stropu) a uloží rekord.
+ * Pošle událost pro Hexíka u příkladu. Vrací nový stav comba a kolik krystalů se připsalo.
+ */
+export function odmenaZaCombo(c: StavComba, spravne: boolean, rychlyTip: boolean): { stav: StavComba; krystaly: number } {
+  const { s: stav, udalost } = krokComba(c, spravne, rychlyTip);
+  const den = localDateStr();
+  const { krystaly, rekord } = upravSbirku((s) => {
+    let x = s, n = 0;
+    if (udalost.druh === "vic" && udalost.bonus > 0) { const r = pripis(x, udalost.bonus, den); x = r.s; n = r.vysledek; }
+    if (stav.max > (x.comboRekord ?? 0)) x = { ...x, comboRekord: stav.max };
+    return { s: x, vysledek: { krystaly: n, rekord: x.comboRekord ?? 0 } };
+  });
+  ohlasKrystaly(krystaly);
+  if (typeof window !== "undefined") {
+    const detail: DetailComba = { stav, udalost, krystaly, rekord };
+    window.dispatchEvent(new CustomEvent(COMBO_EVENT, { detail }));
+  }
+  return { stav, krystaly };
 }
 
 /** Splněné doporučení (zvládnuté téma, plán po testu) přidá Truhlu doporučení. Vrací true, když je nová. */
