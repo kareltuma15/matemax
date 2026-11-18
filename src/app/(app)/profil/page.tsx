@@ -28,7 +28,7 @@ import ShareButton from "@/components/ShareButton";
 import Hexik from "@/components/hexik/Hexik";
 import PozadiZive from "@/components/hexik/PozadiZive";
 import { useSbirka } from "@/lib/use-sbirka";
-import { nasazena, etapaHexika } from "@/lib/sbirka";
+import { nasazena, etapaHexika, slotyHexika, krystaly, ETAPY_HEXIKA } from "@/lib/sbirka";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -660,6 +660,14 @@ export default function ProfilPage() {
                 >
                   🎯 {getDaysUntilCermat()} dní do přijímaček
                 </span>
+                <Link
+                  href="/sbirka"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black tabular-nums"
+                  style={{ background: "rgba(127,227,245,0.18)", border: "1px solid rgba(127,227,245,0.45)", color: "#CFF4FC" }}
+                  data-testid="profil-krystaly"
+                >
+                  <i className="hx-krystal" aria-hidden="true" /> {krystaly(sbirka)} krystalů
+                </Link>
               </div>
 
               {/* XP row */}
@@ -677,8 +685,9 @@ export default function ProfilPage() {
                 />
               </div>
             </div>
-            <Link href="/sbirka" className="shrink-0 hidden min-[380px]:block" title="Tvůj Hexík" data-testid="profil-hexik">
-              <Hexik podoba={nasazena(sbirka, trida, "podoba").klic} etapa={etapaHexika(sbirka.maxOdhad[trida])} staticky className="w-16 sm:w-20" />
+            <Link href="/sbirka?tab=satnik" className="shrink-0 flex flex-col items-center gap-1" title="Tvůj Hexík: šatník" data-testid="profil-hexik">
+              <Hexik podoba={nasazena(sbirka, trida, "podoba").klic} etapa={etapaHexika(sbirka.maxOdhad[trida])} d3 otacet doplnky={slotyHexika(sbirka, trida)} className="w-20 h-20 sm:w-28 sm:h-28" />
+              <span className="text-[10px] font-black uppercase tracking-wider text-white/70">{ETAPY_HEXIKA[Math.max(0, etapaHexika(sbirka.maxOdhad[trida]) - 1)]?.nazev ?? "Hexík"}</span>
             </Link>
           </div>
 

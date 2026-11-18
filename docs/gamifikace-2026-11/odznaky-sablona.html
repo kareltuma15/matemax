@@ -1,0 +1,305 @@
+<title>Nové odznaky MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: vlevo telefon se záložkou Odznaky na profilu (medailová stěna), vpravo pravidla. Pod tím seznam všech odznaků a co se stane se starými. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#56617D; --linka:#DCE2EE; --navy:#0D1B3E; --amber:#F5A623;
+  --bronz:#C98A4B; --stribro:#AEB8C8; --zlato:#F2C14E; --diamant:#7FE3F5;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 56px;display:grid;gap:28px}
+.mock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#E9EEFA;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700;justify-self:start;max-width:100%}
+.mock b{color:var(--amber)}
+.hlava{display:grid;gap:10px}
+.hlava h1{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;letter-spacing:-.02em}
+.hlava p{color:var(--tl);max-width:72ch}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:18px;padding:18px 20px;display:grid;gap:12px;min-width:0}
+.blok h2{font-size:1.25rem;font-weight:900}
+.blok ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.tl{color:var(--tl);font-size:.9rem}
+.dva{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.dva{grid-template-columns:1fr}}
+.telefon{width:100%;max-width:390px;margin:0 auto;border-radius:38px;background:#0B1022;padding:10px;box-shadow:0 30px 60px -24px rgba(13,27,62,.55)}
+.displej{border-radius:30px;overflow:hidden;background:#F1F3FA;color:#0D1B3E;min-height:720px;position:relative}
+.pr-hlava{background:linear-gradient(135deg,#0D1B3E,#1E3A6E);color:#fff;padding:18px 16px 14px;display:grid;gap:10px}
+.pr-hlava .r{display:flex;align-items:center;gap:10px}
+.pr-hlava .av{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:28px}
+.pr-hlava b{font-size:1.05rem}
+.pr-hlava small{display:block;color:#B9C4E4;font-weight:700}
+.pr-tab{display:flex;gap:6px}
+.pr-tab span{font-size:.82rem;font-weight:800;border-radius:999px;padding:5px 11px;background:rgba(255,255,255,.1);color:#CFD8F2}
+.pr-tab span.on{background:#fff;color:#0D1B3E}
+.stena{padding:12px 12px 18px;display:grid;gap:12px;max-height:560px;overflow-y:auto}
+.nejbl{background:#fff;border-radius:16px;padding:10px 12px;display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;border:1px solid #E4E8F2}
+.nejbl b{display:block;font-size:.92rem}
+.nejbl span{display:block;font-size:.8rem;color:#56617D}
+.bar{height:7px;border-radius:5px;background:#E4E8F2;overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#F5A623,#F2C14E)}
+.kat h3{font-size:.8rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#56617D;margin:4px 2px 8px;display:flex;justify-content:space-between}
+.kat h3 span{letter-spacing:0;text-transform:none;font-weight:800}
+.medaile{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.med{background:#fff;border:1px solid #E4E8F2;border-radius:14px;padding:8px 6px 9px;display:grid;justify-items:center;gap:3px;cursor:pointer;font:inherit;color:inherit;text-align:center}
+.med:focus-visible{outline:3px solid #7FD8EE;outline-offset:2px}
+.med img{width:86px;height:86px;display:block;object-fit:contain;margin:-6px 0 -4px}
+.nejbl img{width:64px;height:64px;display:block;object-fit:contain}
+.med .ph{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,#E4E8F2,transparent 70%)}
+.med .n{font-size:.72rem;font-weight:800;line-height:1.15}
+.med .st{font-size:.62rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+.med.zamceno img{opacity:.8}
+.med .mini{width:100%;height:4px;border-radius:3px;background:#E4E8F2;overflow:hidden}
+.med .mini i{display:block;height:100%;background:#F5A623}
+.detail{position:absolute;inset:0;background:rgba(8,14,34,.7);display:grid;place-items:center;padding:16px;z-index:5}
+.detail>div{background:linear-gradient(180deg,#1C2F66,#0F1D45);color:#fff;border-radius:24px;padding:20px 18px;width:100%;display:grid;gap:8px;text-align:center;animation:vys .45s cubic-bezier(.3,1.5,.5,1)}
+@keyframes vys{from{transform:scale(.7);opacity:0}}
+.detail .velka{justify-self:center;width:210px;height:210px;position:relative}
+.detail .velka canvas{width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
+@keyframes otoc{0%{transform:rotateY(-180deg) scale(.6)}60%{transform:rotateY(20deg) scale(1.08)}100%{transform:none}}
+.stupne{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px}
+.stupne span{border-radius:10px;padding:6px 4px;font-size:.7rem;font-weight:800;background:rgba(255,255,255,.08)}
+.stupne span.ok{background:rgba(242,193,78,.2);color:#FFE08A}
+.stupne b{display:block;font-size:.9rem}
+.btn{font:inherit;font-weight:900;border-radius:14px;padding:10px 16px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;cursor:pointer}
+.btn.hl{background:#F5A623;color:#0D1B3E;border-color:#F5A623}
+.ovl{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.prep{display:inline-flex;background:var(--plocha);border:1px solid var(--linka);border-radius:999px;padding:4px;gap:4px}
+.prep button{font:inherit;font-weight:800;border:0;background:transparent;color:var(--tl);padding:7px 14px;border-radius:999px;cursor:pointer}
+.prep button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.tier{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.85rem}
+.tier i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.tabulka{width:100%;border-collapse:collapse;font-size:.9rem}
+.tabulka th,.tabulka td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--linka);vertical-align:top}
+.tabulka th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tl)}
+.posuv{overflow-x:auto}
+.pill{display:inline-block;font-size:.72rem;font-weight:900;border-radius:999px;padding:2px 8px}
+.pill.pryc{background:#FDE7E5;color:#B4232F}.pill.nove{background:#E3F5EC;color:#14774A}.pill.prevod{background:#E5EEFC;color:#2B4CC0}
+.rozh{margin:0;padding-left:20px;display:grid;gap:8px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<div class="obal">
+  <div class="mock"><b>Mockup v2</b> · nové odznaky na profilu jako 3D medaile</div>
+  <div class="hlava">
+    <h1>Nové odznaky: 3D medaile za učení</h1>
+    <p>Verze 2: medaile jsou skutečné 3D vyznamenání stejnou technikou jako Hexík. Kov podle stupně, smalt, vyražený znak a stuha, od stříbra vavřínový věnec, zlato s hvězdou, diamant s krystalem a jiskrami. V detailu se medaile otáčí a jde chytit. Medaile se zlepšují ve čtyřech stupních a odměňují jen učení. Trofeje ve Sbírce zůstávají za herní systém, odznaky na profilu jsou za matiku.</p>
+  </div>
+
+  <section class="blok">
+    <h2>Co je dnes špatně</h2>
+    <ul>
+      <li>Odznaky za témata počítají se <b>starými tématy</b> Mocniny a Procenta a se „všemi 6 tématy“. Dnes je 9 témat a <b>páťáci nemají žádný</b> odznak za okruhy.</li>
+      <li>Odznaky za úrovně patří ke <b>starému systému</b> Žák, Pokročilý, Expert, Mistr. Ten nahradilo 30 nových úrovní.</li>
+      <li>Odznak <b>za Premium</b> a odznak <b>za rychlost</b> (příklad do 15 s) odporují zásadám: nic za peníze, nic za rychlé klikání.</li>
+      <li>Je to 37 malých emoji bez postupu. Žák nevidí, jak blízko je dalšímu.</li>
+    </ul>
+  </section>
+
+  <div class="dva">
+    <div>
+      <div class="telefon"><div class="displej" id="disp">
+        <div class="pr-hlava">
+          <div class="r"><span class="av">🧑‍🎓</span><div><b>Terka</b><small id="pr-trida">9. třída · úroveň 8</small></div></div>
+          <div class="pr-tab"><span>Přehled</span><span>Historie</span><span class="on">Odznaky</span></div>
+        </div>
+        <div class="stena" id="stena"></div>
+        <div class="detail" id="detail" hidden><div>
+          <div class="velka" id="d-velka"></div>
+          <span class="tier" id="d-tier" style="justify-self:center"></span>
+          <b style="font-size:1.25rem" id="d-n"></b>
+          <span style="color:#C4CEEA;font-size:.9rem" id="d-p"></span>
+          <div class="stupne" id="d-stupne"></div>
+          <span style="color:#FFD27E;font-size:.85rem;font-weight:800" id="d-odm"></span>
+          <button type="button" class="btn hl" id="d-ok">Paráda!</button>
+        </div></div>
+      </div></div>
+      <div class="ovl">
+        <div class="prep" role="group" aria-label="Třída"><button type="button" aria-pressed="true" data-t="9">9. třída</button><button type="button" aria-pressed="false" data-t="5">5. třída</button></div>
+        <button type="button" class="btn" style="color:var(--fg);border-color:var(--linka);background:var(--plocha)" id="oslava">Ukázat oslavu nového stupně</button>
+      </div>
+      <p class="tl" style="text-align:center;margin-top:8px">Klikni na medaili: uvidíš stupně a kolik chybí.</p>
+    </div>
+
+    <div style="display:grid;gap:16px;min-width:0">
+      <section class="blok">
+        <h2>Jak to funguje</h2>
+        <ul>
+          <li>Medaile jsou <b>3D</b>: na stěně jako obrázky (šetří baterii), v detailu živé, otáčí se a jde je chytit. Při novém stupni se dvakrát roztočí.</li>
+          <li>Každá medaile má <b>4 stupně</b>: <span class="tier"><i style="background:var(--bronz)"></i>bronz</span>, <span class="tier"><i style="background:var(--stribro)"></i>stříbro</span>, <span class="tier"><i style="background:var(--zlato)"></i>zlato</span>, <span class="tier"><i style="background:var(--diamant)"></i>diamant</span>. Medaile se postupně vylepšuje a pod ní je vidět, kolik chybí do dalšího stupně.</li>
+          <li><b>Mistr témat</b>: každé téma (9 u deváťáků, 8 okruhů u páťáků) má svou medaili. Bronz = zvládnutá 1. úroveň, stříbro = 2., zlato = 3. úroveň (jako v testu). Diamant = zlato a 50 správně v testových příkladech.</li>
+          <li>Za každý nový stupeň krystaly: bronz 20, stříbro 40, zlato 80, diamant 150. Oslava s otočením medaile, jako u truhly.</li>
+          <li>Nahoře „Nejbližší medaile“: ta, ke které má žák nejblíž. Hexík radí ji občas připomene.</li>
+          <li>Páťák vidí jen odznaky pro 5. třídu, deváťák pro 9.</li>
+        </ul>
+      </section>
+      <section class="blok">
+        <h2>Odznaky vs. trofeje</h2>
+        <p class="tl">Trofeje ve Sbírce zůstávají za herní systém (truhly, boss, combo, kalendář). Odznaky na profilu jsou čistě za učení, takže rodič na profilu vidí, co dítě zvládlo. Nic se neopakuje dvakrát.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="blok">
+    <h2>Všechny nové odznaky</h2>
+    <div class="posuv"><table class="tabulka" id="seznam"><thead><tr><th>Odznak</th><th>Za co</th><th>Bronz / stříbro / zlato / diamant</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section class="blok">
+    <h2>Co se stane se starými odznaky</h2>
+    <p class="tl">Nikdo nic neztratí. Co žák už má, převede se na odpovídající stupeň nové medaile. Odznaky bez náhrady zůstanou v rozbalovací sekci „Původní odznaky“.</p>
+    <div class="posuv"><table class="tabulka">
+      <thead><tr><th>Dnes</th><th>Nově</th></tr></thead>
+      <tbody>
+        <tr><td>Série 3, 7, 14, 30, 100 dní</td><td><span class="pill prevod">převod</span> Plamínek: bronz 3, stříbro 7, zlato 30, diamant 100 (14 dní je mezikrok)</td></tr>
+        <tr><td>10, 50, 100, 250, 500 příkladů</td><td><span class="pill prevod">převod</span> Počtář: bronz 50, stříbro 250, zlato 500, diamant 1 000</td></tr>
+        <tr><td>Mistr Zlomků, Rovnic, Geometrie, Slovních úloh</td><td><span class="pill prevod">převod</span> Mistr tématu, stupeň stříbro</td></tr>
+        <tr><td>Mistr Mocnin, Procent, všech 6 témat</td><td><span class="pill pryc">pryč</span> staré témata, zůstanou v Původních</td></tr>
+        <tr><td>Úrovně Žák, Pokročilý, Expert, Mistr</td><td><span class="pill pryc">pryč</span> nahradilo 30 úrovní a trofeje Desítka, Vytrvalec, Legenda</td></tr>
+        <tr><td>Premium, Rychlík (do 15 s)</td><td><span class="pill pryc">pryč</span> odporuje zásadám: nic za peníze, nic za rychlé klikání</td></tr>
+        <tr><td>Perfektní sezení, 10 bez chyby, perfektní diagnostika</td><td><span class="pill prevod">převod</span> Čistá práce (sezení bez chyby) a Diagnostika</td></tr>
+        <tr><td>Ranní ptáče, Víkendový bojovník, Návrat po pauze</td><td><span class="pill nove">zůstává</span> jako bonusové odznaky bez stupňů</td></tr>
+        <tr><td>Noční sova (po 21:00)</td><td><span class="pill pryc">pryč</span> neodměňujeme učení pozdě večer</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blok">
+    <h2>Potřebuju od tebe</h2>
+    <ol class="rozh">
+      <li>Líbí se ti medailová stěna se čtyřmi stupni a rozdělení odznaky za učení / trofeje za hru?</li>
+      <li>Sedí seznam odznaků a stupně? Chceš něco přidat nebo ubrat?</li>
+      <li>Souhlasíš s vyřazením odznaků za Premium, rychlost a Noční sovu?</li>
+    </ol>
+    <p class="tl">Odhad stavby: 1,5 až 2 dny včetně převodu starých odznaků a oslavy. Změna dlaždic témat na úvodní stránce je hotová v náhledu.</p>
+  </section>
+</div>
+
+<script>%%MED3D%%</script>
+<script>
+(function(){
+  "use strict";
+  var TIER = [["bronz","#C98A4B","#F3C99B","#8A5A2B"],["stříbro","#AEB8C8","#F4F7FB","#6F7B8F"],["zlato","#F2C14E","#FFF1B8","#B07D00"],["diamant","#7FE3F5","#E6FBFF","#2BA9C7"]];
+  var STUHA = { "Mistr témat": "#5B55D6", "Mistr okruhů": "#5B55D6", "Vytrvalost": "#E0653A", "Pilnost": "#1F9D63", "Testy a pokrok": "#2F7FD6", "Typy úloh": "#C27A00", "Bonusové": "#8E44AD" };
+  var OBR = {};
+  function klic(z, t, s){ return z + "|" + t + "|" + s; }
+  function pripravObrazky(seznam){
+    var chybi = seznam.filter(function(x){ return !OBR[klic(x[0], x[1], x[2])]; });
+    if (!chybi.length || !window.MED3D) return;
+    var url = MED3D.obrazkyMedaili(chybi.map(function(x){ return { znak: x[0], stupen: x[1], stuha: x[2] }; }), 150);
+    chybi.forEach(function(x, i){ OBR[klic(x[0], x[1], x[2])] = url[i]; });
+  }
+  function obr(z, t, s){ var u = OBR[klic(z, t, s)]; return u ? '<img src="' + u + '" alt="">' : '<span class="ph"></span>'; }
+  function medaile(ik, t, id){
+    var z = t < 0, c = z ? ["","#C9CFDB","#EEF1F6","#9AA3B8"] : TIER[t];
+    var g = "g" + id;
+    return '<svg viewBox="0 0 60 64" aria-hidden="true"><defs><linearGradient id="' + g + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c[2] + '"/><stop offset=".55" stop-color="' + c[1] + '"/><stop offset="1" stop-color="' + c[3] + '"/></linearGradient></defs>' +
+      '<path d="M18 40 L12 62 L22 57 L27 63 L30 46 Z" fill="' + (z ? "#C9CFDB" : "#5B55D6") + '"/><path d="M42 40 L48 62 L38 57 L33 63 L30 46 Z" fill="' + (z ? "#B5BCCB" : "#4741B8") + '"/>' +
+      '<polygon points="30,3 52,15 52,39 30,51 8,39 8,15" fill="url(#' + g + ')" stroke="' + c[3] + '" stroke-width="1.5"/>' +
+      '<polygon points="30,9 47,18.5 47,35.5 30,45 13,35.5 13,18.5" fill="' + (z ? "#F4F6FA" : "#FFFFFF") + '" opacity=".92"/>' +
+      (t === 3 ? '<path d="M14 12 L18 16 M46 12 L42 16 M30 1 L30 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>' : "") +
+      '<text x="30" y="34" text-anchor="middle" font-size="18">' + ik + '</text></svg>';
+  }
+  var D = {
+    9: [
+      ["Mistr témat", [["½","Zlomky",2,0.6],["x²","Výrazy",1,0.4],["=","Rovnice",2,0.2],["△","Geometrie",0,0.7],["%","Slovní úlohy",1,0.9],["▥","Grafy a logika",0,0.3],["⌖","Konstrukce",-1,0.5],["∠","Úhly",0,0.1],["★","Souhrnné",-1,0.2]], "Za zvládnutí úrovní v tématu", ["1. úroveň","2. úroveň","3. úroveň","+50 testových"]],
+      ["Vytrvalost", [["plamen","Plamínek",1,0.5],["5/7","Pravidelnost",0,0.6]], "Dny v řadě / týdny s 5 dny tréninku", ["3 / 1","7 / 4","30 / 10","100 / 20"]],
+      ["Pilnost", [["∑","Počtář",1,0.48],["↺","Po chybě vstávám",0,0.8],["✓","Čistá práce",0,0.3]], "", []],
+      ["Testy a pokrok", [["◎","Diagnostika",3,1],["A+","CERMAT trénink",0,0.33],["↗","Jdu nahoru",1,0.5],["★","Generálka",-1,0]], "", []],
+      ["Typy úloh", [["∡","Rýsovač",0,0.5],["A–E","Detektiv A–E",1,0.2],["▥","Čtenář obrázků",0,0.7]], "", []],
+      ["Bonusové", [["☀","Ranní ptáče",0,1],["S+N","Víkendový bojovník",-1,0],["↩","Jsem zpátky",-1,0]], "", []],
+    ],
+    5: [
+      ["Mistr okruhů", [["+","Počítání",2,0.4],["kg","Jednotky",1,0.7],["?","Slovní úlohy",1,0.3],["½","Zlomky",0,0.6],["▢","Obvod a obsah",0,0.2],["◫","Tělesa",-1,0.4],["✎","Rýsování",0,0.8],["▥","Grafy a vzory",-1,0.1]], "", []],
+      ["Vytrvalost", [["plamen","Plamínek",1,0.5],["5/7","Pravidelnost",0,0.6]], "", []],
+      ["Pilnost", [["∑","Počtář",1,0.48],["↺","Po chybě vstávám",0,0.8],["✓","Čistá práce",0,0.3]], "", []],
+      ["Testy a pokrok", [["◎","Diagnostika",3,1],["A+","Cvičný test",0,0.33],["↗","Jdu nahoru",1,0.5],["★","Generálka",-1,0]], "", []],
+      ["Typy úloh", [["∡","Rýsovač",1,0.5],["A–E","Detektiv A–E",0,0.2],["▥","Čtenář obrázků",0,0.7]], "", []],
+      ["Bonusové", [["☀","Ranní ptáče",0,1],["S+N","Víkendový bojovník",-1,0],["↩","Jsem zpátky",-1,0]], "", []],
+    ]
+  };
+  var POPIS = {
+    "Plamínek": ["Trénuj den po dni bez přestávky.", ["3 dny","7 dní","30 dní","100 dní"]],
+    "Pravidelnost": ["Týdny, kdy trénuješ aspoň 5 dní.", ["1 týden","4 týdny","10 týdnů","20 týdnů"]],
+    "Počtář": ["Správně vyřešené příklady celkem.", ["50","250","500","1 000"]],
+    "Po chybě vstávám": ["Příklad, který ti nešel, později vyřešíš správně.", ["5","25","100","250"]],
+    "Čistá práce": ["Trénink aspoň 10 příkladů bez jediné chyby.", ["1×","5×","15×","40×"]],
+    "Diagnostika": ["Diagnostika všech témat a jak dopadla.", ["hotová","60 %","80 %","90 %"]],
+    "CERMAT trénink": ["Cvičný test na čas s úlohami jako u přijímaček.", ["1×","3×","10×","20×"]],
+    "Cvičný test": ["Cvičný test jako u přijímaček: 14 úloh, 70 minut.", ["1×","3×","10×","20×"]],
+    "Jdu nahoru": ["O kolik bodů ti vzrostl odhad od prvního měření.", ["+3","+6","+10","+15"]],
+    "Generálka": ["Test nanečisto v gymnáziu nebo online.", ["1","2","3","5"]],
+    "Rýsovač": ["Správně narýsované konstrukce.", ["5","20","50","120"]],
+    "Detektiv A–E": ["Správně úlohy s výběrem A–E (po rozmyšlení).", ["10","50","150","400"]],
+    "Čtenář obrázků": ["Správně úlohy s obrázkem, grafem nebo tabulkou.", ["10","50","150","400"]],
+    "Ranní ptáče": ["Trénink mezi 6:00 a 8:00. Bonusový odznak bez stupňů.", null],
+    "Víkendový bojovník": ["Trénink v sobotu i v neděli. Bonusový odznak bez stupňů.", null],
+    "Jsem zpátky": ["Návrat k tréninku po pauze delší než týden. Bonusový odznak bez stupňů.", null]
+  };
+  var MISTR = ["Zvládnutá 1. úroveň","Zvládnutá 2. úroveň","Zvládnutá 3. úroveň (jako v testu)","Zlato a 50 správně v testových příkladech"];
+  var trida = "9", el = function(i){ return document.getElementById(i); };
+  function stena(){
+    var vse = [["%", 1, STUHA["Mistr témat"]]];
+    D[trida].forEach(function(kat){ kat[1].forEach(function(m){ vse.push([m[0], m[2], STUHA[kat[0]]]); }); });
+    pripravObrazky(vse);
+    var html = '<div class="nejbl"><div>' + obr("%", 1, STUHA["Mistr témat"]) + '</div><div><b>Nejbližší medaile: Slovní úlohy</b><span>Do zlata chybí zvládnout 3. úroveň (9 z 10 hotovo)</span><div class="bar"><i style="width:90%"></i></div></div></div>';
+    var uid = 0;
+    D[trida].forEach(function(kat){
+      var mam = kat[1].filter(function(m){ return m[2] >= 0; }).length;
+      html += '<div class="kat"><h3>' + kat[0] + '<span>' + mam + ' z ' + kat[1].length + '</span></h3><div class="medaile">';
+      kat[1].forEach(function(m){
+        uid++;
+        var t = m[2], st = t < 0 ? "zamčeno" : TIER[t][0];
+        html += '<button type="button" class="med' + (t < 0 ? " zamceno" : "") + '" data-k="' + encodeURIComponent(JSON.stringify([kat[0], m])) + '">' + obr(m[0], t, STUHA[kat[0]]) + '<span class="n">' + m[1] + '</span><span class="st" style="color:' + (t < 0 ? "#9AA3B8" : TIER[t][3]) + '">' + st + '</span>' + (t < 3 && POPIS[m[1]] !== undefined && POPIS[m[1]][1] === null ? "" : '<span class="mini"><i style="width:' + Math.round(m[3] * 100) + '%"></i></span>') + '</button>';
+      });
+      html += '</div></div>';
+    });
+    el("stena").innerHTML = html;
+    el("pr-trida").textContent = trida + ". třída · úroveň 8";
+    el("stena").querySelectorAll(".med").forEach(function(b){ b.addEventListener("click", function(){ detail(JSON.parse(decodeURIComponent(b.dataset.k)), false); }); });
+  }
+  function detail(x, novy){
+    var kat = x[0], m = x[1], t = m[2], p = POPIS[m[1]];
+    var mistr = kat.indexOf("Mistr") === 0;
+    if (window.__m3d) { window.__m3d.znic(); window.__m3d = null; }
+    el("d-velka").innerHTML = '<canvas aria-label="3D medaile, jde otočit"></canvas>';
+    if (window.MED3D) { window.__m3d = MED3D.vytvorMedaili3D(el("d-velka").firstChild, { znak: m[0], stupen: t, stuha: STUHA[kat] || "#5B55D6" }); if (novy) setTimeout(function(){ window.__m3d && window.__m3d.oslava(); }, 150); }
+    el("d-tier").innerHTML = t < 0 ? '<span style="color:#9AA3B8">Zatím zamčeno</span>' : '<i style="background:' + TIER[t][1] + '"></i><span style="color:' + TIER[t][2] + '">' + (novy ? "Nový stupeň: " : "") + TIER[t][0] + '</span>';
+    el("d-n").textContent = m[1];
+    el("d-p").textContent = mistr ? "Medaile za téma. Roste s tím, jak zvládáš úrovně." : (p ? p[0] : "");
+    var st = mistr ? MISTR : (p && p[1] ? p[1] : null);
+    el("d-stupne").innerHTML = st ? st.map(function(s, i){ return '<span class="' + (i <= t ? "ok" : "") + '"><b>' + ["Bronz","Stříbro","Zlato","Diamant"][i] + '</b>' + s + '</span>'; }).join("") : "";
+    el("d-stupne").hidden = !st;
+    el("d-odm").textContent = novy ? "+80 krystalů za nový stupeň" : (t < 3 && st ? "Do dalšího stupně: " + Math.round((1 - m[3]) * 100) + " % zbývá" : t === 3 ? "Nejvyšší stupeň!" : "");
+    el("detail").hidden = false;
+  }
+  el("d-ok").addEventListener("click", function(){ el("detail").hidden = true; if (window.__m3d) { window.__m3d.znic(); window.__m3d = null; } });
+  el("oslava").addEventListener("click", function(){ detail(["Mistr témat", ["½", "Zlomky", 2, 0.6]], true); });
+  document.querySelectorAll("[data-t]").forEach(function(b){ b.addEventListener("click", function(){ trida = b.dataset.t; document.querySelectorAll("[data-t]").forEach(function(x){ x.setAttribute("aria-pressed", x === b); }); stena(); }); });
+  stena();
+  // seznam
+  var radky = [
+    ["Mistr témat / okruhů", "Každé téma 9. třídy (9) a každý okruh 5. třídy (8)", "zvládnutá 1. / 2. / 3. úroveň / + 50 testových"],
+    ["Plamínek", "Dny v řadě s tréninkem", "3 / 7 / 30 / 100 dní"],
+    ["Pravidelnost", "Týdny s aspoň 5 dny tréninku", "1 / 4 / 10 / 20 týdnů"],
+    ["Počtář", "Správně vyřešené příklady", "50 / 250 / 500 / 1 000"],
+    ["Po chybě vstávám", "Příklad, který nešel, později správně", "5 / 25 / 100 / 250"],
+    ["Čistá práce", "Trénink 10+ příkladů bez chyby", "1× / 5× / 15× / 40×"],
+    ["Diagnostika", "Diagnostika a její výsledek", "hotová / 60 % / 80 % / 90 %"],
+    ["CERMAT trénink (9.) / Cvičný test (5.)", "Cvičné testy jako u přijímaček", "1× / 3× / 10× / 20×"],
+    ["Jdu nahoru", "Růst odhadu bodů od prvního měření", "+3 / +6 / +10 / +15"],
+    ["Generálka", "Testy nanečisto", "1 / 2 / 3 / 5"],
+    ["Rýsovač", "Správně narýsované konstrukce", "5 / 20 / 50 / 120"],
+    ["Detektiv A–E", "Správně úlohy s výběrem (po rozmyšlení)", "10 / 50 / 150 / 400"],
+    ["Čtenář obrázků", "Správně úlohy s obrázkem, grafem, tabulkou", "10 / 50 / 150 / 400"],
+    ["Ranní ptáče, Víkendový bojovník, Jsem zpátky", "Bonusové, bez stupňů", "jednou"]
+  ];
+  el("seznam").querySelector("tbody").innerHTML = radky.map(function(r){ return "<tr><td><b>" + r[0] + "</b></td><td>" + r[1] + "</td><td>" + r[2] + "</td></tr>"; }).join("");
+})();
+</script>
