@@ -9,6 +9,11 @@
  */
 import * as THREE from "three";
 import { podobaHexika, type Podoba } from "../hexik-svg";
+import { vytvorCastice, type Castice, type MeritkoCastic } from "./castice";
+import {
+  usi, vousky, antena, rohy, kridla, rohJednorozce, hriva, ksiltovka, plamen, vanocniCepice, kulich, medaile, tykadla, vceliKridla, sala, koruna,
+  zlatoMat, type Doplnek, type Sklad, type Pohyb,
+} from "./doplnky";
 
 const N = "#0D1B3E";
 
@@ -22,11 +27,10 @@ export interface HexikModel {
   eyes: THREE.Group[];
   mouth: THREE.Object3D;
   stin: THREE.Mesh;
-  /** Díly, které se hýbou samy (křídla, plamen, třpyt, aura). */
-  kridla: THREE.Object3D[];
-  plamen: THREE.Object3D | null;
-  trpyt: THREE.Object3D[];
-  aura: THREE.Object3D | null;
+  /** Efekty mimo Hexíka (sníh kolem čepice), scéna je přidá zvlášť. */
+  okoli: THREE.Object3D;
+  /** Pružiny, efekty a samostatné pohyby doplňků; volá scéna každý snímek. */
+  aktualizuj: (p: Pohyb) => void;
   /** Barva svitu (neon, diamant) pro bodové světlo; null = bez svitu. */
   svit: string | null;
   dispose: () => void;
@@ -69,7 +73,7 @@ function duhaTextura(): THREE.Texture {
 /** Materiál těla podle barvy z 2D kresby (gradienty = zlato, chrom, diamant, duha). */
 function materialTela(P: Podoba): THREE.MeshPhysicalMaterial {
   const m = new THREE.MeshPhysicalMaterial({ color: P.o.startsWith("url") ? "#FFFFFF" : P.o, roughness: 0.42, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.4 });
-  if (P.o === "url(#hxZlato)") { m.color.set("#F7BE35"); m.metalness = 0.85; m.roughness = 0.28; m.emissive.set("#7A5200"); m.emissiveIntensity = 0.45; }
+  if (P.o === "url(#hxZlato)") { m.color.set("#FFC93C"); m.metalness = 0.7; m.roughness = 0.26; m.emissive.set("#A86E00"); m.emissiveIntensity = 0.45; }
   if (P.o === "url(#hxChrom)") { m.color.set("#C9D3DF"); m.metalness = 1; m.roughness = 0.12; }
   if (P.o === "url(#hxDiamant)") {
     m.color.set("#9FEAFF"); m.roughness = 0.05; m.clearcoat = 1; m.transparent = true; m.opacity = 0.7;
@@ -89,10 +93,12 @@ function std(barva: string, o: Partial<THREE.MeshStandardMaterialParameters> = {
  * Postaví Hexíka pro danou podobu a etapu. Vrací skupinu a díly pro animace.
  * Rozměry: tělo má poloměr 1 (s obrubou ~1,12), stojí nohama na y ≈ −1,4.
  */
-export function postavHexika(klic: string, etapa = 1): HexikModel {
+export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = { value: 400 }): HexikModel {
   const P = podobaHexika(klic);
   const geometrie: THREE.BufferGeometry[] = [];
   const materialy: THREE.Material[] = [];
+  const textury: THREE.Texture[] = [];
+  const castice: Castice[] = [];
   const g = <T extends THREE.BufferGeometry>(x: T) => { geometrie.push(x); return x; };
   const mt = <T extends THREE.Material>(x: T) => { materialy.push(x); return x; };
   const mesh = (geo: THREE.BufferGeometry, mat: THREE.Material) => new THREE.Mesh(g(geo), mt(mat));
@@ -186,141 +192,66 @@ export function postavHexika(klic: string, etapa = 1): HexikModel {
     const f = new THREE.Mesh(g(new THREE.SphereGeometry(0.22, 20, 14)), bodyMat); f.scale.set(1.15, 0.55, 1.35); f.position.set(sx * 0.4, -1.27, 0.08); root.add(f);
   }
 
-  // ── Doplňky podle příznaků ────────────────────────────────────────────────
-  const zlato = mt(std("#F5B623", { metalness: 0.6, roughness: 0.3, emissive: "#9A6A00", emissiveIntensity: 0.55 }));
-  const kridla: THREE.Object3D[] = [];
-  let plamen: THREE.Object3D | null = null;
-  const trpyt: THREE.Object3D[] = [];
+  // ── Doplňky podle příznaků (doplnky.ts: látky, pružiny, efekty) ───────────
+  const sklad: Sklad = { g, m: mt, t: (x) => { textury.push(x); return x; } };
+  const zlato = zlatoMat(sklad);
+  const doplnky: Doplnek[] = [];
+  const pridej = (d: Doplnek) => { body.add(d.obj); doplnky.push(d); return d; };
+  let kridlaObj: THREE.Object3D[] = [];
+  let plamenU: { uCas: { value: number } } | null = null;
+  const jiskryBarvy: string[] = [];
 
-  if (P.usi) {
-    const ruzova = mt(std("#F7A3C0", { roughness: 0.6 }));
-    for (const sx of [-1, 1]) {
-      const u = new THREE.Group(); u.position.set(sx * 0.52, 0.88, 0); u.rotation.z = -sx * 0.42;
-      u.add(new THREE.Mesh(g(new THREE.ConeGeometry(0.24, 0.56, 20)), bodyMat));
-      const vn = new THREE.Mesh(g(new THREE.ConeGeometry(0.13, 0.36, 16)), ruzova); vn.position.set(0, -0.04, 0.12); u.add(vn);
-      body.add(u);
-    }
-  }
-  if (P.vousy) {
-    const vm = mt(std(N));
-    for (const sx of [-1, 1]) for (const k of [-1, 1]) {
-      const v = new THREE.Mesh(g(new THREE.CylinderGeometry(0.012, 0.012, 0.42, 6)), vm);
-      v.rotation.z = Math.PI / 2 + k * 0.12 * sx; v.position.set(sx * 0.78, -0.2 + k * 0.05, 0.42); body.add(v);
-    }
-  }
-  if (P.antena) {
-    const t = mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.42, 8), std("#6F8299", { metalness: 0.6, roughness: 0.3 })); t.position.y = 1.28; body.add(t);
-    const k = mesh(new THREE.SphereGeometry(0.1, 16, 12), std("#FF5A5F", { emissive: "#FF5A5F", emissiveIntensity: 0.5 })); k.position.y = 1.52; body.add(k);
-  }
+  if (P.usi) pridej(usi(sklad, bodyMat, P.o === "#F08C3A" ? "#FFE3C7" : "#F7A3C0", P.o === "#F08C3A" ? "#3B2416" : undefined));
+  if (P.vousy) pridej(vousky(sklad));
+  if (P.antena) pridej(antena(sklad));
   if (P.srouby) {
-    for (const sx of [-1, 1]) { const b = mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.08, 6), std("#6F8299", { metalness: 0.7, roughness: 0.3 })); b.rotation.x = Math.PI / 2; b.position.set(sx * 0.7, 0.0, 0.47); body.add(b); }
+    for (const sx of [-1, 1]) { const b = mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.08, 6), std("#6F8299", { metalness: 0.8, roughness: 0.3 })); b.rotation.x = Math.PI / 2; b.position.set(sx * 0.7, 0.0, 0.47); body.add(b); }
   }
-  if (P.rohy) {
-    for (const sx of [-1, 1]) { const r = new THREE.Mesh(g(new THREE.ConeGeometry(0.11, 0.42, 14)), zlato); r.position.set(sx * 0.3, 1.12, 0); r.rotation.z = -sx * 0.35; body.add(r); }
-  }
-  if (P.kridla) {
-    const ks = new THREE.Shape(); ks.moveTo(0, 0); ks.lineTo(0.75, 0.45); ks.lineTo(0.62, 0.05); ks.lineTo(0.8, -0.2); ks.lineTo(0, -0.3); ks.closePath();
-    for (const sx of [-1, 1]) {
-      const pivot = new THREE.Group(); pivot.position.set(sx * 0.7, 0.2, -0.3);
-      const w = new THREE.Mesh(g(new THREE.ExtrudeGeometry(ks, { depth: 0.04, bevelEnabled: false })), bodyMat);
-      w.scale.x = sx; pivot.add(w); pivot.userData.sx = sx;
-      body.add(pivot); kridla.push(pivot);
-    }
-  }
-  if (P.roh) {
-    const r = new THREE.Mesh(g(new THREE.ConeGeometry(0.1, 0.6, 20)), zlato); r.position.set(0, 1.35, 0.05); body.add(r);
-  }
-  if (P.hriva) {
-    [["#FF9AC8", -0.45, 0.95, 0.17], ["#B79CFF", -0.7, 0.7, 0.15], ["#8ED1FF", -0.85, 0.4, 0.13], ["#FFD36E", -0.2, 1.1, 0.14]].forEach(([b, x, y, r]) => {
-      const s = mesh(new THREE.SphereGeometry(r as number, 16, 12), std(b as string, { roughness: 0.55 })); s.position.set(x as number, y as number, -0.15); body.add(s);
-    });
-  }
-  if (P.ksiltovka) {
-    const c = new THREE.Group(); c.position.set(0, 0.86, 0);
-    const top = mesh(new THREE.SphereGeometry(0.56, 28, 14, 0, Math.PI * 2, 0, Math.PI / 2), std(P.o === "#5E7148" ? "#3F4D2E" : N)); top.scale.set(1, 0.72, 0.95); c.add(top);
-    const brim = mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.045, 28, 1, false, -Math.PI / 2, Math.PI), std("#232F55")); brim.scale.set(1.2, 1, 1.5); brim.position.set(0, 0.02, 0.42); c.add(brim);
-    const btn = mesh(new THREE.SphereGeometry(0.06, 12, 8), std("#F5A623")); btn.position.y = 0.41; c.add(btn);
-    body.add(c);
-  }
-  if (P.plamen) {
-    const pg = new THREE.Group(); pg.position.set(0, 1.0, 0);
-    [["#FFB000", 0, 0.32, 0.6], ["#FF7A3D", -0.22, 0.24, 0.42], ["#FF7A3D", 0.22, 0.24, 0.45], ["#FFE066", 0, 0.18, 0.36]].forEach(([b, x, r, h]) => {
-      const f = mesh(new THREE.ConeGeometry(r as number, h as number, 16), std(b as string, { emissive: b as string, emissiveIntensity: 0.6 })); f.position.set(x as number, (h as number) / 2, 0); pg.add(f);
-    });
-    body.add(pg); plamen = pg;
-  }
-  if (P.trpyt) {
-    const sm = mt(new THREE.MeshBasicMaterial({ color: "#FFFFFF" }));
-    [[-1.05, 0.75, 0.3], [1.05, 0.35, 0.3], [0.85, -0.85, 0.4]].forEach(([x, y, z], i) => {
-      const s = new THREE.Mesh(g(new THREE.OctahedronGeometry(0.08)), sm); s.position.set(x, y, z); s.userData.faze = i * 1.3; body.add(s); trpyt.push(s);
-    });
-  }
-  if (P.cepice) {
-    const c = new THREE.Group(); c.position.set(0.05, 1.02, 0); c.rotation.z = -0.28;
-    const k = mesh(new THREE.ConeGeometry(0.44, 0.95, 28), std(P.o === "#3FA45B" ? "#2F8F4E" : "#D93A3A")); k.position.y = 0.48; c.add(k);
-    const lem = mesh(new THREE.TorusGeometry(0.43, 0.11, 12, 32), std("#FFFFFF", { roughness: 0.9 })); lem.rotation.x = Math.PI / 2; lem.position.y = 0.02; c.add(lem);
-    const bam = mesh(new THREE.SphereGeometry(0.12, 16, 12), std("#FFFFFF", { roughness: 0.9 })); bam.position.y = 0.98; c.add(bam);
-    body.add(c);
-  }
-  if (P.kulich) {
-    const c = new THREE.Group(); c.position.set(0, 0.92, 0);
-    const k = mesh(new THREE.SphereGeometry(0.52, 28, 14, 0, Math.PI * 2, 0, Math.PI / 2), std("#2E6DA4", { roughness: 0.85 })); k.scale.set(1, 1.05, 0.95); c.add(k);
-    const pas = mesh(new THREE.CylinderGeometry(0.53, 0.53, 0.16, 28), std("#E5383B", { roughness: 0.85 })); pas.scale.z = 0.95; c.add(pas);
-    const bam = mesh(new THREE.SphereGeometry(0.15, 16, 12), std("#FFFFFF", { roughness: 0.95 })); bam.position.y = 0.6; c.add(bam);
-    body.add(c);
-  }
-  if (P.medaile) {
-    const c = new THREE.Group(); c.position.set(0, -0.05, 0.47);
-    const stuha = mesh(new THREE.TorusGeometry(0.46, 0.04, 8, 36, Math.PI), std("#2E6DA4")); stuha.rotation.z = Math.PI; c.add(stuha);
-    const disk = new THREE.Mesh(g(new THREE.CylinderGeometry(0.17, 0.17, 0.05, 32)), zlato); disk.rotation.x = Math.PI / 2; disk.position.set(0, -0.56, 0.02); c.add(disk);
-    body.add(c);
-  }
-  if (P.tykadla) {
-    for (const sx of [-1, 1]) {
-      const t = mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.5, 8), std(N)); t.position.set(sx * 0.3, 1.25, 0); t.rotation.z = -sx * 0.45; body.add(t);
-      const k = mesh(new THREE.SphereGeometry(0.1, 14, 10), std(N)); k.position.set(sx * 0.52, 1.47, 0); body.add(k);
-    }
-  }
+  if (P.rohy) pridej(rohy(sklad));
+  if (P.kridla) { const k = kridla(sklad, P.o.startsWith("#") ? P.o : "#5FC489"); pridej(k); kridlaObj = k.kridla; }
+  if (P.roh) pridej(rohJednorozce(sklad));
+  if (P.hriva) pridej(hriva(sklad));
+  if (P.ksiltovka) pridej(ksiltovka(sklad, P.o === "#5B55D6" ? "#232F55" : "#1E2A55", P.o === "#5E7148"));
+  if (P.plamen) { const pl = plamen(sklad); pridej(pl); plamenU = pl.uniforms; }
+  if (P.trpyt) jiskryBarvy.push("#FFFFFF", P.o === "url(#hxDiamant)" ? "#BFF4FF" : "#FFE08A");
+  if (P.cepice) pridej(vanocniCepice(sklad, P.o === "#3FA45B" ? "#2F8F4E" : "#C8202A", P.o === "#3FA45B"));
+  if (P.kulich) pridej(kulich(sklad, P.o === "#B9D6F2" ? "#4A7FB5" : "#2E6DA4", "#E5383B"));
+  if (P.medaile) pridej(medaile(sklad));
+  if (P.tykadla) pridej(tykadla(sklad));
+  if (P.tykadla && P.pruhy) pridej(vceliKridla(sklad));
   if (P.pruhy) {
     const hw = (y: number) => 0.72 * (0.83 - Math.abs(y)) / 0.415;
     const pm = mt(new THREE.MeshBasicMaterial({ color: N, transparent: true, opacity: 0.85, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
     for (const [y1, y2] of [[-0.47, -0.55], [-0.63, -0.69]]) {
-      const s = new THREE.Shape([new THREE.Vector2(-hw(y1), y1), new THREE.Vector2(hw(y1), y1), new THREE.Vector2(hw(y2), y2), new THREE.Vector2(-hw(y2), y2)]);
-      const m = new THREE.Mesh(g(new THREE.ShapeGeometry(s)), pm); m.position.z = 0.467; body.add(m);
+      const sh = new THREE.Shape([new THREE.Vector2(-hw(y1), y1), new THREE.Vector2(hw(y1), y1), new THREE.Vector2(hw(y2), y2), new THREE.Vector2(-hw(y2), y2)]);
+      const m = new THREE.Mesh(g(new THREE.ShapeGeometry(sh)), pm); m.position.z = 0.467; body.add(m);
     }
   }
 
   // ── Etapy podle odhadu bodů ───────────────────────────────────────────────
   let aura: THREE.Object3D | null = null;
-  if (etapa >= 2) {
-    const h = new THREE.Mesh(g(new THREE.ExtrudeGeometry(hvezdaShape(0.16, 0.07), { depth: 0.05, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.015, bevelSegments: 2 })), zlato);
+  if (etapa >= 2 && !P.medaile) {
+    const h = new THREE.Mesh(g(new THREE.ExtrudeGeometry(hvezdaShape(0.16, 0.07), { depth: 0.05, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.02, bevelSegments: 3 })), zlato);
     h.position.set(0.52, -0.42, 0.47); body.add(h);
   }
-  if (etapa >= 3) {
-    const sala = mt(std("#E0565B", { roughness: 0.8 }));
-    const t = new THREE.Mesh(g(new THREE.TorusGeometry(0.56, 0.085, 12, 40)), sala); t.rotation.x = Math.PI / 2; t.scale.set(1.12, 0.92, 1); t.position.y = -0.74; body.add(t);
-    const konec = new THREE.Mesh(g(new THREE.BoxGeometry(0.16, 0.42, 0.08)), sala); konec.position.set(0.32, -0.95, 0.52); konec.rotation.z = 0.15; body.add(konec);
-  }
+  if (etapa >= 3 && !P.medaile) pridej(sala(sklad));
   if (etapa >= 4) {
-    const a = new THREE.Group();
-    const km = mt(new THREE.MeshBasicMaterial({ color: "#F5A623", transparent: true, opacity: 0.8 }));
-    for (let i = 0; i < 18; i++) { const k = new THREE.Mesh(g(new THREE.SphereGeometry(0.045, 8, 6)), km); const u = (i / 18) * Math.PI * 2; k.position.set(Math.cos(u) * 1.55, Math.sin(u) * 1.55, 0); a.add(k); }
-    a.position.set(0, 0.05, -0.6); body.add(a); aura = a;
+    const a = new THREE.Group(); a.position.set(0, 0.05, -0.6); body.add(a); aura = a;
+    const prsten = new THREE.Mesh(g(new THREE.TorusGeometry(1.55, 0.012, 8, 96)), mt(new THREE.MeshBasicMaterial({ color: "#FFD36E", transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false })));
+    a.add(prsten);
+    const c = vytvorCastice("aura", meritko, ["#FFD36E", "#FFFFFF", "#F5A623"]); a.add(c.obj); castice.push(c);
   }
   // Bodové světlo jen pro studený svit (neon, led); zlatou záři dělá CSS stín kolem plátna (Hexik.tsx)
   const svit: string | null = P.svit === "hx-svit-cyan" ? (P.obrys ?? "#3DF5FF") : null;
-  if (etapa >= 5) {
-    if (!P.hlava) {
-      const k = new THREE.Group(); k.position.set(0, 1.02, 0);
-      const ring = new THREE.Mesh(g(new THREE.CylinderGeometry(0.36, 0.4, 0.2, 32, 1, true)), zlato); (ring.material as THREE.Material).side = THREE.DoubleSide; k.add(ring);
-      for (let i = 0; i < 6; i++) {
-        const u = (i / 6) * Math.PI * 2;
-        const sp = new THREE.Mesh(g(new THREE.ConeGeometry(0.08, 0.24, 10)), zlato); sp.position.set(Math.sin(u) * 0.37, 0.2, Math.cos(u) * 0.37); k.add(sp);
-      }
-      const drahokam = mesh(new THREE.SphereGeometry(0.06, 12, 8), std("#E5484D", { roughness: 0.1 })); drahokam.position.set(0, 0, 0.41); k.add(drahokam);
-      body.add(k);
-    }
-  }
+  if (etapa >= 5 && !P.hlava) pridej(koruna(sklad));
+
+  // Efekty kolem: jiskry (třpyt, koruna, rolnička, medaile), sníh (zimní čepice), uhlíky (plamen)
+  for (const d of doplnky) if (d.jiskry) jiskryBarvy.push(...d.jiskry);
+  if (jiskryBarvy.length) { const c = vytvorCastice("jiskry", meritko, [...new Set(jiskryBarvy)], 12); body.add(c.obj); castice.push(c); }
+  const okoli = new THREE.Group();
+  if (doplnky.some((d) => d.okoli === "snih") || P.o === "#7CC9F0") { const c = vytvorCastice("snih", meritko, ["#FFFFFF", "#EAF6FF"]); okoli.add(c.obj); castice.push(c); }
+  if (plamenU) { const c = vytvorCastice("uhliky", meritko, ["#FFB000", "#FF7A3D", "#FFE066"]); c.obj.position.set(0, 1.0, 0); body.add(c.obj); castice.push(c); }
+  const pruziny = doplnky.flatMap((d) => d.pruziny);
 
   // Měkký stín pod Hexíkem
   const cv = document.createElement("canvas"); cv.width = cv.height = 128;
@@ -333,8 +264,18 @@ export function postavHexika(klic: string, etapa = 1): HexikModel {
   stin.rotation.x = -Math.PI / 2; stin.position.y = -1.4;
 
   return {
-    root, hips, body, armL, armR, eyes, mouth, stin, kridla, plamen, trpyt, aura, svit,
+    root, hips, body, armL, armR, eyes, mouth, stin, svit, okoli,
+    aktualizuj: (p) => {
+      for (const z of pruziny) z.krok(p);
+      for (const d of doplnky) d.krok?.(p);
+      for (const c of castice) c.aktualizuj(p.dt, p.cas);
+      for (const k of kridlaObj) k.rotation.y = (k.userData.sx as number) * (0.25 + 0.3 * Math.sin(p.cas * (Math.abs(p.wy) > 1 || Math.abs(p.ay) > 3 ? 14 : 3)));
+      if (plamenU) plamenU.uCas.value = p.cas;
+      if (aura) aura.rotation.z = p.cas * 0.4;
+    },
     dispose: () => {
+      castice.forEach((c) => c.dispose());
+      textury.forEach((t) => t.dispose());
       geometrie.forEach((x) => x.dispose());
       materialy.forEach((x) => { const mm = x as THREE.MeshStandardMaterial; mm.map?.dispose(); x.dispose(); });
       stinTex.dispose();

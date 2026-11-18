@@ -49,7 +49,7 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
   const es = new THREE.Scene();
   const eg = new THREE.SphereGeometry(10, 32, 16);
   const pos = eg.attributes.position, cols: number[] = [];
-  const dol = new THREE.Color("#262B5A"), nah = new THREE.Color("#FFFFFF");
+  const dol = new THREE.Color("#6E74A8"), nah = new THREE.Color("#FFFFFF");
   for (let i = 0; i < pos.count; i++) {
     const k = Math.max(0, pos.getY(i) / 10) * 0.85 + 0.12;
     const c = dol.clone().lerp(nah, k); cols.push(c.r, c.g, c.b);
@@ -69,8 +69,10 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
   const rim = new THREE.DirectionalLight("#B9A8FF", 2.0); rim.position.set(-3, 2.5, -3); scene.add(rim);
   const svit = new THREE.PointLight("#3DF5FF", 0, 6, 2); svit.position.set(0, 0.4, 2.6); scene.add(svit);
 
-  let model: HexikModel = postavHexika(podoba, etapa);
-  scene.add(model.root); scene.add(model.stin);
+  // Velikost částic (sníh, jiskry) podle výšky plátna v pixelech
+  const meritko = { value: 400 };
+  let model: HexikModel = postavHexika(podoba, etapa, meritko);
+  scene.add(model.root); scene.add(model.stin); scene.add(model.okoli);
   const nastavSvit = () => { svit.color.set(model.svit ?? "#FFFFFF"); svit.intensity = model.svit ? 2.5 : 0; };
   nastavSvit();
 
@@ -99,6 +101,8 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
   let userRot = 0, vel = 0, drag = false, lastX = 0, posledni = -10;
   const look = { x: 0, y: 0 };
   let videt = true, bezi = false, raf = 0;
+  // Pohyb těla z minulého snímku (pro pružiny doplňků)
+  const minulaPoza = { y: 0, vy: 0, rY: 0, rX: 0, rZ: 0 };
   let minule = performance.now();
   const delta = () => { const ted = performance.now(); const d = (ted - minule) / 1000; minule = ted; return d; };
 
@@ -110,6 +114,7 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
     const z = w / h < 0.9 ? 7.6 / (w / h) * 0.9 : 7.6;
     camera.position.set(0, 0.45, z); camera.lookAt(0, 0.35, 0);
     camera.updateProjectionMatrix();
+    meritko.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan((camera.fov * Math.PI) / 360));
     vykresli(true);
   }
 
@@ -118,6 +123,8 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
     const klidne = !akce && !drag && Math.abs(vel) < 0.0005 && konfety.every((k) => !k.visible);
     if (!vynutit && klidne && mozn.setrne) return false;
     if (!vynutit && klidne && cas - posledniKresba < 1 / 30) return true;
+    // Čas od minulého vykreslení (v klidu se kreslí jen 30× za sekundu)
+    const dtK = posledniKresba < 0 ? dt : Math.min(0.05, cas - posledniKresba);
     posledniKresba = cas;
 
     let P = klid(cas, pohyb && !mozn.setrne);
@@ -141,10 +148,18 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
     if (cas > mrk) { mrkStart = cas; mrk = cas + 2.5 + Math.random() * 2.5; }
     const bl = mrkStart > 0 && cas - mrkStart < 0.16 ? 1 - 0.9 * Math.sin(((cas - mrkStart) / 0.16) * Math.PI) : 1;
     for (const g of m.eyes) { g.scale.y = bl; g.position.x = (g.userData.bx as number) + (P.lx + look.x * 0.6) * 0.05; g.position.y = 0.1 + (P.ly + look.y * 0.5) * 0.05; }
-    for (const k of m.kridla) k.rotation.y = (k.userData.sx as number) * (0.25 + 0.25 * Math.sin(cas * (akce ? 14 : 3)));
-    if (m.plamen) m.plamen.scale.y = 1 + 0.12 * Math.sin(cas * 11) + 0.06 * Math.sin(cas * 23);
-    for (const s of m.trpyt) { const f = 0.5 + 0.5 * Math.sin(cas * 3 + (s.userData.faze as number)); s.scale.setScalar(0.4 + f); s.rotation.z = cas; }
-    if (m.aura) m.aura.rotation.z = cas * 0.4;
+    // Doplňky: pružiny reagují na zrychlení a otáčení těla
+    if (dtK > 0) {
+      const rYted = userRot + P.rY, vy = (P.y - minulaPoza.y) / dtK;
+      m.aktualizuj({
+        ay: Math.max(-40, Math.min(40, (vy - minulaPoza.vy) / dtK)),
+        wy: Math.max(-14, Math.min(14, (rYted - minulaPoza.rY) / dtK)),
+        wx: Math.max(-14, Math.min(14, (P.rX - minulaPoza.rX) / dtK)),
+        wz: Math.max(-6, Math.min(6, (P.rZ - minulaPoza.rZ) / dtK)),
+        cas, dt: dtK,
+      });
+      minulaPoza.y = P.y; minulaPoza.vy = vy; minulaPoza.rY = rYted; minulaPoza.rX = P.rX; minulaPoza.rZ = P.rZ;
+    }
     if (m.svit) svit.intensity = 2.2 + 0.6 * Math.sin(cas * 3);
     const ss = Math.max(0.45, 1 - P.y * 0.35); m.stin.scale.setScalar(ss * P.s);
     for (const k of konfety) {
@@ -198,9 +213,9 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
 
   return {
     nastav(p, e) {
-      scene.remove(model.root); scene.remove(model.stin); model.dispose();
-      model = postavHexika(p, e);
-      scene.add(model.root); scene.add(model.stin);
+      scene.remove(model.root); scene.remove(model.stin); scene.remove(model.okoli); model.dispose();
+      model = postavHexika(p, e, meritko);
+      scene.add(model.root); scene.add(model.stin); scene.add(model.okoli);
       nastavSvit(); vykresli(true); spust();
     },
     reaguj(animace) {
