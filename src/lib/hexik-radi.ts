@@ -10,10 +10,11 @@ import {
   type SbirkaStav,
 } from "./sbirka";
 import { urovenZXP, odmenaUrovne } from "./urovne";
+import { oknaKOtevreni } from "./kalendar";
 import type { Trida } from "@/types";
 
 export interface RadaHexika {
-  druh: "truhla" | "uroven" | "tema" | "mise" | "boss" | "hotovo";
+  druh: "truhla" | "kalendar" | "uroven" | "tema" | "mise" | "boss" | "hotovo";
   text: string;
   tlacitko: string;
   href: string;
@@ -46,6 +47,16 @@ export function radaHexika(v: VstupRady): RadaHexika {
       druh: "truhla", reakce: "jasot", href: "/sbirka",
       text: `${truhel === 1 ? "Čeká na tebe truhla" : `Čekají na tebe ${truhel} ${sklon(truhel, "truhla", "truhly", "truhel")}`}! Pojď ji otevřít, jsem zvědavý, co v ní je.`,
       tlacitko: truhel === 1 ? "Otevřít truhlu" : "Otevřít truhly",
+    };
+  }
+
+  // 1b) Adventní kalendář: okénko čeká
+  const oken = oknaKOtevreni(stav, den);
+  if (oken > 0) {
+    return {
+      druh: "kalendar", reakce: "jasot", href: "/sbirka?tab=kalendar",
+      text: oken === 1 ? "Okénko adventního kalendáře čeká! Co v něm asi bude?" : `Čekají na tebe ${oken} okénka adventního kalendáře!`,
+      tlacitko: "Otevřít okénko",
     };
   }
 

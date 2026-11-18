@@ -34,7 +34,7 @@ export interface Odmena {
    * Odkud jinak než z truhel (v truhlách pak nepadá a nejde koupit):
    * "test" = jen za test nanečisto, "uroven" = dostane ji každý, kdo dosáhne XP úrovně `uroven`.
    */
-  zdroj?: "test" | "uroven";
+  zdroj?: "test" | "uroven" | "kalendar";
   /** U odměny za úroveň: číslo XP úrovně, na které se odemkne. */
   uroven?: number;
   /** Sezónní věc: koupit a vylosovat jde jen v sezóně, co žák jednou má, zůstává mu. */
@@ -92,7 +92,7 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
 };
 
 // [typ, klíč, název, vzácnost, cena, zdroj nebo sezóna?]  „u10“ = odměna za XP úroveň 10
-type Radek = [TypOdmeny, string, string, Vzacnost, number | null, ("test" | SezonaId | `u${number}`)?];
+type Radek = [TypOdmeny, string, string, Vzacnost, number | null, ("test" | "kalendar" | SezonaId | `u${number}`)?];
 const KATALOG: Record<Trida, Radek[]> = {
   5: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -174,6 +174,14 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["oslava", "pirueta", "Dvojitá pirueta", "vzacna", null, "u18"],
     ["oslava", "breakdance", "Breakdance", "vzacna", null, "u22"],
     ["oslava", "hvezdne", "Hvězdné salto", "legenda", null, "u28"],
+    // adventní kalendář (jen z kalendáře, 1.–24. 12.)
+    ["hlava", "parohy", "Sobí parohy", "neobvykla", null, "kalendar"],
+    ["krk", "svetr", "Vánoční svetr", "neobvykla", null, "kalendar"],
+    ["efekt", "koule", "Sněhové koule", "neobvykla", null, "kalendar"],
+    ["pozadi", "svetylka", "Adventní světýlka", "vzacna", null, "kalendar"],
+    ["podoba", "pernicek", "Perníčkový Hexík", "vzacna", null, "kalendar"],
+    ["oslava", "rolnicky", "Rolničky", "vzacna", null, "kalendar"],
+    ["hlava", "hvezda", "Zlatá hvězda", "legenda", null, "kalendar"],
   ],
   9: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -256,6 +264,14 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["oslava", "pirueta", "Dvojitá pirueta", "vzacna", null, "u18"],
     ["oslava", "breakdance", "Breakdance", "vzacna", null, "u22"],
     ["oslava", "hvezdne", "Hvězdné salto", "legenda", null, "u28"],
+    // adventní kalendář (jen z kalendáře, 1.–24. 12.)
+    ["hlava", "parohy", "Sobí parohy", "neobvykla", null, "kalendar"],
+    ["krk", "svetr", "Vánoční svetr", "neobvykla", null, "kalendar"],
+    ["efekt", "koule", "Sněhové koule", "neobvykla", null, "kalendar"],
+    ["pozadi", "svetylka", "Adventní světýlka", "vzacna", null, "kalendar"],
+    ["podoba", "polarni", "Polární Hexík", "vzacna", null, "kalendar"],
+    ["oslava", "rolnicky", "Rolničky", "vzacna", null, "kalendar"],
+    ["hlava", "hvezda", "Zlatá hvězda", "legenda", null, "kalendar"],
   ],
 };
 
@@ -263,6 +279,7 @@ const zKatalogu = (t: Trida) => KATALOG[t].map(([typ, klic, nazev, vz, cena, ext
   ({
     id: `${t}-${typ}-${klic}`, trida: t, typ, klic, nazev, vz, cena,
     ...(extra === "test" ? { zdroj: "test" as const }
+      : extra === "kalendar" ? { zdroj: "kalendar" as const }
       : extra?.startsWith("u") ? { zdroj: "uroven" as const, uroven: Number(extra.slice(1)) }
       : extra ? { sezona: extra as SezonaId } : {}),
   }));
@@ -279,6 +296,7 @@ export const ANIMACE_OSLAVY: Record<string, string> = {
   radost: "radost", poskok: "poskok", tanec: "tanec", kotrmelec: "salto", salto: "salto",
   teleport: "teleport", disco: "disco", piruetka: "pirueta",
   robot: "robot", vlnka: "vlnka", pirueta: "pirueta", breakdance: "breakdance", hvezdne: "hvezdne",
+  rolnicky: "rolnicky",
 };
 
 /** Tmavé vzhledy: obsah appky leží na světlém listu, aby texty mimo karty zůstaly čitelné. */
@@ -291,6 +309,7 @@ export const IKONA_ODMENY: Record<string, string> = {
   nic: "⭕", masle: "🎀", venecek: "🌼", sluchatka: "🎧", klobouk: "🧙", koruna: "👑", cepice: "🎅", kulich: "🧶", ksiltovka: "🧢", celenka: "🥷", svatozar: "😇",
   bryle: "👓", srdce: "😍", hvezdicky: "🤩", slunecni: "🕶️", pixel: "😎", vizor: "🥽",
   motylek: "🎩", sala: "🧣", retez: "⛓️",
+  parohy: "🦌", svetr: "🧶", koule: "⚪", rolnicky: "🔔", hvezda: "🌟",
 };
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
@@ -410,8 +429,31 @@ export interface SbirkaStav {
   uroven: number;
   /** Nejdelší combo (správně za sebou v jednom tréninku). */
   comboRekord: number;
+  /** Adventní kalendář (lib/kalendar.ts). */
+  advent?: AdventStav;
   /** Kdy se stav naposledy změnil (ms) — při slučování vyhrává novější u nasazení a pojistky. */
   t: number;
+}
+
+/** Adventní kalendář: otevřená okénka a tréninky v jednom dni (pravidla v lib/kalendar.ts). */
+export interface AdventStav {
+  rok: number;
+  /** Otevřená okénka (dny 1–24). */
+  otevreno: number[];
+  /** Dokončené tréninky v jednom dni (kvůli dohánění). */
+  tr: { d: string; n: number };
+  /** Kolik zmeškaných okének už žák v ten den dohnal. */
+  dohnano: { d: string; n: number };
+  /** Bonus za všech 24 okének už připsán. */
+  mistr?: boolean;
+}
+
+/** Sloučení stavu kalendáře ze dvou zařízení (nic se neztratí). */
+export function slucAdvent(a?: AdventStav, b?: AdventStav): AdventStav | undefined {
+  if (!a || !b) return a ?? b;
+  if (a.rok !== b.rok) return a.rok > b.rok ? a : b;
+  const vetsi = (x: { d: string; n: number }, y: { d: string; n: number }) => (x.d === y.d ? { d: x.d, n: Math.max(x.n, y.n) } : x.d > y.d ? x : y);
+  return { rok: a.rok, otevreno: [...new Set([...a.otevreno, ...b.otevreno])].sort((x, y) => x - y), tr: vetsi(a.tr, b.tr), dohnano: vetsi(a.dohnano, b.dohnano), mistr: !!(a.mistr || b.mistr) };
 }
 
 export const SBIRKA_KEY = "matemax-sbirka";
@@ -597,11 +639,12 @@ export function losujVzacnost(s: SbirkaStav, t: Truhla, rnd: () => number): Vzac
   return "bezna";
 }
 
-export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: string, rnd: () => number = Math.random): { s: SbirkaStav; vysledek: VysledekTruhly | null } {
-  if (!dostupnostTruhly(s, id, den).ok) return { s, vysledek: null };
+/** @param zdarma truhla jako dárek (adventní kalendář): bez ceny a bez kontroly dostupnosti */
+export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: string, rnd: () => number = Math.random, zdarma = false): { s: SbirkaStav; vysledek: VysledekTruhly | null } {
+  if (!zdarma && !dostupnostTruhly(s, id, den).ok) return { s, vysledek: null };
   const t = TRUHLY.find((x) => x.id === id)!;
   let dalsi: SbirkaStav = { ...s, otevreno: s.otevreno + 1 };
-  if (t.cena !== null) dalsi.utraceno += t.cena;
+  if (t.cena !== null && !zdarma) dalsi.utraceno += t.cena;
   if (id === "denni") dalsi.denniOtevrena = den;
   if (id === "zlata") dalsi.zlataOtevrena = pondeli(den);
   if ((NAROKOVE_TRUHLY as string[]).includes(id)) {
@@ -698,6 +741,7 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
     })),
     uroven: Math.max(a.uroven ?? 1, b.uroven ?? 1),
     comboRekord: Math.max(a.comboRekord ?? 0, b.comboRekord ?? 0),
+    ...(a.advent || b.advent ? { advent: slucAdvent(a.advent, b.advent) } : {}),
     t: Math.max(a.t, b.t),
   };
 }
@@ -835,6 +879,7 @@ export const TROFEJE: Trofej[] = [
   { id: "uroven_30", nazev: "Legenda MateMaxu", popis: "Dosáhni 30. XP úrovně.", ikona: "🏆", splneno: (s) => (s.uroven ?? 1) >= 30 },
   { id: "sezonni", nazev: "Sezónní sběratel", popis: "Získej věc ze sezóny.", ikona: "🎄", splneno: (s) => s.mam.some((id) => !!najdiOdmenu(id)?.sezona) },
   { id: "combo_10", nazev: "Ohnivé combo", popis: "Odpověz správně 10× za sebou.", ikona: "🔥", splneno: (s) => (s.comboRekord ?? 0) >= 10 },
+  { id: "advent_mistr", nazev: "Adventní mistr", popis: "Otevři všech 24 okének adventního kalendáře.", ikona: "🎄", splneno: (s) => (s.advent?.otevreno.length ?? 0) >= 24 },
   { id: "combo_25", nazev: "Nezastavitelný", popis: "Odpověz správně 25× za sebou.", ikona: "⚡", splneno: (s) => (s.comboRekord ?? 0) >= 25 },
 ];
 

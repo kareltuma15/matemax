@@ -107,6 +107,10 @@ export function spustEfekt(typ: string, zdroj?: Element | null, sila = 1): void 
       }
       kolem("hx-p-jiskra", 10, 40, 90, 1200, undefined, () => "background:#FF8A00");
       break;
+    case "koule":
+      kolem("hx-p-hvezda", 14, 50, 150, 1700, () => "●", (i) => `color:#FFFFFF;font-size:${[14, 18, 22][i % 3]}px;text-shadow:0 0 0 #fff,0 2px 6px rgba(70,130,200,.6)`);
+      kolem("hx-p-hvezda", 6, 60, 130, 1700, () => "❄", () => "color:#BFE4FF;text-shadow:0 0 4px #5AA9E6");
+      break;
     case "duha":
       pridej("hx-p-duha", `--x:${ox}px;--y:${oy}px`, 1300);
       kolem("hx-p-hvezda", 8, 50, 110, 1500, () => "★", (i) => `color:${BARVY[i % BARVY.length]}`);
@@ -117,7 +121,7 @@ export function spustEfekt(typ: string, zdroj?: Element | null, sila = 1): void 
 }
 
 /** Spustí CSS animaci reakce na prvku Hexíka (znovu i tutéž za sebou). */
-const REAKCE = ["hx-r-jasot", "hx-r-radost", "hx-r-poskok", "hx-r-povzbud", "hx-r-tanec", "hx-r-salto", "hx-r-teleport", "hx-r-disco", "hx-r-robot", "hx-r-vlnka", "hx-r-pirueta", "hx-r-breakdance", "hx-r-hvezdne", "hx-r-mavani"];
+const REAKCE = ["hx-r-rolnicky", "hx-r-jasot", "hx-r-radost", "hx-r-poskok", "hx-r-povzbud", "hx-r-tanec", "hx-r-salto", "hx-r-teleport", "hx-r-disco", "hx-r-robot", "hx-r-vlnka", "hx-r-pirueta", "hx-r-breakdance", "hx-r-hvezdne", "hx-r-mavani"];
 export function reaguj(el: HTMLElement | null, animace: string): void {
   if (!el) return;
   el.classList.remove(...REAKCE);

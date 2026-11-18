@@ -52,6 +52,9 @@ const PODOBY: Record<string, Podoba> = {
   toxic: { o: "#1C2B12", i: "#2E4A1A", oci: "lidi", obrys: "#A6FF3D", usta: "#A6FF3D", svit: "hx-svit-cyan" },
   chrom: { o: "url(#hxChrom)", i: "#E6ECF3", oci: "visor", rovna: true, usta: "#6F8299" },
   diamant: { o: "url(#hxDiamant)", i: "#E9FBFF", oci: "kulate", obrys: "#BFF4FF", trpyt: true, svit: "hx-svit-cyan" },
+  // z adventního kalendáře (prosinec 2026)
+  pernicek: { o: "#B8743A", i: "#E8B47A", oci: "kulate", tvare: true, obrys: "#FFF4E6" },
+  polarni: { o: "#E6F3FF", i: "#FFFFFF", oci: "lidi", obrys: "#8ED0FF", svit: "hx-svit-cyan" },
 };
 
 /** Nastavení podoby (barvy, oči, doplňky) — stejné čte i 3D Hexík (lib/hexik3d). */

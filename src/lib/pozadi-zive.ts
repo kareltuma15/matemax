@@ -213,6 +213,7 @@ const SCENY: Record<string, () => Scena> = {
   polarni: () => sloz(hvezdy(["#FFFFFF", "#CFE3FF"], 0.9), aurora()),
   generalka: () => sloz(reflektory("rgba(255,224,138,.16)"), konfety(["#F5C542", "#FFE08A", "#FFFFFF"], 0.7)),
   vanoce: () => sloz(svetylka(), snih(1.1)),
+  svetylka: () => sloz(svetylka(), svetlusky("#FFC46B", 0.8), snih(0.5)),
   ledove: () => sloz(snih(0.8, "#8EC9EE"), jiskry(["#FFFFFF", "#7FC8F0"], 1.2)),
   cil: () => konfety(["#F5A623", "#2E6DA4", "#FFFFFF", "#E5383B"], 1),
   duhova: () => sloz(jiskry(["#FFFFFF", "#FFE9A8"], 0.8), roj(() => 4, (p, w, h) => { p.x = rnd(0, w); p.y = rnd(h * 0.1, h * 0.6); p.barva = vyber(["#FF9AC8", "#8ED1FF", "#FFD36E"]); }, (p, w, h, t, dt) => { p.x += Math.sin(t * 0.7 + p.f) * 18 * dt; p.y += Math.cos(t * 0.9 + p.f) * 10 * dt; return true; }, (x, p, t) => { const k = Math.abs(Math.sin(t * 9 + p.f)); x.fillStyle = p.barva; x.globalAlpha = 0.9; x.beginPath(); x.ellipse(p.x - 4 * k, p.y, 4 * k + 0.5, 3, -0.4, 0, Math.PI * 2); x.ellipse(p.x + 4 * k, p.y, 4 * k + 0.5, 3, 0.4, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1; })),

@@ -736,6 +736,8 @@ export function doplnekNaSlot(s: Sklad, slot: "hlava" | "oci" | "krk", klic: str
     if (klic === "ksiltovka") return ksiltovka(s, "#1E2A55", false);
     if (klic === "celenka") return celenka(s);
     if (klic === "svatozar") return svatozar(s);
+    if (klic === "parohy") return parohy(s);
+    if (klic === "hvezda") return zlataHvezda(s);
   }
   if (slot === "oci" && ["bryle", "srdce", "hvezdicky", "slunecni", "pixel", "vizor"].includes(klic)) return bryle(s, klic as DruhBryli);
   if (slot === "krk") {
@@ -743,6 +745,76 @@ export function doplnekNaSlot(s: Sklad, slot: "hlava" | "oci" | "krk", klic: str
     if (klic === "sala") return sala(s);
     if (klic === "medaile") return medaile(s);
     if (klic === "retez") return retez(s);
+    if (klic === "svetr") return svetr(s);
   }
   return null;
+}
+
+// ── Adventní kalendář (prosinec 2026) ───────────────────────────────────────
+
+/** Sobí parohy: větvené, sametově hnědé, pružně se houpou; mezi nimi malá rolnička. */
+export function parohy(s: Sklad): Doplnek {
+  const g = new THREE.Group(); const pruziny: Pruzina[] = [];
+  const mat = s.m(new THREE.MeshPhysicalMaterial({ color: "#8A5A35", roughness: 0.7, sheen: 0.8, sheenRoughness: 0.5, sheenColor: new THREE.Color("#E7C49A") }));
+  const tl = (t: number, r0: number) => r0 * Math.pow(1 - t, 0.7) + 0.012;
+  for (const sx of [-1, 1]) {
+    const pivot = new THREE.Group(); pivot.position.set(sx * 0.32, 0.98, -0.02); pivot.rotation.z = -sx * 0.18;
+    const kmen = new THREE.CubicBezierCurve3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(sx * 0.06, 0.2, 0), new THREE.Vector3(sx * 0.22, 0.38, -0.04), new THREE.Vector3(sx * 0.3, 0.6, -0.08));
+    pivot.add(new THREE.Mesh(s.g(trubka(kmen, (t) => tl(t, 0.07), 28, 12)), mat));
+    for (const [t0, dx, dy] of [[0.35, 0.2, 0.16], [0.62, -0.06, 0.2], [0.82, 0.16, 0.12]] as const) {
+      const z = kmen.getPoint(t0);
+      const vet = new THREE.QuadraticBezierCurve3(z, new THREE.Vector3(z.x + sx * dx * 0.5, z.y + dy * 0.7, z.z), new THREE.Vector3(z.x + sx * dx, z.y + dy, z.z - 0.02));
+      pivot.add(new THREE.Mesh(s.g(trubka(vet, (t) => tl(t, 0.04), 14, 8)), mat));
+    }
+    g.add(pivot);
+    pruziny.push(new Pruzina(pivot, 0.5, 90, 7));
+  }
+  const zvonek = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.07, 16, 12)), zlatoMat(s)); zvonek.position.set(0, 1.04, 0.36); g.add(zvonek);
+  const masle = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.06, 0.025, 8, 20)), samet(s, "#C8202A")); masle.position.set(0, 1.12, 0.36); masle.scale.set(1.6, 0.8, 1); g.add(masle);
+  return { obj: g, pruziny, jiskry: ["#FFE08A", "#FFFFFF"] };
+}
+
+function texturaSvetr(): THREE.CanvasTexture {
+  return platno(128, 64, (x) => {
+    x.fillStyle = "#C8202A"; x.fillRect(0, 0, 128, 64);
+    x.fillStyle = "#FFFFFF";
+    x.fillRect(0, 6, 128, 4); x.fillRect(0, 54, 128, 4);
+    for (let i = 0; i < 16; i++) { // cik-cak pruh
+      x.beginPath(); x.moveTo(i * 8, 22); x.lineTo(i * 8 + 4, 16); x.lineTo(i * 8 + 8, 22); x.lineTo(i * 8 + 4, 28); x.closePath(); x.fill();
+    }
+    for (let i = 0; i < 8; i++) { // vločky
+      const cx = i * 16 + 8, cy = 40;
+      x.fillRect(cx - 1, cy - 5, 2, 10); x.fillRect(cx - 5, cy - 1, 10, 2);
+      x.fillRect(cx - 3, cy - 3, 2, 2); x.fillRect(cx + 1, cy + 1, 2, 2); x.fillRect(cx + 1, cy - 3, 2, 2); x.fillRect(cx - 3, cy + 1, 2, 2);
+    }
+    x.fillStyle = "#2E8B57"; for (let i = 0; i < 32; i++) x.fillRect(i * 4, 11, 2, 2);
+  }, true, [3, 1]);
+}
+
+/** Vánoční svetr: pletený rolák s vločkami a cik-cak vzorem, vpředu sob. */
+export function svetr(s: Sklad): Doplnek {
+  const g = new THREE.Group();
+  const bump = s.t(texturaPleteni([30, 4]));
+  const mat = s.m(new THREE.MeshPhysicalMaterial({ map: s.t(texturaSvetr()), bumpMap: bump, bumpScale: 2, roughness: 0.95, sheen: 0.8, sheenColor: new THREE.Color("#FFFFFF") }));
+  const rolak = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.62, 0.66, 0.26, 48, 1, true)), mat); rolak.position.y = -0.72; rolak.scale.z = 0.86; g.add(rolak);
+  const lem = new THREE.Mesh(s.g(chlupatyLem(0.6, 0.07, 0.15)), s.m(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") })));
+  lem.rotation.x = Math.PI / 2; lem.position.y = -0.58; lem.scale.set(1.03, 0.88, 1); g.add(lem);
+  const nos = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.045, 14, 10)), s.m(new THREE.MeshStandardMaterial({ color: "#FF3B3B", emissive: "#FF2020", emissiveIntensity: 0.6, roughness: 0.3 })));
+  nos.position.set(0, -0.72, 0.58); g.add(nos);
+  let blik = 0;
+  return { obj: g, pruziny: [], krok: (p) => { blik = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(p.cas * 3)); (nos.material as THREE.MeshStandardMaterial).emissiveIntensity = blik; } };
+}
+
+/** Zlatá hvězda: legendární, vznáší se nad hlavou, točí se a září. */
+export function zlataHvezda(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, 1.5, 0);
+  const sh = new THREE.Shape();
+  for (let i = 0; i < 10; i++) { const rr = i % 2 ? 0.16 : 0.38, a = Math.PI / 2 + (i * Math.PI) / 5; if (i === 0) sh.moveTo(Math.cos(a) * rr, Math.sin(a) * rr); else sh.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+  sh.closePath();
+  const geo = s.g(new THREE.ExtrudeGeometry(sh, { depth: 0.08, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.04, bevelSegments: 4 }));
+  geo.center();
+  const hv = new THREE.Mesh(geo, zlatoMat(s)); g.add(hv);
+  const zar = new THREE.Mesh(s.g(new THREE.CircleGeometry(0.5, 40)), s.m(new THREE.MeshBasicMaterial({ color: "#FFD36E", transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending, depthWrite: false })));
+  zar.position.z = -0.06; g.add(zar);
+  return { obj: g, pruziny: [], jiskry: ["#FFFFFF", "#FFE08A", "#FFC93C"], krok: (p) => { g.position.y = 1.5 + Math.sin(p.cas * 1.8) * 0.06; hv.rotation.y = Math.sin(p.cas * 1.2) * 0.6; zar.lookAt(0, 1.5, 10); (zar.material as THREE.MeshBasicMaterial).opacity = 0.08 + 0.06 * Math.sin(p.cas * 3); } };
 }

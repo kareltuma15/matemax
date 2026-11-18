@@ -12,6 +12,8 @@ import Sady from "@/components/hexik/Sady";
 import SezonaPruh from "@/components/hexik/SezonaPruh";
 import OdmenaVizual from "@/components/hexik/OdmenaVizual";
 import CestaUrovni from "@/components/hexik/CestaUrovni";
+import AdventniKalendar from "@/components/hexik/AdventniKalendar";
+import { denAdventu } from "@/lib/kalendar";
 import HexikUvod from "@/components/hexik/HexikUvod";
 import PozadiZive from "@/components/hexik/PozadiZive";
 import TruhlaScena from "@/components/hexik/TruhlaScena";
@@ -32,7 +34,7 @@ import {
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
 
-type Zalozka = "truhly" | "satnik" | "urovne" | "sady" | "trofeje";
+type Zalozka = "kalendar" | "truhly" | "satnik" | "urovne" | "sady" | "trofeje";
 
 function Krystal({ className = "" }: { className?: string }) {
   return <i className={`hx-krystal ${className}`} aria-hidden="true" />;
@@ -45,6 +47,7 @@ function stavOdmeny(s: SbirkaStav, o: Odmena, trida: Trida, den: string) {
   if (maOdmenu(s, o)) return "mam" as const;
   if (o.zdroj === "test") return "test" as const;
   if (o.zdroj === "uroven") return "uroven" as const;
+  if (o.zdroj === "kalendar") return "kalendar" as const;
   if (!jeVNabidce(o, den)) return "mimo" as const;
   if (o.cena === null) return "truhla" as const;
   return "koupit" as const;
@@ -63,7 +66,8 @@ function Sbirka() {
   const { stav, nacteno } = useSbirka();
   const params = useSearchParams();
   const tabParam = params.get("tab");
-  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "trofeje" || tabParam === "sady" || tabParam === "urovne" ? tabParam : "truhly");
+  const vAdventu = denAdventu(localDateStr()) !== null;
+  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "trofeje" || tabParam === "sady" || tabParam === "urovne" ? tabParam : tabParam === "kalendar" && vAdventu ? "kalendar" : "truhly");
   // Ohlášení nahoře (dokončená sada, nová trofej) jdou po sobě, nepřepisují se
   const [fronta, setFronta] = useState<string[]>([]);
   const novaTrofej = fronta[0] ?? null;
@@ -191,7 +195,7 @@ function Sbirka() {
       <HexikUvod trida={trida} naSbirce />
 
       <div className="flex gap-2" role="tablist" aria-label="Sbírka">
-        {(["truhly", "satnik", "urovne", "sady", "trofeje"] as Zalozka[]).map((z) => (
+        {((vAdventu ? ["kalendar", "truhly", "satnik", "urovne", "sady", "trofeje"] : ["truhly", "satnik", "urovne", "sady", "trofeje"]) as Zalozka[]).map((z) => (
           <button
             key={z}
             type="button"
@@ -202,12 +206,13 @@ function Sbirka() {
             style={zalozka === z ? { background: "#0D1B3E" } : undefined}
             data-testid={`zalozka-${z}`}
           >
-            <span aria-hidden="true">{z === "truhly" ? "🎁" : z === "satnik" ? "👕" : z === "urovne" ? "⭐" : z === "sady" ? "📚" : "🏆"}</span>
-            {z === "truhly" ? "Truhly" : z === "satnik" ? "Šatník" : z === "urovne" ? "Úrovně" : z === "sady" ? "Sady" : "Trofeje"}
+            <span aria-hidden="true">{z === "kalendar" ? "🎄" : z === "truhly" ? "🎁" : z === "satnik" ? "👕" : z === "urovne" ? "⭐" : z === "sady" ? "📚" : "🏆"}</span>
+            {z === "kalendar" ? "Kalendář" : z === "truhly" ? "Truhly" : z === "satnik" ? "Šatník" : z === "urovne" ? "Úrovně" : z === "sady" ? "Sady" : "Trofeje"}
           </button>
         ))}
       </div>
 
+      {zalozka === "kalendar" && <AdventniKalendar trida={trida} den={localDateStr()} />}
       {(zalozka === "truhly" || zalozka === "satnik") && <SezonaPruh trida={trida} />}
 
       {zalozka === "truhly" && (
@@ -284,12 +289,12 @@ function Sbirka() {
             <button
               type="button"
               onClick={akce}
-              disabled={vybStav === "nasazeno" || vybStav === "truhla" || vybStav === "test" || vybStav === "uroven" || vybStav === "mimo" || (vybStav === "koupit" && krystaly(stav) < (vyb.cena ?? 0))}
+              disabled={vybStav === "nasazeno" || vybStav === "truhla" || vybStav === "test" || vybStav === "uroven" || vybStav === "kalendar" || vybStav === "mimo" || (vybStav === "koupit" && krystaly(stav) < (vyb.cena ?? 0))}
               className="mm-tlacitko w-full rounded-2xl py-3 font-extrabold text-white disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
               style={{ background: "#5B55D6" }}
               data-testid="satnik-akce"
             >
-              {vybStav === "nasazeno" ? "Nasazeno" : vybStav === "mam" ? "Nasadit" : vybStav === "truhla" ? "Legendární: jen z truhel" : vybStav === "test" ? "Jen za test nanečisto" : vybStav === "uroven" ? `Odemkne úroveň ${vyb.uroven}` : vybStav === "mimo" ? "Jen v sezóně" :
+              {vybStav === "nasazeno" ? "Nasazeno" : vybStav === "mam" ? "Nasadit" : vybStav === "truhla" ? "Legendární: jen z truhel" : vybStav === "test" ? "Jen za test nanečisto" : vybStav === "uroven" ? `Odemkne úroveň ${vyb.uroven}` : vybStav === "kalendar" ? "Jen z adventního kalendáře" : vybStav === "mimo" ? "Jen v sezóně" :
                 krystaly(stav) < (vyb.cena ?? 0) ? `Chybí ${(vyb.cena ?? 0) - krystaly(stav)} krystalů` : <>Koupit za {vyb.cena} <Krystal /></>}
             </button>
             <button type="button" onClick={() => predved(vyb)} className="text-sm font-bold underline" style={{ color: "#5B55D6" }}>Vyzkoušet</button>
@@ -334,7 +339,7 @@ function Sbirka() {
                     <span className="flex items-center justify-center h-14" style={st === "mimo" ? { filter: "grayscale(.8)", opacity: 0.55 } : undefined}><Vizual o={o} /></span>
                     <span className="text-[13px] font-bold leading-tight" style={{ color: "var(--text-primary)" }}>{o.nazev}</span>
                     <span className="text-[11px] font-bold flex items-center gap-1" style={{ color: st === "nasazeno" ? "#1F9D55" : "#5F6982" }}>
-                      {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "mimo" ? "Jen v sezóně" : st === "truhla" ? "🎁 Jen z truhly" : st === "test" ? "🏫 Za test nanečisto" : st === "uroven" ? `⭐ Úroveň ${o.uroven}` : <><Krystal /> {o.cena}</>}
+                      {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "mimo" ? "Jen v sezóně" : st === "truhla" ? "🎁 Jen z truhly" : st === "test" ? "🏫 Za test nanečisto" : st === "uroven" ? `⭐ Úroveň ${o.uroven}` : st === "kalendar" ? "🎄 Z kalendáře" : <><Krystal /> {o.cena}</>}
                     </span>
                   </button>
                 );

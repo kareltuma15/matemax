@@ -14,6 +14,7 @@ import {
   type OdmenaZaTrenink, type MiseId,
 } from "./sbirka";
 import { krokComba, COMBO_EVENT, type StavComba, type DetailComba } from "./combo";
+import { zapocitejTreninkAdvent } from "./kalendar";
 
 export const KRYSTALY_EVENT = "matemax-krystaly";
 /** Splněná denní mise (detail: { ids }) — Hexík u příkladu ji ohlásí. */
@@ -103,7 +104,7 @@ export function odmenaZaKonecTreninku(
   if (odpovezeno < 5) return { krystaly: 0, denniNove: false, zlataNove: false, odhad: odmenaZaOdhad(trida), mise: [], doporuceni };
   const r = upravSbirku((s) => {
     const t = dokoncenyTrenink(s, den);
-    const m = splnMise(t.s, den);
+    const m = splnMise(zapocitejTreninkAdvent(t.s, den), den);
     return { s: m.s, vysledek: { ...t.vysledek, krystaly: t.vysledek.krystaly + m.vysledek.krystaly, mise: m.vysledek.nove } };
   });
   ohlasKrystaly(r.krystaly);

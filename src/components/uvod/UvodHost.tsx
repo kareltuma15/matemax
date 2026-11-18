@@ -5,6 +5,8 @@ import Link from "next/link";
 import Hexik from "@/components/hexik/Hexik";
 import { readLocalTrida, saveLocalTrida } from "@/lib/trida";
 import { EXAMPLES_TEXT, EXAMPLES_LABEL } from "@/lib/site-stats";
+import { HeroScena, TemataObouTrid, NovinkySekce, HexikOdmeny } from "./UvodHra";
+import { ODMENY } from "@/lib/sbirka";
 import "@/app/uvod.css";
 
 /**
@@ -20,8 +22,8 @@ const TESTY_NANECISTO = "https://www.matematika-snadno.cz/prijimacky-nanecisto";
 const TEXTY = {
   9: {
     h1a: "Přijímačky z matiky?", h1b: "Zvládneš je.",
-    sub: "Deset minut denně, úlohy přesně ve stylu CERMAT a Hexík, který ti u každého příkladu fandí. Rodiče každé pondělí vědí, jak na tom jsi.",
-    chipy: [`Více než ${EXAMPLES_TEXT} úloh ve stylu CERMAT`, "9 témat jako v testu", "Na mobilu i počítači"],
+    sub: "Deset minut denně, úlohy přesně ve stylu CERMAT a Hexík ve 3D, který s tebou roste. Za každý správný příklad krystaly, truhly a nové věci. Rodiče každé pondělí vědí, jak na tom jsi.",
+    chipy: [`Více než ${EXAMPLES_TEXT} úloh ve stylu CERMAT`, "30 úrovní s odměnami", "Na mobilu i počítači"],
     testInfo: "Úloha 7 z 16 · 50 bodů",
     tema: "Zlomky", temaB: ["#C2366B", "#FCE7EF"],
     otazkaKolaz: "3/4 + 1/6 = ?", kolaz: ["11/12", "5/6", "7/12", "1/2"], postupKolaz: "9/12 + 2/12 = 11/12",
@@ -36,13 +38,13 @@ const TEXTY = {
     temataH: "Všech 9 témat z testu CERMAT", temataSub: "Každé téma má tři úrovně. Na nejtěžší jsou úlohy jako ve skutečném testu.",
     slabePriklad: "zlomky jdou, slovní úlohy o pohybu ještě ne.",
     format: "70 minut, 16 úloh, 50 bodů.",
-    zdarma: ["Diagnostika všech témat", "Zlomky, výrazy a rovnice", "Hexík, krystaly a truhly"],
+    zdarma: ["Diagnostika všech témat", "Zlomky, výrazy a rovnice", "Hexík ve 3D, truhly a 30 úrovní", "Adventní kalendář"],
     premium: ["Všech 9 témat a cvičné testy CERMAT", "Odhad bodů a slabá místa", "E-mail rodičům každé pondělí"],
     termin: "čtyřleté obory 12.–13. 4.",
   },
   5: {
     h1a: "Na gymnázium", h1b: "hravě.",
-    sub: "Krátké úlohy s obrázky, rýsováním a grafy jako v testu CERMAT pro páťáky. Hexík fandí u každého příkladu a za snahu sbíráš odměny.",
+    sub: "Krátké úlohy s obrázky, rýsováním a grafy jako v testu CERMAT pro páťáky. Hexík ve 3D fandí u každého příkladu a za snahu sbíráš odměny.",
     chipy: ["8 okruhů jako v testu", "Rýsování přímo v appce", "První tři okruhy zdarma"],
     testInfo: "Úloha 7 z 14 · rýsování",
     tema: "Jednotky, čas a peníze", temaB: ["#A66300", "#FDF0DA"],
@@ -58,59 +60,11 @@ const TEXTY = {
     temataH: "Všech 8 okruhů z testu pro páťáky", temataSub: "Každý okruh má tři úrovně. Na nejtěžší jsou úlohy jako ve skutečném testu.",
     slabePriklad: "počítání jde, převody jednotek času ještě ne.",
     format: "70 minut, 14 úloh, 50 bodů.",
-    zdarma: ["Počítání s čísly", "Jednotky, čas a peníze", "Slovní úlohy a úvaha", "Hexík, krystaly a truhly"],
+    zdarma: ["Počítání s čísly", "Jednotky, čas a peníze", "Slovní úlohy a úvaha", "Hexík ve 3D, truhly a 30 úrovní", "Adventní kalendář"],
     premium: ["Všech 8 okruhů", "Odhad bodů a slabá místa", "E-mail rodičům každé pondělí"],
     termin: "víceletá gymnázia 14.–15. 4.",
   },
 } as const;
-
-const B = {
-  MODRA: ["#2E6DA4", "#E4EEF7"], JANTAR: ["#A66300", "#FDF0DA"], FIALOVA: ["#5B55D6", "#EBEAFE"], RUZOVA: ["#C2366B", "#FCE7EF"],
-  TYRKYS: ["#0F7F76", "#DDF3F0"], ORANZ: ["#C4521A", "#FDE9DE"], ZELENA: ["#3B7A24", "#E8F4DF"], PURPUR: ["#8E3FA8", "#F4E7F9"], BRIDLICE: ["#44507A", "#E9EBF3"],
-} as const;
-const I = {
-  POCITANI: "M3 6h6M6 3v6M15 6h6M4 15l5 5M9 15l-5 5M15 16h6M15 20h6",
-  BUBLINA: "M4 5h16v11H9l-5 4V5ZM8 9h8M8 12.5h5",
-  ZLOMEK: "M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18ZM12 3v18M12 12h9",
-  KRUZITKO: "M12 3v3M12 6L6 21M12 6l6 15M8.5 15h7",
-  GRAF: "M4 20h16M7 20v-6M12 20V6M17 20V10",
-};
-type Tema = [nazev: string, barva: keyof typeof B, ikona: string, priklad: string, zdarma: boolean];
-const TEMATA: Record<T, Tema[]> = {
-  9: [
-    ["Zlomky", "RUZOVA", I.ZLOMEK, "2/3 · 9/4 = ?", true],
-    ["Výrazy", "MODRA", I.POCITANI, "Roznásob 3(x − 2)", true],
-    ["Rovnice", "FIALOVA", "M5 9h14M5 15h14", "2x + 5 = 17", true],
-    ["Geometrie", "TYRKYS", "M12 4l9 16H3L12 4Z", "Obsah lichoběžníku", false],
-    ["Slovní úlohy", "JANTAR", I.BUBLINA, "Cena po slevě 20 %", false],
-    ["Grafy a logika", "PURPUR", I.GRAF, "Čtení ze sloupcového grafu", false],
-    ["Konstrukční úlohy", "ZELENA", I.KRUZITKO, "Sestroj trojúhelník ABC", false],
-    ["Úhly", "ORANZ", "M4 20L19 5M4 20h16M12.5 20a8.5 8.5 0 0 0-2.5-6", "Dopočítej úhel α", false],
-    ["Souhrnné", "BRIDLICE", "M12 3l2.7 5.6l6.1.8l-4.4 4.3l1 6.1l-5.4-2.9l-5.4 2.9l1-6.1l-4.4-4.3l6.1-.8L12 3Z", "Úlohy A–E jako v testu", false],
-  ],
-  5: [
-    ["Počítání s čísly", "MODRA", I.POCITANI, "25 · 4 + 18 = ?", true],
-    ["Jednotky, čas a peníze", "JANTAR", "M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18ZM12 7v5l3.5 2", "3 h 20 min = ? min", true],
-    ["Slovní úlohy a úvaha", "FIALOVA", I.BUBLINA, "Kolik stojí 3 sešity?", true],
-    ["Zlomky a části celku", "RUZOVA", I.ZLOMEK, "Kolik je 1/4 z 20?", false],
-    ["Obvod a obsah", "TYRKYS", "M4 4h16v16H4ZM4 12h16M12 4v16", "Obvod obdélníku 5 × 3 cm", false],
-    ["Tělesa a souměrnost", "ORANZ", "M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3ZM4 7.5l8 4.5l8-4.5M12 12v9", "Kolik krychlí má stavba?", false],
-    ["Rýsování", "ZELENA", I.KRUZITKO, "Narýsuj čtverec ABCD", false],
-    ["Grafy, tabulky a vzory", "PURPUR", I.GRAF, "Doplň další číslo řady", false],
-  ],
-};
-
-const RAR = {
-  bezna: ["Běžná", "#9FB4DA", "rgba(159,180,218,.35)"],
-  neobvykla: ["Neobvyklá", "#4ADE80", "rgba(74,222,128,.45)"],
-  vzacna: ["Vzácná", "#7DB7FF", "rgba(125,183,255,.5)"],
-  legenda: ["Legendární", "#FFD166", "rgba(255,209,102,.6)"],
-} as const;
-type Podoba = [klic: string, etapa: number, nazev: string, rarita: keyof typeof RAR];
-const PODOBY: Record<T, Podoba[]> = {
-  9: [["klasik", 3, "Hexík", "bezna"], ["ohnivy", 3, "Ohnivý", "bezna"], ["neon", 4, "Neon", "neobvykla"], ["street", 4, "Streetwear", "neobvykla"], ["kyber", 4, "Kyber", "vzacna"], ["zlaty", 5, "Zlatý Hexík", "legenda"]],
-  5: [["klasik", 3, "Hexík", "bezna"], ["malina", 3, "Malinový", "bezna"], ["kocicka", 3, "Kočičí", "neobvykla"], ["robutek", 4, "Robůtek", "neobvykla"], ["dracek", 4, "Dráček", "vzacna"], ["jednorozec", 5, "Jednorožec", "legenda"]],
-};
 
 const TERMINY = ["12. 12. 2026", "9. 1.", "23. 1.", "6. 2.", "20. 2.", "6. 3.", "20. 3.", "3. 4. 2027"];
 
@@ -129,12 +83,6 @@ function Hlavicka({ pill, pillStyle, nadpis, lead, leadStyle }: { pill: string; 
     </div>
   );
 }
-
-const Sipka = () => (
-  <div className="u-sip" aria-hidden="true">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-  </div>
-);
 
 export default function UvodHost({ diagDone }: { diagDone: boolean }) {
   // Třída: co si návštěvník zvolil už dřív (v prohlížeči), jinak 9. Volba se uloží, takže trénink
@@ -168,8 +116,10 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
             <span style={{ fontWeight: 900, fontSize: 19 }}>MateMax</span>
           </Link>
           <nav style={{ display: "flex", gap: 24, alignItems: "center" }} aria-label="Hlavní">
-            <a className="u-skryt u-nav-a" href="#ukazky">Ukázky</a>
             <a className="u-skryt u-nav-a" href="#temata">Témata</a>
+            <a className="u-skryt u-nav-a" href="#ukazky">Ukázky</a>
+            <a className="u-skryt u-nav-a" href="#novinky" style={{ color: "#17A34A" }}>Novinky</a>
+            <a className="u-skryt u-nav-a" href="#hexik">Hexík</a>
             <a className="u-skryt u-nav-a" href="#rodice">Pro rodiče</a>
             <a className="u-skryt u-nav-a" href="#cena">Cena</a>
             <Link href="/prihlaseni" style={{ color: "#2E6DA4", fontWeight: 800, fontSize: 15, border: "2px solid #2E6DA4", borderRadius: 10, padding: "7px 14px" }}>Přihlásit se</Link>
@@ -190,7 +140,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
 
         <div className="u-wrap u-hero" style={{ position: "relative", zIndex: 2 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 22, alignItems: "flex-start", minWidth: 0 }}>
-            <span className="u-pill" style={{ background: "rgba(255,255,255,.14)", color: "#CFF4FC", border: "1px solid rgba(255,255,255,.22)" }}>Příprava na přijímačky z matematiky</span>
+            <a href="#novinky" className="u-pill" style={{ background: "rgba(255,255,255,.14)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.3)", textTransform: "none", letterSpacing: 0, fontSize: 14, padding: "5px 12px 5px 5px" }}><span style={{ background: "#34D399", color: "#05351F", borderRadius: 999, padding: "3px 9px", fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase" }}>Nově</span>Hexík ve 3D · adventní kalendář od 1. 12.</a>
             <div role="group" aria-label="Třída" style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 999, background: "rgba(255,255,255,.10)", border: "1px solid rgba(255,255,255,.22)" }}>
               <button type="button" className="u-tr" aria-pressed={trida === 9} onClick={() => zvol(9)} style={trida === 9 ? aktivni : neaktivni}>🎒 9. třída</button>
               <button type="button" className="u-tr" aria-pressed={trida === 5} onClick={() => zvol(5)} style={trida === 5 ? aktivni : neaktivni}>✏️ 5. třída</button>
@@ -220,58 +170,20 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
             </div>
           </div>
 
-          {/* Koláž appky */}
-          <div className="u-kolaz" aria-hidden="true">
-            <div className="u-karta u-md" style={{ top: 34, right: 6, width: 270, padding: 18, transform: "rotate(7deg)", background: "#0D1B3E", color: "#FFFFFF" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, fontWeight: 800, color: "#9FB4DA" }}><span>Test CERMAT</span><span style={{ color: "#FFD166" }}>⏱ 52:18</span></div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: 5, marginTop: 14 }}>
-                {["#22C55E", "#22C55E", "#22C55E", "#EF4444", "#22C55E", "#22C55E", "#00B4D8", ...Array(9).fill("#22355F")].map((c, i) => (
-                  <span key={i} style={{ height: 22, borderRadius: 6, background: c }} />
-                ))}
-              </div>
-              <p style={{ margin: "12px 0 0", fontSize: 12, color: "#9FB4DA" }}>{t.testInfo}</p>
-            </div>
-
-            <div className="u-karta u-km">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
-                <span style={stitek(t.temaB)}>{t.tema}</span>
-                <span style={{ fontSize: 13, fontWeight: 800, color: "#4A5470" }}>4 / 10</span>
-              </div>
-              <div style={{ height: 8, borderRadius: 99, background: "#EEF1F6", marginTop: 12, overflow: "hidden" }}><div style={{ width: "40%", height: "100%", background: "linear-gradient(90deg,#2E6DA4,#00B4D8)" }} /></div>
-              <p style={{ margin: "22px 0 18px", fontSize: 26, fontWeight: 900, textAlign: "center" }}>{t.otazkaKolaz}</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                {t.kolaz.map((m, i) => (
-                  <span key={m} style={{ borderRadius: 12, padding: 12, textAlign: "center", fontWeight: 800, fontSize: 18, ...(i === 0 ? { background: "#22C55E", color: "#FFFFFF" } : { background: "#F4F7FC", color: "#33405F" }) }}>{m}</span>
-                ))}
-              </div>
-              <div style={{ marginTop: 14, background: "#E8F8EE", border: "1px solid #B9E8CA", borderRadius: 12, padding: "10px 12px", fontSize: 14, color: "#17663A", fontWeight: 700 }}>✓ Správně! {t.postupKolaz}</div>
-            </div>
-
-            <div className="u-kh">
-              <Hexik podoba="klasik" etapa={4} className="u-kh-hx" />
-              <span className="u-kh-bublina">Paráda! Třetí v řadě 🎉</span>
-            </div>
-
-            <div className="u-karta u-md" style={{ top: 4, left: 150, padding: "10px 14px", fontWeight: 800, fontSize: 14, color: "#C4521A", transform: "rotate(-2deg)" }}>🔥 6 dní v řadě</div>
-            <div className="u-karta u-md" style={{ top: 392, right: -18, width: 190, padding: 14, transform: "rotate(3deg)" }}>
-              <div style={{ fontSize: 12, fontWeight: 800, color: "#5F6982", textTransform: "uppercase", letterSpacing: ".05em" }}>Odhad bodů</div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginTop: 2 }}><span style={{ fontSize: 30, fontWeight: 900 }}>31</span><span style={{ color: "#5F6982", fontWeight: 700 }}>/ 50</span><span style={{ marginLeft: "auto", color: "#17A34A", fontWeight: 900, fontSize: 14 }}>▲ 4</span></div>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: 5, height: 40, marginTop: 6 }}>
-                {[[40, "#CFE0F2"], [52, "#CFE0F2"], [50, "#CFE0F2"], [66, "#9CC3E8"], [74, "#5B9BD5"], [90, "#2E6DA4"]].map(([h, c], i) => (
-                  <span key={i} style={{ flex: 1, height: `${h}%`, background: c as string, borderRadius: 4 }} />
-                ))}
-              </div>
-            </div>
-            <div className="u-karta u-md" style={{ bottom: 0, right: 150, padding: "12px 14px", display: "flex", gap: 10, alignItems: "center", transform: "rotate(-2deg)" }}>
-              <span style={{ fontSize: 26 }}>🎁</span>
-              <span><span style={{ display: "block", fontSize: 12, fontWeight: 800, color: "#8E3FA8", textTransform: "uppercase", letterSpacing: ".05em" }}>Vzácná odměna!</span><span style={{ fontWeight: 800, fontSize: 15 }}>Z denní truhly: Robůtek</span></span>
-              <span style={{ width: 44, height: 44 }}><Hexik podoba="robutek" etapa={4} staticky /></span>
-            </div>
-            <div className="u-karta u-md" style={{ top: 236, left: -18, padding: "8px 12px", fontWeight: 900, fontSize: 15, color: "#2E6DA4", transform: "rotate(-6deg)" }}>+2 💎</div>
-          </div>
+          <HeroScena trida={trida} otazka={t.otazkaKolaz} moznosti={t.kolaz} />
         </div>
 
-        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ position: "absolute", left: 0, bottom: -1, width: "100%", height: 80, display: "block" }} aria-hidden="true"><path d="M0 50 C 240 90 480 10 720 40 C 960 70 1200 20 1440 46 L1440 80 L0 80 Z" fill="#F4F7FC" /></svg>
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ position: "absolute", left: 0, bottom: -1, width: "100%", height: 80, display: "block" }} aria-hidden="true"><path d="M0 50 C 240 90 480 10 720 40 C 960 70 1200 20 1440 46 L1440 80 L0 80 Z" fill="#FFFFFF" /></svg>
+      </section>
+
+      {/* ═══ ČÍSLA ═══ */}
+      <section data-sekce="cisla" style={{ background: "#FFFFFF", borderTop: "1px solid #E8ECF4", borderBottom: "1px solid #E8ECF4" }}>
+        <div className="u-wrap u-g4" style={{ paddingTop: 36, paddingBottom: 36, textAlign: "center" }}>
+          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#2E6DA4" }}>{t.cislo1}</div><div style={{ color: "#5F6982", fontWeight: 600 }}>{t.cislo1p}</div></div>
+          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#17A34A" }}>25 z 25</div><div style={{ color: "#5F6982", fontWeight: 600 }}>mých žáků loni přijato</div></div>
+          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#C4521A" }}>10 min</div><div style={{ color: "#5F6982", fontWeight: 600 }}>denně stačí</div></div>
+          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#8E3FA8" }}>{ODMENY[trida].filter((o) => o.klic !== "nic").length}</div><div style={{ color: "#5F6982", fontWeight: 600 }}>odměn pro Hexíka</div></div>
+        </div>
       </section>
 
       {/* ═══ ZKUS SI PŘÍKLAD ═══ */}
@@ -283,7 +195,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
             <ul style={{ margin: "24px 0 0", padding: 0, listStyle: "none", display: "grid", gap: 12, fontSize: 17, color: "#33405F" }}>
               <li>✅ Úlohy ve stylu skutečných testů CERMAT</li>
               <li>💬 Po chybě hned vidíš postup krok za krokem</li>
-              <li>💎 Za správnou odpověď krystaly pro Hexíka</li>
+              <li>💎 Za správnou odpověď krystaly, za správné v řadě combo</li>
               <li>📈 Appka sama přidá těžší, když už to umíš</li>
             </ul>
           </div>
@@ -322,15 +234,8 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
         </div>
       </section>
 
-      {/* ═══ ČÍSLA ═══ */}
-      <section data-sekce="cisla" style={{ background: "#FFFFFF", borderTop: "1px solid #E8ECF4", borderBottom: "1px solid #E8ECF4" }}>
-        <div className="u-wrap u-g4" style={{ paddingTop: 36, paddingBottom: 36, textAlign: "center" }}>
-          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#2E6DA4" }}>{t.cislo1}</div><div style={{ color: "#5F6982", fontWeight: 600 }}>{t.cislo1p}</div></div>
-          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#17A34A" }}>25 z 25</div><div style={{ color: "#5F6982", fontWeight: 600 }}>mých žáků loni přijato</div></div>
-          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#C4521A" }}>10 min</div><div style={{ color: "#5F6982", fontWeight: 600 }}>denně stačí</div></div>
-          <div><div style={{ fontSize: 38, fontWeight: 900, color: "#8E3FA8" }}>{t.cislo4}</div><div style={{ color: "#5F6982", fontWeight: 600 }}>{t.cislo4p}</div></div>
-        </div>
-      </section>
+      {/* ═══ TŘI KROKY A TÉMATA OBOU TŘÍD ═══ */}
+      <TemataObouTrid krok1={[t.krok1, t.krok1p, t.krok1t]} />
 
       {/* ═══ UKÁZKY APPKY ═══ */}
       <section data-sekce="ukazky" id="ukazky" className="u-sekce" style={{ background: "linear-gradient(180deg,#FFFFFF 0%,#F4F7FC 100%)", scrollMarginTop: 68 }}>
@@ -340,7 +245,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
             {/* 1 Dnešní trénink */}
             <div className="u-karta u-ukazka">
               <div className="u-ukazka-obr" style={{ background: "linear-gradient(135deg,#2E6DA4,#00B4D8)", padding: 22, color: "#FFFFFF" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontWeight: 900, fontSize: 18 }}>Dnešní trénink</span><span style={{ background: "rgba(255,255,255,.2)", borderRadius: 999, padding: "4px 10px", fontWeight: 800, fontSize: 13 }}>🔥 6</span></div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontWeight: 900, fontSize: 18 }}>Dnešní trénink</span><span style={{ background: "linear-gradient(90deg,#FF9A3D,#FF5E3A)", borderRadius: 999, padding: "4px 10px", fontWeight: 900, fontSize: 13 }}>🔥 10× combo</span></div>
                 <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 16 }}>
                   <svg width="78" height="78" viewBox="0 0 80 80" aria-hidden="true" style={{ flex: "none" }}><circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,.25)" strokeWidth="10" /><circle cx="40" cy="40" r="32" fill="none" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" strokeDasharray="80 201" transform="rotate(-90 40 40)" /><text x="40" y="46" textAnchor="middle" fontSize="18" fontWeight="900" fill="#FFFFFF">4/10</text></svg>
                   <div style={{ display: "grid", gap: 7, flex: 1, minWidth: 0 }}>
@@ -348,7 +253,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
                   </div>
                 </div>
               </div>
-              <div style={{ padding: "20px 22px 24px" }}><h3>Trénink na míru</h3><p>Každý den sada příkladů podle toho, co ti jde a co ještě ne.</p></div>
+              <div style={{ padding: "20px 22px 24px" }}><h3>Trénink na míru</h3><p>Každý den sada příkladů podle toho, co ti jde a co ještě ne. Za správné odpovědi v řadě combo.</p></div>
             </div>
 
             {/* 2 Postup po chybě */}
@@ -402,21 +307,12 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
               <div style={{ padding: "20px 22px 24px" }}><h3>Odhad bodů</h3><p>Kolik bodů z 50 bys dnes asi získal. Vidíš, jak roste, a víš, co dotáhnout.</p></div>
             </div>
 
-            {/* 5 Hexík a truhly */}
+            {/* 5 Hexík a truhly ve 3D */}
             <div className="u-karta u-ukazka">
-              <div className="u-ukazka-obr" style={{ background: "radial-gradient(circle at 30% 20%,#5B55D6 0%,#2A1F6E 60%,#1A1446 100%)", padding: "18px 22px", color: "#FFFFFF" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontWeight: 900, fontSize: 18 }}>Tvoje truhly</span><span style={{ background: "rgba(255,255,255,.16)", borderRadius: 999, padding: "4px 10px", fontWeight: 800, fontSize: 13 }}>💎 640</span></div>
-                <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
-                  {([["🎁", "Denní", "Otevřít!", "#FFD166", false], ["💠", "Velká", "350 💎", "#C9C7F5", false], ["🏆", "Zlatá", "4 / 5 dní", "#FFD166", true]] as const).map(([ik, n, pod, c, zlata]) => (
-                    <div key={n} style={{ flex: 1, background: zlata ? "linear-gradient(160deg,rgba(255,209,102,.35),rgba(255,209,102,.1))" : "rgba(255,255,255,.12)", border: zlata ? "1px solid rgba(255,209,102,.5)" : undefined, borderRadius: 14, padding: 10, textAlign: "center" }}>
-                      <div style={{ fontSize: 34 }}>{ik}</div><div style={{ fontWeight: 800, fontSize: 12 }}>{n}</div><div style={{ fontSize: 11, color: c, fontWeight: 800 }}>{pod}</div>
-                    </div>
-                  ))}
-                </div>
-                <Hexik podoba={trida === 5 ? "dracek" : "kyber"} etapa={4} style={{ position: "absolute", right: 14, bottom: 6, width: 70, height: 70 }} />
-                <span style={{ position: "absolute", left: 22, bottom: 18, fontSize: 13, fontWeight: 700, color: "#C9C7F5" }}>Nová podoba: {trida === 5 ? "Dráček" : "Kyber"} ✨</span>
+              <div className="u-ukazka-obr" style={{ background: "linear-gradient(160deg,#2B2370,#0D1B3E)", overflow: "hidden" }}>
+                <img src="/uvod/truhla-3d.webp" alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 22%", display: "block" }} />
               </div>
-              <div style={{ padding: "20px 22px 24px" }}><h3>Hexík a odměny</h3><p>Za trénink krystaly, za krystaly truhly s novými podobami Hexíka.</p></div>
+              <div style={{ padding: "20px 22px 24px" }}><h3>Hexík a truhly ve 3D</h3><p>Za trénink krystaly, za krystaly truhly. Hexík je otevírá s tebou a nové věci si hned obleče.</p></div>
             </div>
 
             {/* 6 E-mail rodičům */}
@@ -439,108 +335,11 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
         </div>
       </section>
 
-      {/* ═══ TŘI KROKY ═══ */}
-      <section data-sekce="jak-to-funguje" id="jak-to-funguje" className="u-sekce" style={{ background: "#FFFFFF" }}>
-        <div className="u-wrap">
-          <Hlavicka pill="Jak to funguje" pillStyle={{ background: "#E4EEF7", color: "#2E6DA4" }} nadpis="Tři kroky k lepšímu výsledku" />
-          <div className="u-kroky" style={{ marginTop: 48 }}>
-            {([
-              ["01", "🎯", t.krok1, t.krok1p, t.krok1t, "#BFD7EE", "#F2F8FE", "#2E6DA4"],
-              ["02", "🏋️", "Denní trénink", "10 minut denně stačí", "Příklady od lehčích k těžším. Co ti nejde, se vrací, dokud to neumíš. Co už umíš, tě nezdržuje.", "#F9D2B3", "#FFF7F0", "#C4521A"],
-              ["03", "📈", "Pokrok a odměny", "Vidíš, jak rosteš", "Odhad bodů, plamínek za dny v řadě a Hexík, který s tebou roste. Rodiče každý týden e-mail.", "#BFE5C9", "#F1FBF4", "#17A34A"],
-            ] as const).map(([n, ik, h, p, txt, bd, bg, c], i) => (
-              <FragmentKrok key={n} sipka={i > 0}>
-                <div style={{ position: "relative", border: `2px solid ${bd}`, background: bg, borderRadius: 22, padding: 28 }}>
-                  <span aria-hidden="true" style={{ position: "absolute", top: 14, right: 20, fontSize: 56, fontWeight: 900, color: c, opacity: 0.12 }}>{n}</span>
-                  <div style={{ fontSize: 40 }} aria-hidden="true">{ik}</div>
-                  <h3 style={{ margin: "12px 0 2px", fontSize: 22, fontWeight: 900 }}>{h}</h3>
-                  <p style={{ margin: 0, fontWeight: 800, color: c }}>{p}</p>
-                  <p style={{ margin: "10px 0 0", color: "#4A5470" }}>{txt}</p>
-                </div>
-              </FragmentKrok>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ TÉMATA ═══ */}
-      <section data-sekce="temata" id="temata" className="u-sekce" style={{ background: "#F4F7FC", scrollMarginTop: 68 }}>
-        <div className="u-wrap">
-          <Hlavicka pill="Co procvičíš" pillStyle={{ background: "#FCE7EF", color: "#C2366B" }} nadpis={t.temataH} lead={t.temataSub} />
-          <div className={trida === 9 ? "u-g3" : "u-g4"} style={{ marginTop: 44 }}>
-            {TEMATA[trida].map(([n, b, ic, ex, free]) => {
-              const [c, tint] = B[b];
-              return (
-                <div key={n} className="u-tema" style={{ background: tint }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ width: 48, height: 48, borderRadius: 14, background: c, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ic} /></svg>
-                    </span>
-                    <span style={{ fontSize: 12, fontWeight: 800, padding: "4px 10px", borderRadius: 999, ...(free ? { background: "#FFFFFF", color: "#17663A" } : { background: "rgba(255,255,255,.6)", color: "#5F6982" }) }}>{free ? "Zdarma" : "Premium"}</span>
-                  </div>
-                  <div style={{ fontWeight: 900, fontSize: 19, marginTop: 14, color: c }}>{n}</div>
-                  <div style={{ marginTop: 10, background: "#FFFFFF", borderRadius: 12, padding: "10px 12px", fontWeight: 700, color: "#33405F", fontSize: 15 }}>{ex}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* ═══ NOVINKY ═══ */}
+      <NovinkySekce trida={trida} />
 
       {/* ═══ HEXÍK A ODMĚNY ═══ */}
-      <section data-sekce="hexik" className="u-sekce" style={{ position: "relative", color: "#FFFFFF", background: "radial-gradient(ellipse at 15% 10%,#3B2F9E 0%,transparent 55%),radial-gradient(ellipse at 90% 90%,#0E6E8C 0%,transparent 50%),#0D1B3E" }}>
-        <Sym c="✦" style={{ top: "12%", left: "88%", fontSize: 40, opacity: 0.08 }} />
-        <Sym c="✦" style={{ top: "74%", left: "6%", fontSize: 34, opacity: 0.08, animationDelay: "1.2s" }} />
-        <div className="u-wrap">
-          <Hlavicka
-            pill="Hexík"
-            pillStyle={{ background: "rgba(175,172,251,.18)", color: "#D9D7FF" }}
-            nadpis={<>Za snahu odměny.<br /><span style={{ color: "#AFACFB" }}>Hexík roste s tebou.</span></>}
-            lead="Za každý správný příklad krystaly. Za krystaly truhly s novými podobami, oslavami a efekty. Nic se nekupuje za peníze, odměny jsou jen za trénink."
-            leadStyle={{ color: "#BFCBE6" }}
-          />
-          <div className="u-g5" style={{ marginTop: 48, alignItems: "end" }}>
-            {([[1, "Nováček", "start", 74], [2, "Učeň", "odhad 15 bodů", 88], [3, "Zkušený", "odhad 25 bodů", 102], [4, "Expert", "odhad 35 bodů", 116], [5, "Mistr", "odhad 43 bodů", 132]] as const).map(([e, n, p, w]) => (
-              <div key={n} style={{ textAlign: "center" }}>
-                <Hexik podoba="klasik" etapa={e} staticky={e !== 5} style={{ width: w, height: w, margin: "0 auto" }} />
-                <div style={{ fontWeight: 900, marginTop: 8, color: e === 5 ? "#FFD166" : undefined }}>{n}</div>
-                <div style={{ fontSize: 13, color: "#9FB4DA" }}>{p}</div>
-              </div>
-            ))}
-          </div>
-
-          <h3 style={{ margin: "64px 0 18px", fontSize: 22, fontWeight: 900, textAlign: "center" }}>Podoby ze šatníku</h3>
-          <div className="u-g6">
-            {PODOBY[trida].map(([k, e, n, r]) => {
-              const [l, c, bd] = RAR[r];
-              return (
-                <div key={k} style={{ background: "rgba(255,255,255,.06)", border: `1px solid ${bd}`, borderRadius: 18, padding: "16px 10px", textAlign: "center" }}>
-                  <Hexik podoba={k} etapa={e} staticky style={{ width: 86, height: 86, margin: "0 auto" }} />
-                  <div style={{ fontWeight: 900, marginTop: 8 }}>{n}</div>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: c, textTransform: "uppercase", letterSpacing: ".05em" }}>{l}</div>
-                </div>
-              );
-            })}
-          </div>
-
-          <h3 style={{ margin: "56px 0 18px", fontSize: 22, fontWeight: 900, textAlign: "center" }}>Pět truhel</h3>
-          <div className="u-g5">
-            {([
-              ["🎁", "Denní", "za dokončený trénink", "rgba(255,255,255,.07)", "rgba(255,255,255,.14)", undefined],
-              ["💎", "Krystalová", "100 krystalů", "rgba(255,255,255,.07)", "rgba(255,255,255,.14)", undefined],
-              ["💠", "Velká", "350 krystalů", "rgba(255,255,255,.07)", "rgba(255,255,255,.14)", undefined],
-              ["🔮", "Mistrovská", "900 krystalů", "rgba(175,172,251,.14)", "rgba(175,172,251,.4)", undefined],
-              ["🏆", "Zlatá", "5 dní tréninku v týdnu", "rgba(255,209,102,.14)", "rgba(255,209,102,.45)", "#FFD166"],
-            ] as const).map(([ik, n, p, bg, bd, c]) => (
-              <div key={n} style={{ background: bg, border: `1px solid ${bd}`, borderRadius: 18, padding: 18, textAlign: "center" }}>
-                <div style={{ fontSize: 42 }} aria-hidden="true">{ik}</div>
-                <div style={{ fontWeight: 900, marginTop: 4, color: c }}>{n}</div>
-                <div style={{ fontSize: 13, color: "#BFCBE6" }}>{p}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HexikOdmeny trida={trida} />
 
       {/* ═══ PRO RODIČE ═══ */}
       <section data-sekce="pro-rodice" id="rodice" className="u-sekce" style={{ background: "linear-gradient(180deg,#EEF5FD 0%,#FFFFFF 100%)", scrollMarginTop: 68 }}>
@@ -554,6 +353,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
                   ["📊", "#E4EEF7", "Odhad bodů", "Kolik bodů z 50 by dítě dnes asi získalo a jak se to mění týden po týdnu."],
                   ["🎯", "#FDE9DE", "Přesná slabá místa", `Ne „nějak to jde“, ale konkrétně: ${t.slabePriklad}`],
                   ["✉️", "#E8F4DF", "E-mail každé pondělí", "Kolik dní dítě trénovalo, co mu jde a co dotáhnout. S Premium."],
+                  ["🎁", "#F4E7F9", "Odměny, které vedou k učení", "Krystaly jen za správné příklady. Hexík radí, co se teď nejvíc vyplatí, nejčastěji nejslabší téma."],
                 ] as const).map(([ik, bg, h, p]) => (
                   <div key={h} className="u-karta" style={{ padding: "18px 20px", display: "flex", gap: 16, alignItems: "flex-start" }}>
                     <span aria-hidden="true" style={{ width: 48, height: 48, borderRadius: 14, background: bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, flex: "none" }}>{ik}</span>
@@ -615,7 +415,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
                   ["Kdykoli, i na mobilu", true, false, true],
                   ["Okamžitá kontrola a postup", true, true, false],
                   ["Týdenní přehled pro rodiče", true, false, false],
-                  ["Odměny a motivace", true, false, false],
+                  ["Hexík ve 3D a odměny jen za učení", true, false, false],
                 ] as const).map(([l, ...h]) => (
                   <tr key={l}><td>{l}</td>{h.map((v, j) => <td key={j}>{v ? <span className="u-ano" aria-label="ano">✓</span> : <span className="u-ne" aria-label="ne">✗</span>}</td>)}</tr>
                 ))}
@@ -660,7 +460,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
               ["Pro koho je MateMax?", "Pro deváťáky před přijímačkami na střední školu a pro páťáky před přijímačkami na víceleté gymnázium. Každý vidí jen úlohy pro svou třídu."],
               ["Kolik času denně to zabere?", "Stačí 10 minut. Pravidelnost je důležitější než dlouhé sezení jednou za týden."],
               ["Co když dítě udělá chybu?", "Appka ukáže postup krok za krokem a úlohu tohoto typu později zopakuje, dokud ji dítě neumí."],
-              ["Odměny? Nebude to jen hra?", "Krystaly jsou jen za správně vyřešené příklady, za rychlé klikání bez přemýšlení nejsou. Nic se nekupuje za peníze."],
+              ["Odměny? Nebude to jen hra?", "Nebude. Krystaly a XP dostane dítě jen za správně vyřešené příklady a dokončený trénink, za čas ani klikání nic. Hexík radí, co se teď nejvíc vyplatí, a nejčastěji pošle dítě k nejslabšímu tématu. Nic se nekupuje za peníze."],
               ["Musím zadávat kartu?", "Ne. Účet zdarma je bez karty. Premium si zapnete, až budete chtít."],
               ["Jak to souvisí s testy nanečisto?", "Test nanečisto ukáže, jak na tom dítě je v reálných podmínkách. MateMax pak pomáhá trénovat přesně to, co v testu nešlo."],
             ] as const).map(([q, a]) => (
@@ -687,14 +487,5 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
       </section>
       <footer style={{ padding: "22px 0", color: "#5F6982", fontSize: 14, textAlign: "center", background: "#FFFFFF" }}>MateMax · Matematika Snadno · Ing. Karel Tůma</footer>
     </div>
-  );
-}
-
-function FragmentKrok({ sipka, children }: { sipka: boolean; children: ReactNode }) {
-  return (
-    <>
-      {sipka && <Sipka />}
-      {children}
-    </>
   );
 }

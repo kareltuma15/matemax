@@ -15,14 +15,13 @@ import vyzvy from "@/data/daily-challenges.json";
 import diagnostika9 from "@/data/diagnostika.json";
 import { DIAG5_IDS } from "@/data/diagnostika-5";
 import { VIDEOLEKCE } from "@/data/videolekce";
-import kronikaData from "@/data/kronika-obsahu.json";
+import { KRONIKA, dnyMezi, type OblastId, type ZapisKroniky, type Kronika } from "./obsah-kronika";
+export { KRONIKA, dnyMezi, type OblastId, type ZapisKroniky, type Kronika };
 import { ODMENY, TROFEJE, SADY, TRUHLY, SEZONY, TYP_NAZEV, type TypOdmeny } from "./sbirka";
 import { dovednostiTematu, dovednostUlohy, TESTOVE, TESTOVE_NAZEV } from "./dovednosti";
 import { temaLabel, TEMATA_ORDER_5, type DBExample, type Trida } from "@/types";
 
 // ── Oblasti a limity ────────────────────────────────────────────────────────
-
-export type OblastId = "priklady9" | "priklady5" | "odmeny" | "odznaky" | "testy" | "diagnostika" | "videolekce" | "vyzvy";
 
 export interface Oblast { id: OblastId; nazev: string; limit: number }
 
@@ -75,15 +74,6 @@ export function pocty(): Record<string, number> {
 
 // ── Kronika ─────────────────────────────────────────────────────────────────
 
-export interface ZapisKroniky {
-  /** Den vydání naostro (YYYY-MM-DD). null = hotové, ale ještě nenasazené. */
-  datum: string | null;
-  oblast: OblastId;
-  popis: string;
-}
-export interface Kronika { stav: Record<string, number>; zapisy: ZapisKroniky[] }
-export const KRONIKA = kronikaData as Kronika;
-
 /** Klíče, u kterých se počet v kódu liší od kroniky (prázdné = kronika je aktuální). */
 export function rozdilyProtiKronice(k: Kronika = KRONIKA): { klic: string; kronika: number | undefined; kod: number }[] {
   const p = pocty();
@@ -94,9 +84,6 @@ export function rozdilyProtiKronice(k: Kronika = KRONIKA): { klic: string; kroni
 // ── Čerstvost ───────────────────────────────────────────────────────────────
 
 export type StavCerstvosti = "ok" | "pozor" | "zle" | "ceka";
-
-export const dnyMezi = (od: string, do_: string) =>
-  Math.round((Date.parse(do_ + "T00:00:00Z") - Date.parse(od + "T00:00:00Z")) / 86400000);
 
 export interface Cerstvost {
   oblast: OblastId; nazev: string; limit: number;

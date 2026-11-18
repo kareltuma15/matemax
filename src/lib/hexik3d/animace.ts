@@ -3,11 +3,11 @@
  * takže oslavy série z šatníku jsou rovnou 3D tanečky.
  */
 export type Reakce3D = "jasot" | "radost" | "poskok" | "povzbud" | "tanec" | "salto" | "teleport" | "disco"
-  | "robot" | "vlnka" | "pirueta" | "breakdance" | "hvezdne" | "mavani";
+  | "robot" | "vlnka" | "pirueta" | "breakdance" | "hvezdne" | "mavani" | "rolnicky";
 
 export const DELKA: Record<Reakce3D, number> = {
   jasot: 1.1, radost: 1.5, poskok: 1.2, povzbud: 2.0, tanec: 2.8, salto: 1.5, teleport: 1.3, disco: 2.6,
-  robot: 3.2, vlnka: 2.6, pirueta: 1.6, breakdance: 3.0, hvezdne: 2.0, mavani: 2.0,
+  robot: 3.2, vlnka: 2.6, pirueta: 1.6, breakdance: 3.0, hvezdne: 2.0, mavani: 2.0, rolnicky: 2.4,
 };
 
 export interface Poza {
@@ -132,6 +132,17 @@ export function reakce(id: Reakce3D, p: number, t: number, P: Poza, vyhozeno: bo
       R.sy = p < 0.1 ? 1 - 0.25 * Math.sin((p / 0.1) * Math.PI) : 1 + 0.1 * Math.sin(p * Math.PI);
       if (p > 0.45 && !vyhozeno) R.konfety = 50;
       break;
+    case "rolnicky": {
+      // Rolničky: drobné poskoky ze strany na stranu, ruce cinkají nad hlavou, nakonec otočka
+      const w = p * Math.PI * 10;
+      q = ease(cl((p - 0.75) / 0.22));
+      R.y = 0.14 * Math.abs(Math.sin(w)) * e + Math.sin(q * Math.PI) * 0.3;
+      R.rZ = 0.18 * Math.sin(w * 0.5) * e * (1 - q);
+      R.aL = 1.9 + 0.5 * Math.sin(w) * e; R.aR = 1.9 + 0.5 * Math.sin(w + Math.PI) * e;
+      R.rY = q * Math.PI * 2;
+      if (p > 0.9 && !vyhozeno) R.konfety = 26;
+      break;
+    }
     case "mavani":
       R.aR = 0.25 + 2.4 * e + 0.4 * Math.sin(p * Math.PI * 10) * e; R.rZ = -0.07 * e; R.lx = 0.4 * e;
       break;
