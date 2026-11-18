@@ -146,7 +146,7 @@ test("stránka Hexík: koupit a nasadit podobu, otevřít truhlu za krystaly", a
   await expect(page.getByTestId("otevrit-mistrovska")).toBeEnabled();
 
   await page.getByTestId("otevrit-krystalova").click();
-  await expect(page.getByTestId("odhaleni")).toContainText(/běžná|neobvyklá|vzácná|legendární/, { timeout: 5000 });
+  await expect(page.getByTestId("odhaleni")).toContainText(/běžná|neobvyklá|vzácná|legendární/, { timeout: 15000 });
   await page.getByTestId("odhaleni-hotovo").click();
   await expect(page.getByTestId("sbirka-krystaly")).not.toContainText("1000 ");
 

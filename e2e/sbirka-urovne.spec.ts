@@ -6,7 +6,7 @@ import { hexikSvg } from "../src/lib/hexik-svg";
 // XP úrovně s odměnami a jeden společný boss (17. 11. 2026).
 
 const s0 = (zmeny: Partial<SbirkaStav> = {}): SbirkaStav => ({ ...vychoziStav(), ...zmeny });
-const UROVNE_S_VECI = [3, 5, 8, 10, 13, 16, 20, 25, 30];
+const UROVNE_S_VECI = [3, 5, 6, 8, 10, 12, 13, 16, 18, 20, 22, 25, 28, 30];
 
 test.describe("XP úrovně: pravidla", () => {
   test("prahy úrovní rostou a hodnost zůstává podle původních hranic", () => {
@@ -52,7 +52,8 @@ test.describe("XP úrovně: pravidla", () => {
     expect(krystaly(r.s)).toBe(ocek);
     expect(r.s.uroven).toBe(10);
     expect(naroku(r.s, "legendarni")).toBe(1);
-    expect(r.s.mam.filter((id) => najdiOdmenu(id)?.zdroj === "uroven")).toHaveLength(4);
+    expect(r.s.mam.filter((id) => najdiOdmenu(id)?.zdroj === "uroven")).toHaveLength(5);
+    expect(r.s.mam).toContain("5-oslava-robot");
     expect(r.s.mam).toContain("5-podoba-vcelka");
 
     // Podruhé nic

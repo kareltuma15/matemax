@@ -96,7 +96,7 @@ test("Vánoce ve Sbírce: pruh sezóny, Vánoční truhla a sezónní věci v š
   await expect(page.getByTestId("sezona-pruh")).toContainText("6. 1.");
   await expect(page.getByTestId("truhla-sezonni")).toContainText("Vánoční truhla");
   await page.getByTestId("otevrit-sezonni").click();
-  await expect(page.getByTestId("odhaleni")).toContainText(/neobvyklá|vzácná|legendární|běžná/, { timeout: 5000 });
+  await expect(page.getByTestId("odhaleni")).toContainText(/neobvyklá|vzácná|legendární|běžná/, { timeout: 15000 });
   await page.getByTestId("odhaleni-hotovo").click();
 
   await page.getByTestId("zalozka-satnik").click();

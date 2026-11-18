@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { hexikSvg, podobaHexika } from "@/lib/hexik-svg";
-import type { Hexik3D } from "@/lib/hexik3d/scena";
+import type { Hexik3D, SlotyHexika } from "@/lib/hexik3d/scena";
 
 interface Props {
   podoba: string;
@@ -18,13 +18,15 @@ interface Props {
   d3?: boolean | "setrne";
   /** Otáčení tažením (jen s d3). */
   otacet?: boolean;
+  /** Doplňky na sloty (hlava, oči, krk) – jen ve 3D. */
+  doplnky?: SlotyHexika;
 }
 
 /** Reakce Hexíka (jásot, tanec…) přichází jako událost na prvku, viz hexik-efekty.ts → reaguj. */
 export const HEXIK_REAKCE_EVENT = "hx-reakce";
 
 /** Hexík (avatar žáka). SVG je naše vlastní kresba, žádný vstup od uživatele. */
-const Hexik = forwardRef<HTMLSpanElement, Props>(function Hexik({ podoba, etapa = 1, className = "", staticky, style, d3, otacet }, ref) {
+const Hexik = forwardRef<HTMLSpanElement, Props>(function Hexik({ podoba, etapa = 1, className = "", staticky, style, d3, otacet, doplnky }, ref) {
   const html = useMemo(() => hexikSvg(podoba, etapa), [podoba, etapa]);
   // Záře kolem 3D Hexíka stejně jako u 2D (zlatý, neon…; v 5. etapě s čepicí zlatá)
   const pp = podobaHexika(podoba);
@@ -32,8 +34,9 @@ const Hexik = forwardRef<HTMLSpanElement, Props>(function Hexik({ podoba, etapa 
   const obal = useRef<HTMLSpanElement | null>(null);
   const inst = useRef<Hexik3D | null>(null);
   const [je3d, setJe3d] = useState(false);
-  const posledni = useRef({ podoba, etapa });
-  posledni.current = { podoba, etapa };
+  const dopKlic = JSON.stringify(doplnky ?? {});
+  const posledni = useRef({ podoba, etapa, doplnky });
+  posledni.current = { podoba, etapa, doplnky };
 
   // Spuštění 3D (jen v prohlížeči, knihovna se načte až teď)
   useEffect(() => {
@@ -47,7 +50,7 @@ const Hexik = forwardRef<HTMLSpanElement, Props>(function Hexik({ podoba, etapa 
       if (otacet) canvas.style.cursor = "grab";
       obal.current.appendChild(canvas);
       try {
-        inst.current = vytvorHexika3D(canvas, posledni.current.podoba, posledni.current.etapa, { otacet, setrne: d3 === "setrne" });
+        inst.current = vytvorHexika3D(canvas, posledni.current.podoba, posledni.current.etapa, { otacet, setrne: d3 === "setrne" }, posledni.current.doplnky ?? {});
         setJe3d(true);
       } catch {
         canvas.remove(); canvas = null;
@@ -65,7 +68,7 @@ const Hexik = forwardRef<HTMLSpanElement, Props>(function Hexik({ podoba, etapa 
     };
   }, [d3, otacet]);
 
-  useEffect(() => { inst.current?.nastav(podoba, etapa); }, [podoba, etapa]);
+  useEffect(() => { inst.current?.nastav(podoba, etapa, posledni.current.doplnky ?? {}); }, [podoba, etapa, dopKlic]);
 
   return (
     <span

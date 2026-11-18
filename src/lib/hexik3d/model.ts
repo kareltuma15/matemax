@@ -12,8 +12,11 @@ import { podobaHexika, type Podoba } from "../hexik-svg";
 import { vytvorCastice, type Castice, type MeritkoCastic } from "./castice";
 import {
   usi, vousky, antena, rohy, kridla, rohJednorozce, hriva, ksiltovka, plamen, vanocniCepice, kulich, medaile, tykadla, vceliKridla, sala, koruna,
-  zlatoMat, type Doplnek, type Sklad, type Pohyb,
+  zlatoMat, doplnekNaSlot, type Doplnek, type Sklad, type Pohyb,
 } from "./doplnky";
+
+/** Doplňky na sloty (klíče z katalogu sbirka.ts). */
+export type SlotyHexika = Partial<Record<"hlava" | "oci" | "krk", string>>;
 
 const N = "#0D1B3E";
 
@@ -93,7 +96,7 @@ function std(barva: string, o: Partial<THREE.MeshStandardMaterialParameters> = {
  * Postaví Hexíka pro danou podobu a etapu. Vrací skupinu a díly pro animace.
  * Rozměry: tělo má poloměr 1 (s obrubou ~1,12), stojí nohama na y ≈ −1,4.
  */
-export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = { value: 400 }): HexikModel {
+export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = { value: 400 }, sloty: SlotyHexika = {}): HexikModel {
   const P = podobaHexika(klic);
   const geometrie: THREE.BufferGeometry[] = [];
   const materialy: THREE.Material[] = [];
@@ -211,12 +214,14 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
   if (P.kridla) { const k = kridla(sklad, P.o.startsWith("#") ? P.o : "#5FC489"); pridej(k); kridlaObj = k.kridla; }
   if (P.roh) pridej(rohJednorozce(sklad));
   if (P.hriva) pridej(hriva(sklad));
-  if (P.ksiltovka) pridej(ksiltovka(sklad, P.o === "#5B55D6" ? "#232F55" : "#1E2A55", P.o === "#5E7148"));
-  if (P.plamen) { const pl = plamen(sklad); pridej(pl); plamenU = pl.uniforms; }
+  if (P.ksiltovka && !sloty.hlava) pridej(ksiltovka(sklad, P.o === "#5B55D6" ? "#232F55" : "#1E2A55", P.o === "#5E7148"));
+  if (P.plamen && !sloty.hlava) { const pl = plamen(sklad); pridej(pl); plamenU = pl.uniforms; }
   if (P.trpyt) jiskryBarvy.push("#FFFFFF", P.o === "url(#hxDiamant)" ? "#BFF4FF" : "#FFE08A");
-  if (P.cepice) pridej(vanocniCepice(sklad, P.o === "#3FA45B" ? "#2F8F4E" : "#C8202A", P.o === "#3FA45B"));
-  if (P.kulich) pridej(kulich(sklad, P.o === "#B9D6F2" ? "#4A7FB5" : "#2E6DA4", "#E5383B"));
-  if (P.medaile) pridej(medaile(sklad));
+  if (P.cepice && !sloty.hlava) pridej(vanocniCepice(sklad, P.o === "#3FA45B" ? "#2F8F4E" : "#C8202A", P.o === "#3FA45B"));
+  if (P.kulich && !sloty.hlava) pridej(kulich(sklad, P.o === "#B9D6F2" ? "#4A7FB5" : "#2E6DA4", "#E5383B"));
+  if (P.medaile && !sloty.krk) pridej(medaile(sklad));
+  // Doplňky ze slotů (hlava, oči, krk) na jakoukoli podobu
+  for (const sl of ["hlava", "oci", "krk"] as const) { const k = sloty[sl]; if (k) { const d = doplnekNaSlot(sklad, sl, k); if (d) pridej(d); } }
   if (P.tykadla) pridej(tykadla(sklad));
   if (P.tykadla && P.pruhy) pridej(vceliKridla(sklad));
   if (P.pruhy) {
@@ -230,11 +235,11 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
 
   // ── Etapy podle odhadu bodů ───────────────────────────────────────────────
   let aura: THREE.Object3D | null = null;
-  if (etapa >= 2 && !P.medaile) {
+  if (etapa >= 2 && !P.medaile && !sloty.krk) {
     const h = new THREE.Mesh(g(new THREE.ExtrudeGeometry(hvezdaShape(0.16, 0.07), { depth: 0.05, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.02, bevelSegments: 3 })), zlato);
     h.position.set(0.52, -0.42, 0.47); body.add(h);
   }
-  if (etapa >= 3 && !P.medaile) pridej(sala(sklad));
+  if (etapa >= 3 && !P.medaile && !sloty.krk) pridej(sala(sklad));
   if (etapa >= 4) {
     const a = new THREE.Group(); a.position.set(0, 0.05, -0.6); body.add(a); aura = a;
     const prsten = new THREE.Mesh(g(new THREE.TorusGeometry(1.55, 0.012, 8, 96)), mt(new THREE.MeshBasicMaterial({ color: "#FFD36E", transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false })));
@@ -243,7 +248,7 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
   }
   // Bodové světlo jen pro studený svit (neon, led); zlatou záři dělá CSS stín kolem plátna (Hexik.tsx)
   const svit: string | null = P.svit === "hx-svit-cyan" ? (P.obrys ?? "#3DF5FF") : null;
-  if (etapa >= 5 && !P.hlava) pridej(koruna(sklad));
+  if (etapa >= 5 && !P.hlava && !sloty.hlava) pridej(koruna(sklad));
 
   // Efekty kolem: jiskry (třpyt, koruna, rolnička, medaile), sníh (zimní čepice), uhlíky (plamen)
   for (const d of doplnky) if (d.jiskry) jiskryBarvy.push(...d.jiskry);

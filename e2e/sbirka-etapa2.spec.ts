@@ -183,7 +183,7 @@ test("Sbírka: denní mise s plamínkem a Truhla doporučení, když na ni má �
   await expect(page.getByTestId("mise-pocet")).toHaveText("0/3");
   await expect(page.getByTestId("truhla-doporuceni")).toContainText("čeká 1");
   await page.getByTestId("otevrit-doporuceni").click();
-  await expect(page.getByTestId("odhaleni")).toContainText(/neobvyklá|vzácná|legendární/, { timeout: 5000 });
+  await expect(page.getByTestId("odhaleni")).toContainText(/neobvyklá|vzácná|legendární/, { timeout: 15000 });
   await page.getByTestId("odhaleni-hotovo").click();
   await expect(page.getByTestId("otevrit-doporuceni")).toBeDisabled();
 });

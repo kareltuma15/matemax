@@ -4,11 +4,13 @@
  */
 import * as THREE from "three";
 
-export type DruhCastic = "snih" | "jiskry" | "uhliky" | "aura";
+export type DruhCastic = "snih" | "jiskry" | "uhliky" | "aura" | "vybuch";
 
 export interface Castice {
   obj: THREE.Points;
   aktualizuj: (dt: number, cas: number) => void;
+  /** Jen u „vybuch“: vystřelí všechny jiskry najednou. */
+  vystrel?: (sila?: number) => void;
   dispose: () => void;
 }
 
@@ -46,7 +48,7 @@ void main() {
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
 export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: string[], pocet?: number): Castice {
-  const n = pocet ?? (druh === "snih" ? 70 : druh === "uhliky" ? 26 : druh === "aura" ? 22 : 10);
+  const n = pocet ?? (druh === "snih" ? 70 : druh === "uhliky" ? 26 : druh === "aura" ? 22 : druh === "vybuch" ? 90 : 10);
   const pos = new Float32Array(n * 3), size = new Float32Array(n), alpha = new Float32Array(n), col = new Float32Array(n * 3);
   // Stav každé částice: rychlost, fáze, život
   const v = new Float32Array(n * 3), faze = new Float32Array(n), zivot = new Float32Array(n), zakladVel = new Float32Array(n);
@@ -70,6 +72,9 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
       v.set([rnd(-0.12, 0.12), rnd(0.5, 0.9), rnd(-0.08, 0.08)], i * 3);
       zivot[i] = prvni ? Math.random() * 1.4 : 0;
       zakladVel[i] = rnd(0.035, 0.06);
+    } else if (druh === "vybuch") {
+      pos.set([0, 0, 0], i * 3); zivot[i] = 99; alpha[i] = 0;
+      zakladVel[i] = rnd(0.06, 0.16);
     } else {
       const u = (i / n) * Math.PI * 2;
       pos.set([Math.cos(u) * 1.55, Math.sin(u) * 1.55, 0], i * 3);
@@ -109,6 +114,13 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
           const f = 0.5 + 0.5 * Math.sin(cas * (druh === "aura" ? 2.2 : 3.1) + faze[i] * 3);
           size[i] = zakladVel[i] * (0.25 + f * f);
           alpha[i] = 0.25 + 0.75 * f;
+        } else if (druh === "vybuch") {
+          zivot[i] += dt;
+          if (zivot[i] < 2) {
+            v[k + 1] -= 4.5 * dt; v[k] *= 0.985; v[k + 2] *= 0.985;
+            pos[k] += v[k] * dt; pos[k + 1] += v[k + 1] * dt; pos[k + 2] += v[k + 2] * dt;
+            alpha[i] = Math.max(0, 1 - zivot[i] / 2); size[i] = zakladVel[i] * (0.6 + 0.4 * Math.sin(cas * 12 + faze[i]));
+          } else alpha[i] = 0;
         } else {
           zivot[i] += dt;
           pos[k] += v[k] * dt; pos[k + 1] += v[k + 1] * dt; pos[k + 2] += v[k + 2] * dt;
@@ -122,6 +134,14 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
       geo.attributes.aSize.needsUpdate = true;
       geo.attributes.aAlpha.needsUpdate = true;
       geo.attributes.aColor.needsUpdate = true;
+    },
+    vystrel(sila = 1) {
+      for (let i = 0; i < n; i++) {
+        const u = Math.random() * Math.PI * 2, rr = rnd(0.4, 1.6) * sila;
+        pos.set([rnd(-0.3, 0.3), 0, rnd(-0.2, 0.2)], i * 3);
+        v.set([Math.cos(u) * rr, rnd(2.2, 4.6) * sila, Math.sin(u) * rr * 0.7], i * 3);
+        zivot[i] = Math.random() * 0.15;
+      }
     },
     dispose() { geo.dispose(); mat.dispose(); },
   };

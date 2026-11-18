@@ -150,7 +150,7 @@ test("Sbírka: po testu nanečisto je pozadí Generálka ve sbírce a truhly če
   await expect(page.getByTestId("truhla-generalka")).toContainText("čeká 1");
   await expect(page.getByTestId("otevrit-legendarni")).toBeEnabled();
   await page.getByTestId("otevrit-legendarni").click();
-  await expect(page.getByTestId("odhaleni")).toContainText("legendární", { timeout: 5000 });
+  await expect(page.getByTestId("odhaleni")).toContainText("legendární", { timeout: 15000 });
   await page.getByTestId("odhaleni-hotovo").click();
   await page.getByTestId("zalozka-satnik").click();
   await page.getByTestId("typ-pozadi").click();

@@ -963,3 +963,8 @@ html[data-vzhled="lava"], .mm-swatch[data-vz="lava"] { --vz-pozadi: radial-gradi
 .hx-3d[data-zare="cyan"] > .hx-canvas { filter: drop-shadow(0 0 8px rgba(61, 245, 255, .6)); }
 /* Živé pozadí (lib/pozadi-zive.ts) nad CSS základem, pod obsahem hlavičky */
 .mm-pozadi-zive { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
+/* 2D záloha pro tanečky, které má jen 3D Hexík */
+.hx.hx-r-robot, .hx.hx-r-vlnka { animation: hx-tanec 1.6s ease-in-out; }
+.hx.hx-r-pirueta, .hx.hx-r-breakdance { animation: hx-disco 1.8s ease-in-out; }
+.hx.hx-r-hvezdne { animation: hx-salto 1.1s cubic-bezier(.4,0,.3,1); }
+.hx.hx-r-mavani { animation: hx-poskok 1.1s ease; }

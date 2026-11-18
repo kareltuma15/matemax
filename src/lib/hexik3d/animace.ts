@@ -2,10 +2,12 @@
  * Pohyby 3D Hexíka. Jména reakcí jsou stejná jako u 2D (hexik-efekty.ts → reaguj, ANIMACE_OSLAVY),
  * takže oslavy série z šatníku jsou rovnou 3D tanečky.
  */
-export type Reakce3D = "jasot" | "radost" | "poskok" | "povzbud" | "tanec" | "salto" | "teleport" | "disco";
+export type Reakce3D = "jasot" | "radost" | "poskok" | "povzbud" | "tanec" | "salto" | "teleport" | "disco"
+  | "robot" | "vlnka" | "pirueta" | "breakdance" | "hvezdne" | "mavani";
 
 export const DELKA: Record<Reakce3D, number> = {
   jasot: 1.1, radost: 1.5, poskok: 1.2, povzbud: 2.0, tanec: 2.8, salto: 1.5, teleport: 1.3, disco: 2.6,
+  robot: 3.2, vlnka: 2.6, pirueta: 1.6, breakdance: 3.0, hvezdne: 2.0, mavani: 2.0,
 };
 
 export interface Poza {
@@ -19,6 +21,8 @@ export interface Poza {
 
 const cl = (v: number) => Math.max(0, Math.min(1, v));
 const ease = (x: number) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
+/** Robot: póza po krocích (ruce, natočení, náklon). */
+const ROBOT = { l: [0.25, 1.57, 1.57, 0.25, 0.25, 2.9, 1.57, 0.25], r: [0.25, 0.25, 1.57, 1.57, 2.9, 0.25, 1.57, 0.25], y: [0, 0, 0.6, 0.6, -0.6, -0.6, 0, 0], z: [0, 0.08, 0, -0.08, 0, 0.08, 0, 0] };
 
 /** Klidové dýchání; `t` v sekundách. */
 export function klid(t: number, pohyb: boolean): Poza {
@@ -89,6 +93,47 @@ export function reakce(id: Reakce3D, p: number, t: number, P: Poza, vyhozeno: bo
       R.aR = p < 0.6 ? (Math.sin(b) > 0 ? 0.4 : 2.8) * e : 0.25 + 2.3 * Math.sin(q * Math.PI);
       R.rZ = p < 0.6 ? 0.12 * Math.sin(b) * e : 0;
       if (p > 0.9 && !vyhozeno) R.konfety = 36;
+      break;
+    case "robot": {
+      const i = Math.min(7, Math.floor(p * 8)), j = Math.max(0, i - 1), k = Math.min(1, ((p * 8) % 1) * 6);
+      R.aL = ROBOT.l[j] + (ROBOT.l[i] - ROBOT.l[j]) * k; R.aR = ROBOT.r[j] + (ROBOT.r[i] - ROBOT.r[j]) * k;
+      R.rY = ROBOT.y[j] + (ROBOT.y[i] - ROBOT.y[j]) * k; R.rZ = ROBOT.z[j] + (ROBOT.z[i] - ROBOT.z[j]) * k;
+      R.y = 0.04 * (1 - k); R.sy = 1 - 0.04 * (1 - k);
+      if (p > 0.9 && !vyhozeno) R.konfety = 20;
+      break;
+    }
+    case "vlnka": {
+      // Vlna rukama zleva doprava a tělo se vlní s ní
+      const w = p * Math.PI * 4;
+      R.aL = 0.3 + 2.2 * Math.max(0, Math.sin(w)) * e; R.aR = 0.3 + 2.2 * Math.max(0, Math.sin(w - 1.3)) * e;
+      R.rZ = 0.14 * Math.sin(w - 0.6) * e; R.y = 0.1 * Math.abs(Math.sin(w * 0.5)) * e; R.sy = 1 + 0.05 * Math.sin(w) * e;
+      if (p > 0.85 && !vyhozeno) R.konfety = 18;
+      break;
+    }
+    case "pirueta":
+      q = ease(cl((p - 0.1) / 0.8));
+      R.rY = q * Math.PI * 4; R.y = Math.sin(p * Math.PI) * 0.45;
+      R.aL = R.aR = 0.25 + 1.3 * Math.sin(p * Math.PI); R.sy = 1 + 0.1 * Math.sin(p * Math.PI);
+      if (p > 0.9 && !vyhozeno) R.konfety = 30;
+      break;
+    case "breakdance": {
+      // Lehne si na bok a roztočí se, pak vyskočí
+      const d = Math.min(1, p / 0.15, (0.8 - p) / 0.1 + 1) * (p < 0.8 ? 1 : Math.max(0, 1 - (p - 0.8) / 0.12));
+      R.rZ = 1.2 * d; R.y = -0.25 * d + (p > 0.85 ? Math.sin(((p - 0.85) / 0.15) * Math.PI) * 0.4 : 0);
+      R.rY = ease(cl((p - 0.12) / 0.7)) * Math.PI * 6;
+      R.aL = 0.25 + 2.6 * d; R.aR = 0.25 + 0.9 * d;
+      if (p > 0.88 && !vyhozeno) R.konfety = 34;
+      break;
+    }
+    case "hvezdne":
+      R.y = Math.sin(p * Math.PI) * 0.85;
+      q = ease(cl((p - 0.12) / 0.7)); R.rX = -q * Math.PI * 4; R.rY = q * Math.PI;
+      R.aL = R.aR = 0.25 + 2.5 * Math.sin(p * Math.PI);
+      R.sy = p < 0.1 ? 1 - 0.25 * Math.sin((p / 0.1) * Math.PI) : 1 + 0.1 * Math.sin(p * Math.PI);
+      if (p > 0.45 && !vyhozeno) R.konfety = 50;
+      break;
+    case "mavani":
+      R.aR = 0.25 + 2.4 * e + 0.4 * Math.sin(p * Math.PI * 10) * e; R.rZ = -0.07 * e; R.lx = 0.4 * e;
       break;
   }
   return R;

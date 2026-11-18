@@ -117,7 +117,7 @@ export function spustEfekt(typ: string, zdroj?: Element | null, sila = 1): void 
 }
 
 /** Spustí CSS animaci reakce na prvku Hexíka (znovu i tutéž za sebou). */
-const REAKCE = ["hx-r-jasot", "hx-r-radost", "hx-r-poskok", "hx-r-povzbud", "hx-r-tanec", "hx-r-salto", "hx-r-teleport", "hx-r-disco"];
+const REAKCE = ["hx-r-jasot", "hx-r-radost", "hx-r-poskok", "hx-r-povzbud", "hx-r-tanec", "hx-r-salto", "hx-r-teleport", "hx-r-disco", "hx-r-robot", "hx-r-vlnka", "hx-r-pirueta", "hx-r-breakdance", "hx-r-hvezdne", "hx-r-mavani"];
 export function reaguj(el: HTMLElement | null, animace: string): void {
   if (!el) return;
   el.classList.remove(...REAKCE);

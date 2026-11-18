@@ -4,7 +4,8 @@
  * a s `setrne` (Hexík u příkladu) se v klidu nekreslí vůbec, jen při reakci.
  */
 import * as THREE from "three";
-import { postavHexika, type HexikModel } from "./model";
+import { postavHexika, type HexikModel, type SlotyHexika } from "./model";
+export type { SlotyHexika };
 import { klid, reakce, DELKA, jeReakce3D, type Reakce3D } from "./animace";
 
 export interface Hexik3DMoznosti {
@@ -15,7 +16,7 @@ export interface Hexik3DMoznosti {
 }
 
 export interface Hexik3D {
-  nastav: (podoba: string, etapa: number) => void;
+  nastav: (podoba: string, etapa: number, sloty?: SlotyHexika) => void;
   reaguj: (animace: string) => void;
   velikost: () => void;
   znic: () => void;
@@ -37,7 +38,7 @@ export function umi3D(): boolean {
   return umi;
 }
 
-export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa: number, mozn: Hexik3DMoznosti = {}): Hexik3D {
+export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa: number, mozn: Hexik3DMoznosti = {}, sloty: SlotyHexika = {}): Hexik3D {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "low-power" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.toneMapping = THREE.NoToneMapping;
@@ -71,7 +72,7 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
 
   // Velikost částic (sníh, jiskry) podle výšky plátna v pixelech
   const meritko = { value: 400 };
-  let model: HexikModel = postavHexika(podoba, etapa, meritko);
+  let model: HexikModel = postavHexika(podoba, etapa, meritko, sloty);
   scene.add(model.root); scene.add(model.stin); scene.add(model.okoli);
   const nastavSvit = () => { svit.color.set(model.svit ?? "#FFFFFF"); svit.intensity = model.svit ? 2.5 : 0; };
   nastavSvit();
@@ -212,9 +213,9 @@ export function vytvorHexika3D(canvas: HTMLCanvasElement, podoba: string, etapa:
   spust();
 
   return {
-    nastav(p, e) {
+    nastav(p, e, sl = {}) {
       scene.remove(model.root); scene.remove(model.stin); scene.remove(model.okoli); model.dispose();
-      model = postavHexika(p, e, meritko);
+      model = postavHexika(p, e, meritko, sl);
       scene.add(model.root); scene.add(model.stin); scene.add(model.okoli);
       nastavSvit(); vykresli(true); spust();
     },

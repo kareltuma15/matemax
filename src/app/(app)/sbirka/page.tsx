@@ -14,6 +14,7 @@ import OdmenaVizual from "@/components/hexik/OdmenaVizual";
 import CestaUrovni from "@/components/hexik/CestaUrovni";
 import HexikUvod from "@/components/hexik/HexikUvod";
 import PozadiZive from "@/components/hexik/PozadiZive";
+import TruhlaScena from "@/components/hexik/TruhlaScena";
 import JakZiskat from "@/components/hexik/JakZiskat";
 import { zkontrolujUroven } from "@/lib/sbirka-trenink";
 import { urovenZXP } from "@/lib/urovne";
@@ -26,7 +27,7 @@ import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import {
   ODMENY, TRUHLY, VZACNOST, TYP_NAZEV, ANIMACE_OSLAVY, ETAPY_HEXIKA, DENNI_STROP,
   POJISTKA_VZACNA, krystaly, maOdmenu, nasazena, etapaHexika, dostupnostTruhly, otevriTruhlu,
-  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, SADY, SADA_EVENT, SEZONY, aktualniSezona, konecSezony, jeVNabidce, TMAVE_VZHLEDY, type NarokTruhla,
+  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, SADY, SADA_EVENT, SEZONY, aktualniSezona, konecSezony, jeVNabidce, TMAVE_VZHLEDY, slotyHexika, SLOTY, type NarokTruhla,
   type Odmena, type TypOdmeny, type TruhlaId, type VysledekTruhly, type SbirkaStav,
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
@@ -147,13 +148,15 @@ function Sbirka() {
     predved(vyb);
   }
 
+  // Výsledek se losuje hned, 3D truhla ho pak ukáže (dítě klepe, Hexík otevírá)
   function otevri(id: TruhlaId) {
-    setOtevirani({ id, faze: "tres", vysledek: null });
-    window.setTimeout(() => {
-      const vysledek = upravSbirku((s) => otevriTruhlu(s, id, trida, localDateStr()));
-      setOtevirani({ id, faze: "hotovo", vysledek });
-      if (vysledek) window.setTimeout(() => spustEfekt(vysledek.vz === "legenda" || vysledek.vz === "vzacna" ? "hvezdy" : "jiskry", odhaleniRef.current, vysledek.vz === "legenda" ? 2 : 1.2), 80);
-    }, 700);
+    const vysledek = upravSbirku((s) => otevriTruhlu(s, id, trida, localDateStr()));
+    setOtevirani({ id, faze: vysledek ? "tres" : "hotovo", vysledek });
+  }
+  function odhal() {
+    setOtevirani((o) => (o ? { ...o, faze: "hotovo" } : o));
+    const v = otevirani?.vysledek;
+    if (v) window.setTimeout(() => spustEfekt(v.vz === "legenda" || v.vz === "vzacna" ? "hvezdy" : "jiskry", odhaleniRef.current, v.vz === "legenda" ? 2 : 1.2), 80);
   }
 
   if (!nacteno) return <div className="mm-karta h-64 animate-pulse" />;
@@ -168,7 +171,7 @@ function Sbirka() {
         data-testid="sbirka-hlavicka"
       >
         <PozadiZive klic={pozadi.klic} />
-        <Hexik podoba={podoba.klic} etapa={etapa} d3 otacet className="w-28 lg:w-36 shrink-0" />
+        <Hexik podoba={podoba.klic} etapa={etapa} d3 otacet doplnky={slotyHexika(stav, trida)} className="w-28 lg:w-36 shrink-0" />
         <div className="flex-1 min-w-0 text-center sm:text-left">
           <p className="text-xs font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>Tvůj Hexík · {etapaInfo.nazev}</p>
           <h1 className="text-3xl lg:text-4xl font-black mt-1 flex items-center gap-2 justify-center sm:justify-start" data-testid="sbirka-krystaly">
@@ -269,10 +272,10 @@ function Sbirka() {
                 data-testid="satnik-nahled-pozadi"
               >
                 <PozadiZive klic={nahledPozadi} />
-                <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet className="w-28" />
+                <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet doplnky={slotyHexika(stav, trida)} className="w-28" />
               </div>
             ) : (
-              <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet className="w-36" />
+              <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet doplnky={slotyHexika(stav, trida, (SLOTY as readonly string[]).includes(vyb.typ) ? vyb : undefined)} className="w-36" />
             )}
             <p className="text-sm text-center" style={{ color: "#5F6982" }}>
               <span className="inline-block rounded-full px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-white mr-1" style={{ background: VZACNOST[vyb.vz].barva }}>{VZACNOST[vyb.vz].nazev}</span>
@@ -294,23 +297,23 @@ function Sbirka() {
 
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-2" role="tablist" aria-label="Druh odměny">
-              {(["podoba", "oslava", "efekt", "vzhled", "pozadi"] as TypOdmeny[]).map((t) => (
+              {(["podoba", "hlava", "oci", "krk", "oslava", "efekt", "vzhled", "pozadi"] as TypOdmeny[]).map((t) => (
                 <button
                   key={t}
                   type="button"
                   role="tab"
                   aria-selected={typ === t}
                   onClick={() => { setTyp(t); setVybrana(null); }}
-                  className={`flex-1 min-w-[30%] sm:min-w-0 rounded-xl px-3 py-2 text-sm font-extrabold ${typ === t ? "text-white" : "mm-obrys"}`}
+                  className={`flex-1 min-w-[22%] sm:min-w-0 rounded-xl px-2.5 py-2 text-sm font-extrabold ${typ === t ? "text-white" : "mm-obrys"}`}
                   style={typ === t ? { background: "#5B55D6" } : undefined}
                   data-testid={`typ-${t}`}
                 >
-                  {t === "podoba" ? "Podoba" : t === "oslava" ? "Oslava série" : t === "efekt" ? "Efekt" : t === "vzhled" ? "Vzhled appky" : "Pozadí"}
+                  {t === "podoba" ? "Podoba" : t === "hlava" ? "Hlava" : t === "oci" ? "Oči" : t === "krk" ? "Krk" : t === "oslava" ? "Tanečky" : t === "efekt" ? "Efekt" : t === "vzhled" ? "Vzhled appky" : "Pozadí"}
                 </button>
               ))}
             </div>
             <p className="text-xs" style={{ color: "#5F6982" }}>
-              {typ === "podoba" ? "Jak Hexík vypadá u příkladů a v profilu." : typ === "oslava" ? "Co Hexík udělá, když máš tři správně v řadě." : typ === "efekt" ? "Co vyletí, když odpovíš správně." : typ === "vzhled" ? "Klepni a vyzkoušej: změní se pozadí celé appky. Nasadit ho můžeš, až ho máš." : "Pozadí hlavičky v profilu a tady ve Sbírce."}
+              {typ === "podoba" ? "Jak Hexík vypadá u příkladů a v profilu." : typ === "hlava" || typ === "oci" || typ === "krk" ? "Doplněk si nasadíš na jakoukoli podobu Hexíka. Otoč si ho prstem." : typ === "oslava" ? "Taneček, který Hexík zatančí, když máš tři správně v řadě. Některé se odemykají jen za XP úrovně." : typ === "efekt" ? "Co vyletí, když odpovíš správně." : typ === "vzhled" ? "Klepni a vyzkoušej: změní se pozadí celé appky. Nasadit ho můžeš, až ho máš." : "Pozadí hlavičky v profilu a tady ve Sbírce."}
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5" data-testid="satnik-mrizka">
               {seznam.map((o) => {
@@ -356,9 +359,11 @@ function Sbirka() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" style={{ background: "rgba(8,12,30,.78)" }} role="dialog" aria-modal="true" aria-label="Otevírání truhly">
           <div className="w-full max-w-sm rounded-3xl p-6 flex flex-col items-center gap-4 text-center text-white" style={{ background: "radial-gradient(circle at 50% 30%,#2A2F7A,#0D1B3E 72%)" }}>
             <p className="text-sm font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>{TRUHLY.find((t) => t.id === otevirani.id)?.nazev}</p>
-            <span className={`hx-truhla ${otevirani.faze === "tres" ? "hx-tres" : "hx-otevrena"}`} data-druh={otevirani.id}><span className="hx-vika" /><span className="hx-telo" /><span className="hx-zamek" /></span>
-            <div ref={odhaleniRef} className="min-h-[150px] flex flex-col items-center justify-center gap-2" aria-live="polite" data-testid="odhaleni">
-              {otevirani.faze === "tres" && <p style={{ color: "#D9D8FE" }}>…</p>}
+            {otevirani.vysledek && (
+              <TruhlaScena druh={otevirani.id} vz={otevirani.vysledek.vz} podoba={podoba.klic} etapa={etapa} sloty={slotyHexika(stav, trida)} onOtevreno={odhal} />
+            )}
+            <div ref={odhaleniRef} className="min-h-[120px] flex flex-col items-center justify-center gap-2" aria-live="polite" data-testid="odhaleni">
+              
               {otevirani.faze === "hotovo" && otevirani.vysledek && (
                 <>
                   {otevirani.vysledek.odmena && <Vizual o={otevirani.vysledek.odmena} velikost={84} />}

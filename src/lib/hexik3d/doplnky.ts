@@ -557,3 +557,192 @@ export function sala(s: Sklad, a = "#E0565B", b = "#FFFFFF"): Doplnek {
   }
   return { obj: g, pruziny };
 }
+
+
+// ── Doplňky na sloty (nasazují se na jakoukoli podobu) ──────────────────────
+
+/** Mašle na hlavu: dvě saténové smyčky a uzel, smyčky pruží. */
+export function masle(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0.42, 0.86, 0.22); g.rotation.set(0.25, 0, -0.45); g.scale.setScalar(1.45);
+  const mat = s.m(new THREE.MeshPhysicalMaterial({ color: "#FF5A9E", roughness: 0.35, sheen: 1, sheenRoughness: 0.25, sheenColor: new THREE.Color("#FFD0E6"), clearcoat: 0.4 }));
+  const pruziny: Pruzina[] = [];
+  for (const sx of [-1, 1]) {
+    const pivot = new THREE.Group(); g.add(pivot);
+    const sm = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.12, 0.05, 12, 24)), mat); sm.scale.set(1.25, 0.85, 0.6); sm.position.x = sx * 0.15; pivot.add(sm);
+    pruziny.push(new Pruzina(pivot, 0.5, 70, 5, 0, sx));
+  }
+  const uzel = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.065, 16, 12)), mat); g.add(uzel);
+  for (const sx of [-1, 1]) { const st = new THREE.Mesh(s.g(new THREE.BoxGeometry(0.06, 0.2, 0.02)), mat); st.position.set(sx * 0.05, -0.12, 0); st.rotation.z = sx * 0.3; g.add(st); }
+  return { obj: g, pruziny, jiskry: ["#FFD0E6"] };
+}
+
+/** Květinový věneček: zelená obruč s kvítky. */
+export function venecek(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, 1.0, 0);
+  const obruc = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.42, 0.04, 10, 48)), s.m(new THREE.MeshStandardMaterial({ color: "#4FA45B", roughness: 0.7 }))); obruc.rotation.x = Math.PI / 2; g.add(obruc);
+  const barvy = ["#FF7AB8", "#FFD24D", "#FFFFFF", "#B07CFF", "#FF9A5A"];
+  const stred = s.m(new THREE.MeshStandardMaterial({ color: "#FFB000", roughness: 0.5 }));
+  for (let i = 0; i < 9; i++) {
+    const u = (i / 9) * Math.PI * 2, kv = new THREE.Group(); kv.position.set(Math.cos(u) * 0.42, 0.03, Math.sin(u) * 0.42); kv.lookAt(Math.cos(u) * 2, 0.6, Math.sin(u) * 2);
+    const pm = s.m(new THREE.MeshPhysicalMaterial({ color: barvy[i % barvy.length], roughness: 0.5, sheen: 0.8, sheenColor: new THREE.Color("#FFFFFF") }));
+    for (let k = 0; k < 5; k++) { const pl = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.05, 10, 8)), pm); const a = (k / 5) * Math.PI * 2; pl.position.set(Math.cos(a) * 0.05, Math.sin(a) * 0.05, 0); pl.scale.set(1, 1, 0.4); kv.add(pl); }
+    const st = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.03, 8, 6)), stred); st.position.z = 0.02; kv.add(st);
+    g.add(kv);
+  }
+  return { obj: g, pruziny: [] };
+}
+
+/** Sluchátka se svítícími LED, která pulzují do rytmu. */
+export function sluchatka(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, 0.3, 0);
+  const tm = s.m(new THREE.MeshPhysicalMaterial({ color: "#1E2230", roughness: 0.35, metalness: 0.4, clearcoat: 0.8 }));
+  const polstr = s.m(new THREE.MeshPhysicalMaterial({ color: "#2B3044", roughness: 0.9, sheen: 0.6, sheenColor: new THREE.Color("#8A90B0") }));
+  g.add(new THREE.Mesh(s.g(new THREE.TorusGeometry(1.08, 0.06, 12, 48, Math.PI)), tm));
+  const ledMat = s.m(new THREE.MeshBasicMaterial({ color: "#3DF5FF" }));
+  for (const sx of [-1, 1]) {
+    const mus = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.24, 0.24, 0.2, 32)), tm); mus.rotation.z = Math.PI / 2; mus.position.x = sx * 1.08; g.add(mus);
+    const pol = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.19, 0.06, 10, 24)), polstr); pol.rotation.y = Math.PI / 2; pol.position.x = sx * 0.97; g.add(pol);
+    const led = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.16, 0.025, 8, 32)), ledMat); led.rotation.y = Math.PI / 2; led.position.x = sx * 1.19; g.add(led);
+  }
+  return { obj: g, pruziny: [], krok: (p) => { const k = 0.5 + 0.5 * Math.sin(p.cas * 6); ledMat.color.setRGB(0.24 + 0.6 * k, 0.96 - 0.5 * k, 1); } };
+}
+
+/** Čarodějný klobouk: široká krempa, ohnutá pružná špička, přezka a jiskry. */
+export function klobouk(s: Sklad): Doplnek {
+  const zaklad = new THREE.Group(); zaklad.position.set(0, 0.92, 0); zaklad.rotation.z = 0.08;
+  const latka = samet(s, "#5B3FD6", "#C9B8FF");
+  const krempa = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.78, 0.82, 0.05, 48)), latka); zaklad.add(krempa);
+  const pas = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.47, 0.48, 0.14, 40, 1, true)), samet(s, "#F5A623")); pas.position.y = 0.09; zaklad.add(pas);
+  const prezka = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.07, 0.02, 6, 4)), zlatoMat(s)); prezka.position.set(0, 0.09, 0.48); prezka.rotation.z = Math.PI / 4; zaklad.add(prezka);
+  const pruziny: Pruzina[] = [];
+  const N = 5, h = 0.24, r = (t: number) => 0.46 * (1 - t) + 0.03;
+  let rodic: THREE.Object3D = zaklad;
+  for (let i = 0; i < N; i++) {
+    const seg = new THREE.Group(); seg.position.y = i === 0 ? 0.03 : h; seg.rotation.z = i < 2 ? 0 : 0.18 + i * 0.05;
+    const geo = s.g(new THREE.CylinderGeometry(r((i + 1) / N), r(i / N), h * 1.04, 28, 1, true)); geo.translate(0, h / 2, 0);
+    seg.add(new THREE.Mesh(geo, latka));
+    if (i > 0) { const kl = new THREE.Mesh(s.g(new THREE.SphereGeometry(r(i / N), 20, 10)), latka); kl.scale.y = 0.5; seg.add(kl); }
+    rodic.add(seg); rodic = seg;
+    pruziny.push(new Pruzina(seg, 0.15 + i * 0.12, 70, 5, -1, i));
+  }
+  const hv = new THREE.Mesh(s.g(new THREE.OctahedronGeometry(0.06)), zlatoMat(s)); hv.position.y = h + 0.03; rodic.add(hv);
+  return { obj: zaklad, pruziny, jiskry: ["#FFE08A", "#C9B8FF"] };
+}
+
+/** Ninja čelenka s vlajícími konci. */
+export function celenka(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, 0.5, 0);
+  const mat = samet(s, "#E5383B", "#FF9A9A");
+  const pas = new THREE.Mesh(s.g(new THREE.CylinderGeometry(1.0, 1.0, 0.17, 6, 1, true)), mat); pas.rotation.y = Math.PI / 6; pas.scale.set(0.98, 1, 0.56); g.add(pas);
+  const pruziny: Pruzina[] = [];
+  for (const [nakl, faze] of [[1.9, 0], [2.2, 1.5]] as const) {
+    let rodic: THREE.Object3D = g;
+    const zac = new THREE.Group(); zac.position.set(-0.9, 0, -0.35); zac.rotation.z = nakl; rodic.add(zac); rodic = zac;
+    for (let k = 0; k < 3; k++) {
+      const seg = new THREE.Group(); if (k > 0) seg.position.y = 0.2;
+      const kus = new THREE.Mesh(s.g(new THREE.BoxGeometry(0.13 - k * 0.02, 0.21, 0.02)), mat); kus.position.y = 0.1; seg.add(kus);
+      rodic.add(seg); rodic = seg;
+      pruziny.push(new Pruzina(seg, 0.6 + k * 0.5, 45, 3.5, 0, faze + k));
+    }
+  }
+  return { obj: g, pruziny };
+}
+
+/** Svatozář: zlatý prstenec, který se vznáší a září. */
+export function svatozar(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, 1.45, 0);
+  const prsten = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.42, 0.05, 16, 64)), s.m(new THREE.MeshStandardMaterial({ color: "#FFE08A", emissive: "#FFC93C", emissiveIntensity: 1.2, roughness: 0.3 })));
+  prsten.rotation.x = Math.PI / 2 - 0.55; g.add(prsten);
+  const zar = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.42, 0.14, 8, 64)), s.m(new THREE.MeshBasicMaterial({ color: "#FFD36E", transparent: true, opacity: 0.22, blending: THREE.AdditiveBlending, depthWrite: false })));
+  zar.rotation.x = Math.PI / 2 - 0.55; g.add(zar);
+  return { obj: g, pruziny: [], jiskry: ["#FFFFFF", "#FFE08A"], krok: (p) => { g.position.y = 1.45 + Math.sin(p.cas * 2) * 0.05; g.rotation.y = p.cas * 0.6; } };
+}
+
+type DruhBryli = "bryle" | "srdce" | "hvezdicky" | "slunecni" | "pixel" | "vizor";
+
+/** Brýle: kulaté, srdíčkové, hvězdné, sluneční, pixelové nebo kyber vizor. */
+export function bryle(s: Sklad, druh: DruhBryli): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, 0.11, 0.52);
+  if (druh === "vizor") {
+    const v = new THREE.Mesh(s.g(new THREE.CapsuleGeometry(0.17, 0.66, 8, 20)), s.m(new THREE.MeshPhysicalMaterial({ color: "#3DF5FF", emissive: "#1AB8FF", emissiveIntensity: 0.9, roughness: 0.05, transparent: true, opacity: 0.85, clearcoat: 1 })));
+    v.rotation.z = Math.PI / 2; v.scale.z = 0.35; g.add(v);
+    const ram = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.5, 0.02, 8, 48)), s.m(new THREE.MeshStandardMaterial({ color: "#9FB3C8", metalness: 0.9, roughness: 0.2 }))); ram.scale.set(1, 0.38, 1); g.add(ram);
+    const sken = new THREE.Mesh(s.g(new THREE.PlaneGeometry(0.06, 0.22)), s.m(new THREE.MeshBasicMaterial({ color: "#FFFFFF", transparent: true, opacity: 0.7 }))); sken.position.z = 0.07; g.add(sken);
+    return { obj: g, pruziny: [], krok: (p) => { sken.position.x = Math.sin(p.cas * 2.2) * 0.42; } };
+  }
+  if (druh === "pixel") {
+    const cerna = s.m(new THREE.MeshStandardMaterial({ color: "#111522", roughness: 0.4 }));
+    const bila = s.m(new THREE.MeshBasicMaterial({ color: "#FFFFFF" }));
+    const px = 0.055;
+    const mapa = ["111111111111", "011110011110", "011220011220", "001100001100"];
+    mapa.forEach((radek, y) => [...radek].forEach((c, x) => {
+      if (c === "0") return;
+      const b = new THREE.Mesh(s.g(new THREE.BoxGeometry(px, px, 0.04)), c === "2" ? bila : cerna);
+      b.position.set((x - 5.5) * px, (1.5 - y) * px, 0); g.add(b);
+    }));
+    return { obj: g, pruziny: [] };
+  }
+  const ramMat = s.m(new THREE.MeshPhysicalMaterial({ color: druh === "srdce" ? "#FF5A9E" : druh === "hvezdicky" ? "#F5A623" : druh === "slunecni" ? "#111522" : "#2B3A55", roughness: 0.3, clearcoat: 1, metalness: druh === "bryle" ? 0.6 : 0 }));
+  const sklo = s.m(new THREE.MeshPhysicalMaterial({ color: druh === "slunecni" ? "#1A1F33" : druh === "srdce" ? "#FF9AC8" : druh === "hvezdicky" ? "#FFE08A" : "#DDEFFF", roughness: 0.05, transparent: true, opacity: druh === "slunecni" ? 0.92 : 0.35, clearcoat: 1, iridescence: druh === "slunecni" ? 0.6 : 0 }));
+  const tvar = (): THREE.Shape => {
+    const sh = new THREE.Shape();
+    if (druh === "srdce") { sh.moveTo(0, -0.11); sh.bezierCurveTo(-0.2, 0.0, -0.13, 0.15, 0, 0.06); sh.bezierCurveTo(0.13, 0.15, 0.2, 0.0, 0, -0.11); }
+    else if (druh === "hvezdicky") { for (let i = 0; i < 10; i++) { const rr = i % 2 ? 0.065 : 0.15, a = Math.PI / 2 + (i * Math.PI) / 5; if (i === 0) sh.moveTo(Math.cos(a) * rr, Math.sin(a) * rr); else sh.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } }
+    else if (druh === "slunecni") { sh.moveTo(-0.17, 0.08); sh.lineTo(0.17, 0.08); sh.quadraticCurveTo(0.16, -0.12, 0, -0.11); sh.quadraticCurveTo(-0.16, -0.12, -0.17, 0.08); }
+    else sh.absarc(0, 0, 0.13, 0, Math.PI * 2, false);
+    return sh;
+  };
+  for (const sx of [-1, 1]) {
+    const sh = tvar();
+    const okraj = new THREE.Mesh(s.g(new THREE.ExtrudeGeometry(sh, { depth: 0.03, bevelEnabled: true, bevelThickness: 0.015, bevelSize: 0.022, bevelSegments: 3, curveSegments: 24 })), ramMat);
+    okraj.position.set(sx * 0.27, 0, -0.01); g.add(okraj);
+    const sk = new THREE.Mesh(s.g(new THREE.ShapeGeometry(sh, 24)), sklo); sk.position.set(sx * 0.27, 0, 0.035); sk.scale.setScalar(0.86); g.add(sk);
+  }
+  const most = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.06, 0.016, 6, 16, Math.PI)), ramMat); most.position.set(0, 0.03, 0.01); g.add(most);
+  return { obj: g, pruziny: [], jiskry: druh === "hvezdicky" ? ["#FFE08A", "#FFFFFF"] : undefined };
+}
+
+/** Motýlek pod pusou. */
+export function motylek(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, -0.6, 0.5);
+  const mat = s.m(new THREE.MeshPhysicalMaterial({ color: "#E5383B", roughness: 0.4, sheen: 1, sheenColor: new THREE.Color("#FFB0B0"), clearcoat: 0.3 }));
+  for (const sx of [-1, 1]) { const k = new THREE.Mesh(s.g(new THREE.ConeGeometry(0.13, 0.22, 4, 1)), mat); k.rotation.z = sx * Math.PI / 2; k.position.x = sx * 0.12; k.scale.z = 0.45; g.add(k); }
+  g.add(new THREE.Mesh(s.g(new THREE.SphereGeometry(0.055, 12, 8)), mat));
+  return { obj: g, pruziny: [] };
+}
+
+/** Zlatý řetěz z článků s přívěskem. */
+export function retez(s: Sklad): Doplnek {
+  const g = new THREE.Group(); g.position.set(0, -0.08, 0.47);
+  const zl = zlatoMat(s);
+  for (let i = 0; i <= 12; i++) {
+    const u = Math.PI + (i / 12) * Math.PI, cl = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.045, 0.014, 6, 14)), zl);
+    cl.position.set(Math.cos(u) * 0.48, Math.sin(u) * 0.48 * 0.85, 0); cl.rotation.z = u; if (i % 2) cl.rotation.y = Math.PI / 2; g.add(cl);
+  }
+  const pr = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.1, 0.1, 0.03, 6)), zl); pr.rotation.x = Math.PI / 2; pr.position.set(0, -0.44, 0.02); g.add(pr);
+  return { obj: g, pruziny: [], jiskry: ["#FFE08A"] };
+}
+
+/** Postaví doplněk na slot podle klíče z katalogu (sbirka.ts). */
+export function doplnekNaSlot(s: Sklad, slot: "hlava" | "oci" | "krk", klic: string): Doplnek | null {
+  if (slot === "hlava") {
+    if (klic === "masle") return masle(s);
+    if (klic === "venecek") return venecek(s);
+    if (klic === "sluchatka") return sluchatka(s);
+    if (klic === "klobouk") return klobouk(s);
+    if (klic === "koruna") return koruna(s);
+    if (klic === "cepice") return vanocniCepice(s, "#C8202A", false);
+    if (klic === "kulich") return kulich(s, "#2E6DA4", "#E5383B");
+    if (klic === "ksiltovka") return ksiltovka(s, "#1E2A55", false);
+    if (klic === "celenka") return celenka(s);
+    if (klic === "svatozar") return svatozar(s);
+  }
+  if (slot === "oci" && ["bryle", "srdce", "hvezdicky", "slunecni", "pixel", "vizor"].includes(klic)) return bryle(s, klic as DruhBryli);
+  if (slot === "krk") {
+    if (klic === "motylek") return motylek(s);
+    if (klic === "sala") return sala(s);
+    if (klic === "medaile") return medaile(s);
+    if (klic === "retez") return retez(s);
+  }
+  return null;
+}

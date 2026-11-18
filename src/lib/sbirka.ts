@@ -15,7 +15,10 @@
 import type { Trida } from "@/types";
 import { localDateStr } from "./date";
 
-export type TypOdmeny = "podoba" | "oslava" | "efekt" | "vzhled" | "pozadi";
+export type TypOdmeny = "podoba" | "oslava" | "efekt" | "vzhled" | "pozadi" | "hlava" | "oci" | "krk";
+/** Doplňky na sloty: nasazují se na jakoukoli podobu Hexíka (3D). */
+export const SLOTY = ["hlava", "oci", "krk"] as const;
+export type Slot = (typeof SLOTY)[number];
 export type Vzacnost = "bezna" | "neobvykla" | "vzacna" | "legenda";
 
 export interface Odmena {
@@ -83,6 +86,9 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
   efekt: "Efekt správné odpovědi",
   vzhled: "Vzhled appky",
   pozadi: "Pozadí profilu",
+  hlava: "Na hlavu",
+  oci: "Na oči",
+  krk: "Na krk",
 };
 
 // [typ, klíč, název, vzácnost, cena, zdroj nebo sezóna?]  „u10“ = odměna za XP úroveň 10
@@ -145,6 +151,29 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["podoba", "kralovsky", "Královský Hexík", "vzacna", null, "u20"],
     ["vzhled", "vata", "Cukrová vata", "vzacna", null, "u25"],
     ["podoba", "duhovy", "Duhový Hexík", "legenda", null, "u30"],
+    // doplňky na sloty
+    ["hlava", "nic", "Bez doplňku", "bezna", 0],
+    ["hlava", "masle", "Mašle", "bezna", 150],
+    ["hlava", "venecek", "Květinový věneček", "neobvykla", 400],
+    ["hlava", "sluchatka", "Sluchátka", "neobvykla", 400],
+    ["hlava", "klobouk", "Čarodějný klobouk", "vzacna", 900],
+    ["hlava", "koruna", "Korunka", "legenda", null],
+    ["hlava", "cepice", "Vánoční čepice", "neobvykla", 400, "vanoce"],
+    ["hlava", "kulich", "Kulich", "neobvykla", 400, "zima"],
+    ["oci", "nic", "Bez brýlí", "bezna", 0],
+    ["oci", "bryle", "Kulaté brýle", "bezna", 150],
+    ["oci", "srdce", "Srdíčkové brýle", "neobvykla", 400],
+    ["oci", "hvezdicky", "Hvězdné brýle", "vzacna", 900],
+    ["krk", "nic", "Nic na krku", "bezna", 0],
+    ["krk", "motylek", "Motýlek", "bezna", 150],
+    ["krk", "sala", "Pletená šála", "neobvykla", 400],
+    ["krk", "medaile", "Zlatá medaile", "vzacna", 900],
+    // tanečky za XP úrovně
+    ["oslava", "robot", "Robot", "neobvykla", null, "u6"],
+    ["oslava", "vlnka", "Vlnka", "neobvykla", null, "u12"],
+    ["oslava", "pirueta", "Dvojitá pirueta", "vzacna", null, "u18"],
+    ["oslava", "breakdance", "Breakdance", "vzacna", null, "u22"],
+    ["oslava", "hvezdne", "Hvězdné salto", "legenda", null, "u28"],
   ],
   9: [
     ["podoba", "klasik", "Hexík", "bezna", 0],
@@ -204,6 +233,29 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["podoba", "chrom", "Chrom", "vzacna", null, "u20"],
     ["vzhled", "lava", "Láva", "vzacna", null, "u25"],
     ["podoba", "diamant", "Diamantový Hexík", "legenda", null, "u30"],
+    // doplňky na sloty
+    ["hlava", "nic", "Bez doplňku", "bezna", 0],
+    ["hlava", "ksiltovka", "Kšiltovka", "bezna", 150],
+    ["hlava", "sluchatka", "Sluchátka", "neobvykla", 400],
+    ["hlava", "celenka", "Ninja čelenka", "neobvykla", 400],
+    ["hlava", "svatozar", "Svatozář", "vzacna", 900],
+    ["hlava", "koruna", "Koruna", "legenda", null],
+    ["hlava", "cepice", "Vánoční čepice", "neobvykla", 400, "vanoce"],
+    ["hlava", "kulich", "Kulich", "neobvykla", 400, "zima"],
+    ["oci", "nic", "Bez brýlí", "bezna", 0],
+    ["oci", "slunecni", "Sluneční brýle", "bezna", 150],
+    ["oci", "pixel", "Pixelové brýle", "neobvykla", 400],
+    ["oci", "vizor", "Kyber vizor", "vzacna", 900],
+    ["krk", "nic", "Nic na krku", "bezna", 0],
+    ["krk", "sala", "Šála", "bezna", 150],
+    ["krk", "retez", "Zlatý řetěz", "neobvykla", 400],
+    ["krk", "medaile", "Zlatá medaile", "vzacna", 900],
+    // tanečky za XP úrovně
+    ["oslava", "robot", "Robot", "neobvykla", null, "u6"],
+    ["oslava", "vlnka", "Vlnka", "neobvykla", null, "u12"],
+    ["oslava", "pirueta", "Dvojitá pirueta", "vzacna", null, "u18"],
+    ["oslava", "breakdance", "Breakdance", "vzacna", null, "u22"],
+    ["oslava", "hvezdne", "Hvězdné salto", "legenda", null, "u28"],
   ],
 };
 
@@ -225,7 +277,8 @@ export function najdiOdmenu(id: string): Odmena | undefined {
 /** Animace Hexíka pro oslavu série (klíč oslavy → CSS animace). */
 export const ANIMACE_OSLAVY: Record<string, string> = {
   radost: "radost", poskok: "poskok", tanec: "tanec", kotrmelec: "salto", salto: "salto",
-  teleport: "teleport", disco: "disco", piruetka: "disco",
+  teleport: "teleport", disco: "disco", piruetka: "pirueta",
+  robot: "robot", vlnka: "vlnka", pirueta: "pirueta", breakdance: "breakdance", hvezdne: "hvezdne",
 };
 
 /** Tmavé vzhledy: obsah appky leží na světlém listu, aby texty mimo karty zůstaly čitelné. */
@@ -234,6 +287,10 @@ export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora", "ma
 export const IKONA_ODMENY: Record<string, string> = {
   radost: "🙌", poskok: "🦘", tanec: "💃", kotrmelec: "🤸", salto: "🤸", teleport: "🌀", disco: "🪩", piruetka: "🌈",
   jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥", vlocky: "❄️", medaile: "🥇", notky: "🎵", motylci: "🦋", binar: "💾", rakety: "🚀",
+  robot: "🤖", vlnka: "🌊", pirueta: "🩰", breakdance: "🕺", hvezdne: "🌟",
+  nic: "⭕", masle: "🎀", venecek: "🌼", sluchatka: "🎧", klobouk: "🧙", koruna: "👑", cepice: "🎅", kulich: "🧶", ksiltovka: "🧢", celenka: "🥷", svatozar: "😇",
+  bryle: "👓", srdce: "😍", hvezdicky: "🤩", slunecni: "🕶️", pixel: "😎", vizor: "🥽",
+  motylek: "🎩", sala: "🧣", retez: "⛓️",
 };
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
@@ -381,6 +438,16 @@ export function nasazena(s: SbirkaStav, trida: Trida, typ: TypOdmeny): Odmena {
   const o = id ? najdiOdmenu(id) : undefined;
   if (o && maOdmenu(s, o)) return o;
   return ODMENY[trida].find((x) => x.typ === typ && x.cena === 0)!;
+}
+
+/** Nasazené doplňky na sloty (klíče pro 3D Hexíka; „nic“ = prázdný slot). Volitelně s náhledem jedné věci. */
+export function slotyHexika(s: SbirkaStav, trida: Trida, nahled?: Odmena): Partial<Record<Slot, string>> {
+  const v: Partial<Record<Slot, string>> = {};
+  for (const sl of SLOTY) {
+    const o = nahled && nahled.typ === sl ? nahled : nasazena(s, trida, sl);
+    if (o && o.klic !== "nic") v[sl] = o.klic;
+  }
+  return v;
 }
 
 export function nactiSbirku(): SbirkaStav {
