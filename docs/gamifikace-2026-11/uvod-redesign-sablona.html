@@ -1,0 +1,563 @@
+<title>Nová úvodní stránka MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: věrný mockup úvodní stránky pro hosty (vlastní pevné barvy MateMaxu, jako naostro). Každá sekce má štítek NOVÉ / UPRAVENO / BEZE ZMĚNY. */
+:root{
+  --bg:#FFFFFF; --fg:#0D1B3E; --tl:#5F6982; --linka:#E4E8F2; --navy:#0D1B3E; --modra:#1E6FD9; --amber:#F5A623; --fialova:#3B2F9E;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.55}
+h1,h2,h3,h4{margin:0;line-height:1.12;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.lista-mock{background:#0D1B3E;color:#E9EEFA;font-size:.85rem;font-weight:700}
+.lista-mock .obal{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;padding-block:8px}
+.lista-mock b{color:var(--amber)}
+.legenda-st{display:flex;gap:10px;flex-wrap:wrap}
+.st{display:inline-flex;align-items:center;font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:4px 10px}
+.st.nove{background:#34D399;color:#05351F}.st.upr{background:#FFD27E;color:#4A2E00}.st.stejne{background:#DDE3EF;color:#56617D}
+.sekce{position:relative}
+.sekce>.st{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:14px;z-index:20;box-shadow:0 4px 12px rgba(13,27,62,.18)}
+.pozn{font-size:.85rem;color:#56617D;background:#FFF8E8;border:1px dashed #E8C77A;border-radius:12px;padding:10px 14px;max-width:760px}
+.pozn b{color:#7A4B00}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--linka)}
+nav.top .obal{display:flex;align-items:center;gap:16px;height:58px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900}
+.logo i{width:30px;height:30px;border-radius:9px;background:#0D1B3E;color:#fff;display:grid;place-items:center;font-style:normal;font-size:.75rem}
+nav.top .odkazy{margin-left:auto;display:flex;gap:18px;font-size:.88rem;font-weight:700;color:#33405F}
+nav.top .odkazy span.nov{color:#1F9D63}
+nav.top .btn-s{border:1px solid #CBD5E8;border-radius:10px;padding:6px 12px;font-weight:800;font-size:.85rem}
+nav.top .btn-p{background:#1E6FD9;color:#fff;border-radius:10px;padding:7px 14px;font-weight:800;font-size:.85rem}
+@media (max-width:760px){nav.top .odkazy,nav.top .btn-s{display:none}nav.top .btn-p{margin-left:auto}}
+/* hero */
+.hero{background:radial-gradient(ellipse at 80% 20%,#5FD0FF 0%,transparent 45%),linear-gradient(160deg,#1E6FD9 0%,#1A8FD6 55%,#22A6D0 100%);color:#fff;position:relative;overflow:hidden}
+.hero .obal{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center;padding-block:64px 110px}
+@media (max-width:900px){.hero .obal{grid-template-columns:1fr;padding-block:56px 80px}}
+.hero .vlna{position:absolute;left:0;right:0;bottom:-1px;height:70px}
+.pill-nove{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 12px 6px 6px;font-weight:800;font-size:.85rem;max-width:100%}
+.pill-nove span{background:#34D399;color:#05351F;border-radius:999px;padding:3px 9px;font-size:.7rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.tridy{display:inline-flex;background:rgba(255,255,255,.15);border-radius:999px;padding:4px;gap:4px;margin-top:16px}
+.tridy button{font:inherit;font-weight:800;font-size:.85rem;border:0;border-radius:999px;padding:6px 14px;background:transparent;color:#fff;cursor:pointer}
+.tridy button[aria-pressed="true"]{background:#fff;color:#1E6FD9}
+.hero h1{font-size:clamp(2.4rem,6vw,3.9rem);font-weight:900;letter-spacing:-.025em;margin-top:16px}
+.hero h1 em{font-style:normal;color:#CFF2FF}
+.hero .lead{color:#E3F2FF;max-width:52ch;margin-top:14px;font-size:1.05rem}
+.chipy{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chipy span{background:rgba(255,255,255,.14);border-radius:999px;padding:5px 11px;font-size:.82rem;font-weight:700}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{border-radius:14px;padding:13px 20px;font-weight:900;text-decoration:none}
+.cta .h{background:#fff;color:#1E6FD9;box-shadow:0 10px 24px -10px rgba(0,0,0,.35)}
+.cta .v{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.scena{position:relative;height:470px;min-width:0}
+@media (max-width:900px){.scena{height:420px}}
+.podstavec{position:absolute;left:50%;bottom:40px;width:300px;height:70px;margin-left:-150px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.55),rgba(255,255,255,0) 70%);filter:blur(2px)}
+.kruh{position:absolute;left:50%;top:50%;width:360px;height:360px;margin:-200px 0 0 -180px;border-radius:50%;border:2px dashed rgba(255,255,255,.35);animation:otoc 40s linear infinite}
+@keyframes otoc{to{transform:rotate(360deg)}}
+.velky-hx{position:absolute;left:50%;top:50%;width:280px;height:280px;margin:-170px 0 0 -140px;cursor:pointer}
+.velky-hx img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.92);transition:opacity .55s,transform .55s;filter:drop-shadow(0 24px 22px rgba(10,40,90,.45))}
+.velky-hx img.vid{opacity:1;transform:none;animation:houp 3.2s ease-in-out infinite}
+.velky-hx.skok img.vid{animation:skok .6s ease}
+@keyframes houp{50%{transform:translateY(-10px) rotate(-1.5deg)}}
+@keyframes skok{35%{transform:translateY(-34px) scale(1.06) rotate(-6deg)}70%{transform:translateY(3px) scale(.97)}}
+.otoc-tip{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-size:.78rem;font-weight:800;background:rgba(13,27,62,.35);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.plov{position:absolute;background:#fff;color:#0D1B3E;border-radius:16px;box-shadow:0 18px 36px -16px rgba(13,27,62,.45);padding:10px 12px;font-size:.82rem;animation:plov 5s ease-in-out infinite}
+.plov b{display:block;font-size:.9rem}
+.plov small{color:#5F6982;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em}
+@keyframes plov{50%{transform:translateY(-8px)}}
+.plov.p1{left:0;top:30px;width:190px}
+.plov.p2{right:0;top:12px;animation-delay:-1.5s}
+.plov.p3{right:6px;bottom:96px;width:200px;animation-delay:-3s}
+.plov.p4{left:8px;bottom:110px;animation-delay:-2s}
+.p1 .bar{height:7px;border-radius:5px;background:#E4E8F2;margin-top:6px;overflow:hidden}.p1 .bar i{display:block;height:100%;width:82%;background:linear-gradient(90deg,#4FA3FF,#9B6BFF)}
+.combo-chip{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#FF9A3D,#FF5E3A)!important;color:#fff!important;font-weight:900}
+.combo-chip b{font-size:1.3rem}
+@media (max-width:560px){.plov.p1{top:0;width:160px}.plov.p3{bottom:70px;width:170px}.plov.p4{display:none}.kruh{width:300px;height:300px;margin:-170px 0 0 -150px}.velky-hx{width:230px;height:230px;margin:-140px 0 0 -115px}}
+/* novinky */
+.novinky{background:radial-gradient(ellipse at 10% 0%,#3B2F9E 0%,transparent 55%),radial-gradient(ellipse at 95% 100%,#0E6E8C 0%,transparent 50%),#0D1B3E;color:#fff}
+.novinky .obal{padding-block:56px;display:grid;gap:22px}
+.nadp{display:grid;gap:8px}
+.nadp .k{color:#FFD27E;font-weight:900;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+.nadp h2{font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:900;letter-spacing:-.015em}
+.nadp p{color:#C4CEEA;max-width:62ch}
+.nov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:980px){.nov-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.nov-grid{grid-template-columns:1fr}}
+.nk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
+.nk .obr{height:130px;border-radius:12px;overflow:hidden;position:relative;display:grid;place-items:center;background:rgba(255,255,255,.05)}
+.nk .obr img{max-height:120px;max-width:100%;object-fit:contain}
+.nk h3{font-size:1.08rem;font-weight:900}
+.nk p{color:#C4CEEA;font-size:.9rem}
+.pill{justify-self:start;font-size:.68rem;font-weight:900;border-radius:999px;padding:4px 9px;letter-spacing:.05em;text-transform:uppercase}
+.pill.n{background:#34D399;color:#05351F}.pill.b{background:#FFD27E;color:#4A2E00}
+.odpocet{display:flex;gap:6px}
+.odpocet div{background:rgba(255,255,255,.1);border-radius:10px;padding:6px 8px;text-align:center;min-width:50px}
+.odpocet b{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.odpocet small{font-size:.62rem;color:#B9C4E4;text-transform:uppercase;letter-spacing:.06em}
+.mini-kal{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;width:100%;padding:8px}
+.mini-kal i{aspect-ratio:1;border-radius:5px;background:linear-gradient(145deg,#C63A4B,#8E1F34);display:grid;place-items:center;font-style:normal;font-size:.62rem;font-weight:900;color:#fff}
+.mini-kal i:nth-child(3n){background:linear-gradient(145deg,#1F8A5B,#0F5C3B)}.mini-kal i:nth-child(4n+1){background:linear-gradient(145deg,#2F5FBF,#1D3B85)}
+.mini-kal i.z{background:linear-gradient(145deg,#F4C443,#C88A0E);color:#4A2E00;box-shadow:0 0 12px rgba(255,214,90,.8)}
+.combo-mini{font-size:3rem;font-weight:900;background:linear-gradient(180deg,#FFF3B0,#FFB23E 45%,#FF5A1F);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(255,120,30,.7))}
+/* zkus */
+.zkus{background:#F4F7FC}
+.zkus .obal{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;padding-block:64px}
+@media (max-width:900px){.zkus .obal{grid-template-columns:1fr}}
+.zkus h2,.sek h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;letter-spacing:-.015em}
+.zkus h2 span{color:#1E6FD9}
+.zkus ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px;color:#33405F}
+.zkus ul li::before{content:"✓";color:#1F9D63;font-weight:900;margin-right:8px}
+.priklad{background:#fff;border-radius:22px;box-shadow:0 24px 48px -28px rgba(13,27,62,.4);padding:20px;display:grid;gap:14px;position:relative;overflow:hidden}
+.priklad .hor{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tag{font-size:.75rem;font-weight:800;color:#B4561F;background:#FFF0E3;border-radius:999px;padding:4px 10px}
+.combo-z{display:flex;align-items:center;gap:6px;font-weight:900;border-radius:999px;padding:5px 11px;background:#ECEAFE;color:#3B2F9E;transition:all .3s}
+.combo-z.hori{background:linear-gradient(90deg,#FF9A3D,#FF5E3A);color:#fff;box-shadow:0 0 16px rgba(255,110,50,.5)}
+.priklad .ot{font-size:1.4rem;font-weight:900}
+.moznosti{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.moznosti button{font:inherit;font-weight:800;font-size:1.1rem;padding:14px;border-radius:14px;border:2px solid #E1E5F0;background:#fff;cursor:pointer;color:#0D1B3E}
+.moznosti button:hover{border-color:#9CC3F5}
+.moznosti button.ok{border-color:#34C27A;background:#EAFBF2;color:#147A47}
+.moznosti button.ne{border-color:#F3A3A6;background:#FFF2F2;color:#B4232F}
+.hx-rada{display:flex;align-items:center;gap:10px;background:#F4F7FC;border-radius:14px;padding:8px 12px 8px 6px}
+.hx-rada img{width:64px;height:64px;object-fit:contain}
+.hx-rada img.skok{animation:skok .6s ease}
+.krystaly-pop{position:absolute;right:20px;top:60px;font-weight:900;color:#1E6FD9;opacity:0;font-size:1.2rem}
+.krystaly-pop.u{animation:kpop 1s ease}
+@keyframes kpop{20%{opacity:1;transform:translateY(-6px)}100%{opacity:0;transform:translateY(-30px)}}
+/* čísla */
+.cisla{border-block:1px solid var(--linka)}
+.cisla .obal{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding-block:26px;gap:12px}
+@media (max-width:700px){.cisla .obal{grid-template-columns:repeat(2,1fr)}}
+.cisla b{display:block;font-size:2rem;font-weight:900;font-variant-numeric:tabular-nums}
+.cisla span{font-size:.85rem;color:#5F6982}
+/* herní systém */
+.hra{background:radial-gradient(ellipse at 15% 10%,#3B2F9E 0%,transparent 55%),radial-gradient(ellipse at 90% 90%,#0E6E8C 0%,transparent 50%),#0D1B3E;color:#fff;overflow:hidden}
+.hra .obal{padding-block:72px 80px;display:grid;gap:40px}
+.hra .nadp{text-align:center;justify-items:center}
+.hra h2 em{font-style:normal;color:#9FB8FF}
+.zasady{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.zasady span{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 12px;font-weight:800;font-size:.85rem}
+.satnik{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:center}
+@media (max-width:900px){.satnik{grid-template-columns:1fr}}
+.sat-scena{position:relative;height:380px;border-radius:26px;background:radial-gradient(ellipse at 50% 85%,#3A4FA0 0%,#1A2558 55%,#111A40 100%);overflow:hidden;min-width:0}
+.sat-scena .podl{position:absolute;left:50%;bottom:44px;width:240px;height:50px;margin-left:-120px;border-radius:50%;background:radial-gradient(ellipse,rgba(160,190,255,.5),transparent 70%)}
+.sat-scena img{position:absolute;left:50%;top:46%;width:250px;height:250px;margin:-125px 0 0 -125px;object-fit:contain;transition:opacity .4s,transform .4s;filter:drop-shadow(0 20px 20px rgba(0,0,0,.45));animation:houp 3s ease-in-out infinite}
+.sat-scena .jm{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-weight:900}
+.sat-scena .jm small{display:block;color:#B9C4E4;font-weight:700;font-size:.78rem}
+.sat-tab{display:flex;flex-wrap:wrap;gap:6px}
+.sat-tab button{font:inherit;font-weight:800;font-size:.85rem;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;padding:6px 13px;cursor:pointer}
+.sat-tab button[aria-pressed="true"]{background:#fff;color:#0D1B3E}
+.sat-mrizka{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin-top:12px}
+.sat-mrizka button{font:inherit;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:14px;padding:6px 4px 8px;color:#fff;cursor:pointer;display:grid;justify-items:center;gap:2px}
+.sat-mrizka button img{width:62px;height:62px;object-fit:contain}
+.sat-mrizka button small{font-size:.68rem;font-weight:800}
+.sat-mrizka button[aria-pressed="true"]{border-color:#FFD27E;background:rgba(255,210,126,.14)}
+.vz{font-size:.6rem!important;font-weight:900!important;letter-spacing:.04em;text-transform:uppercase}
+.cesta{overflow-x:auto;padding-bottom:6px}
+.cesta-in{display:flex;gap:0;min-width:900px;align-items:flex-start;position:relative;padding-top:6px}
+.cesta-in::before{content:"";position:absolute;left:20px;right:20px;top:27px;height:4px;border-radius:3px;background:linear-gradient(90deg,#34D399,#4FA3FF 40%,#9B6BFF 70%,#FFC83D)}
+.uz{flex:1;display:grid;justify-items:center;gap:6px;position:relative;text-align:center;min-width:60px}
+.uz i{width:46px;height:46px;border-radius:50%;background:#1A2558;border:3px solid #4F67C9;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:.95rem}
+.uz.v i{background:#fff;color:#0D1B3E;border-color:#FFD27E;box-shadow:0 0 16px rgba(255,210,126,.6)}
+.uz.l i{background:linear-gradient(145deg,#FFD25E,#E59A00);color:#4A2E00;border-color:#FFF1B8}
+.uz b{font-size:.78rem}
+.uz small{font-size:.68rem;color:#B9C4E4;max-width:90px}
+.tri{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+@media (max-width:900px){.tri{grid-template-columns:1fr}}
+.truhla-obr{border-radius:22px;overflow:hidden;max-width:360px;justify-self:center;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.truhla-obr img{display:block;width:100%}
+.kroky3{display:grid;gap:10px}
+.kroky3 div{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 14px}
+.kroky3 div b.n{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#FFD27E;color:#4A2E00;font-size:1.2rem}
+.kroky3 span{color:#C4CEEA;font-size:.9rem}
+.truhly-chipy{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.truhly-chipy span{background:rgba(255,255,255,.1);border-radius:999px;padding:4px 10px;font-size:.78rem;font-weight:800}
+.dalsi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.dalsi{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.dalsi{grid-template-columns:1fr}}
+.dk{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:16px;display:grid;gap:6px;align-content:start}
+.dk .ik{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.4rem}
+.dk h4{font-size:1.02rem;font-weight:900}
+.dk p{color:#C4CEEA;font-size:.88rem}
+.etapy{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end;text-align:center}
+@media (max-width:560px){.etapy{grid-template-columns:repeat(3,1fr)}}
+.etapy img{width:100%;max-width:130px;margin:0 auto;display:block}
+.etapy b{display:block;font-size:.9rem}
+.etapy small{color:#B9C4E4;font-size:.75rem}
+/* ostatní */
+.sek .obal{padding-block:64px;display:grid;gap:22px}
+.sek .k{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#6B5BD2;background:#EEEBFF;border-radius:999px;padding:4px 10px;justify-self:start}
+.ukazky{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:900px){.ukazky{grid-template-columns:1fr}}
+.uk{border-radius:20px;border:1px solid var(--linka);overflow:hidden;background:#fff;box-shadow:0 14px 30px -24px rgba(13,27,62,.35)}
+.uk .top{height:150px;display:grid;place-items:center;position:relative;overflow:hidden}
+.uk .txt{padding:14px 16px 16px}
+.uk h3{font-size:1.02rem;font-weight:900}
+.uk p{font-size:.88rem;color:#5F6982;margin-top:4px}
+.nahled{border-radius:18px;overflow:hidden;border:1px solid var(--linka);box-shadow:0 14px 30px -24px rgba(13,27,62,.35);background:#fff}
+.nahled img{display:block;width:100%}
+.dvesl{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media (max-width:900px){.dvesl{grid-template-columns:1fr}}
+.cenik{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:0 auto;width:100%}
+@media (max-width:700px){.cenik{grid-template-columns:1fr}}
+.cen{border:1.5px solid #DDE3EF;border-radius:20px;padding:20px;display:grid;gap:8px}
+.cen.p{border-color:#5FB3F0;box-shadow:0 0 0 4px rgba(95,179,240,.15)}
+.cen .c{font-size:2.2rem;font-weight:900}
+.cen ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:.92rem}
+.cen li::before{content:"✓ ";color:#1F9D63;font-weight:900}
+.cen li.nov{font-weight:800}
+.cen li.nov::after{content:" nově";font-size:.65rem;font-weight:900;color:#05351F;background:#34D399;border-radius:999px;padding:2px 6px;margin-left:4px;vertical-align:2px}
+.faq{max-width:760px;margin:0 auto;width:100%;display:grid;gap:8px}
+.faq details{border:1px solid var(--linka);border-radius:14px;padding:12px 16px;background:#fff}
+.faq summary{font-weight:800;cursor:pointer}
+.faq details p{margin-top:8px;color:#33405F}
+.faq .bylo{font-size:.82rem;color:#8A93AA;margin-top:6px}
+.zaver{background:linear-gradient(160deg,#1E6FD9 0%,#1A8FD6 55%,#22A6D0 100%);color:#fff;text-align:center}
+.zaver .obal{padding-block:64px;display:grid;justify-items:center;gap:12px}
+.zaver img{width:170px;height:170px;object-fit:contain;filter:drop-shadow(0 18px 20px rgba(0,0,0,.35));animation:houp 3s ease-in-out infinite}
+.zaver h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900}
+.zaver p{color:#E3F2FF;max-width:56ch}
+.zaver .cta{justify-content:center}
+.konec-mock{background:#F4F7FC;border-top:1px solid var(--linka)}
+.konec-mock .obal{padding-block:36px;display:grid;gap:12px}
+.konec-mock ol{margin:0;padding-left:20px;display:grid;gap:8px}
+:focus-visible{outline:3px solid #FFD27E;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="lista-mock"><div class="obal"><span><b>Mockup</b> nové úvodní stránky pro nepřihlášené · Hexík je skutečný 3D render z appky, naostro bude živý (otáčí se, reaguje)</span><span class="legenda-st"><span class="st nove">Nové</span><span class="st upr">Upraveno</span><span class="st stejne">Beze změny</span></span></div></div>
+
+<nav class="top"><div class="obal">
+  <span class="logo"><i>M²</i>MateMax</span>
+  <span class="odkazy"><span class="nov">Novinky</span><span>Ukázky</span><span>Hexík</span><span>Témata</span><span>Pro rodiče</span><span>Cena</span></span>
+  <span class="btn-s">Přihlásit se</span><span class="btn-p">Začít zdarma</span>
+</div></nav>
+
+<!-- HERO -->
+<section class="sekce hero">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <div style="min-width:0">
+      <span class="pill-nove"><span>Nově</span>Hexík ve 3D · adventní kalendář od 1. 12.</span>
+      <div><div class="tridy" role="group" aria-label="Třída"><button type="button" aria-pressed="true" data-trida="9">9. třída</button><button type="button" aria-pressed="false" data-trida="5">5. třída</button></div></div>
+      <h1>Přijímačky z matiky? <em>Zvládneš je.</em></h1>
+      <p class="lead" id="hero-lead">Deset minut denně, úlohy přesně ve stylu CERMAT a Hexík ve 3D, který s tebou roste. Za každý správný příklad krystaly, truhly a nové věci. Rodiče každé pondělí vědí, jak na tom jsi.</p>
+      <div class="chipy"><span>Více než 1 200 úloh ve stylu CERMAT</span><span>30 úrovní s odměnami</span><span>Na mobilu i počítači</span></div>
+      <div class="cta"><a class="h" href="#zkus">Začít zdarma →</a><a class="v" href="#zkus">Zkusit příklad ↓</a></div>
+    </div>
+    <div class="scena" id="scena">
+      <div class="kruh"></div>
+      <div class="podstavec"></div>
+      <div class="velky-hx" id="velky-hx" role="button" tabindex="0" aria-label="Klikni na Hexíka">
+        <img src="%%HX:neon%%" alt="Hexík Neon s kšiltovkou, slunečními brýlemi a řetězem" data-t="9">
+        <img src="%%HX:kyber%%" alt="Hexík Kyber s vizorem a svatozáří" data-t="9">
+        <img src="%%HX:ohnivy%%" alt="Ohnivý Hexík" data-t="9">
+        <img src="%%HX:street%%" alt="Streetwear Hexík s pixelovými brýlemi" data-t="9">
+        <img src="%%HX:santa%%" alt="Hexík s vánoční čepicí a šálou" data-t="5 9">
+        <img src="%%HX:dracek%%" alt="Dráček s hvězdnými brýlemi" data-t="5">
+        <img src="%%HX:kocicka%%" alt="Kočičí Hexík se sluchátky" data-t="5">
+        <img src="%%HX:lisak%%" alt="Lišáček s čarodějným kloboukem a motýlkem" data-t="5">
+        <img src="%%HX:jednorozec%%" alt="Jednorožec s medailí" data-t="5">
+      </div>
+      <div class="plov p1"><small>Zlomky · 4/10</small><b>3/4 + 1/6 = 11/12 ✓</b><div class="bar"><i></i></div></div>
+      <div class="plov p2 combo-chip"><span>🔥</span><b>10×</b><span>combo</span></div>
+      <div class="plov p3"><small>Úroveň 8</small><b id="p3-vec">Nová podoba: Toxic</b><span style="color:#5F6982">+110 krystalů</span></div>
+      <div class="plov p4"><small>Vzácná odměna!</small><b>Z truhly: Svatozář</b></div>
+      <span class="otoc-tip">Klikni na Hexíka · naostro ho jde i otáčet</span>
+    </div>
+  </div>
+  <svg class="vlna" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 360 80 720 0 1080 30 S 1440 40 1440 40 V70 H0Z" fill="#0D1B3E"/></svg>
+</section>
+
+<!-- NOVINKY -->
+<section class="sekce novinky" id="novinky">
+  <span class="st nove">Nové</span>
+  <div class="obal">
+    <div class="nadp"><span class="k">Novinky v MateMaxu</span><h2>Co je nového a na co se těšit</h2><p>Každou novinku tu uvidí návštěvníci i žáci. Před startem jako „Brzy“ s odpočtem, v den startu jako „Nově“.</p></div>
+    <div class="nov-grid">
+      <div class="nk"><span class="pill n">Nově</span><div class="obr"><img src="%%HX:malina%%" alt="Malinový Hexík s věnečkem a srdíčkovými brýlemi"></div><h3>Hexík ve 3D</h3><p>Obléká se, roste a tančí. Přes 70 věcí pro každou třídu.</p></div>
+      <div class="nk"><span class="pill b">Od 1. prosince</span><div class="obr"><div class="mini-kal" id="mini-kal"></div></div><h3>Adventní kalendář</h3><div class="odpocet" id="odpocet"><div><b>12</b><small>dní</small></div><div><b>08</b><small>hodin</small></div><div><b>40</b><small>minut</small></div></div></div>
+      <div class="nk"><span class="pill n">Nově</span><div class="obr"><span class="combo-mini">20×</span></div><h3>Combo v tréninku</h3><p>Správně za sebou a Hexík hoří, září a nakonec zlátne.</p></div>
+      <div class="nk"><span class="pill n">Nově</span><div class="obr" style="padding:0"><img src="%%IMG:truhla%%" alt="Hexík otevírá truhlu" style="max-height:none;width:100%;height:100%;object-fit:cover;object-position:50% 25%"></div><h3>Truhly ve 3D</h3><p>Tři klepnutí, záblesk vzácnosti a nová věc pro Hexíka.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ZKUS PŘÍKLAD -->
+<section class="sekce zkus" id="zkus">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <div>
+      <span class="k" style="font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#1E6FD9;background:#E3EEFF;border-radius:999px;padding:4px 10px">Vyzkoušej hned</span>
+      <h2 style="margin-top:12px">Zkus si tři příklady. <span>Bez registrace.</span></h2>
+      <ul>
+        <li>Úlohy ve stylu skutečných testů CERMAT</li>
+        <li>Po chybě hned vidíš postup krok za krokem</li>
+        <li>Za správnou odpověď krystaly, za tři v řadě combo</li>
+        <li>Hexík ve 3D se raduje s tebou</li>
+      </ul>
+    </div>
+    <div class="priklad" id="priklad">
+      <div class="hor"><span class="tag" id="z-tag">Slovní úlohy · procenta</span><span class="combo-z" id="combo-z">🔥 <span id="combo-zn">0</span></span></div>
+      <div class="ot" id="z-ot">Kolik je 15 % z 240?</div>
+      <div class="moznosti" id="z-mo"></div>
+      <div class="hx-rada"><img src="%%HX:e3%%" alt="Hexík" id="z-hx"><span id="z-txt" style="font-weight:800">Vyber odpověď, já ti fandím!</span></div>
+      <span class="krystaly-pop" id="z-kr">+12 💎</span>
+    </div>
+  </div>
+</section>
+
+<!-- ČÍSLA -->
+<section class="sekce cisla">
+  <span class="st upr" style="top:6px">Upraveno</span>
+  <div class="obal">
+    <div><b style="color:#1E6FD9">1 600+</b><span>úloh pro 5. a 9. třídu</span></div>
+    <div><b style="color:#1F9D63">25 z 25</b><span>mých žáků loni přijato</span></div>
+    <div><b style="color:#E0653A">10 min</b><span>denně stačí</span></div>
+    <div><b style="color:#6B5BD2">145</b><span>odměn pro Hexíka</span></div>
+  </div>
+  <div class="obal" style="padding-block:0 18px"><p class="pozn">Počet úloh navrhuji změnit z 1 200+ na 1 600+ (obě třídy dohromady). Pošlu jako návrh faktu do kokpitu.</p></div>
+</section>
+
+<!-- UKÁZKY -->
+<section class="sekce sek" id="ukazky">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <span class="k" style="justify-self:center">Podívej se dovnitř</span>
+    <h2 style="text-align:center">Takhle vypadá trénink v MateMaxu</h2>
+    <p class="pozn" style="justify-self:center">Karty zůstávají. <b>Karta „Hexík a odměny“ dostane 3D truhlu s Hexíkem</b> a <b>přibude karta Combo</b>. Ostatní karty (trénink na míru, postup po chybě, rýsování, odhad bodů, přehled pro rodiče) se nemění, níž jsou jen ty dotčené.</p>
+    <div class="ukazky">
+      <div class="uk"><div class="top" style="background:linear-gradient(160deg,#2B2370,#0D1B3E)"><img src="%%IMG:truhla%%" alt="Hexík otevírá truhlu" style="width:100%;height:100%;object-fit:cover;object-position:50% 25%"></div><div class="txt"><h3>Hexík a truhly ve 3D</h3><p>Za trénink krystaly, za krystaly truhly. Hexík je otevírá s tebou.</p></div></div>
+      <div class="uk"><div class="top" style="background:radial-gradient(ellipse at 50% 90%,#B8401A,#5A1A12 55%,#1C0B12)"><img src="%%HX:ohnivy%%" alt="Ohnivý Hexík" style="height:130px"><span style="position:absolute;right:14px;top:10px" class="combo-mini">10</span></div><div class="txt"><h3>Combo v tréninku</h3><p>Správně za sebou a Hexík hoří. Na 20 v řadě zlatá legenda.</p></div></div>
+      <div class="uk"><div class="top" style="background:linear-gradient(160deg,#1E3A6E,#0D1B3E);color:#fff;display:grid;gap:4px;align-content:center;justify-items:center"><b style="font-size:2.2rem">31 <span style="font-size:1rem;color:#9FB0D8">/ 50</span></b><span style="font-size:.8rem;color:#9FE3BE;font-weight:800">▲ +9 za měsíc</span></div><div class="txt"><h3>Odhad bodů</h3><p>Kolik bodů z 50 by dnes asi získal. Vidíš, jak roste.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HERNÍ SYSTÉM -->
+<section class="sekce hra" id="hexik">
+  <span class="st nove">Nové místo dnešní sekce Hexík</span>
+  <div class="obal">
+    <div class="nadp"><span class="k">Hexík a odměny</span><h2>Za snahu odměny. <em>Hexík ve 3D roste s tebou.</em></h2><p>Krystaly a XP jen za učení. Za krystaly truhly, za úrovně unikátní věci. Nic se nekupuje za peníze.</p>
+      <div class="zasady"><span>Odměny jen za učení</span><span>Nic za peníze</span><span>Šance vidět u každé truhly</span><span>Premium nedává lepší šance</span></div></div>
+
+    <div class="satnik">
+      <div class="sat-scena"><div class="podl"></div><img src="%%HX:neon%%" alt="Vybraný Hexík" id="sat-img"><div class="jm" id="sat-jm">Neon <small>podoba · neobvyklá</small></div></div>
+      <div>
+        <h3 style="font-size:1.4rem;font-weight:900">Šatník: tvůj Hexík, tvůj styl</h3>
+        <p style="color:#C4CEEA;margin-top:6px">Podoby, čepice, brýle, šály, tanečky a živá pozadí. Doplňky sednou na jakoukoli podobu. Vyber si a podívej se.</p>
+        <div class="sat-tab" role="group" aria-label="Druh" style="margin-top:14px" id="sat-tab">
+          <button type="button" aria-pressed="true" data-k="podoby">Podoby</button>
+          <button type="button" aria-pressed="false" data-k="doplnky">Doplňky</button>
+        </div>
+        <div class="sat-mrizka" id="sat-mrizka"></div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:1.4rem;font-weight:900;text-align:center">30 úrovní a za každou odměna</h3>
+      <p style="color:#C4CEEA;text-align:center;margin:6px 0 18px">Krystaly za každou úroveň, unikátní věc na 14 z nich, legendární truhla na 10., 20. a 30.</p>
+      <div class="cesta"><div class="cesta-in" id="cesta"></div></div>
+    </div>
+
+    <div class="tri">
+      <div class="truhla-obr"><img src="%%IMG:truhla%%" alt="Hexík otevírá mistrovskou truhlu a padá legendární odměna Duha"></div>
+      <div>
+        <h3 style="font-size:1.4rem;font-weight:900">Truhly, které otevírá Hexík</h3>
+        <div class="kroky3" style="margin-top:14px">
+          <div><b class="n">1</b><span><b style="color:#fff">Klepni.</b> Truhla se zatřese.</span></div>
+          <div><b class="n">2</b><span><b style="color:#fff">Klepni znovu.</b> Ze škvíry prosvítá barva vzácnosti.</span></div>
+          <div><b class="n">3</b><span><b style="color:#fff">Potřetí</b> Hexík poskočí a víko se rozletí.</span></div>
+        </div>
+        <div class="truhly-chipy"><span>Denní zdarma</span><span>Zlatá za 5 dní</span><span>Doporučení</span><span>Generálka</span><span>Legendární</span><span>Krystalová</span><span>Velká</span><span>Mistrovská</span><span>Sezónní</span></div>
+      </div>
+    </div>
+
+    <div class="dalsi">
+      <div class="dk"><span class="ik" style="background:linear-gradient(135deg,#FF9A3D,#FF5E3A)">🔥</span><h4>Combo</h4><p>Správně za sebou: Hexík září, hoří, pak zlátne. Na milnících krystaly.</p></div>
+      <div class="dk"><span class="ik" style="background:#C63A4B">🎄</span><h4>Adventní kalendář</h4><p>24 okének od 1. 12., každé po tréninku. Sedm věcí, které jinde nejsou.</p></div>
+      <div class="dk"><span class="ik" style="background:#5B4BD6">👾</span><h4>Boss týdne</h4><p>Jedna těžká úloha ve stylu přijímaček týdně. Za výhru trofej.</p></div>
+      <div class="dk"><span class="ik" style="background:#1F9D63">✅</span><h4>Denní mise</h4><p>Tři mise denně a plamínek série, který nesmí zhasnout.</p></div>
+      <div class="dk"><span class="ik" style="background:#2F7FD6">💬</span><h4>Hexík radí</h4><p>Řekne jednu věc, která se teď nejvíc vyplatí. Většinou nejslabší téma.</p></div>
+      <div class="dk"><span class="ik" style="background:#C88A0E">🏆</span><h4>Sady a trofeje</h4><p>14 sad s bonusem a 20 trofejí za vytrvalost a pokrok.</p></div>
+    </div>
+
+    <div>
+      <h3 style="font-size:1.25rem;font-weight:900;text-align:center;margin-bottom:14px">Hexík roste podle odhadu bodů</h3>
+      <div class="etapy">
+        <div><img src="%%HX:e1%%" alt="Nováček"><b>Nováček</b><small>start</small></div>
+        <div><img src="%%HX:e2%%" alt="Učeň"><b>Učeň</b><small>od 15 bodů</small></div>
+        <div><img src="%%HX:e3%%" alt="Zkušený"><b>Zkušený</b><small>od 25 bodů</small></div>
+        <div><img src="%%HX:e4%%" alt="Expert"><b>Expert</b><small>od 35 bodů</small></div>
+        <div><img src="%%HX:e5%%" alt="Mistr přijímaček"><b>Mistr</b><small>od 43 bodů</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TŘI KROKY, TÉMATA -->
+<section class="sekce sek" style="background:#F4F7FC">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <h2 style="text-align:center">Tři kroky k lepšímu výsledku · Všech 9 témat z testu CERMAT</h2>
+    <p class="pozn" style="justify-self:center">Obě sekce zůstávají, jak jsou. Jen <b>3. krok „Pokrok a odměny“</b> dostane nový text: „Odhad bodů, plamínek za dny v řadě, 30 úrovní a Hexík ve 3D. Rodiče každé pondělí dostanou e-mail.“</p>
+    <div class="nahled" style="max-width:820px;justify-self:center"><img src="%%SHOT:kroky%%" alt="Dnešní sekce Tři kroky a Témata"></div>
+  </div>
+</section>
+
+<!-- PRO RODIČE, AUTOR, SROVNÁNÍ -->
+<section class="sekce sek">
+  <span class="st stejne">Beze změny, drobnosti</span>
+  <div class="obal">
+    <h2 style="text-align:center">Pro rodiče · Kdo za tím stojí · Srovnání</h2>
+    <p class="pozn" style="justify-self:center">Zůstává. Do srovnání přibude řádek <b>„Hexík ve 3D a odměny jen za učení“</b> a u rodičů věta <b>„Odměny vedou dítě k nejslabšímu tématu, ne k hraní.“</b></p>
+    <div class="dvesl"><div class="nahled"><img src="%%SHOT:rodice%%" alt="Dnešní sekce Pro rodiče"></div><div class="nahled"><img src="%%SHOT:srovnani%%" alt="Dnešní sekce Srovnání"></div></div>
+  </div>
+</section>
+
+<!-- CENÍK -->
+<section class="sekce sek" style="background:#F4F7FC" id="cena">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <h2 style="text-align:center">Začni zdarma, Premium kdykoli</h2>
+    <p class="pozn" style="justify-self:center">Ceny se nemění, jsou z ověřených faktů. Mění se jen řádky v seznamu. Herní systém je pro všechny, i zdarma.</p>
+    <div class="cenik">
+      <div class="cen"><b>Zdarma</b><span class="c">0 Kč</span><ul><li>Diagnostika všech témat</li><li>Zlomky, výrazy a rovnice</li><li class="nov">Hexík ve 3D, truhly a 30 úrovní</li><li class="nov">Adventní kalendář</li></ul></div>
+      <div class="cen p"><b>Premium</b><span class="c">99 Kč <small style="font-size:.9rem;color:#5F6982">/ měsíc</small></span><ul><li>Všech 9 témat a cvičné testy CERMAT</li><li>Odhad bodů a slabá místa</li><li>E-mail rodičům každé pondělí</li><li>Mistrovské kousky za zvládnutá témata (brzy)</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- OTÁZKY -->
+<section class="sekce sek">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <h2 style="text-align:center">Na co se rodiče ptají</h2>
+    <div class="faq">
+      <details open><summary>Odměny? Nebude to jen hra?</summary><p>Nebude. Krystaly a XP dostane dítě jen za správně vyřešené příklady a dokončený trénink, za čas ani klikání nic. Hexík radí, co se teď nejvíc vyplatí, a nejčastěji pošle dítě k nejslabšímu tématu. Nic se nekupuje za peníze.</p><p class="bylo">Nová odpověď. Ostatních pět otázek beze změny.</p></details>
+      <details><summary>Pro koho je MateMax?</summary></details>
+      <details><summary>Kolik času denně to zabere?</summary></details>
+    </div>
+  </div>
+</section>
+
+<!-- ZÁVĚR -->
+<section class="sekce zaver">
+  <span class="st upr">Upraveno</span>
+  <div class="obal">
+    <img src="%%HX:e5%%" alt="Hexík Mistr přijímaček s korunou">
+    <h2>Přijímačky jsou za rohem. Začni dnes.</h2>
+    <p>Deset minut denně do toho, aby Hexík dostal korunu. A ty místo na škole, kterou chceš.</p>
+    <div class="cta"><a class="h" href="#zkus">Začít zdarma →</a><a class="v" href="#zkus">Zkusit příklad</a></div>
+  </div>
+</section>
+
+<section class="konec-mock">
+  <div class="obal">
+    <h2 style="font-size:1.3rem;font-weight:900">Jak to postavím a co potřebuju od tebe</h2>
+    <ol>
+      <li><b>3D Hexík naostro:</b> v hlavičce a v šatníku poběží živý 3D Hexík (otáčí se prstem, reaguje na klik). Načte se až po zobrazení stránky, takže úvodní stránka nezpomalí. Na slabých telefonech se ukáže obrázek.</li>
+      <li><b>Novinky:</b> sekce se plní ze stejné kroniky jako administrace, takže každá nová věc se tu ukáže sama ve stavu „Brzy“ a pak „Nově“.</li>
+      <li><b>Texty:</b> všechny nové a upravené texty pošlu ke schválení do kokpitu. Nasadí se spolu s herním systémem.</li>
+      <li><b>Potřebuju od tebe:</b> líbí se ti pořadí (hlavička, Novinky, Zkus příklad…) a sekce Hexík a odměny? Chceš v šatníku víc ukázek, nebo takhle?</li>
+    </ol>
+    <p style="color:#5F6982;font-size:.9rem">Odhad stavby: 2 dny včetně živého 3D v hlavičce a šatníku.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  var redukce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var el = function(id){ return document.getElementById(id); };
+  var trida = "9";
+
+  /* hlavička: střídání Hexíků podle třídy, klik = poskok */
+  var vh = el("velky-hx"), ix = 0;
+  function hxList(){ return [].slice.call(vh.querySelectorAll("img")).filter(function(i){ return i.dataset.t.split(" ").indexOf(trida) >= 0; }); }
+  function ukazHx(){ var l = hxList(); vh.querySelectorAll("img").forEach(function(i){ i.classList.remove("vid"); }); if (l.length) l[ix % l.length].classList.add("vid"); }
+  ukazHx(); if (!redukce) setInterval(function(){ ix++; ukazHx(); }, 2600);
+  function poskok(){ vh.classList.remove("skok"); void vh.offsetWidth; vh.classList.add("skok"); setTimeout(function(){ vh.classList.remove("skok"); }, 650); }
+  vh.addEventListener("click", poskok); vh.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); poskok(); } });
+  document.querySelectorAll("[data-trida]").forEach(function(b){ b.addEventListener("click", function(){
+    trida = b.dataset.trida; document.querySelectorAll("[data-trida]").forEach(function(x){ x.setAttribute("aria-pressed", x === b); });
+    ix = 0; ukazHx();
+    el("p3-vec").textContent = trida === "5" ? "Nová podoba: Včelka" : "Nová podoba: Toxic";
+    el("hero-lead").textContent = trida === "5" ? "Deset minut denně, úlohy ve stylu přijímaček na víceletá gymnázia a Hexík ve 3D, který s tebou roste. Za každý správný příklad krystaly, truhly a nové věci." : "Deset minut denně, úlohy přesně ve stylu CERMAT a Hexík ve 3D, který s tebou roste. Za každý správný příklad krystaly, truhly a nové věci. Rodiče každé pondělí vědí, jak na tom jsi.";
+    stavSatnik(); stavCesta(); zacniPriklady();
+  }); });
+
+  /* novinky: mini kalendář a odpočet */
+  var mk = el("mini-kal"); for (var d = 1; d <= 12; d++) { var i = document.createElement("i"); i.textContent = [7,15,2,20,11,4,18,9,24,13,1,23][d-1]; if (i.textContent === "24") i.className = "z"; mk.appendChild(i); }
+  function odpocet(){ var z = Math.max(0, new Date("2026-12-01T00:00:00+01:00").getTime() - Date.now()); var b = el("odpocet").querySelectorAll("b"); b[0].textContent = Math.floor(z/864e5); b[1].textContent = String(Math.floor(z%864e5/36e5)).padStart(2,"0"); b[2].textContent = String(Math.floor(z%36e5/6e4)).padStart(2,"0"); }
+  odpocet(); setInterval(odpocet, 30000);
+
+  /* zkus si příklady: tři v řadě = combo */
+  var PR = {
+    "9": [["Slovní úlohy · procenta","Kolik je 15 % z 240?",["24","32","36","40"],"36"],["Rovnice","Vyřeš: 3x − 7 = 11",["4","6","8","18"],"6"],["Zlomky","Vypočítej: 2/3 + 1/6",["3/9","5/6","1/2","3/6"],"5/6"]],
+    "5": [["Počítání s čísly","Kolik je 48 : 6 + 7?",["13","15","14","8"],"15"],["Jednotky","Kolik minut je 2 h 15 min?",["135","215","120","125"],"135"],["Zlomky","Kolik je polovina z 3/4 dortu?",["3/8","1/4","3/2","1/8"],"3/8"]]
+  };
+  var krok = 0, combo = 0;
+  function zacniPriklady(){ krok = 0; combo = 0; el("combo-zn").textContent = 0; el("combo-z").classList.remove("hori"); el("z-txt").textContent = "Vyber odpověď, já ti fandím!"; ukazPriklad(); }
+  function ukazPriklad(){
+    var p = PR[trida][krok % 3];
+    el("z-tag").textContent = p[0]; el("z-ot").textContent = p[1];
+    var mo = el("z-mo"); mo.innerHTML = "";
+    p[2].forEach(function(o){ var b = document.createElement("button"); b.type = "button"; b.textContent = o; b.addEventListener("click", function(){ odpoved(b, o === p[3]); }); mo.appendChild(b); });
+  }
+  function odpoved(b, ok){
+    el("z-mo").querySelectorAll("button").forEach(function(x){ x.disabled = true; });
+    b.classList.add(ok ? "ok" : "ne");
+    var hx = el("z-hx");
+    if (ok) {
+      combo++; el("combo-zn").textContent = combo; if (combo >= 3) el("combo-z").classList.add("hori");
+      hx.classList.remove("skok"); void hx.offsetWidth; hx.classList.add("skok");
+      var kr = el("z-kr"); kr.classList.remove("u"); void kr.offsetWidth; kr.classList.add("u");
+      el("z-txt").textContent = combo >= 3 ? "Tři v řadě! Combo hoří 🔥 V appce pokračuje dál." : "Správně! Dáme další?";
+    } else { combo = 0; el("combo-zn").textContent = 0; el("combo-z").classList.remove("hori"); el("z-txt").textContent = "Nevadí! V appce ti hned ukážu postup."; }
+    setTimeout(function(){ krok++; if (krok % 3 === 0 && combo >= 3) { el("z-txt").textContent = "Paráda! Zaregistruj se a sbírej krystaly naostro."; } ukazPriklad(); }, 1300);
+  }
+  zacniPriklady();
+
+  /* šatník */
+  var SAT = {
+    podoby: { "9": [["neon","Neon","neobvyklá"],["kyber","Kyber","vzácná"],["ohnivy","Ohnivý","běžná"],["ledovy","Ledový","vzácná"],["street","Streetwear","neobvyklá"],["e5","Klasik Mistr","etapa"]],
+              "5": [["kocicka","Kočičí Hexík","neobvyklá"],["lisak","Lišáček","neobvyklá"],["dracek","Dráček","vzácná"],["jednorozec","Jednorožec","legendární"],["robutek","Robůtek","neobvyklá"],["malina","Malinový Hexík","běžná"]] },
+    doplnky: { "9": [["santa","Vánoční čepice + šála","sezónní"],["neon","Kšiltovka, brýle, řetěz","neobvyklá"],["kyber","Vizor + svatozář","vzácná"],["street","Pixelové brýle","neobvyklá"],["robutek","Koruna","legendární"],["ledovy","Pletená šála","neobvyklá"]],
+               "5": [["santa","Vánoční čepice + šála","sezónní"],["malina","Věneček + srdíčka","neobvyklá"],["lisak","Klobouk + motýlek","vzácná"],["kocicka","Sluchátka","neobvyklá"],["dracek","Hvězdné brýle","vzácná"],["jednorozec","Zlatá medaile","vzácná"]] }
+  };
+  var HX = %%HXJSON%%;
+  var satK = "podoby";
+  function stavSatnik(){
+    var m = el("sat-mrizka"); m.innerHTML = "";
+    SAT[satK][trida].forEach(function(x, i){
+      var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-pressed", i === 0);
+      b.innerHTML = '<img src="' + HX[x[0]] + '" alt=""><small>' + x[1] + '</small><small class="vz" style="color:#FFD27E">' + x[2] + '</small>';
+      b.addEventListener("click", function(){ m.querySelectorAll("button").forEach(function(y){ y.setAttribute("aria-pressed", y === b); }); vyber(x); });
+      m.appendChild(b);
+    });
+    vyber(SAT[satK][trida][0]);
+  }
+  function vyber(x){ var im = el("sat-img"); im.style.opacity = 0; setTimeout(function(){ im.src = HX[x[0]]; im.style.opacity = 1; }, 180); el("sat-jm").innerHTML = x[1] + " <small>" + (satK === "podoby" ? "podoba" : "doplněk") + " · " + x[2] + "</small>"; }
+  document.querySelectorAll("#sat-tab button").forEach(function(b){ b.addEventListener("click", function(){ satK = b.dataset.k; document.querySelectorAll("#sat-tab button").forEach(function(y){ y.setAttribute("aria-pressed", y === b); }); stavSatnik(); }); });
+  stavSatnik();
+
+  /* cesta úrovní */
+  var VECI = { "9": {3:"Binárka",5:"Beton",6:"Robot",8:"Toxic",10:"Karbon",12:"Vlnka",13:"Rakety",16:"Neonová ulice",18:"Pirueta",20:"Chrom",22:"Breakdance",25:"Láva",28:"Hvězdné salto",30:"Diamantový Hexík"},
+               "5": {3:"Notičky",5:"Duhová louka",6:"Robot",8:"Včelka",10:"Kouzelný les",12:"Vlnka",13:"Motýlci",16:"Zámek v oblacích",18:"Pirueta",20:"Královský Hexík",22:"Breakdance",25:"Cukrová vata",28:"Hvězdné salto",30:"Duhový Hexík"} };
+  function stavCesta(){
+    var c = el("cesta"); c.innerHTML = "";
+    [1,3,5,6,8,10,12,13,16,18,20,22,25,28,30].forEach(function(u){
+      var v = VECI[trida][u], leg = u === 10 || u === 20 || u === 30;
+      var d = document.createElement("div"); d.className = "uz" + (v ? " v" : "") + (leg ? " l" : "");
+      d.innerHTML = "<i>" + u + "</i><b>" + (u === 1 ? "Start" : v) + "</b><small>" + (leg ? "+ legendární truhla" : u === 1 ? "začátek" : (30 + 10*u) + " krystalů") + "</small>";
+      c.appendChild(d);
+    });
+  }
+  stavCesta();
+})();
+</script>

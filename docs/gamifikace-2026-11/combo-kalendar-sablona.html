@@ -1,0 +1,802 @@
+<title>Combo, kalendář a novinky</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: tři záložky (Combo, Adventní kalendář, Novinky). Vlevo živá ukázka v telefonu, vpravo pravidla. Ukázky appky mají vlastní pevné barvy appky, stránka kolem nich má světlé i tmavé téma. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#56617D; --linka:#DCE2EE;
+  --navy:#0D1B3E; --amber:#F5A623; --krystal:#3E8FD6; --ok:#1F9D63;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.stitek{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tl)}
+.hlava{padding-block:28px 8px;display:grid;gap:10px}
+.hlava h1{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;letter-spacing:-.02em}
+.hlava p{color:var(--tl);max-width:70ch}
+.mock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#E9EEFA;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700;justify-self:start;max-width:100%}
+.mock b{color:var(--amber)}
+.zalozky{display:flex;flex-wrap:wrap;gap:6px;padding-block:14px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.zalozky a{font-weight:800;text-decoration:none;color:var(--tl);padding:9px 16px;border-radius:999px;border:1px solid var(--linka);background:var(--plocha)}
+.zalozky a[aria-current="page"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.zalozky a:focus-visible,button:focus-visible{outline:2px solid var(--krystal);outline-offset:2px}
+.sekce{display:grid;gap:22px;padding-block:10px 56px}
+.dva{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:880px){.dva{grid-template-columns:1fr}}
+.pravidla{display:grid;gap:16px;min-width:0}
+.pravidla h2{font-size:1.6rem;font-weight:900}
+.pravidla .lead{color:var(--tl)}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:16px;padding:16px 18px;display:grid;gap:10px}
+.blok h3{font-size:1rem;font-weight:800}
+.blok ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.blok li::marker{color:var(--krystal)}
+.tl{color:var(--tl);font-size:.9rem}
+.stupne{display:grid;gap:8px}
+.stupen{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:8px 10px;border-radius:12px;border:1px solid var(--linka)}
+.stupen b{font-variant-numeric:tabular-nums;font-size:1.2rem;text-align:center}
+.stupen small{color:var(--tl)}
+.stupen .odm{font-weight:800;font-size:.85rem;white-space:nowrap}
+.stupen.akt{border-color:var(--amber);box-shadow:0 0 0 2px rgba(245,166,35,.25)}
+/* telefon */
+.telefon{width:100%;max-width:380px;margin:0 auto;border-radius:38px;background:#0B1022;padding:10px;box-shadow:0 30px 60px -24px rgba(13,27,62,.55)}
+.displej{border-radius:30px;overflow:hidden;position:relative;background:#F1F3FA;color:#0D1B3E;min-height:640px;display:flex;flex-direction:column}
+.ovl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:14px;padding:11px 16px;cursor:pointer}
+.btn-ok{background:#1F9D63;color:#fff}.btn-chyba{background:#E5484D;color:#fff}.btn-sv{background:var(--plocha);color:var(--fg);border:1px solid var(--linka)}
+.btn:active{transform:translateY(1px)}
+/* trénink */
+.tr-horni{display:flex;align-items:center;gap:10px;padding:16px 14px 6px}
+.tr-x{width:34px;height:34px;border-radius:12px;background:#E7EAF3;display:grid;place-items:center;color:#6B7590;font-weight:800}
+.tr-pruh{flex:1;display:flex;gap:4px}
+.tr-pruh i{flex:1;height:8px;border-radius:5px;background:#DCE0EC}
+.tr-pruh i.h{background:#CF3F6B}
+.combo{display:flex;align-items:center;gap:6px;padding:6px 10px 6px 8px;border-radius:999px;background:#E9E7FB;color:#3B2F9E;font-weight:900;font-variant-numeric:tabular-nums;transition:background .3s,color .3s,box-shadow .3s;position:relative}
+.combo svg{width:18px;height:18px}
+.combo.t1{background:#E0F4FF;color:#0F6B9E}
+.combo.t2{background:#DCE6FF;color:#2B4CC0;box-shadow:0 0 0 3px rgba(91,140,255,.25)}
+.combo.t3{background:linear-gradient(90deg,#FF9A3D,#FF5E3A);color:#fff;box-shadow:0 0 18px rgba(255,110,50,.55)}
+.combo.t4{background:linear-gradient(90deg,#FF5E8A,#FFB13D,#56D27E,#4FA3FF,#9B6BFF);background-size:200% 100%;animation:duha 2s linear infinite;color:#fff;box-shadow:0 0 20px rgba(155,107,255,.5)}
+.combo.t5{background:linear-gradient(90deg,#FFD25E,#FFB000);color:#5A3A00;box-shadow:0 0 26px rgba(255,190,40,.8)}
+@keyframes duha{to{background-position:200% 0}}
+.combo.pop{animation:pop .35s ease}
+.combo.t4.pop{animation:pop .35s ease,duha 2s linear infinite}
+@keyframes pop{40%{transform:scale(1.25)}}
+.tr-cil{padding:0 14px;font-size:.78rem;color:#6B7590;font-weight:700;display:flex;justify-content:space-between;gap:8px}
+.tr-cil .bar{flex:1;height:6px;border-radius:4px;background:#DCE0EC;margin-top:7px;overflow:hidden;max-width:160px}
+.tr-cil .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4FA3FF,#9B6BFF);transition:width .3s}
+.tr-hx{display:flex;align-items:center;gap:10px;padding:10px 14px}
+.hxbox{width:86px;height:86px;flex:none;position:relative;display:grid;place-items:center}
+.hxbox img{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:transform .2s}
+.hxbox::before{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle,var(--zar,transparent) 0%,transparent 70%);opacity:var(--zo,0);transition:opacity .4s;filter:blur(4px)}
+.hxbox.skok img{animation:skok .5s ease}
+.hxbox.smutek img{animation:smutek .6s ease}
+@keyframes skok{30%{transform:translateY(-14px) rotate(-6deg) scale(1.06)}60%{transform:translateY(0) rotate(4deg)}}
+@keyframes smutek{30%{transform:rotate(-8deg) translateX(-3px)}60%{transform:rotate(6deg) translateX(3px)}}
+.bublina{background:#fff;border-radius:16px;padding:9px 13px;font-weight:800;box-shadow:0 2px 0 rgba(13,27,62,.06);font-size:.95rem;min-width:0}
+.kr{margin-left:auto;background:#E8F2FC;color:#0D3D7A;font-weight:900;border-radius:999px;padding:6px 11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tr-karta{margin:4px 12px 0;background:#fff;border-radius:22px;border:1.5px solid #DDF0E5;padding:16px;display:grid;gap:12px;flex:1;align-content:start}
+.tr-karta .tema{font-size:.78rem;font-weight:800;color:#C04A79;background:#FBEAF1;border-radius:999px;padding:4px 10px;width:max-content}
+.tr-karta .zad{font-size:1.25rem;font-weight:800;line-height:1.3}
+.tr-karta .odp{border:2px solid #E1E5F0;border-radius:14px;padding:12px 14px;font-weight:800;font-size:1.2rem;color:#9AA3BA}
+.tr-karta .odp.ok{border-color:#9FDDBC;color:#1F7A4D;background:#F2FBF6}
+.tr-karta .odp.chyba{border-color:#F3B3B5;color:#B4232F;background:#FFF4F4}
+.milnik{position:absolute;left:50%;top:66%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;text-align:center;z-index:4;white-space:nowrap;background:rgba(13,27,62,.9);border-radius:22px;padding:14px 20px 12px;box-shadow:0 18px 40px rgba(13,27,62,.4)}
+.milnik b{display:block;font-size:2.2rem;font-weight:900;line-height:1.05;background:linear-gradient(90deg,#FFD25E,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent}
+.milnik span{display:inline-block;margin-top:4px;background:rgba(255,255,255,.1);color:#FFD27E;font-weight:800;border-radius:999px;padding:5px 12px;font-size:.9rem}
+.milnik.ukaz{animation:milnik 1.6s ease forwards}
+@keyframes milnik{15%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}25%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
+.flash{position:absolute;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(circle at 50% 35%,var(--fl,#fff),transparent 60%)}
+.flash.ukaz{animation:flash .7s ease}
+@keyframes flash{20%{opacity:.55}100%{opacity:0}}
+.displej.tres{animation:tres .35s ease}
+@keyframes tres{25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-2px,0)}}
+canvas.castice{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+.konec{position:absolute;inset:0;background:rgba(13,27,62,.6);display:grid;place-items:center;z-index:6;padding:20px}
+.konec>div{background:#fff;border-radius:22px;padding:20px;display:grid;gap:10px;text-align:center;width:100%}
+.konec .rek{font-size:2.6rem;font-weight:900;color:#E06A00;line-height:1}
+.stit{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:800;color:#3B2F9E;background:#ECEAFE;border-radius:999px;padding:4px 10px}
+/* combo scéna */
+.stage{position:relative;margin:6px 12px 0;height:262px;border-radius:24px;overflow:hidden;background:radial-gradient(ellipse at 50% 85%,#2A3C7A 0%,#16214A 55%,#0E1635 100%);transition:background .6s;isolation:isolate}
+.stage[data-t="1"]{background:radial-gradient(ellipse at 50% 85%,#245C86 0%,#14284F 55%,#0C1634 100%)}
+.stage[data-t="2"]{background:radial-gradient(ellipse at 50% 80%,#2F5BD8 0%,#172C70 50%,#0B1438 100%)}
+.stage[data-t="3"]{background:radial-gradient(ellipse at 50% 95%,#B8401A 0%,#5A1A12 45%,#1C0B12 100%)}
+.stage[data-t="4"]{background:radial-gradient(ellipse at 50% 90%,#6B3AC7 0%,#2B1660 50%,#120A2E 100%)}
+.stage[data-t="5"]{background:radial-gradient(ellipse at 50% 90%,#D99A1A 0%,#6B4208 45%,#1E1405 100%)}
+.paprsky{position:absolute;left:50%;top:44%;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;opacity:0;transition:opacity .6s;z-index:0;background:repeating-conic-gradient(from 0deg,var(--pc,rgba(120,170,255,.28)) 0deg 7deg,transparent 7deg 22deg);-webkit-mask:radial-gradient(circle,#000 0%,transparent 62%);mask:radial-gradient(circle,#000 0%,transparent 62%);animation:otoc 14s linear infinite}
+.stage[data-t="2"] .paprsky,.stage[data-t="4"] .paprsky,.stage[data-t="5"] .paprsky{opacity:1}
+.stage[data-t="4"] .paprsky{--pc:rgba(200,140,255,.3);animation-duration:8s}
+.stage[data-t="5"] .paprsky{--pc:rgba(255,215,90,.38);animation-duration:6s}
+@keyframes otoc{to{transform:rotate(360deg)}}
+canvas.ohen{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.hx3{position:absolute;left:50%;top:44%;width:150px;height:150px;margin:-75px 0 0 -75px;z-index:3;animation:houp2 2.6s ease-in-out infinite}
+.hx3 img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45));transition:filter .5s}
+.stage[data-t="2"] .hx3 img{filter:drop-shadow(0 0 16px rgba(110,160,255,.95)) drop-shadow(0 0 34px rgba(110,160,255,.6))}
+.stage[data-t="3"] .hx3 img{filter:drop-shadow(0 0 14px rgba(255,140,40,.9)) drop-shadow(0 8px 12px rgba(0,0,0,.5))}
+.stage[data-t="4"] .hx3 img{animation:duhaZar 2s linear infinite}
+.stage[data-t="5"] .hx3 img{filter:drop-shadow(0 0 18px rgba(255,210,80,1)) drop-shadow(0 0 40px rgba(255,180,40,.7))}
+@keyframes duhaZar{0%{filter:drop-shadow(0 0 16px #FF5E8A)}25%{filter:drop-shadow(0 0 16px #FFB13D)}50%{filter:drop-shadow(0 0 16px #56D27E)}75%{filter:drop-shadow(0 0 16px #4FA3FF)}100%{filter:drop-shadow(0 0 16px #FF5E8A)}}
+@keyframes houp2{50%{transform:translateY(-7px)}}
+.hx3.skok{animation:skok2 .55s ease}
+.hx3.smutek{animation:smutek .6s ease}
+@keyframes skok2{30%{transform:translateY(-22px) scale(1.08) rotate(-5deg)}60%{transform:translateY(2px) scale(.97) rotate(3deg)}}
+.stage .bublina{position:absolute;left:12px;top:12px;z-index:4;font-size:.85rem;padding:7px 11px;max-width:150px}
+.cnt{position:absolute;right:12px;top:10px;z-index:4;display:grid;justify-items:center;line-height:1;color:#fff;min-width:74px}
+.cnt-n{font-size:2.7rem;font-weight:900;font-variant-numeric:tabular-nums;text-shadow:0 3px 12px rgba(0,0,0,.4)}
+.cnt-l{font-size:.68rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;opacity:.8;margin-top:2px}
+.cnt-s{font-size:.7rem;font-weight:800;margin-top:5px;border-radius:999px;padding:3px 8px;background:rgba(255,255,255,.14);white-space:nowrap}
+.cnt-s:empty{display:none}
+.stage[data-t="3"] .cnt-n{background:linear-gradient(180deg,#FFF3B0,#FFB23E 45%,#FF5A1F);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px rgba(255,120,30,.8))}
+.stage[data-t="4"] .cnt-n{background:linear-gradient(90deg,#FF5E8A,#FFB13D,#56D27E,#4FA3FF,#B67BFF,#FF5E8A);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:duha 1.5s linear infinite}
+.stage[data-t="5"] .cnt-n{background:linear-gradient(180deg,#FFFBE0,#FFD25E 50%,#E59A00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(255,200,60,.9))}
+.cnt.pop .cnt-n{animation:pop .35s ease}
+.stage[data-t="4"] .cnt.pop .cnt-n{animation:pop .35s ease,duha 1.5s linear infinite}
+.stage .cil{position:absolute;left:12px;right:12px;bottom:10px;z-index:4;display:flex;align-items:center;gap:10px;color:#CFD8F2;font-size:.75rem;font-weight:800}
+.stage .cil .bar{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.15);overflow:hidden}
+.stage .cil .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FFD27E,#FF8A3D);transition:width .3s}
+/* kalendář */
+.kal-scena{perspective:900px}
+.kal{transform-style:preserve-3d;transition:transform .25s ease-out;animation:kyv 7s ease-in-out infinite;background:radial-gradient(ellipse at 50% -10%,#2C4C8F 0%,transparent 60%),linear-gradient(180deg,#0F1E45,#0B1633);color:#fff;border-radius:22px;padding:16px 14px 18px;position:relative;overflow:hidden}
+@keyframes kyv{0%,100%{transform:rotateY(-4deg) rotateX(3deg)}50%{transform:rotateY(4deg) rotateX(-1deg)}}
+.kal.ruka{animation:none}
+.girlanda{position:relative;z-index:2;height:26px;margin:-4px -6px 2px}
+.girlanda svg{position:absolute;inset:0;width:100%;height:100%}
+.girlanda i{position:absolute;width:9px;height:12px;border-radius:50% 50% 45% 45%;transform:translate(-50%,0);animation:blik 1.8s ease-in-out infinite}
+@keyframes blik{0%,100%{opacity:1;filter:brightness(1.3)}50%{opacity:.35;filter:brightness(.7)}}
+.kal h3{font-size:1.1rem;font-weight:900;display:flex;justify-content:space-between;gap:8px;align-items:center;position:relative;z-index:2}
+.kal h3 small{font-weight:700;color:#B9C4E4;font-size:.8rem}
+.kal canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.okna{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-flow:dense;gap:8px;margin-top:14px;position:relative;z-index:2;perspective:700px}
+.okno{aspect-ratio:1/1.08;position:relative;border:0;padding:0;background:transparent;cursor:default;font:inherit}
+.okno.velke{grid-column:span 2;grid-row:span 2;aspect-ratio:1/1.08}
+.okno{transform-style:preserve-3d}
+.okno .vnitrek{position:absolute;inset:0;border-radius:12px;background:radial-gradient(circle at 50% 40%,#22408A,#0E1E48);box-shadow:inset 0 8px 16px rgba(0,0,0,.6),inset 0 -2px 0 rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;align-content:center;gap:2px;text-align:center;padding:4px;overflow:hidden}
+.okno .vnitrek .ik{font-size:1.5rem;line-height:1}
+.okno.velke .vnitrek .ik{font-size:2.6rem}
+.okno .vnitrek .tx{font-size:.62rem;font-weight:800;color:#CFE0FF;line-height:1.15}
+.okno.velke .vnitrek .tx{font-size:.8rem}
+.okno .dvirka{position:absolute;inset:0;border-radius:12px;transform-origin:left center;transform:translateZ(3px);transition:transform .9s cubic-bezier(.3,1.4,.5,1),box-shadow .3s;backface-visibility:hidden;display:grid;place-items:center;font-weight:900;font-size:1.25rem;color:#fff;background:linear-gradient(145deg,#C63A4B,#8E1F34);box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.15)}
+.okno:nth-child(3n) .dvirka{background:linear-gradient(145deg,#1F8A5B,#0F5C3B)}
+.okno:nth-child(4n+1) .dvirka{background:linear-gradient(145deg,#2F5FBF,#1D3B85)}
+.okno:nth-child(5n+2) .dvirka{background:linear-gradient(145deg,#C98A1E,#94600C)}
+.okno.velke .dvirka{background:linear-gradient(145deg,#F4C443,#C88A0E);color:#4A2E00;font-size:2.4rem}
+.okno .dvirka::after{content:"";position:absolute;right:8px;top:50%;width:5px;height:12px;border-radius:3px;background:rgba(255,255,255,.55)}
+.okno.otevreno .dvirka{transform:translateZ(3px) rotateY(-112deg);box-shadow:10px 0 18px rgba(0,0,0,.45)}
+.okno.otevreno .vnitrek::after{content:"";position:absolute;inset:-20%;background:radial-gradient(circle,rgba(255,226,140,.75),transparent 60%);animation:svit 1.4s ease-out forwards;pointer-events:none}
+@keyframes svit{0%{opacity:0;transform:scale(.4)}25%{opacity:1}100%{opacity:0;transform:scale(1.4)}}
+.okno.otevreno .vnitrek .ik{animation:vylet .8s cubic-bezier(.3,1.6,.5,1)}
+@keyframes vylet{0%{transform:scale(.2) translateY(14px)}60%{transform:scale(1.35) translateY(-6px)}100%{transform:none}}
+.okno.dnes:hover .dvirka,.okno.zmeskane:hover .dvirka{transform:translateZ(14px) rotateY(-10deg)}
+.okno.budouci .dvirka{filter:saturate(.35) brightness(.75)}
+.okno.budouci .dvirka::before{content:"";position:absolute;inset:0;border-radius:12px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px)}
+.okno.dnes{cursor:pointer}
+.okno.dnes .dvirka{animation:zari 1.6s ease-in-out infinite,cuk 3.2s ease-in-out infinite}
+@keyframes cuk{0%,86%,100%{transform:translateZ(3px) rotateY(0)}90%{transform:translateZ(8px) rotateY(-18deg)}94%{transform:translateZ(5px) rotateY(-6deg)}}
+@keyframes zari{50%{box-shadow:0 0 0 3px #FFE08A,0 0 24px 6px rgba(255,214,90,.7),inset 0 -6px 0 rgba(0,0,0,.15)}}
+.okno.zmeskane{cursor:pointer}
+.okno.zmeskane .dvirka{filter:grayscale(.2) brightness(.85)}
+.okno.zmeskane .dvirka span.dohnat{position:absolute;bottom:4px;left:0;right:0;font-size:.55rem;font-weight:800;color:#FFE7A8;text-transform:uppercase;letter-spacing:.04em}
+.kal-ovl{display:grid;gap:8px;margin-top:14px}
+.kal-ovl label{font-weight:800;font-size:.9rem;display:flex;justify-content:space-between}
+.kal-ovl input{width:100%;accent-color:var(--amber)}
+.kal-stav{background:#fff;border-radius:16px;padding:12px 14px;color:#0D1B3E;display:grid;gap:4px;margin-top:12px;position:relative;z-index:2}
+.kal-stav b{font-size:1rem}
+.kal-stav span{font-size:.85rem;color:#56617D}
+.odhal{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:rgba(8,14,34,.72);padding:18px}
+.odhal>div{background:linear-gradient(180deg,#1C2F66,#0F1D45);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:22px;padding:22px 18px;text-align:center;display:grid;gap:8px;width:100%;animation:vyskoc .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes vyskoc{from{transform:scale(.6);opacity:0}}
+.odhal .ik{font-size:3.4rem;line-height:1}
+.odhal .vz{justify-self:center;font-size:.75rem;font-weight:900;border-radius:999px;padding:4px 10px;background:#F59E0B;color:#3B2400}
+.odmeny-kal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.odm-k{border:1px solid var(--linka);border-radius:12px;padding:10px;display:grid;gap:2px}
+.odm-k .d{font-size:.75rem;font-weight:800;color:var(--tl)}
+.odm-k .n{font-weight:800}
+.odm-k .t{font-size:.8rem;color:var(--tl)}
+/* novinky */
+.prohl{border-radius:16px;overflow:hidden;border:1px solid var(--linka);background:#fff;box-shadow:0 24px 50px -30px rgba(13,27,62,.45)}
+.prohl-lista{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#E8EBF3}
+.prohl-lista i{width:10px;height:10px;border-radius:50%;background:#C9CFDD}
+.prohl-lista span{margin-left:10px;font-size:.78rem;color:#56617D;background:#fff;border-radius:999px;padding:3px 12px;flex:1;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.land{background:radial-gradient(ellipse at 12% 0%,#3B2F9E 0%,transparent 55%),radial-gradient(ellipse at 95% 100%,#0E6E8C 0%,transparent 50%),#0D1B3E;color:#fff;padding:34px 22px 30px;display:grid;gap:20px}
+.land .st{color:#FFD27E;font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
+.land h3{font-size:clamp(1.5rem,3.4vw,2.2rem);font-weight:900;letter-spacing:-.01em}
+.land .lead{color:#C4CEEA;max-width:60ch}
+.land-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px}
+@media (max-width:820px){.land-grid{grid-template-columns:1fr}}
+.nk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:16px;display:grid;gap:8px;align-content:start;position:relative;overflow:hidden;min-width:0}
+.nk .pill{justify-self:start;font-size:.72rem;font-weight:900;border-radius:999px;padding:4px 10px;letter-spacing:.04em;text-transform:uppercase}
+.pill.nove{background:#34D399;color:#05351F}.pill.brzy{background:#FFD27E;color:#4A2E00}.pill.chystame{background:rgba(255,255,255,.18);color:#fff}
+.nk h4{margin:0;font-size:1.15rem;font-weight:900}
+.nk p{color:#C4CEEA;font-size:.92rem}
+.nk.hlavni{grid-row:span 2}
+.hx-stage{height:210px;position:relative;display:grid;place-items:center}
+.hx-stage img{position:absolute;width:190px;height:190px;object-fit:contain;opacity:0;transition:opacity .6s,transform .6s;transform:scale(.9) translateY(6px);filter:drop-shadow(0 18px 18px rgba(0,0,0,.35))}
+.hx-stage img.vid{opacity:1;transform:scale(1) translateY(0);animation:houp 3s ease-in-out infinite}
+@keyframes houp{50%{transform:translateY(-8px) rotate(-2deg)}}
+.hx-tecky{display:flex;gap:6px;justify-content:center}
+.hx-tecky i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3)}
+.hx-tecky i.on{background:#FFD27E}
+.odpocet{display:flex;gap:6px}
+.odpocet div{background:rgba(255,255,255,.1);border-radius:10px;padding:6px 8px;text-align:center;min-width:52px}
+.odpocet b{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.odpocet small{font-size:.65rem;color:#B9C4E4;text-transform:uppercase;letter-spacing:.06em}
+.mini-truhla{height:110px;border-radius:12px;overflow:hidden}
+.mini-truhla img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.mini-combo{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mini-combo span{font-weight:900;border-radius:999px;padding:5px 11px;font-size:.85rem}
+.domov{background:#F1F3FA;color:#0D1B3E;min-height:560px;padding:16px 14px;display:grid;gap:12px;align-content:start}
+.dm-novinka{border-radius:20px;padding:14px;background:linear-gradient(135deg,#3B2F9E,#1E3A6E);color:#fff;display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center;position:relative}
+.dm-novinka img{width:76px;height:76px;object-fit:contain}
+.dm-novinka .x{position:absolute;right:10px;top:8px;color:#B9C4E4;font-weight:800;background:transparent;border:0;font-size:1rem;cursor:pointer}
+.dm-novinka b{display:block;font-size:1rem}
+.dm-novinka p{font-size:.85rem;color:#D7DEF5}
+.dm-novinka .akce{display:inline-block;margin-top:8px;background:#F5A623;color:#0D1B3E;font-weight:900;border-radius:12px;padding:7px 12px;font-size:.85rem}
+.dm-brzy{border-radius:18px;padding:12px 14px;background:#fff;border:1px dashed #C9D2E6;display:flex;gap:10px;align-items:center}
+.dm-brzy .ik{width:44px;height:44px;border-radius:12px;background:#FDECEC;display:grid;place-items:center;font-size:1.4rem;flex:none}
+.dm-brzy b{display:block;font-size:.95rem}
+.dm-brzy span{font-size:.82rem;color:#56617D}
+.dm-karta{background:#fff;border-radius:18px;padding:14px;display:grid;gap:6px}
+.dm-karta .r{height:10px;border-radius:6px;background:#E5E9F3}
+.tok{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px}
+.tok .krok{border:1px solid var(--linka);border-radius:14px;padding:12px 14px;background:var(--plocha);display:grid;gap:4px}
+.tok .krok b{font-size:.95rem}
+.tok .krok span{color:var(--tl);font-size:.88rem}
+.rozh{margin:0;padding-left:20px;display:grid;gap:8px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="obal">
+  <header class="hlava">
+    <div class="mock"><b>Mockup</b> · ukázky jsou klikací, Hexík je skutečný 3D render z appky</div>
+    <h1>Combo, adventní kalendář a novinky</h1>
+    <p>Tři věci, které by šly ven spolu s herním systémem: combo v tréninku, adventní kalendář od 1. 12. a sekce Novinky na úvodní stránce i na Domově, aby žáci věděli, na co se těšit.</p>
+  </header>
+  <nav class="zalozky" aria-label="Části mockupu">
+    <a href="#combo" data-tab="combo">Combo v tréninku</a>
+    <a href="#kalendar" data-tab="kalendar">Adventní kalendář</a>
+    <a href="#novinky" data-tab="novinky">Novinky a úvodní stránka</a>
+  </nav>
+
+  <!-- ═════════ COMBO ═════════ -->
+  <section class="sekce" id="s-combo">
+    <div class="dva">
+      <div>
+        <div class="telefon">
+          <div class="displej" id="disp">
+            <div class="flash" id="flash"></div>
+            <canvas class="castice" id="cast"></canvas>
+            <div class="tr-horni">
+              <div class="tr-x">✕</div>
+              <div class="tr-pruh" id="pruh"></div>
+              <div class="kr" id="kr">💎 1240</div>
+            </div>
+            <div class="stage" id="stage" data-t="0">
+              <div class="paprsky" id="paprsky"></div>
+              <canvas class="ohen" id="ohen"></canvas>
+              <div class="hx3" id="hxbox"><img src="%%HX:neon%%" alt="3D Hexík"></div>
+              <div class="bublina" id="bublina">Jdeme na to!</div>
+              <div class="cnt" id="combo" aria-live="polite"><span class="cnt-n" id="combo-n">0</span><span class="cnt-l">combo</span><span class="cnt-s" id="cnt-s"></span></div>
+              <div class="cil"><span id="cil-text">Odpovídej správně za sebou</span><div class="bar"><i id="cil-bar"></i></div></div>
+            </div>
+            <div class="tr-karta">
+              <span class="tema">Zlomky · Sčítání a odčítání</span>
+              <div class="zad" id="zadani">Vypočítej: 3/4 + 1/8</div>
+              <div class="odp" id="odp">Napiš výsledek…</div>
+              <div class="tl" style="font-size:.8rem">Krystaly za combo se počítají do denního stropu 250.</div>
+            </div>
+            <div class="milnik" id="milnik"><b id="milnik-n">10× COMBO</b><span id="milnik-t">Ohnivé combo · +5 💎</span></div>
+            <div class="konec" id="konec" hidden><div>
+              <span class="stit">Konec tréninku</span>
+              <div class="tl" style="color:#56617D">Nejdelší combo dnes</div>
+              <div class="rek" id="rek-dnes">0</div>
+              <div id="rek-text" style="font-weight:800">Tvůj rekord je 21. Zkusíš ho překonat zítra?</div>
+              <button class="btn btn-ok" type="button" id="znovu">Trénovat znovu</button>
+            </div></div>
+          </div>
+        </div>
+        <div class="ovl">
+          <button class="btn btn-ok" type="button" id="b-ok">Odpovědět správně</button>
+          <button class="btn btn-chyba" type="button" id="b-chyba">Odpovědět špatně</button>
+          <button class="btn btn-sv" type="button" data-skok="4">Na 4</button><button class="btn btn-sv" type="button" data-skok="9">Na 9</button><button class="btn btn-sv" type="button" data-skok="14">Na 14</button><button class="btn btn-sv" type="button" data-skok="19">Na 19</button>
+          <button class="btn btn-sv" type="button" id="b-zvuk" aria-pressed="false">Zvuk: vypnutý</button>
+          <button class="btn btn-sv" type="button" id="b-konec">Konec tréninku</button>
+        </div>
+      </div>
+      <div class="pravidla">
+        <div class="stitek">Novinka 1 · v tréninku</div>
+        <h2>Combo: každá správná odpověď v řadě je silnější</h2>
+        <p class="lead">Klikni v telefonu na „Odpovědět správně“. Combo roste, Hexík víc září a na milnících přijde velká oslava se zvukem a vibrací. Po chybě combo spadne, ale Hexík povzbudí. Jednou za trénink combo podrží štít.</p>
+        <div class="blok">
+          <h3>Stupně comba</h3>
+          <div class="stupne" id="stupne">
+            <div class="stupen" data-od="3"><b>3</b><div><strong>Rozjíždíš se</strong><br><small>Jiskřičky kolem Hexíka</small></div><span class="odm">—</span></div>
+            <div class="stupen" data-od="5"><b>5</b><div><strong>Hexík září</strong><br><small>Modrá záře, Hexík poskočí</small></div><span class="odm">štít na 1 chybu</span></div>
+            <div class="stupen" data-od="10"><b>10</b><div><strong>Ohnivé combo</strong><br><small>Oslava přes obrazovku, vibrace</small></div><span class="odm">+5 💎</span></div>
+            <div class="stupen" data-od="15"><b>15</b><div><strong>Duhové combo</strong><br><small>Duhový plamínek, taneček</small></div><span class="odm">+5 💎</span></div>
+            <div class="stupen" data-od="20"><b>20</b><div><strong>Legendární combo</strong><br><small>Zlatá záře, salto, ohňostroj</small></div><span class="odm">+10 💎</span></div>
+          </div>
+        </div>
+        <div class="blok">
+          <h3>Aby to bylo fér a učilo</h3>
+          <ul>
+            <li>Počítají se jen správné odpovědi. U výběru A–E jen po rozmyšlení, ne rychlé klikání.</li>
+            <li>Krystaly za combo jdou do denního stropu, takže se nevyplatí „honit“ lehké příklady.</li>
+            <li>Po chybě se nic nebere, combo jen začne znovu. Hexík řekne „Nevadí, další dáme!“ a nabídne postup řešení.</li>
+            <li>Na konci tréninku: nejdelší combo dnes a osobní rekord. Nové trofeje Combo 10 a Combo 25.</li>
+          </ul>
+        </div>
+        <div class="blok">
+          <h3>Zvuk, vibrace a pohyb</h3>
+          <ul>
+            <li>Jemné tóny, které s combem stoupají. Vypínač zvuku je v tréninku i v profilu.</li>
+            <li>Krátká vibrace za správnou odpověď a silnější na milníku (Android; iPhone vibraci webovým stránkám nedovolí, v nativní appce půjde).</li>
+            <li>Kdo má v telefonu omezený pohyb, uvidí combo bez třesení a výbuchů.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ KALENDÁŘ ═════════ -->
+  <section class="sekce" id="s-kalendar" hidden>
+    <div class="dva">
+      <div>
+        <div class="telefon">
+          <div class="displej" style="background:#0B1633;padding:12px">
+            <div class="kal-scena"><div class="kal" id="kal">
+              <canvas id="snih"></canvas>
+              <div class="girlanda" id="girlanda"><svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 3 Q25 24 50 6 T100 3" fill="none" stroke="#2B3A2E" stroke-width="1.2"/></svg></div>
+              <h3>Adventní kalendář <small id="kal-datum">prosinec</small></h3>
+              <div class="okna" id="okna"></div>
+              <div class="kal-stav" id="kal-stav"><b>Dnešní okénko čeká</b><span>Dokonči dnešní trénink a otevři ho.</span></div>
+            </div></div>
+            <div class="odhal" id="odhal" hidden><div>
+              <div class="tl" style="color:#B9C4E4;font-weight:800" id="od-den">1. prosince</div>
+              <div class="ik" id="od-ik">💎</div>
+              <span class="vz" id="od-vz">Adventní</span>
+              <div style="font-size:1.3rem;font-weight:900" id="od-n">50 krystalů</div>
+              <div style="color:#C4CEEA;font-size:.9rem" id="od-t">Zítra čeká další okénko.</div>
+              <button class="btn" type="button" id="od-ok" style="background:#F5A623;color:#0D1B3E;margin-top:6px">Paráda!</button>
+            </div></div>
+          </div>
+        </div>
+        <div class="kal-ovl blok" style="margin-top:14px">
+          <label for="den">Simulovat den v prosinci <span id="den-v">8. 12.</span></label>
+          <input type="range" id="den" min="1" max="24" value="8">
+          <span class="tl">Zlatě svítí dnešní okénko. Šedá „dohnat“ jsou zmeškané dny. Zkus je otevřít.</span>
+        </div>
+      </div>
+      <div class="pravidla">
+        <div class="stitek">Novinka 2 · od 1. do 24. prosince</div>
+        <h2>Adventní kalendář s Hexíkem</h2>
+        <p class="lead">Každý den jedno okénko, ale otevře se až po dokončeném tréninku. Za okénky jsou krystaly, sezónní truhly a sedm věcí, které jdou získat jen z kalendáře. 24. prosince čeká legendární Zlatá hvězda.</p>
+        <div class="blok">
+          <h3>Pravidla</h3>
+          <ul>
+            <li>Okénko se otevře jen v daný den a jen po dokončeném tréninku. Nejdřív učení, pak dárek.</li>
+            <li>Zmeškané okénko jde dohnat: za každý další dokončený trénink v jednom dni se otevře jedno zmeškané. Kdo vynechal víkend, může ho v pondělí dohnat dvěma tréninky.</li>
+            <li>Všech 24 okének: trofej Adventní mistr a bonus 300 krystalů.</li>
+            <li>Na Domově je v prosinci kalendář nahoře a Hexík radí: „Dnešní okénko čeká!“</li>
+          </ul>
+        </div>
+        <div class="blok">
+          <h3>Co je za okénky</h3>
+          <div class="odmeny-kal" id="odmeny-kal"></div>
+          <p class="tl">Ve dnech bez věci jsou krystaly (40 až 100). Páťáci a deváťáci mají stejný kalendář, liší se jen podoba Hexíka 18. prosince.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ NOVINKY ═════════ -->
+  <section class="sekce" id="s-novinky" hidden>
+    <div class="pravidla" style="max-width:76ch">
+      <div class="stitek">Novinka 3 · úvodní stránka a Domov</div>
+      <h2>Novinky: co je nové a na co se těšit</h2>
+      <p class="lead">Na úvodní stránce pro nové návštěvníky bude sekce Novinky v MateMaxu. Na Domově přihlášeného žáka bude nahoře karta s novinkou a pod ní „Brzy“ s odpočtem. Úvodní stránka zatím 3D Hexíka ani herní systém neukazuje. Má jen 2D Hexíka a truhly z první etapy, tohle je návrh, jak ji doplnit.</p>
+    </div>
+
+    <div class="prohl">
+      <div class="prohl-lista"><i></i><i></i><i></i><span>matemax.matematika-snadno.cz</span></div>
+      <div class="land">
+        <div style="display:grid;gap:8px">
+          <span class="st">Novinky v MateMaxu</span>
+          <h3>Hexík ožil ve 3D. A v prosinci otevírá kalendář.</h3>
+          <p class="lead">Za každý trénink krystaly, za krystaly truhly a nové věci pro Hexíka. Nic se nekupuje za peníze, odměny jsou jen za učení.</p>
+        </div>
+        <div class="land-grid">
+          <div class="nk hlavni">
+            <span class="pill nove">Nově</span>
+            <div class="hx-stage" id="hx-stage">
+              <img src="%%HX:klasik%%" alt="Hexík">
+              <img src="%%HX:santa%%" alt="Hexík s vánoční čepicí a šálou">
+              <img src="%%HX:dracek%%" alt="Dráček s hvězdnými brýlemi">
+              <img src="%%HX:neon%%" alt="Neon s kšiltovkou, brýlemi a řetězem">
+              <img src="%%HX:malina%%" alt="Malinový Hexík s věnečkem a srdíčkovými brýlemi">
+              <img src="%%HX:kyber%%" alt="Kyber s vizorem a svatozáří">
+            </div>
+            <div class="hx-tecky" id="hx-tecky"></div>
+            <h4>Hexík ve 3D: obléká se, roste a tančí</h4>
+            <p>Přes 70 věcí pro každou třídu: podoby, čepice, brýle, šály, tanečky a živá pozadí. 30 úrovní a za každou odměna.</p>
+          </div>
+          <div class="nk">
+            <span class="pill brzy">Od 1. prosince</span>
+            <h4>Adventní kalendář</h4>
+            <div class="odpocet" id="odpocet"><div><b>13</b><small>dní</small></div><div><b>08</b><small>hodin</small></div><div><b>42</b><small>minut</small></div></div>
+            <p>24 okének, za každé dokončený trénink. Na Štědrý den legendární Zlatá hvězda.</p>
+          </div>
+          <div class="nk">
+            <span class="pill nove">Nově</span>
+            <div class="mini-truhla"><img src="%%IMG:truhla%%" alt="Hexík otevírá zlatou truhlu"></div>
+            <h4>Truhly, které otevírá Hexík</h4>
+            <p>Tři klepnutí, záblesk vzácnosti a nová věc do sbírky.</p>
+          </div>
+          <div class="nk">
+            <span class="pill nove">Nově</span>
+            <div class="mini-combo"><span style="background:#E0F4FF;color:#0F6B9E">3×</span><span style="background:linear-gradient(90deg,#FF9A3D,#FF5E3A)">10×</span><span style="background:linear-gradient(90deg,#FFD25E,#FFB000);color:#5A3A00">20×</span></div>
+            <h4>Combo v tréninku</h4>
+            <p>Správně za sebou a Hexík víc a víc září. Překonáš svůj rekord?</p>
+          </div>
+          <div class="nk">
+            <span class="pill chystame">Připravujeme</span>
+            <h4>Mistrovské kousky za témata</h4>
+            <p>Zvládneš zlomky a Hexík dostane plášť zlomků. Na Hexíkovi bude vidět, co už umíš.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dva" style="margin-top:6px">
+      <div class="telefon">
+        <div class="displej"><div class="domov">
+          <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:1.2rem">Ahoj, Terko!</b><span class="kr" style="margin:0">💎 1240</span></div>
+          <div class="dm-novinka" id="dm-novinka">
+            <button class="x" type="button" aria-label="Zavřít novinku" id="dm-x">✕</button>
+            <img src="%%HX:santa%%" alt="Hexík s vánoční čepicí">
+            <div><span class="pill nove" style="font-size:.65rem;font-weight:900;border-radius:999px;padding:3px 8px">Nově</span>
+              <b>Combo v tréninku!</b>
+              <p>Odpovídej správně za sebou a sleduj, jak Hexík září. Na 10 v řadě čeká oslava a krystaly.</p>
+              <span class="akce">Vyzkoušet</span></div>
+          </div>
+          <div class="dm-brzy"><div class="ik">🎄</div><div><b>Od 1. prosince: adventní kalendář</b><span>24 okének s věcmi, které jinde nezískáš.</span></div></div>
+          <div class="dm-karta"><b style="font-size:.95rem">Hexík radí</b><div class="r" style="width:90%"></div><div class="r" style="width:70%"></div></div>
+          <div class="dm-karta"><b style="font-size:.95rem">Dnešní trénink</b><div class="r" style="width:80%"></div><div class="r" style="width:60%"></div></div>
+        </div></div>
+      </div>
+      <div class="pravidla">
+        <h2 style="font-size:1.35rem">Na Domově žáka</h2>
+        <ul class="rozh">
+          <li>Karta s novinkou se ukáže jednou. Po zavření nebo vyzkoušení zmizí a příště přijde další novinka.</li>
+          <li>„Brzy“ s odpočtem ukazuje, co přijde. Den před startem se změní na „Zítra!“ a v den startu na novinku.</li>
+          <li>Páťák vidí jen novinky pro páťáky, deváťák pro deváťáky.</li>
+        </ul>
+        <h2 style="font-size:1.35rem">Jak to bude fungovat</h2>
+        <div class="tok">
+          <div class="krok"><b>Jeden zápis</b><span>Každá novinka je jeden zápis v kronice: nadpis, text, obrázek, od kdy platí a pro kterou třídu.</span></div>
+          <div class="krok"><b>Samo se ukáže</b><span>Před startem se zobrazí jako „Brzy“, v den startu jako „Nově“. Na úvodní stránce, na Domově, v administraci i v kokpitu.</span></div>
+          <div class="krok"><b>Postupné pouštění</b><span>Novinky můžeme mít hotové dopředu a pouštět je podle data. Nic se nemusí nasazovat v ten den.</span></div>
+        </div>
+        <p class="tl">Texty na úvodní stránce před nasazením pošlu ke schválení do kokpitu, jako vždy u veřejného webu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce" style="padding-top:0">
+    <div class="blok">
+      <h3>Potřebuju od tebe</h3>
+      <ol class="rozh">
+        <li>Combo: sedí stupně (3, 5, 10, 15, 20), krystaly na milnících a štít na jednu chybu?</li>
+        <li>Kalendář: sedí pravidla dohánění a sedm vlastních věcí (Sobí parohy, Vánoční svetr, Sněhové koule, Adventní světýlka, Perníčkový / Polární Hexík, taneček Rolničky, Zlatá hvězda)?</li>
+        <li>Novinky: chceš na úvodní stránce sekci přesně takhle, a má pak nahradit i dnešní sekci s 2D Hexíkem?</li>
+      </ol>
+      <p class="tl">Odhad stavby: combo 1–2 dny, kalendář 2 dny (včetně sedmi 3D věcí), novinky 1 den. Všechno stihnu před 1. 12., když schválíš do konce týdne.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var redukce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* ── záložky ── */
+  var TABY = ["combo","kalendar","novinky"];
+  function ukazTab(){
+    var h = (location.hash || "#combo").slice(1); if (TABY.indexOf(h) < 0) h = "combo";
+    TABY.forEach(function(t){ document.getElementById("s-"+t).hidden = t !== h; });
+    document.querySelectorAll("[data-tab]").forEach(function(a){ if (a.dataset.tab === h) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+    if (h === "kalendar") startSnih();
+  }
+  window.addEventListener("hashchange", ukazTab);
+
+  /* ── zvuk ── */
+  var ac = null, zvuk = false;
+  var bz = document.getElementById("b-zvuk");
+  bz.addEventListener("click", function(){
+    zvuk = !zvuk; bz.setAttribute("aria-pressed", zvuk); bz.textContent = zvuk ? "Zvuk: zapnutý" : "Zvuk: vypnutý";
+    if (zvuk && !ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
+  });
+  function ton(f, t0, d, typ, hl){
+    if (!zvuk || !ac) return;
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.type = typ || "sine"; o.frequency.value = f;
+    var t = ac.currentTime + (t0||0);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(hl || 0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + d + 0.05);
+  }
+  var PENTA = [523.25,587.33,659.25,783.99,880,1046.5,1174.66,1318.5,1567.98,1760];
+  function zvukOk(n){ var f = PENTA[Math.min(n-1, PENTA.length-1)] || 523; ton(f,0,.18,"triangle"); ton(f*2,0.02,.12,"sine",.05); }
+  function zvukMilnik(){ [523.25,659.25,783.99,1046.5].forEach(function(f,i){ ton(f,i*.07,.35,"triangle",.16); }); }
+  function zvukChyba(){ ton(220,0,.18,"sine",.12); ton(196,.12,.22,"sine",.1); }
+
+  /* ── částice ── */
+  function castice(canvas){
+    var ctx = canvas.getContext("2d"), cast = [], bezi = false;
+    function velikost(){ var r = canvas.getBoundingClientRect(); canvas.width = r.width * devicePixelRatio; canvas.height = r.height * devicePixelRatio; }
+    function krok(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      cast = cast.filter(function(c){ return c.z > 0; });
+      cast.forEach(function(c){
+        c.x += c.vx; c.y += c.vy; c.vy += c.g; c.vx *= .985; c.z -= c.dz; c.r += c.vr;
+        ctx.save(); ctx.globalAlpha = Math.max(0, Math.min(1, c.z)); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.fillStyle = c.b;
+        if (c.tvar === "h") { ctx.beginPath(); for (var i=0;i<5;i++){ var a = i*Math.PI*2/5 - Math.PI/2, b = a + Math.PI/5; ctx.lineTo(Math.cos(a)*c.s, Math.sin(a)*c.s); ctx.lineTo(Math.cos(b)*c.s*.45, Math.sin(b)*c.s*.45);} ctx.closePath(); ctx.fill(); }
+        else if (c.tvar === "k") { ctx.beginPath(); ctx.arc(0,0,c.s*.5,0,7); ctx.fill(); }
+        else ctx.fillRect(-c.s/2, -c.s/4, c.s, c.s/2);
+        ctx.restore();
+      });
+      if (cast.length) requestAnimationFrame(krok); else bezi = false;
+    }
+    return function(x, y, pocet, barvy, sila, tvar){
+      if (redukce) return;
+      velikost(); var d = devicePixelRatio;
+      for (var i=0;i<pocet;i++){
+        var a = Math.random()*Math.PI*2, v = (Math.random()*.7+.3) * sila * d;
+        cast.push({ x:x*d, y:y*d, vx:Math.cos(a)*v, vy:Math.sin(a)*v - sila*.6*d, g:.18*d, z:1.3, dz:.012+Math.random()*.01, r:Math.random()*6, vr:(Math.random()-.5)*.3, s:(5+Math.random()*7)*d, b:barvy[i%barvy.length], tvar: tvar || (Math.random()<.35?"h":"o") });
+      }
+      if (!bezi) { bezi = true; requestAnimationFrame(krok); }
+    };
+  }
+
+  /* ── combo ── */
+  var STUPNE = [
+    { od:0, t:"", zar:"transparent", zo:0, txt:["Jdeme na to!"] },
+    { od:3, t:"t1", zar:"#7FD1FF", zo:.6, txt:["Rozjíždíme se!","Pěkně!"] },
+    { od:5, t:"t2", zar:"#5B8CFF", zo:.85, txt:["Hexík září!","To je série!"] },
+    { od:10, t:"t3", zar:"#FF8A3D", zo:1, txt:["Hoří to!","Neuvěřitelné!"] },
+    { od:15, t:"t4", zar:"#B67BFF", zo:1, txt:["Duhové combo!","Jsi nezastavitelný!"] },
+    { od:20, t:"t5", zar:"#FFC83D", zo:1, txt:["LEGENDA!","Zlatá série!"] }
+  ];
+  var MILNIKY = { 10:{n:"10× COMBO", t:"Ohnivé combo · +5 💎", kr:5, b:["#FF9A3D","#FF5E3A","#FFD27E"]}, 15:{n:"15× COMBO", t:"Duhové combo · +5 💎", kr:5, b:["#FF5E8A","#FFB13D","#56D27E","#4FA3FF","#9B6BFF"]}, 20:{n:"20× COMBO", t:"Legendární combo · +10 💎", kr:10, b:["#FFD25E","#FFB000","#FFF1B8","#FFFFFF"]}, 25:{n:"25× COMBO", t:"Trofej Combo 25!", kr:10, b:["#FFD25E","#FFB000","#FFFFFF"]} };
+  var ZADANI = [["Vypočítej: 3/4 + 1/8","7/8"],["Zkrať zlomek 12/18","2/3"],["Vypočítej: 2/3 − 1/6","1/2"],["Kolik je 3/5 z 40?","24"],["Vypočítej: 1 1/2 + 3/4","2 1/4"],["Porovnej: 5/8 ☐ 3/5","5/8 > 3/5"]];
+  var n = 0, max = 0, kr = 1240, stit = false, stitUzit = false, krokZad = 0, odp = 0;
+  var el = function(id){ return document.getElementById(id); };
+  var vystrel = castice(el("cast"));
+  var pruh = el("pruh"); for (var i=0;i<10;i++){ pruh.appendChild(document.createElement("i")); }
+  function stupen(x){ var s = STUPNE[0]; STUPNE.forEach(function(q){ if (x >= q.od) s = q; }); return s; }
+  function dalsi(x){ var m = [3,5,10,15,20,25,30].filter(function(q){ return q > x; })[0]; return m || x+5; }
+  var NAZEV_ST = ["", "Rozjíždíš se", "Hexík září", "Ohnivé combo", "Duhové combo", "Legendární combo"];
+  function vykresli(pop){
+    var s = stupen(n), ti = STUPNE.indexOf(s), c = el("combo");
+    el("stage").dataset.t = ti; fx.t = ti;
+    c.className = "cnt" + (pop ? " pop" : "");
+    el("combo-n").textContent = n;
+    el("cnt-s").textContent = NAZEV_ST[ti] + (stit ? " · 🛡" : "");
+    var d = dalsi(n), prev = [0,3,5,10,15,20,25,30].filter(function(q){ return q <= n; }).pop();
+    el("cil-bar").style.width = Math.round((n - prev) / (d - prev) * 100) + "%";
+    el("cil-text").textContent = n === 0 ? "Odpovídej správně za sebou" : "Další stupeň za " + (d - n);
+    pruh.querySelectorAll("i").forEach(function(x, i){ x.className = i < (odp % 10 || (odp ? 10 : 0)) ? "h" : ""; });
+    document.querySelectorAll("#stupne .stupen").forEach(function(r){ r.classList.toggle("akt", Number(r.dataset.od) === s.od); });
+  }
+  function hexik(cls){ var hb = el("hxbox"); hb.classList.remove("skok","smutek"); void hb.offsetWidth; hb.classList.add(cls); setTimeout(function(){ hb.classList.remove(cls); }, 650); }
+
+  /* Ohňová scéna: jiskry kolem Hexíka (3+), modré jiskry (5+), oheň a uhlíky (10+), duhový oheň (15+), zlatý oheň a blesky (20+). */
+  var fx = (function(){
+    var cv = el("ohen"), ctx = cv.getContext("2d"), P = [], W = 0, H = 0, d = 1, f = 0, blesk = null, api = { t: 0, davka: 0 };
+    function vel(){ var r = cv.getBoundingClientRect(); d = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; }
+    function pridej(o){ P.push(o); }
+    function emit(){
+      var t = api.t, cx = W / 2, cy = H * .44, i;
+      if (t >= 1) for (i = 0; i < (t >= 2 ? 3 : 1); i++) { var a = Math.random() * 6.283, rr = 70 + Math.random() * 12; pridej({ k: "jiskra", x: cx + Math.cos(a) * rr, y: cy + Math.sin(a) * rr * .8, vx: -Math.sin(a) * 1.4, vy: Math.cos(a) * 1.1 - .3, z: 1, dz: .02, s: 1.5 + Math.random() * 1.8, h: t >= 2 ? 215 : 195 }); }
+      if (t >= 3) {
+        var pocet = t >= 5 ? 9 : 7;
+        for (i = 0; i < pocet; i++) { var ua = Math.PI * (.05 + Math.random() * .9), sx = cx + Math.cos(ua) * 78 * (Math.random() < .5 ? 1 : -1), base = cy + Math.sin(ua) * 62; pridej({ k: "ohen", x: sx, y: base, vx: (cx - sx) * .006 + (Math.random() - .5) * .6, vy: -(2.2 + Math.random() * 2.8), z: 1, dz: .013 + Math.random() * .01, s: 20 + Math.random() * 22, h: Math.random() * 360 }); }
+        for (i = 0; i < 3; i++) pridej({ k: "ohen", x: W - 50 + (Math.random() - .5) * 40, y: 46, vx: (Math.random() - .5) * .4, vy: -(1 + Math.random() * 1.4), z: .6, dz: .035, s: 8 + Math.random() * 7, h: Math.random() * 360 });
+        if (Math.random() < .6) pridej({ k: "uhlik", x: cx + (Math.random() - .5) * 110, y: cy + 40, vx: (Math.random() - .5) * 1.2, vy: -(2 + Math.random() * 2.5), z: 1, dz: .008, s: 1.4 + Math.random() * 1.6, w: Math.random() * 6 });
+      }
+      if (t >= 5 && !blesk && Math.random() < .03) {
+        var b = [], x = cx + (Math.random() - .5) * 220, y = 0; b.push([x, y]);
+        while (y < cy - 30) { y += 14 + Math.random() * 16; x += (Math.random() - .5) * 26; b.push([x, y]); }
+        blesk = { b: b, z: 7 };
+      }
+    }
+    function barva(p, l){
+      if (p.k === "jiskra") return "hsla(" + p.h + ",100%," + (70 + l * 25) + "%," + l + ")";
+      if (p.k === "uhlik") return "hsla(" + (30 + l * 20) + ",100%," + (60 + l * 30) + "%," + l + ")";
+      if (api.t === 4) return "hsla(" + ((p.h + f * 3) % 360) + ",100%," + (45 + l * 30) + "%," + (l * .85) + ")";
+      if (api.t >= 5) return "hsla(" + (36 + l * 14) + ",100%," + (46 + l * 30) + "%," + (l * .75) + ")";
+      return "hsla(" + (8 + l * 40) + ",100%," + (40 + l * 32) + "%," + (l * .7) + ")";
+    }
+    function krok(){
+      f++;
+      if (!document.getElementById("s-combo").hidden && !redukce) {
+        if (!W || cv.width !== Math.round(W * d)) vel();
+        emit();
+        ctx.setTransform(d, 0, 0, d, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        ctx.globalCompositeOperation = "lighter";
+        for (var i = P.length - 1; i >= 0; i--) {
+          var p = P[i]; p.z -= p.dz; if (p.z <= 0) { P.splice(i, 1); continue; }
+          p.x += p.vx; p.y += p.vy;
+          if (p.k === "ohen") { p.vx *= .98; p.s *= .985; }
+          if (p.k === "uhlik") { p.w += .15; p.x += Math.sin(p.w) * .6; }
+          var l = Math.min(1, p.z), g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.s);
+          g.addColorStop(0, barva(p, l)); g.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, 6.283); ctx.fill();
+        }
+        if (blesk) {
+          ctx.strokeStyle = "rgba(255,240,170," + (blesk.z / 7) + ")"; ctx.lineWidth = 3; ctx.shadowColor = "#FFD25E"; ctx.shadowBlur = 16;
+          ctx.beginPath(); blesk.b.forEach(function(q, j){ if (j) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); }); ctx.stroke();
+          ctx.shadowBlur = 0; if (--blesk.z <= 0) blesk = null;
+        }
+        ctx.globalCompositeOperation = "source-over";
+      }
+      requestAnimationFrame(krok);
+    }
+    window.addEventListener("resize", vel);
+    requestAnimationFrame(krok);
+    api.vzplanuti = function(){ var cx = W / 2, cy = H * .44; for (var i = 0; i < 60; i++) { var a = Math.random() * 6.283, v = 2 + Math.random() * 5; pridej({ k: api.t >= 3 ? "ohen" : "jiskra", x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, z: 1, dz: .025, s: api.t >= 3 ? 14 + Math.random() * 12 : 3, h: Math.random() * 360 }); } };
+    return api;
+  })();
+  function dalsiZadani(stav){
+    var o = el("odp"); o.className = "odp " + stav; o.textContent = stav === "ok" ? ZADANI[krokZad % ZADANI.length][1] + "  ✓" : "Zkus postup řešení";
+    setTimeout(function(){ krokZad++; el("zadani").textContent = ZADANI[krokZad % ZADANI.length][0]; o.className = "odp"; o.textContent = "Napiš výsledek…"; }, 650);
+  }
+  function spravne(){
+    n++; odp++; max = Math.max(max, n);
+    var s = stupen(n);
+    el("bublina").textContent = s.txt[n % s.txt.length];
+    if (n === 5 && !stitUzit) stit = true;
+    vykresli(true); hexik("skok"); dalsiZadani("ok"); zvukOk(n); if ([3,5,10,15,20].indexOf(n) >= 0) fx.vzplanuti();
+    try { navigator.vibrate && navigator.vibrate(n % 5 === 0 ? [30,40,60] : 18); } catch(e){}
+    var r = el("hxbox").getBoundingClientRect(), dr = el("disp").getBoundingClientRect();
+    var cx = r.left - dr.left + r.width/2, cy = r.top - dr.top + r.height/2;
+    if (n >= 3) vystrel(cx, cy, 6 + Math.min(n, 20), [s.zar, "#FFFFFF"], 3 + Math.min(n, 20) * .15, "k");
+    var m = MILNIKY[n];
+    if (m) {
+      kr += m.kr; el("kr").textContent = "💎 " + kr;
+      el("milnik-n").textContent = m.n; el("milnik-t").textContent = m.t;
+      var ml = el("milnik"); ml.classList.remove("ukaz"); void ml.offsetWidth; ml.classList.add("ukaz");
+      var fl = el("flash"); fl.style.setProperty("--fl", s.zar); fl.classList.remove("ukaz"); void fl.offsetWidth; fl.classList.add("ukaz");
+      if (!redukce) { var dp = el("disp"); dp.classList.remove("tres"); void dp.offsetWidth; dp.classList.add("tres"); }
+      vystrel(dr.width/2, dr.height*.28, n >= 20 ? 140 : 90, m.b, 9);
+      if (n >= 20) setTimeout(function(){ vystrel(dr.width*.25, dr.height*.3, 70, m.b, 8); vystrel(dr.width*.75, dr.height*.3, 70, m.b, 8); }, 350);
+      zvukMilnik();
+    }
+  }
+  function spatne(){
+    odp++;
+    if (stit && n > 0) { stit = false; stitUzit = true; el("bublina").textContent = "Štít podržel combo! 🛡"; vykresli(true); dalsiZadani("chyba"); zvukChyba(); return; }
+    n = 0; el("bublina").textContent = "Nevadí, další dáme!"; vykresli(false); hexik("smutek"); dalsiZadani("chyba"); zvukChyba();
+  }
+  el("b-ok").addEventListener("click", spravne);
+  el("b-chyba").addEventListener("click", spatne);
+  document.querySelectorAll("[data-skok]").forEach(function(b){ b.addEventListener("click", function(){ n = Number(b.dataset.skok); max = Math.max(max, n); odp = Math.max(odp, n); if (!stitUzit && n >= 5) stit = true; vykresli(true); el("bublina").textContent = "Ještě jedna a přijde další stupeň!"; }); });
+  el("b-konec").addEventListener("click", function(){ el("rek-dnes").textContent = max; el("rek-text").textContent = max > 21 ? "Nový osobní rekord! 🎉" : "Tvůj rekord je 21. Zkusíš ho překonat zítra?"; el("konec").hidden = false; });
+  el("znovu").addEventListener("click", function(){ el("konec").hidden = true; n = 0; max = 0; odp = 0; stit = false; stitUzit = false; el("bublina").textContent = "Jdeme na to!"; vykresli(false); });
+  vykresli(false);
+
+  /* ── kalendář ── */
+  var VECI = {
+    3:{ik:"🦌",n:"Sobí parohy",t:"Na hlavu · jen z kalendáře",vz:"Neobvyklá"},
+    6:{ik:"🎁",n:"Mikulášská truhla",t:"Sezónní truhla zdarma",vz:"Truhla"},
+    8:{ik:"🧶",n:"Vánoční svetr",t:"Na krk · jen z kalendáře",vz:"Neobvyklá"},
+    11:{ik:"❄️",n:"Sněhové koule",t:"Efekt správné odpovědi",vz:"Neobvyklá"},
+    13:{ik:"🎁",n:"Sezónní truhla",t:"Zdarma, 3. adventní neděle",vz:"Truhla"},
+    15:{ik:"✨",n:"Adventní světýlka",t:"Živé pozadí profilu",vz:"Vzácná"},
+    18:{ik:"🍪",n:"Perníčkový Hexík",t:"Podoba (deváťáci: Polární Hexík)",vz:"Vzácná"},
+    20:{ik:"🎁",n:"Sezónní truhla",t:"Zdarma, 4. adventní neděle",vz:"Truhla"},
+    22:{ik:"🔔",n:"Taneček Rolničky",t:"Oslava správné odpovědi",vz:"Vzácná"},
+    24:{ik:"🌟",n:"Zlatá hvězda",t:"Na hlavu · legendární + 150 💎",vz:"Legendární"}
+  };
+  var KRYST = {1:50,2:40,4:60,5:40,7:50,9:60,10:40,12:70,14:50,16:60,17:50,19:70,21:80,23:100};
+  function odmenaDne(d){ return VECI[d] || {ik:"💎", n: KRYST[d] + " krystalů", t:"Za dnešní trénink", vz:"Krystaly"}; }
+  var PORADI = [7,15,2,20,11,4,18,9,24,13,1,23,6,16,10,21,3,14,8,19,5,12,22,17];
+  var dnes = 8, otevrene = {}, zmeskane = {4:true};
+  function resetDny(){ otevrene = {}; for (var d=1; d<dnes; d++) if (!zmeskane[d]) otevrene[d] = true; }
+  var okna = el("okna");
+  PORADI.forEach(function(d){
+    var b = document.createElement("button"); b.type = "button"; b.className = "okno" + (d === 24 ? " velke" : ""); b.dataset.d = d;
+    var o = odmenaDne(d);
+    b.innerHTML = '<span class="vnitrek"><span class="ik">' + o.ik + '</span><span class="tx">' + o.n + '</span></span><span class="dvirka">' + d + '</span>';
+    b.addEventListener("click", function(){ klikOkno(d, b); });
+    okna.appendChild(b);
+  });
+  var kalSt = el("kal-stav");
+  function vykresliKal(){
+    el("den-v").textContent = dnes + ". 12."; el("kal-datum").textContent = dnes + ". prosince";
+    var zm = 0;
+    okna.querySelectorAll(".okno").forEach(function(b){
+      var d = Number(b.dataset.d), stav = otevrene[d] ? "otevreno" : d === dnes ? "dnes" : d < dnes ? "zmeskane" : "budouci";
+      if (stav === "zmeskane") zm++;
+      b.classList.remove("otevreno","dnes","zmeskane","budouci"); b.classList.add(stav);
+      var dv = b.querySelector(".dvirka"); dv.innerHTML = d + (stav === "zmeskane" ? '<span class="dohnat">dohnat</span>' : "");
+      b.setAttribute("aria-label", d + ". prosince: " + (stav === "otevreno" ? odmenaDne(d).n : stav === "dnes" ? "otevři po tréninku" : stav === "zmeskane" ? "zmeškané, dá se dohnat dalším tréninkem" : "zatím zavřené"));
+    });
+    var hotovo = Object.keys(otevrene).length;
+    kalSt.innerHTML = otevrene[dnes]
+      ? "<b>Dnešní okénko máš otevřené</b><span>Otevřeno " + hotovo + " z 24." + (zm ? " Zmeškaná okénka: " + zm + ". Další trénink otevře jedno z nich." : " Zítra čeká další.") + "</span>"
+      : "<b>Dnešní okénko čeká</b><span>V ukázce je trénink hotový, klikni na svítící okénko " + dnes + ".</span>";
+  }
+  var odhal = el("odhal");
+  function klikOkno(d, b){
+    if (!(b.classList.contains("dnes") || b.classList.contains("zmeskane"))) return;
+    if (b.classList.contains("zmeskane") && !otevrene[dnes]) { kalSt.innerHTML = "<b>Nejdřív dnešní okénko</b><span>Zmeškané se otevírají až dalšími tréninky.</span>"; return; }
+    otevrene[d] = true; delete zmeskane[d];
+    b.classList.remove("dnes","zmeskane"); b.classList.add("otevreno");
+    var o = odmenaDne(d);
+    setTimeout(function(){
+      el("od-den").textContent = d + ". prosince" + (d < dnes ? " (dohnáno)" : "");
+      el("od-ik").textContent = o.ik; el("od-n").textContent = o.n; el("od-t").textContent = o.t; el("od-vz").textContent = o.vz;
+      el("od-vz").style.background = o.vz === "Legendární" ? "#FFC83D" : o.vz === "Vzácná" ? "#7AA8F2" : o.vz === "Neobvyklá" ? "#4CC08A" : "#F59E0B";
+      odhal.hidden = false;
+      var r = el("kal").getBoundingClientRect();
+      kalVystrel(r.width/2, r.height*.4, d === 24 ? 160 : 70, d === 24 ? ["#FFD25E","#FFB000","#FFFFFF"] : ["#FF5E5E","#34D399","#FFD27E","#FFFFFF"], d === 24 ? 10 : 7);
+      ton(784,0,.2,"triangle"); ton(1046.5,.1,.3,"triangle");
+    }, redukce ? 0 : 700);
+    vykresliKal();
+  }
+  el("od-ok").addEventListener("click", function(){ odhal.hidden = true; vykresliKal(); });
+  el("den").addEventListener("input", function(e){ dnes = Number(e.target.value); zmeskane = {}; if (dnes > 4) zmeskane[4] = true; if (dnes > 10) zmeskane[9] = true; resetDny(); vykresliKal(); });
+  resetDny(); vykresliKal();
+  var kalCanvas = document.createElement("canvas"); kalCanvas.className = "castice"; el("kal").parentNode.appendChild(kalCanvas);
+  var kalVystrel = castice(kalCanvas);
+  (function(){
+    var g = el("girlanda"), B = ["#FF5E5E","#FFD25E","#5EE38F","#5EB8FF","#FF8AD8"];
+    function y(t){ var u, a, b, c; if (t <= .5) { u = t * 2; a = 3; b = 24; c = 6; } else { u = (t - .5) * 2; a = 6; b = -12; c = 3; } return (1-u)*(1-u)*a + 2*(1-u)*u*b + u*u*c; }
+    for (var i = 0; i < 14; i++) { var x = (i + .5) / 14, el2 = document.createElement("i"); el2.style.left = (x * 100) + "%"; el2.style.top = Math.max(0, y(x) * 26 / 26 - 1) + "px"; el2.style.background = B[i % B.length]; el2.style.boxShadow = "0 0 8px " + B[i % B.length]; el2.style.animationDelay = ((i * .37) % 1.8) + "s"; g.appendChild(el2); }
+  })();
+  (function(){
+    var k = el("kal"); if (redukce) { k.style.animation = "none"; return; }
+    k.addEventListener("pointermove", function(e){ var r = k.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, yy = (e.clientY - r.top) / r.height - .5; k.classList.add("ruka"); k.style.transform = "rotateY(" + (x * 12) + "deg) rotateX(" + (-yy * 10) + "deg)"; });
+    k.addEventListener("pointerleave", function(){ k.classList.remove("ruka"); k.style.transform = ""; });
+  })();
+  var odmenyK = el("odmeny-kal");
+  Object.keys(VECI).forEach(function(d){ var v = VECI[d]; var x = document.createElement("div"); x.className = "odm-k"; x.innerHTML = '<span class="d">' + d + '. prosince · ' + v.vz + '</span><span class="n">' + v.ik + ' ' + v.n + '</span><span class="t">' + v.t + '</span>'; odmenyK.appendChild(x); });
+
+  /* sníh v kalendáři */
+  var snihBezi = false;
+  function startSnih(){
+    if (snihBezi || redukce) return; snihBezi = true;
+    var c = el("snih"), ctx = c.getContext("2d"), vl = [];
+    function vel(){ var r = c.getBoundingClientRect(); c.width = r.width; c.height = r.height; }
+    vel(); window.addEventListener("resize", vel);
+    for (var i=0;i<90;i++) { var hl = Math.random() < .25; vl.push({x:Math.random()*c.width, y:Math.random()*c.height, r: hl ? Math.random()*2+2.2 : Math.random()*1.4+.5, v: hl ? Math.random()*.6+.7 : Math.random()*.4+.2, f:Math.random()*6, a: hl ? .95 : .55}); }
+    (function krok(){
+      if (document.getElementById("s-kalendar").hidden) { snihBezi = false; return; }
+      ctx.clearRect(0,0,c.width,c.height);
+      vl.forEach(function(s){ s.y += s.v; s.f += .02; s.x += Math.sin(s.f)*.3; if (s.y > c.height) { s.y = -4; s.x = Math.random()*c.width; } ctx.fillStyle = "rgba(255,255,255," + s.a + ")"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill(); });
+      requestAnimationFrame(krok);
+    })();
+  }
+
+  /* ── novinky: střídání Hexíků ── */
+  var imgs = document.querySelectorAll("#hx-stage img"), tecky = el("hx-tecky"), ix = 0;
+  imgs.forEach(function(){ tecky.appendChild(document.createElement("i")); });
+  function hx(){ imgs.forEach(function(im,i){ im.classList.toggle("vid", i === ix); }); tecky.querySelectorAll("i").forEach(function(t,i){ t.classList.toggle("on", i === ix); }); }
+  hx(); if (!redukce) setInterval(function(){ ix = (ix + 1) % imgs.length; hx(); }, 2200);
+  el("dm-x").addEventListener("click", function(){ el("dm-novinka").style.display = "none"; });
+  function odpocet(){
+    var zbyva = Math.max(0, new Date("2026-12-01T00:00:00+01:00").getTime() - Date.now());
+    var d = Math.floor(zbyva / 864e5), h = Math.floor(zbyva % 864e5 / 36e5), m = Math.floor(zbyva % 36e5 / 6e4);
+    var b = el("odpocet").querySelectorAll("b"); b[0].textContent = d; b[1].textContent = String(h).padStart(2,"0"); b[2].textContent = String(m).padStart(2,"0");
+  }
+  odpocet(); setInterval(odpocet, 30000);
+
+  ukazTab();
+})();
+</script>
