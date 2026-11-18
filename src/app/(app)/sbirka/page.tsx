@@ -13,6 +13,7 @@ import SezonaPruh from "@/components/hexik/SezonaPruh";
 import OdmenaVizual from "@/components/hexik/OdmenaVizual";
 import CestaUrovni from "@/components/hexik/CestaUrovni";
 import HexikUvod from "@/components/hexik/HexikUvod";
+import PozadiZive from "@/components/hexik/PozadiZive";
 import JakZiskat from "@/components/hexik/JakZiskat";
 import { zkontrolujUroven } from "@/lib/sbirka-trenink";
 import { urovenZXP } from "@/lib/urovne";
@@ -166,6 +167,7 @@ function Sbirka() {
         data-pozadi={pozadi.klic === "klasik" ? undefined : pozadi.klic}
         data-testid="sbirka-hlavicka"
       >
+        <PozadiZive klic={pozadi.klic} />
         <Hexik podoba={podoba.klic} etapa={etapa} d3 otacet className="w-28 lg:w-36 shrink-0" />
         <div className="flex-1 min-w-0 text-center sm:text-left">
           <p className="text-xs font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>Tvůj Hexík · {etapaInfo.nazev}</p>
@@ -266,6 +268,7 @@ function Sbirka() {
                 data-pozadi={nahledPozadi === "klasik" ? undefined : nahledPozadi}
                 data-testid="satnik-nahled-pozadi"
               >
+                <PozadiZive klic={nahledPozadi} />
                 <Hexik ref={nahledRef} podoba={nahledPodoba} etapa={etapa} d3 otacet className="w-28" />
               </div>
             ) : (

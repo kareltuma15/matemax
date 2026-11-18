@@ -961,3 +961,5 @@ html[data-vzhled="lava"], .mm-swatch[data-vz="lava"] { --vz-pozadi: radial-gradi
 .hx-3d > .hx-svg { visibility: hidden; }
 .hx-3d[data-zare="zlato"] > .hx-canvas { filter: drop-shadow(0 0 10px rgba(245, 197, 66, .8)); }
 .hx-3d[data-zare="cyan"] > .hx-canvas { filter: drop-shadow(0 0 8px rgba(61, 245, 255, .6)); }
+/* Živé pozadí (lib/pozadi-zive.ts) nad CSS základem, pod obsahem hlavičky */
+.mm-pozadi-zive { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }

@@ -26,6 +26,7 @@ import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 import ShareButton from "@/components/ShareButton";
 import Hexik from "@/components/hexik/Hexik";
+import PozadiZive from "@/components/hexik/PozadiZive";
 import { useSbirka } from "@/lib/use-sbirka";
 import { nasazena, etapaHexika } from "@/lib/sbirka";
 
@@ -608,6 +609,7 @@ export default function ProfilPage() {
         data-pozadi={pozadiKlic === "klasik" ? undefined : pozadiKlic}
         data-testid="profil-hlavicka"
       >
+        <PozadiZive klic={pozadiKlic} />
         <div className="px-5 pt-6 pb-5">
           {/* Top row: avatar + info */}
           <div className="flex items-center gap-4">
