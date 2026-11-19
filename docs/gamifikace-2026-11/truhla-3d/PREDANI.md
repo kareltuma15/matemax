@@ -14,10 +14,11 @@ session věděla, než se cokoli přenese do appky.
 
 - Truhly se mu líbí, **víc zdobení nepřidávat**.
 - Vnitřek musí být ve 3D (hotovo ve verzi 3: duté tělo, dřevěné stěny, prošívaný samet s knoflíky).
-- Občas má být vidět znak MateMaxu: medailon M² na spodku víka, vidět jen po otevření. U Generálky tabule se vzorci.
+- Občas má být vidět znak MateMaxu: medailon M² na spodku víka, vidět jen po otevření.
+- Generálka (test nanečisto): tabule v dubovém rámu s opraveným testem křídou (vzorce s fajfkami, „Generálka“, 50 b v kroužku, Hexík), polička s křídami, cedulka GENERÁLKA zepředu.
 - Všech 9 druhů truhel má jeden vlastní prvek podle toho, za co truhla je (záložka, tabule, ucha, 5 hvězd, krystaly).
 - **Sezónní truhla** (TruhlaId `sezonni`) má tři podoby podle `aktualniSezona()`: Vánoční (dárek: zelená stuha s mašlí, světýlka), Zimní (sníh mezi pásy, rampouchy), Finiš (šachovnicové pásy). Mapování je `SEZONNI_MODEL` v `truhla-model.ts`.
-- Po schválení se nové otevírání přenese do appky a vydá se sezónou Zima 7. 1. spolu s „Hexík ožil“.
+- **Vydání: 1. 12. 2026 spolu s adventním kalendářem a Vánoční truhlou** (Karel 19. 11.). Přenos do appky musí být hotový a otestovaný do 30. 11.
 - Pořadí prací: QR kód na test nanečisto 12. 12. → nová truhla v appce + 3D miniatury → výzva kamarádovi → Hexík karta.
 
 ## Které soubory v appce se přenos dotkne
@@ -39,14 +40,14 @@ Prosím needitovat je bez domluvy, dokud přenos neproběhne (ať nevznikne konf
 | Projít novou 3D truhlu a napsat připomínky | Karel | 22. 11. |
 | QR kód a text „Otevři si truhlu Generálka“ k testu 12. 12. | Claude Code | 5. 12. |
 | Dodělat zbylých 5 druhů truhel + zimní vzhled | Claude Code | 5. 12. (v mockupu hotovo, čeká na schválení) |
-| Nové otevírání truhly v appce | Claude Code | 19. 12. |
+| Nové otevírání truhly v appce (vydání 1. 12.) | Claude Code | 30. 11. |
 | 3D miniatury odměn v šatníku a 3D truhly v obchodě | Claude Code | 23. 12. |
 | Výzva kamarádovi | Claude Code | 15. 1. |
 | Hexík karta ke sdílení | Claude Code | 29. 1. |
 
 ## Poznámky pro přenos
 
-- **Termín:** Vánoční truhla je vidět jen 1. 12. – 6. 1. Při vydání až 7. 1. by ji letos nikdo neviděl. O dřívějším vydání rozhoduje Karel.
+- **Termín:** vydání 1. 12. (Vánoční truhla je vidět jen 1. 12. – 6. 1.). Adventní kalendář otevírá Sezónní truhlu (`lib/kalendar.ts`), takže nové otevírání se ukáže i tam.
 
 - Mockup používá záři (bloom) přes `EffectComposer`. Na slabých telefonech ji vypnout a snížit rozlišení.
   Plátno už není průhledné (pozadí se kreslí ve scéně kvůli záři).

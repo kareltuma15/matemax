@@ -173,17 +173,64 @@ function texturaM2(s: Sklad): THREE.Texture {
   const t = s.t(new THREE.CanvasTexture(c)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
 }
 
-/** Tabule na víku Generálky: křídou psané vzorce z přijímaček. */
+/** Tabule na víku Generálky: opravený test křídou (vzorce s fajfkami, 50 b v kroužku, Hexík v rohu). */
 function texturaTabule(s: Sklad): THREE.Texture {
-  const c = document.createElement("canvas"); c.width = 512; c.height = 640; const x = c.getContext("2d")!;
-  x.fillStyle = "#1F3D34"; x.fillRect(0, 0, 512, 640);
-  let sem = 3; const rnd = () => { sem = (sem * 16807) % 2147483647; return sem / 2147483647; };
-  for (let i = 0; i < 40; i++) { x.fillStyle = `rgba(255,255,255,${0.015 + rnd() * 0.03})`; x.beginPath(); x.ellipse(rnd() * 512, rnd() * 640, 30 + rnd() * 90, 8 + rnd() * 30, rnd() * 3, 0, Math.PI * 2); x.fill(); }
-  x.fillStyle = "rgba(245,245,235,.92)"; x.textAlign = "center";
-  const r = (txt: string, y: number, vel: number, rot = 0) => { x.save(); x.translate(256, y); x.rotate(rot); x.font = `700 ${vel}px 'Comic Sans MS', 'Segoe Print', 'DM Sans', sans-serif`; x.fillText(txt, 0, 0); x.restore(); };
-  r("a² + b² = c²", 110, 54, -0.03); r("2x + 3 = 11", 220, 50, 0.02); r("x = 4", 300, 44, -0.02); r("√49 = 7", 400, 50, 0.03); r("π ≈ 3,14", 500, 48, -0.02);
-  x.strokeStyle = "rgba(245,245,235,.85)"; x.lineWidth = 4; x.beginPath(); x.moveTo(60, 600); x.lineTo(160, 600); x.lineTo(60, 540); x.closePath(); x.stroke();
-  x.beginPath(); x.arc(420, 575, 34, 0, Math.PI * 2); x.stroke();
+  const W = 1024, H = 1280;
+  const c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d")!;
+  let sem = 11; const rnd = () => { sem = (sem * 16807) % 2147483647; return sem / 2147483647; };
+  const g = x.createRadialGradient(W * 0.5, H * 0.45, 100, W * 0.5, H * 0.5, W * 0.9); g.addColorStop(0, "#26493F"); g.addColorStop(1, "#16302A");
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  // stopy po houbě (setřená křída)
+  for (let i = 0; i < 26; i++) { x.save(); x.translate(rnd() * W, rnd() * H); x.rotate((rnd() - 0.5) * 0.6); x.fillStyle = `rgba(230,240,235,${0.025 + rnd() * 0.035})`; x.beginPath(); x.ellipse(0, 0, 120 + rnd() * 220, 30 + rnd() * 50, 0, 0, Math.PI * 2); x.fill(); x.restore(); }
+  for (let i = 0; i < 2500; i++) { x.fillStyle = `rgba(255,255,255,${rnd() * 0.05})`; x.fillRect(rnd() * W, rnd() * H, 2, 2); }
+  const pismo = "'Segoe Print', 'Comic Sans MS', 'Chalkboard SE', 'DM Sans', sans-serif";
+  /** Křída: text víckrát s malým posunem a zrnitostí. */
+  const kresba = (barva: string, fn: () => void) => {
+    x.save(); x.fillStyle = barva; x.strokeStyle = barva;
+    for (let k = 0; k < 3; k++) { x.globalAlpha = k === 0 ? 0.9 : 0.35; x.save(); x.translate((rnd() - 0.5) * 2.5, (rnd() - 0.5) * 2.5); fn(); x.restore(); }
+    x.restore();
+  };
+  const text = (txt: string, xx: number, y: number, vel: number, barva = "#F4F6F0", rot = 0) =>
+    kresba(barva, () => { x.translate(xx, y); x.rotate(rot); x.font = `700 ${vel}px ${pismo}`; x.textAlign = "left"; x.fillText(txt, 0, 0); });
+  const fajfka = (xx: number, y: number) => kresba("#FFE066", () => { x.lineWidth = 11; x.lineCap = "round"; x.lineJoin = "round"; x.beginPath(); x.moveTo(xx, y); x.lineTo(xx + 26, y + 28); x.lineTo(xx + 72, y - 40); x.stroke(); });
+  // vzadu (nahoře na plátně): Hexík a formát testu
+  kresba("#FFB3D1", () => {
+    x.lineWidth = 9; x.lineJoin = "round"; x.beginPath();
+    for (let i = 0; i < 6; i++) { const a = Math.PI / 2 + i * Math.PI / 3, px = 820 + 100 * Math.cos(a), py = 190 + 100 * Math.sin(a); if (i === 0) x.moveTo(px, py); else x.lineTo(px, py); }
+    x.closePath(); x.stroke();
+    x.beginPath(); x.arc(787, 176, 10, 0, Math.PI * 2); x.arc(853, 176, 10, 0, Math.PI * 2); x.fill();
+    x.lineWidth = 8; x.lineCap = "round"; x.beginPath(); x.arc(820, 200, 32, 0.2 * Math.PI, 0.8 * Math.PI); x.stroke();
+  });
+  text("70 min · 16 úloh", 110, 215, 60, "#BFE3FF", 0.0);
+  // uprostřed: vzorce s fajfkami
+  text("a² + b² = c²", 110, 400, 84, "#F4F6F0", -0.015); fajfka(720, 375);
+  text("2x + 3 = 11", 110, 540, 80, "#F4F6F0", 0.01);
+  text("x = 4", 210, 650, 76, "#F4F6F0", -0.01); fajfka(470, 625);
+  text("√49 = 7", 110, 800, 80, "#F4F6F0", 0.015); fajfka(470, 775);
+  text("π ≈ 3,14", 110, 940, 80, "#F4F6F0", -0.01); fajfka(500, 915);
+  // vpředu (dole na plátně, nejlíp vidět): nadpis a plný počet bodů
+  text("Generálka", 100, 1150, 104, "#FFFFFF", -0.02);
+  kresba("#FFE066", () => { x.lineWidth = 8; x.lineCap = "round"; x.beginPath(); x.moveTo(95, 1185); x.quadraticCurveTo(330, 1172, 580, 1192); x.stroke(); });
+  kresba("#FFE066", () => { x.lineWidth = 10; x.beginPath(); x.ellipse(820, 1090, 150, 112, -0.12, 0.2, Math.PI * 2.05); x.stroke(); });
+  text("50 b", 708, 1125, 100, "#FFE066", -0.08);
+  // u vzorců vpravo ještě body za úlohy
+  text("+3", 830, 420, 56, "#FFE066", 0.05); text("+4", 830, 660, 56, "#FFE066", -0.04); text("+2", 830, 810, 56, "#FFE066", 0.03);
+  // zrnitost křídy: vyškrábnout drobné tečky
+  x.globalCompositeOperation = "destination-out";
+  for (let i = 0; i < 9000; i++) { x.fillStyle = `rgba(0,0,0,${rnd() * 0.25})`; x.fillRect(rnd() * W, rnd() * H, 1.5, 1.5); }
+  x.globalCompositeOperation = "destination-over"; x.fillStyle = "#1C3B33"; x.fillRect(0, 0, W, H);
+  const t = s.t(new THREE.CanvasTexture(c)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+
+/** Stříbrná cedulka s vyrytým nápisem. */
+function texturaCedulky(s: Sklad, napis: string): THREE.Texture {
+  const c = document.createElement("canvas"); c.width = 512; c.height = 128; const x = c.getContext("2d")!;
+  const g = x.createLinearGradient(0, 0, 0, 128); g.addColorStop(0, "#F2F5FA"); g.addColorStop(0.5, "#C9D1DC"); g.addColorStop(1, "#E6EBF2");
+  x.fillStyle = g; x.fillRect(0, 0, 512, 128);
+  for (let i = 0; i < 128; i += 2) { x.fillStyle = `rgba(255,255,255,${0.05 + (i % 6) * 0.01})`; x.fillRect(0, i, 512, 1); }
+  x.font = "900 66px 'DM Sans', system-ui, sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
+  x.fillStyle = "rgba(255,255,255,.8)"; x.fillText(napis, 257, 68);
+  x.fillStyle = "#1E2A55"; x.fillText(napis, 256, 66);
   const t = s.t(new THREE.CanvasTexture(c)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
 }
 
@@ -376,13 +423,29 @@ export function postavTruhlu(s: Sklad, druh: DruhModelu, barva: THREE.Color): Mo
     for (const [x, r] of [[0.5, -0.06], [0.6, 0.1]] as const) { const m = new THREE.Mesh(sg, stuha); m.position.set(x, 0.04, VD / 2 + 0.035); m.rotation.z = r; viko.add(m); }
   }
   if (P.prvek === "tabule") {
-    // Generálka: tabule se vzorci z přijímaček na vršku víka
-    const tw = 2 * pasX - 0.26, td = VD * 0.8;
+    // Generálka (test nanečisto): tabule s opraveným testem v dřevěném rámu, polička s křídami, cedulka zepředu
+    const tw = 2 * pasX - 0.27, td = VD * 0.78;
     const naVrch = (v: THREE.Vector3, dy: number) => { const zn = cl(v.z / (VD / 2), -1, 1); v.y += LH + dy + LA * Math.cos(zn * Math.PI / 2); };
-    viko.add(new THREE.Mesh(s.g(tvar(tw + 0.06, 0.02, td + 0.06, 0.01, [16, 1, 32], new THREE.Vector3(0, 0, 0), (v) => naVrch(v, 0.004))), kovMat));
-    const tg = s.g(tvar(tw, 0.012, td, 0.004, [16, 1, 32], new THREE.Vector3(0, 0, 0), (v) => naVrch(v, 0.016)));
+    const dub = texturaDreva("#C9995E", 2, s);
+    const dubMat = s.m(new THREE.MeshPhysicalMaterial({ map: dub.map, roughness: 0.5, clearcoat: 0.6, clearcoatRoughness: 0.25 }));
+    viko.add(new THREE.Mesh(s.g(tvar(tw + 0.08, 0.045, td + 0.08, 0.02, [16, 2, 34], new THREE.Vector3(0, 0, 0), (v) => naVrch(v, 0.0))), dubMat));
+    const tg = s.g(tvar(tw, 0.02, td, 0.006, [16, 1, 34], new THREE.Vector3(0, 0, 0), (v) => naVrch(v, 0.018)));
     { const p = tg.attributes.position, uv = tg.attributes.uv; for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / tw + 0.5, 0.5 - p.getZ(i) / td); uv.needsUpdate = true; }
-    viko.add(new THREE.Mesh(tg, s.m(new THREE.MeshStandardMaterial({ map: texturaTabule(s), roughness: 0.92 }))));
+    viko.add(new THREE.Mesh(tg, s.m(new THREE.MeshStandardMaterial({ map: texturaTabule(s), roughness: 0.95 }))));
+    // polička u spodní (přední) hrany tabule a dvě křídy
+    const zp = td / 2 + 0.03, yp = LH + LA * Math.cos(cl(zp / (VD / 2), -1, 1) * Math.PI / 2);
+    const policka = new THREE.Group(); policka.position.set(0, yp + 0.03, zp); policka.rotation.x = Math.atan2(LA * Math.PI / 2 * Math.sin(zp / (VD / 2) * Math.PI / 2), VD / 2); viko.add(policka);
+    policka.add(new THREE.Mesh(s.g(tvar(tw * 0.92, 0.03, 0.06, 0.012, [10, 2, 2], null)), dubMat));
+    const kridaGeo = s.g(new THREE.CapsuleGeometry(0.013, 0.08, 4, 10)); kridaGeo.rotateZ(Math.PI / 2);
+    for (const [xx, barva, r] of [[-0.12, "#F6F6F0", 0.1], [0.05, "#FFE066", -0.15]] as const) {
+      const k = new THREE.Mesh(kridaGeo, s.m(new THREE.MeshStandardMaterial({ color: barva, roughness: 1 }))); k.position.set(xx, 0.028, 0); k.rotation.y = r; policka.add(k);
+    }
+    // cedulka GENERÁLKA na přední straně
+    const yc = 0.31, zc = bulge(yc / H) * (D / 2) + 0.02;
+    const cedulka = new THREE.Group(); cedulka.position.set(0, yc, zc); pruzne.add(cedulka);
+    cedulka.add(new THREE.Mesh(s.g(tvar(0.56, 0.14, 0.03, 0.012, [6, 2, 2], null)), nytMat));
+    const cg = s.g(new THREE.PlaneGeometry(0.5, 0.1)); const cm = new THREE.Mesh(cg, s.m(new THREE.MeshPhysicalMaterial({ map: texturaCedulky(s, "GENERÁLKA"), roughness: 0.35, clearcoat: 0.6, envMapIntensity: 0.4 }))); cm.position.z = 0.0165; cedulka.add(cm);
+    for (const sx of [-1, 1]) { const n = new THREE.Mesh(nytGeo, nytMat); n.scale.setScalar(0.5); n.position.set(sx * 0.25, 0, 0.016); cedulka.add(n); }
   }
   if (P.prvek === "snih") {
     // Zimní: sníh napadaný mezi pásy (pásy koukají ven) a rampouchy
