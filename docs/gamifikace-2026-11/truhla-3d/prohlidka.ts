@@ -35,11 +35,11 @@ export function vytvorProhlidku(canvas: HTMLCanvasElement, druh: DruhModelu, bar
     const ted = performance.now(), dt = Math.min(0.05, (ted - minule) / 1000); minule = ted; cas += dt;
     if (auto && !klidne) cil += dt * 0.35;
     uhel += (cil - uhel) * Math.min(1, dt * 6); otocna.rotation.y = uhel - 0.95;
-    otev += (cilOtev - otev) * Math.min(1, dt * 5); m.vikoCep.rotation.x = -1.2 * otev;
-    m.sametMat.emissiveIntensity = otev * 0.25; m.kamen.rotation.z = Math.sin(cas) * 0.05;
-    m.kamenMat.emissiveIntensity = 0.45 + 0.15 * Math.sin(cas * 2.2);
+    otev += (cilOtev - otev) * Math.min(1, dt * 5); m.vikoCep.rotation.x = -1.75 * otev;
+    m.sametMat.emissiveIntensity = otev * 0.06; m.kamen.rotation.z = Math.sin(cas) * 0.05;
+    m.kamenMat.emissiveIntensity = 0.45 + 0.15 * Math.sin(cas * 2.2); m.krok?.(cas);
     const z = camera.aspect < 1 ? 5.6 / Math.max(0.55, camera.aspect) : 5.6;
-    camera.position.set(0, 1.9, z); camera.lookAt(posun.x, -0.2, 0);
+    camera.position.set(0, 1.9 + otev * 0.9, z); camera.lookAt(posun.x, -0.2 + otev * 0.05, 0);
     st.render(); raf = requestAnimationFrame(snimek);
   }
   raf = requestAnimationFrame(snimek);

@@ -19,7 +19,7 @@ import { klid, reakce, DELKA, type Reakce3D } from "../../../src/lib/hexik3d/ani
 import { vytvorCastice, type Castice } from "../../../src/lib/hexik3d/castice";
 
 export type Vz = "bezna" | "neobvykla" | "vzacna" | "legenda";
-export type Druh = "denni" | "mistrovska" | "legendarni" | "krystalova";
+export type Druh = "denni" | "doporuceni" | "generalka" | "legendarni" | "sezonni" | "krystalova" | "velka" | "mistrovska" | "zlata";
 const PORADI: Vz[] = ["bezna", "neobvykla", "vzacna", "legenda"];
 export const BARVA: Record<Vz, string> = { bezna: "#E6EDF8", neobvykla: "#4DA3FF", vzacna: "#B07CFF", legenda: "#FFC93C" };
 const POZADI: Record<Vz, [string, string]> = { bezna: ["#33399A", "#121A4C"], neobvykla: ["#2A55B8", "#0F1F55"], vzacna: ["#5233B0", "#1B1352"], legenda: ["#8A6326", "#2A1A3E"] };
@@ -91,8 +91,8 @@ export function vytvorNovouTruhlu(canvas: HTMLCanvasElement, o: { druh: Druh; vz
   const podVikoMat = model.sametMat;
   const zareTex = tx(texturaZare());
   const zareVnitrMat = mt(new THREE.MeshBasicMaterial({ map: zareTex, color: barvaTier, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
-  const zareVnitr = new THREE.Mesh(g(new THREE.PlaneGeometry(model.W * 1.1, model.D * 1.3)), zareVnitrMat); zareVnitr.rotation.x = -Math.PI / 2; zareVnitr.position.y = H + 0.07; pruzne.add(zareVnitr);
-  const svetlo = new THREE.PointLight(barvaTier, 0, 7, 1.6); svetlo.position.set(0, H + 0.5, 0.2); pruzne.add(svetlo);
+  const zareVnitr = new THREE.Mesh(g(new THREE.PlaneGeometry(model.W * 1.1, model.D * 1.3)), zareVnitrMat); zareVnitr.rotation.x = -Math.PI / 2; zareVnitr.position.y = model.dnoY + 0.06; pruzne.add(zareVnitr);
+  const svetlo = new THREE.PointLight(barvaTier, 0, 7, 1.6); svetlo.position.set(0, model.dnoY + 0.25, 0.1); pruzne.add(svetlo);
 
   // ── světelné efekty ──
   const sloupTex = tx(texturaSloupu());
@@ -303,6 +303,7 @@ export function vytvorNovouTruhlu(canvas: HTMLCanvasElement, o: { druh: Druh; vz
     }
     if (d && odmenaObal.visible) d.krok?.({ ay: 0, wx: 0, wy: 1.1, wz: 0, cas, dt });
     for (const c of castice) c.aktualizuj(dt, cas);
+    model.krok?.(cas);
 
     // ── kamera: při klepání se přibližuje, po otevření zpět a nahoru, u vzácných otřes ──
     const priblizeni = tOtevreni >= 0 ? (tOdmena >= 0 ? -0.2 : 0.4) : Math.min(3, klepnuti) * 0.35 + (tNadech >= 0 ? 0.25 : 0);

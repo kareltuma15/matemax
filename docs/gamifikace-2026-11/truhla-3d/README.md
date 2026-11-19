@@ -5,7 +5,7 @@ Návrh nového otevírání truhly a nového modelu truhly. Živá stránka: `do
 
 Soubory:
 
-- `truhla-model.ts` – model truhly v hračkovém stylu Hexíka (baculaté tělo, drážky prken, kování, šestiúhelníkový zámek s drahokamem, prošívaný samet). Druhy: denni, mistrovska, legendarni, krystalova.
+- `truhla-model.ts` – model truhly v hračkovém stylu Hexíka (baculaté tělo, drážky prken, kování, šestiúhelníkový zámek s drahokamem, prošívaný samet). Všech 9 druhů z appky (denni, doporuceni, generalka, legendarni, sezonni, krystalova, velka, mistrovska, zlata), každý s jedním vlastním prvkem. Dutá: vnitřní stěny, prošívané sametové dno, ve víku medailon M².
 - `scena-sdilena.ts` – studio: odlesky (RoomEnvironment), pozadí ve scéně, jemná záře (bloom).
 - `nova-truhla.ts` – otevírání: 3 klepnutí se stupňováním vzácnosti, nádech, víko, světlo, odměna ve 3D, nasazení na Hexíka.
 - `prohlidka.ts` – prohlídka truhly (otáčení tažením, víko).
