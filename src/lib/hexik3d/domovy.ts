@@ -1,6 +1,6 @@
 /**
  * Domovy Hexíka: 3D místa, kam se Hexík nastěhuje za dokončenou sadu (pravidla sad 19. 11. 2026).
- * Zatím Vánoční pokojíček (krb, stromeček se světýlky, okno se sněhem, dárky, koberec, křeslo).
+ * Vánoční pokojíček (krb, stromeček se světýlky, okno se sněhem, dárky, koberec, křeslo), Synthwave (Ulice), Podmořský svět (Pod mořem) a Polární záře (Zima).
  * Scéna je převzatá z mockupu docs/gamifikace-2026-11/revize-odmen/odmeny3d.ts; další domovy (Synthwave,
  * Podmoří, Polární záře…) přijdou v lednu stejným způsobem do STAVITELE.
  *
@@ -13,7 +13,7 @@ import { postavHexika, type HexikModel, type SlotyHexika } from "./model";
 import { animujOblicej, type Vyraz3D } from "./oblicej";
 import { slabeZarizeni, softwarove } from "./studio";
 
-export type DruhDomova = "vanocni-pokojicek";
+export type DruhDomova = "vanocni-pokojicek" | "synthwave" | "podmorsky-svet" | "polarni-zare";
 
 export interface Domov3D {
   /** Přestaví Hexíka (jiná podoba, etapa nebo doplňky a efekt sady). */
@@ -53,8 +53,20 @@ interface Prostredi {
   kamera: { z: number; y: number; look: number };
   klik?: (o: THREE.Object3D, cas: number) => boolean;
   pozadi: THREE.Texture | THREE.Color;
+  mlha?: THREE.Fog;
   svetlo?: (s: ReturnType<typeof svetla>) => void;
   dispose: () => void;
+}
+
+function hvezdy(n: number, r: number, vel: number, barva = "#FFFFFF", hore = true) {
+  const pos = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    const u = Math.random() * Math.PI * 2, v = hore ? Math.random() * 0.9 + 0.08 : Math.random() * 2 - 1;
+    const rr = r * (0.8 + Math.random() * 0.2);
+    pos.set([Math.cos(u) * Math.cos(v * Math.PI / 2) * rr, Math.sin(v * Math.PI / 2) * rr, Math.sin(u) * Math.cos(v * Math.PI / 2) * rr], i * 3);
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  return new THREE.Points(g, new THREE.PointsMaterial({ color: barva, size: vel, sizeAttenuation: true, transparent: true, opacity: 0.9, depthWrite: false }));
 }
 
 function stavPokojicek(): Prostredi {
@@ -152,7 +164,153 @@ function stavPokojicek(): Prostredi {
   };
 }
 
-const STAVITELE: Record<DruhDomova, () => Prostredi> = { "vanocni-pokojicek": stavPokojicek };
+// Synthwave, Podmoří a Polární záře: scény z mockupu revize odměn (docs/gamifikace-2026-11/revize-odmen/odmeny3d.ts)
+function stavSynthwave(): Prostredi {
+  const g = new THREE.Group(); const veci: (THREE.BufferGeometry | THREE.Material | THREE.Texture)[] = [];
+  const pozadi = nebe([[0, "#0B0326"], [0.45, "#3B0B5E"], [0.62, "#B3226E"], [0.66, "#FF7A59"], [1, "#12001F"]]); veci.push(pozadi);
+  // slunce s pruhy
+  const sl = cTex(256, 256, (x) => { const gr = x.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "#FFE36E"); gr.addColorStop(0.6, "#FF6F91"); gr.addColorStop(1, "#C2187A"); x.fillStyle = gr; x.beginPath(); x.arc(128, 128, 126, 0, Math.PI * 2); x.fill(); x.globalCompositeOperation = "destination-out"; for (let i = 0; i < 7; i++) x.fillRect(0, 150 + i * 16, 256, 3 + i * 1.6); });
+  veci.push(sl);
+  const slunce = new THREE.Mesh(new THREE.PlaneGeometry(7, 7), new THREE.MeshBasicMaterial({ map: sl, transparent: true, fog: false })); slunce.position.set(0, 2.2, -24); g.add(slunce);
+  veci.push(slunce.geometry, slunce.material as THREE.Material);
+  // hory
+  const horyMat = new THREE.MeshBasicMaterial({ color: "#2A0A45", fog: false }); veci.push(horyMat);
+  const horyDrat = new THREE.MeshBasicMaterial({ color: "#FF3FD0", wireframe: true, transparent: true, opacity: 0.55, fog: false }); veci.push(horyDrat);
+  for (let i = 0; i < 9; i++) { const h = 2 + Math.random() * 3; const geo = new THREE.ConeGeometry(2 + Math.random() * 2, h, 4); veci.push(geo); const x = -16 + i * 4 + Math.random(); const m1 = new THREE.Mesh(geo, horyMat); m1.position.set(x, -1.2 + h / 2, -20); const m2 = new THREE.Mesh(geo, horyDrat); m2.position.copy(m1.position); m2.scale.setScalar(1.01); g.add(m1, m2); }
+  // mřížka podlahy, posouvá se k nám
+  const mriz = cTex(128, 128, (x) => { x.fillStyle = "#14002A"; x.fillRect(0, 0, 128, 128); x.strokeStyle = "#FF2BD6"; x.lineWidth = 4; x.shadowColor = "#FF2BD6"; x.shadowBlur = 8; x.strokeRect(0, 0, 128, 128); }, [24, 24]);
+  veci.push(mriz);
+  const podl = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshBasicMaterial({ map: mriz })); podl.rotation.x = -Math.PI / 2; podl.position.y = -1.21; g.add(podl);
+  veci.push(podl.geometry, podl.material as THREE.Material);
+  // palmy (siluety)
+  const palMat = new THREE.MeshBasicMaterial({ color: "#12001F", fog: false }); veci.push(palMat);
+  for (const sx of [-1, 1]) {
+    const p = new THREE.Group(); p.position.set(sx * 5.5, -1.2, -7); g.add(p);
+    const kmen = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.16, 4.2, 6), palMat); kmen.position.y = 2.1; kmen.rotation.z = sx * 0.12; p.add(kmen); veci.push(kmen.geometry);
+    for (let i = 0; i < 7; i++) { const l = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.3), palMat); veci.push(l.geometry); const a = (i / 7) * Math.PI * 2; l.position.set(Math.cos(a) * 0.8 + sx * 0.25, 4.15 - Math.abs(Math.sin(a)) * 0.1, Math.sin(a) * 0.8); l.rotation.set(0, -a, -0.45); p.add(l); }
+  }
+  const hv = hvezdy(220, 40, 0.18, "#FFD6FF"); veci.push(hv.geometry, hv.material as THREE.Material); g.add(hv);
+  return {
+    g, pozadi, mlha: new THREE.Fog("#3B0B5E", 8, 30), kamera: { z: 11, y: 1.1, look: 0.9 },
+    svetlo: (s) => { s.rim.color.set("#FF3FD0"); s.rim.intensity = 2.6; s.fill.color.set("#3DF5FF"); s.fill.intensity = 1.2; },
+    krok: (cas) => { mriz.offset.y = (cas * 0.9) % 1; },
+    dispose: () => veci.forEach((v) => v.dispose()),
+  };
+}
+
+function stavPodmori(): Prostredi {
+  const g = new THREE.Group(); const veci: (THREE.BufferGeometry | THREE.Material | THREE.Texture)[] = [];
+  const pozadi = nebe([[0, "#5ED3F3"], [0.35, "#1A8DC9"], [1, "#062A57"]]); veci.push(pozadi);
+  const pisek = cTex(256, 256, (x) => { x.fillStyle = "#E9CF97"; x.fillRect(0, 0, 256, 256); for (let i = 0; i < 1400; i++) { x.fillStyle = `rgba(${150 + Math.random() * 80},${120 + Math.random() * 60},70,.35)`; x.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); } }, [6, 6]);
+  veci.push(pisek);
+  const pg = new THREE.PlaneGeometry(40, 40, 60, 60); const pp = pg.attributes.position;
+  for (let i = 0; i < pp.count; i++) pp.setZ(i, Math.sin(pp.getX(i) * 0.6) * 0.12 + Math.cos(pp.getY(i) * 0.5) * 0.12 + (Math.abs(pp.getY(i)) > 6 ? (Math.abs(pp.getY(i)) - 6) * 0.25 : 0));
+  pg.computeVertexNormals(); veci.push(pg);
+  const dno = new THREE.Mesh(pg, new THREE.MeshStandardMaterial({ map: pisek, roughness: 1 })); dno.rotation.x = -Math.PI / 2; dno.position.y = -1.25; g.add(dno); veci.push(dno.material as THREE.Material);
+  // řasy (segmenty, kývají se)
+  const rasy: { g: THREE.Group; f: number }[] = [];
+  const rasaMat = new THREE.MeshStandardMaterial({ color: "#2FB36B", roughness: 0.7, side: THREE.DoubleSide }); veci.push(rasaMat);
+  const segG = new THREE.CapsuleGeometry(0.07, 0.34, 3, 6); veci.push(segG);
+  for (let i = 0; i < 16; i++) {
+    const a = Math.PI + (i / 15) * Math.PI + (Math.random() - 0.5) * 0.2, r = 3 + Math.random() * 3;
+    let rodic: THREE.Object3D = new THREE.Group(); (rodic as THREE.Group).position.set(Math.cos(a) * r * 1.4, -1.25, Math.sin(a) * r - 0.5); g.add(rodic);
+    const zaklad = rodic as THREE.Group;
+    const n = 5 + Math.floor(Math.random() * 5);
+    for (let k = 0; k < n; k++) { const s = new THREE.Group(); s.position.y = k === 0 ? 0 : 0.38; const m = new THREE.Mesh(segG, rasaMat); m.position.y = 0.19; s.add(m); rodic.add(s); rodic = s; }
+    rasy.push({ g: zaklad, f: Math.random() * 6 });
+  }
+  // korály a kameny
+  const KOR = ["#FF6F91", "#FF9F45", "#B07CFF", "#FFD45A"];
+  for (let i = 0; i < 10; i++) {
+    const m = new THREE.MeshStandardMaterial({ color: KOR[i % 4], roughness: 0.6 }); veci.push(m);
+    const k = new THREE.Group(); const a = Math.PI + Math.random() * Math.PI, r = 2.6 + Math.random() * 3; k.position.set(Math.cos(a) * r * 1.3, -1.25, Math.sin(a) * r - 0.5); g.add(k);
+    for (let j = 0; j < 6; j++) { const geo = new THREE.SphereGeometry(0.12 + Math.random() * 0.12, 10, 8); veci.push(geo); const b = new THREE.Mesh(geo, m); b.position.set((Math.random() - 0.5) * 0.5, Math.random() * 0.5, (Math.random() - 0.5) * 0.5); k.add(b); }
+  }
+  const kamMat = new THREE.MeshStandardMaterial({ color: "#7D8A99", roughness: 0.9, flatShading: true }); veci.push(kamMat);
+  for (let i = 0; i < 6; i++) { const geo = new THREE.DodecahedronGeometry(0.3 + Math.random() * 0.4); veci.push(geo); const k = new THREE.Mesh(geo, kamMat); const a = Math.random() * Math.PI * 2; k.position.set((i % 2 ? 1 : -1) * (2.4 + Math.random() * 3), -1.15, -1.5 - Math.random() * 3); k.scale.y = 0.6; g.add(k); }
+  // rybky
+  const ryby: { m: THREE.Group; r: number; v: number; y: number; f: number }[] = [];
+  const RB = ["#FFB020", "#FF5E7E", "#4DE0FF"];
+  for (let i = 0; i < 7; i++) {
+    const m = new THREE.Group(); const mat = new THREE.MeshStandardMaterial({ color: RB[i % 3], roughness: 0.4 }); veci.push(mat);
+    const t = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 8), mat); t.scale.set(1.5, 1, 0.6); m.add(t); veci.push(t.geometry);
+    const ocas = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.2, 4), mat); ocas.rotation.z = Math.PI / 2; ocas.position.x = -0.3; m.add(ocas); veci.push(ocas.geometry);
+    g.add(m); ryby.push({ m, r: 2.2 + Math.random() * 2.5, v: 0.25 + Math.random() * 0.3, y: Math.random() * 2.4 - 0.2, f: Math.random() * 6 });
+  }
+  // paprsky světla
+  const papMat = new THREE.MeshBasicMaterial({ color: "#BFF4FF", transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }); veci.push(papMat);
+  const paprsky: THREE.Mesh[] = [];
+  for (let i = 0; i < 5; i++) { const geo = new THREE.ConeGeometry(0.9, 9, 12, 1, true); veci.push(geo); const p = new THREE.Mesh(geo, papMat); p.position.set(-4 + i * 2, 3.2, -3 - (i % 2)); p.rotation.z = 0.25; g.add(p); paprsky.push(p); }
+  // bubliny
+  const nB = 60, bPos = new Float32Array(nB * 3);
+  for (let i = 0; i < nB; i++) bPos.set([(Math.random() - 0.5) * 8, Math.random() * 6 - 1.2, (Math.random() - 0.5) * 6 - 1], i * 3);
+  const bG = new THREE.BufferGeometry(); bG.setAttribute("position", new THREE.BufferAttribute(bPos, 3)); veci.push(bG);
+  const bub = cTex(64, 64, (x) => { x.strokeStyle = "rgba(255,255,255,.95)"; x.lineWidth = 4; x.beginPath(); x.arc(32, 32, 26, 0, Math.PI * 2); x.stroke(); x.fillStyle = "rgba(255,255,255,.8)"; x.beginPath(); x.arc(22, 22, 6, 0, Math.PI * 2); x.fill(); }); veci.push(bub);
+  const bubMat = new THREE.PointsMaterial({ map: bub, size: 0.16, transparent: true, depthWrite: false }); veci.push(bubMat);
+  g.add(new THREE.Points(bG, bubMat));
+  return {
+    g, pozadi, mlha: new THREE.Fog("#0F5E95", 7, 20), kamera: { z: 10.5, y: 1.0, look: 0.7 },
+    svetlo: (s) => { s.key.color.set("#CFF6FF"); s.rim.color.set("#4DE0FF"); s.rim.intensity = 2; },
+    krok: (cas, dt) => {
+      rasy.forEach((r) => { let s: THREE.Object3D | undefined = r.g.children[0]; let k = 0; while (s) { s.rotation.z = Math.sin(cas * 1.3 + r.f + k * 0.5) * 0.16; s.rotation.x = Math.cos(cas * 1.1 + r.f + k * 0.4) * 0.1; s = s.children.find((c) => c instanceof THREE.Group); k++; } });
+      ryby.forEach((f) => { const a = cas * f.v + f.f; f.m.position.set(Math.cos(a) * f.r, f.y + Math.sin(cas * 1.4 + f.f) * 0.15, Math.sin(a) * f.r * 0.6 - 1.5); f.m.rotation.y = -a - Math.PI / 2; });
+      for (let i = 0; i < nB; i++) { let y = bPos[i * 3 + 1] + dt * (0.4 + (i % 4) * 0.12); if (y > 5) y = -1.2; bPos[i * 3 + 1] = y; bPos[i * 3] += Math.sin(cas * 2 + i) * 0.002; }
+      bG.attributes.position.needsUpdate = true;
+      paprsky.forEach((p, i) => { (p.material as THREE.MeshBasicMaterial).opacity = 0.06 + 0.03 * Math.sin(cas * 0.8 + i); });
+    },
+    dispose: () => veci.forEach((v) => v.dispose()),
+  };
+}
+
+function stavPolarni(): Prostredi {
+  const g = new THREE.Group(); const veci: (THREE.BufferGeometry | THREE.Material | THREE.Texture)[] = [];
+  const pozadi = nebe([[0, "#020617"], [0.55, "#0B1E3F"], [0.8, "#123C5C"], [1, "#0B1A2C"]]); veci.push(pozadi);
+  const hv = hvezdy(400, 40, 0.14); veci.push(hv.geometry, hv.material as THREE.Material); g.add(hv);
+  // sněhové kopce
+  const kg = new THREE.PlaneGeometry(60, 40, 80, 50); const kp = kg.attributes.position;
+  for (let i = 0; i < kp.count; i++) { const x = kp.getX(i), y = kp.getY(i); kp.setZ(i, Math.max(0, -y - 4) * 0.25 * (1 + Math.sin(x * 0.3) * 0.6) + Math.sin(x * 0.7 + y) * 0.06); }
+  kg.computeVertexNormals(); veci.push(kg);
+  const snihMat = new THREE.MeshStandardMaterial({ color: "#EAF4FF", roughness: 0.85 }); veci.push(snihMat);
+  const kopce = new THREE.Mesh(kg, snihMat); kopce.rotation.x = -Math.PI / 2; kopce.position.y = -1.22; g.add(kopce);
+  // smrky
+  const smrkMat = new THREE.MeshStandardMaterial({ color: "#123A34", roughness: 0.9, flatShading: true }); veci.push(smrkMat);
+  const snehCap = new THREE.MeshStandardMaterial({ color: "#F4FAFF", roughness: 0.8, flatShading: true }); veci.push(snehCap);
+  for (let i = 0; i < 14; i++) {
+    const t = new THREE.Group(); const sx = i % 2 ? 1 : -1; t.position.set(sx * (3 + Math.random() * 6), -1.2, -3 - Math.random() * 10); const s = 0.7 + Math.random() * 0.9; t.scale.setScalar(s); g.add(t);
+    [[0.9, 1.3, 0.8], [0.7, 1.1, 1.5], [0.45, 0.9, 2.1]].forEach(([r, h, y]) => { const geo = new THREE.ConeGeometry(r, h, 7); veci.push(geo); const c = new THREE.Mesh(geo, smrkMat); c.position.y = y; t.add(c); const cap = new THREE.Mesh(geo, snehCap); cap.scale.set(0.75, 0.35, 0.75); cap.position.y = y + h * 0.3; t.add(cap); });
+  }
+  // polární záře: pruhy se shaderem
+  const zare: THREE.ShaderMaterial[] = [];
+  for (let i = 0; i < 3; i++) {
+    const geo = new THREE.PlaneGeometry(36, 7, 120, 1); veci.push(geo);
+    const mat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false,
+      uniforms: { uCas: { value: 0 }, uF: { value: i * 1.7 }, uA: { value: new THREE.Color(["#3DFFB4", "#47E6FF", "#B07CFF"][i]) }, uB: { value: new THREE.Color(["#B07CFF", "#3DFFB4", "#FF6FD8"][i]) } },
+      vertexShader: `uniform float uCas; uniform float uF; varying vec2 vUv; void main(){ vUv=uv; vec3 p=position; p.z += sin(p.x*0.25+uCas*0.5+uF)*2.0; p.y += sin(p.x*0.4+uCas*0.7+uF)*0.6; gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);}`,
+      fragmentShader: `uniform float uCas; uniform float uF; uniform vec3 uA; uniform vec3 uB; varying vec2 vUv; void main(){ float sv = smoothstep(0.0,0.25,vUv.y)*smoothstep(1.0,0.35,vUv.y); float zav = 0.55+0.45*sin(vUv.x*40.0+uCas*1.5+uF*3.0)*sin(vUv.x*9.0-uCas*0.6); vec3 c = mix(uA,uB,vUv.y); float a = sv*zav*1.1*smoothstep(0.0,0.15,vUv.x)*smoothstep(1.0,0.85,vUv.x); gl_FragColor=vec4(c*a,a); }`,
+    });
+    zare.push(mat); veci.push(mat);
+    const m = new THREE.Mesh(geo, mat); m.position.set(0, 5.5 + i * 0.9, -15 - i * 2); m.rotation.x = 0.2; g.add(m);
+  }
+  // padající sníh
+  const nS = 140, sPos = new Float32Array(nS * 3);
+  for (let i = 0; i < nS; i++) sPos.set([(Math.random() - 0.5) * 14, Math.random() * 7 - 1.2, (Math.random() - 0.5) * 10], i * 3);
+  const sG = new THREE.BufferGeometry(); sG.setAttribute("position", new THREE.BufferAttribute(sPos, 3)); veci.push(sG);
+  const sMat = new THREE.PointsMaterial({ color: "#FFFFFF", size: 0.05, transparent: true, opacity: 0.85, depthWrite: false }); veci.push(sMat);
+  g.add(new THREE.Points(sG, sMat));
+  return {
+    g, pozadi, mlha: new THREE.Fog("#0B1E3F", 12, 32), kamera: { z: 11, y: 1.0, look: 1.4 },
+    svetlo: (s) => { s.key.color.set("#BFE8FF"); s.key.intensity = 1.1; s.rim.color.set("#3DFFB4"); s.rim.intensity = 2.4; },
+    krok: (cas, dt) => {
+      zare.forEach((z) => { z.uniforms.uCas.value = cas; });
+      for (let i = 0; i < nS; i++) { let y = sPos[i * 3 + 1] - dt * (0.35 + (i % 5) * 0.08); if (y < -1.2) y = 5.8; sPos[i * 3 + 1] = y; sPos[i * 3] += Math.sin(cas * 0.8 + i) * 0.003; }
+      sG.attributes.position.needsUpdate = true;
+    },
+    dispose: () => veci.forEach((v) => v.dispose()),
+  };
+}
+
+const STAVITELE: Record<DruhDomova, () => Prostredi> = { "vanocni-pokojicek": stavPokojicek, synthwave: stavSynthwave, "podmorsky-svet": stavPodmori, "polarni-zare": stavPolarni };
 
 export function jeHotovyDomov(id: string): id is DruhDomova {
   return id in STAVITELE;
@@ -169,7 +327,7 @@ export function vytvorDomov(canvas: HTMLCanvasElement, druh: DruhDomova, podoba:
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 120);
   const meritko = { value: 400 };
   const prost = STAVITELE[druh]();
-  scene.add(prost.g); scene.background = prost.pozadi; prost.svetlo?.(sv);
+  scene.add(prost.g); scene.background = prost.pozadi; scene.fog = prost.mlha ?? null; prost.svetlo?.(sv);
   let hx: HexikModel = postavHexika(podoba, etapa, meritko, sloty);
   const svit = new THREE.PointLight("#FFFFFF", 0, 6, 2); svit.position.set(0, 0.4, 2.4); scene.add(svit);
   const nasadHexika = () => { scene.add(hx.root, hx.stin, hx.okoli); svit.color.set(hx.svit ?? "#FFFFFF"); svit.intensity = hx.svit ? 2.5 : 0; };

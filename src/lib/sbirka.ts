@@ -1058,7 +1058,7 @@ export interface Sada {
 }
 
 /** Hotové 3D domovy. Ostatní se odemknou hned, Hexík se do nich nastěhuje, až budou scény hotové (leden). */
-export const HOTOVE_DOMOVY: readonly string[] = ["vanocni-pokojicek"];
+export const HOTOVE_DOMOVY: readonly string[] = ["vanocni-pokojicek", "synthwave", "podmorsky-svet", "polarni-zare"];
 
 const KRYSTALY_ZA_VEC = 50;
 const MAX_BONUS_SADY = 250;

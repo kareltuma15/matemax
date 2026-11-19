@@ -109,12 +109,15 @@ test.describe("sezóny a sady: pravidla", () => {
     expect(r.s.okoli?.[9]).toBeNull();
     expect(zapisSady(r.s, "2026-12-09").vysledek.ids).toEqual([]);
     // Nehotový domov nejde nastavit, cizí třída taky ne
-    const more = SADY[5].find((sd) => sd.id === "5-more")!;
-    const m = zapisSady(s0({ mam: [...more.polozky] }), "2026-11-20").s;
+    const zv = SADY[5].find((sd) => sd.id === "5-zviratka")!; // Paseka zatím není hotová
+    const m = zapisSady(s0({ mam: [...zv.polozky] }), "2026-11-20").s;
     expect(m.domov?.[5]).toBeUndefined();
-    expect(nastavDomov(m, 5, "5-more").vysledek).toBe(false);
-    expect(nastavEfekt(m, 9, "5-more").vysledek).toBe(false);
-    expect(efektHexika(m, 5)).toBe("bubliny");
+    expect(nastavDomov(m, 5, "5-zviratka").vysledek).toBe(false);
+    expect(nastavEfekt(m, 9, "5-zviratka").vysledek).toBe(false);
+    expect(efektHexika(m, 5)).toBe("motylci");
+    // Podmořský svět už hotový je: po dokončení Pod mořem se nastaví sám
+    const more = SADY[5].find((sd) => sd.id === "5-more")!;
+    expect(domovHexika(zapisSady(s0({ mam: [...more.polozky] }), "2026-11-20").s, 5)?.id).toBe("podmorsky-svet");
   });
 
   test("sady: kdo sadu dokončil podle dřívějšího složení, má efekt i domov dál; slučování dvou zařízení", () => {

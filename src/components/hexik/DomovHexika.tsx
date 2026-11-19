@@ -8,10 +8,13 @@ import type { Domov3D } from "@/lib/hexik3d/domovy";
 import type { Trida } from "@/types";
 
 /**
- * Domov Hexíka: 3D místo za dokončenou sadu (zatím Vánoční pokojíček). Ukazuje se v profilu, na Domově
+ * Domov Hexíka: 3D místo za dokončenou sadu (pokojíček, Synthwave, Podmoří, Polární záře). Ukazuje se v profilu, na Domově
  * a v Sadách, jen když si ho žák nastavil (při dokončení sady se nastaví sám). 3D knihovna se načte až tady.
  * Bez WebGL se karta neukáže.
  */
+/** Barva plochy, než se 3D scéna načte (podle domova). */
+const PODKLAD: Record<string, string> = { "vanocni-pokojicek": "#2A0F17", synthwave: "#2A0A45", "podmorsky-svet": "#0F5E95", "polarni-zare": "#0B1E3F" };
+
 export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odkaz?: boolean }) {
   const { stav, nacteno } = useSbirka();
   const domov = nacteno ? domovHexika(stav, trida) : null;
@@ -65,12 +68,12 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
   if (!domov || bez3D) return null;
   return (
     <section className="mm-karta overflow-hidden p-0" data-testid="domov-hexika" data-domov={domov.id}>
-      <div ref={plocha} className="relative w-full" style={{ height: "clamp(220px, 42vw, 320px)", background: "#2A0F17" }} />
+      <div ref={plocha} className="relative w-full" style={{ height: "clamp(220px, 42vw, 320px)", background: PODKLAD[domov.id] ?? "#1A2558" }} />
       <div className="flex items-center gap-3 px-4 py-3">
         <span className="text-2xl" aria-hidden="true">{SADY[trida].find((sd) => sd.domov.id === domov.id)?.ikona ?? "🏠"}</span>
         <div className="flex-1 min-w-0">
           <p className="font-black leading-tight" style={{ color: "#0D1B3E" }}>Hexík bydlí: {domov.nazev}</p>
-          <p className="text-xs" style={{ color: "#5F6982" }}>Táhni do stran, ťukni na Hexíka nebo na stromeček.</p>
+          <p className="text-xs" style={{ color: "#5F6982" }}>{domov.id === "vanocni-pokojicek" ? "Táhni do stran, ťukni na Hexíka nebo na stromeček." : "Táhni do stran a ťukni na Hexíka."}</p>
         </div>
         {odkaz && <Link href="/sbirka?tab=sady" className="text-sm font-extrabold shrink-0" style={{ color: "#2E6DA4" }}>Sady</Link>}
       </div>
