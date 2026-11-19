@@ -15,7 +15,8 @@ export default function RegistraceForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [name, setName]             = useState(""); // „Jak ti říkat?“ (nepovinné)
-  const [trida, setTrida]           = useState<Trida | null>(null); // 5. nebo 9. třída (povinné)
+  // 5. nebo 9. třída (povinné). Z osobního QR testu nanečisto přijde předvyplněná (?trida=5|9).
+  const [trida, setTrida]           = useState<Trida | null>(() => { const t = searchParams.get("trida"); return t === "5" ? 5 : t === "9" ? 9 : null; });
   const [email, setEmail]           = useState("");
   const [password, setPassword]     = useState("");
   const [showPassword, setShowPassword] = useState(false);

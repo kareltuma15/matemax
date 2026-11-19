@@ -5,8 +5,8 @@ import { povolenyNavrat, platnyState, navratUrl, tridaNaG } from "@/lib/vysledky
 import { prihlasenyZak, novyKod, hashKodu, noveLinkId, jeProdukce, KOD_PLATNOST_MS, chyba, ok } from "@/lib/vysledky-server";
 
 /**
- * Obrazovka /propojit → po souhlasu rodiče. Volá ji prohlížeč přihlášeného žáka (jeho token).
- * POST { state, navrat, souhlas: true } → { url } = navrat?state=…&code=… (kód platí 5 minut, v DB jen hash).
+ * Obrazovka /propojit → tlačítko Propojit. Volá ji prohlížeč přihlášeného žáka (jeho token).
+ * POST { state, navrat } → { url } = navrat?state=…&code=… (kód platí 5 minut, v DB jen hash).
  * Předchozí propojení účtu se zruší (jeden účet = jedno propojení).
  */
 export async function POST(req: NextRequest) {
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   let body: Record<string, unknown> = {};
   try { body = (await req.json()) as Record<string, unknown>; } catch { /* prázdné tělo */ }
-  if (body.souhlas !== true) return chyba(400, "souhlas");
+  // Krok 3 (Karel 19. 11. 2026): bez zaškrtávání souhlasu, rodič je informován e-mailem po propojení.
   if (!povolenyNavrat(body.navrat, jeProdukce())) return chyba(400, "navrat");
   if (!platnyState(body.state)) return chyba(400, "state");
 

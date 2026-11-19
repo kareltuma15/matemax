@@ -129,3 +129,47 @@ test("obrazovka propojení: neplatný odkaz, host dostane registraci s návratem
   await page.waitForURL(/\/registrace/);
   await expect(page.locator(`a[href="/prihlaseni?next=${encodeURIComponent(cesta)}"]`).first()).toBeAttached();
 });
+
+// ── Krok 3: osobní QR (Karel 19. 11. 2026) ──────────────────────────────────
+
+async function falesnaRelace(context: import("@playwright/test").BrowserContext) {
+  const fs = await import("fs");
+  const env = fs.readFileSync(".env.local", "utf8");
+  const ref = new URL(env.match(/NEXT_PUBLIC_SUPABASE_URL=(\S+)/)![1].replace(/["']/g, "")).hostname.split(".")[0];
+  const user = { id: "00000000-0000-4000-8000-000000000000", aud: "authenticated", role: "authenticated", email: "zak@example.com", app_metadata: {}, user_metadata: { first_name: "Tomáš", trida: 9 }, created_at: "2026-10-01T00:00:00Z" };
+  const relace = { access_token: "x", refresh_token: "y", token_type: "bearer", expires_in: 3600, expires_at: Math.floor(Date.now() / 1000) + 86400, user };
+  await context.addCookies([{ name: `sb-${ref}-auth-token`, value: "base64-" + Buffer.from(JSON.stringify(relace)).toString("base64url"), domain: "localhost", path: "/" }]);
+  await context.route("**/auth/v1/user**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(user) }));
+  await context.route("**/rest/v1/**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: "[]" }));
+}
+
+test("osobní QR: úvod pro žáka s dnem testu a registrace s předvyplněnou třídou", async ({ page }) => {
+  const cesta = `/propojit?klient=vysledky&state=abc123&navrat=${encodeURIComponent(NAVRAT_PRODUKCE)}&uvod=qr&g=m9&test=2026-12-12`;
+  await page.goto(cesta);
+  const uvod = page.getByTestId("propojit-uvod-qr");
+  await expect(uvod).toBeVisible();
+  await expect(uvod).toContainText("Test nanečisto 12. 12. · 9. třída");
+  await expect(uvod).toContainText("Tady budou tvoje výsledky z testu");
+  const reg = page.getByTestId("propojit-qr-registrace");
+  await expect(reg).toHaveAttribute("href", `/registrace?next=${encodeURIComponent(cesta)}&trida=9`);
+  await reg.click();
+  await page.waitForURL(/\/registrace/);
+  await expect(page.getByTestId("trida-9")).toHaveAttribute("aria-pressed", "true");
+});
+
+test("propojení bez zaškrtávání souhlasu: informace a tlačítko Propojit", async ({ page, context }) => {
+  await falesnaRelace(context);
+  await page.goto(`/propojit?klient=vysledky&state=abc123&navrat=${encodeURIComponent(NAVRAT_PRODUKCE)}&uvod=qr&g=m9&test=2026-12-12`);
+  await expect(page.getByTestId("propojit-souhlas")).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId("propojit-souhlas-check")).toHaveCount(0);
+  await expect(page.getByTestId("propojit-info")).toContainText("Rodič dostane e-mail");
+  await expect(page.getByTestId("propojit-tlacitko")).toBeEnabled();
+});
+
+test("Domov po propojení z QR ukáže potvrzení a uklidí adresu", async ({ page, context }) => {
+  await falesnaRelace(context);
+  await page.addInitScript(() => localStorage.setItem("matemax-trida", "9"));
+  await page.goto("/?z=qr&propojeno=1");
+  await expect(page.getByTestId("propojeno-karta")).toContainText("Propojeno s Testy nanečisto", { timeout: 20_000 });
+  await expect.poll(() => new URL(page.url()).search).toBe("");
+});
