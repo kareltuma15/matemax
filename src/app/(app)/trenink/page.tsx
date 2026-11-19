@@ -1257,8 +1257,6 @@ function TreningPageInner() {
         }}
       />
 
-      <HexikParta trida={trida} />
-
       {/* Režim série jen jedním malým řádkem, a jen když není běžný trénink tématu */}
       {(freezeUsedToday || rezimFilter === "chyby" || rezimFilter === "sm2" || (isWeakTopic && !temaFilter)) && (
         <p className="mb-3 text-xs font-semibold text-slate-500">
@@ -1274,6 +1272,9 @@ function TreningPageInner() {
 
       {/* Pro e2e testy: která úloha je na řadě a z čeho se sezení skládá. */}
       <span hidden data-testid="sezeni" data-aktualni={currentExample.id} data-ulohy={sessionIds.join(",")} />
+
+      {/* Hexík stojí na horní hraně karty, proto těsně nad ní */}
+      <HexikParta trida={trida} />
 
       {currentExample.konstrukce_scena ? (
         <ConstructionMarkCard

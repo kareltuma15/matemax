@@ -24,9 +24,14 @@ const TEXTY: Record<Trida, { ok: string[]; serie: string[]; chyba: string[] }> =
   },
 };
 const nahodne = (a: string[]) => a[Math.floor(Math.random() * a.length)];
+/** Úvodní hláška, než žák poprvé odpoví (pak ji nahradí reakce). */
+const START: Record<Trida, string[]> = {
+  5: ["Tohle dáš! Fandím ti 💪", "Jdeme na to spolu!", "Hurá do toho!"],
+  9: ["Tohle dáš. Fandím ti 💪", "Jdeme na to!", "Pojď, dáme pár příkladů."],
+};
 
 /**
- * Hexík u příkladu: na telefonu v řádku nad úlohou, na počítači vpravo dole.
+ * Hexík u příkladu: na telefonu stojí na horní hraně karty s bublinou vlevo, na počítači vpravo vedle karty.
  * Reaguje na vyhodnocení odpovědi (událost ze zvuku správně/špatně), oslavuje každou třetí
  * správnou v řadě nasazenou oslavou a ukazuje připsané krystaly.
  */
@@ -35,6 +40,8 @@ export default function HexikParta({ trida }: { trida: Trida }) {
   const hxRef = useRef<HTMLSpanElement>(null);
   const serieRef = useRef(0);
   const [bublina, setBublina] = useState<string | null>(null);
+  const [uvod, setUvod] = useState<string | null>(null);
+  useEffect(() => { setUvod(nahodne(START[trida])); }, [trida]); // eslint-disable-line react-hooks/set-state-in-effect
   const [plus, setPlus] = useState<{ n: number; klic: number } | null>(null);
   const bublinaCas = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [combo, setCombo] = useState<{ n: number; stit: boolean; pop: number }>({ n: 0, stit: false, pop: 0 });
@@ -55,6 +62,7 @@ export default function HexikParta({ trida }: { trida: Trida }) {
   useEffect(() => {
     const rekni = (t: string, ms = 2000) => {
       setBublina(t);
+      setUvod(null);
       if (bublinaCas.current) clearTimeout(bublinaCas.current);
       bublinaCas.current = setTimeout(() => setBublina(null), ms);
     };
@@ -150,61 +158,62 @@ export default function HexikParta({ trida }: { trida: Trida }) {
     return () => clearTimeout(t);
   }, [milnik]);
 
-  if (!nacteno) return <div className="h-14 mb-2 lg:hidden" aria-hidden="true" />;
+  if (!nacteno) return <div className="h-[118px] lg:hidden" aria-hidden="true" />;
 
+  // Telefon (Karel 19. 11., mockup Opravy z mobilu): nahoře krystaly a combo, pod tím bublina a Hexík,
+  // který stojí nohama na horní hraně karty s příkladem. Počítač: panel vpravo vedle karty jako dřív.
   return (
-    <div
-      className="relative flex items-center gap-2 mb-2 h-14 lg:fixed lg:z-30 lg:top-28 lg:left-[calc(50%+22rem)] lg:mb-0 lg:h-auto lg:flex-col-reverse lg:items-start lg:gap-1.5"
-      data-testid="hexik-parta"
-    >
-      <div className="combo-obal relative w-12 shrink-0 lg:w-32" data-t={comboStupen} data-testid="combo-hexik">
-        <canvas ref={ohenCv} className="combo-ohen" aria-hidden="true" />
-        <Hexik ref={hxRef} podoba={podoba} etapa={etapa} d3="setrne" doplnky={slotyHexika(stav, trida)} className="relative z-[1] w-full" />
+    <div className="hx-parta" data-testid="hexik-parta">
+      <div className="hx-parta-info">
+        <div className="relative z-[2] shrink-0">
+          <span
+            className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1 text-sm font-black tabular-nums"
+            style={{ background: "#E8F4FF", color: "#1E5FA8" }}
+            title="Krystaly"
+            data-testid="hexik-krystaly"
+          >
+            <i className="hx-krystal" aria-hidden="true" />
+            {krystaly(stav)}
+          </span>
+          {plus && (
+            <span key={plus.klic} className="hx-plus hx-jede absolute right-1 -top-5 text-sm font-black" style={{ color: "#1E8FE0" }}>
+              +{plus.n}
+            </span>
+          )}
+        </div>
+        {combo.n >= 2 && (
+          <span
+            key={combo.pop}
+            className="combo-cip shrink-0 inline-flex items-center gap-1 rounded-xl px-2.5 py-1 text-sm font-black tabular-nums"
+            data-t={comboStupen}
+            data-testid="combo"
+            data-n={combo.n}
+            title={STUPNE_COMBA[comboStupen].nazev || "Combo: správně za sebou"}
+          >
+            <span aria-hidden="true">🔥</span>{combo.n}{combo.stit && <span aria-label="štít">🛡</span>}
+          </span>
+        )}
       </div>
-      <div className="relative z-[2] flex-1 min-w-0 lg:flex-none lg:max-w-[220px]">
+      <div className="hx-parta-bub">
         <p
-          className={`hx-bublina inline-block max-w-full rounded-2xl rounded-bl-md lg:rounded-bl-2xl lg:rounded-br-md px-3 py-1.5 text-sm font-bold shadow-sm border ${bublina ? "hx-vid" : ""}`}
+          className={`hx-bublina hx-bublina-sipka inline-block max-w-full rounded-2xl px-3 py-1.5 text-sm font-bold shadow-sm border ${bublina ?? uvod ? "hx-vid" : ""}`}
           style={{ background: "var(--surface-0, #fff)", borderColor: "var(--border-color, #E4E6EF)", color: "var(--text-primary, #0D1B3E)" }}
           aria-live="polite"
           data-testid="hexik-bublina"
         >
-          {bublina ?? " "}
+          {bublina ?? uvod ?? " "}
         </p>
       </div>
-      {combo.n >= 2 && (
-        <span
-          key={combo.pop}
-          className="combo-cip shrink-0 inline-flex items-center gap-1 rounded-xl px-2.5 py-1 text-sm font-black tabular-nums lg:self-start"
-          data-t={comboStupen}
-          data-testid="combo"
-          data-n={combo.n}
-          title={STUPNE_COMBA[comboStupen].nazev || "Combo: správně za sebou"}
-        >
-          <span aria-hidden="true">🔥</span>{combo.n}{combo.stit && <span aria-label="štít">🛡</span>}
-        </span>
-      )}
+      <div className="hx-parta-hx combo-obal" data-t={comboStupen} data-testid="combo-hexik">
+        <canvas ref={ohenCv} className="combo-ohen" aria-hidden="true" />
+        <Hexik ref={hxRef} podoba={podoba} etapa={etapa} d3="setrne" doplnky={slotyHexika(stav, trida)} className="relative z-[1] w-full" />
+      </div>
       {milnik && (
         <div key={milnik.klic} className="combo-milnik" role="status" data-testid="combo-milnik">
           <b>{milnik.n}× COMBO</b>
           <span>{milnik.nazev}{milnik.krystaly > 0 ? ` · +${milnik.krystaly} krystalů` : ""}</span>
         </div>
       )}
-      <div className="relative z-[2] shrink-0 lg:self-start">
-        <span
-          className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1 text-sm font-black tabular-nums"
-          style={{ background: "#E8F4FF", color: "#1E5FA8" }}
-          title="Krystaly"
-          data-testid="hexik-krystaly"
-        >
-          <i className="hx-krystal" aria-hidden="true" />
-          {krystaly(stav)}
-        </span>
-        {plus && (
-          <span key={plus.klic} className="hx-plus hx-jede absolute right-1 -top-5 text-sm font-black" style={{ color: "#1E8FE0" }}>
-            +{plus.n}
-          </span>
-        )}
-      </div>
     </div>
   );
 }

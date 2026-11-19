@@ -1081,3 +1081,19 @@ html[data-vzhled="lava"], .mm-swatch[data-vz="lava"] { --vz-pozadi: radial-gradi
 .mm-dlazdice > .mm-swatch, .mm-dlazdice > .mm-banner { width: 82% !important; height: 58% !important; }
 .mm-dlazdice-stitek { position: absolute; left: 5px; top: 5px; margin: 0; }
 .mm-dlazdice-sada { position: absolute; right: 5px; bottom: 5px; font-size: 10px; font-weight: 800; line-height: 1; color: #fff; background: rgba(13, 27, 62, .78); border-radius: 999px; padding: 3px 6px; }
+
+/* Hexík u příkladu (Karel 19. 11.): na telefonu nahoře krystaly a combo, pod tím bublina a Hexík
+   stojící nohama na horní hraně karty; na počítači panel vpravo vedle karty. */
+.hx-parta { position: relative; z-index: 3; display: grid; grid-template-columns: minmax(0,1fr) 104px; grid-template-areas: "info info" "bub hx"; align-items: end; column-gap: 6px; margin-bottom: -12px; }
+.hx-parta-info { grid-area: info; display: flex; align-items: center; gap: 8px; }
+.hx-parta-bub { grid-area: bub; justify-self: end; min-width: 0; margin-bottom: 26px; text-align: right; }
+.hx-parta-hx { grid-area: hx; position: relative; width: 104px; }
+.hx-bublina-sipka { position: relative; }
+.hx-bublina-sipka::after { content: ""; position: absolute; right: -6px; top: 50%; width: 11px; height: 11px; background: inherit; border-right: 1px solid var(--border-color, #E4E6EF); border-top: 1px solid var(--border-color, #E4E6EF); transform: translateY(-50%) rotate(45deg); }
+@media (min-width: 1024px) {
+  .hx-parta { position: fixed; z-index: 30; top: 7rem; left: calc(50% + 22rem); display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 0; }
+  .hx-parta-info { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .hx-parta-bub { margin: 0; max-width: 220px; text-align: left; }
+  .hx-parta-hx { width: 8rem; }
+  .hx-bublina-sipka::after { display: none; }
+}

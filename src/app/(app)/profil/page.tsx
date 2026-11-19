@@ -567,8 +567,6 @@ export default function ProfilPage() {
   const toNext: number | null = urovenXP.do - xp;
   const pct = Math.min(100, Math.round(urovenXP.podil * 100));
 
-  const initials = email ? email[0].toUpperCase() : "?";
-
   // SM-2 progress per topic
   const sm2CardMap = new Map(sm2Cards.map((c) => [c.exampleId, c]));
   const sm2TopicStats = [...TEMATA_ORDER].reduce<Record<string, { practiced: number; mastered: number; total: number }>>((acc, tema) => {
@@ -612,58 +610,50 @@ export default function ProfilPage() {
       >
         <PozadiZive klic={pozadiKlic} />
         <div className="px-5 pt-6 pb-5">
-          {/* Top row: avatar + info */}
+          {/* Hexík místo písmene (Karel 19. 11.): Hexík vlevo s etapou, jméno s tužkou, štítky a XP jako dřív */}
           <div className="flex items-center gap-4">
-            <div className="relative shrink-0">
-              <div
-                className="rounded-full flex items-center justify-center"
-                style={{
-                  width: "80px", height: "80px",
-                  background: "rgba(255,255,255,0.12)",
-                  border: "3px solid rgba(255,255,255,0.3)",
-                  boxShadow: "0 0 24px rgba(124,58,237,0.45)",
-                }}
-              >
-                {avatarEmoji
-                  ? <span className="text-4xl leading-none">{avatarEmoji}</span>
-                  : <span className="text-white text-4xl font-black">{initials}</span>
-                }
-              </div>
-              <button
-                type="button"
-                onClick={() => { setShowPersonaForm(true); setTimeout(() => document.getElementById("nastaveni-section")?.scrollIntoView({ behavior: "smooth" }), 50); }}
-                className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-sm shadow-md press-scale"
-                style={{ background: "#2E6DA4", border: "2px solid rgba(255,255,255,0.3)" }}
-                title="Upravit profil"
-              >
-                ✏️
-              </button>
-            </div>
+            <Link href="/sbirka?tab=satnik" className="shrink-0 flex flex-col items-center gap-1" title="Tvůj Hexík: šatník" data-testid="profil-hexik">
+              <Hexik podoba={nasazena(sbirka, trida, "podoba").klic} etapa={etapaHexika(sbirka.maxOdhad[trida])} d3 otacet doplnky={slotyHexika(sbirka, trida)} className="w-24 h-24 sm:w-28 sm:h-28" />
+              <span className="text-[10px] font-black uppercase tracking-wider text-white/70">{ETAPY_HEXIKA[Math.max(0, etapaHexika(sbirka.maxOdhad[trida]) - 1)]?.nazev ?? "Hexík"}</span>
+            </Link>
 
             <div className="flex-1 min-w-0">
-              <p className="text-white font-black text-lg leading-tight truncate">
-                {displayName || email || "Nepřihlášen"}
-              </p>
+              <div className="flex items-center gap-2 min-w-0">
+                <p className="text-white font-black text-lg leading-tight truncate">
+                  {displayName || email || "Nepřihlášen"}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => { setShowPersonaForm(true); setTimeout(() => document.getElementById("nastaveni-section")?.scrollIntoView({ behavior: "smooth" }), 50); }}
+                  className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm shadow-md press-scale"
+                  style={{ background: "#2E6DA4", border: "2px solid rgba(255,255,255,0.3)" }}
+                  title="Upravit profil"
+                  aria-label="Upravit profil"
+                  data-testid="profil-upravit"
+                >
+                  ✏️
+                </button>
+              </div>
               {displayName && email && (
                 <p className="text-blue-300 text-xs mt-0.5 truncate">{email}</p>
               )}
               <div className="mt-2 flex flex-wrap items-center gap-1.5">
                 <span
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full max-w-full min-w-0"
                   style={{ background: "rgba(253,224,71,0.18)", border: "1px solid rgba(253,224,71,0.4)" }}
                 >
                   <span className="text-sm">{level.icon_emoji}</span>
-                  <span className="text-xs font-bold" style={{ color: "#fde047" }}>Úroveň {urovenXP.n} · {level.rank_title}</span>
+                  <span className="text-xs font-bold truncate" style={{ color: "#fde047" }}>Úroveň {urovenXP.n} · {level.rank_title}</span>
                 </span>
                 <span
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-white"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-white whitespace-nowrap"
                   style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}
                 >
                   🎯 {getDaysUntilCermat()} dní do přijímaček
                 </span>
                 <Link
                   href="/sbirka"
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black tabular-nums"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black tabular-nums whitespace-nowrap"
                   style={{ background: "rgba(127,227,245,0.18)", border: "1px solid rgba(127,227,245,0.45)", color: "#CFF4FC" }}
                   data-testid="profil-krystaly"
                 >
@@ -686,10 +676,6 @@ export default function ProfilPage() {
                 />
               </div>
             </div>
-            <Link href="/sbirka?tab=satnik" className="shrink-0 flex flex-col items-center gap-1" title="Tvůj Hexík: šatník" data-testid="profil-hexik">
-              <Hexik podoba={nasazena(sbirka, trida, "podoba").klic} etapa={etapaHexika(sbirka.maxOdhad[trida])} d3 otacet doplnky={slotyHexika(sbirka, trida)} className="w-20 h-20 sm:w-28 sm:h-28" />
-              <span className="text-[10px] font-black uppercase tracking-wider text-white/70">{ETAPY_HEXIKA[Math.max(0, etapaHexika(sbirka.maxOdhad[trida]) - 1)]?.nazev ?? "Hexík"}</span>
-            </Link>
           </div>
 
         </div>
