@@ -9,7 +9,7 @@
  */
 import * as THREE from "three";
 import { podobaHexika, type Podoba } from "../hexik-svg";
-import { vytvorCastice, type Castice, type MeritkoCastic } from "./castice";
+import { vytvorCastice, type Castice, type DruhCastic, type MeritkoCastic } from "./castice";
 import {
   usi, vousky, antena, rohy, kridla, rohJednorozce, hriva, ksiltovka, plamen, vanocniCepice, kulich, medaile, tykadla, vceliKridla, sala, koruna,
   zlatoMat, doplnekNaSlot, type Doplnek, type Sklad, type Pohyb,
@@ -17,8 +17,31 @@ import {
 import { postavOblicej, type RigObliceje } from "./oblicej";
 import { postavRuku, postavNohu, type Koncetiny } from "./koncetiny";
 
-/** Doplňky na sloty (klíče z katalogu sbirka.ts). */
-export type SlotyHexika = Partial<Record<"hlava" | "oci" | "krk" | "ruce" | "nohy", string>>;
+/**
+ * Doplňky na sloty (klíče z katalogu sbirka.ts). `okoli` = efekt sady kolem Hexíka (klíč z OKOLI níž),
+ * odemyká se za polovinu sady (sbirka.ts → SADY).
+ */
+export type SlotyHexika = Partial<Record<"hlava" | "oci" | "krk" | "ruce" | "nohy" | "okoli", string>>;
+
+/** Efekty sad kolem Hexíka: druh částic, barvy, počet a výška (u raket u nohou). */
+export const OKOLI: Record<string, { druh: DruhCastic; barvy: string[]; pocet?: number; y?: number; x?: number[] }> = {
+  snih: { druh: "snih", barvy: ["#FFFFFF", "#EAF6FF"] },
+  vlocky: { druh: "snih", barvy: ["#DDF1FF", "#A9D8F5", "#FFFFFF"], pocet: 45 },
+  drobky: { druh: "jiskry", barvy: ["#C98A4B", "#FFD36E", "#8B5A2B"], pocet: 18 },
+  konfety: { druh: "jiskry", barvy: ["#FF5C8A", "#FFD23F", "#3DDC97", "#4DA3FF"], pocet: 20 },
+  bubliny: { druh: "stoupani", barvy: ["#BFF4FF", "#7FD8FF", "#FFFFFF"] },
+  listky: { druh: "snih", barvy: ["#7BC96F", "#F2A541", "#E5383B"], pocet: 26 },
+  motylci: { druh: "jiskry", barvy: ["#FF9ED8", "#FFD36E", "#9ED8FF"], pocet: 14 },
+  duha: { druh: "jiskry", barvy: ["#FF5C5C", "#FFB13D", "#FFE14D", "#4CD38A", "#4DA3FF", "#9B6BFF"], pocet: 20 },
+  magie: { druh: "aura", barvy: ["#B79BFF", "#FFD36E", "#FFFFFF"], pocet: 24 },
+  rakety: { druh: "uhliky", barvy: ["#FFB000", "#FF7A3D", "#FFE066"], pocet: 22, y: -1.25, x: [-0.55, 0.55] },
+  digital: { druh: "stoupani", barvy: ["#3DF5A0", "#2BD67B", "#B6FFD8"], pocet: 30 },
+  neon: { druh: "aura", barvy: ["#FF3DCB", "#3DF5FF", "#FFFFFF"], pocet: 24 },
+  uhliky: { druh: "stoupani", barvy: ["#FFB000", "#FF7A3D", "#FF4D2E"], pocet: 22 },
+  jinovatka: { druh: "jiskry", barvy: ["#DDF6FF", "#FFFFFF", "#9FD9FF"], pocet: 18 },
+  potlesk: { druh: "jiskry", barvy: ["#FFD36E", "#FFFFFF", "#F5A623"], pocet: 18 },
+  blesky: { druh: "aura", barvy: ["#7CF5FF", "#FFFFFF", "#B79BFF"], pocet: 22 },
+};
 
 const N = "#0D1B3E";
 
@@ -275,6 +298,18 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
   const okoli = new THREE.Group();
   if (doplnky.some((d) => d.okoli === "snih") || P.o === "#7CC9F0") { const c = vytvorCastice("snih", meritko, ["#FFFFFF", "#EAF6FF"]); okoli.add(c.obj); castice.push(c); }
   if (plamenU) { const c = vytvorCastice("uhliky", meritko, ["#FFB000", "#FF7A3D", "#FFE066"]); c.obj.position.set(0, 1.0, 0); body.add(c.obj); castice.push(c); }
+  // Efekt sady kolem Hexíka (sníh z čepice se nezdvojuje)
+  const ef = sloty.okoli ? OKOLI[sloty.okoli] : undefined;
+  if (ef && !(ef.druh === "snih" && okoli.children.length)) {
+    // Větší částice; uhlíky z raket vedle nohou (víc trysek), kroužky jisker a aury blíž k tělu a před něj
+    // (plátno je oříznuté těsně kolem Hexíka)
+    for (const x of ef.x ?? [0]) {
+      const c = vytvorCastice(ef.druh, meritko, ef.barvy, ef.pocet, ef.druh === "uhliky" ? 1.6 : 2);
+      if (ef.y !== undefined) c.obj.position.set(x, ef.y, 0.35);
+      if (ef.druh === "jiskry" || ef.druh === "aura") { c.obj.scale.setScalar(ef.druh === "aura" ? 0.82 : 1); c.obj.position.z = 0.6; }
+      okoli.add(c.obj); castice.push(c);
+    }
+  }
   const pruziny = doplnky.flatMap((d) => d.pruziny);
 
   // Měkký stín pod Hexíkem

@@ -1,0 +1,174 @@
+<title>Sady MateMax</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: one column, nahoře ukázka karty sady, pod ní seznam sad po třídách, na konci 3 otázky */
+:root{
+  --bg:#F4F6FB; --karta:#FFFFFF; --ink:#0D1B3E; --muted:#5F6982; --line:#E3E7F0;
+  --zlato:#F5A623; --zlato-bg:#FFF6E3; --zelena:#1F9D55; --zelena-bg:#E9F8EF; --nove:#7B3FE4; --nove-bg:#F1EAFE;
+  --zmena:#B45309; --zmena-bg:#FFF1DC;
+  --f:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1430; --karta:#121E42; --ink:#EEF2FF; --muted:#A3AECB; --line:#26345E;
+  --zlato:#F7B844; --zlato-bg:#3A2C0E; --zelena:#4CD38A; --zelena-bg:#123726; --nove:#B79BFF; --nove-bg:#2A1F4F;
+  --zmena:#FBBF5B; --zmena-bg:#3B2A10; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1430; --karta:#121E42; --ink:#EEF2FF; --muted:#A3AECB; --line:#26345E;
+  --zlato:#F7B844; --zlato-bg:#3A2C0E; --zelena:#4CD38A; --zelena-bg:#123726; --nove:#B79BFF; --nove-bg:#2A1F4F;
+  --zmena:#FBBF5B; --zmena-bg:#3B2A10; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1{font-size:30px;font-weight:900;line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:21px;font-weight:900;margin:0;text-wrap:balance}
+p{margin:0}
+.lead{color:var(--muted);max-width:68ch}
+.pravidla{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.pravidlo{background:var(--karta);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.pravidlo b{font-size:15px}
+.pravidlo span{color:var(--muted);font-size:13.5px}
+.ukazka{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.sada{background:var(--karta);border:1.5px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.sada.hotova{border-color:var(--zlato);background:linear-gradient(160deg,var(--zlato-bg),var(--karta) 60%)}
+.hlava{display:flex;align-items:center;gap:12px}
+.ikona{font-size:30px}
+.nazev{font-weight:900;font-size:18px;line-height:1.2}
+.pod{font-size:12.5px;color:var(--muted)}
+.pocet{margin-left:auto;font-weight:900;font-variant-numeric:tabular-nums}
+.stitek{align-self:flex-start;font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--zmena-bg);color:var(--zmena)}
+.veci{display:flex;flex-wrap:wrap;gap:8px}
+.vec{width:76px;border-radius:12px;padding:6px 4px;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;text-align:center;line-height:1.15;position:relative}
+.vec .e{font-size:26px;line-height:1.2}
+.vec.ne{opacity:.5;filter:grayscale(.8)}
+.vec.ma::after{content:"✓";position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:var(--zelena);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+.cesta{display:flex;flex-direction:column;gap:8px}
+.bar{height:10px;border-radius:99px;background:var(--line);position:relative;overflow:visible}
+.bar i{position:absolute;inset:0 auto 0 0;border-radius:99px;background:linear-gradient(90deg,var(--zlato),#FFD36E)}
+.bar u{position:absolute;top:50%;width:4px;height:16px;transform:translate(-50%,-50%);border-radius:2px;background:var(--ink);opacity:.35;text-decoration:none}
+.kroky{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.krok{border-radius:12px;padding:8px 10px;font-size:12.5px;line-height:1.3;border:1px dashed var(--line);color:var(--muted)}
+.krok b{display:block;color:var(--ink);font-size:13px}
+.krok.ok{border-style:solid;border-color:var(--zelena);background:var(--zelena-bg)}
+.krok.ok b{color:var(--zelena)}
+.tlac{align-self:flex-start;font:inherit;font-weight:800;font-size:13px;padding:7px 12px;border-radius:12px;border:0;background:var(--ink);color:var(--karta)}
+.tabwrap{overflow-x:auto;background:var(--karta);border:1px solid var(--line);border-radius:18px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.n{font-weight:800;white-space:nowrap}
+td.k{font-variant-numeric:tabular-nums;white-space:nowrap}
+.z{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:99px;margin-left:4px;vertical-align:1px}
+.z.nova{background:var(--nove-bg);color:var(--nove)}
+.z.zm{background:var(--zmena-bg);color:var(--zmena)}
+.ven{color:var(--muted);text-decoration:line-through}
+.otazky{display:flex;flex-direction:column;gap:12px}
+.otazka{background:var(--karta);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.otazka b{font-size:15.5px}
+.otazka .doporuc{font-size:13.5px;color:var(--zelena);font-weight:700}
+.otazka span{color:var(--muted);font-size:14px}
+@media (max-width:420px){h1{font-size:25px}.kroky{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <h1>Sady podle nových pravidel</h1>
+    <p class="lead">Takhle by vypadala záložka Sady a takhle by se sady složily. Pravidla jsi schválil 19. 11. Při skládání se pár dnešních sad s pravidly nesneslo, ty jsou označené <span class="z zm">změna</span>. Na konci jsou 3 věci k rozhodnutí.</p>
+  </header>
+
+  <section class="pravidla" aria-label="Pravidla">
+    <div class="pravidlo"><b>Jeden svět, 3–5 věcí</b><span>Různé druhy: podoba, doplněk, taneček nebo efekt, pozadí, vzhled.</span></div>
+    <div class="pravidlo"><b>Jen neobvyklé a lepší</b><span>Běžné věci zůstanou volné. Každá věc patří nejvýš do jedné sady.</span></div>
+    <div class="pravidlo"><b>Polovina sady: efekt</b><span>Kolem Hexíka se rozběhne efekt sady (sníh, bubliny, jiskry…). Dá se vypnout nebo přepnout.</span></div>
+    <div class="pravidlo"><b>Celá sada: domov</b><span>3D místo, kde Hexík bydlí, a menší bonus krystalů. Teď hotový Vánoční pokojíček, další domovy v lednu.</span></div>
+    <div class="pravidlo"><b>Legenda vždycky padne</b><span>Když truhla losuje legendu, přednost má chybějící legenda z rozdělané sady.</span></div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2>Záložka Sady</h2>
+    <div class="ukazka">
+      <div class="sada">
+        <div class="hlava"><span class="ikona">🎄</span><div><p class="nazev">Vánoce</p><p class="pod">Za polovinu sněžení kolem Hexíka, za celou Vánoční pokojíček a 200 krystalů</p></div><span class="pocet">2/4</span></div>
+        <span class="stitek">🎄 Sezóna Vánoce, jen do 6. 1.</span>
+        <div class="veci">
+          <span class="vec ma"><span class="e">🧝</span>Vánoční skřítek</span>
+          <span class="vec ma"><span class="e">🎅</span>Vánoční čepice</span>
+          <span class="vec ne"><span class="e">🌨️</span>Sněžení</span>
+          <span class="vec ne"><span class="e">🌌</span>Vánoční noc</span>
+        </div>
+        <div class="cesta">
+          <div class="bar"><i style="width:50%"></i><u style="left:50%"></u></div>
+          <div class="kroky">
+            <div class="krok ok"><b>✓ Sněžení kolem Hexíka</b>Odemčeno za 2 ze 4</div>
+            <div class="krok"><b>🔒 Vánoční pokojíček</b>Za celou sadu, ještě 2 věci</div>
+          </div>
+        </div>
+        <button class="tlac" type="button">Sněžení zapnuto · přepnout</button>
+      </div>
+
+      <div class="sada hotova">
+        <div class="hlava"><span class="ikona">🐠</span><div><p class="nazev">Pod mořem</p><p class="pod">Hotovo 12. 11. · 150 krystalů připsáno</p></div><span class="pocet">3/3</span></div>
+        <div class="veci">
+          <span class="vec ma"><span class="e">🌊</span>Oceán</span>
+          <span class="vec ma"><span class="e">🪸</span>Podmoří</span>
+          <span class="vec ma"><span class="e">🫧</span>Bubliny</span>
+        </div>
+        <div class="cesta">
+          <div class="bar"><i style="width:100%"></i><u style="left:50%"></u></div>
+          <div class="kroky">
+            <div class="krok ok"><b>✓ Bubliny kolem Hexíka</b>Odemčeno</div>
+            <div class="krok ok"><b>✓ Domov Podmořský svět</b>Hexík se nastěhuje v lednu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="pod">Ve 3D šatníku zůstane štítek sady na kartě věci. Efekt kolem Hexíka uvidí dítě na Domově, v profilu i ve Sbírce.</p>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2>5. třída · 10 sad</h2>
+    <div class="tabwrap"><table>
+      <thead><tr><th>Sada</th><th>Co do ní patří</th><th>Za polovinu</th><th>Za celou</th><th>Krystaly</th></tr></thead>
+      <tbody>
+        <tr><td class="n">🎄 Vánoce</td><td>Vánoční skřítek, Vánoční čepice, Sněžení, Vánoční noc <span class="z zm">čepice místo Vloček</span></td><td>Sněžení</td><td>Vánoční pokojíček</td><td class="k">200 <span class="ven">300</span></td></tr>
+        <tr><td class="n">🍪 Advent <span class="z nova">nová</span></td><td>7 věcí z adventního kalendáře</td><td>Perníkové drobky</td><td>Perníková chaloupka</td><td class="k">250</td></tr>
+        <tr><td class="n">❄️ Zima</td><td>Sněhulák, Kulich, Brusle, Ledové království <span class="z zm">+ Kulich, Brusle</span></td><td>Poletující vločky</td><td>Polární záře</td><td class="k">200 <span class="ven">250</span></td></tr>
+        <tr><td class="n">🏁 Finiš</td><td>Šampion, Medaile, Cílová páska</td><td>Konfety</td><td>Cílová rovinka</td><td class="k">150 <span class="ven">300</span></td></tr>
+        <tr><td class="n">🐠 Pod mořem</td><td>Oceán, Podmoří, Bubliny</td><td>Bubliny</td><td>Podmořský svět</td><td class="k">150 <span class="ven">300</span></td></tr>
+        <tr><td class="n">🐾 Zvířátka</td><td>Kočičí Hexík, Motýlci, Džungle, Květinový věneček <span class="z zm">byly 4 podoby</span></td><td>Motýlci</td><td>Paseka</td><td class="k">200 <span class="ven">400</span></td></tr>
+        <tr><td class="n">🏰 Pohádka</td><td>Jednorožec, Pohádka, Duha, Duhová piruetka <span class="z zm">Jednorožec místo Duhového vzhledu</span></td><td>Duhové jiskry</td><td>Zámek v oblacích</td><td class="k">200 <span class="ven">500</span></td></tr>
+        <tr><td class="n">🪄 Kouzelník <span class="z nova">nová</span></td><td>Čarodějný klobouk, Hvězdné brýle, Kouzelnické rukavice, Hvězdičky <span class="z zm">Hvězdičky místo Teleportu</span></td><td>Magické jiskry</td><td>Kouzelnická věž</td><td class="k">200</td></tr>
+        <tr><td class="n">🦸 Superhrdina <span class="z nova">nová</span></td><td>Rukavice superhrdiny, Raketové boty, Vesmír</td><td>Stopa z raket</td><td>Střecha mrakodrapu</td><td class="k">150</td></tr>
+        <tr><td class="n">🍓 Ovocný košík</td><td>Mátový, Malinový, Citronový, Borůvkový Hexík <span class="z zm">viz otázka 1</span></td><td>Padající lístky</td><td>Ovocný sad</td><td class="k">100 <span class="ven">200</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2>9. třída · 11 sad</h2>
+    <div class="tabwrap"><table>
+      <thead><tr><th>Sada</th><th>Co do ní patří</th><th>Za polovinu</th><th>Za celou</th><th>Krystaly</th></tr></thead>
+      <tbody>
+        <tr><td class="n">🎄 Vánoce</td><td>Santa, Vánoční čepice, Sněžení, Vánoční noc <span class="z zm">čepice místo Vloček</span></td><td>Sněžení</td><td>Vánoční pokojíček</td><td class="k">200 <span class="ven">300</span></td></tr>
+        <tr><td class="n">🍪 Advent <span class="z nova">nová</span></td><td>7 věcí z adventního kalendáře</td><td>Perníkové drobky</td><td>Perníková chaloupka</td><td class="k">250</td></tr>
+        <tr><td class="n">❄️ Zima</td><td>Yeti, Kulich, Brusle, Ledové království <span class="z zm">+ Kulich, Brusle</span></td><td>Poletující vločky</td><td>Polární záře</td><td class="k">200 <span class="ven">250</span></td></tr>
+        <tr><td class="n">🏁 Finiš</td><td>Finišer, Medaile, Cílová páska</td><td>Konfety</td><td>Cílová rovinka</td><td class="k">150 <span class="ven">300</span></td></tr>
+        <tr><td class="n">⚽ Sportovec <span class="z nova">nová</span></td><td>Kopačky, Boxerské rukavice, Zlatá medaile, Stadion, Salto</td><td>Potlesk</td><td>Šatna s trofejemi</td><td class="k">250</td></tr>
+        <tr><td class="n">🦸 Superhrdina <span class="z nova">nová</span></td><td>Rukavice superhrdiny, Raketové boty, Rakety</td><td>Stopa z raket</td><td>Střecha mrakodrapu</td><td class="k">150</td></tr>
+        <tr><td class="n">🤖 Kyber</td><td>Kyber, Kyber vizor, Matrix, Teleport <span class="z zm">bez Neonu a Mřížky</span></td><td>Digitální částice</td><td>Neonová garáž</td><td class="k">200 <span class="ven">400</span></td></tr>
+        <tr><td class="n">🛹 Ulice</td><td>Streetwear, Sluchátka, Noční město, Synthwave, Breakdance <span class="z zm">bez Maskáče</span></td><td>Blikající neon</td><td>Synthwave ve 3D</td><td class="k">250 <span class="ven">400</span></td></tr>
+        <tr><td class="n">🔥 Oheň</td><td>Ohnivá stopa, Láva, Západ slunce <span class="z zm">bez Ohnivého Hexíka a Blesků</span></td><td>Stoupající uhlíky</td><td>Kovárna u sopky</td><td class="k">150 <span class="ven">500</span></td></tr>
+        <tr><td class="n">🧊 Led</td><td>Diamantový Hexík, Aurora, Polární záře <span class="z zm">Diamantový místo Ledového</span></td><td>Jinovatka</td><td>Ledová jeskyně</td><td class="k">150 <span class="ven">500</span></td></tr>
+        <tr><td class="n">🌀 Ninja <span class="z nova">nová</span></td><td>Ninja, Ninja čelenka, Blesky, Disco <span class="z zm">viz otázka 3</span></td><td>Bleskové jiskry</td><td>Dódžó</td><td class="k">200</td></tr>
+      </tbody>
+    </table></div>
+    <p class="pod">Ohnivý a Ledový Hexík, Mřížka a Vločky jsou běžné, proto ze sad vypadly a dají se dál sbírat volně. Kdo už nějakou sadu dokončil, má ji hotovou dál a efekt i domov dostane hned.</p>
+  </section>
+
+  <section class="otazky" aria-label="K rozhodnutí">
+    <h2>K rozhodnutí</h2>
+    <div class="otazka"><b>1. Ovocný košík jsou čtyři běžné podoby. Necháme ho jako jedinou sadu pro začátečníky?</b><span>Podle pravidel by do sady nepatřil. Páťákům ale dává rychlý první úspěch, proto bych ho nechal s malým bonusem 100 krystalů.</span><p class="doporuc">Doporučuju: nechat jako začátečnickou sadu.</p></div>
+    <div class="otazka"><b>2. Sedí nižší bonusy (150 až 250 krystalů podle počtu věcí)?</b><span>Dnes je to 200 až 500. Hlavní odměnou je teď efekt a domov, krystaly jsou navíc.</span><p class="doporuc">Doporučuju: 50 krystalů za každou věc sady, nejvýš 250.</p></div>
+    <div class="otazka"><b>3. Přidat deváťákům sadu Ninja?</b><span>V předání nebyla. Ninja, čelenka, Blesky a Disco by ale jinak zůstaly mimo sady, a Ninja se tím víc odliší od Kybera.</span><p class="doporuc">Doporučuju: přidat.</p></div>
+  </section>
+</div>

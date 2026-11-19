@@ -29,7 +29,7 @@ import { spustEfekt, reaguj } from "@/lib/hexik-efekty";
 import {
   ODMENY, TRUHLY, VZACNOST, TYP_NAZEV, ANIMACE_OSLAVY, ETAPY_HEXIKA, DENNI_STROP,
   POJISTKA_VZACNA, krystaly, maOdmenu, nasazena, etapaHexika, dostupnostTruhly, otevriTruhlu,
-  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, SADY, SADA_EVENT, SEZONY, aktualniSezona, konecSezony, jeVNabidce, TMAVE_VZHLEDY, slotyHexika, SLOTY, type NarokTruhla,
+  kupOdmenu, nasadOdmenu, upravSbirku, dnuTentoTyden, DNU_PRO_ZLATOU, naroku, NAROKOVE_TRUHLY, TROFEJE, TROFEJ_EVENT, zkontrolujTrofeje, SADY, VSECHNY_SADY, SADA_EVENT, SEZONY, aktualniSezona, konecSezony, jeVNabidce, TMAVE_VZHLEDY, slotyHexika, SLOTY, type NarokTruhla,
   type Odmena, type TypOdmeny, type TruhlaId, type VysledekTruhly, type SbirkaStav,
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
@@ -77,11 +77,8 @@ function Sbirka() {
     return () => clearTimeout(cas);
   }, [novaTrofej]);
 
-  // Výsledky testů nanečisto z appky Vyhodnocení (propojený účet) → Truhla Generálka a za zlepšení Legendární truhla
-  useEffect(() => { zkontrolujTrofeje(); nactiTestyZVysledku().catch(() => {}); }, []);
-  // Odměny za XP úrovně (i zpětně za XP z doby před herním systémem)
-  useEffect(() => { zkontrolujUroven(trida); }, [trida]);
-
+  // Posluchače ohlášení jsou první efekt stránky: další efekty (úrovně, testy) ukládají Sbírku a sady
+  // se při tom dopočítají, ohlášení se tak neztratí.
   useEffect(() => {
     const na = (e: Event) => {
       const ids = (e as CustomEvent<{ ids: string[] }>).detail?.ids ?? [];
@@ -89,15 +86,24 @@ function Sbirka() {
       if (texty.length) setFronta((f) => [...f, ...texty]);
     };
     const naSadu = (e: Event) => {
-      const det = (e as CustomEvent<{ ids: string[]; krystaly: number }>).detail;
-      const texty = (det?.ids ?? []).map((id) => [...SADY[5], ...SADY[9]].find((x) => x.id === id)).filter(Boolean)
-        .map((sd) => `${sd!.ikona} Sada ${sd!.nazev} je kompletní! +${sd!.bonus} krystalů`);
+      const det = (e as CustomEvent<{ ids: string[]; krystaly: number; poloviny?: string[] }>).detail;
+      const najdi = (id: string) => VSECHNY_SADY.find((x) => x.id === id);
+      const texty = [
+        ...(det?.poloviny ?? []).map(najdi).filter(Boolean).map((sd) => `${sd!.ikona} Půlka sady ${sd!.nazev}! Kolem Hexíka: ${sd!.efekt.nazev}`),
+        ...(det?.ids ?? []).map(najdi).filter(Boolean).map((sd) => `${sd!.ikona} Sada ${sd!.nazev} je kompletní! ${sd!.domov.hotovy ? `Hexík se stěhuje: ${sd!.domov.nazev}` : `Domov ${sd!.domov.nazev} odemčen`} · +${sd!.bonus} krystalů`),
+      ];
       if (texty.length) setFronta((f) => [...f, ...texty]);
     };
     window.addEventListener(TROFEJ_EVENT, na);
     window.addEventListener(SADA_EVENT, naSadu);
+    // Zpětné sady a trofeje až po zapnutí posluchačů, ať se ohlásí
+    zkontrolujTrofeje();
     return () => { window.removeEventListener(TROFEJ_EVENT, na); window.removeEventListener(SADA_EVENT, naSadu); };
   }, []);
+  // Výsledky testů nanečisto z appky Vyhodnocení (propojený účet) → Truhla Generálka a za zlepšení Legendární truhla
+  useEffect(() => { nactiTestyZVysledku().catch(() => {}); }, []);
+  // Odměny za XP úrovně (i zpětně za XP z doby před herním systémem)
+  useEffect(() => { zkontrolujUroven(trida); }, [trida]);
   const [typ, setTyp] = useState<TypOdmeny>("podoba");
   const [vybrana, setVybrana] = useState<string | null>(null);
   const [otevirani, setOtevirani] = useState<{ id: TruhlaId; faze: "tres" | "hotovo"; vysledek: VysledekTruhly | null } | null>(null);
