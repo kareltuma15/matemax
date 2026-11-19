@@ -1,0 +1,421 @@
+<title>Souboje v MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: stejný jazyk jako mockupy truhel a Hexíka. Vlevo telefon s klikacím tokem, vpravo popis kroku. Dva toky: s kamarádem a skupina. Dole pravidla, odměny, plán. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#56617D; --linka:#DCE2EE;
+  --navy:#0D1B3E; --amber:#F5A623; --lev:#AFACFB; --fialova:#5B55D6; --zelena:#2FA36B; --cervena:#E5484D;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 64px;display:grid;gap:34px}
+.mock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#E9EEFA;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700;justify-self:start;max-width:100%}
+.mock b{color:var(--amber)}
+.hlava{display:grid;gap:10px}
+.hlava h1{font-size:clamp(1.8rem,4.2vw,2.7rem);font-weight:900;letter-spacing:-.025em}
+.hlava p{color:var(--tl);max-width:72ch}
+.sekce{display:grid;gap:16px}
+.sekce>h2{font-size:clamp(1.3rem,2.6vw,1.65rem);font-weight:900;letter-spacing:-.015em}
+.sekce>p.uvod{color:var(--tl);max-width:72ch}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:18px;padding:18px 20px;display:grid;gap:12px;min-width:0}
+.blok h3{font-size:1.08rem;font-weight:900}
+.tl{color:var(--tl);font-size:.92rem}
+ul.cisty{margin:0;padding-left:18px;display:grid;gap:7px}
+
+.prepinac{display:flex;gap:8px;flex-wrap:wrap}
+.prepinac button{font:inherit;font-weight:900;border-radius:999px;padding:9px 16px;border:1px solid var(--linka);background:var(--plocha);color:var(--fg);cursor:pointer}
+.prepinac button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+:root[data-theme="dark"] .prepinac button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .prepinac button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}}
+.dvojice{display:grid;grid-template-columns:minmax(0,390px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.dvojice{grid-template-columns:1fr}}
+.kroky{display:flex;gap:6px;flex-wrap:wrap}
+.kroky button{font:inherit;font-size:.8rem;font-weight:800;border-radius:10px;padding:5px 10px;border:1px solid var(--linka);background:var(--plocha);color:var(--tl);cursor:pointer}
+.kroky button[aria-current="step"]{background:var(--fialova);color:#fff;border-color:var(--fialova)}
+button:focus-visible{outline:3px solid #7FD8EE;outline-offset:2px}
+
+/* telefon */
+.telefon{width:100%;max-width:390px;margin:0 auto;border-radius:40px;background:#0B1022;padding:10px;box-shadow:0 30px 60px -24px rgba(13,27,62,.55)}
+.displej{border-radius:31px;overflow:hidden;position:relative;height:720px;background:#F3F4FB;color:#0D1B3E;display:flex;flex-direction:column}
+.lista{display:flex;align-items:center;gap:8px;padding:14px 16px 10px;background:#fff;border-bottom:1px solid #E4E8F2;font-weight:900}
+.lista .m2{width:30px;height:30px;border-radius:9px;background:#0D1B3E;color:#fff;display:grid;place-items:center;font-size:.8rem}
+.lista small{margin-left:auto;font-weight:800;color:#56617D}
+.obraz{flex:1;overflow-y:auto;padding:16px;display:none;flex-direction:column;gap:12px}
+.obraz.on{display:flex}
+.karta{background:#fff;border:1px solid #E4E8F2;border-radius:18px;padding:14px;display:grid;gap:8px}
+.karta.tmava{background:linear-gradient(140deg,#1F2F66,#0D1B3E 70%);color:#fff;border:0}
+.karta.tmava .tl2{color:#C9C7F5}
+.tl2{color:#56617D;font-size:.88rem}
+.velke{font-size:1.35rem;font-weight:900;line-height:1.15}
+.tlac{font:inherit;font-weight:900;border:0;border-radius:16px;padding:13px 14px;background:#F5A623;color:#0D1B3E;cursor:pointer;width:100%}
+.tlac.druhe{background:#fff;color:#0D1B3E;border:1px solid #DCE2EE}
+.tlac.zel{background:#25D366;color:#063B1D}
+.cipy{display:flex;gap:6px;flex-wrap:wrap}
+.cip{font:inherit;font-size:.82rem;font-weight:800;border-radius:999px;padding:6px 11px;border:1px solid #DCE2EE;background:#fff;color:#0D1B3E;cursor:pointer}
+.cip[aria-pressed="true"]{background:#5B55D6;color:#fff;border-color:#5B55D6}
+.radek{display:flex;align-items:center;gap:10px}
+.av{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:900;color:#fff;flex:0 0 auto}
+.kod{font-size:2rem;font-weight:900;letter-spacing:.12em;text-align:center;font-variant-numeric:tabular-nums}
+.qr{width:118px;height:118px;margin:0 auto;border-radius:12px;background:#fff;padding:8px}
+.whatsapp{background:#E5DDD5;border-radius:16px;padding:12px;display:grid;gap:8px}
+.bublina-wa{background:#DCF8C6;border-radius:12px;padding:10px;font-size:.9rem;justify-self:end;max-width:92%;box-shadow:0 1px 1px rgba(0,0,0,.1)}
+.nahled-wa{background:#fff;border-radius:10px;overflow:hidden;margin-bottom:6px}
+.nahled-wa .obr{height:120px;background:linear-gradient(140deg,#2B3A86,#0D1B3E);display:grid;place-items:center;color:#fff;font-weight:900;font-size:1.1rem;text-align:center;padding:10px}
+.nahled-wa .tx{padding:8px;font-size:.8rem;color:#56617D}
+.hra-hlava{display:flex;justify-content:space-between;align-items:center;font-weight:900}
+.cas{font-variant-numeric:tabular-nums;font-size:1.3rem}
+.otazka{font-size:1.7rem;font-weight:900;text-align:center;padding:18px 0}
+.moznosti{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.moznosti button{font:inherit;font-size:1.25rem;font-weight:900;border-radius:16px;padding:16px 8px;border:2px solid #DCE2EE;background:#fff;color:#0D1B3E;cursor:pointer}
+.moznosti button.ok{border-color:#2FA36B;background:#E6F6EE}
+.moznosti button.zle{border-color:#E5484D;background:#FDECEC}
+.pruh{height:8px;border-radius:5px;background:#E4E8F2;overflow:hidden}
+.pruh i{display:block;height:100%;background:#5B55D6;transition:width .3s}
+.ostatni{display:grid;gap:6px}
+.ostatni .radek{font-size:.84rem;font-weight:800}
+.ostatni .pruh{flex:1}
+.srovnani{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hx3d{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#141E52}
+.hx3d canvas{position:absolute;inset:0;width:100%;height:100%}
+.hx3d span{position:absolute;left:8px;top:6px;z-index:1;font-size:.72rem;font-weight:900;color:#FFE08A}
+.vysl{text-align:center;font-weight:900}
+.vysl small{display:block;font-weight:700;color:#56617D}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:6px;align-items:end}
+.podium .misto{display:grid;gap:4px;text-align:center}
+.podium .stupen{border-radius:12px 12px 0 0;color:#fff;font-weight:900;display:grid;place-items:center;font-size:1.3rem}
+.zebricek{display:grid;gap:6px}
+.zebricek .radek{background:#fff;border:1px solid #E4E8F2;border-radius:12px;padding:8px 10px;font-size:.88rem;font-weight:800}
+.zebricek .radek.ja{border-color:#F5A623;box-shadow:0 0 0 2px #F5A623 inset}
+.zebricek .poradi{width:22px;text-align:center;color:#56617D}
+.zebricek .body{margin-left:auto;font-variant-numeric:tabular-nums}
+.odmena{display:flex;align-items:center;gap:10px;background:#FFF7E6;border:1px solid #F5D9A0;border-radius:14px;padding:10px;font-weight:800;font-size:.9rem}
+.odmena .ik{font-size:1.6rem}
+
+.tab{overflow-x:auto;border:1px solid var(--linka);border-radius:16px;background:var(--plocha)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--linka)}
+th{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--tl);background:color-mix(in srgb,var(--plocha) 85%,var(--lev) 15%)}
+tr:last-child td{border-bottom:0}
+td b{display:block}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.rozh{background:var(--navy);color:#E9EEFA;border-radius:18px;padding:18px 20px;display:grid;gap:10px}
+.rozh h3{color:#fff}
+.rozh li{color:#D7DDF0}
+.popis-kroku{display:grid;gap:10px}
+.popis-kroku h3{font-size:1.2rem}
+</style>
+
+<div class="obal">
+  <header class="hlava">
+    <span class="mock"><b>Návrh 19. 11. 2026</b> · mockup, v appce zatím nic není</span>
+    <h1>Souboje</h1>
+    <p>Dva způsoby, jak si děti zahrají proti sobě: <b>souboj s kamarádem přes odkaz</b> (kamarád hraje hned, bez registrace) a <b>skupinový souboj</b> pro partu nebo třídu. Všichni počítají stejné úlohy na čas, pak se rozhodne o vítězi a rozdají se odměny. V telefonu si můžeš oba toky proklikat a úlohy opravdu spočítat.</p>
+  </header>
+
+  <section class="sekce" aria-labelledby="h-tok">
+    <h2 id="h-tok">Vyzkoušej si to</h2>
+    <div class="prepinac" role="group" aria-label="Druh souboje">
+      <button type="button" data-tok="a" aria-pressed="true">Souboj s kamarádem</button>
+      <button type="button" data-tok="b" aria-pressed="false">Skupinový souboj</button>
+    </div>
+    <div class="dvojice">
+      <div class="telefon">
+        <div class="displej" id="displej">
+          <div class="lista"><span class="m2">M²</span>MateMax<small id="lista-vpravo">⚔️ Souboje</small></div>
+
+          <!-- A1: po tréninku -->
+          <div class="obraz on" data-o="a1">
+            <div class="karta tmava"><span class="tl2">Trénink dokončen</span><span class="velke">8 z 10 správně · Zlomky</span><span class="tl2">+40 krystalů · série 4 dny 🔥</span></div>
+            <div class="karta">
+              <b>⚔️ Vyzvi kamaráda na souboj</b>
+              <span class="tl2">Kamarád dostane stejné úlohy. Kdo dá víc správně (při shodě rychleji), vyhrává. Když se kamarád zaregistruje, dostanete oba Truhlu souboje.</span>
+              <div class="cipy" id="a-tema">
+                <button type="button" class="cip" aria-pressed="true">Zlomky</button><button type="button" class="cip" aria-pressed="false">Procenta</button><button type="button" class="cip" aria-pressed="false">Rovnice</button>
+              </div>
+              <button type="button" class="tlac" data-jdi="a2">Poslat výzvu</button>
+            </div>
+          </div>
+
+          <!-- A2: odeslání -->
+          <div class="obraz" data-o="a2">
+            <b>Pošli výzvu, kam chceš</b>
+            <div class="whatsapp">
+              <div class="bublina-wa">
+                <div class="nahled-wa"><div class="obr">⚔️ Tomáš tě vyzval!<br>Zlomky · 5 úloh · na čas</div><div class="tx">matemax.matematika-snadno.cz/souboj/K7P4 · Bez registrace, hraješ hned</div></div>
+                Dáš víc než já? 😎 Zlomky, 5 úloh na čas.
+              </div>
+            </div>
+            <span class="tl2">V odkazu není jméno ani e-mail, jen kód souboje. Výzvu jde poslat přes WhatsApp, Messenger, Instagram nebo zkopírovat.</span>
+            <button type="button" class="tlac zel" data-jdi="a3">Odeslat (WhatsApp)</button>
+            <button type="button" class="tlac druhe" data-jdi="a1">Zpět</button>
+          </div>
+
+          <!-- A3: kamarád otevře odkaz -->
+          <div class="obraz" data-o="a3">
+            <div class="karta tmava"><span class="tl2">Kamarád otevřel odkaz · bez účtu</span><span class="velke">⚔️ Tomáš tě vyzval na souboj!</span><span class="tl2">Zlomky · 5 úloh · Tomáš: 4 z 5 za 1:12</span></div>
+            <div class="karta"><b>Jak to funguje</b><ul class="cisty tl2"><li>Stejné úlohy jako Tomáš.</li><li>Rozhoduje počet správných, při shodě čas.</li><li>Hraješ hned, účet nepotřebuješ.</li></ul></div>
+            <button type="button" class="tlac" data-jdi="hra" data-start="a">Hrát souboj</button>
+          </div>
+
+          <!-- A4 / B3: hra -->
+          <div class="obraz" data-o="hra">
+            <div class="hra-hlava"><span id="hra-cislo">Úloha 1/5</span><span class="cas" id="hra-cas">0:00</span></div>
+            <div class="pruh"><i id="hra-pruh" style="width:0%"></i></div>
+            <div class="otazka" id="hra-otazka">½ + ¼ = ?</div>
+            <div class="moznosti" id="hra-moznosti"></div>
+            <div class="karta" id="hra-ostatni-karta" hidden><b class="tl2">Ostatní</b><div class="ostatni" id="hra-ostatni"></div></div>
+            <div class="karta" id="hra-souper-karta"><span class="tl2">Tomáš měl 4 z 5 za 1:12. Dáš to?</span></div>
+          </div>
+
+          <!-- A5: výsledek -->
+          <div class="obraz" data-o="a5">
+            <div class="velke" id="a-vysledek-nadpis" style="text-align:center">Vyhrál jsi! 🎉</div>
+            <div class="srovnani">
+              <div><div class="hx3d" id="hx-ty"><span>TY</span></div><div class="vysl" id="a-ty">5/5<small>0:58</small></div></div>
+              <div><div class="hx3d" id="hx-souper"><span>TOMÁŠ</span></div><div class="vysl">4/5<small>1:12</small></div></div>
+            </div>
+            <div class="karta"><b>Ulož si výsledek a vylíhni si vlastního Hexíka</b><span class="tl2">Po registraci dostanete oba Truhlu souboje a můžeš Tomáše vyzvat zpátky.</span></div>
+            <button type="button" class="tlac" data-jdi="a6">Zaregistrovat se a vzít truhlu</button>
+            <button type="button" class="tlac druhe" data-jdi="a3">Hrát znovu</button>
+          </div>
+
+          <!-- A6: registrace hotová -->
+          <div class="obraz" data-o="a6">
+            <div class="karta tmava" style="text-align:center"><span class="velke">Vítej v MateMaxu! 👋</span><span class="tl2">Tvůj Hexík je vylíhnutý a čeká na tebe Truhla souboje.</span></div>
+            <div class="odmena"><span class="ik">🎁</span>Truhla souboje pro tebe i pro Tomáše</div>
+            <div class="odmena"><span class="ik">🏅</span>Trofej „První souboj“</div>
+            <button type="button" class="tlac" data-jdi="a2">Vyzvat Tomáše zpátky</button>
+            <span class="tl2">Truhla za souboj je jen za kamaráda, který se opravdu zaregistroval, a nejvýš 5 za týden (proti zneužití).</span>
+          </div>
+
+          <!-- B1: založení -->
+          <div class="obraz" data-o="b1">
+            <div class="karta"><b>Založit skupinový souboj</b>
+              <span class="tl2">Pro partu kamarádů nebo celou třídu. Do 10 hráčů.</span>
+              <span class="tl2"><b>Téma</b></span>
+              <div class="cipy" id="b-tema"><button type="button" class="cip" aria-pressed="true">Zlomky</button><button type="button" class="cip" aria-pressed="false">Procenta</button><button type="button" class="cip" aria-pressed="false">Mix z přijímaček</button></div>
+              <span class="tl2"><b>Počet úloh</b></span>
+              <div class="cipy"><button type="button" class="cip" aria-pressed="true">5</button><button type="button" class="cip" aria-pressed="false">10</button><button type="button" class="cip" aria-pressed="false">15</button></div>
+              <span class="tl2"><b>Kdy</b></span>
+              <div class="cipy"><button type="button" class="cip" aria-pressed="true">Hned, až budou všichni</button><button type="button" class="cip" aria-pressed="false">Do večera (každý kdy chce)</button></div>
+              <button type="button" class="tlac" data-jdi="b2">Založit souboj</button>
+            </div>
+          </div>
+
+          <!-- B2: čekárna -->
+          <div class="obraz" data-o="b2">
+            <div class="karta" style="text-align:center"><span class="tl2">Kód souboje</span><div class="kod">MX-7K4P</div>
+              <svg class="qr" viewBox="0 0 21 21" aria-label="QR kód souboje" role="img" id="qr"></svg>
+              <span class="tl2">Kamarádi zadají kód v MateMaxu, nebo naskenují QR.</span></div>
+            <div class="karta"><b>V čekárně (<span id="b-pocet">1</span>/10)</b><div class="ostatni" id="b-lobby"></div></div>
+            <button type="button" class="tlac" data-jdi="hra" data-start="b">Spustit souboj</button>
+          </div>
+
+          <!-- B4: žebříček -->
+          <div class="obraz" data-o="b4">
+            <div class="velke" style="text-align:center">🏆 Výsledky souboje</div>
+            <div class="podium" id="b-podium"></div>
+            <div class="zebricek" id="b-zebricek"></div>
+            <div class="odmena"><span class="ik">🎁</span><span>Vítěz: Truhla souboje · 2. a 3. místo: 60 a 40 krystalů · všem, kdo dohráli: 20 krystalů</span></div>
+            <button type="button" class="tlac" data-jdi="b1">Odveta</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="popis-kroku">
+        <div class="kroky" id="kroky" aria-label="Kroky"></div>
+        <div class="blok" id="popis"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-pravidla">
+    <h2 id="h-pravidla">Pravidla, odměny a bezpečnost</h2>
+    <div class="tab">
+      <table>
+        <thead><tr><th>Co</th><th>S kamarádem</th><th>Skupina</th></tr></thead>
+        <tbody>
+          <tr><td><b>Kdo může hrát</b></td><td>Kdokoli s odkazem, i bez účtu</td><td>Do 10 hráčů s kódem, i bez účtu (výsledek se uloží po registraci)</td></tr>
+          <tr><td><b>Úlohy</b></td><td>Stejná sada pro oba, ze zvoleného tématu a úrovně vyzyvatele</td><td>Stejná sada pro všechny, téma vybere zakladatel</td></tr>
+          <tr><td><b>Kdo vyhraje</b></td><td colspan="2">Víc správných odpovědí, při shodě kratší čas. Čas měří server, ne telefon.</td></tr>
+          <tr><td><b>Odměny</b></td><td>Po registraci kamaráda Truhla souboje oběma (nejvýš 5 za týden)</td><td>Vítěz Truhla souboje, 2. a 3. místo krystaly, všem, kdo dohráli, 20 krystalů</td></tr>
+          <tr><td><b>Soukromí</b></td><td colspan="2">Jen přezdívky a Hexíci, žádná jména, e-maily ani fotky. V odkazu je jen kód souboje.</td></tr>
+          <tr><td><b>Proti podvádění</b></td><td colspan="2">Každý hraje jen jednou, úlohy se ukazují postupně, výsledky počítá server, podezřele rychlé odpovědi (pod 1 s) se nepočítají.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-plan">
+    <h2 id="h-plan">Jak bych to postavil</h2>
+    <div class="tab">
+      <table>
+        <thead><tr><th>Krok</th><th>Co</th><th>Odhad</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Souboj s kamarádem</b></td><td>Odkaz s kódem, hra pro hosta (navazuje na hru z úvodní stránky), srovnání s 3D Hexíky, registrace z odkazu a Truhla souboje oběma, sdílecí obrázek</td><td class="num">10–12 h</td></tr>
+          <tr><td><b>2. Skupinový souboj</b></td><td>Založení s kódem a QR, čekárna, postup ostatních během hry, žebříček se stupni vítězů, odvety</td><td class="num">8–10 h</td></tr>
+          <tr><td><b>Společné</b></td><td>Tabulka soubojů a výsledků v Supabase, výpočet výsledků na serveru, nová Truhla souboje, trofeje, měření (založené, dohrané, registrace ze soubojů)</td><td class="num">v odhadech výše</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rozh">
+      <h3>Co potřebuju od tebe</h3>
+      <ul class="cisty">
+        <li>Líbí se ti oba toky? Mám začít soubojem s kamarádem (víc přivádí nové děti) a skupinu přidat hned po něm?</li>
+        <li>Odměny: je v pořádku Truhla souboje pro vítěze a obě strany po registraci kamaráda, s limitem 5 za týden?</li>
+        <li>Skupinový souboj ve třídě: chceš později i učitelský režim (učitel založí souboj pro celou třídu a vidí výsledky)?</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script src="hexik-plus.js"></script>
+<script>
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var displej = el("displej");
+  var POPISY = {
+    a1: ["Po tréninku: vyzvi kamaráda", "Na konci tréninku se nabídne souboj. Vybere se téma, ve kterém dítě právě trénovalo, a úroveň podle něj. Kamarád dostane úplně stejné úlohy."],
+    a2: ["Odeslání výzvy", "Výzva odejde přes WhatsApp, Messenger nebo Instagram s obrázkem Hexíka. V odkazu je jen kód souboje, žádné osobní údaje."],
+    a3: ["Kamarád otevře odkaz", "Hraje hned bez registrace. Vidí, koho porazit (výsledek a čas vyzyvatele), a pravidla v jedné kartě."],
+    hra: ["Hra na čas", "Úlohy jdou jedna po druhé, čas běží. Ve skupině vidíš, jak daleko jsou ostatní. Spočítej to, v ukázce je 5 úloh."],
+    a5: ["Výsledek a srovnání", "Dva 3D Hexíci vedle sebe: vítěz se raduje, poražený dostane povzbuzení. Pro kamaráda bez účtu tlačítko k registraci a Truhle souboje."],
+    a6: ["Registrace a odměna", "Po registraci dostanou oba Truhlu souboje a trofej. Nový hráč může hned vyzvat zpátky, takže se souboje šíří dál."],
+    b1: ["Založení skupinového souboje", "Zakladatel vybere téma, počet úloh a jestli se hraje hned (všichni najednou), nebo do večera (každý kdy chce)."],
+    b2: ["Čekárna s kódem a QR", "Kamarádi nebo spolužáci zadají kód nebo naskenují QR. V čekárně se postupně objevují jejich Hexíci."],
+    b4: ["Žebříček a odměny", "Stupně vítězů s 3D Hexíky, celý žebříček a odměny. Odvetou jde hrát znovu se stejnou partou."]
+  };
+  var TOK = { a: ["a1","a2","a3","hra","a5","a6"], b: ["b1","b2","hra","b4"] };
+  var tok = "a", aktualni = "a1", hexici = [];
+
+  function zrusHexiky(){ hexici.forEach(function(h){ try { h.znic(); } catch (e) {} }); hexici = []; el("hx-ty").querySelectorAll("canvas").forEach(function(c){c.remove();}); el("hx-souper").querySelectorAll("canvas").forEach(function(c){c.remove();}); el("b-podium").innerHTML = ""; }
+  function hexik(obal, podoba, vyraz, ruce, nohy){
+    if (!window.HexikPlus) return;
+    var c = document.createElement("canvas"); obal.appendChild(c);
+    try { var h = HexikPlus.vytvorHexikaPlus(c, { podoba: podoba, etapa: 3, koruna: false, interaktivni: false, ruce: ruce || "", nohy: nohy || "" }); setTimeout(function(){ h.vyraz(vyraz); }, 400); hexici.push(h); } catch (e) {}
+  }
+  function ukaz(o){
+    zrusHexiky(); zastavHru();
+    aktualni = o;
+    displej.querySelectorAll(".obraz").forEach(function(x){ x.classList.toggle("on", x.dataset.o === o); });
+    var p = POPISY[o]; el("popis").innerHTML = "<h3>" + p[0] + "</h3><p class='tl'>" + p[1] + "</p>";
+    el("kroky").querySelectorAll("button").forEach(function(b){ if (b.dataset.k === o) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current"); });
+    if (o === "hra") spustHru();
+    if (o === "a5") vysledekA();
+    if (o === "b2") lobby();
+    if (o === "b4") zebricek();
+  }
+  function kreslitKroky(){
+    var nazvy = { a1:"Po tréninku", a2:"Odeslání", a3:"Pozvánka", hra:"Hra", a5:"Výsledek", a6:"Registrace", b1:"Založení", b2:"Čekárna", b4:"Žebříček" };
+    el("kroky").innerHTML = TOK[tok].map(function(k, i){ return "<button type='button' data-k='" + k + "'>" + (i+1) + ". " + nazvy[k] + "</button>"; }).join("");
+    el("kroky").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ ukaz(b.dataset.k); }); });
+  }
+  document.querySelectorAll(".prepinac button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".prepinac button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+      tok = b.dataset.tok; kreslitKroky(); ukaz(TOK[tok][0]);
+    });
+  });
+  displej.querySelectorAll("[data-jdi]").forEach(function(b){ b.addEventListener("click", function(){ if (b.dataset.start) tok = b.dataset.start; ukaz(b.dataset.jdi); }); });
+  displej.querySelectorAll(".cipy").forEach(function(g){ g.querySelectorAll(".cip").forEach(function(c){ c.addEventListener("click", function(){ g.querySelectorAll(".cip").forEach(function(x){ x.setAttribute("aria-pressed", String(x===c)); }); }); }); });
+
+  // ── hra: zlomky ──
+  var ULOHY = [
+    { q: "½ + ¼ = ?", a: "¾", o: ["¾", "⅔", "²⁄₆", "1"] },
+    { q: "⅔ ze 12 = ?", a: "8", o: ["6", "8", "9", "4"] },
+    { q: "Zkrať ⁶⁄₉", a: "⅔", o: ["⅔", "³⁄₄", "½", "⁶⁄₉"] },
+    { q: "1 − ⅜ = ?", a: "⅝", o: ["⅝", "⅞", "½", "⅜"] },
+    { q: "Co je víc?", a: "⅗", o: ["⅗", "½"] }
+  ];
+  var hra = null;
+  var HRACI = [ ["Ema","#E5484D",0.9,0.95], ["Kuba","#2FA36B",1.25,0.75], ["Nela","#F5A623",1.0,0.85], ["Ondra","#4DA3FF",1.6,0.65], ["Bára","#B07CFF",1.15,0.8] ];
+  function zastavHru(){ if (hra) { clearInterval(hra.t); hra = null; } }
+  function spustHru(){
+    hra = { i: 0, ok: 0, start: performance.now(), konec: 0, t: 0, boti: HRACI.map(function(h){ return { n: h[0], b: h[1], rychlost: h[2], presnost: h[3], i: 0, ok: 0, dalsi: (2 + Math.random() * 2) * h[2] }; }) };
+    el("hra-ostatni-karta").hidden = tok !== "b"; el("hra-souper-karta").hidden = tok !== "a";
+    otazka();
+    hra.t = setInterval(tik, 250);
+  }
+  function fmt(s){ s = Math.round(s); return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); }
+  function tik(){
+    if (!hra) return;
+    var s = (performance.now() - hra.start) / 1000; el("hra-cas").textContent = fmt(s);
+    if (tok === "b") {
+      hra.boti.forEach(function(b){ if (b.i < ULOHY.length && s > b.dalsi) { b.i++; if (Math.random() < b.presnost) b.ok++; b.dalsi = s + (2 + Math.random() * 3) * b.rychlost; } });
+      el("hra-ostatni").innerHTML = hra.boti.map(function(b){ return "<div class='radek'><span class='av' style='width:26px;height:26px;border-radius:8px;background:" + b.b + "'>" + b.n[0] + "</span><span style='width:46px'>" + b.n + "</span><div class='pruh'><i style='width:" + (b.i / ULOHY.length * 100) + "%;background:" + b.b + "'></i></div></div>"; }).join("");
+    }
+  }
+  function otazka(){
+    var u = ULOHY[hra.i];
+    el("hra-cislo").textContent = "Úloha " + (hra.i + 1) + "/" + ULOHY.length;
+    el("hra-pruh").style.width = (hra.i / ULOHY.length * 100) + "%";
+    el("hra-otazka").textContent = u.q;
+    var m = el("hra-moznosti"); m.innerHTML = "";
+    u.o.forEach(function(x){
+      var b = document.createElement("button"); b.type = "button"; b.textContent = x;
+      b.addEventListener("click", function(){
+        if (!hra || m.dataset.zamceno) return; m.dataset.zamceno = "1";
+        var spravne = x === u.a; if (spravne) hra.ok++;
+        b.classList.add(spravne ? "ok" : "zle");
+        if (!spravne) m.querySelectorAll("button").forEach(function(y){ if (y.textContent === u.a) y.classList.add("ok"); });
+        setTimeout(function(){ delete m.dataset.zamceno; hra.i++; if (hra.i >= ULOHY.length) dohrano(); else otazka(); }, 550);
+      });
+      m.appendChild(b);
+    });
+  }
+  var vysledek = { ok: 5, cas: 58 };
+  function dohrano(){
+    vysledek = { ok: hra.ok, cas: (performance.now() - hra.start) / 1000 };
+    var boti = hra.boti;
+    boti.forEach(function(b){ while (b.i < ULOHY.length) { b.i++; if (Math.random() < b.presnost) b.ok++; } b.cas = 40 + b.rychlost * 30 + Math.random() * 15; });
+    window.__boti = boti;
+    zastavHru();
+    ukaz(tok === "a" ? "a5" : "b4");
+  }
+  function vysledekA(){
+    var vyhra = vysledek.ok > 4 || (vysledek.ok === 4 && vysledek.cas < 72);
+    el("a-vysledek-nadpis").textContent = vyhra ? "Vyhrál jsi! 🎉" : "Těsně! Tomáš vyhrál 💪";
+    el("a-ty").innerHTML = vysledek.ok + "/5<small>" + fmt(vysledek.cas) + "</small>";
+    hexik(el("hx-ty"), "klasik", vyhra ? "radost" : "povzbuzeni", "", "tenisky");
+    hexik(el("hx-souper"), "kocicka", vyhra ? "povzbuzeni" : "radost", "palcaky", "");
+  }
+  function lobby(){
+    var l = el("b-lobby"); l.innerHTML = ""; var n = 1;
+    var ja = "<div class='radek'><span class='av' style='background:#5B55D6'>T</span><b>Ty</b><small style='margin-left:auto;color:#56617D'>zakladatel</small></div>";
+    l.innerHTML = ja; el("b-pocet").textContent = "1";
+    HRACI.forEach(function(h, i){ setTimeout(function(){ if (aktualni !== "b2") return; l.insertAdjacentHTML("beforeend", "<div class='radek'><span class='av' style='background:" + h[1] + "'>" + h[0][0] + "</span><b>" + h[0] + "</b><small style='margin-left:auto;color:#2FA36B'>připojen</small></div>"); n++; el("b-pocet").textContent = String(n); }, 500 + i * 450); });
+  }
+  function zebricek(){
+    var boti = window.__boti || HRACI.map(function(h){ return { n: h[0], b: h[1], ok: Math.round(5 * h[3]), cas: 40 + h[2] * 30 }; });
+    var vsichni = boti.map(function(b){ return { n: b.n, b: b.b, ok: b.ok, cas: b.cas }; });
+    vsichni.push({ n: "Ty", b: "#5B55D6", ok: vysledek.ok, cas: vysledek.cas, ja: true });
+    vsichni.sort(function(x, y){ return y.ok - x.ok || x.cas - y.cas; });
+    var pod = el("b-podium"); pod.innerHTML = "";
+    var poradi = [1, 0, 2], vysky = [70, 96, 52], barvy = ["#AEB8C8", "#F2C14E", "#C98A4B"], podoby = ["kocicka", "klasik", "dracek"];
+    poradi.forEach(function(idx, k){
+      var h = vsichni[idx]; if (!h) return;
+      var m = document.createElement("div"); m.className = "misto";
+      var box = document.createElement("div"); box.className = "hx3d"; box.style.aspectRatio = "1/1.05";
+      m.appendChild(box);
+      m.insertAdjacentHTML("beforeend", "<b style='font-size:.85rem'>" + h.n + "</b><div class='stupen' style='height:" + vysky[k] + "px;background:" + barvy[k] + "'>" + (idx + 1) + "</div>");
+      pod.appendChild(m);
+      hexik(box, h.ja ? "klasik" : podoby[k], idx === 0 ? "radost" : "povzbuzeni", idx === 0 ? "boxerske" : "", idx === 0 ? "brusle" : "tenisky");
+    });
+    el("b-zebricek").innerHTML = vsichni.map(function(h, i){ return "<div class='radek" + (h.ja ? " ja" : "") + "'><span class='poradi'>" + (i + 1) + ".</span><span class='av' style='width:28px;height:28px;border-radius:9px;background:" + h.b + "'>" + h.n[0] + "</span>" + h.n + "<span class='body'>" + h.ok + "/5 · " + fmt(h.cas) + "</span></div>"; }).join("");
+  }
+  // QR (dekorativní vzor)
+  (function(){ var s = el("qr"), r = "", seed = 7; function rnd(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    function roh(x, y){ r += "<rect x='" + x + "' y='" + y + "' width='7' height='7' fill='#0D1B3E'/><rect x='" + (x+1) + "' y='" + (y+1) + "' width='5' height='5' fill='#fff'/><rect x='" + (x+2) + "' y='" + (y+2) + "' width='3' height='3' fill='#0D1B3E'/>"; }
+    for (var y = 0; y < 21; y++) for (var x = 0; x < 21; x++) { if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue; if (rnd() > 0.52) r += "<rect x='" + x + "' y='" + y + "' width='1' height='1' fill='#0D1B3E'/>"; }
+    roh(0,0); roh(14,0); roh(0,14); s.innerHTML = r; })();
+
+  kreslitKroky(); ukaz("a1");
+})();
+</script>
