@@ -5,10 +5,10 @@
  */
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { postavHexika, type HexikModel, type SlotyHexika } from "/home/user/matemax/src/lib/hexik3d/model";
-import { animujOblicej, type Vyraz3D } from "/home/user/matemax/src/lib/hexik3d/oblicej";
-import { vytvorCastice, type Castice, type DruhCastic } from "/home/user/matemax/src/lib/hexik3d/castice";
-import { hexikSvg } from "/home/user/matemax/src/lib/hexik-svg";
+import { postavHexika, type HexikModel, type SlotyHexika } from "../../../src/lib/hexik3d/model";
+import { animujOblicej, type Vyraz3D } from "../../../src/lib/hexik3d/oblicej";
+import { vytvorCastice, type Castice, type DruhCastic } from "../../../src/lib/hexik3d/castice";
+import { hexikSvg } from "../../../src/lib/hexik-svg";
 
 export { hexikSvg };
 
