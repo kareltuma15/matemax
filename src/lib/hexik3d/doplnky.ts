@@ -582,11 +582,11 @@ export function venecek(s: Sklad): Doplnek {
   const obruc = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.42, 0.04, 10, 48)), s.m(new THREE.MeshStandardMaterial({ color: "#4FA45B", roughness: 0.7 }))); obruc.rotation.x = Math.PI / 2; g.add(obruc);
   const barvy = ["#FF7AB8", "#FFD24D", "#FFFFFF", "#B07CFF", "#FF9A5A"];
   const stred = s.m(new THREE.MeshStandardMaterial({ color: "#FFB000", roughness: 0.5 }));
-  for (let i = 0; i < 9; i++) {
-    const u = (i / 9) * Math.PI * 2, kv = new THREE.Group(); kv.position.set(Math.cos(u) * 0.42, 0.03, Math.sin(u) * 0.42); kv.lookAt(Math.cos(u) * 2, 0.6, Math.sin(u) * 2);
+  for (let i = 0; i < 11; i++) {
+    const u = (i / 11) * Math.PI * 2, kv = new THREE.Group(); kv.position.set(Math.cos(u) * 0.42, 0.03, Math.sin(u) * 0.42); kv.lookAt(Math.cos(u) * 2, 0.6, Math.sin(u) * 2);
     const pm = s.m(new THREE.MeshPhysicalMaterial({ color: barvy[i % barvy.length], roughness: 0.5, sheen: 0.8, sheenColor: new THREE.Color("#FFFFFF") }));
-    for (let k = 0; k < 5; k++) { const pl = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.05, 10, 8)), pm); const a = (k / 5) * Math.PI * 2; pl.position.set(Math.cos(a) * 0.05, Math.sin(a) * 0.05, 0); pl.scale.set(1, 1, 0.4); kv.add(pl); }
-    const st = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.03, 8, 6)), stred); st.position.z = 0.02; kv.add(st);
+    for (let k = 0; k < 5; k++) { const pl = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.075, 10, 8)), pm); const a = (k / 5) * Math.PI * 2; pl.position.set(Math.cos(a) * 0.075, Math.sin(a) * 0.075, 0); pl.scale.set(1, 1, 0.4); kv.add(pl); }
+    const st = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.045, 8, 6)), stred); st.position.z = 0.02; kv.add(st);
     g.add(kv);
   }
   return { obj: g, pruziny: [] };
@@ -631,9 +631,11 @@ export function klobouk(s: Sklad): Doplnek {
 
 /** Ninja čelenka s vlajícími konci. */
 export function celenka(s: Sklad): Doplnek {
-  const g = new THREE.Group(); g.position.set(0, 0.5, 0);
+  const g = new THREE.Group(); g.position.set(0, 0.62, 0);
   const mat = samet(s, "#E5383B", "#FF9A9A");
-  const pas = new THREE.Mesh(s.g(new THREE.CylinderGeometry(1.0, 1.0, 0.17, 6, 1, true)), mat); pas.rotation.y = Math.PI / 6; pas.scale.set(0.98, 1, 0.56); g.add(pas);
+  const pas = new THREE.Mesh(s.g(new THREE.CylinderGeometry(1.0, 1.0, 0.2, 6, 1, true)), mat); pas.rotation.y = Math.PI / 6; pas.scale.set(1.0, 1, 0.64); g.add(pas);
+  // uzel vzadu na boku, odkud vlají konce
+  const uzel = new THREE.Mesh(s.g(new THREE.SphereGeometry(0.1, 14, 10)), mat); uzel.position.set(-0.9, 0, -0.33); uzel.scale.set(0.8, 1, 0.8); g.add(uzel);
   const pruziny: Pruzina[] = [];
   for (const [nakl, faze] of [[1.9, 0], [2.2, 1.5]] as const) {
     let rodic: THREE.Object3D = g;
@@ -713,13 +715,13 @@ export function motylek(s: Sklad): Doplnek {
 
 /** Zlatý řetěz z článků s přívěskem. */
 export function retez(s: Sklad): Doplnek {
-  const g = new THREE.Group(); g.position.set(0, -0.08, 0.47);
+  const g = new THREE.Group(); g.position.set(0, -0.5, 0.47);
   const zl = zlatoMat(s);
   for (let i = 0; i <= 12; i++) {
-    const u = Math.PI + (i / 12) * Math.PI, cl = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.045, 0.014, 6, 14)), zl);
-    cl.position.set(Math.cos(u) * 0.48, Math.sin(u) * 0.48 * 0.85, 0); cl.rotation.z = u; if (i % 2) cl.rotation.y = Math.PI / 2; g.add(cl);
+    const u = Math.PI + (i / 12) * Math.PI, cl = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.05, 0.016, 6, 14)), zl);
+    cl.position.set(Math.cos(u) * 0.46, Math.sin(u) * 0.46 * 0.5, 0); cl.rotation.z = u; if (i % 2) cl.rotation.y = Math.PI / 2; g.add(cl);
   }
-  const pr = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.1, 0.1, 0.03, 6)), zl); pr.rotation.x = Math.PI / 2; pr.position.set(0, -0.44, 0.02); g.add(pr);
+  const pr = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.1, 0.1, 0.03, 6)), zl); pr.rotation.x = Math.PI / 2; pr.position.set(0, -0.3, 0.03); pr.scale.setScalar(1.2); g.add(pr);
   return { obj: g, pruziny: [], jiskry: ["#FFE08A"] };
 }
 
@@ -733,7 +735,7 @@ export function doplnekNaSlot(s: Sklad, slot: "hlava" | "oci" | "krk", klic: str
     if (klic === "koruna") return koruna(s);
     if (klic === "cepice") return vanocniCepice(s, "#C8202A", false);
     if (klic === "kulich") return kulich(s, "#2E6DA4", "#E5383B");
-    if (klic === "ksiltovka") return ksiltovka(s, "#1E2A55", false);
+    if (klic === "ksiltovka") return ksiltovka(s, "#2F6BFF", false);
     if (klic === "celenka") return celenka(s);
     if (klic === "svatozar") return svatozar(s);
     if (klic === "parohy") return parohy(s);
@@ -742,7 +744,7 @@ export function doplnekNaSlot(s: Sklad, slot: "hlava" | "oci" | "krk", klic: str
   if (slot === "oci" && ["bryle", "srdce", "hvezdicky", "slunecni", "pixel", "vizor"].includes(klic)) return bryle(s, klic as DruhBryli);
   if (slot === "krk") {
     if (klic === "motylek") return motylek(s);
-    if (klic === "sala") return sala(s);
+    if (klic === "sala") return sala(s, "#2E6DA4", "#FFD24D"); // jiné barvy než šála za 3. etapu, ať je koupě vidět
     if (klic === "medaile") return medaile(s);
     if (klic === "retez") return retez(s);
     if (klic === "svetr") return svetr(s);

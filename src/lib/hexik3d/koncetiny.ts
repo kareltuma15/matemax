@@ -57,8 +57,8 @@ export function postavRuku(s: Sklad, arm: THREE.Group, sx: number, bodyMat: THRE
   if (klic === "naramek") {
     // přátelský náramek: barevné korálky kolem zápěstí a srdíčko
     const barvy = ["#FF7AB8", "#FFD24D", "#5FD0AA", "#5AB8FF", "#B07CFF"];
-    const kor = s.g(new THREE.SphereGeometry(0.03, 14, 10));
-    for (let i = 0; i < 14; i++) { const a = (i / 14) * Math.PI * 2; const m = new THREE.Mesh(kor, s.m(new THREE.MeshPhysicalMaterial({ color: barvy[i % 5], roughness: 0.15, clearcoat: 1 }))); m.position.set(Math.cos(a) * 0.15, -0.2, Math.sin(a) * 0.13); arm.add(m); }
+    const kor = s.g(new THREE.SphereGeometry(0.045, 14, 10));
+    for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; const m = new THREE.Mesh(kor, s.m(new THREE.MeshPhysicalMaterial({ color: barvy[i % 5], roughness: 0.15, clearcoat: 1 }))); m.position.set(Math.cos(a) * 0.165, -0.2, Math.sin(a) * 0.145); arm.add(m); }
     const sr = new THREE.Shape(); sr.moveTo(0, -0.04); sr.bezierCurveTo(-0.06, 0, -0.03, 0.05, 0, 0.02); sr.bezierCurveTo(0.03, 0.05, 0.06, 0, 0, -0.04);
     const srm = new THREE.Mesh(s.g(new THREE.ExtrudeGeometry(sr, { depth: 0.015, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.006, bevelSegments: 2 })), s.m(new THREE.MeshPhysicalMaterial({ color: "#FF3D7F", roughness: 0.2, clearcoat: 1 })));
     srm.position.set(0, -0.26, 0.15); arm.add(srm);
@@ -73,10 +73,10 @@ export function postavRuku(s: Sklad, arm: THREE.Group, sx: number, bodyMat: THRE
   if (klic === "superhrdina" || klic === "kouzelnicke") {
     // rukavice s rozšířenou manžetou; superhrdina červeno-žlutá s bleskem, kouzelnické fialové se zlatými hvězdičkami
     const sup = klic === "superhrdina";
-    const gm = s.m(new THREE.MeshPhysicalMaterial({ color: sup ? "#E5303C" : "#5B2DB8", roughness: 0.3, clearcoat: 0.8, sheen: sup ? 0 : 0.6, sheenColor: new THREE.Color("#C9B6FF") }));
+    const gm = s.m(new THREE.MeshPhysicalMaterial({ color: sup ? "#E5303C" : "#8A5CFF", roughness: 0.3, clearcoat: 0.8, sheen: sup ? 0 : 0.6, sheenColor: new THREE.Color("#C9B6FF") }));
     const gl = new THREE.Mesh(s.g(new THREE.LatheGeometry(v2([[0.13, -0.2], [0.15, -0.3], [0.16, -0.39], [0.138, -0.475], [0.08, -0.525], [0, -0.535]].reverse()), 32)), gm); gl.scale.set(1.04, 1, 0.88); arm.add(gl);
     const pp = new THREE.Mesh(palecGeo, gm); pp.scale.set(1.0, 1.35, 1.0); pp.position.set(-sx * 0.065, -0.33, 0.105); pp.rotation.z = sx * 0.5; arm.add(pp);
-    const manzeta = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.2, 0.135, 0.17, 32, 1, true)), s.m(new THREE.MeshPhysicalMaterial({ color: sup ? "#FFD24D" : "#2A0F55", roughness: 0.3, clearcoat: 0.8, side: THREE.DoubleSide })));
+    const manzeta = new THREE.Mesh(s.g(new THREE.CylinderGeometry(0.2, 0.135, 0.17, 32, 1, true)), s.m(new THREE.MeshPhysicalMaterial({ color: sup ? "#FFD24D" : "#4B23A8", roughness: 0.3, clearcoat: 0.8, side: THREE.DoubleSide })));
     manzeta.position.y = -0.14; manzeta.scale.z = 0.9; arm.add(manzeta);
     const lem = new THREE.Mesh(s.g(new THREE.TorusGeometry(0.2, 0.014, 8, 40)), s.m(new THREE.MeshPhysicalMaterial({ color: "#FFC24A", metalness: 1, roughness: 0.2 }))); lem.rotation.x = Math.PI / 2; lem.position.y = -0.055; lem.scale.set(1, 0.9, 1); arm.add(lem);
     if (sup) {
