@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { pragueDateStr } from "@/lib/date";
 
 /**
  * Návštěvnost a trychtýř pro admina (Karel): z analytics_events (měření bez cookies) a z účtů.
@@ -8,10 +9,60 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
  */
 type Ev = { event_name: string; created_at: string; user_id: string | null; properties: Record<string, string | undefined> & { sekund?: number; scroll?: number; kliku?: number } | null };
 
+/** Hodina v Praze (0–23). */
+const hodinaPraha = (d: Date) => Number(new Intl.DateTimeFormat("cs-CZ", { timeZone: "Europe/Prague", hour: "2-digit", hourCycle: "h23" }).format(d));
+/** Pražský den o `n` dní dřív než dnes (poledne UTC je bezpečné přes letní čas). */
+const denPred = (n: number) => pragueDateStr(new Date(Date.now() - n * 86400000));
+
+const POPIS_UDALOSTI: Record<string, string> = {
+  navsteva: "otevřel stránku", klik: "klikl", odchod: "odešel ze stránky", registrace_odeslana: "odeslal registraci", registrace_google: "registrace přes Google",
+  premium_zobrazeno: "otevřel Premium", platba_start: "začal platit", formular_start: "začal vyplňovat", formular_chyba: "chyba ve formuláři", doporuceni_otevreno: "otevřel doporučení",
+};
+
+/**
+ * Živý přehled (obnovuje se každých 30 s): kdo je teď na webu, dnešek po hodinách proti včerejšku
+ * a posledních 20 událostí. Jen počty a cesty, žádné osobní údaje.
+ */
+async function zive() {
+  const ted = Date.now();
+  const { data, error } = await supabaseAdmin!.from("analytics_events").select("event_name, created_at, properties").gte("created_at", new Date(ted - 50 * 3600000).toISOString()).order("created_at", { ascending: false }).limit(20000);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  const ev = (data ?? []) as Omit<Ev, "user_id">[];
+  const v = (arr: typeof ev) => new Set(arr.map((e) => e.properties?.v).filter(Boolean)).size;
+  const za = (min: number) => ev.filter((e) => ted - Date.parse(e.created_at) <= min * 60000);
+  const dnes = pragueDateStr(), vcera = denPred(1);
+  const hodinaTed = hodinaPraha(new Date(ted));
+  const dneska = ev.filter((e) => pragueDateStr(new Date(e.created_at)) === dnes);
+  const vcerejsi = ev.filter((e) => pragueDateStr(new Date(e.created_at)) === vcera);
+  const navstevy = (arr: typeof ev) => arr.filter((e) => e.event_name === "navsteva");
+  const poHodinach = Array.from({ length: 24 }, (_, h) => ({
+    h,
+    dnes: v(navstevy(dneska).filter((e) => hodinaPraha(new Date(e.created_at)) === h)),
+    vcera: v(navstevy(vcerejsi).filter((e) => hodinaPraha(new Date(e.created_at)) === h)),
+  }));
+  const posl30 = navstevy(za(30));
+  const strankyTed = [...posl30.reduce((m, e) => { const k = e.properties?.cesta ?? "?"; const s = m.get(k) ?? new Set<string>(); s.add(e.properties?.v ?? e.created_at); return m.set(k, s); }, new Map<string, Set<string>>())]
+    .map(([k, s]) => ({ k, n: s.size })).sort((a, b) => b.n - a.n).slice(0, 8);
+  return NextResponse.json({
+    cas: new Date(ted).toISOString(),
+    pet: v(za(5)), tricet: v(za(30)),
+    dnes: { navstevniku: v(navstevy(dneska)), stranek: navstevy(dneska).length },
+    // Včera ve stejnou dobu (do stejné hodiny a minuty), ať je srovnání férové
+    vceraDoTed: v(navstevy(vcerejsi).filter((e) => { const d = new Date(e.created_at); const h = hodinaPraha(d); return h < hodinaTed || (h === hodinaTed && d.getUTCMinutes() <= new Date(ted).getUTCMinutes()); })),
+    vceraCelkem: v(navstevy(vcerejsi)),
+    hodinaTed, poHodinach, strankyTed,
+    posledni: ev.filter((e) => e.event_name !== "odchod").slice(0, 20).map((e) => ({
+      cas: e.created_at, co: POPIS_UDALOSTI[e.event_name] ?? e.event_name,
+      kde: e.event_name === "klik" ? (e.properties?.text || e.properties?.cil) : e.properties?.cesta, zarizeni: e.properties?.zarizeni ?? null,
+    })),
+  });
+}
+
 export async function GET(req: NextRequest) {
   const auth = await requireAdmin(req);
   if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
   if (!supabaseAdmin) return NextResponse.json({ error: "Admin client not configured" }, { status: 503 });
+  if (new URL(req.url).searchParams.get("zive") === "1") return zive();
 
   const dni = Math.min(90, Math.max(7, Number(new URL(req.url).searchParams.get("dni")) || 30));
   const od = new Date(Date.now() - dni * 86400000).toISOString();
@@ -26,15 +77,16 @@ export async function GET(req: NextRequest) {
 
   const navstevy = ev.filter((e) => e.event_name === "navsteva");
   const unik = (arr: Ev[]) => new Set(arr.map((e) => p(e).v).filter(Boolean)).size;
-  const den = (iso: string) => iso.slice(0, 10);
+  // Den podle Prahy (ne UTC: noční návštěvy by jinak padaly do předchozího dne)
+  const den = (iso: string) => pragueDateStr(new Date(iso));
 
   // po dnech
   const dnyMap = new Map<string, Ev[]>();
   for (const e of navstevy) { const d = den(e.created_at); dnyMap.set(d, [...(dnyMap.get(d) ?? []), e]); }
   const poDnech = Array.from({ length: dni }, (_, i) => {
-    const d = new Date(Date.now() - (dni - 1 - i) * 86400000).toISOString().slice(0, 10);
+    const d = denPred(dni - 1 - i);
     const a = dnyMap.get(d) ?? [];
-    return { den: d, navstevniku: unik(a), stranek: a.length };
+    return { den: d, navstevniku: unik(a), stranek: a.length, ucty: (authData?.users ?? []).filter((u) => den(u.created_at) === d).length };
   });
 
   const pocitej = (arr: Ev[], klic: (e: Ev) => string | undefined, unikatne = true) => {
