@@ -20,7 +20,7 @@ export type Vyraz = "neutral" | "radost" | "prekvapeni" | "povzbuzeni" | "ospaly
 export type Ruce = "" | "palcaky" | "boxerske";
 export type Nohy = "" | "tenisky" | "zimni" | "brusle";
 export interface HexikPlus { nastav(podoba: string, koruna: boolean, ruce?: Ruce, nohy?: Nohy): void; vyraz(v: Vyraz): void; mrkni(): void; znic(): void }
-export interface MoznostiPlus { podoba: string; etapa: number; koruna: boolean; ruce?: Ruce; nohy?: Nohy; vylepsitKoncetiny?: boolean; interaktivni: boolean; zoom?: number; onVyraz?: (v: Vyraz) => void }
+export interface MoznostiPlus { detail?: "ruce" | "nohy"; podoba: string; etapa: number; koruna: boolean; ruce?: Ruce; nohy?: Nohy; vylepsitKoncetiny?: boolean; interaktivni: boolean; zoom?: number; onVyraz?: (v: Vyraz) => void }
 
 const N = "#0D1B3E";
 const cl = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -56,6 +56,21 @@ function srdceTextura(): THREE.CanvasTexture {
   x.lineWidth = 6; x.strokeStyle = "rgba(255,255,255,.7)"; x.stroke();
   x.fillStyle = "rgba(255,255,255,.8)"; x.beginPath(); x.ellipse(-16, -22, 9, 6, -0.5, 0, Math.PI * 2); x.fill();
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+/** Pletený palčák: červené pletení (vlnky), bílý norský pruh s vločkami. pruh=false pro palec. */
+function texturaPalcaku(pruh: boolean): THREE.CanvasTexture {
+  const c = document.createElement("canvas"); c.width = 512; c.height = 256; const x = c.getContext("2d")!;
+  x.fillStyle = "#D2303C"; x.fillRect(0, 0, 512, 256);
+  // očka pletení: řady malých „V“
+  for (let r = 0; r < 32; r++) for (let k = 0; k < 64; k++) { const cx = k * 8 + 4, cy = r * 8 + 4; x.strokeStyle = (r + k) % 2 ? "rgba(120,10,20,.35)" : "rgba(255,170,170,.22)"; x.lineWidth = 1.6; x.beginPath(); x.moveTo(cx - 3, cy - 3); x.lineTo(cx, cy + 3); x.lineTo(cx + 3, cy - 3); x.stroke(); }
+  if (pruh) {
+    x.fillStyle = "#F7F3EE"; x.fillRect(0, 70, 512, 70);
+    x.fillStyle = "#D2303C"; for (let k = 0; k < 16; k++) { const cx = k * 32 + 16; x.beginPath(); x.moveTo(cx - 16, 140); x.lineTo(cx, 124); x.lineTo(cx + 16, 140); x.fill(); x.beginPath(); x.moveTo(cx - 16, 70); x.lineTo(cx, 86); x.lineTo(cx + 16, 70); x.fill(); }
+    x.strokeStyle = "#D2303C"; x.lineWidth = 3; for (let k = 0; k < 8; k++) { const cx = k * 64 + 32, cy = 105; for (let a = 0; a < 6; a++) { const u = a * Math.PI / 3; x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx + Math.cos(u) * 12, cy + Math.sin(u) * 12); x.stroke(); } }
+    x.fillStyle = "#F7F3EE"; for (let k = 0; k < 32; k++) x.fillRect(k * 16 + 6, 200, 5, 5);
+  }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = THREE.RepeatWrapping; t.anisotropy = 8; return t;
 }
 
 interface Oko { g: THREE.Group; koule: THREE.Object3D[]; oblouk: THREE.Mesh; vicko: THREE.Group; vickoMesh: THREE.Mesh; obocí: THREE.Mesh; sx: number }
@@ -161,9 +176,10 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
     if (o.vylepsitKoncetiny !== false) koncetiny(barvaObliceje);
   }
   function koncetiny(barvaObliceje: THREE.Color) {
+    const palcakTex = tx(texturaPalcaku(true)), palcakPalecTex = tx(texturaPalcaku(false));
     const bodyMat = (hx.armL.children[0] as THREE.Mesh).material as THREE.Material;
     // ručička: měkký „palčák“ (zúžené rameno, kulatá dlaň) a palec
-    const profil = [[0, 0.03], [0.075, 0.02], [0.105, -0.05], [0.118, -0.17], [0.142, -0.3], [0.152, -0.39], [0.13, -0.47], [0.075, -0.515], [0, -0.525]].map(([x, y]) => new THREE.Vector2(x, y));
+    const profil = [[0, 0.03], [0.075, 0.02], [0.105, -0.05], [0.118, -0.17], [0.142, -0.3], [0.152, -0.39], [0.13, -0.47], [0.075, -0.515], [0, -0.525]].reverse().map(([x, y]) => new THREE.Vector2(x, y));
     const ruckaGeo = g(new THREE.LatheGeometry(profil, 28));
     const palecGeo = g(new THREE.SphereGeometry(0.056, 16, 12));
     for (const [arm, sx] of [[hx.armL, -1], [hx.armR, 1]] as const) {
@@ -173,12 +189,16 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
       const r = new THREE.Mesh(ruckaGeo, bodyMat); r.scale.set(1.08, 1.05, 0.9); arm.add(r);
       const pal = new THREE.Mesh(palecGeo, bodyMat); pal.scale.set(0.9, 1.25, 0.9); pal.position.set(-sx * 0.06, -0.33, 0.1); pal.rotation.z = sx * 0.5; arm.add(pal);
       if (ruce === "palcaky") {
-        const plet = tx(texturaPleteni([3, 3])); const pm = mt(new THREE.MeshPhysicalMaterial({ map: plet, color: "#D9343F", roughness: 0.95, sheen: 1, sheenColor: new THREE.Color("#FF9AA2") }));
-        const prof2 = [[0.128, -0.2], [0.152, -0.3], [0.163, -0.395], [0.14, -0.485], [0.08, -0.535], [0, -0.548]].map(([x, y]) => new THREE.Vector2(x, y));
-        const pg = new THREE.Mesh(g(new THREE.LatheGeometry(prof2, 28)), pm); pg.scale.set(1, 1, 0.88); arm.add(pg);
-        const pp = new THREE.Mesh(palecGeo, pm); pp.scale.set(1.08, 1.4, 1.08); pp.position.set(-sx * 0.065, -0.33, 0.105); pp.rotation.z = sx * 0.5; arm.add(pp);
-        const lem = new THREE.Mesh(g(chlupatyLem(0.13, 0.04, 0.3)), mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") })));
-        lem.rotation.x = Math.PI / 2; lem.position.y = -0.2; lem.scale.set(1, 0.88, 1); arm.add(lem);
+        // palčák: baculatý, větší než ručička, pletený s norským pruhem; výrazný palec; žebrovaná manžeta
+        const pm = mt(new THREE.MeshPhysicalMaterial({ map: palcakTex, roughness: 0.95, sheen: 0.8, sheenColor: new THREE.Color("#FFC2C8") }));
+        const prof2 = [[0.15, -0.17], [0.178, -0.26], [0.196, -0.36], [0.19, -0.46], [0.155, -0.54], [0.085, -0.585], [0, -0.596]].reverse().map(([x, y]) => new THREE.Vector2(x, y));
+        const pg = new THREE.Mesh(g(new THREE.LatheGeometry(prof2, 36)), pm); pg.scale.set(1, 1, 0.84); arm.add(pg);
+        const palec = new THREE.Mesh(g(new THREE.CapsuleGeometry(0.058, 0.1, 6, 14)), mt(new THREE.MeshPhysicalMaterial({ map: palcakPalecTex, roughness: 0.95, sheen: 0.8, sheenColor: new THREE.Color("#FFC2C8") })));
+        palec.position.set(-sx * 0.07, -0.33, 0.15); palec.rotation.set(0.95, 0, sx * 0.35); arm.add(palec);
+        const zebrGeo = g(new THREE.CylinderGeometry(0.165, 0.158, 0.13, 64, 2, false));
+        { const pp = zebrGeo.attributes.position; for (let i = 0; i < pp.count; i++) { const x = pp.getX(i), z = pp.getZ(i), r = Math.hypot(x, z); if (r > 0.1) { const a = Math.atan2(z, x), k = 1 + 0.06 * Math.max(0, Math.cos(a * 22)); pp.setX(i, x * k); pp.setZ(i, z * k); } } zebrGeo.computeVertexNormals(); }
+        const manz = new THREE.Mesh(zebrGeo, mt(new THREE.MeshPhysicalMaterial({ color: "#F7F3EE", roughness: 0.95, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") }))); manz.position.y = -0.15; manz.scale.z = 0.86; arm.add(manz);
+        const prouzek = new THREE.Mesh(g(new THREE.TorusGeometry(0.168, 0.012, 8, 48)), pm); prouzek.rotation.x = Math.PI / 2; prouzek.position.y = -0.15; prouzek.scale.set(1, 0.86, 1); arm.add(prouzek);
       }
       if (ruce === "boxerske") {
         const bm = mt(new THREE.MeshPhysicalMaterial({ color: "#E5303C", roughness: 0.25, clearcoat: 1, clearcoatRoughness: 0.1 }));
@@ -202,18 +222,9 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
       if (nohy === "tenisky") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#FAFBFF", roughness: 0.45, clearcoat: 0.4 })); podrMat = mt(new THREE.MeshPhysicalMaterial({ color: "#5B55D6", roughness: 0.5 })); }
       if (nohy === "zimni") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#8A5A35", roughness: 0.75, sheen: 0.6, sheenColor: new THREE.Color("#E7C49A") })); podrMat = mt(new THREE.MeshStandardMaterial({ color: "#3A2618", roughness: 0.8 })); vys = 0.95; }
       if (nohy === "brusle") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 0.35, clearcoat: 0.6 })); podrMat = mt(new THREE.MeshStandardMaterial({ color: "#2B3A86", roughness: 0.5 })); vys = 1.05; }
+      if (nohy === "tenisky" || nohy === "zimni") { bot.rotation.y = sx * 0.42; postavBotu(bot, nohy, sx); continue; }
       const horni = new THREE.Mesh(botGeo, horniMat); horni.scale.set(1.08, vys, 1.32); horni.position.y = 0.03 + (vys - 0.62) * 0.08; bot.add(horni);
       const podr = new THREE.Mesh(podrGeo, podrMat); podr.position.y = -0.05; podr.scale.set(1.06, 1, 1); bot.add(podr);
-      if (nohy === "tenisky") {
-        const pm = mt(new THREE.MeshStandardMaterial({ color: "#5B55D6", roughness: 0.4 }));
-        const pruh = new THREE.Mesh(g(new THREE.TorusGeometry(0.15, 0.018, 8, 24, Math.PI * 0.9)), pm); pruh.rotation.set(0, sx * Math.PI / 2, -0.25); pruh.position.set(sx * 0.2, 0.02, 0.0); bot.add(pruh);
-        const tk = mt(new THREE.MeshStandardMaterial({ color: "#DDE3F0", roughness: 0.6 }));
-        for (const [z, y] of [[0.1, 0.085], [0.17, 0.07], [0.23, 0.05]] as const) { const t = new THREE.Mesh(g(new THREE.CapsuleGeometry(0.012, 0.11, 4, 8)), tk); t.rotation.z = Math.PI / 2; t.position.set(0, y, z); t.rotation.x = -0.4; bot.add(t); }
-      }
-      if (nohy === "zimni") {
-        const lem = new THREE.Mesh(g(chlupatyLem(0.15, 0.05, 0.35)), mt(new THREE.MeshPhysicalMaterial({ color: "#FFF8EE", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") })));
-        lem.rotation.x = Math.PI / 2; lem.position.set(0, 0.2, -0.03); lem.scale.set(1.15, 1, 1); bot.add(lem);
-      }
       if (nohy === "brusle") {
         const ocel = mt(new THREE.MeshPhysicalMaterial({ color: "#DDE6F2", metalness: 1, roughness: 0.15, envMapIntensity: 2 }));
         const nuz = new THREE.Mesh(g(new THREE.BoxGeometry(0.018, 0.035, 0.58)), ocel); nuz.position.set(0, -0.16, 0.03); bot.add(nuz);
@@ -223,6 +234,44 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
         for (const y of [0.12, 0.2]) { const t = new THREE.Mesh(g(new THREE.CapsuleGeometry(0.011, 0.12, 4, 8)), tk); t.rotation.z = Math.PI / 2; t.position.set(0, y, 0.16); bot.add(t); }
       }
     }
+  }
+  /** Tenisky a zimní boty: podrážka podle obrysu chodidla, svršek nižší u špičky, tkaničky, jazyk, poutko, logo. */
+  function postavBotu(bot: THREE.Group, druh: Nohy, sx: number) {
+    const obrys = new THREE.Shape(); obrys.absellipse(0, 0.02, 0.165, 0.3, 0, Math.PI * 2, false);
+    const vyt = (hl: number, bev: number) => { const ge = g(new THREE.ExtrudeGeometry(obrys, { depth: hl, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 3, curveSegments: 40 })); ge.rotateX(Math.PI / 2); return ge; };
+    const zimni = druh === "zimni";
+    const bilaMat = mt(new THREE.MeshPhysicalMaterial({ color: zimni ? "#3A2618" : "#FAFBFF", roughness: zimni ? 0.85 : 0.35, clearcoat: zimni ? 0 : 0.5 }));
+    const mezi = new THREE.Mesh(vyt(zimni ? 0.06 : 0.07, 0.022), bilaMat); mezi.position.y = 0.0; bot.add(mezi);
+    const dno = new THREE.Mesh(vyt(0.018, 0.01), mt(new THREE.MeshStandardMaterial({ color: zimni ? "#1F140C" : "#7C86A6", roughness: 0.9 }))); dno.position.y = -0.095; dno.scale.set(1.02, 1, 1.02); bot.add(dno);
+    if (zimni) for (let i = 0; i < 6; i++) { const z = -0.24 + i * 0.095; const zub = new THREE.Mesh(g(new THREE.BoxGeometry(0.26 * Math.sqrt(Math.max(0.1, 1 - ((z - 0.02) / 0.3) ** 2)), 0.02, 0.03)), mt(new THREE.MeshStandardMaterial({ color: "#1F140C", roughness: 0.9 }))); zub.position.set(0, -0.115, z); bot.add(zub); }
+    // svršek
+    const vys = zimni ? 0.3 : 0.17;
+    const sg = g(new THREE.SphereGeometry(1, 40, 20, 0, Math.PI * 2, 0, Math.PI / 2));
+    { const pp = sg.attributes.position; for (let i = 0; i < pp.count; i++) { let x = pp.getX(i) * 0.152, y = pp.getY(i) * vys, z = pp.getZ(i) * 0.285 + 0.02; const zn = (z - 0.02) / 0.285; y *= zn > 0 ? 1 - 0.58 * Math.pow(zn, 1.3) : 1; pp.setXYZ(i, x, y, z); } sg.computeVertexNormals(); }
+    const barva = zimni ? "#8A5A35" : "#5B55D6";
+    const svrsek = new THREE.Mesh(sg, mt(new THREE.MeshPhysicalMaterial({ color: barva, roughness: zimni ? 0.7 : 0.45, clearcoat: zimni ? 0.1 : 0.3, sheen: zimni ? 0.6 : 0, sheenColor: new THREE.Color("#E7C49A") }))); svrsek.position.y = 0.012; bot.add(svrsek);
+    if (!zimni) {
+      // bílá gumová špička
+      const sp = new THREE.Mesh(g(new THREE.SphereGeometry(1, 28, 14, 0, Math.PI * 2, 0, Math.PI / 2)), bilaMat); sp.scale.set(0.156, 0.075, 0.12); sp.position.set(0, 0.012, 0.19); bot.add(sp);
+      // logo: šestiúhelník na vnějším boku
+      const hs = new THREE.Shape(); for (let i = 0; i < 6; i++) { const a = Math.PI / 2 + i * Math.PI / 3, px = 0.045 * Math.cos(a), py = 0.045 * Math.sin(a); if (i === 0) hs.moveTo(px, py); else hs.lineTo(px, py); } hs.closePath();
+      for (const strana of [-1, 1]) { const lg = new THREE.Mesh(g(new THREE.ExtrudeGeometry(hs, { depth: 0.008, bevelEnabled: true, bevelThickness: 0.004, bevelSize: 0.004, bevelSegments: 1 })), mt(new THREE.MeshStandardMaterial({ color: "#F5A623", roughness: 0.35, metalness: 0.2 }))); lg.position.set(strana * 0.148, 0.065, -0.03); lg.rotation.y = strana * Math.PI / 2; bot.add(lg); }
+      // poutko na patě
+      const pout = new THREE.Mesh(g(new THREE.BoxGeometry(0.05, 0.07, 0.02)), mt(new THREE.MeshStandardMaterial({ color: "#F5A623", roughness: 0.5 }))); pout.position.set(0, 0.16, -0.255); pout.rotation.x = -0.25; bot.add(pout);
+    }
+    // jazyk a otvor (lem kolem kotníku)
+    const jaz = new THREE.Mesh(g(new THREE.CapsuleGeometry(0.045, 0.08, 4, 10)), mt(new THREE.MeshPhysicalMaterial({ color: zimni ? "#6E4527" : "#7C77EA", roughness: 0.6 }))); jaz.scale.set(1, 1, 0.35); jaz.rotation.x = -0.9; jaz.position.set(0, vys - 0.005, -0.03); bot.add(jaz);
+    const lemTvar = zimni ? g(chlupatyLem(0.11, 0.045, 0.35)) : g(new THREE.TorusGeometry(0.1, 0.026, 10, 32));
+    const lemK = new THREE.Mesh(lemTvar, mt(new THREE.MeshPhysicalMaterial({ color: zimni ? "#FFF8EE" : "#3F39B5", roughness: zimni ? 1 : 0.5, sheen: zimni ? 1 : 0, sheenColor: new THREE.Color("#FFFFFF") })));
+    lemK.rotation.x = Math.PI / 2; lemK.scale.set(1.15, 1.2, 1); lemK.position.set(0, vys + (zimni ? 0.0 : -0.01), -0.11); bot.add(lemK);
+    // tkaničky do X na nártu
+    const tkMat = mt(new THREE.MeshStandardMaterial({ color: zimni ? "#E8C07A" : "#FFFFFF", roughness: 0.5 }));
+    const tkGeo = g(new THREE.CapsuleGeometry(0.011, 0.1, 4, 8));
+    for (let i = 0; i < 3; i++) {
+      const z = 0.0 + i * 0.06, zn = (z - 0.02) / 0.285, y = 0.012 + vys * (zn > 0 ? 1 - 0.58 * Math.pow(zn, 1.3) : 1) * Math.sqrt(Math.max(0, 1 - zn * zn)) + 0.008;
+      for (const d of [-1, 1]) { const tk = new THREE.Mesh(tkGeo, tkMat); tk.position.set(0, y, z); tk.rotation.set(-0.5, 0, Math.PI / 2 + d * 0.55); bot.add(tk); }
+    }
+    if (zimni) { const tk = new THREE.Mesh(g(new THREE.TorusGeometry(0.03, 0.009, 6, 16)), tkMat); tk.position.set(0.05, vys + 0.02, 0.0); tk.rotation.y = 0.5; bot.add(tk); }
   }
   postav();
 
@@ -289,7 +338,10 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
     studio.velikost();
     const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1;
     const z = (w / h < 0.9 ? 7.6 / (w / h) * 0.9 : 7.6) / (o.zoom ?? 1);
-    camera.position.set(0, 0.45, z); camera.lookAt(0, 0.35, 0); camera.updateProjectionMatrix();
+    if (o.detail === "ruce") { camera.position.set(2.05, -0.3, 2.15); camera.lookAt(1.12, -0.52, 0.3); }
+    else if (o.detail === "nohy") { camera.position.set(0.35, -0.75, 2.45); camera.lookAt(0, -1.28, 0.2); }
+    else { camera.position.set(0, 0.45, z); camera.lookAt(0, 0.35, 0); }
+    camera.updateProjectionMatrix();
     meritko.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan((camera.fov * Math.PI) / 360));
   }
 
@@ -317,12 +369,13 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
     let P = klid(cas, true);
     if (akce) { const a: { id: Reakce3D; start: number } = akce; const p = Math.min(1, (cas - a.start) / DELKA[a.id]); P = reakce(a.id, p, cas, P, true); if (p >= 1) akce = null; }
     const kyv = c.kyv * Math.sin(cas * 1.1) * 0.08;
-    hx.root.position.y = P.y - c.kyv * 0.03; hx.root.rotation.set(P.rX - look.y * 0.12 + c.kyv * 0.05, P.rY + look.x * 0.38, 0); hx.root.scale.setScalar(P.s);
+    hx.root.position.y = P.y - c.kyv * 0.03; hx.root.rotation.set(o.detail ? 0 : P.rX - look.y * 0.12 + c.kyv * 0.05, o.detail ? (o.detail === "ruce" ? Math.sin(cas * 0.45) * 0.35 - 0.15 : Math.sin(cas * 0.45) * 0.7) : P.rY + look.x * 0.38, 0); hx.root.scale.setScalar(P.s);
     // ťuknutí: zmáčknutí
     const tc = cas - chichot; const zm = tc < 0.6 ? Math.exp(-tc * 7) * Math.cos(tc * 26) * 0.14 : 0;
     const sy = P.sy - zm, sk = 1 / Math.sqrt(sy); hx.hips.scale.set(sk, sy, sk);
     hx.body.rotation.z = P.rZ + c.naklon + kyv;
-    hx.armL.rotation.z = -P.aL; hx.armR.rotation.z = P.aR + (vyraz === "povzbuzeni" ? 1.4 + Math.sin(cas * 6) * 0.25 : 0);
+    const odTela = ruce ? 0.32 : 0.08;
+    hx.armL.rotation.z = -(P.aL + odTela); hx.armR.rotation.z = P.aR + odTela + (vyraz === "povzbuzeni" ? 1.4 + Math.sin(cas * 6) * 0.25 : 0);
     for (const ok of oci) {
       ok.g.scale.set(c.oci, c.oci * c.skvir * bl, 1);
       ok.g.position.x = (ok.g.userData.bx as number) + look.x * 0.055; ok.g.position.y = 0.1 + look.y * 0.04;
