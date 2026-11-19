@@ -1,0 +1,480 @@
+<title>Revize odměn MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Revize odměn: verdikt, audit podle kategorií, živý 3D šatník (dnes / návrh), sady s domovem pro Hexíka, 3D pozadí profilu, vzhledy appky, plán. Stejný jazyk jako předchozí mockupy. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#56617D; --linka:#DCE2EE;
+  --navy:#0D1B3E; --amber:#F5A623; --lev:#AFACFB; --fialova:#5B55D6; --zelena:#2FA36B; --cervena:#E5484D; --oranz:#E8890C;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 64px;display:grid;gap:40px}
+.mock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#E9EEFA;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700;justify-self:start;max-width:100%}
+.mock b{color:var(--amber)}
+.hlava{display:grid;gap:12px}
+.hlava h1{font-size:clamp(1.8rem,4.2vw,2.7rem);font-weight:900;letter-spacing:-.025em}
+.hlava p{color:var(--tl);max-width:76ch}
+.tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.tri{grid-template-columns:1fr}}
+.tri>div{background:var(--plocha);border:1px solid var(--linka);border-radius:16px;padding:14px 16px;display:grid;gap:6px;align-content:start}
+.tri b{font-size:1.05rem}
+.tri span,.tri li{color:var(--tl);font-size:.92rem}
+.tri ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.sekce{display:grid;gap:16px}
+.sekce>h2{font-size:clamp(1.3rem,2.6vw,1.65rem);font-weight:900;letter-spacing:-.015em}
+.sekce>p.uvod{color:var(--tl);max-width:76ch}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:18px;padding:18px 20px;display:grid;gap:12px;min-width:0}
+.blok h3{font-size:1.08rem;font-weight:900}
+.tl{color:var(--tl);font-size:.92rem}
+ul.cisty{margin:0;padding-left:18px;display:grid;gap:7px}
+.tab{overflow-x:auto;border:1px solid var(--linka);border-radius:16px;background:var(--plocha)}
+table.t{border-collapse:collapse;width:100%;min-width:760px;font-size:.92rem}
+.t th,.t td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--linka)}
+.t th{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--tl);background:color-mix(in srgb,var(--plocha) 85%,var(--lev) 15%)}
+.t tr:last-child td{border-bottom:0}
+.t td b{display:block}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.znamka{display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:.8rem;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.z-ok{background:color-mix(in srgb,var(--zelena) 16%,transparent);color:var(--zelena)}
+.z-lad{background:color-mix(in srgb,var(--amber) 20%,transparent);color:var(--oranz)}
+.z-pred{background:color-mix(in srgb,var(--cervena) 15%,transparent);color:var(--cervena)}
+.galerie{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.galerie figure{margin:0;background:var(--plocha);border:1px solid var(--linka);border-radius:16px;overflow:hidden;display:grid}
+.galerie img{width:100%;height:auto;display:block;border-bottom:1px solid var(--linka)}
+.galerie figcaption{padding:10px 14px;font-size:.88rem;color:var(--tl)}
+.galerie figcaption b{color:var(--fg)}
+.nalezy{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px}
+.nalez{background:var(--plocha);border:1px solid var(--linka);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.nalez .em{font-size:1.6rem;line-height:1;width:36px;text-align:center}
+.nalez b{display:block}
+.nalez span{color:var(--tl);font-size:.88rem}
+
+.prepinac{display:flex;gap:8px;flex-wrap:wrap}
+.prepinac button{font:inherit;font-weight:900;border-radius:999px;padding:8px 15px;border:1px solid var(--linka);background:var(--plocha);color:var(--fg);cursor:pointer}
+.prepinac button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+:root[data-theme="dark"] .prepinac button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .prepinac button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}}
+.prepinac.male button{font-size:.84rem;padding:6px 12px}
+button:focus-visible{outline:3px solid #7FD8EE;outline-offset:2px}
+
+/* šatník */
+.satnik{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.satnik{grid-template-columns:1fr}}
+.nahled{position:sticky;top:12px;display:grid;gap:10px}
+@media (max-width:860px){.nahled{position:static}}
+.nahled-plocha{position:relative;aspect-ratio:1/1.05;border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 42%,#3B4C9B,#141E52 72%)}
+.nahled-plocha canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y}
+.nahled-info{background:var(--plocha);border:1px solid var(--linka);border-radius:14px;padding:12px 14px;display:grid;gap:2px}
+.nahled-info b{font-size:1.05rem}
+.mrizka{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.karta{position:relative;border-radius:16px;padding:8px 8px 10px;border:1px solid var(--linka);background:var(--plocha);cursor:pointer;display:grid;gap:4px;justify-items:center;text-align:center;font:inherit;color:var(--fg)}
+.karta .obr{width:100%;aspect-ratio:1/1;border-radius:12px;display:grid;place-items:center;overflow:hidden}
+.karta .obr img{width:100%;height:100%;object-fit:cover}
+.karta .obr .em{font-size:2.3rem}
+.karta .obr svg{width:62%;height:auto}
+.karta b{font-size:.82rem;line-height:1.2}
+.karta small{font-size:.7rem;font-weight:800;color:var(--tl)}
+.karta[aria-pressed="true"]{outline:3px solid var(--fialova);outline-offset:1px}
+.karta .proužek{position:absolute;left:10px;right:10px;top:4px;height:3px;border-radius:2px}
+.karta .sada{position:absolute;top:12px;left:12px;font-size:.66rem;font-weight:900;background:rgba(13,27,62,.82);color:#fff;border-radius:999px;padding:1px 7px}
+.karta .hraj{position:absolute;bottom:52px;right:12px;font-size:.7rem;font-weight:900;background:#fff;color:#0D1B3E;border-radius:999px;padding:2px 7px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.v-bezna{--v1:#EEF1F7;--v2:#D9DFEA;--vc:#8A93AB}
+.v-neobvykla{--v1:#E3F0FF;--v2:#B9D8FF;--vc:#2E6DD8}
+.v-vzacna{--v1:#F1E8FF;--v2:#D6C2FF;--vc:#7B4CE0}
+.v-legenda{--v1:#FFF5D6;--v2:#FFD978;--vc:#C78400}
+.styl-3d .obr{background:radial-gradient(circle at 50% 38%,var(--v1),var(--v2))}
+.styl-3d .karta{border-color:color-mix(in srgb,var(--vc) 45%,var(--linka))}
+.styl-3d .karta small{color:var(--vc)}
+.styl-dnes .obr{background:transparent}
+.styl-dnes .proužek{background:var(--vc)}
+.styl-3d .proužek{display:none}
+
+/* sady */
+.sada-blok{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);gap:20px;align-items:start}
+@media (max-width:900px){.sada-blok{grid-template-columns:1fr}}
+.scena{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:#1A0B10}
+.scena canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y}
+.zamek{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:rgba(10,8,20,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);color:#fff;padding:20px;transition:opacity .6s}
+.zamek div{display:grid;gap:6px;justify-items:center;max-width:36ch}
+.zamek .ik{font-size:2.6rem}
+.zamek b{font-size:1.2rem}
+.zamek span{color:#D7DCF0;font-size:.92rem}
+.oslava-pruh{position:absolute;left:50%;top:16px;transform:translateX(-50%) translateY(-120%);background:linear-gradient(135deg,#FFE08A,#F5A623);color:#0D1B3E;font-weight:900;border-radius:999px;padding:9px 18px;box-shadow:0 10px 24px -8px rgba(0,0,0,.5);transition:transform .5s cubic-bezier(.2,1.4,.4,1);white-space:nowrap;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis}
+.oslava-pruh.on{transform:translateX(-50%) translateY(0)}
+.scena-tip{position:absolute;left:12px;bottom:10px;font-size:.75rem;font-weight:800;color:#fff;background:rgba(13,27,62,.6);border-radius:999px;padding:4px 10px}
+.polozky-sady{display:grid;gap:8px}
+.ps{display:flex;align-items:center;gap:10px;background:var(--plocha);border:1px solid var(--linka);border-radius:14px;padding:9px 12px}
+.ps .em{font-size:1.5rem;width:32px;text-align:center}
+.ps b{display:block;font-size:.92rem}
+.ps small{color:var(--tl);font-size:.78rem}
+.ps button{margin-left:auto;font:inherit;font-weight:900;font-size:.8rem;border:0;border-radius:10px;padding:6px 10px;background:var(--amber);color:#0D1B3E;cursor:pointer}
+.ps.mam{border-color:color-mix(in srgb,var(--zelena) 50%,var(--linka))}
+.ps.mam button{background:transparent;color:var(--zelena);cursor:default}
+.postup{height:10px;border-radius:6px;background:var(--linka);overflow:hidden}
+.postup i{display:block;height:100%;width:0;background:linear-gradient(90deg,#F5A623,#FFD45A);transition:width .4s}
+
+/* profil */
+.profil{border-radius:22px;overflow:hidden;background:var(--plocha);border:1px solid var(--linka);display:grid}
+.profil .scena{border-radius:0;aspect-ratio:auto;height:clamp(240px,40vw,380px)}
+.profil-dole{display:flex;gap:14px;align-items:center;padding:14px 18px;flex-wrap:wrap}
+.profil-dole .jm{font-weight:900;font-size:1.2rem}
+.profil-dole .st{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.profil-dole .st span{background:color-mix(in srgb,var(--lev) 22%,var(--plocha));border-radius:999px;padding:4px 10px;font-weight:800;font-size:.82rem}
+.srovnani{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:700px){.srovnani{grid-template-columns:1fr}}
+
+/* vzhled appky */
+.vz-dvojice{display:grid;grid-template-columns:minmax(0,390px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.vz-dvojice{grid-template-columns:1fr}}
+.telefon{width:100%;max-width:390px;margin:0 auto;border-radius:40px;background:#0B1022;padding:10px;box-shadow:0 30px 60px -24px rgba(13,27,62,.55)}
+.displej{border-radius:31px;overflow:hidden;position:relative;height:680px;color:#fff;isolation:isolate}
+.vrstva{position:absolute;inset:-30px;pointer-events:none;transition:transform .12s linear}
+.vrstva canvas{width:100%;height:100%;display:block}
+.ui{position:relative;z-index:2;padding:16px;display:grid;gap:12px}
+.ui-lista{display:flex;align-items:center;gap:8px;font-weight:900}
+.ui-lista .m2{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:.8rem;border:1px solid rgba(255,255,255,.25)}
+.ui-lista small{margin-left:auto;font-weight:900;background:rgba(255,255,255,.16);border-radius:999px;padding:3px 10px}
+.ui-karta{background:var(--uik,rgba(255,255,255,.12));border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:14px;display:grid;gap:8px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ui-karta .tl3{opacity:.8;font-size:.86rem}
+.ui-pruh{height:10px;border-radius:6px;background:rgba(255,255,255,.18);overflow:hidden}
+.ui-pruh i{display:block;height:100%;width:64%;background:var(--uia,#F5A623);box-shadow:0 0 12px var(--uia,#F5A623)}
+.ui-tl{font:inherit;font-weight:900;border:0;border-radius:16px;padding:13px;background:var(--uia,#F5A623);color:#0D1B3E;width:100%}
+.ui-hx{position:absolute;right:8px;bottom:8px;width:120px;height:130px;z-index:3}
+.ui-hx canvas{width:100%;height:100%}
+.ui-bublina{position:absolute;right:118px;bottom:84px;z-index:3;background:#fff;color:#0D1B3E;font-weight:800;font-size:.8rem;border-radius:14px 14px 4px 14px;padding:7px 10px;max-width:170px}
+
+.rozh{background:var(--navy);color:#E9EEFA;border-radius:18px;padding:18px 20px;display:grid;gap:10px}
+.rozh h3{color:#fff}
+.rozh li{color:#D7DDF0}
+</style>
+
+<div class="obal">
+  <header class="hlava">
+    <span class="mock"><b>Revize 19. 11. 2026</b> · mockup a návrh, v appce zatím nic</span>
+    <h1>Revize odměn: z 2D obrázků do 3D světa</h1>
+    <p>Prošel jsem v appce všech 179 odměn obou tříd (bez výchozích „nic“), každou záložku šatníku, vzhledy appky, pozadí profilu i sady. Níž je, co je dobře, co bolí a jak bych to převedl do 3D: šatník s miniaturami z pravého modelu, sady, za které se Hexík někam nastěhuje, a pozadí profilu jako místo, kde Hexík bydlí. Všechno 3D na téhle stránce je živé, staví na modelu Hexíka z appky.</p>
+    <div class="tri">
+      <div><b>👍 Co je dobře</b><ul><li>Hexík ve 3D je hlavní hvězda: výrazy, doplňky na tělo, nové truhly.</li><li>Sbírka je bohatá a dobře poskládaná: sezóny, úrovně, kalendář, vzácnosti.</li><li>Sady existují, jen o nich skoro nikdo neví.</li></ul></div>
+      <div><b>😬 Co bolí</b><ul><li>Šatník ukazuje 3D věci jako emoji a ploché šestiúhelníky. Dítě nevidí, co dostane.</li><li>Pozadí a vzhledy jsou ploché obrázky, některé jen barva.</li><li>Za dokončenou sadu přijdou jen krystaly, nic se nestane.</li></ul></div>
+      <div><b>🚀 Co navrhuju</b><ul><li><b>Hned (prosinec):</b> 3D miniatury a náhled v šatníku. Vánoční sada odemkne Vánoční pokojíček se sněžením.</li><li><b>Leden:</b> pozadí profilu jako 3D místa, každá sada s vlastním domovem.</li><li><b>Únor:</b> živé vzhledy appky s Hexíkem v rohu.</li></ul></div>
+    </div>
+  </header>
+
+  <section class="sekce" aria-labelledby="h-audit">
+    <h2 id="h-audit">Audit podle kategorií</h2>
+    <div class="tab">
+      <table class="t">
+        <thead><tr><th>Kategorie</th><th>Kolik (5. / 9.)</th><th>Jak vypadá dnes</th><th>Stav</th><th>Co udělat</th></tr></thead>
+        <tbody>
+          <tr><td><b>Podoby Hexíka</b></td><td class="num">17 / 18</td><td>Malý 2D šestiúhelník. Ve 3D jsou podoby výrazné, v šatníku splývají (Kyber a Ninja, Ledový a Diamantový).</td><td><span class="znamka z-pred">Předělat</span></td><td>3D miniatura celé postavy. Ninjovi přidat masku, ať se liší od Kybera i ve 3D.</td></tr>
+          <tr><td><b>Doplňky (hlava, oči, krk, ruce, nohy)</b></td><td class="num">26 / 26</td><td>Emoji, které často neodpovídá 3D modelu (kulich jako klubko, svatozář jako smajlík).</td><td><span class="znamka z-pred">Předělat</span></td><td>3D miniatura: Hexík s doplňkem, záběr na dané místo těla.</td></tr>
+          <tr><td><b>Oslavy série</b></td><td class="num">11 / 12</td><td>Emoji. Jak taneček vypadá, se dítě dozví, až ho koupí.</td><td><span class="znamka z-lad">Doladit</span></td><td>Ťuknutí na kartu: Hexík v náhledu taneček předvede.</td></tr>
+          <tr><td><b>Efekty správné odpovědi</b></td><td class="num">11 / 10</td><td>Emoji, některé matoucí (disketa, fialový čtverec, bílý kruh).</td><td><span class="znamka z-lad">Doladit</span></td><td>Náhled efektu v kartě (krátká smyčka). Nové ikony pro Binárku, Pixely a Sněhové koule.</td></tr>
+          <tr><td><b>Vzhledy appky</b></td><td class="num">10 / 10</td><td>Malé schéma barev. Kouzelný les vypadá jako Louka, Cukrová vata jako Bonbon.</td><td><span class="znamka z-lad">Doladit</span></td><td>Živá vrstva pozadí s hloubkou, vlastní tlačítka a Hexík v rohu. Náhled celé obrazovky.</td></tr>
+          <tr><td><b>Pozadí profilu</b></td><td class="num">14 / 14</td><td>Plochý obrázek s 2D částicemi. Tyrkys, Mřížka a Beton jsou skoro jen barva.</td><td><span class="znamka z-pred">Předělat</span></td><td>3D místo, kde Hexík stojí: dá se otočit a ťuknout na věci. Nejlepší pozadí převést, nejslabší vyřadit.</td></tr>
+          <tr><td><b>Sady</b></td><td class="num">7 / 7</td><td>Bonus krystalů. V šatníku není vidět, že věc do sady patří.</td><td><span class="znamka z-pred">Předělat</span></td><td>Štítek sady na kartě, efekt kolem Hexíka a domov za dokončení. Nové sady i z doplňků.</td></tr>
+          <tr><td><b>Truhly a Hexík</b></td><td class="num">9 truhel</td><td>Nové 3D truhly a Hexík s výrazy (nasazeno 19. 11.).</td><td><span class="znamka z-ok">V pořádku</span></td><td>Nic. Jsou měřítkem, kam dotáhnout zbytek.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="galerie">
+      <figure><img src="dnes-podoby.jpg" alt="Šatník dnes: podoby Hexíka jako malé 2D šestiúhelníky" width="560" height="328"><figcaption><b>Dnes: podoby.</b> Kyber a Ninja jsou na pohled stejné, legendy poznáš jen podle proužku.</figcaption></figure>
+      <figure><img src="dnes-doplnky.jpg" alt="Šatník dnes: doplňky na ruce a nohy jako emoji" width="560" height="464"><figcaption><b>Dnes: doplňky.</b> Kouzelné rukavice jsou hůlka, kopačky míč, náramek růženec.</figcaption></figure>
+      <figure><img src="dnes-pozadi.jpg" alt="Šatník dnes: pozadí profilu jako ploché náhledy" width="560" height="420"><figcaption><b>Dnes: pozadí.</b> Ploché obrázky, několik je jen barva nebo přechod.</figcaption></figure>
+    </div>
+    <h3 style="font-size:1.08rem;font-weight:900">Konkrétní věci k opravě</h3>
+    <div class="nalezy">
+      <div class="nalez"><span class="em">🧶</span><div><b>Kulich a Vánoční svetr mají stejnou ikonu</b><span>Obojí je klubko vlny. Ve 3D je kulich čepice s bambulí, svetr má norský vzor.</span></div></div>
+      <div class="nalez"><span class="em">😇</span><div><b>Svatozář je smajlík</b><span>Emoji ukazuje obličej, ne zlatý kroužek nad hlavou.</span></div></div>
+      <div class="nalez"><span class="em">📿</span><div><b>Přátelský náramek jako růženec</b><span>Emoji modlitebních korálků. Model je barevný korálkový náramek.</span></div></div>
+      <div class="nalez"><span class="em">🪄</span><div><b>Kouzelné rukavice jsou hůlka</b><span>A rukavice superhrdiny jsou celá postava. Kopačky jsou míč, raketové boty raketa.</span></div></div>
+      <div class="nalez"><span class="em">💾</span><div><b>Binárka, Pixely, Sněhové koule</b><span>Disketa, fialový čtverec a bílý kruh. Z ikony není jasné, co efekt dělá.</span></div></div>
+      <div class="nalez"><span class="em">🎨</span><div><b>Dvojčata ve vzhledech</b><span>Kouzelný les je skoro Louka, Cukrová vata skoro Bonbon. Za úroveň 10 a 25 to zklame.</span></div></div>
+      <div class="nalez"><span class="em">🥷</span><div><b>Kyber a Ninja jsou stejní</b><span>Tmavý Hexík s růžovým pruhem. I ve 3D je potřeba Ninjovi dát masku a čelenku.</span></div></div>
+      <div class="nalez"><span class="em">🏷️</span><div><b>„Máš“ na každé kartě</b><span>Opakuje se všude. Lepší je zvýraznit to, co dítě nemá, a ukázat, do jaké sady věc patří.</span></div></div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-satnik">
+    <h2 id="h-satnik">Šatník ve 3D</h2>
+    <p class="uvod">Miniatury se vyrenderují jedním 3D rendererem z pravého modelu a uloží se jako obrázky. Mřížka je pak stejně rychlá jako dnes. Ťukni na kartu a Hexík vlevo si věc nasadí. U oslav taneček předvede. Přepni na „Dnes“ a porovnej.</p>
+    <div class="prepinac" role="group" aria-label="Zobrazení">
+      <button type="button" data-styl="3d" aria-pressed="true">Návrh ve 3D</button>
+      <button type="button" data-styl="dnes" aria-pressed="false">Dnes</button>
+    </div>
+    <div class="prepinac male" role="group" aria-label="Záložka" id="zalozky"></div>
+    <div class="satnik">
+      <div class="nahled">
+        <div class="nahled-plocha" id="nahled"></div>
+        <div class="nahled-info" id="nahled-info"><b>Hexík</b><span class="tl">Otoč ho tažením</span></div>
+      </div>
+      <div class="mrizka styl-3d" id="mrizka" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-sady">
+    <h2 id="h-sady">Sady: Hexík se má kam nastěhovat</h2>
+    <p class="uvod">Za dokončenou sadu dnes přijdou krystaly a krátká hláška. Návrh: každá sada má <b>efekt kolem Hexíka</b> a <b>domov</b>, místo, kde Hexík bydlí. Domov si dítě nastaví jako pozadí profilu a Domova. Zkus to: posbírej Vánoční sadu (4 věci) a sleduj, co se stane. Ve scéně jde ťuknout na Hexíka i na stromeček.</p>
+    <div class="sada-blok">
+      <div class="scena" id="scena-sada">
+        <div class="zamek" id="zamek"><div><span class="ik">🔒</span><b>Vánoční pokojíček</b><span>Dokonči Vánoční sadu a Hexík se sem na Vánoce nastěhuje. Kolem něj začne sněžit.</span></div></div>
+        <div class="oslava-pruh" id="oslava-pruh">🎄 Vánoční sada je kompletní!</div>
+        <span class="scena-tip">Táhni do stran · ťukni na Hexíka nebo stromeček</span>
+      </div>
+      <div class="blok">
+        <h3>🎄 Vánoce · 9. třída</h3>
+        <div class="postup"><i id="postup"></i></div>
+        <span class="tl" id="postup-t">0 ze 4 · za dokončení: domov, sněžení kolem Hexíka a 300 krystalů</span>
+        <div class="polozky-sady" id="polozky-sady"></div>
+        <button type="button" class="prepinac" id="reset-sady" style="all:unset;cursor:pointer;color:var(--fialova);font-weight:800;font-size:.85rem">Začít znovu</button>
+      </div>
+    </div>
+    <div class="tab">
+      <table class="t">
+        <thead><tr><th>Sada</th><th>Co do ní patří</th><th>Efekt kolem Hexíka</th><th>Domov (3D místo)</th></tr></thead>
+        <tbody>
+          <tr><td><b>🎄 Vánoce</b><span class="tl">obě třídy, sezóna</span></td><td>Santa nebo Skřítek, Vločky, Sněžení, Vánoční noc</td><td>Sněží kolem Hexíka</td><td>Vánoční pokojíček (ukázka nahoře)</td></tr>
+          <tr><td><b>🍪 Advent</b><span class="tl">nová, z kalendáře</span></td><td>7 věcí z adventního kalendáře</td><td>Voní perník: drobky a jiskry</td><td>Perníková chaloupka</td></tr>
+          <tr><td><b>❄️ Zima</b><span class="tl">obě třídy, sezóna</span></td><td>Sněhulák nebo Yeti, Ledové království</td><td>Pára od pusy, poletující vločky</td><td>Polární záře (ukázka níž)</td></tr>
+          <tr><td><b>🧤 Zimní výbava</b><span class="tl">nová, z doplňků</span></td><td>Kulich, šála, palčáky, zimní boty</td><td>Hexík se při nečinnosti zahřívá a dupe</td><td>Iglú</td></tr>
+          <tr><td><b>🏁 Finiš</b><span class="tl">obě třídy, sezóna</span></td><td>Šampion nebo Finišer, Medaile, Cílová páska</td><td>Konfety po každé sérii</td><td>Cílová rovinka se stupni vítězů</td></tr>
+          <tr><td><b>🐠 Pod mořem</b><span class="tl">5. třída</span></td><td>Oceán, Podmoří, Bubliny</td><td>Bubliny kolem Hexíka</td><td>Podmořský svět (ukázka níž)</td></tr>
+          <tr><td><b>🍓 Ovocný košík</b> · <b>🐾 Zvířátka</b> · <b>🏰 Pohádka</b><span class="tl">5. třída</span></td><td>Jako dnes</td><td>Padající lístky · motýlci · duhové jiskry</td><td>Ovocný sad · Paseka · Zámek v oblacích</td></tr>
+          <tr><td><b>🤖 Kyber</b> · <b>🛹 Ulice</b><span class="tl">9. třída</span></td><td>Jako dnes</td><td>Digitální částice · bliká neon</td><td>Neonová garáž · Synthwave (ukázka níž)</td></tr>
+          <tr><td><b>🔥 Oheň</b> · <b>🧊 Led</b><span class="tl">9. třída</span></td><td>Jako dnes</td><td>Uhlíky stoupají · jinovatka</td><td>Kovárna u sopky · Ledová jeskyně</td></tr>
+          <tr><td><b>⚽ Sportovec</b> · <b>🪄 Kouzelník</b> · <b>🦸 Superhrdina</b><span class="tl">nové, z doplňků</span></td><td>Kšiltovka, kopačky, boxerské, medaile · klobouk, kouzelné rukavice, hvězdné brýle · rukavice superhrdiny, raketové boty, vizor</td><td>Potlesk · magické jiskry · stopa z raket</td><td>Stadion · Kouzelnická věž · Střecha města</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-profil">
+    <h2 id="h-profil">Pozadí profilu ve 3D</h2>
+    <p class="uvod">Pozadí přestane být obrázek za kartou. Stane se místem, kde Hexík stojí: dá se rozhlédnout, ťuknout na Hexíka a ve scéně se pořád něco děje. Stejná scéna může běžet za Hexíkem na Domově. Kreslí se jen když je vidět, na slabých zařízeních jako statický obrázek.</p>
+    <div class="prepinac" role="group" aria-label="Pozadí" id="pozadi-volba">
+      <button type="button" data-druh="synthwave" data-podoba="neon" aria-pressed="true">Synthwave</button>
+      <button type="button" data-druh="podmori" data-podoba="klasik" aria-pressed="false">Podmoří</button>
+      <button type="button" data-druh="polarni" data-podoba="ledovy" aria-pressed="false">Polární záře</button>
+      <button type="button" data-druh="pokojicek" data-podoba="santa" aria-pressed="false">Vánoční pokojíček</button>
+    </div>
+    <div class="profil">
+      <div class="scena" id="scena-profil"><span class="scena-tip">Táhni do stran · ťukni na Hexíka</span></div>
+      <div class="profil-dole"><span class="jm">Tomáš</span><span class="tl">9. třída · Úroveň 14</span><div class="st"><span>🔥 12 dní</span><span>💎 2 340</span><span>🏅 18 medailí</span></div></div>
+    </div>
+    <div class="srovnani">
+      <div class="blok"><h3>Které pozadí převést</h3><ul class="cisty tl"><li><b>Do 3D hned:</b> Synthwave, Polární záře, Podmoří, Vánoční noc, Ledové království, Zámek v oblacích, Neonová ulice, Stadion.</li><li><b>Spojit se sadami:</b> každá sada dostane domov, takže pozadí a sady se doplňují.</li><li><b>Nechat jako 2D základ:</b> Klasik a Tyrkys (rychlé a čitelné), Mřížka a Beton nahradit.</li></ul></div>
+      <div class="blok"><h3>Výkon a baterie</h3><ul class="cisty tl"><li>Scéna se kreslí, jen když je na obrazovce. V tréninku neběží.</li><li>Slabý telefon dostane jeden vyrenderovaný snímek scény místo animace.</li><li>Jedna scéna má kolem 30 objektů a sdílí model Hexíka s ostatní appkou.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-vzhled">
+    <h2 id="h-vzhled">Vzhledy appky</h2>
+    <p class="uvod">Celou appku do plného 3D bych nedával: v tréninku by brala baterii a odváděla pozornost od příkladů. Navrhuju <b>živou vrstvu s hloubkou</b> (pohne se, když nakloníš telefon nebo pohneš myší), tlačítka a ukazatele v barvách vzhledu a <b>3D Hexíka v rohu</b>, který komentuje. Pohni myší nad telefonem, na mobilu ho nakloň.</p>
+    <div class="vz-dvojice">
+      <div class="telefon"><div class="displej" id="vz-displej">
+        <div class="vrstva" data-hloubka="8"><canvas id="vz-z"></canvas></div>
+        <div class="vrstva" data-hloubka="18" id="vz-stred"></div>
+        <div class="vrstva" data-hloubka="30"><canvas id="vz-p"></canvas></div>
+        <div class="ui">
+          <div class="ui-lista"><span class="m2">M²</span>Domov<small>💎 2 340</small></div>
+          <div class="ui-karta"><b>Dnešní mise</b><span class="tl3">2 ze 3 hotové · ještě 10 příkladů</span><div class="ui-pruh"><i></i></div></div>
+          <div class="ui-karta"><b>Plán po testu 14. 11.</b><span class="tl3">Zlomky · Slovní úlohy: pohyb · Geometrie</span><button type="button" class="ui-tl">Pokračovat v tréninku</button></div>
+          <div class="ui-karta"><b>🔥 Série 12 dní</b><span class="tl3">Zítra Truhla série</span></div>
+        </div>
+        <div class="ui-bublina" id="vz-bublina">Dnes máš skvělou formu!</div>
+        <div class="ui-hx" id="vz-hx"></div>
+      </div></div>
+      <div class="blok">
+        <h3>Vyber vzhled</h3>
+        <div class="prepinac" role="group" aria-label="Vzhled" id="vz-volba">
+          <button type="button" data-vz="vesmir" aria-pressed="true">Vesmír</button>
+          <button type="button" data-vz="snezeni" aria-pressed="false">Sněžení</button>
+          <button type="button" data-vz="matrix" aria-pressed="false">Matrix</button>
+        </div>
+        <ul class="cisty tl">
+          <li><b>Tři vrstvy do hloubky:</b> vzdálené hvězdy, planeta nebo kopce, blízké částice. Každá se pohne jinak, takže obrazovka působí prostorově, ale stojí to málo výkonu.</li>
+          <li><b>Barvy vzhledu i v ovládání:</b> tlačítka, ukazatele, combo v tréninku.</li>
+          <li><b>Hexík v rohu</b> v podobě, kterou si dítě oblékne. Ťuknutím se rozesměje, k misi řekne větu.</li>
+          <li><b>Při tréninku</b> se vrstva zklidní a zpomalí, aby nerušila.</li>
+          <li><b>Opravit dvojčata:</b> Kouzelný les dostane stromy a světlušky, Cukrová vata obláčky a pastelovou duhu.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-plan">
+    <h2 id="h-plan">Plán a odhady</h2>
+    <div class="tab">
+      <table class="t">
+        <thead><tr><th>Krok</th><th>Co</th><th>Odhad</th><th>Kdy</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. 3D šatník</b></td><td>Miniatury z modelu (cache v prohlížeči), náhled Hexíka v šatníku a obchodě, oslavy se předvedou, štítek sady na kartě, nové ikony efektů</td><td class="num">8–10 h</td><td class="num">do 10. 12.</td></tr>
+          <tr><td><b>2. Vánoční sada s domovem</b></td><td>Vánoční pokojíček jako 3D scéna, sněžení kolem Hexíka po dokončení, oslava dokončení, domov jako pozadí profilu</td><td class="num">8 h</td><td class="num">do 15. 12.</td></tr>
+          <tr><td><b>3. Pozadí profilu ve 3D</b></td><td>Převod 8 nejlepších pozadí na scény, domov pro každou sadu, statický snímek pro slabá zařízení, Domov se scénou</td><td class="num">16–20 h</td><td class="num">leden</td></tr>
+          <tr><td><b>4. Nové sady</b></td><td>Advent, Zimní výbava, Sportovec, Kouzelník, Superhrdina s efekty</td><td class="num">4–6 h</td><td class="num">leden</td></tr>
+          <tr><td><b>5. Vzhledy appky</b></td><td>Živá vrstva s hloubkou pro 10 vzhledů každé třídy, barvy v ovládání, Hexík v rohu, oprava dvojčat</td><td class="num">10–12 h</td><td class="num">únor</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rozh">
+      <h3>Co potřebuju od tebe</h3>
+      <ul class="cisty">
+        <li>Sedí ti směr „pozadí profilu = domov, kde Hexík bydlí“ a že sady odemykají domovy?</li>
+        <li>Mám začít krokem 1 a 2 (šatník a Vánoční pokojíček), aby byly hotové v půlce prosince, kdy děti začnou sbírat vánoční věci?</li>
+        <li>Nové sady z doplňků (Zimní výbava, Sportovec, Kouzelník, Superhrdina): chceš je všechny, nebo jen některé?</li>
+        <li>Vyřadit Mřížku a Beton jako pozadí (kdo je má, dostane náhradu), nebo je nechat?</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script src="odmeny3d.js"></script>
+<script>
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var O = window.Odmeny3D;
+  var IK = { radost:"🙌", poskok:"🦘", tanec:"💃", salto:"🤸", teleport:"🌀", disco:"🪩", robot:"🤖", vlnka:"🌊", pirueta:"🩰", breakdance:"🕺", hvezdne:"🌟", rolnicky:"🔔",
+    ksiltovka:"🧢", sluchatka:"🎧", celenka:"🥷", svatozar:"😇", koruna:"👑", cepice:"🎅", kulich:"🧶", parohy:"🦌", hvezda:"🌟", slunecni:"🕶️", pixel:"😎", vizor:"🥽",
+    sala:"🧣", retez:"⛓️", medaile:"🥇", svetr:"🧶", naramek:"📿", palcaky:"🧤", boxerske:"🥊", superhrdina:"🦸", kouzelnicke:"🪄", tenisky:"👟", zimni:"🥾", kopacky:"⚽", brusle:"⛸️", raketove:"🚀" };
+  var VZ = { bezna:"Běžná", neobvykla:"Neobvyklá", vzacna:"Vzácná", legenda:"Legendární" };
+  var SADA = { santa:"🎄", cepice:"🎄", parohy:"🍪", svetr:"🍪", hvezda:"🍪", rolnicky:"🍪", kulich:"🧤", sala:"🧤", palcaky:"🧤", zimni:"🧤", yeti:"❄️", ksiltovka:"⚽", kopacky:"⚽", boxerske:"⚽", medaile:"⚽", superhrdina:"🦸", raketove:"🦸", vizor:"🦸", kouzelnicke:"🪄", neon:"🤖", kyber:"🤖", street:"🛹", maskac:"🛹", ohnivy:"🔥", ledovy:"🧊" };
+  var KAT = {
+    podoba: { nazev:"Podoby", ramec:"cely", slot:null, polozky:[["klasik","Hexík","bezna"],["grafit","Grafitový Hexík","bezna"],["ohnivy","Ohnivý Hexík","bezna"],["ledovy","Ledový Hexík","bezna"],["neon","Neon","neobvykla"],["street","Streetwear","neobvykla"],["maskac","Maskáč","neobvykla"],["kyber","Kyber","vzacna"],["ninja","Ninja","vzacna"],["zlaty","Zlatý Hexík","legenda"],["toxic","Toxic","neobvykla"],["chrom","Chrom","vzacna"],["diamant","Diamantový Hexík","legenda"],["santa","Santa","neobvykla"],["yeti","Yeti","vzacna"]] },
+    hlava: { nazev:"Hlava", ramec:"hlava", slot:"hlava", polozky:[["ksiltovka","Kšiltovka","bezna"],["sluchatka","Sluchátka","neobvykla"],["celenka","Ninja čelenka","neobvykla"],["svatozar","Svatozář","vzacna"],["koruna","Koruna","legenda"],["cepice","Vánoční čepice","neobvykla"],["kulich","Kulich","neobvykla"],["parohy","Sobí parohy","neobvykla"],["hvezda","Zlatá hvězda","legenda"]] },
+    oci: { nazev:"Oči", ramec:"oci", slot:"oci", polozky:[["slunecni","Sluneční brýle","bezna"],["pixel","Pixelové brýle","neobvykla"],["vizor","Kyber vizor","vzacna"]] },
+    krk: { nazev:"Krk", ramec:"krk", slot:"krk", polozky:[["sala","Šála","bezna"],["retez","Zlatý řetěz","neobvykla"],["medaile","Zlatá medaile","vzacna"],["svetr","Vánoční svetr","neobvykla"]] },
+    ruce: { nazev:"Ruce", ramec:"ruce", slot:"ruce", polozky:[["naramek","Přátelský náramek","bezna"],["palcaky","Palčáky","bezna"],["boxerske","Boxerské rukavice","neobvykla"],["superhrdina","Rukavice superhrdiny","vzacna"],["kouzelnicke","Kouzelnické rukavice","legenda"]] },
+    nohy: { nazev:"Nohy", ramec:"nohy", slot:"nohy", polozky:[["tenisky","Tenisky","bezna"],["zimni","Zimní boty","bezna"],["kopacky","Kopačky","neobvykla"],["brusle","Brusle","vzacna"],["raketove","Raketové boty","legenda"]] },
+    oslava: { nazev:"Oslavy", ramec:null, slot:null, polozky:[["radost","Radost","bezna"],["poskok","Poskok","bezna"],["tanec","Taneček","neobvykla"],["salto","Salto","vzacna"],["teleport","Teleport","vzacna"],["disco","Disco","legenda"],["robot","Robot","neobvykla"],["vlnka","Vlnka","neobvykla"],["pirueta","Dvojitá pirueta","vzacna"],["breakdance","Breakdance","vzacna"],["hvezdne","Hvězdné salto","legenda"],["rolnicky","Rolničky","vzacna"]] }
+  };
+  var zalozka = "podoba", styl = "3d", obrazky = {}, stav = { podoba:"klasik", sloty:{} };
+
+  // náhled: Hexík z appky
+  var hx = null;
+  function nahled(){
+    if (!O) return;
+    var c = document.createElement("canvas"); el("nahled").appendChild(c);
+    try { hx = O.vytvorHexika3D(c, stav.podoba, 3, { otacet:true, mazlit:true }, stav.sloty); } catch(e) {}
+  }
+  function info(n, t){ el("nahled-info").innerHTML = "<b>" + n + "</b><span class='tl'>" + t + "</span>"; }
+
+  function render(){
+    var k = KAT[zalozka];
+    var m = el("mrizka"); m.className = "mrizka styl-" + styl; m.innerHTML = "";
+    if (styl === "3d" && k.ramec && !obrazky[zalozka] && O) {
+      try { obrazky[zalozka] = O.miniatury(k.polozky.map(function(p){ var s = {}; if (k.slot) s[k.slot] = p[0]; return { podoba: k.slot ? "klasik" : p[0], sloty: s, ramec: k.ramec }; }), 200); } catch(e) { obrazky[zalozka] = []; }
+    }
+    k.polozky.forEach(function(p, i){
+      var b = document.createElement("button"); b.type = "button"; b.className = "karta v-" + p[2];
+      var nasazeno = k.slot ? stav.sloty[k.slot] === p[0] : (zalozka === "podoba" && stav.podoba === p[0]);
+      b.setAttribute("aria-pressed", String(!!nasazeno));
+      var obr;
+      if (styl === "3d" && k.ramec && obrazky[zalozka] && obrazky[zalozka][i]) obr = "<img alt='' src='" + obrazky[zalozka][i] + "'>";
+      else if (zalozka === "podoba" && O) obr = O.hexikSvg(p[0], 1);
+      else obr = "<span class='em'>" + (IK[p[0]] || "✨") + "</span>";
+      var sada = styl === "3d" && SADA[p[0]] ? "<span class='sada'>" + SADA[p[0]] + " sada</span>" : "";
+      var hraj = zalozka === "oslava" && styl === "3d" ? "<span class='hraj'>▶</span>" : "";
+      b.innerHTML = "<span class='proužek'></span>" + sada + "<span class='obr'>" + obr + "</span>" + hraj + "<b>" + p[1] + "</b><small>" + (styl === "dnes" ? "Máš" : VZ[p[2]]) + "</small>";
+      b.addEventListener("click", function(){
+        if (!hx) return;
+        if (zalozka === "oslava") { hx.reaguj(p[0]); info(p[1], "Oslava série · " + VZ[p[2]]); return; }
+        if (k.slot) { if (stav.sloty[k.slot] === p[0]) delete stav.sloty[k.slot]; else stav.sloty[k.slot] = p[0]; }
+        else stav.podoba = p[0];
+        hx.nastav(stav.podoba, 3, stav.sloty); hx.reaguj("poskok");
+        info(p[1], (k.slot ? ({ hlava:"Na hlavu", oci:"Na oči", krk:"Na krk", ruce:"Na ruce", nohy:"Na nohy" })[k.slot] : "Podoba") + " · " + VZ[p[2]]);
+        render();
+      });
+      m.appendChild(b);
+    });
+  }
+  el("zalozky").innerHTML = Object.keys(KAT).map(function(z){ return "<button type='button' data-z='" + z + "' aria-pressed='" + (z === zalozka) + "'>" + KAT[z].nazev + "</button>"; }).join("");
+  el("zalozky").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ zalozka = b.dataset.z; el("zalozky").querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); }); render(); }); });
+  document.querySelectorAll("[data-styl]").forEach(function(b){ b.addEventListener("click", function(){ styl = b.dataset.styl; document.querySelectorAll("[data-styl]").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); }); render(); }); });
+
+  // ── sada s domovem ──
+  var SADA_VANOCE = [["santa","Santa","podoba","🎅"],["vlocky","Vločky","efekt","❄️"],["snezeni","Sněžení","vzhled","🌨️"],["vanoce","Vánoční noc","pozadi","🎄"]];
+  var mam = {}, scSada = null;
+  function kresliSadu(){
+    var n = Object.keys(mam).length;
+    el("postup").style.width = (n / 4 * 100) + "%";
+    el("postup-t").textContent = n + " ze 4 · za dokončení: domov, sněžení kolem Hexíka a 300 krystalů";
+    el("polozky-sady").innerHTML = SADA_VANOCE.map(function(p){
+      var ok = mam[p[0]];
+      return "<div class='ps" + (ok ? " mam" : "") + "'><span class='em'>" + p[3] + "</span><span><b>" + p[1] + "</b><small>" + ({podoba:"Podoba",efekt:"Efekt",vzhled:"Vzhled appky",pozadi:"Pozadí"})[p[2]] + "</small></span><button type='button' data-p='" + p[0] + "'" + (ok ? " disabled" : "") + ">" + (ok ? "✓ Máš" : "Získat") + "</button></div>";
+    }).join("");
+    el("polozky-sady").querySelectorAll("button[data-p]").forEach(function(b){ b.addEventListener("click", function(){ mam[b.dataset.p] = true; kresliSadu(); if (Object.keys(mam).length === 4) dokonci(); }); });
+  }
+  function dokonci(){
+    el("zamek").style.opacity = "0"; setTimeout(function(){ el("zamek").hidden = true; }, 600);
+    el("oslava-pruh").classList.add("on"); setTimeout(function(){ el("oslava-pruh").classList.remove("on"); }, 4200);
+    if (scSada) { scSada.efekt("snih"); scSada.oslava(); }
+  }
+  el("reset-sady").addEventListener("click", function(){ mam = {}; el("zamek").hidden = false; el("zamek").style.opacity = "1"; if (scSada) scSada.efekt(null); kresliSadu(); });
+  function scena(obal, o){ if (!O) return null; var c = document.createElement("canvas"); obal.insertBefore(c, obal.firstChild); try { return O.vytvorScenu(c, o); } catch(e) { return null; } }
+
+  // ── profil ──
+  var scProfil = null;
+  document.querySelectorAll("#pozadi-volba button").forEach(function(b){ b.addEventListener("click", function(){
+    document.querySelectorAll("#pozadi-volba button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+    var sloty = b.dataset.druh === "pokojicek" ? { hlava:"cepice" } : b.dataset.druh === "polarni" ? { hlava:"kulich", krk:"sala", ruce:"palcaky" } : b.dataset.druh === "synthwave" ? { oci:"slunecni", nohy:"tenisky" } : { oci:"pixel" };
+    if (scProfil) scProfil.druh(b.dataset.druh, b.dataset.podoba, sloty);
+  }); });
+
+  // ── vzhled appky ──
+  var VZHLEDY = {
+    vesmir: { bg:"radial-gradient(circle at 70% 18%,#3A2B8F,#120B3A 55%,#05031A)", akcent:"#FFC93C", karta:"rgba(255,255,255,.10)", stred:"<div style='position:absolute;right:40px;top:120px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFB8E0,#B04BD8 55%,#3D1470);box-shadow:0 0 40px rgba(200,100,255,.45)'></div><div style='position:absolute;right:10px;top:168px;width:180px;height:26px;border-radius:50%;border:3px solid rgba(255,220,160,.55);transform:rotate(-14deg)'></div>", castice:"hvezdy", bublina:"Dnes máš skvělou formu! 🚀" },
+    snezeni: { bg:"linear-gradient(#5D86C9,#9EC1EC 60%,#E6F0FC)", akcent:"#FF5E6C", karta:"rgba(20,40,90,.28)", stred:"<svg viewBox='0 0 400 200' preserveAspectRatio='none' style='position:absolute;left:0;bottom:0;width:100%;height:42%'><path d='M0,120 C80,60 160,80 220,110 C290,140 340,70 400,90 L400,200 L0,200Z' fill='#F2F7FF'/><path d='M0,160 C90,120 200,150 260,140 C320,130 360,150 400,140 L400,200 L0,200Z' fill='#DCE8F8'/></svg>", castice:"snih", bublina:"Brr, venku sněží! Zahřejeme se příkladem? ❄️" },
+    matrix: { bg:"linear-gradient(#000,#021A0C)", akcent:"#3DFF7A", karta:"rgba(0,40,15,.55)", stred:"", castice:"matrix", bublina:"Probíhá stahování znalostí… 0101 💚" }
+  };
+  var vz = "vesmir", zv = el("vz-z"), pv = el("vz-p"), cz, cp, castice = [], hxRoh = null;
+  function pripravCastice(){
+    var w = zv.clientWidth, h = zv.clientHeight; [zv, pv].forEach(function(c){ c.width = w; c.height = h; });
+    cz = zv.getContext("2d"); cp = pv.getContext("2d"); castice = [];
+    var n = vz === "matrix" ? 26 : 110;
+    for (var i = 0; i < n; i++) castice.push({ x: Math.random() * w, y: Math.random() * h, v: 0.3 + Math.random(), r: Math.random(), blizko: i % 3 === 0, z: "01ア∑π√x²"[i % 9] });
+  }
+  function kresliCastice(){
+    if (!cz) return;
+    var w = zv.width, h = zv.height; cz.clearRect(0, 0, w, h); cp.clearRect(0, 0, w, h);
+    castice.forEach(function(c){
+      var ctx = c.blizko ? cp : cz;
+      if (vz === "hvezdy" || vz === "vesmir") { var a = 0.4 + 0.6 * Math.abs(Math.sin(performance.now() / 900 + c.r * 10)); ctx.fillStyle = "rgba(255,255,255," + a + ")"; ctx.beginPath(); ctx.arc(c.x, c.y, c.blizko ? 1.8 : 0.9, 0, 7); ctx.fill(); }
+      else if (vz === "snezeni") { c.y += c.v * (c.blizko ? 1.3 : 0.6); c.x += Math.sin(performance.now() / 1000 + c.r * 6) * 0.3; if (c.y > h) { c.y = -4; c.x = Math.random() * w; } ctx.fillStyle = "rgba(255,255,255,.9)"; ctx.beginPath(); ctx.arc(c.x, c.y, c.blizko ? 3 : 1.6, 0, 7); ctx.fill(); }
+      else { c.y += c.v * 2.2; if (c.y > h + 200) { c.y = -200; c.x = Math.random() * w; } ctx.font = (c.blizko ? 18 : 13) + "px monospace"; for (var k = 0; k < 9; k++) { ctx.fillStyle = "rgba(61,255,122," + (k === 0 ? 1 : 0.6 - k * 0.06) + ")"; ctx.fillText("01ア∑π√x²"[(k + Math.floor(c.y / 20)) % 9], c.x, c.y - k * (c.blizko ? 20 : 15)); } }
+    });
+    requestAnimationFrame(kresliCastice);
+  }
+  function nastavVzhled(k){
+    vz = k; var v = VZHLEDY[k], d = el("vz-displej");
+    d.style.background = v.bg; d.style.setProperty("--uia", v.akcent); d.style.setProperty("--uik", v.karta);
+    el("vz-stred").innerHTML = v.stred; el("vz-bublina").textContent = v.bublina;
+    pripravCastice();
+    if (hxRoh) hxRoh.nastav(k === "snezeni" ? "ledovy" : k === "matrix" ? "toxic" : "klasik", 3, k === "snezeni" ? { hlava:"kulich", krk:"sala" } : k === "matrix" ? { oci:"pixel" } : { oci:"slunecni" });
+  }
+  document.querySelectorAll("#vz-volba button").forEach(function(b){ b.addEventListener("click", function(){ document.querySelectorAll("#vz-volba button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); }); nastavVzhled(b.dataset.vz); }); });
+  function paralaxa(nx, ny){ document.querySelectorAll("#vz-displej .vrstva").forEach(function(v){ var d = +v.dataset.hloubka; v.style.transform = "translate(" + (-nx * d) + "px," + (-ny * d) + "px)"; }); }
+  el("vz-displej").addEventListener("pointermove", function(e){ var r = el("vz-displej").getBoundingClientRect(); paralaxa((e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5); });
+  el("vz-displej").addEventListener("pointerleave", function(){ paralaxa(0, 0); });
+  window.addEventListener("deviceorientation", function(e){ if (e.gamma == null) return; paralaxa(Math.max(-1, Math.min(1, e.gamma / 30)) * 0.5, Math.max(-1, Math.min(1, (e.beta - 40) / 30)) * 0.5); });
+
+  // spouštění scén až při doscrollování (šetří výkon)
+  var spusteno = {};
+  var io = new IntersectionObserver(function(z){ z.forEach(function(x){
+    if (!x.isIntersecting || spusteno[x.target.id]) return; spusteno[x.target.id] = true;
+    if (x.target.id === "scena-sada") scSada = scena(el("scena-sada"), { druh:"pokojicek", podoba:"santa", sloty:{ krk:"svetr" }, efekt:null });
+    if (x.target.id === "scena-profil") scProfil = scena(el("scena-profil"), { druh:"synthwave", podoba:"neon", sloty:{ oci:"slunecni", nohy:"tenisky" } });
+    if (x.target.id === "vz-displej") { var c = document.createElement("canvas"); el("vz-hx").appendChild(c); try { hxRoh = O.vytvorHexika3D(c, "klasik", 3, { mazlit:true }, { oci:"slunecni" }); } catch(e) {} nastavVzhled(vz); kresliCastice(); }
+  }); }, { rootMargin: "200px" });
+  ["scena-sada","scena-profil","vz-displej"].forEach(function(id){ io.observe(el(id)); });
+
+  nahled(); render(); kresliSadu();
+})();
+</script>

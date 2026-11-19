@@ -1,0 +1,456 @@
+<title>Osobní QR do MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Stejný jazyk jako mockupy truhel, Hexíka a Soubojů. Nahoře verdikt a schéma, uprostřed proklikání obou kanálů (e-mail rodiči, výsledkový list) vedle telefonu, dole tři weby, bezpečnost, plán a rozhodnutí. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#56617D; --linka:#DCE2EE;
+  --navy:#0D1B3E; --amber:#F5A623; --lev:#AFACFB; --fialova:#5B55D6; --zelena:#2FA36B; --cervena:#E5484D;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 64px;display:grid;gap:38px}
+.mock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#E9EEFA;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700;justify-self:start;max-width:100%}
+.mock b{color:var(--amber)}
+.hlava{display:grid;gap:12px}
+.hlava h1{font-size:clamp(1.8rem,4.2vw,2.7rem);font-weight:900;letter-spacing:-.025em}
+.hlava p{color:var(--tl);max-width:74ch}
+.verdikt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.verdikt{grid-template-columns:1fr}}
+.verdikt div{background:var(--plocha);border:1px solid var(--linka);border-radius:16px;padding:14px 16px;display:grid;gap:4px}
+.verdikt b{font-size:1.05rem}
+.verdikt span{color:var(--tl);font-size:.92rem}
+.sekce{display:grid;gap:16px}
+.sekce>h2{font-size:clamp(1.3rem,2.6vw,1.65rem);font-weight:900;letter-spacing:-.015em}
+.sekce>p.uvod{color:var(--tl);max-width:74ch}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:18px;padding:18px 20px;display:grid;gap:12px;min-width:0}
+.blok h3{font-size:1.08rem;font-weight:900}
+.tl{color:var(--tl);font-size:.92rem}
+ul.cisty{margin:0;padding-left:18px;display:grid;gap:7px}
+.schema{background:var(--plocha);border:1px solid var(--linka);border-radius:18px;padding:14px;overflow-x:auto}
+.schema svg{display:block;width:100%;min-width:760px;height:auto}
+.schema text{font-family:var(--font)}
+.s-box{fill:var(--plocha);stroke:var(--linka);stroke-width:1.5}
+.s-nad{fill:var(--fg);font-weight:900;font-size:15px}
+.s-tx{fill:var(--tl);font-size:12.5px}
+.s-car{stroke:var(--tl);stroke-width:1.6;fill:none}
+.s-cislo{fill:var(--fialova)}
+.s-cislo-t{fill:#fff;font-weight:900;font-size:13px}
+
+.prepinac{display:flex;gap:8px;flex-wrap:wrap}
+.prepinac button{font:inherit;font-weight:900;border-radius:999px;padding:9px 16px;border:1px solid var(--linka);background:var(--plocha);color:var(--fg);cursor:pointer}
+.prepinac button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+:root[data-theme="dark"] .prepinac button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .prepinac button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}}
+.dvojice{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,390px);gap:28px;align-items:start}
+@media (max-width:900px){.dvojice{grid-template-columns:1fr}}
+.kroky{display:flex;gap:6px;flex-wrap:wrap}
+.kroky button{font:inherit;font-size:.8rem;font-weight:800;border-radius:10px;padding:5px 10px;border:1px solid var(--linka);background:var(--plocha);color:var(--tl);cursor:pointer}
+.kroky button[aria-current="step"]{background:var(--fialova);color:#fff;border-color:var(--fialova)}
+button:focus-visible,a:focus-visible{outline:3px solid #7FD8EE;outline-offset:2px}
+.levy{display:grid;gap:14px;min-width:0}
+
+/* e-mail */
+.mail{background:#fff;color:#0D1B3E;border-radius:18px;overflow:hidden;border:1px solid var(--linka);box-shadow:0 20px 40px -28px rgba(13,27,62,.5)}
+.mail-hl{background:#F6F7FB;border-bottom:1px solid #E4E8F2;padding:12px 16px;font-size:.84rem;color:#56617D;display:grid;gap:2px}
+.mail-hl b{color:#0D1B3E}
+.mail-telo{padding:18px 20px;display:grid;gap:12px;font-size:.95rem}
+.mail-stare{border-left:3px solid #DCE2EE;padding:4px 0 4px 12px;color:#56617D;font-size:.9rem;display:grid;gap:4px}
+.mail-stare small{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:.68rem;color:#8A93AB}
+.mail-novy{border:2px solid #AFACFB;background:linear-gradient(160deg,#F4F3FF,#fff 60%);border-radius:16px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;position:relative}
+.mail-novy .stitek{position:absolute;top:-11px;left:14px;background:#5B55D6;color:#fff;font-size:.7rem;font-weight:900;border-radius:999px;padding:2px 9px;letter-spacing:.04em}
+.mail-novy h3{font-size:1.12rem}
+.mail-novy ul{margin:6px 0 10px;padding-left:18px;display:grid;gap:4px;font-size:.9rem;color:#3E4964}
+.mail-tl{display:inline-block;background:#F5A623;color:#0D1B3E;font-weight:900;border-radius:12px;padding:10px 16px;text-decoration:none;border:0;font:inherit;cursor:pointer}
+.qrbox{display:grid;gap:4px;justify-items:center;text-align:center;font-size:.72rem;color:#56617D;font-weight:700;max-width:130px}
+.qrbox svg{width:112px;height:112px;background:#fff;border-radius:10px;padding:6px;border:1px solid #E4E8F2}
+@media (max-width:560px){.mail-novy{grid-template-columns:1fr}.qrbox{justify-self:start}}
+
+/* výsledkový list */
+.list{background:#FFFEFA;color:#0D1B3E;border-radius:6px;border:1px solid var(--linka);padding:22px 24px;display:grid;gap:14px;box-shadow:0 20px 40px -28px rgba(13,27,62,.5);font-size:.9rem}
+.list-hl{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #0D1B3E;padding-bottom:8px}
+.list-hl b{font-size:1.1rem}
+.list table{width:100%;border-collapse:collapse;font-size:.86rem}
+.list td{padding:5px 4px;border-bottom:1px dashed #DCE2EE}
+.list td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+.list-qr{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;border:2px dashed #5B55D6;border-radius:12px;padding:12px}
+.list-qr svg{width:104px;height:104px}
+.list-qr b{display:block;font-size:1rem}
+
+/* telefon */
+.telefon{width:100%;max-width:390px;margin:0 auto;border-radius:40px;background:#0B1022;padding:10px;box-shadow:0 30px 60px -24px rgba(13,27,62,.55)}
+.displej{border-radius:31px;overflow:hidden;position:relative;height:720px;background:#F3F4FB;color:#0D1B3E;display:flex;flex-direction:column}
+.lista{display:flex;align-items:center;gap:8px;padding:14px 16px 10px;background:#fff;border-bottom:1px solid #E4E8F2;font-weight:900}
+.lista .m2{width:30px;height:30px;border-radius:9px;background:#0D1B3E;color:#fff;display:grid;place-items:center;font-size:.8rem}
+.lista small{margin-left:auto;font-weight:800;color:#56617D;font-size:.78rem}
+.obraz{flex:1;overflow-y:auto;padding:16px;display:none;flex-direction:column;gap:12px}
+.obraz.on{display:flex}
+.karta{background:#fff;border:1px solid #E4E8F2;border-radius:18px;padding:14px;display:grid;gap:8px}
+.karta.tmava{background:linear-gradient(140deg,#1F2F66,#0D1B3E 70%);color:#fff;border:0}
+.karta.tmava .tl2{color:#C9C7F5}
+.tl2{color:#56617D;font-size:.88rem}
+.velke{font-size:1.35rem;font-weight:900;line-height:1.15}
+.tlac{font:inherit;font-weight:900;border:0;border-radius:16px;padding:13px 14px;background:#F5A623;color:#0D1B3E;cursor:pointer;width:100%}
+.tlac.druhe{background:#fff;color:#0D1B3E;border:1px solid #DCE2EE}
+.tlac.google{background:#fff;border:1px solid #DCE2EE;color:#0D1B3E}
+.tlac:disabled{opacity:.45;cursor:not-allowed}
+.hx3d{position:relative;border-radius:16px;overflow:hidden;background:#141E52}
+.hx3d canvas{position:absolute;inset:0;width:100%;height:100%}
+.uvod-hx{height:200px}
+.pole{display:grid;gap:4px;font-size:.8rem;font-weight:700;color:#56617D}
+.pole div{border:1px solid #DCE2EE;border-radius:12px;padding:10px 12px;background:#fff;color:#0D1B3E;font-weight:600;font-size:.92rem}
+.pole div.pred{border-color:#2E6DA4;background:#EFF6FF}
+.volba{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.volba div{border:2px solid #DCE2EE;border-radius:12px;padding:8px 10px;font-size:.84rem;background:#fff}
+.volba div.on{border-color:#2E6DA4;background:#EFF6FF}
+.volba b{display:block}
+.zaskrt{display:flex;gap:10px;align-items:flex-start;border:1px solid #DCE2EE;border-radius:14px;padding:12px;background:#fff;cursor:pointer;font-weight:800}
+.zaskrt input{width:20px;height:20px;margin-top:2px;accent-color:#5B55D6}
+.stav{display:flex;gap:10px;align-items:center;border-radius:14px;padding:10px 12px;font-weight:800;font-size:.88rem}
+.stav.ok{background:#E6F6EE;color:#17663F}
+.stav.ceka{background:#FFF4DE;color:#8A5300}
+.tema{display:grid;gap:4px}
+.tema .radek{display:flex;justify-content:space-between;font-size:.86rem;font-weight:800}
+.pruh{height:8px;border-radius:5px;background:#E4E8F2;overflow:hidden}
+.pruh i{display:block;height:100%}
+.odmena{display:flex;align-items:center;gap:12px;background:linear-gradient(140deg,#2A3A2C,#3E5A41);color:#fff;border-radius:16px;padding:12px;font-weight:800;font-size:.9rem}
+.odmena .ik{font-size:2rem}
+.odmena small{display:block;font-weight:600;color:#CFE7D2}
+.notif{background:rgba(255,255,255,.96);border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:.84rem;box-shadow:0 8px 22px -10px rgba(13,27,62,.4)}
+.notif .m2{width:34px;height:34px;border-radius:9px;background:#0D1B3E;color:#fff;display:grid;place-items:center;font-size:.8rem;font-weight:900;flex:0 0 auto}
+
+.tab{overflow-x:auto;border:1px solid var(--linka);border-radius:16px;background:var(--plocha)}
+table.t{border-collapse:collapse;width:100%;min-width:680px;font-size:.92rem}
+.t th,.t td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--linka)}
+.t th{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--tl);background:color-mix(in srgb,var(--plocha) 85%,var(--lev) 15%)}
+.t tr:last-child td{border-bottom:0}
+.t td b{display:block}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mrizka2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.mrizka2{grid-template-columns:1fr}}
+.dum{display:grid;gap:8px}
+.dum .ik{font-size:1.6rem}
+.dum small{font-weight:900;text-transform:uppercase;letter-spacing:.07em;font-size:.7rem;color:var(--fialova)}
+.rozh{background:var(--navy);color:#E9EEFA;border-radius:18px;padding:18px 20px;display:grid;gap:10px}
+.rozh h3{color:#fff}
+.rozh li{color:#D7DDF0}
+.popis-kroku{display:grid;gap:10px}
+.popis-kroku h3{font-size:1.15rem}
+</style>
+
+<div class="obal">
+  <header class="hlava">
+    <span class="mock"><b>Návrh 19. 11. 2026</b> · mockup, nic z toho zatím neběží</span>
+    <h1>Osobní QR: z testu rovnou do MateMaxu</h1>
+    <p>Každý žák přihlášený na test nanečisto dostane vlastní QR kód: v e-mailu rodičům týden před testem a na výsledkovém listu. Kód otevře MateMax, žák se zaregistruje nebo přihlásí, rodič odsouhlasí propojení a od té chvíle chodí výsledky testů do MateMaxu samy. Spolu s nimi přijde plán tréninku a Truhla Generálka, bez opisování kódu.</p>
+    <div class="verdikt">
+      <div><b>✅ Dá se to udělat</b><span>Propojení účtů (krok 2) už v MateMaxu je hotové. QR jen zkrátí cestu k němu: dnes ho rodič musí ve Vyhodnocení najít a kliknout sám.</span></div>
+      <div><b>⏱️ Stihne se to k 12. 12.</b><span>MateMax zhruba 6–8 h, Vyhodnocení testů zhruba 6–8 h. Připomínka k 12. 12. odchází 5. 12., takže obě části musí být hotové do 4. 12.</span></div>
+      <div><b>🛟 Záchrana je připravená</b><span>Kdyby se to nestihlo, na list i do učebny půjde společný kód Generálka (už funguje). Osobní QR pak naběhne k testu 9. 1.</span></div>
+    </div>
+  </header>
+
+  <section class="sekce" aria-labelledby="h-schema">
+    <h2 id="h-schema">Jak to funguje</h2>
+    <div class="schema">
+      <svg viewBox="0 0 1100 250" role="img" aria-labelledby="schema-t">
+        <title id="schema-t">Vyhodnocení testů vytvoří osobní QR, ten otevře MateMax, žák se přihlásí, rodič souhlasí, účty se propojí a po testu jdou výsledky do MateMaxu a souhrn tréninku zpět rodiči.</title>
+        <defs><marker id="sip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" style="color:var(--tl)"/></marker></defs>
+        <g>
+          <rect class="s-box" x="10" y="20" width="230" height="110" rx="16"/>
+          <circle class="s-cislo" cx="34" cy="44" r="13"/><text class="s-cislo-t" x="34" y="49" text-anchor="middle">1</text>
+          <text class="s-nad" x="56" y="49">Vyhodnocení testů</text>
+          <text class="s-tx" x="26" y="76">Ke každému přihlášenému</text>
+          <text class="s-tx" x="26" y="94">žákovi vytvoří osobní QR</text>
+          <text class="s-tx" x="26" y="112">(e-mail rodiči a výsledkový list)</text>
+        </g>
+        <path class="s-car" d="M240,75 L300,75" marker-end="url(#sip)"/>
+        <g>
+          <rect class="s-box" x="300" y="20" width="230" height="110" rx="16"/>
+          <circle class="s-cislo" cx="324" cy="44" r="13"/><text class="s-cislo-t" x="324" y="49" text-anchor="middle">2</text>
+          <text class="s-nad" x="346" y="49">MateMax</text>
+          <text class="s-tx" x="316" y="76">Úvod pro žáka, registrace</text>
+          <text class="s-tx" x="316" y="94">s předvyplněnou třídou,</text>
+          <text class="s-tx" x="316" y="112">nebo přihlášení</text>
+        </g>
+        <path class="s-car" d="M530,75 L590,75" marker-end="url(#sip)"/>
+        <g>
+          <rect class="s-box" x="590" y="20" width="230" height="110" rx="16"/>
+          <circle class="s-cislo" cx="614" cy="44" r="13"/><text class="s-cislo-t" x="614" y="49" text-anchor="middle">3</text>
+          <text class="s-nad" x="636" y="49">Souhlas rodiče</text>
+          <text class="s-tx" x="606" y="76">Z e-mailu: zaškrtnutí.</text>
+          <text class="s-tx" x="606" y="94">Z papíru: potvrzení e-mailem,</text>
+          <text class="s-tx" x="606" y="112">které pošle Vyhodnocení</text>
+        </g>
+        <path class="s-car" d="M820,75 L880,75" marker-end="url(#sip)"/>
+        <g>
+          <rect class="s-box" x="880" y="20" width="210" height="110" rx="16"/>
+          <circle class="s-cislo" cx="904" cy="44" r="13"/><text class="s-cislo-t" x="904" y="49" text-anchor="middle">4</text>
+          <text class="s-nad" x="926" y="49">Propojeno</text>
+          <text class="s-tx" x="896" y="76">Stejné propojení jako dnes</text>
+          <text class="s-tx" x="896" y="94">(kód a výměna za link_id),</text>
+          <text class="s-tx" x="896" y="112">jen bez hledání tlačítka</text>
+        </g>
+        <path class="s-car" d="M985,130 L985,170 L820,170" marker-end="url(#sip)"/>
+        <g>
+          <rect class="s-box" x="300" y="150" width="520" height="86" rx="16"/>
+          <text class="s-nad" x="320" y="178">Po každém testu samo, bez kódu a bez klikání</text>
+          <text class="s-tx" x="320" y="202">→ do MateMaxu: body po tématech, plán do dalšího testu, Truhla Generálka</text>
+          <text class="s-tx" x="320" y="222">← rodiči do Vyhodnocení: kolik a co dítě trénovalo (už hotový souhrn)</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-tok">
+    <h2 id="h-tok">Proklikej si to</h2>
+    <p class="uvod">Dva vstupy, stejný QR systém. Přepni kanál a projdi kroky v telefonu. Liší se jen souhlas: z e-mailu ho dá rodič rovnou, z papíru ho rodič potvrdí v e-mailu, který mu přijde.</p>
+    <div class="prepinac" role="group" aria-label="Kanál">
+      <button type="button" data-kanal="mail" aria-pressed="true">📧 E-mail rodiči týden před testem</button>
+      <button type="button" data-kanal="list" aria-pressed="false">📄 Výsledkový list z testu</button>
+    </div>
+    <div class="dvojice">
+      <div class="levy">
+        <div class="mail" id="kanal-mail">
+          <div class="mail-hl"><span>Od: <b>Testy nanečisto · Matematika Snadno</b></span><span>Předmět: <b>Za týden test nanečisto (12. 12.)</b></span></div>
+          <div class="mail-telo">
+            <div class="mail-stare"><small>Stávající připomínka, beze změny</small>Sobota 12. 12. · sraz 9:45, start testu 10:00, konec 11:45 · Gymnázium Týn nad Vltavou, Havlíčkova 13 · co si vzít s sebou…</div>
+            <div class="mail-novy">
+              <span class="stitek">NOVÉ</span>
+              <div>
+                <h3>Výsledky rovnou do MateMaxu</h3>
+                <ul>
+                  <li>Po testu dítě uvidí body po tématech a plán, co trénovat do dalšího testu.</li>
+                  <li>Za test dostane v MateMaxu Truhlu Generálka.</li>
+                  <li>Vy tady uvidíte, kolik a co trénovalo. Jméno ani e-mail se nepředávají.</li>
+                </ul>
+                <button type="button" class="mail-tl" data-jdi="uvod">Propojit s MateMaxem</button>
+              </div>
+              <div class="qrbox"><svg viewBox="0 0 25 25" class="qr" data-seed="11" aria-hidden="true"></svg>Dítě si kód může načíst svým telefonem nebo tabletem</div>
+            </div>
+            <span class="tl" style="font-size:.82rem">Kód je jen pro vaše dítě. Pokud už propojené je, otevře se rovnou MateMax.</span>
+          </div>
+        </div>
+
+        <div class="list" id="kanal-list" hidden>
+          <div class="list-hl"><b>Test nanečisto · 12. 12. 2026</b><span>Žák: Tomáš N. · 9. třída</span></div>
+          <table>
+            <tr><td>Zlomky</td><td>4 / 6</td></tr>
+            <tr><td>Výrazy</td><td>3 / 4</td></tr>
+            <tr><td>Rovnice</td><td>5 / 6</td></tr>
+            <tr><td>Slovní úlohy</td><td>2 / 8</td></tr>
+            <tr><td>Geometrie</td><td>6 / 9</td></tr>
+            <tr><td>Grafy a logika</td><td>4 / 5</td></tr>
+            <tr><td><b>Celkem</b></td><td>31 / 50</td></tr>
+          </table>
+          <div class="list-qr">
+            <svg viewBox="0 0 25 25" class="qr" data-seed="23" aria-hidden="true"></svg>
+            <div><b>Naskenuj a otevři si Truhlu Generálka 🎁</b><span class="tl" style="color:#56617D">Tvoje výsledky a plán, co trénovat do 9. 1., najdeš v MateMaxu. Kód je jen tvůj.</span>
+              <div style="margin-top:8px"><button type="button" class="mail-tl" data-jdi="uvod" style="font-size:.85rem;padding:8px 12px">Naskenovat (v ukázce)</button></div></div>
+          </div>
+        </div>
+
+        <div class="popis-kroku">
+          <div class="kroky" id="kroky" aria-label="Kroky v telefonu"></div>
+          <div class="blok" id="popis"></div>
+        </div>
+      </div>
+
+      <div class="telefon">
+        <div class="displej">
+          <div class="lista"><span class="m2">M²</span>MateMax<small id="lista-t">matemax.matematika-snadno.cz</small></div>
+
+          <div class="obraz on" data-o="uvod">
+            <div class="hx3d uvod-hx" id="hx-uvod"></div>
+            <div class="karta tmava"><span class="tl2" id="uvod-nad">Test nanečisto 12. 12. · 9. třída</span><span class="velke" id="uvod-t">Ahoj! Tady budou tvoje výsledky z testu</span><span class="tl2" id="uvod-p">Po testu ti sem přijdou body po tématech, plán do dalšího testu a Truhla Generálka. Do testu si můžeš zatrénovat.</span></div>
+            <button type="button" class="tlac" data-jdi="registrace">Vytvořit účet zdarma</button>
+            <button type="button" class="tlac druhe" data-jdi="souhlas">Už mám účet, přihlásit</button>
+            <span class="tl2" style="text-align:center">Třídu už známe z testu, nic dalšího vyplňovat nemusíš.</span>
+          </div>
+
+          <div class="obraz" data-o="registrace">
+            <b style="font-size:1.15rem">Vytvoř si účet</b>
+            <div class="volba"><div class="on"><b>🎓 9. třída</b>z testu nanečisto</div><div><b>🎒 5. třída</b>víceletá gymnázia</div></div>
+            <div class="pole">Jak ti říkat? (nepovinné)<div>Tomáš</div></div>
+            <div class="pole">E-mail<div>tomas@…</div></div>
+            <div class="pole">Heslo<div>••••••••</div></div>
+            <button type="button" class="tlac" data-jdi="souhlas">Zaregistrovat se</button>
+            <button type="button" class="tlac google" data-jdi="souhlas">Pokračovat přes Google</button>
+            <span class="tl2">Třída je předvyplněná podle testu. Po registraci se appka vrátí rovnou k propojení.</span>
+          </div>
+
+          <div class="obraz" data-o="souhlas">
+            <span class="tl2" style="font-weight:900;color:#A66300;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem">Propojení s Testy nanečisto</span>
+            <b style="font-size:1.2rem">Propojit MateMax s výsledky z testů</b>
+            <span class="tl2">Testy nanečisto Matematika Snadno budou do MateMaxu posílat body z testů po tématech. MateMax pošle zpátky jen souhrn, kolik a co jsi procvičil(a). Jméno ani e-mail se nepředávají. Propojení jde kdykoli zrušit v profilu.</span>
+            <div id="souhlas-mail">
+              <label class="zaskrt"><input type="checkbox" id="chk"> Jsem rodič a souhlasím</label>
+              <div style="height:10px"></div>
+              <button type="button" class="tlac" id="propojit" disabled data-jdi="hotovo">Propojit</button>
+            </div>
+            <div id="souhlas-list" hidden style="display:grid;gap:10px">
+              <div class="karta" style="background:#FFF9EC;border-color:#F5D9A0"><b>Propojení potvrdí rodič</b><span class="tl2">Pošleme e-mail na adresu, kterou rodič zadal při přihlášce na test. Stačí jedno kliknutí. Truhlu Generálka si mezitím můžeš otevřít.</span></div>
+              <button type="button" class="tlac" data-jdi="hotovo">Poslat rodiči e-mail</button>
+              <button type="button" class="tlac druhe" data-jdi="hotovo" id="rodic-vedle">Rodič je u mě, potvrdí hned</button>
+            </div>
+          </div>
+
+          <div class="obraz" data-o="hotovo">
+            <div class="hx3d uvod-hx" id="hx-hotovo"></div>
+            <div class="stav ok" id="stav-ok">✓ Propojeno s Testy nanečisto</div>
+            <div class="stav ceka" id="stav-ceka" hidden>⏳ Čeká na potvrzení rodiče (e-mail odešel)</div>
+            <div class="karta" id="hotovo-pred"><b>Do testu zbývá 7 dní 💪</b><span class="tl2">Rozcvič se: 10 příkladů z celého testu, ať víš, jak na tom jsi. Po testu sem večer přijdou výsledky.</span><button type="button" class="tlac">Rozcvička před testem</button></div>
+            <div class="odmena" id="hotovo-truhla" hidden><span class="ik">🎁</span><span>Truhla Generálka je tvoje<small>Za test 12. 12. · otevři ji ve Sbírce</small></span></div>
+            <button type="button" class="tlac druhe" data-jdi="po">Ukázat, co přijde po testu →</button>
+          </div>
+
+          <div class="obraz" data-o="po">
+            <div class="notif"><span class="m2">M²</span><span><b>Výsledky z testu jsou tady!</b><br>31 z 50 bodů. Hexík má pro tebe truhlu 🎁</span></div>
+            <div class="karta">
+              <b>Test nanečisto 12. 12. · 31 / 50</b>
+              <div class="tema"><div class="radek"><span>Slovní úlohy</span><span>2 / 8</span></div><div class="pruh"><i style="width:25%;background:#E5484D"></i></div></div>
+              <div class="tema"><div class="radek"><span>Zlomky</span><span>4 / 6</span></div><div class="pruh"><i style="width:67%;background:#F5A623"></i></div></div>
+              <div class="tema"><div class="radek"><span>Geometrie</span><span>6 / 9</span></div><div class="pruh"><i style="width:67%;background:#F5A623"></i></div></div>
+              <div class="tema"><div class="radek"><span>Rovnice</span><span>5 / 6</span></div><div class="pruh"><i style="width:83%;background:#2FA36B"></i></div></div>
+            </div>
+            <div class="karta"><b>Plán do testu 9. 1.</b><span class="tl2">1. Slovní úlohy: pohyb · 2. Zlomky ve slovních úlohách · 3. Obvod a obsah</span><button type="button" class="tlac">Začít doporučený trénink · 10 příkladů</button></div>
+            <div class="odmena"><span class="ik">🎁</span><span>Truhla Generálka<small>Přišla sama s výsledky. Za první test i legendární pozadí.</small></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-weby">
+    <h2 id="h-weby">Tři weby: je to překážka?</h2>
+    <p class="uvod"><b>Ano, ale jen když se po nich musí chodit.</b> Rodiče ani děti nevadí, že existují tři adresy. Vadí jim, když si musí pamatovat, kde co je, a přihlašovat se víckrát. Řešením není slít všechno do jednoho webu (drahé a pomalé), ale aby každý měl jeden domov a přechody mezi nimi byly jedním klepnutím. Výhoda: všechny tři jsou už pod jednou značkou a jednou doménou matematika-snadno.cz.</p>
+    <div class="mrizka2">
+      <div class="blok dum"><span class="ik">🧒</span><small>Dítě</small><h3>Bydlí v MateMaxu</h3><p class="tl">Výsledky testů, plán i odměny vidí v MateMaxu. Do Vyhodnocení chodit nemusí vůbec. Osobní QR ho tam dostane bez přepisování.</p></div>
+      <div class="blok dum"><span class="ik">👩</span><small>Rodič</small><h3>Bydlí v e-mailu a ve Vyhodnocení</h3><p class="tl">Přihláška, výsledky, a nově i přehled, jak dítě trénuje. Do MateMaxu chodit nemusí. Všechno důležité mu přijde e-mailem.</p></div>
+      <div class="blok dum"><span class="ik">🏪</span><small>Všichni</small><h3>matematika-snadno.cz je výloha</h3><p class="tl">Sem se chodí jednou: přihlásit se na test, koupit kurz, přečíst si blog. Pak už lidé žijí v appkách.</p></div>
+    </div>
+    <div class="blok">
+      <h3>Co bych k tomu ještě udělal</h3>
+      <ul class="cisty">
+        <li><b>Stejná hlavička ve všech třech:</b> logo Matematika Snadno a přepínač „Testy nanečisto · MateMax“, ať je vidět, že jde o jednu věc. Malý zásah, velký dojem.</li>
+        <li><b>Jeden rodičovský přehled místo dvou.</b> MateMax má vlastní sekci Rodiče a Vyhodnocení teď dostane souhrn tréninku. Pro rodiče z testů bych přehled nechal ve Vyhodnocení a MateMax Rodiče jen pro rodiče dětí, které na test nechodí. To je rozhodnutí na později, ne teď.</li>
+        <li><b>Odkazy, které si pamatují přihlášení:</b> tlačítko „Otevřít MateMax“ ve Vyhodnocení a „Moje výsledky z testů“ v MateMaxu povedou rovnou na správné místo propojeného účtu.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-bezp">
+    <h2 id="h-bezp">Bezpečnost a souhlas</h2>
+    <div class="tab">
+      <table class="t">
+        <thead><tr><th>Riziko</th><th>Řešení</th></tr></thead>
+        <tbody>
+          <tr><td><b>Dítě do 15 let nemůže samo dát souhlas</b></td><td>Z e-mailu souhlasí rodič přímo (má přístup k e-mailu z přihlášky). Z papíru se propojení dokončí až po kliknutí rodiče v potvrzovacím e-mailu. Do té doby Vyhodnocení do MateMaxu nic neposílá.</td></tr>
+          <tr><td><b>Ztracený nebo vyfocený list</b></td><td>Kód sám nic neukáže. Jen spustí propojení, které musí potvrdit rodič. Po propojení už kód jiný účet připojit nemůže, jen otevře MateMax.</td></tr>
+          <tr><td><b>Co je v kódu</b></td><td>Jen náhodný řetězec (128 bitů), žádné jméno, třída ani body. Vyhodnocení si drží jen jeho otisk. Platí do 45 dní po posledním testu, na který je žák přihlášený.</td></tr>
+          <tr><td><b>Co se předává</b></td><td>Beze změny proti kroku 2: body po tématech tam, souhrn tréninku zpět. Jméno ani e-mail ne. Zrušit jde z obou stran.</td></tr>
+          <tr><td><b>Truhla Generálka</b></td><td>Po propojení ji MateMax připíše sám podle data testu ve výsledcích (stejná pravidla jako u kódu: za první test i legendární pozadí, za zlepšení Legendární truhla). Společný kód dál funguje pro děti bez propojení.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-plan">
+    <h2 id="h-plan">Kdo co postaví a kdy</h2>
+    <div class="tab">
+      <table class="t">
+        <thead><tr><th>Kdo</th><th>Co</th><th>Odhad</th><th>Do kdy</th></tr></thead>
+        <tbody>
+          <tr><td><b>MateMax (já)</b></td><td>Úvod pro žáka z QR, třída předvyplněná z testu, návrat po registraci i Google, stav „čeká na rodiče“, automatická Truhla Generálka z výsledků, karta výsledků testu na Domově, testy</td><td class="num">6–8 h</td><td class="num">28. 11.</td></tr>
+          <tr><td><b>Vyhodnocení testů</b></td><td>Osobní kódy a adresa /q/…, QR v připomínce a na výsledkovém listu, potvrzovací e-mail rodiči pro papírový kanál, po propojení návrat do MateMaxu. Předávací text pro tamní Claude Code připravím.</td><td class="num">6–8 h</td><td class="num">3. 12.</td></tr>
+          <tr><td><b>Karel</b></td><td>Schválit text e-mailu (půjde přes návrh v dashboardu), vyzkoušet propojení s jedním testovacím žákem</td><td class="num">1 h</td><td class="num">4. 12.</td></tr>
+          <tr><td><b>Připomínka</b></td><td>Odejde s QR jako obvykle týden před testem</td><td class="num">—</td><td class="num">5. 12.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rozh">
+      <h3>Co potřebuju od tebe</h3>
+      <ul class="cisty">
+        <li>Líbí se ti tok i souhlas (z e-mailu zaškrtnutí, z papíru potvrzení rodičem e-mailem)?</li>
+        <li>Výsledkový list tiskne appka Vyhodnocení, nebo ho děláš jinak? Podle toho tam dám osobní QR, nebo jen společný kód.</li>
+        <li>Mám rovnou připravit předávací text pro Claude Code u Vyhodnocení testů, ať se to stihne do připomínky 5. 12.?</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script src="hexik-plus.js"></script>
+<script>
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var kanal = "mail", hexici = [];
+  var KROKY = ["uvod","registrace","souhlas","hotovo","po"];
+  var NAZVY = { uvod:"Úvod z QR", registrace:"Registrace", souhlas:"Souhlas", hotovo:"Propojeno", po:"Po testu" };
+  var POPIS = {
+    mail: {
+      uvod: ["Rodič klikne v e-mailu, nebo dítě naskenuje QR", "MateMax ví z kódu jen to, že jde o žáka 9. třídy přihlášeného na test 12. 12. Hexík zamává a vysvětlí, co tu dítě najde. Jméno se nepředává."],
+      registrace: ["Registrace s předvyplněnou třídou", "Stávající registrace, jen s třídou podle testu. Funguje i Google. Kdo už účet má, jen se přihlásí."],
+      souhlas: ["Souhlas rodiče jedním zaškrtnutím", "Stejná obrazovka jako dnešní krok 2. Rodič otevřel odkaz ze svého e-mailu, takže stačí zaškrtnout. Zkus to v telefonu."],
+      hotovo: ["Propojeno ještě před testem", "Týden před testem má dítě důvod do MateMaxu přijít: rozcvička z celého testu. Po testu už výsledky přijdou samy."],
+      po: ["Večer po testu", "Vyhodnocení pošle body, MateMax sestaví plán do dalšího testu a připíše Truhlu Generálka. Dítě dostane upozornění, rodič e-mail jako dnes."]
+    },
+    list: {
+      uvod: ["Dítě naskenuje QR z výsledkového listu", "Ještě v učebně nebo cestou domů. Úvod mluví o truhle a výsledcích, které už jsou připravené."],
+      registrace: ["Registrace s předvyplněnou třídou", "Stejné jako u e-mailu. Kdo už účet má, jen se přihlásí."],
+      souhlas: ["Propojení potvrdí rodič", "Dítě samo souhlasit nemůže. Vyhodnocení pošle rodiči e-mail s jedním tlačítkem. Když je rodič vedle, může potvrdit hned u sebe v telefonu."],
+      hotovo: ["Truhla hned, výsledky po potvrzení", "Dítě si Truhlu Generálka otevře hned, aby nečekalo. Výsledky a plán se ukážou, jakmile rodič potvrdí."],
+      po: ["Po potvrzení rodičem", "Body, plán do dalšího testu a pozadí Generálka. Od teď chodí výsledky každého dalšího testu samy."]
+    }
+  };
+  function zrus(){ hexici.forEach(function(h){ try{h.znic();}catch(e){} }); hexici = []; document.querySelectorAll(".hx3d canvas").forEach(function(c){ c.remove(); }); }
+  function hexik(obal, vyraz){
+    if (!window.HexikPlus) return; var c = document.createElement("canvas"); obal.appendChild(c);
+    try { var h = HexikPlus.vytvorHexikaPlus(c, { podoba:"klasik", etapa:3, koruna:false, interaktivni:true, nohy:"tenisky" }); setTimeout(function(){ h.vyraz(vyraz); }, 350); hexici.push(h); } catch(e) {}
+  }
+  function ukaz(o){
+    zrus();
+    document.querySelectorAll(".obraz").forEach(function(x){ x.classList.toggle("on", x.dataset.o === o); });
+    var p = POPIS[kanal][o]; el("popis").innerHTML = "<h3>" + p[0] + "</h3><p class='tl'>" + p[1] + "</p>";
+    el("kroky").querySelectorAll("button").forEach(function(b){ if (b.dataset.k === o) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current"); });
+    if (o === "uvod") hexik(el("hx-uvod"), "radost");
+    if (o === "hotovo") hexik(el("hx-hotovo"), kanal === "mail" ? "povzbuzeni" : "radost");
+    if (o === "souhlas") { el("chk").checked = false; el("propojit").disabled = true; el("stav-ok").hidden = kanal === "list"; el("stav-ceka").hidden = kanal !== "list"; }
+  }
+  function nastavKanal(k){
+    kanal = k;
+    el("kanal-mail").hidden = k !== "mail"; el("kanal-list").hidden = k !== "list";
+    el("souhlas-mail").hidden = k !== "mail"; el("souhlas-list").hidden = k !== "list";
+    var poTestu = k === "list";
+    el("uvod-t").textContent = poTestu ? "Tvoje výsledky z testu jsou připravené!" : "Ahoj! Tady budou tvoje výsledky z testu";
+    el("uvod-p").textContent = poTestu ? "Vytvoř si účet a otevři si Truhlu Generálka. Najdeš tu i plán, co trénovat do testu 9. 1." : "Po testu ti sem přijdou body po tématech, plán do dalšího testu a Truhla Generálka. Do testu si můžeš zatrénovat.";
+    el("hotovo-pred").hidden = poTestu; el("hotovo-truhla").hidden = !poTestu;
+    el("stav-ok").hidden = poTestu; el("stav-ceka").hidden = !poTestu;
+    ukaz("uvod");
+  }
+  el("kroky").innerHTML = KROKY.map(function(k, i){ return "<button type='button' data-k='" + k + "'>" + (i+1) + ". " + NAZVY[k] + "</button>"; }).join("");
+  el("kroky").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ ukaz(b.dataset.k); }); });
+  document.querySelectorAll("[data-jdi]").forEach(function(b){ b.addEventListener("click", function(){ ukaz(b.dataset.jdi); }); });
+  document.querySelectorAll(".prepinac button").forEach(function(b){ b.addEventListener("click", function(){
+    document.querySelectorAll(".prepinac button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); }); nastavKanal(b.dataset.kanal); }); });
+  el("chk").addEventListener("change", function(){ el("propojit").disabled = !el("chk").checked; });
+  el("rodic-vedle").addEventListener("click", function(){ setTimeout(function(){ el("stav-ceka").hidden = true; el("stav-ok").hidden = false; }, 0); });
+  // ilustrační QR vzor (ne skutečný kód)
+  document.querySelectorAll("svg.qr").forEach(function(s){
+    var seed = +s.dataset.seed || 7, r = "";
+    function rnd(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    function roh(x, y){ r += "<rect x='"+x+"' y='"+y+"' width='7' height='7' fill='#0D1B3E'/><rect x='"+(x+1)+"' y='"+(y+1)+"' width='5' height='5' fill='#fff'/><rect x='"+(x+2)+"' y='"+(y+2)+"' width='3' height='3' fill='#0D1B3E'/>"; }
+    for (var y = 0; y < 25; y++) for (var x = 0; x < 25; x++) { if ((x < 8 && y < 8) || (x > 16 && y < 8) || (x < 8 && y > 16)) continue; if (rnd() > 0.5) r += "<rect x='"+x+"' y='"+y+"' width='1' height='1' fill='#0D1B3E'/>"; }
+    roh(0,0); roh(18,0); roh(0,18);
+    r += "<rect x='9.5' y='9.5' width='6' height='6' rx='1.4' fill='#0D1B3E' stroke='#fff' stroke-width='.8'/><text x='12.5' y='13.9' text-anchor='middle' font-size='3.4' font-weight='900' fill='#fff' font-family='DM Sans,sans-serif'>M²</text>";
+    s.innerHTML = r;
+  });
+  nastavKanal("mail");
+})();
+</script>
