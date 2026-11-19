@@ -16,6 +16,18 @@
   },
   "zapisy": [
     {
+      "datum": null,
+      "oblast": "odmeny",
+      "popis": "Nové 3D truhly (Karel schválil 19. 11.): 9 druhů v hračkovém stylu Hexíka, Sezónní ve třech podobách (Vánoční, Zimní, Finiš), dutý vnitřek se sametem a znakem M², otevírání přes celou obrazovku, odměna vyletí ve 3D a Nasadit ji dá rovnou Hexíkovi; vydání 1. 12. s adventním kalendářem",
+      "novinka": {
+        "nadpis": "Nové truhly",
+        "text": "Vánoční truhla převázaná jako dárek. Odměna z ní vyletí ve 3D a jedním klepnutím ji má Hexík na sobě.",
+        "vizual": "truhla",
+        "odkaz": "/sbirka",
+        "od": "2026-12-01"
+      }
+    },
+    {
       "datum": "2026-11-18",
       "oblast": "odznaky",
       "popis": "Odznaky na profilu jako 3D medaile za učení: 24 medailí pro 9. třídu, 23 pro 5. třídu, stupně bronz, stříbro, zlato, diamant, krystaly za nový stupeň",

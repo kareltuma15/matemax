@@ -102,7 +102,6 @@ function Sbirka() {
   const [vybrana, setVybrana] = useState<string | null>(null);
   const [otevirani, setOtevirani] = useState<{ id: TruhlaId; faze: "tres" | "hotovo"; vysledek: VysledekTruhly | null } | null>(null);
   const nahledRef = useRef<HTMLSpanElement>(null);
-  const odhaleniRef = useRef<HTMLDivElement>(null);
   const den = localDateStr();
   // Série dní z prohlížeče (na serveru 0; vykresluje se až po načtení Sbírky)
   const [streak] = useState(() => loadProgress().streak);
@@ -159,8 +158,6 @@ function Sbirka() {
   }
   function odhal() {
     setOtevirani((o) => (o ? { ...o, faze: "hotovo" } : o));
-    const v = otevirani?.vysledek;
-    if (v) window.setTimeout(() => spustEfekt(v.vz === "legenda" || v.vz === "vzacna" ? "hvezdy" : "jiskry", odhaleniRef.current, v.vz === "legenda" ? 2 : 1.2), 80);
   }
 
   if (!nacteno) return <div className="mm-karta h-64 animate-pulse" />;
@@ -359,53 +356,21 @@ function Sbirka() {
         </div>
       )}
 
-      {/* Otevírání truhly */}
+      {/* Otevírání truhly (přes celou obrazovku, 3D) */}
       {otevirani && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" style={{ background: "rgba(8,12,30,.78)" }} role="dialog" aria-modal="true" aria-label="Otevírání truhly">
-          <div className="w-full max-w-sm rounded-3xl p-6 flex flex-col items-center gap-4 text-center text-white" style={{ background: "radial-gradient(circle at 50% 30%,#2A2F7A,#0D1B3E 72%)" }}>
-            <p className="text-sm font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>{TRUHLY.find((t) => t.id === otevirani.id)?.nazev}</p>
-            {otevirani.vysledek && (
-              <TruhlaScena druh={otevirani.id} vz={otevirani.vysledek.vz} podoba={podoba.klic} etapa={etapa} sloty={slotyHexika(stav, trida)} onOtevreno={odhal} />
-            )}
-            <div ref={odhaleniRef} className="min-h-[120px] flex flex-col items-center justify-center gap-2" aria-live="polite" data-testid="odhaleni">
-              
-              {otevirani.faze === "hotovo" && otevirani.vysledek && (
-                <>
-                  {otevirani.vysledek.odmena && <Vizual o={otevirani.vysledek.odmena} velikost={84} />}
-                  <span className="rounded-full px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wide" style={{ background: VZACNOST[otevirani.vysledek.vz].barva }}>{VZACNOST[otevirani.vysledek.vz].nazev}</span>
-                  {otevirani.vysledek.odmena && <p className="text-xl font-black">{otevirani.vysledek.odmena.nazev}</p>}
-                  <p className="text-sm" style={{ color: "#D9D8FE" }}>
-                    {otevirani.vysledek.odmena ? TYP_NAZEV[otevirani.vysledek.odmena.typ] + " · " : ""}
-                    {otevirani.vysledek.nova ? `Nové! A k tomu +${otevirani.vysledek.krystaly} krystalů` : `Už ji máš, vracíme ${otevirani.vysledek.krystaly} krystalů`}
-                  </p>
-                </>
-              )}
-              {otevirani.faze === "hotovo" && !otevirani.vysledek && <p>Truhlu teď nejde otevřít.</p>}
-            </div>
-            <div className="flex gap-2 w-full">
-              {otevirani.faze === "hotovo" && otevirani.vysledek?.nova && otevirani.vysledek.odmena && (
-                <button
-                  type="button"
-                  className="mm-tlacitko flex-1 rounded-2xl py-3 font-extrabold"
-                  style={{ background: "#F5A623", color: "#0D1B3E" }}
-                  onClick={() => { const id = otevirani.vysledek!.odmena!.id; upravSbirku((s) => nasadOdmenu(s, id)); setOtevirani(null); }}
-                  data-testid="odhaleni-nasadit"
-                >
-                  Nasadit
-                </button>
-              )}
-              <button
-                type="button"
-                disabled={otevirani.faze !== "hotovo"}
-                className="flex-1 rounded-2xl py-3 font-extrabold border border-white/30 disabled:opacity-50"
-                onClick={() => setOtevirani(null)}
-                data-testid="odhaleni-hotovo"
-              >
-                Hotovo
-              </button>
-            </div>
-          </div>
-        </div>
+        <TruhlaScena
+          druh={otevirani.id}
+          nazev={otevirani.id === "sezonni" ? aktualniSezona(den)?.truhla ?? "Sezónní truhla" : TRUHLY.find((t) => t.id === otevirani.id)?.nazev ?? "Truhla"}
+          podnadpis={TRUHLY.find((t) => t.id === otevirani.id)?.jak}
+          sezona={aktualniSezona(den)?.id ?? null}
+          vysledek={otevirani.vysledek}
+          podoba={podoba.klic}
+          etapa={etapa}
+          sloty={slotyHexika(stav, trida)}
+          onOdhaleno={odhal}
+          onNasadit={() => { const id = otevirani.vysledek?.odmena?.id; if (id) upravSbirku((s) => nasadOdmenu(s, id)); }}
+          onZavrit={() => setOtevirani(null)}
+        />
       )}
     </div>
   );

@@ -5,7 +5,16 @@ session věděla, než se cokoli přenese do appky.
 
 ## Co na téhle větvi je
 
-- **Jen mockup v `docs/`, žádná změna v `src/`.** Appka se nemění, na produkci nic nejde.
+- **Od 19. 11. i přenos do appky (Karel schválil, přenos dělá tahle vedlejší session):**
+  - `src/lib/hexik3d/truhla-model.ts` – model truhly (9 druhů, Sezónní ve 3 podobách)
+  - `src/lib/hexik3d/studio.ts` – odlesky, pozadí ve scéně, záře (bloom) jen na silných zařízeních; bez GPU (SwiftShader) nejlehčí varianta
+  - `src/lib/hexik3d/truhla.ts` – nové otevírání: 3 klepnutí, odměna ve 3D (doplněk, malý Hexík v nové podobě, medailon), rozpad na krystaly, nasazení na Hexíka; samootevření hlídá skutečný čas
+  - `src/components/hexik/TruhlaScena.tsx` – okno přes celou obrazovku (na počítači vysoký panel), karta odměny, Nasadit/Hotovo; `data-testid` zachované
+  - `src/app/(app)/sbirka/page.tsx` – staré okno nahrazené `TruhlaScena`
+  - `src/data/kronika-obsahu.json` – zápis „Nové truhly“ (datum null, novinka od 1. 12.)
+- Ověřeno: `tsc`, `eslint`, `next build` (s falešnými klíči Stripe/VAPID, kód prošel), e2e Sbírky 92/92 po jednom na počítači i telefonu.
+- Nestabilní už v původním kódu (ne kvůli truhle): `e2e/kalendar.spec.ts:78` (na původním kódu padl 4× ze 6). `e2e/obsah.spec.ts:65` potřebuje `.env.local`.
+- Mockup zůstává v `docs/`:
 - `docs/gamifikace-2026-11/truhla-3d.html` – živá stránka (stejná jako artefakt https://claude.ai/artifact/SdE1w15qiMJPiVkPxmdh2E).
 - `docs/gamifikace-2026-11/truhla-3d/*.ts` – zdroj mockupu. Importuje skutečného Hexíka a doplňky z `src/lib/hexik3d`
   (jen čtení, nic v nich nemění). Projde `tsc` i `eslint`.

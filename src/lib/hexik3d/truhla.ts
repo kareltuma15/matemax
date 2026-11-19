@@ -1,301 +1,431 @@
 /**
- * 3D otevírání truhly (Karel 18. 11. 2026: „ať je vidět, jak Hexík truhlu otevírá, hezky ve 3D“).
+ * 3D otevírání truhly přes celou obrazovku (Karel schválil 19. 11. 2026, mockup docs/gamifikace-2026-11/truhla-3d.html).
  *
- * Průběh: truhla čeká a poskakuje → dítě na ni klepe (1. klepnutí zatřese, 2. ze škvíry prosvítá barva
- * vzácnosti, 3. Hexík skočí a víko se rozletí) → paprsky světla, výbuch jiskřiček a odměna.
- * Když dítě neklepe, truhla se otevře sama (kvůli plynulosti i testům). Výsledek se losuje předem
- * v lib/sbirka.ts, scéna ho jen ukazuje (barva podle vzácnosti).
+ * Průběh:
+ *  1) čekání: truhla dýchá a občas poskočí, drahokam v zámku pulzuje
+ *  2) 3 klepnutí: zmáčknutí a pružení, škvíra svítí silněji, barva se může „vylepšit“ (bílá → modrá → fialová)
+ *  3) otevření: nádech, víko odletí, sloup světla, paprsky, rázová vlna, výbuch jiskřiček; u legendy přepnutí na zlatou
+ *  4) odměna vyletí z truhly ve 3D (doplněk, malý Hexík v nové podobě, nebo medailon u ostatních typů)
+ *     a vznáší se se svatozáří; věc, kterou už dítě má, se rozpadne na krystaly
+ *  5) nasazení: doplněk přiletí Hexíkovi na hlavu/oči/krk, nová podoba vletí do Hexíka
+ *
+ * Výsledek se losuje předem v lib/sbirka.ts, scéna ho jen ukazuje. Když dítě neklepe, truhla se otevře sama.
  */
 import * as THREE from "three";
+import { postavTruhlu, SEZONNI_MODEL, type DruhModelu } from "./truhla-model";
+import { vytvorStudio } from "./studio";
 import { postavHexika, type HexikModel, type SlotyHexika } from "./model";
+import { doplnekNaSlot, type Doplnek, type Sklad } from "./doplnky";
 import { klid, reakce, DELKA, type Reakce3D } from "./animace";
 import { vytvorCastice, type Castice } from "./castice";
 
 export type DruhTruhly = "denni" | "doporuceni" | "generalka" | "legendarni" | "sezonni" | "krystalova" | "velka" | "mistrovska" | "zlata";
 export type VzacnostTruhly = "bezna" | "neobvykla" | "vzacna" | "legenda";
+export type SezonaTruhly = "vanoce" | "zima" | "finis";
 
-export const BARVA_VZACNOSTI: Record<VzacnostTruhly, string> = { bezna: "#DDE6F5", neobvykla: "#4DA3FF", vzacna: "#B07CFF", legenda: "#FFC93C" };
+const PORADI: VzacnostTruhly[] = ["bezna", "neobvykla", "vzacna", "legenda"];
+export const BARVA_VZACNOSTI: Record<VzacnostTruhly, string> = { bezna: "#E6EDF8", neobvykla: "#4DA3FF", vzacna: "#B07CFF", legenda: "#FFC93C" };
+const POZADI: Record<VzacnostTruhly, [string, string]> = { bezna: ["#33399A", "#121A4C"], neobvykla: ["#2A55B8", "#0F1F55"], vzacna: ["#5233B0", "#1B1352"], legenda: ["#8A6326", "#2A1A3E"] };
+const SLOTY = ["hlava", "oci", "krk"] as const;
+type Slot = (typeof SLOTY)[number];
+const jeSlot = (t: string): t is Slot => (SLOTY as readonly string[]).includes(t);
 
-interface Vzhled { barva: string; kovani: string; drevo?: boolean; krystal?: boolean; zlato?: boolean }
-const VZHLED: Record<DruhTruhly, Vzhled> = {
-  denni: { barva: "#A86A34", kovani: "#7D8896", drevo: true },
-  krystalova: { barva: "#5CC8F0", kovani: "#E4ECF5", krystal: true },
-  velka: { barva: "#6B4FD6", kovani: "#F5C542", drevo: true },
-  mistrovska: { barva: "#24305E", kovani: "#F5C542", drevo: true },
-  zlata: { barva: "#FFC93C", kovani: "#FFF1C2", zlato: true },
-  doporuceni: { barva: "#2FA36B", kovani: "#F5C542", drevo: true },
-  generalka: { barva: "#22305E", kovani: "#F5C542", drevo: true },
-  legendarni: { barva: "#FFC93C", kovani: "#B07CFF", zlato: true },
-  sezonni: { barva: "#C8202A", kovani: "#F5F5F5", drevo: true },
-};
+export interface OdmenaVTruhle { typ: string; klic: string; ikona?: string }
 
 export interface MoznostiTruhly {
   druh: DruhTruhly;
+  /** Aktuální sezóna (Sezónní truhla podle ní mění vzhled). */
+  sezona?: SezonaTruhly | null;
   vz: VzacnostTruhly;
   podoba: string;
   etapa: number;
   sloty?: SlotyHexika;
-  /** Víko se otevřelo (ukázat odměnu). */
-  onOtevreno: () => void;
-  /** Kolikrát už dítě klepnulo (pro nápovědu pod truhlou). */
-  onKlepnuti?: (n: number) => void;
+  /** Co padlo (null = jen krystaly). */
+  odmena: OdmenaVTruhle | null;
+  /** Je to nová věc? (jinak se rozpadne na krystaly) */
+  nova: boolean;
+  onKlepnuti?: (n: number, vz: VzacnostTruhly) => void;
+  /** Víko se otevřelo (barva je už ta konečná). */
+  onOtevreno?: (vz: VzacnostTruhly) => void;
+  /** Odměna je vidět (ukázat kartu s názvem). */
+  onOdhaleno: () => void;
+  /** Nasazení doletělo (Hexík má věc na sobě). */
+  onNasazeno?: () => void;
   /** Po kolika sekundách bez klepnutí se truhla otevře sama. */
   samaPo?: number;
 }
 
-export interface Truhla3D { klepni: () => void; otevri: () => void; znic: () => void }
+export interface Truhla3D {
+  klepni: () => void;
+  /** Otevřít hned (tlačítko „Přeskočit“). */
+  otevri: () => void;
+  /** Spustí let věci na Hexíka; vrátí false, když se u tohoto typu odměny nic neanimuje. */
+  nasad: () => boolean;
+  znic: () => void;
+}
 
-const ease = (x: number) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
-const pruzneOtevreni = (x: number) => (x >= 1 ? 1 : 1 - Math.pow(2, -9 * x) * Math.cos(x * Math.PI * 2.4));
+const cl = (v: number) => Math.max(0, Math.min(1, v));
+const easeOut = (x: number) => 1 - Math.pow(1 - cl(x), 3);
+const easeInOut = (x: number) => { x = cl(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const pruzina = (x: number) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x) * Math.cos(x * Math.PI * 3));
 
-function texturaDreva(barva: string): THREE.CanvasTexture {
-  const c = document.createElement("canvas"); c.width = 256; c.height = 256;
+function texturaZare(): THREE.CanvasTexture {
+  const c = document.createElement("canvas"); c.width = c.height = 128;
+  const x = c.getContext("2d")!, g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+  g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(0.25, "rgba(255,255,255,.55)"); g.addColorStop(1, "rgba(255,255,255,0)");
+  x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
+}
+
+function texturaSloupu(): THREE.CanvasTexture {
+  const c = document.createElement("canvas"); c.width = 64; c.height = 256;
   const x = c.getContext("2d")!;
-  x.fillStyle = barva; x.fillRect(0, 0, 256, 256);
-  for (let p = 0; p < 4; p++) {
-    x.fillStyle = "rgba(0,0,0,.18)"; x.fillRect(0, p * 64, 256, 3);
-    for (let k = 0; k < 9; k++) {
-      x.strokeStyle = `rgba(${k % 2 ? "255,240,220" : "40,20,0"},${0.06 + (k % 3) * 0.03})`; x.lineWidth = 1 + (k % 2);
-      x.beginPath(); const y = p * 64 + 8 + k * 6;
-      x.moveTo(0, y); for (let i = 0; i <= 8; i++) x.lineTo(i * 32, y + Math.sin(i * 1.3 + k + p) * 2.5); x.stroke();
-    }
+  const g = x.createLinearGradient(0, 256, 0, 0); g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(0.35, "rgba(255,255,255,.5)"); g.addColorStop(1, "rgba(255,255,255,0)");
+  x.fillStyle = g; x.fillRect(0, 0, 64, 256);
+  const h = x.createLinearGradient(0, 0, 64, 0); h.addColorStop(0, "rgba(0,0,0,1)"); h.addColorStop(0.5, "rgba(0,0,0,0)"); h.addColorStop(1, "rgba(0,0,0,1)");
+  x.globalCompositeOperation = "destination-out"; x.fillStyle = h; x.fillRect(0, 0, 64, 256);
+  return new THREE.CanvasTexture(c);
+}
+
+/** Líc medailonu: tmavý šestiúhelník s ikonou odměny (oslavy, efekty, pozadí, vzhledy, krystaly). */
+function texturaMedailonu(ikona: string): THREE.CanvasTexture {
+  const c = document.createElement("canvas"); c.width = c.height = 256; const x = c.getContext("2d")!;
+  const g = x.createRadialGradient(128, 110, 10, 128, 128, 140); g.addColorStop(0, "#2B3A86"); g.addColorStop(1, "#0D1B3E");
+  x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+  x.font = "150px 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
+  x.fillText(ikona, 128, 140);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+function hexShape(R: number, rr: number): THREE.Shape {
+  const pts: THREE.Vector2[] = [];
+  for (let i = 0; i < 6; i++) { const a = Math.PI / 2 + i * Math.PI / 3; pts.push(new THREE.Vector2(R * Math.cos(a), R * Math.sin(a))); }
+  const s = new THREE.Shape();
+  for (let i = 0; i < 6; i++) {
+    const p = pts[i], a1 = p.clone().lerp(pts[(i + 5) % 6], rr), a2 = p.clone().lerp(pts[(i + 1) % 6], rr);
+    if (i === 0) s.moveTo(a1.x, a1.y); else s.lineTo(a1.x, a1.y);
+    s.quadraticCurveTo(p.x, p.y, a2.x, a2.y);
   }
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 4;
-  return t;
+  s.closePath(); return s;
 }
 
-function texturaPaprsku(): THREE.CanvasTexture {
-  const c = document.createElement("canvas"); c.width = 16; c.height = 128;
-  const x = c.getContext("2d")!;
-  const g = x.createLinearGradient(0, 128, 0, 0); g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(0.5, "rgba(255,255,255,.35)"); g.addColorStop(1, "rgba(255,255,255,0)");
-  x.fillStyle = g; x.fillRect(0, 0, 16, 128);
-  const h = x.createLinearGradient(0, 0, 16, 0); h.addColorStop(0, "rgba(0,0,0,1)"); h.addColorStop(0.5, "rgba(0,0,0,0)"); h.addColorStop(1, "rgba(0,0,0,1)");
-  x.globalCompositeOperation = "destination-out"; x.fillStyle = h; x.fillRect(0, 0, 16, 128);
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
-  return t;
-}
+// Paprsky za truhlou: shader s otáčejícími se klíny světla
+const PAPRSKY_VERT = `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`;
+const PAPRSKY_FRAG = `
+uniform float uCas; uniform float uSila; uniform vec3 uBarva; varying vec2 vUv;
+void main(){
+  vec2 p = vUv - 0.5; float r = length(p); float a = atan(p.y, p.x);
+  float k1 = pow(max(0.0, sin(a * 9.0 + uCas * 0.6)), 6.0);
+  float k2 = pow(max(0.0, sin(a * 14.0 - uCas * 0.9 + 1.3)), 10.0) * 0.6;
+  float pad = smoothstep(0.5, 0.05, r) * smoothstep(0.0, 0.08, r);
+  float jadro = smoothstep(0.22, 0.0, r) * 0.9;
+  float s = ((k1 + k2) * pad + jadro) * uSila;
+  gl_FragColor = vec4(uBarva * s, s);
+}`;
 
-export function vytvorTruhlu3D(canvas: HTMLCanvasElement, m: MoznostiTruhly): Truhla3D {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "low-power" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 60);
+export function vytvorTruhlu3D(canvas: HTMLCanvasElement, o: MoznostiTruhly): Truhla3D {
+  const studio = vytvorStudio(canvas);
+  const { renderer, scene, camera } = studio;
   const geos: THREE.BufferGeometry[] = [], mats: THREE.Material[] = [], texs: THREE.Texture[] = [];
   const g = <T extends THREE.BufferGeometry>(x: T) => { geos.push(x); return x; };
   const mt = <T extends THREE.Material>(x: T) => { mats.push(x); return x; };
+  const tx = <T extends THREE.Texture>(x: T) => { texs.push(x); return x; };
+  const sklad: Sklad = { g, m: mt, t: tx };
+  const sloty: SlotyHexika = { ...(o.sloty ?? {}) };
 
-  // Prostředí pro odlesky a světla (stejně jako u Hexíka)
-  const pm = new THREE.PMREMGenerator(renderer);
-  const es = new THREE.Scene();
-  const eg = new THREE.SphereGeometry(10, 32, 16), pos = eg.attributes.position, cols: number[] = [];
-  const dol = new THREE.Color("#6E74A8"), nah = new THREE.Color("#FFFFFF");
-  for (let i = 0; i < pos.count; i++) { const k = Math.max(0, pos.getY(i) / 10) * 0.85 + 0.12; const c = dol.clone().lerp(nah, k); cols.push(c.r, c.g, c.b); }
-  eg.setAttribute("color", new THREE.Float32BufferAttribute(cols, 3));
-  const em = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide }); es.add(new THREE.Mesh(eg, em));
-  const envRT = pm.fromScene(es, 0.04); scene.environment = envRT.texture; scene.environmentIntensity = 0.9;
-  eg.dispose(); em.dispose(); pm.dispose();
-  scene.add(new THREE.HemisphereLight("#FFFFFF", "#3A3F6B", 1.3));
-  const key = new THREE.DirectionalLight("#FFFFFF", 2.2); key.position.set(2.5, 4, 4); scene.add(key);
-  const rim = new THREE.DirectionalLight("#B9A8FF", 1.8); rim.position.set(-3, 2.5, -3); scene.add(rim);
-
-  const barvaVz = new THREE.Color(BARVA_VZACNOSTI[m.vz]);
   const meritko = { value: 400 };
-  const vz = VZHLED[m.druh];
+  let tier: VzacnostTruhly = "bezna";
+  const barvaTier = new THREE.Color(BARVA_VZACNOSTI.bezna);
 
-  // ── Truhla ────────────────────────────────────────────────────────────────
-  const truhla = new THREE.Group(); truhla.position.set(0.75, -0.9, 0); truhla.rotation.y = -0.38; scene.add(truhla);
-  const telo = new THREE.Group(); truhla.add(telo);
-  let teloMat: THREE.Material;
-  if (vz.drevo) { const t = texturaDreva(vz.barva); texs.push(t); teloMat = mt(new THREE.MeshPhysicalMaterial({ map: t, roughness: 0.65, clearcoat: 0.25 })); }
-  else if (vz.krystal) teloMat = mt(new THREE.MeshPhysicalMaterial({ color: vz.barva, roughness: 0.05, transparent: true, opacity: 0.82, clearcoat: 1, iridescence: 0.8, iridescenceIOR: 1.5 }));
-  else teloMat = mt(new THREE.MeshPhysicalMaterial({ color: vz.barva, metalness: 0.75, roughness: 0.25, clearcoat: 0.8, emissive: "#A86E00", emissiveIntensity: 0.4 }));
-  const kovMat = mt(new THREE.MeshPhysicalMaterial({ color: vz.kovani, metalness: 0.85, roughness: 0.25, clearcoat: 0.6, emissive: vz.kovani === "#F5C542" ? "#7A5200" : "#000000", emissiveIntensity: 0.35 }));
+  // ── truhla ──
+  const druhModelu: DruhModelu = o.druh === "sezonni" ? SEZONNI_MODEL[o.sezona ?? "vanoce"] : o.druh;
+  const truhla = new THREE.Group(); truhla.position.set(0.45, -1.25, 0); truhla.rotation.y = -0.42; scene.add(truhla);
+  const model = postavTruhlu(sklad, druhModelu, barvaTier); truhla.add(model.root);
+  const { pruzne, vikoCep, kamen, kamenMat, skviraMat, H } = model;
+  const sametMat = model.sametMat;
+  const zareTex = tx(texturaZare());
+  const zareVnitrMat = mt(new THREE.MeshBasicMaterial({ map: zareTex, color: barvaTier, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const zareVnitr = new THREE.Mesh(g(new THREE.PlaneGeometry(model.W * 1.1, model.D * 1.3)), zareVnitrMat); zareVnitr.rotation.x = -Math.PI / 2; zareVnitr.position.y = model.dnoY + 0.06; pruzne.add(zareVnitr);
+  const svetlo = new THREE.PointLight(barvaTier, 0, 7, 1.6); svetlo.position.set(0, model.dnoY + 0.25, 0.1); pruzne.add(svetlo);
 
-  const W = 1.5, H = 0.8, D = 1.0;
-  const tvar = new THREE.Shape(); const rr = 0.08;
-  tvar.moveTo(-W / 2 + rr, 0); tvar.lineTo(W / 2 - rr, 0); tvar.quadraticCurveTo(W / 2, 0, W / 2, rr); tvar.lineTo(W / 2, H); tvar.lineTo(-W / 2, H); tvar.lineTo(-W / 2, rr); tvar.quadraticCurveTo(-W / 2, 0, -W / 2 + rr, 0);
-  const teloGeo = g(new THREE.ExtrudeGeometry(tvar, { depth: D, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 }));
-  teloGeo.translate(0, 0, -D / 2);
-  telo.add(new THREE.Mesh(teloGeo, teloMat));
-  // vnitřek (tmavý) a světlo uvnitř
-  const vnitrek = new THREE.Mesh(g(new THREE.PlaneGeometry(W - 0.08, D - 0.08)), mt(new THREE.MeshBasicMaterial({ color: barvaVz.clone().multiplyScalar(0.25) })));
-  vnitrek.rotation.x = -Math.PI / 2; vnitrek.position.y = H - 0.02; telo.add(vnitrek);
-  const zareMat = mt(new THREE.MeshBasicMaterial({ color: barvaVz, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
-  const zare = new THREE.Mesh(g(new THREE.PlaneGeometry(W - 0.1, D - 0.1)), zareMat); zare.rotation.x = -Math.PI / 2; zare.position.y = H + 0.005; telo.add(zare);
-  const svetlo = new THREE.PointLight(barvaVz, 0, 6, 1.5); svetlo.position.set(0, H + 0.4, 0); telo.add(svetlo);
-  // kování na těle
-  for (const sx of [-1, 1]) {
-    const pas = new THREE.Mesh(g(new THREE.BoxGeometry(0.12, H + 0.02, D + 0.08)), kovMat); pas.position.set(sx * W * 0.32, H / 2, 0); telo.add(pas);
-    const roh = new THREE.Mesh(g(new THREE.BoxGeometry(0.1, H + 0.04, 0.1)), kovMat); roh.position.set(sx * (W / 2 + 0.01), H / 2, D / 2 + 0.01); telo.add(roh);
-  }
-  const lem = new THREE.Mesh(g(new THREE.BoxGeometry(W + 0.08, 0.07, D + 0.08)), kovMat); lem.position.y = 0.035; telo.add(lem);
-  // zámek
-  const zamek = new THREE.Group(); zamek.position.set(0, H - 0.08, D / 2 + 0.05); telo.add(zamek);
-  zamek.add(new THREE.Mesh(g(new THREE.BoxGeometry(0.26, 0.3, 0.06)), kovMat));
-  const dirka = new THREE.Mesh(g(new THREE.CylinderGeometry(0.035, 0.035, 0.02, 12)), mt(new THREE.MeshBasicMaterial({ color: "#10131F" }))); dirka.rotation.x = Math.PI / 2; dirka.position.set(0, 0.03, 0.035); zamek.add(dirka);
-  const dirka2 = new THREE.Mesh(g(new THREE.BoxGeometry(0.025, 0.07, 0.02)), mt(new THREE.MeshBasicMaterial({ color: "#10131F" }))); dirka2.position.set(0, -0.025, 0.035); zamek.add(dirka2);
-  // škvíra pod víkem, ze které prosvítá barva vzácnosti
-  const skviraMat = mt(new THREE.MeshBasicMaterial({ color: barvaVz, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
-  const skvira = new THREE.Mesh(g(new THREE.BoxGeometry(W + 0.02, 0.025, D + 0.02)), skviraMat); skvira.position.y = H + 0.012; telo.add(skvira);
-
-  // víko (půlválec) s čepem na zadní hraně
-  const vikoCep = new THREE.Group(); vikoCep.position.set(0, H + 0.02, -D / 2); telo.add(vikoCep);
-  const viko = new THREE.Group(); viko.position.z = D / 2; vikoCep.add(viko);
-  const vikoGeo = g(new THREE.CylinderGeometry(D / 2, D / 2, W, 40, 1, false, 0, Math.PI)); vikoGeo.rotateZ(Math.PI / 2);
-  viko.add(new THREE.Mesh(vikoGeo, teloMat));
-  // vnitřek víka (po otevření je vidět zespodu, nasvícený barvou vzácnosti)
-  const vnitrekVikaMat = mt(new THREE.MeshStandardMaterial({ color: "#2A1A10", roughness: 0.8, side: THREE.BackSide, emissive: barvaVz, emissiveIntensity: 0 }));
-  viko.add(new THREE.Mesh(vikoGeo, vnitrekVikaMat));
-  for (const sx of [-1, 1]) {
-    const pasGeo = g(new THREE.CylinderGeometry(D / 2 + 0.03, D / 2 + 0.03, 0.12, 40, 1, true, 0, Math.PI)); pasGeo.rotateZ(Math.PI / 2);
-    const p = new THREE.Mesh(pasGeo, kovMat); p.position.x = sx * W * 0.32; viko.add(p);
-  }
-  if (vz.zlato || m.druh === "mistrovska" || m.druh === "legendarni") {
-    const kamen = new THREE.Mesh(g(new THREE.OctahedronGeometry(0.09)), mt(new THREE.MeshPhysicalMaterial({ color: m.druh === "legendarni" ? "#B07CFF" : "#E5484D", roughness: 0.05, clearcoat: 1, emissive: m.druh === "legendarni" ? "#B07CFF" : "#E5484D", emissiveIntensity: 0.5 })));
-    kamen.position.set(0, D / 2 * 0.72, D / 2 * 0.72); kamen.rotation.x = Math.PI / 4; viko.add(kamen);
-  }
-  if (m.druh === "sezonni") {
-    const snih = new THREE.Mesh(g(new THREE.SphereGeometry(0.52, 24, 10, 0, Math.PI * 2, 0, Math.PI / 3.2)), mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") })));
-    snih.scale.set(1.45, 0.5, 1); snih.position.y = 0.32; viko.add(snih);
-  }
-
-  // paprsky světla z otevřené truhly
-  const paprskyTex = texturaPaprsku(); texs.push(paprskyTex);
-  const paprsky = new THREE.Group(); paprsky.position.set(0, H, 0); paprsky.visible = false; telo.add(paprsky);
-  const paprskyMat = mt(new THREE.MeshBasicMaterial({ map: paprskyTex, color: barvaVz, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
-  for (let i = 0; i < 7; i++) {
-    const p = new THREE.Mesh(g(new THREE.PlaneGeometry(0.32, 3.2)), paprskyMat);
-    const u = (i / 7) * Math.PI; p.position.y = 1.6; p.rotation.y = u; p.rotation.z = (i % 2 ? 1 : -1) * 0.18; paprsky.add(p);
-  }
-  // stín pod truhlou
+  // ── světelné efekty ──
+  const sloupMat = mt(new THREE.MeshBasicMaterial({ map: tx(texturaSloupu()), color: barvaTier, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+  const sloup = new THREE.Group(); sloup.position.y = H; pruzne.add(sloup);
+  { const pg = g(new THREE.PlaneGeometry(1.25, 4.4)); pg.translate(0, 2.2, 0); sloup.add(new THREE.Mesh(pg, sloupMat));
+    const pg2 = g(new THREE.PlaneGeometry(0.6, 3.6)); pg2.translate(0, 1.8, 0.01); sloup.add(new THREE.Mesh(pg2, sloupMat)); }
+  const paprskyMat = mt(new THREE.ShaderMaterial({ vertexShader: PAPRSKY_VERT, fragmentShader: PAPRSKY_FRAG, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { uCas: { value: 0 }, uSila: { value: 0 }, uBarva: { value: barvaTier.clone() } } }));
+  const paprsky = new THREE.Mesh(g(new THREE.PlaneGeometry(9, 9)), paprskyMat); paprsky.position.set(0.2, 0.55, -2.2); scene.add(paprsky);
+  const vlnaMat = mt(new THREE.MeshBasicMaterial({ color: barvaTier, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+  const vlna = new THREE.Mesh(g(new THREE.RingGeometry(0.95, 1, 72)), vlnaMat); vlna.rotation.x = -Math.PI / 2; vlna.position.y = 0.02; truhla.add(vlna);
+  const podlahaMat = mt(new THREE.MeshBasicMaterial({ map: zareTex, color: "#6E76D8", transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const podlaha = new THREE.Mesh(g(new THREE.PlaneGeometry(4.4, 3)), podlahaMat); podlaha.rotation.x = -Math.PI / 2; podlaha.position.y = 0.004; truhla.add(podlaha);
   const stinC = document.createElement("canvas"); stinC.width = stinC.height = 64;
-  const sx2 = stinC.getContext("2d")!, sg = sx2.createRadialGradient(32, 32, 0, 32, 32, 32); sg.addColorStop(0, "rgba(5,10,30,.5)"); sg.addColorStop(1, "rgba(5,10,30,0)"); sx2.fillStyle = sg; sx2.fillRect(0, 0, 64, 64);
-  const stinT = new THREE.CanvasTexture(stinC); texs.push(stinT);
-  const stin = new THREE.Mesh(g(new THREE.PlaneGeometry(2.6, 1.8)), mt(new THREE.MeshBasicMaterial({ map: stinT, transparent: true, depthWrite: false })));
-  stin.rotation.x = -Math.PI / 2; stin.position.y = 0.005; truhla.add(stin);
+  { const s = stinC.getContext("2d")!, gr = s.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, "rgba(4,8,26,.6)"); gr.addColorStop(1, "rgba(4,8,26,0)"); s.fillStyle = gr; s.fillRect(0, 0, 64, 64); }
+  const stin = new THREE.Mesh(g(new THREE.PlaneGeometry(2.6, 1.9)), mt(new THREE.MeshBasicMaterial({ map: tx(new THREE.CanvasTexture(stinC)), transparent: true, depthWrite: false })));
+  stin.rotation.x = -Math.PI / 2; stin.position.y = 0.006; truhla.add(stin);
 
-  // částice: výbuch jiskřiček a třpyt kolem
   const castice: Castice[] = [];
-  const barvyVybuchu = m.vz === "legenda" ? ["#FFC93C", "#FFFFFF", "#FFE08A", "#B07CFF"] : [BARVA_VZACNOSTI[m.vz], "#FFFFFF"];
-  const vybuch = vytvorCastice("vybuch", meritko, barvyVybuchu, m.vz === "legenda" ? 140 : m.vz === "vzacna" ? 110 : 80);
-  vybuch.obj.position.set(0, H + 0.1, 0); telo.add(vybuch.obj); castice.push(vybuch);
-  const trpyt = vytvorCastice("jiskry", meritko, [BARVA_VZACNOSTI[m.vz], "#FFFFFF"], 10);
-  trpyt.obj.position.set(0, H * 0.6, 0); trpyt.obj.scale.setScalar(0.9); telo.add(trpyt.obj); castice.push(trpyt);
+  const barvyVybuchu = () => (tier === "legenda" ? ["#FFC93C", "#FFFFFF", "#FFE08A", "#B07CFF"] : [BARVA_VZACNOSTI[tier], "#FFFFFF"]);
+  let vybuch = vytvorCastice("vybuch", meritko, barvyVybuchu(), 120); vybuch.obj.position.set(0, H + 0.15, 0); pruzne.add(vybuch.obj); castice.push(vybuch);
+  const trpyt = vytvorCastice("aura", meritko, ["#FFFFFF", "#C9C7F5"], 16); trpyt.obj.position.set(0, H * 0.7, 0); trpyt.obj.scale.setScalar(1.2); pruzne.add(trpyt.obj); castice.push(trpyt);
 
-  // ── Hexík vedle truhly ────────────────────────────────────────────────────
-  const hx: HexikModel = postavHexika(m.podoba, m.etapa, meritko, m.sloty ?? {});
-  const hxObal = new THREE.Group(); hxObal.position.set(-1.45, -0.9 + 1.4 * 0.62, 0.2); hxObal.scale.setScalar(0.62); hxObal.rotation.y = 0.5;
-  hxObal.add(hx.root); hxObal.add(hx.stin); scene.add(hxObal); scene.add(hx.okoli);
-  hx.okoli.visible = false; // sníh kolem čepice by tu rušil
-
-  // ── Stav a animace ────────────────────────────────────────────────────────
-  // Automatické otevření a ohlášení běží ve skutečném čase (na pomalém zařízení se snímky zpožďují)
-  let posledniAkceMs = performance.now(), ohlaseno = false;
-  const ohlas = () => { if (!ohlaseno) { ohlaseno = true; m.onOtevreno(); } };
-  let cas = 0, klepnuti = 0, otevreno = -1, oznameno = false, otrasy = 0, otrasSila = 0, kameraTres = 0;
-  let akce: { id: Reakce3D; start: number; vyhozeno: boolean } | null = null;
-  const minula = { y: 0, vy: 0, rY: 0, rX: 0 };
-  const samaPo = m.samaPo ?? 2.6;
-  const klidne = !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  const hexikReaguj = (id: Reakce3D) => { akce = { id, start: cas, vyhozeno: false }; };
-
-  function otevri() {
-    if (otevreno >= 0) return;
-    otevreno = cas + (klidne ? 0 : 0.45);
-    window.setTimeout(ohlas, klidne ? 0 : 1400);
-    hexikReaguj("poskok");
+  // ── odměna ve 3D ──
+  const odmenaObal = new THREE.Group(); odmenaObal.visible = false; scene.add(odmenaObal);
+  const odmenaRot = new THREE.Group(); odmenaObal.add(odmenaRot);
+  let doplnek: Doplnek | null = null, miniHexik: HexikModel | null = null;
+  let letiNa: "slot" | "podoba" | null = null;
+  const vycentruj = (obj: THREE.Object3D, velikost: number) => {
+    const box = new THREE.Box3().setFromObject(obj), c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+    const k = velikost / Math.max(0.001, s.x, s.y, s.z); obj.scale.multiplyScalar(k); obj.position.sub(c.multiplyScalar(k));
+  };
+  if (o.odmena && jeSlot(o.odmena.typ)) {
+    doplnek = doplnekNaSlot(sklad, o.odmena.typ, o.odmena.klic);
+    if (doplnek) { doplnek.obj.position.set(0, 0, 0); odmenaRot.add(doplnek.obj); vycentruj(doplnek.obj, 0.95); letiNa = "slot"; }
+  } else if (o.odmena?.typ === "podoba") {
+    miniHexik = postavHexika(o.odmena.klic, o.etapa, meritko, sloty);
+    const obal = new THREE.Group(); obal.add(miniHexik.root); miniHexik.okoli.visible = false; odmenaRot.add(obal); vycentruj(obal, 1.1); letiNa = "podoba";
   }
+  const medailon = !doplnek && !miniHexik;
+  if (medailon) {
+    // medailon: zlatý šestiúhelník s ikonou
+    const zl = mt(new THREE.MeshPhysicalMaterial({ color: "#FFC24A", metalness: 1, roughness: 0.2, clearcoat: 0.7, envMapIntensity: 2 }));
+    const m = new THREE.Group(); odmenaRot.add(m);
+    m.add(new THREE.Mesh(g(new THREE.ExtrudeGeometry(hexShape(0.48, 0.24), { depth: 0.08, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 5, curveSegments: 8 })), zl));
+    const lg = g(new THREE.ShapeGeometry(hexShape(0.38, 0.24), 8)); const uv = lg.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / 0.76 + 0.5, uv.getY(i) / 0.76 + 0.5);
+    const lic = new THREE.Mesh(lg, mt(new THREE.MeshPhysicalMaterial({ map: tx(texturaMedailonu(o.odmena?.ikona ?? "💎")), roughness: 0.3, clearcoat: 1 }))); lic.position.z = 0.121; m.add(lic);
+    m.position.z = -0.06;
+  }
+  letiNa = o.nova ? letiNa : null;
+  const svatozarMat = mt(new THREE.MeshBasicMaterial({ map: zareTex, color: barvaTier, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const svatozar = new THREE.Mesh(g(new THREE.PlaneGeometry(2.6, 2.6)), svatozarMat); svatozar.position.z = -0.6; odmenaObal.add(svatozar);
+  const prstenMat = mt(new THREE.MeshBasicMaterial({ color: barvaTier, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const prsten = new THREE.Mesh(g(new THREE.TorusGeometry(0.95, 0.012, 8, 96)), prstenMat); prsten.position.z = -0.3; odmenaObal.add(prsten);
+  const prsten2 = new THREE.Mesh(g(new THREE.TorusGeometry(1.12, 0.006, 8, 96)), prstenMat); prsten2.position.z = -0.35; odmenaObal.add(prsten2);
+  const odmenaJiskry = vytvorCastice("aura", meritko, [BARVA_VZACNOSTI[o.vz], "#FFFFFF"], 26); odmenaObal.add(odmenaJiskry.obj); castice.push(odmenaJiskry);
+  // rozpad na krystaly (věc, kterou už dítě má)
+  const krystalyVybuch = vytvorCastice("vybuch", meritko, ["#BFF4FF", "#4DA3FF", "#FFFFFF"], 90); scene.add(krystalyVybuch.obj); castice.push(krystalyVybuch);
+
+  // ── Hexík ──
+  const HX_S = 0.56;
+  const hxObal = new THREE.Group(); hxObal.position.set(-1.75, -1.25 + 1.4 * HX_S, 0.35); hxObal.scale.setScalar(HX_S); hxObal.rotation.y = 0.55; scene.add(hxObal);
+  let podobaHexika = o.podoba;
+  let hx: HexikModel = postavHexika(podobaHexika, o.etapa, meritko, sloty);
+  hxObal.add(hx.root); hxObal.add(hx.stin); hx.okoli.visible = false;
+  const hlavaJiskry = vytvorCastice("vybuch", meritko, [BARVA_VZACNOSTI[o.vz], "#FFFFFF"], 60); hxObal.add(hlavaJiskry.obj); hlavaJiskry.obj.position.set(0, 1.0, 0); castice.push(hlavaJiskry);
+
+  // ── stav ──
+  const klidne = !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const samaPo = o.samaPo ?? 2.6;
+  let cas = 0, klepnuti = 0, tOtevreni = -1, tNadech = -1, tOdmena = -1, tNasad = -1, tKlep = -10, tTier = -10, tRozpad = -1;
+  let vypusteno = false, ohlaseno = false, nasazeno = false, kameraTres = 0;
+  let posledniAkceMs = performance.now();
+  let akce: { id: Reakce3D; start: number } | null = null;
+  const minula = { y: 0, vy: 0, rY: 0, rX: 0 };
+  const hexikReaguj = (id: Reakce3D) => { akce = { id, start: cas }; };
+  const tierPoKlepnuti = (n: number): VzacnostTruhly => PORADI[Math.min(PORADI.indexOf(o.vz), Math.min(n - 1, 2))];
+  // Ohlášení běží i ve skutečném čase (na pomalém zařízení se snímky zpožďují, testy čekají na kartu)
+  let pojistka = 0;
+  const ohlas = () => { if (!ohlaseno) { ohlaseno = true; o.onOdhaleno(); } };
+
+  function nastavTier(t: VzacnostTruhly) {
+    tier = t; barvaTier.set(BARVA_VZACNOSTI[t]);
+    for (const m of [zareVnitrMat, skviraMat, sloupMat, vlnaMat, svatozarMat, prstenMat]) m.color.copy(barvaTier);
+    kamenMat.color.copy(barvaTier); kamenMat.emissive.copy(barvaTier); sametMat.emissive.copy(barvaTier);
+    svetlo.color.copy(barvaTier); (paprskyMat.uniforms.uBarva.value as THREE.Color).copy(barvaTier);
+    studio.pozadi(POZADI[t][0], POZADI[t][1]);
+    tTier = cas;
+  }
+
   function klepni() {
-    if (otevreno >= 0) return;
-    klepnuti++; posledniAkceMs = performance.now();
-    m.onKlepnuti?.(klepnuti);
-    otrasy = cas; otrasSila = klepnuti === 1 ? 0.05 : 0.09;
-    if (klepnuti === 1) hexikReaguj("jasot");
-    if (klepnuti === 2) hexikReaguj("radost");
-    if (klepnuti >= 3) otevri();
+    if (tNadech >= 0) return;
+    klepnuti++; tKlep = cas; posledniAkceMs = performance.now();
+    const novy = tierPoKlepnuti(klepnuti);
+    if (novy !== tier) nastavTier(novy);
+    o.onKlepnuti?.(klepnuti, tier);
+    hexikReaguj(klepnuti === 1 ? "jasot" : klepnuti === 2 ? "radost" : "poskok");
+    if (klepnuti >= 3) { tNadech = cas + 0.12; pojistka = window.setTimeout(ohlas, klidne ? 50 : 2700); }
+  }
+  function otevri() {
+    if (tNadech >= 0) return;
+    klepnuti = 3; nastavTier(tierPoKlepnuti(3)); tNadech = cas;
+    o.onKlepnuti?.(3, tier);
+    pojistka = window.setTimeout(ohlas, klidne ? 50 : 2600);
+  }
+  function nasad(): boolean {
+    if (!letiNa || tOdmena < 0 || tNasad >= 0) return false;
+    tNasad = cas; return true;
   }
 
   function velikost() {
-    const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1;
-    renderer.setSize(w, h, false); camera.aspect = w / h;
-    const z = w / h < 1 ? 7.4 / (w / h) : 7.4;
-    camera.position.set(0, 1.5, z); camera.lookAt(0, 0.05, 0); camera.updateProjectionMatrix();
+    studio.velikost();
     meritko.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan((camera.fov * Math.PI) / 360));
   }
 
+  const vec = new THREE.Vector3(), cilOdmeny = new THREE.Vector3();
+  let lookY = -0.55;
   let raf = 0, minule = performance.now();
   function snimek() {
-    const ted = performance.now(), dt = Math.min(0.05, (ted - minule) / 1000); minule = ted; cas += dt;
-    if (otevreno < 0 && performance.now() - posledniAkceMs > samaPo * 1000) otevri();
+    // Čas scény jde podle skutečného času (na pomalém zařízení se jen přeskočí snímky), fyzika doplňků po malých krocích
+    const ted = performance.now(), krok = Math.min(0.3, (ted - minule) / 1000), dt = Math.min(0.05, krok); minule = ted; cas += krok;
+    if (tNadech < 0 && ted - posledniAkceMs > samaPo * 1000) otevri();
+    const nasirku = camera.aspect >= 1;
+    cilOdmeny.set(0.25, nasirku ? 1.05 : 0.8, 0.9);
 
-    // truhla: čekání (poskoky), otřesy po klepnutí
-    const cekani = otevreno < 0 ? Math.max(0, Math.sin(cas * 4)) * (Math.sin(cas * 1.3) > 0.6 ? 0.06 : 0) : 0;
-    const tres = Math.max(0, 1 - (cas - otrasy) / 0.45) * otrasSila;
-    truhla.position.y = -0.9 + cekani + tres * 0.6 * Math.abs(Math.sin(cas * 40));
-    truhla.rotation.z = tres * Math.sin(cas * 50);
-    skviraMat.opacity = otevreno >= 0 ? 0 : Math.min(1, klepnuti * 0.45) * (0.7 + 0.3 * Math.sin(cas * 8));
-    (zamek.children[0] as THREE.Mesh).rotation.z = 0;
+    if (tNadech >= 0 && tOtevreni < 0 && cas >= tNadech + (klidne ? 0 : 0.38)) {
+      tOtevreni = cas;
+      if (tier !== o.vz) nastavTier(o.vz);
+      o.onOtevreno?.(tier);
+    }
 
-    // víko
-    if (otevreno >= 0 && cas >= otevreno) {
-      const t = Math.min(1, (cas - otevreno) / 0.9);
-      vikoCep.rotation.x = -1.7 * pruzneOtevreni(t);
-      zamek.rotation.x = Math.min(1, t * 3) * 0.9; zamek.position.y = H - 0.08 - Math.min(1, t * 3) * 0.05;
-      paprsky.visible = true; paprskyMat.opacity = Math.min(0.85, t * 1.5) * (0.8 + 0.2 * Math.sin(cas * 5));
-      paprsky.rotation.y = cas * 0.5;
-      zareMat.opacity = Math.min(1, t * 2);
-      vnitrekVikaMat.emissiveIntensity = Math.min(1, t * 2) * 0.35;
-      svetlo.intensity = Math.min(1, t * 2) * (m.vz === "legenda" ? 14 : 9);
-      if (!oznameno) {
-        oznameno = true;
-        vybuch.vystrel?.(m.vz === "legenda" ? 1.3 : 1);
-        kameraTres = m.vz === "legenda" ? 0.5 : m.vz === "vzacna" ? 0.25 : 0;
-        hexikReaguj(m.vz === "legenda" ? "salto" : "radost");
-        window.setTimeout(ohlas, klidne ? 0 : 450);
-        if (m.vz === "legenda") window.setTimeout(() => vybuch.vystrel?.(1.1), 600);
+    // ── truhla: dýchání, poskoky, zmáčknutí ──
+    let sy = 1, sxz = 1, rz = 0, yy = 0;
+    if (tNadech < 0) {
+      sy = 1 + 0.012 * Math.sin(cas * 2.4);
+      const hop = (cas % 3.2) / 3.2; if (hop > 0.85 && !klidne) { const q = (hop - 0.85) / 0.15; yy = Math.sin(q * Math.PI) * 0.09; sy += Math.sin(q * Math.PI * 2) * 0.04; }
+      const k = cas - tKlep;
+      if (k < 0.6) { const sila = 0.08 + klepnuti * 0.03; sy -= Math.exp(-k * 9) * Math.cos(k * 28) * sila; rz = Math.exp(-k * 8) * Math.sin(k * 46) * 0.06 * klepnuti; }
+      sxz = 1 / Math.sqrt(Math.max(0.6, sy));
+    } else if (tOtevreni < 0) {
+      const q = cl((cas - tNadech) / 0.38); sy = 1 - easeInOut(q) * 0.16; sxz = 1 + easeInOut(q) * 0.08; rz = Math.sin(cas * 70) * 0.02 * q;
+    } else {
+      const k = cas - tOtevreni; sy = 1 + Math.exp(-k * 6) * Math.sin(k * 22) * 0.14; sxz = 1 / Math.sqrt(sy);
+      if (tOdmena >= 0) yy = -easeOut((cas - tOdmena) / 0.8) * 0.15;
+    }
+    pruzne.scale.set(sxz, sy, sxz); pruzne.rotation.z = rz; truhla.position.y = -1.25 + yy;
+
+    const tk = cas - tTier;
+    const zaklad = tNadech >= 0 ? 1 : Math.min(1, klepnuti * 0.38);
+    skviraMat.opacity = tOtevreni >= 0 ? 0 : zaklad * (0.65 + 0.35 * Math.sin(cas * 9)) + Math.max(0, 1 - tk * 2.5) * 0.8;
+    kamenMat.emissiveIntensity = 0.35 + zaklad * 0.9 + Math.max(0, 1 - tk * 2) * 1.5;
+    kamen.rotation.z = Math.sin(cas * 1.5) * 0.08;
+    svetlo.intensity = tOtevreni >= 0 ? 0 : zaklad * 2.5;
+
+    // ── víko a světlo ──
+    if (tOtevreni >= 0) {
+      const k = cas - tOtevreni, t = cl(k / 0.85);
+      vikoCep.rotation.x = -1.72 * pruzina(t);
+      if (!vypusteno) {
+        vypusteno = true;
+        pruzne.remove(vybuch.obj); castice.splice(castice.indexOf(vybuch), 1); vybuch.dispose();
+        vybuch = vytvorCastice("vybuch", meritko, barvyVybuchu(), tier === "legenda" ? 170 : tier === "vzacna" ? 140 : 110);
+        vybuch.obj.position.set(0, H + 0.15, 0); pruzne.add(vybuch.obj); castice.push(vybuch);
+        vybuch.vystrel?.(tier === "legenda" ? 1.5 : 1.15);
+        kameraTres = klidne ? 0 : tier === "legenda" ? 0.6 : tier === "vzacna" ? 0.35 : 0.15;
+        hexikReaguj(tier === "legenda" ? "salto" : "radost");
+        if (tier === "legenda") window.setTimeout(() => vybuch.vystrel?.(1.2), 450);
+      }
+      const silaSvetla = tOdmena >= 0 ? 1 - easeOut((cas - tOdmena) / 1.2) * 0.55 : 1;
+      sloupMat.opacity = Math.min(0.75, k * 3) * (0.8 + 0.2 * Math.sin(cas * 6)) * silaSvetla;
+      sloup.scale.set(1 + Math.max(0, 0.5 - k) * 1.2, Math.min(1, k * 2.4), 1);
+      truhla.updateMatrixWorld(); sloup.getWorldPosition(vec); sloup.rotation.y = Math.atan2(camera.position.x - vec.x, camera.position.z - vec.z) - truhla.rotation.y;
+      paprskyMat.uniforms.uSila.value = Math.min(1, k * 1.6) * (tier === "legenda" ? 1.25 : tier === "vzacna" ? 1.0 : tier === "neobvykla" ? 0.8 : 0.6) * (0.6 + 0.4 * silaSvetla);
+      zareVnitrMat.opacity = Math.min(1, k * 3) * silaSvetla;
+      sametMat.emissiveIntensity = Math.min(1, k * 3) * 0.22;
+      podlahaMat.color.copy(barvaTier); podlahaMat.opacity = 0.35 + Math.min(1, k * 2) * 0.45 * silaSvetla;
+      const v = cl(k / 0.9); vlna.scale.setScalar(1 + easeOut(v) * 1.9); vlnaMat.opacity = (1 - v) * (1 - v) * 0.8;
+      if (tOdmena < 0 && k > (klidne ? 0 : 0.55)) { tOdmena = cas; odmenaObal.visible = true; }
+    } else {
+      paprskyMat.uniforms.uSila.value = Math.max(0, zaklad * 0.12 - 0.02);
+    }
+    paprskyMat.uniforms.uCas.value = cas;
+
+    // ── odměna: vyletí z truhly, vznáší se, otáčí se ──
+    if (tOdmena >= 0 && tNasad < 0) {
+      const k = cas - tOdmena, q = easeOut(k / 0.9);
+      truhla.updateMatrixWorld(); vec.set(0, H, 0); pruzne.localToWorld(vec);
+      odmenaObal.position.lerpVectors(vec, cilOdmeny, q); odmenaObal.position.y += Math.sin(q * Math.PI) * 0.5 + (q >= 1 ? Math.sin(cas * 2) * 0.06 : 0);
+      let s = 0.2 + pruzina(cl(k / 0.9)) * 1.05;
+      // věc, kterou už dítě má: po chvilce se rozpadne na krystaly
+      if (!o.nova && k > 1.5) {
+        if (tRozpad < 0) { tRozpad = cas; krystalyVybuch.obj.position.copy(odmenaObal.position); krystalyVybuch.vystrel?.(1); }
+        s *= 1 - easeInOut((cas - tRozpad) / 0.35);
+      }
+      odmenaObal.scale.setScalar(Math.max(0.0001, s));
+      // medailon se jen pohupuje čelem k dítěti (ikona musí být vidět), 3D věci se otáčejí dokola
+      odmenaRot.rotation.y = (medailon ? Math.sin(cas * 1.3) * 0.45 : cas * 1.1) + (1 - q) * 6.283; odmenaRot.rotation.x = miniHexik || medailon ? 0 : 0.25;
+      const fade = tRozpad >= 0 ? 1 - cl((cas - tRozpad) / 0.35) : 1;
+      svatozarMat.opacity = q * (0.55 + 0.15 * Math.sin(cas * 3)) * fade; prstenMat.opacity = q * 0.7 * fade;
+      prsten.rotation.z = cas * 0.6; prsten2.rotation.z = -cas * 0.4; prsten.scale.setScalar(1 + 0.04 * Math.sin(cas * 3));
+      svatozar.lookAt(camera.position); prsten.lookAt(camera.position); prsten2.lookAt(camera.position);
+      if (k > (klidne ? 0 : 0.7)) ohlas();
+    }
+
+    // ── nasazení: věc přiletí na Hexíka ──
+    if (tNasad >= 0 && !nasazeno) {
+      const q = easeInOut((cas - tNasad) / 0.75);
+      hx.body.updateMatrixWorld();
+      if (letiNa === "slot") { vec.set(0, o.odmena!.typ === "hlava" ? 1.0 : o.odmena!.typ === "oci" ? 0.1 : -0.5, 0.3); }
+      else vec.set(0, 0, 0);
+      hx.body.localToWorld(vec);
+      odmenaObal.position.lerpVectors(cilOdmeny, vec, q); odmenaObal.position.y += Math.sin(q * Math.PI) * 0.9;
+      odmenaObal.scale.setScalar(1.25 + (HX_S * (letiNa === "podoba" ? 0.4 : 1) - 1.25) * q);
+      odmenaRot.rotation.y = (1 - q) * cas * 1.1; odmenaRot.rotation.x = (miniHexik ? 0 : 0.25) * (1 - q);
+      svatozarMat.opacity = (1 - q) * 0.6; prstenMat.opacity = (1 - q) * 0.7;
+      if (q >= 1) {
+        nasazeno = true; odmenaObal.visible = false;
+        if (letiNa === "slot" && o.odmena && jeSlot(o.odmena.typ)) sloty[o.odmena.typ] = o.odmena.klic;
+        if (letiNa === "podoba" && o.odmena) podobaHexika = o.odmena.klic;
+        hxObal.remove(hx.root); hxObal.remove(hx.stin); hx.dispose();
+        hx = postavHexika(podobaHexika, o.etapa, meritko, sloty); hxObal.add(hx.root); hxObal.add(hx.stin); hx.okoli.visible = false;
+        hlavaJiskry.obj.position.set(0, letiNa === "podoba" ? 0 : 1.0, 0);
+        hlavaJiskry.vystrel?.(letiNa === "podoba" ? 1.2 : 0.8); hexikReaguj(o.vz === "legenda" ? "salto" : "radost");
+        o.onNasazeno?.();
       }
     }
 
-    // Hexík: při otevírání poskočí k truhle
-    const cilX = otevreno < 0 ? -1.45 : -1.02;
-    hxObal.position.x += (cilX - hxObal.position.x) * Math.min(1, dt * 7);
+    // ── Hexík ──
+    const cilX = tNasad >= 0 ? -1.05 : tOtevreni >= 0 ? -1.4 : -1.75 + klepnuti * 0.08;
+    hxObal.position.x += (cilX - hxObal.position.x) * Math.min(1, dt * 6);
+    const cilR = tNasad >= 0 ? 0.2 : 0.55;
+    hxObal.rotation.y += (cilR - hxObal.rotation.y) * Math.min(1, dt * 4);
     let P = klid(cas, true);
-    if (akce) {
-      const p = Math.min(1, (cas - akce.start) / DELKA[akce.id]);
-      P = reakce(akce.id, p, cas, P, true);
-      if (p >= 1) akce = null;
-    }
+    if (akce) { const a: { id: Reakce3D; start: number } = akce; const p = Math.min(1, (cas - a.start) / DELKA[a.id]); P = reakce(a.id, p, cas, P, true); if (p >= 1) akce = null; }
     hx.root.position.y = P.y; hx.root.rotation.set(P.rX, P.rY, 0); hx.root.scale.setScalar(P.s);
     const sk = 1 / Math.sqrt(P.sy); hx.hips.scale.set(sk, P.sy, sk); hx.body.rotation.z = P.rZ;
     hx.armL.rotation.z = -P.aL; hx.armR.rotation.z = P.aR;
-    for (const e of hx.eyes) { e.position.x = (e.userData.bx as number) + 0.03; }
+    for (const e of hx.eyes) e.position.x = (e.userData.bx as number) + (tOdmena >= 0 && tNasad < 0 ? 0.05 : 0.035);
     if (dt > 0) {
       const vy = (P.y - minula.y) / dt;
       hx.aktualizuj({ ay: Math.max(-40, Math.min(40, (vy - minula.vy) / dt)), wy: (P.rY - minula.rY) / dt, wx: (P.rX - minula.rX) / dt, wz: 0, cas, dt });
       minula.y = P.y; minula.vy = vy; minula.rY = P.rY; minula.rX = P.rX;
+      if (odmenaObal.visible) {
+        doplnek?.krok?.({ ay: 0, wx: 0, wy: 1.1, wz: 0, cas, dt });
+        miniHexik?.aktualizuj({ ay: 0, wx: 0, wy: 1.1, wz: 0, cas, dt });
+      }
     }
-    for (const c of castice) c.aktualizuj(dt, cas);
+    for (const c of castice) c.aktualizuj(krok, cas);
+    model.krok?.(cas);
 
-    // kamera: lehký přiblížení po otevření, u vzácných otřes
-    const kt = Math.max(0, kameraTres); kameraTres = Math.max(0, kameraTres - dt);
-    camera.position.x = Math.sin(cas * 60) * kt * 0.08;
-    renderer.render(scene, camera);
+    // ── kamera ──
+    const priblizeni = tOtevreni >= 0 ? (tOdmena >= 0 ? -0.2 : 0.4) : Math.min(3, klepnuti) * 0.35 + (tNadech >= 0 ? 0.25 : 0);
+    const aspekt = camera.aspect, zaklZ = aspekt < 1 ? 8.6 / Math.max(0.5, aspekt) : 8.6;
+    camera.position.z += (zaklZ - priblizeni - camera.position.z) * Math.min(1, dt * 5);
+    camera.position.y += ((tOdmena >= 0 ? 1.0 : 0.6) - camera.position.y) * Math.min(1, dt * 4);
+    kameraTres = Math.max(0, kameraTres - dt);
+    camera.position.x = Math.sin(cas * 55) * kameraTres * 0.07 - 0.3;
+    lookY += ((tOdmena >= 0 ? (nasirku ? 0.05 : -0.6) : -0.55) - lookY) * Math.min(1, dt * 3.5);
+    camera.lookAt(-0.3, lookY, 0);
+    studio.render();
     raf = requestAnimationFrame(snimek);
   }
 
+  camera.position.set(-0.3, 0.75, 8.6);
   const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(velikost) : null; ro?.observe(canvas);
   canvas.addEventListener("pointerdown", klepni);
   velikost();
+  nastavTier("bezna");
   raf = requestAnimationFrame(snimek);
   if (klidne) otevri();
+  // Samootevření hlídá i skutečný čas (na pomalém zařízení se snímky zpožďují)
+  const hlidac = window.setInterval(() => { if (tNadech < 0 && performance.now() - posledniAkceMs > samaPo * 1000) otevri(); }, 400);
 
   return {
-    klepni, otevri,
+    klepni, otevri, nasad,
     znic() {
-      cancelAnimationFrame(raf); ro?.disconnect(); canvas.removeEventListener("pointerdown", klepni);
-      hx.dispose(); castice.forEach((c) => c.dispose());
+      cancelAnimationFrame(raf); window.clearTimeout(pojistka); window.clearInterval(hlidac); ro?.disconnect(); canvas.removeEventListener("pointerdown", klepni);
+      hx.dispose(); miniHexik?.dispose(); castice.forEach((c) => c.dispose());
       geos.forEach((x) => x.dispose()); mats.forEach((x) => x.dispose()); texs.forEach((x) => x.dispose());
-      envRT.dispose(); renderer.dispose(); renderer.forceContextLoss();
+      studio.znic();
     },
   };
 }
