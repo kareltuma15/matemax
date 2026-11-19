@@ -3,13 +3,17 @@ import { test, expect } from "@playwright/test";
 // Mobil (Karel 19. 11. 2026): na úzkém telefonu nesmí být text mimo obrazovku ani useknutý.
 // Kontrolují se veřejné stránky ve 320 a 375 px. Ozdoby (aria-hidden) a vodorovně posuvné pásy se nepočítají.
 
-const STRANKY = ["/", "/cenik", "/jak-to-funguje", "/prihlaseni", "/registrace", "/sbirka", "/trenink", "/testy-nanecisto", "/rodice"];
+import { NAVRAT_PRODUKCE } from "../src/lib/vysledky";
+
+// Úvod pro žáka z osobního QR (skenuje se telefonem)
+const QR = `/propojit?klient=vysledky&state=abc123&navrat=${encodeURIComponent(NAVRAT_PRODUKCE)}&uvod=qr&g=m9&test=2026-12-12`;
+const STRANKY = ["/", "/cenik", "/jak-to-funguje", "/prihlaseni", "/registrace", "/sbirka", "/trenink", "/testy-nanecisto", "/rodice", QR];
 
 for (const sirka of [320, 375]) {
   test.describe(`mobil ${sirka} px`, () => {
     test.use({ viewport: { width: sirka, height: 800 } });
     for (const cesta of STRANKY) {
-      test(`${cesta}: nic mimo obrazovku`, async ({ page }, info) => {
+      test(`${cesta === QR ? "úvod z QR" : cesta}: nic mimo obrazovku`, async ({ page }, info) => {
         test.skip(info.project.name !== "mobile", "stačí jeden projekt");
         await page.addInitScript(() => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-hexik-uvod", "1"); });
         await page.goto(cesta, { waitUntil: "networkidle" });

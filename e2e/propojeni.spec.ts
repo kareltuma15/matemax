@@ -148,7 +148,7 @@ test("osobní QR: úvod pro žáka s dnem testu a registrace s předvyplněnou t
   await page.goto(cesta);
   const uvod = page.getByTestId("propojit-uvod-qr");
   await expect(uvod).toBeVisible();
-  await expect(uvod).toContainText("Test nanečisto 12. 12. · 9. třída");
+  await expect(uvod).toContainText(/Test nanečisto 12\.\s12\. · 9\. třída/);
   await expect(uvod).toContainText("Tady budou tvoje výsledky z testu");
   const reg = page.getByTestId("propojit-qr-registrace");
   await expect(reg).toHaveAttribute("href", `/registrace?next=${encodeURIComponent(cesta)}&trida=9`);

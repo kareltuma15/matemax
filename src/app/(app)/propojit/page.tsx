@@ -19,7 +19,7 @@ import Hexik from "@/components/hexik/Hexik";
  */
 function denTestu(test: string | null): string | null {
   if (!test || !/^\d{4}-\d{2}-\d{2}$/.test(test)) return null;
-  return `${Number(test.slice(8, 10))}. ${Number(test.slice(5, 7))}.`;
+  return `${Number(test.slice(8, 10))}. ${Number(test.slice(5, 7))}.`; // nezlomitelná mezera, ať se datum neláme
 }
 
 function Propojit() {
