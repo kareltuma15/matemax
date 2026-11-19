@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import {
   ODMENY, SADY, SEZONY, vychoziStav, aktualniSezona, konecSezony, jeVNabidce, najdiOdmenu, kupOdmenu, otevriTruhlu,
-  dostupnostTruhly, zapisSady, slucSbirku, postupSady, krystaly, type SbirkaStav,
+  dostupnostTruhly, zapisSady, slucSbirku, postupSady, krystaly, efektHexika, domovHexika, nastavEfekt, nastavDomov, slotyHexika, type SbirkaStav,
 } from "../src/lib/sbirka";
 import { hexikSvg } from "../src/lib/hexik-svg";
 
@@ -60,29 +60,88 @@ test.describe("sezóny a sady: pravidla", () => {
     }
   });
 
-  test("sady: všechny věci existují a patří ke své třídě; bonus jen jednou", () => {
+  test("sady podle pravidel 19. 11.: 3–5 věcí různých druhů, žádné běžné, každá věc v jedné sadě", () => {
+    const videno = new Map<string, string>();
     for (const t of [5, 9] as const) {
       expect(new Set(SADY[t].map((sd) => sd.id)).size).toBe(SADY[t].length);
       for (const sd of SADY[t]) {
+        const druhy = new Set<string>();
         for (const id of sd.polozky) {
           const o = najdiOdmenu(id);
           expect(o, id).toBeTruthy();
           expect(o!.trida).toBe(t);
           if (sd.sezona) expect(o!.sezona, id).toBe(sd.sezona);
+          if (sd.puvod === "kalendar") expect(o!.zdroj, id).toBe("kalendar");
+          if (!sd.zacatecnicka) expect(o!.vz, id).not.toBe("bezna");
+          expect(videno.get(id), `${id} je i v ${videno.get(id)}`).toBeUndefined();
+          videno.set(id, sd.id);
+          druhy.add(o!.typ);
         }
+        if (!sd.puvod) {
+          expect(sd.polozky.length, sd.id).toBeGreaterThanOrEqual(3);
+          expect(sd.polozky.length, sd.id).toBeLessThanOrEqual(5);
+          if (!sd.zacatecnicka) expect(druhy.size, sd.id).toBe(sd.polozky.length);
+        }
+        expect(sd.bonus).toBeLessThanOrEqual(250);
       }
     }
-    const ovoce = SADY[5].find((sd) => sd.id === "5-ovoce")!;
-    let s = s0({ mam: ovoce.polozky.slice(0, 3) });
-    expect(postupSady(s, ovoce)).toEqual({ mam: 3, z: 4 });
-    expect(zapisSady(s, "2026-11-20").vysledek.ids).toEqual([]);
-    s = { ...s, mam: [...s.mam, ovoce.polozky[3]] };
-    const r = zapisSady(s, "2026-11-20");
-    expect(r.vysledek).toEqual({ ids: ["5-ovoce"], krystaly: ovoce.bonus });
-    expect(krystaly(r.s)).toBe(ovoce.bonus);
-    expect(zapisSady(r.s, "2026-11-21").vysledek.ids).toEqual([]);
-    const m = slucSbirku(s0({ sady: { "5-ovoce": "2026-11-21" }, t: 1 }), s0({ sady: { "5-ovoce": "2026-11-20", "9-kyber": "2026-11-22" }, t: 2 }));
+    expect(SADY[5].find((sd) => sd.id === "5-vanoce")!.domov).toEqual({ id: "vanocni-pokojicek", nazev: "Vánoční pokojíček", hotovy: true });
+  });
+
+  test("sady: za polovinu efekt kolem Hexíka, za celou domov a bonus jen jednou", () => {
+    const vanoce = SADY[9].find((sd) => sd.id === "9-vanoce")!;
+    let s = s0({ mam: vanoce.polozky.slice(0, 1) });
+    expect(postupSady(s, vanoce)).toMatchObject({ mam: 1, z: 4, polovina: 2, efekt: false, hotovo: false });
+    expect(zapisSady(s, "2026-12-05").vysledek).toEqual({ ids: [], krystaly: 0, poloviny: [] });
+    // Polovina: efekt se zapne sám a objeví se na Hexíkovi
+    s = zapisSady({ ...s, mam: vanoce.polozky.slice(0, 2) }, "2026-12-05").s;
+    expect(s.polovinySad).toEqual({ "9-vanoce": "2026-12-05" });
+    expect(efektHexika(s, 9)).toBe("snih");
+    expect(slotyHexika(s, 9).okoli).toBe("snih");
+    expect(krystaly(s)).toBe(0);
+    // Vypnutý efekt zůstane vypnutý i po dalších sadách
+    s = nastavEfekt(s, 9, null).s;
+    expect(slotyHexika(s, 9).okoli).toBeUndefined();
+    // Celá sada: domov (pokojíček je hotový, nastaví se sám) a bonus
+    const r = zapisSady({ ...s, mam: [...vanoce.polozky] }, "2026-12-08");
+    expect(r.vysledek).toEqual({ ids: ["9-vanoce"], krystaly: vanoce.bonus, poloviny: [] });
+    expect(domovHexika(r.s, 9)?.id).toBe("vanocni-pokojicek");
+    expect(r.s.okoli?.[9]).toBeNull();
+    expect(zapisSady(r.s, "2026-12-09").vysledek.ids).toEqual([]);
+    // Nehotový domov nejde nastavit, cizí třída taky ne
+    const more = SADY[5].find((sd) => sd.id === "5-more")!;
+    const m = zapisSady(s0({ mam: [...more.polozky] }), "2026-11-20").s;
+    expect(m.domov?.[5]).toBeUndefined();
+    expect(nastavDomov(m, 5, "5-more").vysledek).toBe(false);
+    expect(nastavEfekt(m, 9, "5-more").vysledek).toBe(false);
+    expect(efektHexika(m, 5)).toBe("bubliny");
+  });
+
+  test("sady: kdo sadu dokončil podle dřívějšího složení, má efekt i domov dál; slučování dvou zařízení", () => {
+    const kyber = SADY[9].find((sd) => sd.id === "9-kyber")!;
+    const s = s0({ sady: { "9-kyber": "2026-11-18" } });
+    expect(postupSady(s, kyber)).toMatchObject({ efekt: true, hotovo: true });
+    expect(nastavEfekt(s, 9, "9-kyber").vysledek).toBe(true);
+    const m = slucSbirku(
+      s0({ sady: { "5-ovoce": "2026-11-21" }, polovinySad: { "9-led": "2026-11-20" }, okoli: { 9: "9-led" }, t: 1 }),
+      s0({ sady: { "5-ovoce": "2026-11-20", "9-kyber": "2026-11-22" }, polovinySad: { "9-led": "2026-11-19" }, okoli: { 9: "9-kyber" }, t: 2 }),
+    );
     expect(m.sady).toEqual({ "5-ovoce": "2026-11-20", "9-kyber": "2026-11-22" });
+    expect(m.polovinySad).toEqual({ "9-led": "2026-11-19" });
+    expect(m.okoli).toEqual({ 9: "9-kyber" });
+  });
+
+  test("pojistka sad: legenda z truhly doplní rozdělanou sadu", () => {
+    // Kouzelník: klobouk a hvězdné brýle (2 ze 4) → legendární Kouzelnické rukavice mají přednost
+    for (const r of [0.01, 0.37, 0.73, 0.99]) {
+      const s = s0({ mam: ["5-hlava-klobouk", "5-oci-hvezdicky"], bezLegendy: 999 });
+      const v = otevriTruhlu(s, "denni", 5, "2026-11-20", () => r, true).vysledek!;
+      expect(v.vz).toBe("legenda");
+      expect(v.odmena?.id).toBe("5-ruce-kouzelnicke");
+    }
+    // Bez rozdělané sady padá jakákoli legenda
+    const ids = new Set([0.01, 0.5, 0.99].map((r) => otevriTruhlu(s0({ bezLegendy: 999 }), "denni", 5, "2026-11-20", () => r, true).vysledek!.odmena?.id));
+    expect(ids.size).toBeGreaterThan(1);
   });
 });
 
@@ -117,14 +176,45 @@ test("mimo sezónu: sezónní věci nejdou koupit a Vánoční truhla není", as
   await expect(page.getByTestId("satnik-akce")).toBeDisabled();
 });
 
-test("dokončená sada: ohlášení s bonusem a zlatý rámeček v Sadách", async ({ page }) => {
+test("dokončená sada: ohlášení s domovem a bonusem, zlatý rámeček a přepínač efektu v Sadách", async ({ page }) => {
   await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); },
-    stav({ ziskano: 1000, mam: ["9-podoba-neon", "9-podoba-kyber", "9-vzhled-matrix"] }));
+    stav({ ziskano: 2000, mam: ["9-podoba-kyber", "9-oci-vizor", "9-vzhled-matrix"], polovinySad: { "9-kyber": "2026-11-18" }, okoli: { 9: "9-kyber" } }));
   await page.goto("/sbirka?tab=satnik");
-  await page.getByTestId("typ-pozadi").click();
-  await page.getByTestId("odmena-mrizka").click();
-  await page.getByTestId("satnik-akce").click(); // koupit za 150 → sada Kyber je kompletní
-  await expect(page.getByTestId("nova-trofej")).toContainText("Sada Kyber je kompletní! +400 krystalů");
+  await page.getByTestId("typ-oslava").click();
+  await page.getByTestId("odmena-teleport").click();
+  await page.getByTestId("satnik-akce").click(); // koupit za 900 → sada Kyber je kompletní
+  await expect(page.getByTestId("nova-trofej")).toContainText("Sada Kyber je kompletní! Domov Neonová garáž odemčen · +200 krystalů");
   await page.getByTestId("zalozka-sady").click();
   await expect(page.getByTestId("sada-9-kyber")).toHaveAttribute("data-hotovo", "1");
+  await expect(page.getByTestId("sada-krok-domov-9-kyber")).toContainText("Hexík se nastěhuje v lednu");
+  const prepinac = page.getByTestId("sada-efekt-9-kyber");
+  await expect(prepinac).toHaveAttribute("aria-pressed", "true");
+  await prepinac.click();
+  await expect(prepinac).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("sada-krok-efekt-9-ulice")).toHaveAttribute("data-ok", "0");
+});
+
+test("Vánoční sada v Sadách: půlka zapne sněžení, celá nastěhuje Hexíka do pokojíčku", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-12-10T10:00:00"));
+  await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "5"); localStorage.setItem("matemax-sbirka", s); },
+    stav({ ziskano: 2000, mam: ["5-podoba-skritek", "5-hlava-cepice", "5-vzhled-snezeni"] }));
+  await page.goto("/sbirka?tab=sady", { waitUntil: "commit" });
+  await expect(page.getByTestId("nova-trofej")).toContainText("Půlka sady Vánoce! Kolem Hexíka: Sněžení");
+  await expect(page.getByTestId("sada-efekt-5-vanoce")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("sada-krok-domov-5-vanoce")).toContainText("ještě 1");
+});
+
+test("Vánoční pokojíček: po dokončení sady bydlí Hexík doma a domov jde vypnout", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-12-10T10:00:00"));
+  // Vánoční noc je legendární (jen z truhly), tady ji žák už má: při otevření Sbírky se sada dokončí
+  await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); },
+    stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"] }));
+  await page.goto("/sbirka?tab=sady");
+  const domov = page.getByTestId("domov-hexika");
+  await expect(domov).toHaveAttribute("data-domov", "vanocni-pokojicek", { timeout: 20_000 });
+  await expect(domov.locator("canvas")).toHaveCount(1);
+  await expect(page.getByTestId("sada-9-vanoce")).toHaveAttribute("data-hotovo", "1");
+  await page.getByTestId("sada-domov-9-vanoce").click();
+  await expect(page.getByTestId("domov-hexika")).toHaveCount(0);
+  await expect(page.getByTestId("sada-domov-9-vanoce")).toHaveText("Nastěhovat Hexíka");
 });

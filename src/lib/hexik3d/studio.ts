@@ -33,7 +33,7 @@ export function slabeZarizeni(): boolean {
 }
 
 /** Vykresluje se bez grafické karty (SwiftShader, llvmpipe)? Pak jen nejlehčí varianta. */
-function softwarove(renderer: THREE.WebGLRenderer): boolean {
+export function softwarove(renderer: THREE.WebGLRenderer): boolean {
   try {
     const gl = renderer.getContext();
     const ext = gl.getExtension("WEBGL_debug_renderer_info");

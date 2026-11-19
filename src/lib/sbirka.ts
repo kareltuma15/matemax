@@ -454,6 +454,12 @@ export interface SbirkaStav {
   testy: Record<string, number | null>;
   /** Dokončené sady: id → den (bonus krystalů se připíše jen jednou). */
   sady: Record<string, string>;
+  /** Sady, kde žák nasbíral polovinu (odemčený efekt kolem Hexíka): id → den. */
+  polovinySad?: Record<string, string>;
+  /** Zapnutý efekt sady kolem Hexíka podle třídy: id sady, null = žák efekty vypnul. */
+  okoli?: Partial<Record<Trida, string | null>>;
+  /** Domov Hexíka (3D místo za dokončenou sadu) podle třídy: id sady, null = bez domova. */
+  domov?: Partial<Record<Trida, string | null>>;
   /** Nejvyšší XP úroveň, za kterou už žák dostal krystaly a truhly (věci za úroveň se doplňují podle třídy). */
   uroven: number;
   /** Nejdelší combo (správně za sebou v jednom tréninku). */
@@ -522,12 +528,15 @@ export function nasazena(s: SbirkaStav, trida: Trida, typ: TypOdmeny): Odmena {
 }
 
 /** Nasazené doplňky na sloty (klíče pro 3D Hexíka; „nic“ = prázdný slot). Volitelně s náhledem jedné věci. */
-export function slotyHexika(s: SbirkaStav, trida: Trida, nahled?: Odmena): Partial<Record<Slot, string>> {
-  const v: Partial<Record<Slot, string>> = {};
+export function slotyHexika(s: SbirkaStav, trida: Trida, nahled?: Odmena): Partial<Record<Slot | "okoli", string>> {
+  const v: Partial<Record<Slot | "okoli", string>> = {};
   for (const sl of SLOTY) {
     const o = nahled && nahled.typ === sl ? nahled : nasazena(s, trida, sl);
     if (o && o.klic !== "nic") v[sl] = o.klic;
   }
+  // Efekt sady kolem Hexíka (za polovinu sady)
+  const ef = efektHexika(s, trida);
+  if (ef) v.okoli = ef;
   return v;
 }
 
@@ -549,19 +558,19 @@ export function ulozSbirku(s: SbirkaStav): void {
 /** Nově získané trofeje (detail: { ids }) — stránka je ohlásí. */
 export const TROFEJ_EVENT = "matemax-trofej";
 
-/** Nově dokončené sady (detail: { ids, krystaly }) — stránka je ohlásí. */
+/** Nově dokončené sady a poloviny sad (detail: { ids, krystaly, poloviny }) — stránka je ohlásí. */
 export const SADA_EVENT = "matemax-sada";
 
 /** Sady a trofeje se dopočítávají po každé změně stavu (nejdřív sady, protože z nich jsou i trofeje). */
-function dopocitej(s: SbirkaStav): { s: SbirkaStav; sady: string[]; bonus: number; trofeje: string[] } {
+function dopocitej(s: SbirkaStav): { s: SbirkaStav; sady: string[]; bonus: number; poloviny: string[]; trofeje: string[] } {
   const den = localDateStr();
   const sd = zapisSady(s, den);
   const tr = zapisTrofeje(sd.s, den);
-  return { s: tr.s, sady: sd.vysledek.ids, bonus: sd.vysledek.krystaly, trofeje: tr.vysledek };
+  return { s: tr.s, sady: sd.vysledek.ids, bonus: sd.vysledek.krystaly, poloviny: sd.vysledek.poloviny, trofeje: tr.vysledek };
 }
 
-function ohlas(d: { sady: string[]; bonus: number; trofeje: string[] }) {
-  if (d.sady.length > 0) window.dispatchEvent(new CustomEvent(SADA_EVENT, { detail: { ids: d.sady, krystaly: d.bonus } }));
+function ohlas(d: { sady: string[]; bonus: number; poloviny: string[]; trofeje: string[] }) {
+  if (d.sady.length > 0 || d.poloviny.length > 0) window.dispatchEvent(new CustomEvent(SADA_EVENT, { detail: { ids: d.sady, krystaly: d.bonus, poloviny: d.poloviny } }));
   if (d.trofeje.length > 0) window.dispatchEvent(new CustomEvent(TROFEJ_EVENT, { detail: { ids: d.trofeje } }));
 }
 
@@ -578,7 +587,7 @@ export function upravSbirku<T>(fn: (s: SbirkaStav) => { s: SbirkaStav; vysledek:
 export function zkontrolujTrofeje(): void {
   if (typeof window === "undefined") return;
   const d = dopocitej(nactiSbirku());
-  if (d.sady.length === 0 && d.trofeje.length === 0) return;
+  if (d.sady.length === 0 && d.poloviny.length === 0 && d.trofeje.length === 0) return;
   ulozSbirku({ ...d.s, t: Date.now() });
   ohlas(d);
 }
@@ -702,7 +711,9 @@ export function otevriTruhlu(s: SbirkaStav, id: TruhlaId, trida: Trida, den: str
   const vNabidce = ODMENY[trida].filter((o) => o.cena !== 0 && !o.zdroj && jeVNabidce(o, den) && (id !== "sezonni" || o.sezona === sez));
   const pool = vNabidce.filter((o) => o.vz === vz).length > 0 || id !== "sezonni" ? vNabidce.filter((o) => o.vz === vz) : vNabidce;
   const nove = pool.filter((o) => !dalsi.mam.includes(o.id));
-  const vyber = nove.length ? nove : pool;
+  // Pojistka sad: u legendy mají přednost chybějící věci z rozdělaných sad
+  const zeSad = vz === "legenda" ? nove.filter((o) => chybiVRozdelanych(dalsi, trida).has(o.id)) : [];
+  const vyber = zeSad.length ? zeSad : nove.length ? nove : pool;
   const odmena = vyber.length ? vyber[Math.floor(rnd() * vyber.length) % vyber.length] : null;
   const bonus = t.bonus[0] + Math.floor(rnd() * (t.bonus[1] - t.bonus[0] + 1));
   let k = bonus;
@@ -777,6 +788,12 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
       const x = a.sady?.[k], y = b.sady?.[k];
       return [k, !x ? y! : !y ? x : x < y ? x : y];
     })),
+    polovinySad: Object.fromEntries([...new Set([...Object.keys(a.polovinySad ?? {}), ...Object.keys(b.polovinySad ?? {})])].map((k) => {
+      const x = a.polovinySad?.[k], y = b.polovinySad?.[k];
+      return [k, !x ? y! : !y ? x : x < y ? x : y];
+    })),
+    ...(novejsi.okoli ?? a.okoli ?? b.okoli ? { okoli: { ...(a.okoli ?? {}), ...(b.okoli ?? {}), ...(novejsi.okoli ?? {}) } } : {}),
+    ...(novejsi.domov ?? a.domov ?? b.domov ? { domov: { ...(a.domov ?? {}), ...(b.domov ?? {}), ...(novejsi.domov ?? {}) } } : {}),
     uroven: Math.max(a.uroven ?? 1, b.uroven ?? 1),
     comboRekord: Math.max(a.comboRekord ?? 0, b.comboRekord ?? 0),
     odznaky: Object.fromEntries([...new Set([...Object.keys(a.odznaky ?? {}), ...Object.keys(b.odznaky ?? {})])].map((k) => [k, Math.max(a.odznaky?.[k] ?? -1, b.odznaky?.[k] ?? -1)])),
@@ -1019,48 +1036,179 @@ export function tydenSbirky(s: Partial<SbirkaStav> | null | undefined, den: stri
 
 // -- Sady ----------------------------------------------------------------------
 
-export interface Sada { id: string; trida: Trida; nazev: string; ikona: string; polozky: string[]; bonus: number; sezona?: SezonaId }
+/**
+ * Efekt sady kolem 3D Hexíka. Klíč odpovídá OKOLI v hexik3d/model.ts (tady jen řetězec, ať Sbírka
+ * nenačítá 3D knihovnu).
+ */
+export type EfektSady = "snih" | "vlocky" | "drobky" | "konfety" | "bubliny" | "listky" | "motylci" | "duha" | "magie" | "rakety" | "digital" | "neon" | "uhliky" | "jinovatka" | "potlesk" | "blesky";
 
-const sada = (trida: Trida, id: string, nazev: string, ikona: string, bonus: number, polozky: string[], sezona?: SezonaId): Sada =>
-  ({ id: `${trida}-${id}`, trida, nazev, ikona, bonus, polozky: polozky.map((p) => `${trida}-${p}`), ...(sezona ? { sezona } : {}) });
+/** Domov = 3D místo, kde Hexík bydlí (pozadí profilu a Domova). `hotovy` = scéna už existuje. */
+export interface DomovSady { id: string; nazev: string; hotovy: boolean }
+
+export interface Sada {
+  id: string; trida: Trida; nazev: string; ikona: string; polozky: string[]; bonus: number; sezona?: SezonaId;
+  /** Za polovinu sady (zaokrouhleno nahoru). */
+  efekt: { klic: EfektSady; nazev: string };
+  /** Za celou sadu. */
+  domov: DomovSady;
+  /** Odkud věci jsou, když to není běžný obchod a truhly (Advent = adventní kalendář). */
+  puvod?: "kalendar";
+  /** Ovocný košík: první sada z běžných podob pro začátečníky (výjimka z pravidel). */
+  zacatecnicka?: boolean;
+}
+
+/** Hotové 3D domovy. Ostatní se odemknou hned, Hexík se do nich nastěhuje, až budou scény hotové (leden). */
+export const HOTOVE_DOMOVY: readonly string[] = ["vanocni-pokojicek"];
+
+const KRYSTALY_ZA_VEC = 50;
+const MAX_BONUS_SADY = 250;
+
+const sada = (
+  trida: Trida, id: string, nazev: string, ikona: string, polozky: string[],
+  efekt: [EfektSady, string], domov: [string, string],
+  extra: { sezona?: SezonaId; puvod?: "kalendar"; zacatecnicka?: boolean; bonus?: number } = {},
+): Sada => ({
+  id: `${trida}-${id}`, trida, nazev, ikona,
+  polozky: polozky.map((p) => `${trida}-${p}`),
+  bonus: extra.bonus ?? Math.min(MAX_BONUS_SADY, polozky.length * KRYSTALY_ZA_VEC),
+  efekt: { klic: efekt[0], nazev: efekt[1] },
+  domov: { id: domov[0], nazev: domov[1], hotovy: HOTOVE_DOMOVY.includes(domov[0]) },
+  ...(extra.sezona ? { sezona: extra.sezona } : {}),
+  ...(extra.puvod ? { puvod: extra.puvod } : {}),
+  ...(extra.zacatecnicka ? { zacatecnicka: true } : {}),
+});
+
+const ADVENT = (t: Trida) => ["hlava-parohy", "krk-svetr", "efekt-koule", "pozadi-svetylka", t === 5 ? "podoba-pernicek" : "podoba-polarni", "oslava-rolnicky", "hlava-hvezda"];
 
 /**
- * Sady: kdo nasbírá všechny věci sady, dostane jednou bonus krystalů (mimo denní strop) a sada se mu
- * v Sbírce zlatě orámuje. Věci se sbírají běžně (truhly, nákup), sada nic neodemyká navíc.
+ * Sady podle pravidel schválených 19. 11. 2026: jeden svět o 3–5 věcech různých druhů, jen neobvyklé,
+ * vzácné a legendární věci, každá věc nejvýš v jedné sadě. Za polovinu sady efekt kolem Hexíka,
+ * za celou domov a bonus krystalů (50 za věc, nejvýš 250; mimo denní strop).
+ * Výjimky: Advent (7 věcí z kalendáře) a Ovocný košík (běžné podoby, sada pro začátečníky).
+ * Hlídá e2e/sbirka-sezony.spec.ts.
  */
 export const SADY: Record<Trida, Sada[]> = {
   5: [
-    sada(5, "ovoce", "Ovocný košík", "\u{1F353}", 200, ["podoba-mata", "podoba-malina", "podoba-citron", "podoba-boruvka"]),
-    sada(5, "zviratka", "Zvířátka", "\u{1F43E}", 400, ["podoba-kocicka", "podoba-lisak", "podoba-dracek", "podoba-jednorozec"]),
-    sada(5, "more", "Pod mořem", "\u{1F420}", 300, ["vzhled-ocean", "pozadi-podmori", "efekt-bubliny"]),
-    sada(5, "pohadka", "Pohádka", "\u{1F3F0}", 500, ["pozadi-pohadka", "vzhled-duha", "oslava-piruetka", "efekt-duha"]),
-    sada(5, "vanoce", "Vánoce", "\u{1F384}", 300, ["podoba-skritek", "efekt-vlocky", "vzhled-snezeni", "pozadi-vanoce"], "vanoce"),
-    sada(5, "zima", "Zima", "❄️", 250, ["podoba-snehulak", "pozadi-ledove"], "zima"),
-    sada(5, "finis", "Finiš", "\u{1F3C1}", 300, ["podoba-sampion", "efekt-medaile", "pozadi-cil"], "finis"),
+    sada(5, "vanoce", "Vánoce", "\u{1F384}", ["podoba-skritek", "hlava-cepice", "vzhled-snezeni", "pozadi-vanoce"], ["snih", "Sněžení"], ["vanocni-pokojicek", "Vánoční pokojíček"], { sezona: "vanoce" }),
+    sada(5, "advent", "Advent", "\u{1F36A}", ADVENT(5), ["drobky", "Perníkové drobky"], ["pernikova-chaloupka", "Perníková chaloupka"], { puvod: "kalendar" }),
+    sada(5, "zima", "Zima", "❄️", ["podoba-snehulak", "hlava-kulich", "nohy-brusle", "pozadi-ledove"], ["vlocky", "Poletující vločky"], ["polarni-zare", "Polární záře"], { sezona: "zima" }),
+    sada(5, "finis", "Finiš", "\u{1F3C1}", ["podoba-sampion", "efekt-medaile", "pozadi-cil"], ["konfety", "Konfety"], ["cilova-rovinka", "Cílová rovinka"], { sezona: "finis" }),
+    sada(5, "more", "Pod mořem", "\u{1F420}", ["vzhled-ocean", "pozadi-podmori", "efekt-bubliny"], ["bubliny", "Bubliny"], ["podmorsky-svet", "Podmořský svět"]),
+    sada(5, "zviratka", "Zvířátka", "\u{1F43E}", ["podoba-kocicka", "efekt-motylci", "pozadi-dzungle", "hlava-venecek"], ["motylci", "Motýlci"], ["paseka", "Paseka"]),
+    sada(5, "pohadka", "Pohádka", "\u{1F3F0}", ["podoba-jednorozec", "pozadi-pohadka", "efekt-duha", "oslava-piruetka"], ["duha", "Duhové jiskry"], ["zamek-v-oblacich", "Zámek v oblacích"]),
+    sada(5, "kouzelnik", "Kouzelník", "\u{1FA84}", ["hlava-klobouk", "oci-hvezdicky", "ruce-kouzelnicke", "efekt-hvezdy"], ["magie", "Magické jiskry"], ["kouzelnicka-vez", "Kouzelnická věž"]),
+    sada(5, "superhrdina", "Superhrdina", "\u{1F9B8}", ["ruce-superhrdina", "nohy-raketove", "vzhled-vesmir"], ["rakety", "Stopa z raket"], ["strecha-mrakodrapu", "Střecha mrakodrapu"]),
+    sada(5, "ovoce", "Ovocný košík", "\u{1F353}", ["podoba-mata", "podoba-malina", "podoba-citron", "podoba-boruvka"], ["listky", "Padající lístky"], ["ovocny-sad", "Ovocný sad"], { zacatecnicka: true, bonus: 100 }),
   ],
   9: [
-    sada(9, "kyber", "Kyber", "\u{1F916}", 400, ["podoba-neon", "podoba-kyber", "vzhled-matrix", "pozadi-mrizka"]),
-    sada(9, "ulice", "Ulice", "\u{1F6F9}", 400, ["podoba-street", "podoba-maskac", "vzhled-mesto", "pozadi-synthwave"]),
-    sada(9, "ohen", "Oheň", "\u{1F525}", 500, ["podoba-ohnivy", "efekt-ohen", "efekt-blesky", "pozadi-zapad"]),
-    sada(9, "led", "Led", "\u{1F9CA}", 500, ["podoba-ledovy", "vzhled-aurora", "pozadi-polarni"]),
-    sada(9, "vanoce", "Vánoce", "\u{1F384}", 300, ["podoba-santa", "efekt-vlocky", "vzhled-snezeni", "pozadi-vanoce"], "vanoce"),
-    sada(9, "zima", "Zima", "❄️", 250, ["podoba-yeti", "pozadi-ledove"], "zima"),
-    sada(9, "finis", "Finiš", "\u{1F3C1}", 300, ["podoba-finisher", "efekt-medaile", "pozadi-cil"], "finis"),
+    sada(9, "vanoce", "Vánoce", "\u{1F384}", ["podoba-santa", "hlava-cepice", "vzhled-snezeni", "pozadi-vanoce"], ["snih", "Sněžení"], ["vanocni-pokojicek", "Vánoční pokojíček"], { sezona: "vanoce" }),
+    sada(9, "advent", "Advent", "\u{1F36A}", ADVENT(9), ["drobky", "Perníkové drobky"], ["pernikova-chaloupka", "Perníková chaloupka"], { puvod: "kalendar" }),
+    sada(9, "zima", "Zima", "❄️", ["podoba-yeti", "hlava-kulich", "nohy-brusle", "pozadi-ledove"], ["vlocky", "Poletující vločky"], ["polarni-zare", "Polární záře"], { sezona: "zima" }),
+    sada(9, "finis", "Finiš", "\u{1F3C1}", ["podoba-finisher", "efekt-medaile", "pozadi-cil"], ["konfety", "Konfety"], ["cilova-rovinka", "Cílová rovinka"], { sezona: "finis" }),
+    sada(9, "sportovec", "Sportovec", "⚽", ["nohy-kopacky", "ruce-boxerske", "krk-medaile", "pozadi-stadion", "oslava-salto"], ["potlesk", "Potlesk"], ["satna-s-trofejemi", "Šatna s trofejemi"]),
+    sada(9, "superhrdina", "Superhrdina", "\u{1F9B8}", ["ruce-superhrdina", "nohy-raketove", "efekt-rakety"], ["rakety", "Stopa z raket"], ["strecha-mrakodrapu", "Střecha mrakodrapu"]),
+    sada(9, "kyber", "Kyber", "\u{1F916}", ["podoba-kyber", "oci-vizor", "vzhled-matrix", "oslava-teleport"], ["digital", "Digitální částice"], ["neonova-garaz", "Neonová garáž"]),
+    sada(9, "ulice", "Ulice", "\u{1F6F9}", ["podoba-street", "hlava-sluchatka", "vzhled-mesto", "pozadi-synthwave", "oslava-breakdance"], ["neon", "Blikající neon"], ["synthwave", "Synthwave"]),
+    sada(9, "ohen", "Oheň", "\u{1F525}", ["efekt-ohen", "vzhled-lava", "pozadi-zapad"], ["uhliky", "Stoupající uhlíky"], ["kovarna-u-sopky", "Kovárna u sopky"]),
+    sada(9, "led", "Led", "\u{1F9CA}", ["podoba-diamant", "vzhled-aurora", "pozadi-polarni"], ["jinovatka", "Jinovatka"], ["ledova-jeskyne", "Ledová jeskyně"]),
+    sada(9, "ninja", "Ninja", "\u{1F977}", ["podoba-ninja", "hlava-celenka", "efekt-blesky", "oslava-disco"], ["blesky", "Bleskové jiskry"], ["dojo", "Dódžó"]),
   ],
 };
 
-export function postupSady(s: SbirkaStav, sd: Sada): { mam: number; z: number } {
-  return { mam: sd.polozky.filter((id) => s.mam.includes(id)).length, z: sd.polozky.length };
+export const VSECHNY_SADY: Sada[] = [...SADY[5], ...SADY[9]];
+
+/** Kolik věcí sady je potřeba na efekt (polovina, zaokrouhleno nahoru). */
+export function polovinaSady(sd: Sada): number {
+  return Math.ceil(sd.polozky.length / 2);
 }
 
-/** Připíše bonus za nově dokončené sady (obě třídy, každou sadu jednou). */
-export function zapisSady(s: SbirkaStav, den: string): { s: SbirkaStav; vysledek: { ids: string[]; krystaly: number } } {
+export interface PostupSady { mam: number; z: number; polovina: number; efekt: boolean; hotovo: boolean }
+
+export function postupSady(s: SbirkaStav, sd: Sada): PostupSady {
+  const mam = sd.polozky.filter((id) => s.mam.includes(id)).length;
+  // Kdo sadu dokončil podle dřívějšího složení, má efekt i domov dál
+  const hotovo = !!s.sady?.[sd.id] || mam === sd.polozky.length;
+  return { mam, z: sd.polozky.length, polovina: polovinaSady(sd), efekt: hotovo || !!s.polovinySad?.[sd.id] || mam >= polovinaSady(sd), hotovo };
+}
+
+/** Sada, do které věc patří (každá věc je nejvýš v jedné). */
+export function sadaVeci(id: string): Sada | undefined {
+  return VSECHNY_SADY.find((sd) => sd.polozky.includes(id));
+}
+
+/** Zapnutý efekt kolem Hexíka (klíč pro 3D), nebo null. */
+export function efektHexika(s: SbirkaStav, trida: Trida): EfektSady | null {
+  const id = s.okoli?.[trida];
+  if (!id) return null;
+  const sd = SADY[trida].find((x) => x.id === id);
+  return sd && postupSady(s, sd).efekt ? sd.efekt.klic : null;
+}
+
+/** Zvolený domov (jen hotová scéna), nebo null. */
+export function domovHexika(s: SbirkaStav, trida: Trida): DomovSady | null {
+  const id = s.domov?.[trida];
+  if (!id) return null;
+  const sd = SADY[trida].find((x) => x.id === id);
+  return sd && sd.domov.hotovy && postupSady(s, sd).hotovo ? sd.domov : null;
+}
+
+/** Zapne efekt sady (null = vypnout). Jde jen odemčený. */
+export function nastavEfekt(s: SbirkaStav, trida: Trida, sadaId: string | null): { s: SbirkaStav; vysledek: boolean } {
+  if (sadaId) {
+    const sd = SADY[trida].find((x) => x.id === sadaId);
+    if (!sd || !postupSady(s, sd).efekt) return { s, vysledek: false };
+  }
+  return { s: { ...s, okoli: { ...(s.okoli ?? {}), [trida]: sadaId } }, vysledek: true };
+}
+
+/** Nastaví domov (null = bez domova). Jde jen dokončená sada s hotovou scénou. */
+export function nastavDomov(s: SbirkaStav, trida: Trida, sadaId: string | null): { s: SbirkaStav; vysledek: boolean } {
+  if (sadaId) {
+    const sd = SADY[trida].find((x) => x.id === sadaId);
+    if (!sd || !sd.domov.hotovy || !postupSady(s, sd).hotovo) return { s, vysledek: false };
+  }
+  return { s: { ...s, domov: { ...(s.domov ?? {}), [trida]: sadaId } }, vysledek: true };
+}
+
+/**
+ * Pojistka pro legendy: chybějící věci ze sad, kde má žák aspoň polovinu. Když truhla losuje
+ * legendu, dostanou přednost (legendární věc sady jde tak vždycky získat).
+ */
+export function chybiVRozdelanych(s: SbirkaStav, trida: Trida): Set<string> {
+  const v = new Set<string>();
+  for (const sd of SADY[trida]) {
+    const p = postupSady(s, sd);
+    if (!p.hotovo && p.mam >= p.polovina) for (const id of sd.polozky) if (!s.mam.includes(id)) v.add(id);
+  }
+  return v;
+}
+
+export interface VysledekSad { ids: string[]; krystaly: number; poloviny: string[] }
+
+/**
+ * Zapíše nově dosažené poloviny (efekt) a dokončené sady (domov + bonus, každou sadu jednou).
+ * Nový efekt se rovnou zapne, pokud žák efekty sám nevypnul. Hotový domov se nastaví, pokud žádný nemá.
+ */
+export function zapisSady(s: SbirkaStav, den: string): { s: SbirkaStav; vysledek: VysledekSad } {
   const hotove = s.sady ?? {};
-  const nove = [...SADY[5], ...SADY[9]].filter((sd) => !hotove[sd.id] && sd.polozky.every((id) => s.mam.includes(id)));
-  if (nove.length === 0) return { s, vysledek: { ids: [], krystaly: 0 } };
+  const poloviny = s.polovinySad ?? {};
+  const pocet = (sd: Sada) => sd.polozky.filter((id) => s.mam.includes(id)).length;
+  const nove = VSECHNY_SADY.filter((sd) => !hotove[sd.id] && pocet(sd) === sd.polozky.length);
+  const novePoloviny = VSECHNY_SADY.filter((sd) => !hotove[sd.id] && !poloviny[sd.id] && pocet(sd) >= polovinaSady(sd));
+  if (nove.length === 0 && novePoloviny.length === 0) return { s, vysledek: { ids: [], krystaly: 0, poloviny: [] } };
   const bonus = nove.reduce((a, sd) => a + sd.bonus, 0);
+  const okoli = { ...(s.okoli ?? {}) };
+  for (const sd of novePoloviny) if (okoli[sd.trida] !== null) okoli[sd.trida] = sd.id;
+  const domov = { ...(s.domov ?? {}) };
+  for (const sd of nove) if (sd.domov.hotovy && !domov[sd.trida]) domov[sd.trida] = sd.id;
   return {
-    s: { ...s, ziskano: s.ziskano + bonus, sady: { ...hotove, ...Object.fromEntries(nove.map((sd) => [sd.id, den])) } },
-    vysledek: { ids: nove.map((sd) => sd.id), krystaly: bonus },
+    s: {
+      ...s,
+      ziskano: s.ziskano + bonus,
+      sady: { ...hotove, ...Object.fromEntries(nove.map((sd) => [sd.id, den])) },
+      polovinySad: { ...poloviny, ...Object.fromEntries(novePoloviny.map((sd) => [sd.id, den])) },
+      okoli, domov,
+    },
+    vysledek: { ids: nove.map((sd) => sd.id), krystaly: bonus, poloviny: novePoloviny.filter((sd) => !nove.includes(sd)).map((sd) => sd.id) },
   };
 }

@@ -225,7 +225,7 @@ export function HexikOdmeny({ trida }: { trida: T }) {
   const tlac = (aktivni: boolean): CSSProperties => (aktivni ? { background: "#fff", color: "#0D1B3E" } : {});
   return (
     <section data-sekce="hexik" id="hexik" className="u-sekce u-hra" style={{ scrollMarginTop: 68 }}>
-      <div className="u-wrap" style={{ display: "grid", gap: 56 }}>
+      <div className="u-wrap" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr)", gap: 56 }}>
         <div style={{ textAlign: "center" }}>
           <span className="u-pill" style={{ background: "rgba(175,172,251,.18)", color: "#D9D7FF" }}>Hexík a odměny</span>
           <h2 className="u-h2" style={{ color: "#fff" }}>Za snahu odměny.<br /><span style={{ color: "#AFACFB" }}>Hexík ve 3D roste s tebou.</span></h2>

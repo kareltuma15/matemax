@@ -4,7 +4,8 @@
  */
 import * as THREE from "three";
 
-export type DruhCastic = "snih" | "jiskry" | "uhliky" | "aura" | "vybuch";
+/** „stoupani“ = bubliny a digitální částice, které stoupají kolem Hexíka (efekt sady). */
+export type DruhCastic = "snih" | "jiskry" | "uhliky" | "aura" | "vybuch" | "stoupani";
 
 export interface Castice {
   obj: THREE.Points;
@@ -47,8 +48,8 @@ void main() {
 
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
-export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: string[], pocet?: number): Castice {
-  const n = pocet ?? (druh === "snih" ? 70 : druh === "uhliky" ? 26 : druh === "aura" ? 22 : druh === "vybuch" ? 90 : 10);
+export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: string[], pocet?: number, velikost = 1): Castice {
+  const n = pocet ?? (druh === "snih" ? 70 : druh === "uhliky" ? 26 : druh === "aura" ? 22 : druh === "vybuch" ? 90 : druh === "stoupani" ? 26 : 10);
   const pos = new Float32Array(n * 3), size = new Float32Array(n), alpha = new Float32Array(n), col = new Float32Array(n * 3);
   // Stav každé částice: rychlost, fáze, život
   const v = new Float32Array(n * 3), faze = new Float32Array(n), zivot = new Float32Array(n), zakladVel = new Float32Array(n);
@@ -72,6 +73,11 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
       v.set([rnd(-0.12, 0.12), rnd(0.5, 0.9), rnd(-0.08, 0.08)], i * 3);
       zivot[i] = prvni ? Math.random() * 1.4 : 0;
       zakladVel[i] = rnd(0.035, 0.06);
+    } else if (druh === "stoupani") {
+      const u = Math.random() * Math.PI * 2, r = rnd(0.9, 1.7);
+      pos.set([Math.cos(u) * r, prvni ? rnd(-1.4, 2.4) : -1.4, Math.sin(u) * r * 0.7], i * 3);
+      v.set([0, rnd(0.35, 0.65), 0], i * 3);
+      zakladVel[i] = rnd(0.06, 0.12); alpha[i] = 0;
     } else if (druh === "vybuch") {
       pos.set([0, 0, 0], i * 3); zivot[i] = 99; alpha[i] = 0;
       zakladVel[i] = rnd(0.06, 0.16);
@@ -80,7 +86,7 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
       pos.set([Math.cos(u) * 1.55, Math.sin(u) * 1.55, 0], i * 3);
       zakladVel[i] = i % 3 === 0 ? 0.13 : 0.08;
     }
-    size[i] = zakladVel[i];
+    zakladVel[i] *= velikost; size[i] = zakladVel[i];
   };
   for (let i = 0; i < n; i++) zrod(i, true);
 
@@ -91,8 +97,8 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
   geo.setAttribute("aColor", new THREE.BufferAttribute(col, 3));
   const mat = new THREE.ShaderMaterial({
     vertexShader: VERTEX, fragmentShader: FRAGMENT, transparent: true, depthWrite: false,
-    blending: druh === "snih" ? THREE.NormalBlending : THREE.AdditiveBlending,
-    uniforms: { uScale: meritko, uTvar: { value: druh === "snih" || druh === "uhliky" ? 0 : 1 } },
+    blending: druh === "snih" || druh === "stoupani" ? THREE.NormalBlending : THREE.AdditiveBlending,
+    uniforms: { uScale: meritko, uTvar: { value: druh === "snih" || druh === "uhliky" || druh === "stoupani" ? 0 : 1 } },
   });
   const obj = new THREE.Points(geo, mat);
   obj.frustumCulled = false;
@@ -110,6 +116,12 @@ export function vytvorCastice(druh: DruhCastic, meritko: MeritkoCastic, barvy: s
           if (pos[k + 1] < -1.45) zrod(i, false);
           // Mírné zeslabení u horního okraje, ať vločky nevznikají „z ničeho“
           alpha[i] = Math.min(1, (2.6 - pos[k + 1]) * 1.5) * 0.9;
+        } else if (druh === "stoupani") {
+          pos[k] += Math.sin(cas * 1.3 + faze[i]) * 0.1 * dt;
+          pos[k + 1] += v[k + 1] * dt;
+          if (pos[k + 1] > 2.4) zrod(i, false);
+          // Objeví se u země, zmizí nahoře
+          alpha[i] = Math.min(1, (pos[k + 1] + 1.4) * 1.2, (2.4 - pos[k + 1]) * 1.2) * 0.85;
         } else if (druh === "jiskry" || druh === "aura") {
           const f = 0.5 + 0.5 * Math.sin(cas * (druh === "aura" ? 2.2 : 3.1) + faze[i] * 3);
           size[i] = zakladVel[i] * (0.25 + f * f);

@@ -28,6 +28,7 @@ import BossKarta from "@/components/hexik/BossKarta";
 import HexikUvod from "@/components/hexik/HexikUvod";
 import HexikRadi from "@/components/hexik/HexikRadi";
 import { AdventKarta } from "@/components/hexik/AdventniKalendar";
+import DomovHexika from "@/components/hexik/DomovHexika";
 import NovinkyDomov from "@/components/hexik/NovinkyDomov";
 import PropojenoKarta from "@/components/hexik/PropojenoKarta";
 import DenniMise from "@/components/hexik/DenniMise";
@@ -456,6 +457,7 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
 
           <PropojenoKarta />
           <AdventKarta den={localDateStr()} />
+          <DomovHexika trida={trida} />
           <NovinkyDomov trida={trida} />
           <HexikUvod trida={trida} />
           <HexikRadi trida={trida} trenink={trenink} />

@@ -216,3 +216,25 @@
 }
 @media (max-width: 560px) { .mmu .u-dalsi { grid-template-columns: minmax(0,1fr); } }
 @media (prefers-reduced-motion: reduce) { .mmu .u-scena-kruh, .mmu .u-plov, .mmu .u-scena-ruka, .mmu .u-scena-badge i { animation: none; } }
+
+/* Mobil (Karel 19. 11.): názvy témat se nesmí lámat uprostřed slova, odznak scény se zalomí */
+.mmu .u-tm b { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: normal; word-break: normal; }
+@media (max-width: 480px) {
+  .mmu .u-tm { grid-template-columns: minmax(0,1fr); justify-items: start; gap: 8px; min-height: 0; padding: 12px; }
+  .mmu .u-tm i { width: 34px; height: 34px; font-size: 16px; border-radius: 10px; }
+  .mmu .u-tm b { font-size: 14px; }
+  .mmu .u-tm-mrizka { gap: 10px; }
+  .mmu .u-scena-badge { white-space: normal; text-align: center; max-width: calc(100% - 24px); justify-content: center; font-size: 12px; line-height: 1.3; }
+}
+@media (max-width: 360px) {
+  .mmu .u-tm b { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .mmu .u-plov-1 { width: 158px; bottom: 70px; padding: 9px; font-size: 12px; }
+  .mmu .u-plov-1 small { font-size: 10px; }
+  .mmu .u-plov-ot { font-size: 16px !important; margin: 1px 0 6px; }
+  .mmu .u-plov-mo { gap: 4px; }
+  .mmu .u-plov-mo span { padding: 3px; font-size: 12px; border-radius: 8px; }
+  .mmu .u-plov-combo { top: 10px; right: 6px; font-size: 13px; padding: 7px 10px; }
+  .mmu .u-plov-combo b { font-size: 18px; }
+}

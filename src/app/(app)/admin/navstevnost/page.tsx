@@ -3,12 +3,24 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import Graf, { Pruhy } from "@/components/admin/Graf";
+
+interface Zive {
+  cas: string;
+  pet: number; tricet: number;
+  dnes: { navstevniku: number; stranek: number };
+  vceraDoTed: number; vceraCelkem: number;
+  hodinaTed: number;
+  poHodinach: { h: number; dnes: number; vcera: number }[];
+  strankyTed: { k: string; n: number }[];
+  posledni: { cas: string; co: string; kde?: string; zarizeni: string | null }[];
+}
 
 interface Data {
   dni: number;
   mereniOd: string | null;
   souhrn: { navstevniku: number; stranek: number; novychUctu: number };
-  poDnech: { den: string; navstevniku: number; stranek: number }[];
+  poDnech: { den: string; navstevniku: number; stranek: number; ucty: number }[];
   zdroje: { k: string; n: number }[];
   stranky: { k: string; n: number }[];
   kliky: { k: string; n: number }[];
@@ -19,19 +31,28 @@ interface Data {
   odmeny: { zaku: number; ziskano: number; utraceno: number; truhel: number; odmen: number } | null;
 }
 
-function Seznam({ nadpis, polozky }: { nadpis: string; polozky: { k: string; n: number }[] }) {
+function Seznam({ nadpis, polozky, barva }: { nadpis: string; polozky: { k: string; n: number }[]; barva?: string }) {
   return (
-    <div className="mm-karta p-4">
+    <div className="mm-karta p-4 min-w-0">
       <b className="text-sm" style={{ color: "#0D1B3E" }}>{nadpis}</b>
-      {polozky.length === 0 ? <p className="text-sm mt-2" style={{ color: "#8A93AA" }}>Zatím nic.</p> : (
-        <ul className="mt-2 flex flex-col gap-1">
-          {polozky.map((x) => (
-            <li key={x.k} className="flex justify-between gap-3 text-sm"><span className="truncate" style={{ color: "#33405F" }}>{x.k}</span><b className="tabular-nums" style={{ color: "#0D1B3E" }}>{x.n}</b></li>
-          ))}
-        </ul>
-      )}
+      <Pruhy polozky={polozky} barva={barva} />
     </div>
   );
+}
+
+const denCz = (iso: string) => { const [, m, d] = iso.split("-").map(Number); return `${d}. ${m}.`; };
+const DNY_TYDNE = ["ne", "po", "út", "st", "čt", "pá", "so"];
+const denTydne = (iso: string) => DNY_TYDNE[new Date(iso + "T12:00:00").getDay()];
+const pred = (iso: string, ted: number) => { const s = Math.max(0, Math.round((ted - Date.parse(iso)) / 1000)); return s < 60 ? `před ${s} s` : s < 3600 ? `před ${Math.round(s / 60)} min` : `před ${Math.floor(s / 3600)} h`; };
+const OBNOVA_S = 30;
+
+async function nacti<T>(url: string): Promise<{ data?: T; chyba?: string }> {
+  if (!supabase) return { chyba: "Supabase není dostupné." };
+  const { data: s } = await supabase.auth.getSession();
+  if (!s.session) return { chyba: "Přihlas se jako admin." };
+  const r = await fetch(url, { headers: { Authorization: `Bearer ${s.session.access_token}` }, cache: "no-store" });
+  const j = await r.json().catch(() => ({}));
+  return r.ok ? { data: j as T } : { chyba: (j as { error?: string }).error ?? "Chyba" };
 }
 
 /** Návštěvnost a trychtýř od návštěvy po platbu (jen pro admina). Data z měření bez cookies. */
@@ -39,23 +60,35 @@ export default function NavstevnostPage() {
   const [dni, setDni] = useState(30);
   const [data, setData] = useState<Data | null>(null);
   const [chyba, setChyba] = useState<string | null>(null);
+  const [zive, setZive] = useState<Zive | null>(null);
+  const [obnovovat, setObnovovat] = useState(true);
+  const [ted, setTed] = useState(() => Date.now());
 
   useEffect(() => {
     let zruseno = false;
-    (async () => {
-      if (!supabase) { setChyba("Supabase není dostupné."); return; }
-      const { data: s } = await supabase.auth.getSession();
-      if (!s.session) { setChyba("Přihlas se jako admin."); return; }
-      const r = await fetch(`/api/admin/navstevnost?dni=${dni}`, { headers: { Authorization: `Bearer ${s.session.access_token}` } });
-      const j = await r.json();
+    nacti<Data>(`/api/admin/navstevnost?dni=${dni}`).then((r) => {
       if (zruseno) return;
-      if (!r.ok) setChyba(j.error ?? "Chyba"); else { setChyba(null); setData(j); }
-    })();
+      if (r.chyba) setChyba(r.chyba); else { setChyba(null); setData(r.data!); }
+    });
     return () => { zruseno = true; };
   }, [dni]);
 
-  const max = Math.max(1, ...(data?.poDnech.map((d) => d.navstevniku) ?? [1]));
+  // Živý přehled: hned a pak každých 30 s (jen když je karta vidět)
+  useEffect(() => {
+    let zruseno = false;
+    const obnov = () => { if (document.hidden) return; nacti<Zive>("/api/admin/navstevnost?zive=1").then((r) => { if (!zruseno && r.data) setZive(r.data); }); };
+    obnov();
+    if (!obnovovat) return () => { zruseno = true; };
+    const t = setInterval(obnov, OBNOVA_S * 1000);
+    const vid = () => { if (!document.hidden) obnov(); };
+    document.addEventListener("visibilitychange", vid);
+    return () => { zruseno = true; clearInterval(t); document.removeEventListener("visibilitychange", vid); };
+  }, [obnovovat]);
+  // Hodiny pro „před X s“
+  useEffect(() => { const t = setInterval(() => setTed(Date.now()), 5000); return () => clearInterval(t); }, []);
+
   const prvni = data?.trychtyr[0]?.n || 1;
+  const rozdil = zive ? zive.dnes.navstevniku - zive.vceraDoTed : 0;
 
   return (
     <div className="flex flex-col gap-4 max-w-5xl mx-auto w-full mm-siroke" data-testid="navstevnost">
@@ -73,23 +106,96 @@ export default function NavstevnostPage() {
       </div>
 
       {chyba && <p className="mm-karta p-4 text-sm" style={{ color: "#B4232F" }}>{chyba}</p>}
+
+      {/* ── Živě ── */}
+      {zive && (
+        <section className="mm-karta p-4 flex flex-col gap-4" data-testid="zive">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="relative flex w-2.5 h-2.5" aria-hidden="true">
+                {obnovovat && <span className="absolute inline-flex w-full h-full rounded-full opacity-60 animate-ping" style={{ background: "#1F9D55" }} />}
+                <span className="relative inline-flex w-2.5 h-2.5 rounded-full" style={{ background: obnovovat ? "#1F9D55" : "#8A93AA" }} />
+              </span>
+              <b style={{ color: "#0D1B3E" }}>Živě</b>
+              <span className="text-xs" style={{ color: "#5F6982" }}>aktualizováno {new Date(zive.cas).toLocaleTimeString("cs-CZ")}{obnovovat ? `, obnovuje se každých ${OBNOVA_S} s` : ""}</span>
+            </div>
+            <button type="button" onClick={() => setObnovovat((x) => !x)} className="px-3 py-1.5 rounded-full text-xs font-bold" style={{ background: "#EEF0F6", color: "#0D1B3E" }} data-testid="zive-prepinac">
+              {obnovovat ? "Zastavit obnovu" : "Zapnout obnovu"}
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              ["Právě teď", String(zive.pet), "návštěvníků za 5 min"],
+              ["Posledních 30 min", String(zive.tricet), "návštěvníků"],
+              ["Dnes", String(zive.dnes.navstevniku), `${zive.dnes.stranek} stránek`],
+              ["Proti včerejšku", `${rozdil > 0 ? "+" : ""}${rozdil}`, `včera do teď ${zive.vceraDoTed}, celý den ${zive.vceraCelkem}`],
+            ].map(([l, v, p], i) => (
+              <div key={l} className="rounded-xl p-3 min-w-0" style={{ background: "#F5F6FB" }} data-testid={`zive-${i}`}>
+                <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#8A93AA" }}>{l}</p>
+                <p className="text-2xl font-black tabular-nums" style={{ color: i === 3 ? (rozdil > 0 ? "#1F9D55" : rozdil < 0 ? "#B4232F" : "#0D1B3E") : "#0D1B3E" }}>{v}</p>
+                <p className="text-xs" style={{ color: "#5F6982" }}>{p}</p>
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <b className="text-sm" style={{ color: "#0D1B3E" }}>Dnes po hodinách</b>
+            <p className="text-xs mb-1" style={{ color: "#5F6982" }}>Unikátní návštěvníci v každé hodině (český čas). Tečka = včera ve stejnou hodinu.</p>
+            <Graf
+              testid="graf-hodiny"
+              vyska={140}
+              legenda={["dnes", "včera"]}
+              data={zive.poHodinach.map((x) => ({
+                popisek: `${x.h}`, hodnota: x.dnes, hodnota2: x.vcera, zvyraznit: x.h === zive.hodinaTed,
+                detail: `${x.h}:00–${x.h}:59 · dnes ${x.dnes}, včera ${x.vcera} návštěvníků`,
+              }))}
+            />
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-3">
+            <div className="min-w-0">
+              <b className="text-sm" style={{ color: "#0D1B3E" }}>Kde jsou lidé posledních 30 min</b>
+              <Pruhy polozky={zive.strankyTed} barva="#1F9D55" prazdne="Teď tu nikdo není." />
+            </div>
+            <div className="min-w-0">
+              <b className="text-sm" style={{ color: "#0D1B3E" }}>Poslední dění</b>
+              {zive.posledni.length === 0 ? <p className="text-sm mt-2" style={{ color: "#8A93AA" }}>Zatím nic.</p> : (
+                <ul className="mt-2 flex flex-col gap-1 text-sm" data-testid="zive-deni">
+                  {zive.posledni.map((e, i) => (
+                    <li key={i} className="grid gap-2 items-baseline" style={{ gridTemplateColumns: "76px minmax(0,1fr)" }}>
+                      <span className="text-xs tabular-nums" style={{ color: "#8A93AA" }}>{pred(e.cas, ted)}</span>
+                      <span className="min-w-0 break-words" style={{ color: "#33405F" }}>{e.zarizeni === "mobil" ? "📱" : e.zarizeni ? "💻" : ""} {e.co}{e.kde ? <> · <b style={{ color: "#0D1B3E" }}>{e.kde}</b></> : null}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       {!data && !chyba && <div className="skeleton rounded-[20px]" style={{ height: 300 }} />}
 
       {data && (
         <>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[["Návštěvníků", data.souhrn.navstevniku], ["Zobrazených stránek", data.souhrn.stranek], ["Nových účtů", data.souhrn.novychUctu]].map(([l, v]) => (
-              <div key={l as string} className="mm-karta p-4"><p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#8A93AA" }}>{l}</p><p className="text-3xl font-black tabular-nums" style={{ color: "#0D1B3E" }}>{v}</p></div>
+              <div key={l as string} className="mm-karta p-4"><p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#8A93AA" }}>{l} · {data.dni} dní</p><p className="text-3xl font-black tabular-nums" style={{ color: "#0D1B3E" }}>{v}</p></div>
             ))}
           </div>
 
           <div className="mm-karta p-4">
             <b className="text-sm" style={{ color: "#0D1B3E" }}>Návštěvníci po dnech</b>
-            <div className="flex items-end gap-[3px] h-32 mt-3">
-              {data.poDnech.map((d) => (
-                <div key={d.den} className="flex-1 rounded-t" title={`${d.den}: ${d.navstevniku} návštěvníků, ${d.stranek} stránek`} style={{ height: `${Math.max(2, (d.navstevniku / max) * 100)}%`, background: d.navstevniku ? "#5B55D6" : "#E4E6EF" }} />
-              ))}
-            </div>
+            <p className="text-xs mb-1" style={{ color: "#5F6982" }}>Unikátní návštěvníci za den (český čas). Tečka = nové účty ten den.</p>
+            <Graf
+              testid="graf-dny"
+              legenda={["návštěvníci", "nové účty"]}
+              data={data.poDnech.map((d, i) => ({
+                popisek: denCz(d.den), hodnota: d.navstevniku, hodnota2: d.ucty, zvyraznit: i === data.poDnech.length - 1,
+                detail: `${denTydne(d.den)} ${denCz(d.den)} · ${d.navstevniku} návštěvníků, ${d.stranek} stránek, ${d.ucty} ${d.ucty === 1 ? "nový účet" : d.ucty >= 2 && d.ucty <= 4 ? "nové účty" : "nových účtů"}`,
+              }))}
+            />
           </div>
 
           <div className="mm-karta p-4" data-testid="trychtyr">
@@ -99,8 +205,8 @@ export default function NavstevnostPage() {
                 const pred = i > 0 ? data.trychtyr[i - 1].n : null;
                 const ztrata = pred && pred > 0 ? Math.round((1 - t.n / pred) * 100) : null;
                 return (
-                  <div key={t.krok} className="grid grid-cols-[minmax(0,220px)_1fr_auto] gap-3 items-center text-sm">
-                    <span style={{ color: "#33405F" }}>{t.krok}</span>
+                  <div key={t.krok} className="grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(0,220px)_1fr_auto] gap-x-3 gap-y-0.5 items-center text-sm">
+                    <span className="col-span-2 sm:col-span-1" style={{ color: "#33405F" }}>{t.krok}</span>
                     <span className="h-5 rounded-md" style={{ background: "#EEF0F6" }}>
                       <span className="block h-full rounded-md" style={{ width: `${Math.max(1, (t.n / prvni) * 100)}%`, background: i < 5 ? "#5B55D6" : i < 9 ? "#2E6DA4" : "#F5A623" }} />
                     </span>

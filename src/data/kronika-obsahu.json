@@ -7,7 +7,7 @@
     "odmeny9": 90,
     "truhly": 9,
     "trofeje": 23,
-    "sady": 14,
+    "sady": 21,
     "odznaky": 47,
     "cvicne_testy": 2,
     "diagnostika": 2,
@@ -15,6 +15,17 @@
     "vyzvy": 30
   },
   "zapisy": [
+    {
+      "datum": "2026-11-19",
+      "oblast": "odmeny",
+      "popis": "Sady podle nových pravidel (Karel schválil 19. 11.): 21 sad (10 pro 5. třídu, 11 pro 9.), každá jeden svět o 3–5 věcech různých druhů jen z neobvyklých a lepších věcí; za polovinu sady efekt kolem 3D Hexíka (sněžení, bubliny, jiskry…), za celou domov a bonus 50 krystalů za věc; nové sady Advent, Kouzelník, Superhrdina, Sportovec a Ninja; pojistka, že legenda z truhly doplní rozdělanou sadu",
+      "novinka": {
+        "nadpis": "Sady s efekty",
+        "text": "Nasbírej půlku sady a kolem Hexíka začne sněžit, bublat nebo jiskřit. Za celou sadu dostane Hexík domov.",
+        "vizual": "hexik",
+        "odkaz": "/sbirka?tab=sady"
+      }
+    },
     {
       "datum": "2026-11-19",
       "oblast": "odmeny",
