@@ -115,6 +115,7 @@ function Sbirka() {
   const dnesK = stav.dnes.d === den ? stav.dnes.k : 0;
 
   const seznam = ODMENY[trida].filter((o) => o.typ === typ);
+  const sadaOdmeny = new Map(SADY[trida].flatMap((sd) => sd.polozky.map((id) => [id, sd] as const)));
   const vyb = (vybrana && seznam.find((o) => o.id === vybrana)) || nasazena(stav, trida, typ);
   const vybStav = stavOdmeny(stav, vyb, trida, den);
   const nahledPodoba = typ === "podoba" ? vyb.klic : podoba.klic;
@@ -331,10 +332,13 @@ function Sbirka() {
                     style={{ borderColor: vyb.id === o.id ? "#5B55D6" : undefined, boxShadow: vyb.id === o.id ? "0 0 0 2px rgba(91,85,214,.3)" : undefined }}
                     data-testid={`odmena-${o.klic}`}
                   >
-                    <span className="h-1 rounded-full" style={{ background: VZACNOST[o.vz].barva }} />
-                    {z && <span className="mm-sezona-stitek self-start" data-testid={`sezonni-${o.klic}`}>{z.ikona} {st === "mimo" ? `od ${Number(z.od.slice(3))}. ${Number(z.od.slice(0, 2))}.` : `do ${Number(konecSezony(z, den).slice(8))}. ${Number(konecSezony(z, den).slice(5, 7))}.`}</span>}
-                    <span className="flex items-center justify-center h-14" style={st === "mimo" ? { filter: "grayscale(.8)", opacity: 0.55 } : undefined}><Vizual o={o} /></span>
+                    <span className="mm-dlazdice" data-vz={o.vz} style={st === "mimo" ? { filter: "grayscale(.8)", opacity: 0.55 } : undefined}>
+                      <Vizual o={o} velikost={54} etapa={etapa} vyplnit />
+                      {z && <span className="mm-sezona-stitek mm-dlazdice-stitek" data-testid={`sezonni-${o.klic}`}>{z.ikona} {st === "mimo" ? `od ${Number(z.od.slice(3))}. ${Number(z.od.slice(0, 2))}.` : `do ${Number(konecSezony(z, den).slice(8))}. ${Number(konecSezony(z, den).slice(5, 7))}.`}</span>}
+                      {sadaOdmeny.get(o.id) && <span className="mm-dlazdice-sada" title={`Patří do sady ${sadaOdmeny.get(o.id)!.nazev}`} data-testid={`sada-${o.klic}`}>{sadaOdmeny.get(o.id)!.ikona} sada</span>}
+                    </span>
                     <span className="text-[13px] font-bold leading-tight" style={{ color: "var(--text-primary)" }}>{o.nazev}</span>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wide -mt-1" style={{ color: VZACNOST[o.vz].barva }}>{VZACNOST[o.vz].nazev}</span>
                     <span className="text-[11px] font-bold flex items-center gap-1" style={{ color: st === "nasazeno" ? "#1F9D55" : "#5F6982" }}>
                       {st === "nasazeno" ? "✓ Nasazeno" : st === "mam" ? "Máš" : st === "mimo" ? "Jen v sezóně" : st === "truhla" ? "🎁 Jen z truhly" : st === "test" ? "🏫 Za test nanečisto" : st === "uroven" ? `⭐ Úroveň ${o.uroven}` : st === "kalendar" ? "🎄 Z kalendáře" : <><Krystal /> {o.cena}</>}
                     </span>

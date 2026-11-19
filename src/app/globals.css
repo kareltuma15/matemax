@@ -1072,3 +1072,12 @@ html[data-vzhled="lava"], .mm-swatch[data-vz="lava"] { --vz-pozadi: radial-gradi
 .adv-tecky i.dnes { background: #fff; box-shadow: 0 0 6px #FFD27E; }
 .adv-karta-btn { flex: none; background: #F5A623; color: #0D1B3E; font-weight: 900; border-radius: 12px; padding: 8px 12px; font-size: .85rem; }
 @media (prefers-reduced-motion: reduce) { .adv, .adv-girlanda i, .adv-okno .adv-dvirka, .adv-vnitrek .ik, .adv-vnitrek::after { animation: none !important; transition: none !important; } }
+
+/* Dlaždice v šatníku: 3D miniatura na podkladu v barvě vzácnosti, štítek sezóny a sady */
+.mm-dlazdice { --d1: #F1F4F9; --d2: #DCE2EC; position: relative; display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: radial-gradient(circle at 50% 38%, var(--d1), var(--d2)); }
+.mm-dlazdice[data-vz="neobvykla"] { --d1: #E6F1FF; --d2: #BCD8FF; }
+.mm-dlazdice[data-vz="vzacna"] { --d1: #F3EBFF; --d2: #D8C5FF; }
+.mm-dlazdice[data-vz="legenda"] { --d1: #FFF6D9; --d2: #FFD978; }
+.mm-dlazdice > .mm-swatch, .mm-dlazdice > .mm-banner { width: 82% !important; height: 58% !important; }
+.mm-dlazdice-stitek { position: absolute; left: 5px; top: 5px; margin: 0; }
+.mm-dlazdice-sada { position: absolute; right: 5px; bottom: 5px; font-size: 10px; font-weight: 800; line-height: 1; color: #fff; background: rgba(13, 27, 62, .78); border-radius: 999px; padding: 3px 6px; }

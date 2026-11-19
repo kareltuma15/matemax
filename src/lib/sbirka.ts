@@ -332,13 +332,13 @@ export const TMAVE_VZHLEDY = new Set(["grafit", "vesmir", "mesto", "aurora", "ma
 
 export const IKONA_ODMENY: Record<string, string> = {
   radost: "🙌", poskok: "🦘", tanec: "💃", kotrmelec: "🤸", salto: "🤸", teleport: "🌀", disco: "🪩", piruetka: "🌈",
-  jiskry: "✨", srdicka: "💖", pixely: "🟪", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥", vlocky: "❄️", medaile: "🥇", notky: "🎵", motylci: "🦋", binar: "💾", rakety: "🚀",
+  jiskry: "✨", srdicka: "💖", pixely: "👾", konfety: "🎊", bubliny: "🫧", hvezdy: "⭐", duha: "🌈", blesky: "⚡", ohen: "🔥", vlocky: "❄️", medaile: "🥇", notky: "🎵", motylci: "🦋", binar: "🔢", rakety: "🚀",
   robot: "🤖", vlnka: "🌊", pirueta: "🩰", breakdance: "🕺", hvezdne: "🌟",
   nic: "⭕", masle: "🎀", venecek: "🌼", sluchatka: "🎧", klobouk: "🧙", koruna: "👑", cepice: "🎅", kulich: "🧶", ksiltovka: "🧢", celenka: "🥷", svatozar: "😇",
   bryle: "👓", srdce: "😍", hvezdicky: "🤩", slunecni: "🕶️", pixel: "😎", vizor: "🥽",
   motylek: "🎩", sala: "🧣", retez: "⛓️",
   naramek: "📿", palcaky: "🧤", boxerske: "🥊", superhrdina: "🦸", kouzelnicke: "🪄", tenisky: "👟", zimni: "🥾", kopacky: "⚽", brusle: "⛸️", raketove: "🚀",
-  parohy: "🦌", svetr: "🧶", koule: "⚪", rolnicky: "🔔", hvezda: "🌟",
+  parohy: "🦌", svetr: "🧥", koule: "☃️", rolnicky: "🔔", hvezda: "🌟",
 };
 
 // ── Truhly ──────────────────────────────────────────────────────────────────
