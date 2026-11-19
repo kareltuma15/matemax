@@ -203,3 +203,18 @@ test("Vánoční sada v Sadách: půlka zapne sněžení, celá nastěhuje Hexí
   await expect(page.getByTestId("sada-efekt-5-vanoce")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("sada-krok-domov-5-vanoce")).toContainText("ještě 1");
 });
+
+test("Vánoční pokojíček: po dokončení sady bydlí Hexík doma a domov jde vypnout", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-12-10T10:00:00"));
+  // Vánoční noc je legendární (jen z truhly), tady ji žák už má: při otevření Sbírky se sada dokončí
+  await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); },
+    stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"] }));
+  await page.goto("/sbirka?tab=sady");
+  const domov = page.getByTestId("domov-hexika");
+  await expect(domov).toHaveAttribute("data-domov", "vanocni-pokojicek", { timeout: 20_000 });
+  await expect(domov.locator("canvas")).toHaveCount(1);
+  await expect(page.getByTestId("sada-9-vanoce")).toHaveAttribute("data-hotovo", "1");
+  await page.getByTestId("sada-domov-9-vanoce").click();
+  await expect(page.getByTestId("domov-hexika")).toHaveCount(0);
+  await expect(page.getByTestId("sada-domov-9-vanoce")).toHaveText("Nastěhovat Hexíka");
+});

@@ -27,6 +27,7 @@ import { SkeletonLine, SkeletonAvatar } from "@/components/Skeleton";
 import ShareButton from "@/components/ShareButton";
 import Hexik from "@/components/hexik/Hexik";
 import PozadiZive from "@/components/hexik/PozadiZive";
+import DomovHexika from "@/components/hexik/DomovHexika";
 import { useSbirka } from "@/lib/use-sbirka";
 import { nasazena, etapaHexika, slotyHexika, krystaly, ETAPY_HEXIKA } from "@/lib/sbirka";
 
@@ -693,6 +694,9 @@ export default function ProfilPage() {
 
         </div>
       </div>
+
+      {/* Domov Hexíka (3D místo za dokončenou sadu) */}
+      <DomovHexika trida={trida} />
 
       {/* Day 2 banner */}
       {showDay2Banner && (
