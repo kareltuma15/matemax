@@ -364,10 +364,10 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
               <Link href="/rodice/prihlaseni" style={{ display: "inline-block", marginTop: 18, color: "#2E6DA4", fontWeight: 800 }}>Rodičovský přehled →</Link>
             </div>
 
-            <div style={{ borderRadius: 26, padding: 32, color: "#FFFFFF", background: "linear-gradient(150deg,#0D1B3E 0%,#1A2F7A 55%,#2E6DA4 100%)", position: "relative", overflow: "hidden" }}>
+            <div style={{ borderRadius: 26, padding: "clamp(20px, 6vw, 32px)", color: "#FFFFFF", background: "linear-gradient(150deg,#0D1B3E 0%,#1A2F7A 55%,#2E6DA4 100%)", position: "relative", overflow: "hidden" }}>
               <span aria-hidden="true" style={{ position: "absolute", right: -30, top: -30, width: 180, height: 180, borderRadius: "50%", background: "rgba(0,180,216,.18)" }} />
               <span className="u-pill" style={{ background: "rgba(255,209,102,.18)", color: "#FFD166", position: "relative" }}>Testy nanečisto</span>
-              <h3 style={{ margin: "16px 0 0", fontSize: 30, lineHeight: 1.15, fontWeight: 900, position: "relative" }}>Vyzkoušej si přijímačky naostro</h3>
+              <h3 style={{ margin: "16px 0 0", fontSize: "clamp(24px, 7vw, 30px)", lineHeight: 1.15, fontWeight: 900, position: "relative" }}>Vyzkoušej si přijímačky naostro</h3>
               <p style={{ margin: "12px 0 0", color: "#CFE3F7", fontSize: 17, position: "relative" }}>Stejné podmínky jako u skutečného testu: {t.format} V Gymnáziu Týn nad Vltavou, s vyhodnocením a doporučením, co dotáhnout.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 20, position: "relative" }}>
                 {TERMINY.map((d, i) => (
