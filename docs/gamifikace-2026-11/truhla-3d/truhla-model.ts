@@ -11,15 +11,17 @@ import * as THREE from "three";
 import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import type { Sklad } from "../../../src/lib/hexik3d/doplnky";
 
-export type DruhModelu = "denni" | "doporuceni" | "generalka" | "legendarni" | "sezonni" | "krystalova" | "velka" | "mistrovska" | "zlata";
+export type DruhModelu = "denni" | "doporuceni" | "generalka" | "legendarni" | "vanocni" | "zimni" | "finis" | "krystalova" | "velka" | "mistrovska" | "zlata";
+/** Sezónní truhla v appce (TruhlaId "sezonni") mění podobu podle aktuální sezóny (lib/sbirka.ts → SEZONY). */
+export const SEZONNI_MODEL: Record<"vanoce" | "zima" | "finis", DruhModelu> = { vanoce: "vanocni", zima: "zimni", finis: "finis" };
 
 /** Jeden unikátní prvek podle toho, za co truhla je (ne zdobení navíc). */
-type Prvek = "zalozka" | "tabule" | "snih" | "krystaly" | "ucha" | "hvezdy";
+type Prvek = "zalozka" | "tabule" | "snih" | "krystaly" | "ucha" | "hvezdy" | "darek";
 interface Paleta {
   telo: "drevo" | "zlato" | "krystal";
   drevo?: string;
   lak?: number;
-  kov: "ocel" | "zlato" | "email" | "bronz";
+  kov: "ocel" | "zlato" | "email" | "bronz" | "sachovnice";
   email?: string;
   nyty: "ocel" | "zlato";
   samet: string;
@@ -31,7 +33,9 @@ export const PALETY: Record<DruhModelu, Paleta> = {
   doporuceni: { telo: "drevo", drevo: "#2B8455", lak: 1, kov: "bronz", nyty: "zlato", samet: "#0E4A36", prvek: "zalozka" },
   generalka: { telo: "drevo", drevo: "#1E2A55", lak: 1, kov: "ocel", nyty: "ocel", samet: "#16483B", prvek: "tabule" },
   legendarni: { telo: "zlato", kov: "email", email: "#5B2DB8", nyty: "zlato", samet: "#2A0F55" },
-  sezonni: { telo: "drevo", drevo: "#5E8CC4", lak: 0.5, kov: "ocel", nyty: "ocel", samet: "#22417E", prvek: "snih" },
+  vanocni: { telo: "drevo", drevo: "#A8192C", lak: 1, kov: "zlato", nyty: "zlato", samet: "#0F4A2E", prvek: "darek" },
+  zimni: { telo: "drevo", drevo: "#2B4E8E", lak: 1, kov: "ocel", nyty: "ocel", samet: "#1D3D78", prvek: "snih" },
+  finis: { telo: "drevo", drevo: "#EEF0F6", lak: 1, kov: "sachovnice", nyty: "zlato", samet: "#8E1424" },
   krystalova: { telo: "krystal", kov: "ocel", nyty: "ocel", samet: "#1C5C86", prvek: "krystaly" },
   velka: { telo: "drevo", drevo: "#4A36A0", lak: 1, kov: "zlato", nyty: "zlato", samet: "#24135E", prvek: "ucha", meritko: 1.16 },
   mistrovska: { telo: "drevo", drevo: "#1F2D6E", lak: 1, kov: "zlato", nyty: "zlato", samet: "#9E1B3A" },
@@ -183,6 +187,14 @@ function texturaTabule(s: Sklad): THREE.Texture {
   const t = s.t(new THREE.CanvasTexture(c)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
 }
 
+/** Šachovnice cílové vlajky (Truhla finiše). */
+function texturaSachovnice(s: Sklad): THREE.Texture {
+  const c = document.createElement("canvas"); c.width = c.height = 64; const x = c.getContext("2d")!;
+  for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { x.fillStyle = (i + j) % 2 ? "#111522" : "#F6F7FB"; x.fillRect(i * 16, j * 16, 16, 16); }
+  const t = s.t(new THREE.CanvasTexture(c)); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(1, 6); t.magFilter = THREE.NearestFilter;
+  return t;
+}
+
 function hvezdaShape(r1: number, r2: number): THREE.Shape {
   const s = new THREE.Shape();
   for (let i = 0; i < 10; i++) { const r = i % 2 ? r2 : r1, a = Math.PI / 2 + (i * Math.PI) / 5; if (i === 0) s.moveTo(r * Math.cos(a), r * Math.sin(a)); else s.lineTo(r * Math.cos(a), r * Math.sin(a)); }
@@ -247,9 +259,13 @@ export function postavTruhlu(s: Sklad, druh: DruhModelu, barva: THREE.Color): Mo
       ? s.m(new THREE.MeshPhysicalMaterial({ color: P.email, metalness: 0.15, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.05, iridescence: 0.3 }))
       : P.kov === "bronz"
         ? s.m(new THREE.MeshPhysicalMaterial({ color: "#D99A5E", metalness: 1, roughness: 0.3, clearcoat: 0.5, envMapIntensity: 1.9 }))
+        : P.kov === "sachovnice"
+          ? s.m(new THREE.MeshPhysicalMaterial({ color: "#FFC24A", metalness: 1, roughness: 0.22, clearcoat: 0.6, clearcoatRoughness: 0.12, envMapIntensity: 1.9 }))
         : s.m(new THREE.MeshPhysicalMaterial({ color: "#D3DBE6", metalness: 1, roughness: 0.28, clearcoat: 0.4, envMapIntensity: 2.0 }));
+  const sachMat = P.kov === "sachovnice" ? s.m(new THREE.MeshPhysicalMaterial({ map: texturaSachovnice(s), roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.08 })) : null;
   const nytMat = P.nyty === "zlato" ? s.m(new THREE.MeshPhysicalMaterial({ color: "#FFD36A", metalness: 1, roughness: 0.18, clearcoat: 0.8, envMapIntensity: 2 })) : s.m(new THREE.MeshPhysicalMaterial({ color: "#E3E9F2", metalness: 1, roughness: 0.22, envMapIntensity: 2 }));
   const sametMat = s.m(new THREE.MeshPhysicalMaterial({ color: P.samet, roughness: 0.95, sheen: 1, sheenRoughness: 0.38, sheenColor: new THREE.Color(P.samet).lerp(new THREE.Color("#FFFFFF"), 0.35), emissive: barva, emissiveIntensity: 0 }));
+  const pasMat = sachMat ?? kovMat;
   const zlatoMat = s.m(new THREE.MeshPhysicalMaterial({ color: "#FFC24A", metalness: 1, roughness: 0.2, clearcoat: 0.7, envMapIntensity: 2 }));
 
   const root = new THREE.Group(); if (P.meritko) root.scale.setScalar(P.meritko);
@@ -291,7 +307,7 @@ export function postavTruhlu(s: Sklad, druh: DruhModelu, barva: THREE.Color): Mo
   for (const sx of [-1, 1]) {
     // pásy zepředu a zezadu (neprochází dutinou)
     const vnejsi = D / 2 + 0.0175, vnitrni = (D - 2 * R) / 2 + 0.012, hl = vnejsi - vnitrni;
-    for (const sz of [-1, 1]) pruzne.add(new THREE.Mesh(s.g(tvar(0.16, H - 0.06, hl, 0.035, [3, 30, 4], new THREE.Vector3(sx * pasX, H / 2, sz * (vnitrni + hl / 2)), (v) => naTelo(v))), kovMat));
+    for (const sz of [-1, 1]) pruzne.add(new THREE.Mesh(s.g(tvar(0.16, H - 0.06, hl, 0.035, [3, 30, 4], new THREE.Vector3(sx * pasX, H / 2, sz * (vnitrni + hl / 2)), (v) => naTelo(v))), pasMat));
     for (const sz of [-1, 1]) for (const [yy, vh] of [[0.17, 0.34], [H - 0.15, 0.3]] as const) {
       pruzne.add(new THREE.Mesh(s.g(tvar(0.2, vh, 0.2, 0.07, [6, 10, 6], new THREE.Vector3(sx * (W / 2 - 0.075), yy, sz * (D / 2 - 0.075)), (v) => naTelo(v))), kovMat));
     }
@@ -328,7 +344,7 @@ export function postavTruhlu(s: Sklad, druh: DruhModelu, barva: THREE.Color): Mo
     const m = new THREE.Mesh(g, s.m(new THREE.MeshPhysicalMaterial({ map: texturaM2(s), roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.08 }))); m.position.z = 0.046; medailon.add(m); }
   // pásy na víku + přední lem
   for (const sx of [-1, 1]) {
-    viko.add(new THREE.Mesh(s.g(tvar(0.17, LH + 0.03, VD + 0.035, 0.04, [3, 8, 40], new THREE.Vector3(sx * pasX, (LH + 0.03) / 2 - 0.01, 0), (v) => klenba(v, VD + 0.035, LH + 0.03))), kovMat));
+    viko.add(new THREE.Mesh(s.g(tvar(0.17, LH + 0.03, VD + 0.035, 0.04, [3, 8, 40], new THREE.Vector3(sx * pasX, (LH + 0.03) / 2 - 0.01, 0), (v) => klenba(v, VD + 0.035, LH + 0.03))), pasMat));
     viko.add(new THREE.Mesh(s.g(tvar(0.1, LH + 0.02, VD + 0.025, 0.04, [3, 8, 40], new THREE.Vector3(sx * (VW / 2 - 0.17), (LH + 0.02) / 2 - 0.008, 0), (v) => klenba(v, VD + 0.025, LH + 0.02))), kovMat));
   }
   viko.add(new THREE.Mesh(s.g(tvar(VW + 0.03, 0.08, 0.09, 0.035, [20, 2, 2], new THREE.Vector3(0, 0.03, VD / 2 - 0.01))), kovMat));
@@ -369,19 +385,57 @@ export function postavTruhlu(s: Sklad, druh: DruhModelu, barva: THREE.Color): Mo
     viko.add(new THREE.Mesh(tg, s.m(new THREE.MeshStandardMaterial({ map: texturaTabule(s), roughness: 0.92 }))));
   }
   if (P.prvek === "snih") {
-    // Sezónní (Zima): sněhová čepice na víku a rampouchy
-    const snihMat = s.m(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#DDEBFF"), sheenRoughness: 0.6, emissive: "#9FC0FF", emissiveIntensity: 0.06 }));
-    const sw = VW * 0.86, sd = VD * 0.78;
-    const sg = s.g(tvar(sw, 0.1, sd, 0.05, [30, 4, 30], new THREE.Vector3(0, 0, 0), (v) => {
-      const zn = cl(v.z / (sd / 2), -1, 1), xn = cl(v.x / (sw / 2), -1, 1);
-      const hrb = 0.05 * Math.sin(v.x * 9 + 1) * Math.sin(v.z * 7) + 0.03 * Math.sin(v.x * 23 + v.z * 13);
-      v.y = (v.y > 0 ? v.y * (1 + hrb * 6) : v.y * 0.4) + LH + LA * Math.cos(zn * Math.PI / 2) + 0.03 - 0.06 * xn ** 8;
-    }));
-    viko.add(new THREE.Mesh(sg, snihMat));
-    const ledMat = s.m(new THREE.MeshPhysicalMaterial({ color: "#D8F1FF", roughness: 0.05, clearcoat: 1, transparent: true, opacity: 0.8, emissive: "#7FC8FF", emissiveIntensity: 0.15 }));
-    for (const [x, l] of [[-0.7, 0.12], [-0.52, 0.2], [-0.3, 0.1], [0.32, 0.16], [0.45, 0.24], [0.66, 0.12], [-0.12, 0.08]] as const) {
-      const c = new THREE.Mesh(s.g(new THREE.ConeGeometry(0.022, l, 10)), ledMat); c.rotation.x = Math.PI; c.position.set(x, -l / 2 + 0.005, VD / 2 + 0.03); viko.add(c);
+    // Zimní: sníh napadaný mezi pásy (pásy koukají ven) a rampouchy
+    const snihMat = s.m(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#DDEBFF"), sheenRoughness: 0.6, emissive: "#9FC0FF", emissiveIntensity: 0.05 }));
+    const okraj = VW / 2 - 0.23;
+    for (const [x0, x1] of [[-pasX + 0.1, pasX - 0.1], [pasX + 0.1, okraj], [-okraj, -pasX - 0.1]] as const) {
+      const pw = x1 - x0, xc = (x0 + x1) / 2;
+      const sd = VD + 0.05;
+      const g = s.g(tvar(pw + 0.04, 0.1, sd, 0.05, [Math.max(8, Math.round(pw * 40)), 5, 34], new THREE.Vector3(xc, 0, 0), (v) => {
+        const zn = cl(v.z / (VD / 2), -1.05, 1.05);
+        const hrb = 0.03 * Math.sin(v.x * 13 + 2) * Math.sin(v.z * 9) + 0.015 * Math.sin(v.x * 31 + v.z * 23) + 0.012 * Math.cos(v.z * 41 - v.x * 7);
+        const hore = v.y > 0;
+        const tl = hore ? 0.075 + hrb : -0.01;
+        const zakl = LH + LA * Math.cos(cl(zn, -1, 1) * Math.PI / 2);
+        // přes přední a zadní hranu sníh přetéká a zaobluje se dolů
+        const pres = Math.max(0, Math.abs(zn) - 0.92) / 0.13;
+        v.y = zakl + tl * (1 - 0.5 * pres) - pres * pres * 0.09 - 0.005;
+      }));
+      viko.add(new THREE.Mesh(g, snihMat));
     }
+    const ledMat = s.m(new THREE.MeshPhysicalMaterial({ color: "#D8F1FF", roughness: 0.05, clearcoat: 1, transparent: true, opacity: 0.8, emissive: "#7FC8FF", emissiveIntensity: 0.15 }));
+    for (const [x, l] of [[-0.7, 0.12], [-0.56, 0.2], [-0.3, 0.1], [0.3, 0.16], [0.44, 0.24], [0.66, 0.12], [-0.14, 0.08]] as const) {
+      const c = new THREE.Mesh(s.g(new THREE.ConeGeometry(0.03, l, 10)), ledMat); c.rotation.x = Math.PI; c.position.set(x, -l / 2 + 0.005, VD / 2 + 0.03); viko.add(c);
+    }
+  }
+  if (P.prvek === "darek") {
+    // Vánoční: převázaná jako dárek (zlatá stuha a mašle) a řetěz světýlek na víku
+    const stuhaMat = s.m(new THREE.MeshPhysicalMaterial({ color: "#1E7A45", roughness: 0.32, sheen: 1, sheenColor: new THREE.Color("#9BF0BE"), sheenRoughness: 0.28, clearcoat: 0.7, clearcoatRoughness: 0.2, side: THREE.DoubleSide }));
+    viko.add(new THREE.Mesh(s.g(tvar(VW + 0.03, LH + 0.035, 0.15, 0.03, [30, 8, 2], new THREE.Vector3(0, (LH + 0.035) / 2 - 0.01, 0), (v) => klenba(v, VD + 0.035, LH + 0.035))), stuhaMat));
+    viko.add(new THREE.Mesh(s.g(tvar(0.15, LH + 0.035, VD + 0.035, 0.03, [2, 8, 40], new THREE.Vector3(0, (LH + 0.035) / 2 - 0.01, 0), (v) => klenba(v, VD + 0.035, LH + 0.035))), stuhaMat));
+    const masle = new THREE.Group(); masle.position.set(0, LH + LA + 0.035, 0); masle.scale.setScalar(1.35); viko.add(masle);
+    // smyčky ze široké stuhy (otevřený válec = pás stuhy), uzel a dva konce
+    const smycka = s.g(new THREE.CylinderGeometry(0.12, 0.12, 0.13, 40, 1, true)); smycka.rotateX(Math.PI / 2);
+    for (const sx of [-1, 1]) { const m = new THREE.Mesh(smycka, stuhaMat); m.scale.set(1, 0.62, 1); m.position.set(sx * 0.13, 0.075, 0); m.rotation.set(0, sx * 0.25, sx * 0.42); masle.add(m); }
+    const uzel = new THREE.Mesh(s.g(tvar(0.1, 0.09, 0.15, 0.035, [4, 4, 4], null)), stuhaMat); uzel.position.y = 0.045; masle.add(uzel);
+    const konec = new THREE.Shape(); konec.moveTo(-0.065, 0); konec.lineTo(0.065, 0); konec.lineTo(0.065, -0.3); konec.lineTo(0, -0.25); konec.lineTo(-0.065, -0.3); konec.closePath();
+    const kg = s.g(new THREE.ExtrudeGeometry(konec, { depth: 0.008, bevelEnabled: false }));
+    for (const sx of [-1, 1]) { const k = new THREE.Mesh(kg, stuhaMat); k.position.set(sx * 0.04, 0.03, 0.06); k.rotation.set(-1.0, 0, sx * 0.45); masle.add(k); }
+    // světýlka na předním okraji víka
+    const body: THREE.Vector3[] = []; const n = 40;
+    const sv = (u: number) => new THREE.Vector3(-0.82 + 1.64 * u, LH - 0.01 - 0.045 * Math.abs(Math.sin(u * Math.PI * 4)), VD / 2 + 0.005);
+    for (let i = 0; i <= n; i++) body.push(sv(i / n));
+    viko.add(new THREE.Mesh(s.g(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(body), 80, 0.006, 6, false)), s.m(new THREE.MeshStandardMaterial({ color: "#1F3A26", roughness: 0.6 }))));
+    const barvy = ["#FF4D5E", "#FFD24D", "#4DE08A", "#5AB8FF"];
+    const zarovkaGeo = s.g(new THREE.CapsuleGeometry(0.026, 0.034, 4, 12));
+    const zarovky: THREE.MeshPhysicalMaterial[] = [];
+    for (let i = 0; i < 16; i++) {
+      const u = (i + 0.5) / 16, p0 = sv(u); if (Math.abs(p0.x) < 0.3) continue;
+      const mat = s.m(new THREE.MeshPhysicalMaterial({ color: barvy[i % 4], emissive: barvy[i % 4], emissiveIntensity: 1.4, roughness: 0.15, clearcoat: 1 }));
+      zarovky.push(mat);
+      const z = new THREE.Mesh(zarovkaGeo, mat); z.position.set(p0.x, p0.y - 0.035, p0.z + 0.02); z.rotation.x = 0.35; viko.add(z);
+    }
+    animace.push((cas) => zarovky.forEach((m, i) => { m.emissiveIntensity = 0.9 + 0.9 * (0.5 + 0.5 * Math.sin(cas * 2.4 + i * 1.7)); }));
   }
   if (P.prvek === "krystaly") {
     // Krystalová: shluk krystalů vyrůstajících z víka

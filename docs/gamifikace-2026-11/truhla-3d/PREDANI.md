@@ -15,7 +15,8 @@ session věděla, než se cokoli přenese do appky.
 - Truhly se mu líbí, **víc zdobení nepřidávat**.
 - Vnitřek musí být ve 3D (hotovo ve verzi 3: duté tělo, dřevěné stěny, prošívaný samet s knoflíky).
 - Občas má být vidět znak MateMaxu: medailon M² na spodku víka, vidět jen po otevření. U Generálky tabule se vzorci.
-- Všech 9 druhů truhel má jeden vlastní prvek podle toho, za co truhla je (záložka, tabule, sníh, ucha, 5 hvězd, krystaly).
+- Všech 9 druhů truhel má jeden vlastní prvek podle toho, za co truhla je (záložka, tabule, ucha, 5 hvězd, krystaly).
+- **Sezónní truhla** (TruhlaId `sezonni`) má tři podoby podle `aktualniSezona()`: Vánoční (dárek: zelená stuha s mašlí, světýlka), Zimní (sníh mezi pásy, rampouchy), Finiš (šachovnicové pásy). Mapování je `SEZONNI_MODEL` v `truhla-model.ts`.
 - Po schválení se nové otevírání přenese do appky a vydá se sezónou Zima 7. 1. spolu s „Hexík ožil“.
 - Pořadí prací: QR kód na test nanečisto 12. 12. → nová truhla v appce + 3D miniatury → výzva kamarádovi → Hexík karta.
 
@@ -44,6 +45,8 @@ Prosím needitovat je bez domluvy, dokud přenos neproběhne (ať nevznikne konf
 | Hexík karta ke sdílení | Claude Code | 29. 1. |
 
 ## Poznámky pro přenos
+
+- **Termín:** Vánoční truhla je vidět jen 1. 12. – 6. 1. Při vydání až 7. 1. by ji letos nikdo neviděl. O dřívějším vydání rozhoduje Karel.
 
 - Mockup používá záři (bloom) přes `EffectComposer`. Na slabých telefonech ji vypnout a snížit rozlišení.
   Plátno už není průhledné (pozadí se kreslí ve scéně kvůli záři).

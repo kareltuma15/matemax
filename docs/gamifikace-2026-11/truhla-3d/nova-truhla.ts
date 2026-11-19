@@ -19,7 +19,7 @@ import { klid, reakce, DELKA, type Reakce3D } from "../../../src/lib/hexik3d/ani
 import { vytvorCastice, type Castice } from "../../../src/lib/hexik3d/castice";
 
 export type Vz = "bezna" | "neobvykla" | "vzacna" | "legenda";
-export type Druh = "denni" | "doporuceni" | "generalka" | "legendarni" | "sezonni" | "krystalova" | "velka" | "mistrovska" | "zlata";
+export type Druh = "denni" | "doporuceni" | "generalka" | "legendarni" | "vanocni" | "zimni" | "finis" | "krystalova" | "velka" | "mistrovska" | "zlata";
 const PORADI: Vz[] = ["bezna", "neobvykla", "vzacna", "legenda"];
 export const BARVA: Record<Vz, string> = { bezna: "#E6EDF8", neobvykla: "#4DA3FF", vzacna: "#B07CFF", legenda: "#FFC93C" };
 const POZADI: Record<Vz, [string, string]> = { bezna: ["#33399A", "#121A4C"], neobvykla: ["#2A55B8", "#0F1F55"], vzacna: ["#5233B0", "#1B1352"], legenda: ["#8A6326", "#2A1A3E"] };
