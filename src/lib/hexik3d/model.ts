@@ -14,9 +14,11 @@ import {
   usi, vousky, antena, rohy, kridla, rohJednorozce, hriva, ksiltovka, plamen, vanocniCepice, kulich, medaile, tykadla, vceliKridla, sala, koruna,
   zlatoMat, doplnekNaSlot, type Doplnek, type Sklad, type Pohyb,
 } from "./doplnky";
+import { postavOblicej, type RigObliceje } from "./oblicej";
+import { postavRuku, postavNohu, type Koncetiny } from "./koncetiny";
 
 /** Doplňky na sloty (klíče z katalogu sbirka.ts). */
-export type SlotyHexika = Partial<Record<"hlava" | "oci" | "krk", string>>;
+export type SlotyHexika = Partial<Record<"hlava" | "oci" | "krk" | "ruce" | "nohy", string>>;
 
 const N = "#0D1B3E";
 
@@ -36,6 +38,10 @@ export interface HexikModel {
   aktualizuj: (p: Pohyb) => void;
   /** Barva svitu (neon, diamant) pro bodové světlo; null = bez svitu. */
   svit: string | null;
+  /** Obličej s výrazy (oblicej.ts → animujOblicej). */
+  oblicej: RigObliceje;
+  /** Má něco na rukou (scéna dá ruce víc od těla, ať je to vidět). */
+  rucePlne: boolean;
   dispose: () => void;
 }
 
@@ -122,6 +128,7 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
   telo.translate(0, 0, -0.275);
   body.add(new THREE.Mesh(telo, bodyMat));
   const inner = new THREE.Mesh(g(new THREE.ShapeGeometry(hexShape(0.83, 0.2), 10)), innerMat);
+  const tvare: THREE.Mesh[] = [];
   inner.position.z = 0.462; body.add(inner);
 
   // Svítící lem (Neon, Ledový, Toxic, Diamant…)
@@ -181,19 +188,19 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
 
   if (P.tvare) {
     const cm = mt(new THREE.MeshBasicMaterial({ color: "#F7A3C0", transparent: true, opacity: 0.85, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
-    for (const sx of [-1, 1]) { const c = new THREE.Mesh(g(new THREE.CircleGeometry(0.085, 20)), cm); c.position.set(sx * 0.5, -0.14, 0.466); body.add(c); }
+    for (const sx of [-1, 1]) { const c = new THREE.Mesh(g(new THREE.CircleGeometry(0.085, 20)), cm); c.position.set(sx * 0.5, -0.14, 0.466); body.add(c); tvare.push(c); }
   }
 
-  // Ruce a nohy
+  // Ručičky s palcem a botičky (koncetiny.ts), na nich doplňky ze slotů Ruce a Nohy
+  const sklad0: Sklad = { g, m: mt, t: (x) => { textury.push(x); return x; } };
+  const koncetiny: Koncetiny[] = [];
   const ruka = (sx: number) => {
-    const pivot = new THREE.Group(); pivot.position.set(sx * 1.0, -0.12, 0);
-    const a = new THREE.Mesh(g(new THREE.SphereGeometry(0.17, 20, 14)), bodyMat); a.scale.set(0.8, 1.7, 0.8); a.position.y = -0.26; pivot.add(a);
-    body.add(pivot); return pivot;
+    const pivot = new THREE.Group(); body.add(pivot);
+    koncetiny.push(postavRuku(sklad0, pivot, sx, bodyMat, sloty.ruce));
+    return pivot;
   };
   const armL = ruka(-1), armR = ruka(1);
-  for (const sx of [-1, 1]) {
-    const f = new THREE.Mesh(g(new THREE.SphereGeometry(0.22, 20, 14)), bodyMat); f.scale.set(1.15, 0.55, 1.35); f.position.set(sx * 0.4, -1.27, 0.08); root.add(f);
-  }
+  for (const sx of [-1, 1]) koncetiny.push(postavNohu(sklad0, root, sx, bodyMat, new THREE.Color(P.i), sloty.nohy));
 
   // ── Doplňky podle příznaků (doplnky.ts: látky, pružiny, efekty) ───────────
   const sklad: Sklad = { g, m: mt, t: (x) => { textury.push(x); return x; } };
@@ -221,7 +228,19 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
   if (P.kulich && !sloty.hlava) pridej(kulich(sklad, P.o === "#B9D6F2" ? "#4A7FB5" : "#2E6DA4", "#E5383B"));
   if (P.medaile && !sloty.krk) pridej(medaile(sklad));
   // Doplňky ze slotů (hlava, oči, krk) na jakoukoli podobu
-  for (const sl of ["hlava", "oci", "krk"] as const) { const k = sloty[sl]; if (k) { const d = doplnekNaSlot(sklad, sl, k); if (d) pridej(d); } }
+  let naHlave: Doplnek | null = null;
+  for (const sl of ["hlava", "oci", "krk"] as const) { const k = sloty[sl]; if (k) { const d = doplnekNaSlot(sklad, sl, k); if (d) { pridej(d); if (sl === "hlava") naHlave = d; } } }
+  // Doplněk na hlavu a uši/rohy/tykadla se nesrážejí: uši se rozevřou, doplněk sedí o kus výš
+  if (naHlave && (P.usi || P.rohy || P.antena || P.roh || P.tykadla)) {
+    const usiPivoty: THREE.Object3D[] = [];
+    body.traverse((ch) => { if (ch.type === "Group" && ch !== body && Math.abs(Math.abs(ch.position.x) - 0.5) < 0.02 && Math.abs(ch.position.y - 0.82) < 0.02) usiPivoty.push(ch); });
+    for (const ch of usiPivoty) {
+      const rodic = ch.parent; if (!rodic) continue;
+      const sx = Math.sign(ch.position.x); const drzak = new THREE.Group(); drzak.position.copy(ch.position); drzak.rotation.z = -sx * 0.32; drzak.scale.setScalar(0.92);
+      rodic.add(drzak); drzak.add(ch); ch.position.set(0, 0, 0);
+    }
+    (naHlave as Doplnek).obj.position.y += 0.1; (naHlave as Doplnek).obj.scale.multiplyScalar(0.88);
+  }
   if (P.tykadla) pridej(tykadla(sklad));
   if (P.tykadla && P.pruhy) pridej(vceliKridla(sklad));
   if (P.pruhy) {
@@ -268,11 +287,14 @@ export function postavHexika(klic: string, etapa = 1, meritko: MeritkoCastic = {
   const stin = new THREE.Mesh(g(new THREE.PlaneGeometry(2.4, 2.4)), stinMat);
   stin.rotation.x = -Math.PI / 2; stin.position.y = -1.4;
 
+  const oblicej = postavOblicej({ P, body, eyes, mouth, inner, tvare, g, mt, tx: (x) => { textury.push(x); return x; } });
+
   return {
-    root, hips, body, armL, armR, eyes, mouth, stin, svit, okoli,
+    root, hips, body, armL, armR, eyes, mouth, stin, svit, okoli, oblicej, rucePlne: !!sloty.ruce,
     aktualizuj: (p) => {
       for (const z of pruziny) z.krok(p);
       for (const d of doplnky) d.krok?.(p);
+      for (const k of koncetiny) k.krok?.(p);
       for (const c of castice) c.aktualizuj(p.dt, p.cas);
       for (const k of kridlaObj) k.rotation.y = (k.userData.sx as number) * (0.25 + 0.3 * Math.sin(p.cas * (Math.abs(p.wy) > 1 || Math.abs(p.ay) > 3 ? 14 : 3)));
       if (plamenU) plamenU.uCas.value = p.cas;

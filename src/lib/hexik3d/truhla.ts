@@ -16,6 +16,8 @@ import { postavTruhlu, SEZONNI_MODEL, type DruhModelu } from "./truhla-model";
 import { vytvorStudio } from "./studio";
 import { postavHexika, type HexikModel, type SlotyHexika } from "./model";
 import { doplnekNaSlot, type Doplnek, type Sklad } from "./doplnky";
+import { postavRuku, postavNohu } from "./koncetiny";
+import { animujOblicej, type Vyraz3D } from "./oblicej";
 import { klid, reakce, DELKA, type Reakce3D } from "./animace";
 import { vytvorCastice, type Castice } from "./castice";
 
@@ -26,7 +28,7 @@ export type SezonaTruhly = "vanoce" | "zima" | "finis";
 const PORADI: VzacnostTruhly[] = ["bezna", "neobvykla", "vzacna", "legenda"];
 export const BARVA_VZACNOSTI: Record<VzacnostTruhly, string> = { bezna: "#E6EDF8", neobvykla: "#4DA3FF", vzacna: "#B07CFF", legenda: "#FFC93C" };
 const POZADI: Record<VzacnostTruhly, [string, string]> = { bezna: ["#33399A", "#121A4C"], neobvykla: ["#2A55B8", "#0F1F55"], vzacna: ["#5233B0", "#1B1352"], legenda: ["#8A6326", "#2A1A3E"] };
-const SLOTY = ["hlava", "oci", "krk"] as const;
+const SLOTY = ["hlava", "oci", "krk", "ruce", "nohy"] as const;
 type Slot = (typeof SLOTY)[number];
 const jeSlot = (t: string): t is Slot => (SLOTY as readonly string[]).includes(t);
 
@@ -178,14 +180,21 @@ export function vytvorTruhlu3D(canvas: HTMLCanvasElement, o: MoznostiTruhly): Tr
     const box = new THREE.Box3().setFromObject(obj), c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
     const k = velikost / Math.max(0.001, s.x, s.y, s.z); obj.scale.multiplyScalar(k); obj.position.sub(c.multiplyScalar(k));
   };
-  if (o.odmena && jeSlot(o.odmena.typ)) {
-    doplnek = doplnekNaSlot(sklad, o.odmena.typ, o.odmena.klic);
+  const naKoncetiny = !!o.odmena && (o.odmena.typ === "ruce" || o.odmena.typ === "nohy");
+  if (o.odmena && naKoncetiny) {
+    // rukavice nebo bota samostatně (na neutrální ručičce/noze)
+    const obal = new THREE.Group(); const neutral = mt(new THREE.MeshPhysicalMaterial({ color: "#C9C7F5", roughness: 0.45, clearcoat: 0.3 }));
+    if (o.odmena.typ === "ruce") { const pivot = new THREE.Group(); obal.add(pivot); postavRuku(sklad, pivot, 1, neutral, o.odmena.klic); pivot.position.set(0, 0, 0); }
+    else { postavNohu(sklad, obal, 1, neutral, new THREE.Color("#C9C7F5"), o.odmena.klic); obal.children[0].position.set(0, 0, 0); obal.children[0].rotation.y = 0.6; }
+    odmenaRot.add(obal); vycentruj(obal, 0.9); letiNa = "slot";
+  } else if (o.odmena && jeSlot(o.odmena.typ)) {
+    doplnek = doplnekNaSlot(sklad, o.odmena.typ as "hlava" | "oci" | "krk", o.odmena.klic);
     if (doplnek) { doplnek.obj.position.set(0, 0, 0); odmenaRot.add(doplnek.obj); vycentruj(doplnek.obj, 0.95); letiNa = "slot"; }
   } else if (o.odmena?.typ === "podoba") {
     miniHexik = postavHexika(o.odmena.klic, o.etapa, meritko, sloty);
     const obal = new THREE.Group(); obal.add(miniHexik.root); miniHexik.okoli.visible = false; odmenaRot.add(obal); vycentruj(obal, 1.1); letiNa = "podoba";
   }
-  const medailon = !doplnek && !miniHexik;
+  const medailon = !doplnek && !miniHexik && !naKoncetiny;
   if (medailon) {
     // medailon: zlatý šestiúhelník s ikonou
     const zl = mt(new THREE.MeshPhysicalMaterial({ color: "#FFC24A", metalness: 1, roughness: 0.2, clearcoat: 0.7, envMapIntensity: 2 }));
@@ -354,9 +363,10 @@ export function vytvorTruhlu3D(canvas: HTMLCanvasElement, o: MoznostiTruhly): Tr
     if (tNasad >= 0 && !nasazeno) {
       const q = easeInOut((cas - tNasad) / 0.75);
       hx.body.updateMatrixWorld();
-      if (letiNa === "slot") { vec.set(0, o.odmena!.typ === "hlava" ? 1.0 : o.odmena!.typ === "oci" ? 0.1 : -0.5, 0.3); }
-      else vec.set(0, 0, 0);
-      hx.body.localToWorld(vec);
+      const typ = o.odmena?.typ;
+      if (letiNa === "slot" && typ === "ruce") { hx.armR.updateMatrixWorld(); vec.set(0, -0.4, 0.05); hx.armR.localToWorld(vec); }
+      else if (letiNa === "slot" && typ === "nohy") { hx.root.updateMatrixWorld(); vec.set(0.42, -1.25, 0.2); hx.root.localToWorld(vec); }
+      else { vec.set(0, letiNa === "slot" ? (typ === "hlava" ? 1.0 : typ === "oci" ? 0.1 : -0.5) : 0, letiNa === "slot" ? 0.3 : 0); hx.body.localToWorld(vec); }
       odmenaObal.position.lerpVectors(cilOdmeny, vec, q); odmenaObal.position.y += Math.sin(q * Math.PI) * 0.9;
       odmenaObal.scale.setScalar(1.25 + (HX_S * (letiNa === "podoba" ? 0.4 : 1) - 1.25) * q);
       odmenaRot.rotation.y = (1 - q) * cas * 1.1; odmenaRot.rotation.x = (miniHexik ? 0 : 0.25) * (1 - q);
@@ -383,7 +393,10 @@ export function vytvorTruhlu3D(canvas: HTMLCanvasElement, o: MoznostiTruhly): Tr
     hx.root.position.y = P.y; hx.root.rotation.set(P.rX, P.rY, 0); hx.root.scale.setScalar(P.s);
     const sk = 1 / Math.sqrt(P.sy); hx.hips.scale.set(sk, P.sy, sk); hx.body.rotation.z = P.rZ;
     hx.armL.rotation.z = -P.aL; hx.armR.rotation.z = P.aR;
-    for (const e of hx.eyes) e.position.x = (e.userData.bx as number) + (tOdmena >= 0 && tNasad < 0 ? 0.05 : 0.035);
+    // obličej: při klepání třeští oči, po odhalení a nasazení se raduje
+    const vyrazHx: Vyraz3D = (tOdmena >= 0 && cas - tOdmena < 2.6) || (nasazeno && cas - tNasad < 3.4) ? "radost" : klepnuti > 0 && tOdmena < 0 ? "prekvapeni" : "neutral";
+    animujOblicej(hx.oblicej, { vyraz: vyrazHx, lookX: tOdmena >= 0 && tNasad < 0 ? 0.55 : 0.75, lookY: tOdmena >= 0 && tNasad < 0 ? 0.45 : -0.1, mrk: 1, tVyraz: cas }, dt);
+    const odTela = hx.rucePlne ? 0.32 : 0.08; hx.armL.rotation.z -= odTela; hx.armR.rotation.z += odTela;
     if (dt > 0) {
       const vy = (P.y - minula.y) / dt;
       hx.aktualizuj({ ay: Math.max(-40, Math.min(40, (vy - minula.vy) / dt)), wy: (P.rY - minula.rY) / dt, wx: (P.rX - minula.rX) / dt, wz: 0, cas, dt });

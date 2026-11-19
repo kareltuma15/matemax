@@ -3,8 +3,8 @@
   "stav": {
     "priklady9": 1211,
     "priklady5": 397,
-    "odmeny5": 79,
-    "odmeny9": 80,
+    "odmeny5": 89,
+    "odmeny9": 90,
     "truhly": 9,
     "trofeje": 23,
     "sady": 14,
@@ -15,6 +15,17 @@
     "vyzvy": 30
   },
   "zapisy": [
+    {
+      "datum": null,
+      "oblast": "odmeny",
+      "popis": "Vylepšený 3D Hexík (Karel schválil 19. 11.): obličej s hloubkou, živé oči, výrazy (radost, překvapení, povzbuzení, ospalý, stýská se mu), ťuknutí a pohlazení, sleduje prst; ručičky a botičky a nové sloty Ruce a Nohy s 10 doplňky pro každou třídu (palčáky, zimní boty a brusle v sezóně Zima)",
+      "novinka": {
+        "nadpis": "Hexík ožil",
+        "text": "Usmívá se, diví, povzbudí tě a sleduje tě očima. Pohlaď ho! A nově má ruce a nohy: palčáky, tenisky, brusle i raketové boty.",
+        "vizual": "hexik",
+        "odkaz": "/sbirka"
+      }
+    },
     {
       "datum": "2026-11-19",
       "oblast": "odmeny",

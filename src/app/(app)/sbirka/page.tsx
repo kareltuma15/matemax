@@ -299,7 +299,7 @@ function Sbirka() {
 
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-2" role="tablist" aria-label="Druh odměny">
-              {(["podoba", "hlava", "oci", "krk", "oslava", "efekt", "vzhled", "pozadi"] as TypOdmeny[]).map((t) => (
+              {(["podoba", "hlava", "oci", "krk", "ruce", "nohy", "oslava", "efekt", "vzhled", "pozadi"] as TypOdmeny[]).map((t) => (
                 <button
                   key={t}
                   type="button"
@@ -310,12 +310,12 @@ function Sbirka() {
                   style={typ === t ? { background: "#5B55D6" } : undefined}
                   data-testid={`typ-${t}`}
                 >
-                  {t === "podoba" ? "Podoba" : t === "hlava" ? "Hlava" : t === "oci" ? "Oči" : t === "krk" ? "Krk" : t === "oslava" ? "Tanečky" : t === "efekt" ? "Efekt" : t === "vzhled" ? "Vzhled appky" : "Pozadí"}
+                  {t === "podoba" ? "Podoba" : t === "hlava" ? "Hlava" : t === "oci" ? "Oči" : t === "krk" ? "Krk" : t === "ruce" ? "Ruce" : t === "nohy" ? "Nohy" : t === "oslava" ? "Tanečky" : t === "efekt" ? "Efekt" : t === "vzhled" ? "Vzhled appky" : "Pozadí"}
                 </button>
               ))}
             </div>
             <p className="text-xs" style={{ color: "#5F6982" }}>
-              {typ === "podoba" ? "Jak Hexík vypadá u příkladů a v profilu." : typ === "hlava" || typ === "oci" || typ === "krk" ? "Doplněk si nasadíš na jakoukoli podobu Hexíka. Otoč si ho prstem." : typ === "oslava" ? "Taneček, který Hexík zatančí, když máš tři správně v řadě. Některé se odemykají jen za XP úrovně." : typ === "efekt" ? "Co vyletí, když odpovíš správně." : typ === "vzhled" ? "Klepni a vyzkoušej: změní se pozadí celé appky. Nasadit ho můžeš, až ho máš." : "Pozadí hlavičky v profilu a tady ve Sbírce."}
+              {typ === "podoba" ? "Jak Hexík vypadá u příkladů a v profilu." : (SLOTY as readonly string[]).includes(typ) ? "Doplněk si nasadíš na jakoukoli podobu Hexíka. Otoč si ho prstem." : typ === "oslava" ? "Taneček, který Hexík zatančí, když máš tři správně v řadě. Některé se odemykají jen za XP úrovně." : typ === "efekt" ? "Co vyletí, když odpovíš správně." : typ === "vzhled" ? "Klepni a vyzkoušej: změní se pozadí celé appky. Nasadit ho můžeš, až ho máš." : "Pozadí hlavičky v profilu a tady ve Sbírce."}
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5" data-testid="satnik-mrizka">
               {seznam.map((o) => {

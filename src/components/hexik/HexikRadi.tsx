@@ -8,6 +8,7 @@ import { nasazena, slotyHexika, etapaHexika } from "@/lib/sbirka";
 import { radaHexika } from "@/lib/hexik-radi";
 import { reaguj } from "@/lib/hexik-efekty";
 import { loadProgress } from "@/lib/progress";
+import { naladaHexika, type NaladaHexika } from "@/lib/nalada-hexika";
 import { localDateStr } from "@/lib/date";
 import { bossTydne } from "@/lib/boss";
 import type { DnesniTrenink } from "@/lib/dnesni-trenink";
@@ -18,6 +19,8 @@ export default function HexikRadi({ trida, trenink }: { trida: Trida; trenink: D
   const { stav, nacteno } = useSbirka();
   const hx = useRef<HTMLSpanElement>(null);
   const [xp] = useState(() => (typeof window === "undefined" ? 0 : loadProgress().xp ?? 0));
+  // Ospalý po pauze, stýská se mu večer, když hrozí přerušení série (jen 3D obličej, text rady zůstává)
+  const [nalada] = useState<NaladaHexika>(() => (typeof window === "undefined" ? "neutral" : naladaHexika(loadProgress(), new Date())));
   const den = localDateStr();
   const rada = nacteno ? radaHexika({ stav, trida, xp, den, trenink, bossExistuje: !!bossTydne(trida, den) }) : null;
 
@@ -31,7 +34,7 @@ export default function HexikRadi({ trida, trenink }: { trida: Trida; trenink: D
   if (!rada) return null;
   return (
     <section className="mm-karta p-4 lg:p-5 flex items-center gap-3" style={{ background: "linear-gradient(135deg,#EEEDFE,#F7F7FF)", borderColor: "#DCD9FB" }} data-testid="hexik-radi" data-druh={rada.druh}>
-      <Hexik ref={hx} podoba={nasazena(stav, trida, "podoba").klic} etapa={etapaHexika(stav.maxOdhad[trida])} doplnky={slotyHexika(stav, trida)} d3 className="w-20 lg:w-24 shrink-0" />
+      <Hexik ref={hx} podoba={nasazena(stav, trida, "podoba").klic} etapa={etapaHexika(stav.maxOdhad[trida])} doplnky={slotyHexika(stav, trida)} d3 nalada={nalada} mazlit className="w-20 lg:w-24 shrink-0" />
       <div className="flex-1 min-w-0 flex flex-col gap-2">
         <p className="relative rounded-2xl rounded-tl-md bg-white px-3.5 py-2.5 text-sm font-semibold leading-snug shadow-sm" style={{ color: "#0D1B3E", border: "1px solid #E4E6EF" }} data-testid="hexik-radi-text">
           {rada.text}

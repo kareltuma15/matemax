@@ -15,9 +15,9 @@
 import type { Trida } from "@/types";
 import { localDateStr } from "./date";
 
-export type TypOdmeny = "podoba" | "oslava" | "efekt" | "vzhled" | "pozadi" | "hlava" | "oci" | "krk";
+export type TypOdmeny = "podoba" | "oslava" | "efekt" | "vzhled" | "pozadi" | "hlava" | "oci" | "krk" | "ruce" | "nohy";
 /** Doplňky na sloty: nasazují se na jakoukoli podobu Hexíka (3D). */
-export const SLOTY = ["hlava", "oci", "krk"] as const;
+export const SLOTY = ["hlava", "oci", "krk", "ruce", "nohy"] as const;
 export type Slot = (typeof SLOTY)[number];
 export type Vzacnost = "bezna" | "neobvykla" | "vzacna" | "legenda";
 
@@ -89,6 +89,8 @@ export const TYP_NAZEV: Record<TypOdmeny, string> = {
   hlava: "Na hlavu",
   oci: "Na oči",
   krk: "Na krk",
+  ruce: "Na ruce",
+  nohy: "Na nohy",
 };
 
 // [typ, klíč, název, vzácnost, cena, zdroj nebo sezóna?]  „u10“ = odměna za XP úroveň 10
@@ -168,6 +170,19 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["krk", "motylek", "Motýlek", "bezna", 150],
     ["krk", "sala", "Pletená šála", "neobvykla", 400],
     ["krk", "medaile", "Zlatá medaile", "vzacna", 900],
+    // ruce a nohy (Karel schválil 19. 11. 2026): palčáky, zimní boty a brusle jen v sezóně Zima
+    ["ruce", "nic", "Ručičky", "bezna", 0],
+    ["ruce", "naramek", "Přátelský náramek", "bezna", 150],
+    ["ruce", "palcaky", "Palčáky", "bezna", 150, "zima"],
+    ["ruce", "boxerske", "Boxerské rukavice", "neobvykla", 400],
+    ["ruce", "superhrdina", "Rukavice superhrdiny", "vzacna", 900],
+    ["ruce", "kouzelnicke", "Kouzelnické rukavice", "legenda", null],
+    ["nohy", "nic", "Botičky", "bezna", 0],
+    ["nohy", "tenisky", "Tenisky", "bezna", 150],
+    ["nohy", "zimni", "Zimní boty", "bezna", 150, "zima"],
+    ["nohy", "kopacky", "Kopačky", "neobvykla", 400],
+    ["nohy", "brusle", "Brusle", "vzacna", 900, "zima"],
+    ["nohy", "raketove", "Raketové boty", "legenda", null],
     // tanečky za XP úrovně
     ["oslava", "robot", "Robot", "neobvykla", null, "u6"],
     ["oslava", "vlnka", "Vlnka", "neobvykla", null, "u12"],
@@ -258,6 +273,19 @@ const KATALOG: Record<Trida, Radek[]> = {
     ["krk", "sala", "Šála", "bezna", 150],
     ["krk", "retez", "Zlatý řetěz", "neobvykla", 400],
     ["krk", "medaile", "Zlatá medaile", "vzacna", 900],
+    // ruce a nohy (Karel schválil 19. 11. 2026): palčáky, zimní boty a brusle jen v sezóně Zima
+    ["ruce", "nic", "Ručičky", "bezna", 0],
+    ["ruce", "naramek", "Přátelský náramek", "bezna", 150],
+    ["ruce", "palcaky", "Palčáky", "bezna", 150, "zima"],
+    ["ruce", "boxerske", "Boxerské rukavice", "neobvykla", 400],
+    ["ruce", "superhrdina", "Rukavice superhrdiny", "vzacna", 900],
+    ["ruce", "kouzelnicke", "Kouzelnické rukavice", "legenda", null],
+    ["nohy", "nic", "Botičky", "bezna", 0],
+    ["nohy", "tenisky", "Tenisky", "bezna", 150],
+    ["nohy", "zimni", "Zimní boty", "bezna", 150, "zima"],
+    ["nohy", "kopacky", "Kopačky", "neobvykla", 400],
+    ["nohy", "brusle", "Brusle", "vzacna", 900, "zima"],
+    ["nohy", "raketove", "Raketové boty", "legenda", null],
     // tanečky za XP úrovně
     ["oslava", "robot", "Robot", "neobvykla", null, "u6"],
     ["oslava", "vlnka", "Vlnka", "neobvykla", null, "u12"],
@@ -309,6 +337,7 @@ export const IKONA_ODMENY: Record<string, string> = {
   nic: "⭕", masle: "🎀", venecek: "🌼", sluchatka: "🎧", klobouk: "🧙", koruna: "👑", cepice: "🎅", kulich: "🧶", ksiltovka: "🧢", celenka: "🥷", svatozar: "😇",
   bryle: "👓", srdce: "😍", hvezdicky: "🤩", slunecni: "🕶️", pixel: "😎", vizor: "🥽",
   motylek: "🎩", sala: "🧣", retez: "⛓️",
+  naramek: "📿", palcaky: "🧤", boxerske: "🥊", superhrdina: "🦸", kouzelnicke: "🪄", tenisky: "👟", zimni: "🥾", kopacky: "⚽", brusle: "⛸️", raketove: "🚀",
   parohy: "🦌", svetr: "🧶", koule: "⚪", rolnicky: "🔔", hvezda: "🌟",
 };
 
