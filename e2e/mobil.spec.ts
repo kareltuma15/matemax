@@ -7,7 +7,7 @@ import { NAVRAT_PRODUKCE } from "../src/lib/vysledky";
 
 // Úvod pro žáka z osobního QR (skenuje se telefonem)
 const QR = `/propojit?klient=vysledky&state=abc123&navrat=${encodeURIComponent(NAVRAT_PRODUKCE)}&uvod=qr&g=m9&test=2026-12-12`;
-const STRANKY = ["/", "/cenik", "/jak-to-funguje", "/prihlaseni", "/registrace", "/sbirka", "/trenink", "/testy-nanecisto", "/rodice", QR];
+const STRANKY = ["/", "/cenik", "/jak-to-funguje", "/prihlaseni", "/registrace", "/sbirka", "/trenink", "/testy-nanecisto", "/rodice", QR, "/?z=qr&kod=neplatny"];
 
 for (const sirka of [320, 375]) {
   test.describe(`mobil ${sirka} px`, () => {

@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import HexikObrazek from "@/components/hexik/HexikObrazek";
+import { KodNeplatnyHlaska } from "@/components/hexik/KodZTestu";
 import { readLocalTrida, saveLocalTrida } from "@/lib/trida";
 import { EXAMPLES_TEXT, EXAMPLES_LABEL } from "@/lib/site-stats";
 import { HeroScena, TemataObouTrid, NovinkySekce, HexikOdmeny } from "./UvodHra";
@@ -140,6 +141,8 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
 
         <div className="u-wrap u-hero" style={{ position: "relative", zIndex: 2 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 22, alignItems: "flex-start", minWidth: 0 }}>
+            {/* Neplatný kód z letáčku (Vyhodnocení přesměruje na /?z=qr&kod=neplatny) */}
+            <KodNeplatnyHlaska style={{ width: "100%", maxWidth: 540 }} />
             <a href="#novinky" className="u-pill" style={{ background: "rgba(255,255,255,.14)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.3)", textTransform: "none", letterSpacing: 0, fontSize: 14, padding: "5px 12px 5px 5px" }}><span style={{ background: "#34D399", color: "#05351F", borderRadius: 999, padding: "3px 9px", fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase" }}>Nově</span>Sady s efekty · adventní kalendář od 1. 12.</a>
             <div role="group" aria-label="Třída" style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 999, background: "rgba(255,255,255,.10)", border: "1px solid rgba(255,255,255,.22)" }}>
               <button type="button" className="u-tr" aria-pressed={trida === 9} onClick={() => zvol(9)} style={trida === 9 ? aktivni : neaktivni}>🎒 9. třída</button>

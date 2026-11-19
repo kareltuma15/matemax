@@ -56,7 +56,7 @@ export function MamKodZTestu({ varianta = "formular", otevreno = false }: { vari
           autoCapitalize="characters"
           autoComplete="off"
           spellCheck={false}
-          className="min-w-0 flex-1 px-3 py-3 rounded-xl border text-base font-bold tracking-wider uppercase"
+          className="min-w-0 flex-1 px-3 py-3 rounded-xl border text-base font-bold uppercase"
           style={{ borderColor: chyba ? "#B42318" : "var(--border-color, #E4E6EF)", color: "#0D1B3E", background: "#fff" }}
           data-testid="kod-z-testu-pole"
         />
@@ -64,7 +64,7 @@ export function MamKodZTestu({ varianta = "formular", otevreno = false }: { vari
           Pokračovat
         </button>
       </div>
-      {chyba && <p className="text-sm font-semibold" style={{ color: "#B42318" }} data-testid="kod-z-testu-chyba">Kód má 12 znaků, třeba K7MQ-4XT9-PR2W. Zkontroluj ho.</p>}
+      {chyba && <p className="text-sm font-semibold" style={{ color: "#B42318" }} data-testid="kod-z-testu-chyba">Kód má 12 znaků, třeba <span className="whitespace-nowrap">K7MQ-4XT9-PR2W</span>. Zkontroluj ho.</p>}
     </form>
   );
 }
@@ -73,7 +73,7 @@ export function MamKodZTestu({ varianta = "formular", otevreno = false }: { vari
  * Neplatný nebo prošlý kód: Vyhodnocení přesměruje na /?z=qr&kod=neplatny. Ukáže krátkou hlášku,
  * pole na kód (zkusit znovu) a uklidí adresu.
  */
-export function KodNeplatnyHlaska() {
+export function KodNeplatnyHlaska({ style }: { style?: React.CSSProperties } = {}) {
   const [neplatny, setNeplatny] = useState(false);
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
@@ -85,7 +85,7 @@ export function KodNeplatnyHlaska() {
   }, []);
   if (!neplatny) return null;
   return (
-    <div className="rounded-[20px] p-4 flex flex-col gap-3" style={{ background: "#FDECEC", border: "1.5px solid #F5B5B5" }} role="alert" data-testid="kod-neplatny">
+    <div className="rounded-[20px] p-4 flex flex-col gap-3" style={{ background: "#FDECEC", border: "1.5px solid #F5B5B5", ...style }} role="alert" data-testid="kod-neplatny">
       <b className="text-[16px]" style={{ color: "#8A1C1C" }}>Tenhle kód neplatí. Zkontroluj ho, nebo se zeptej rodičů.</b>
       <MamKodZTestu otevreno />
     </div>
