@@ -1,4 +1,5 @@
 "use client";
+import { MamKodZTestu } from "@/components/hexik/KodZTestu";
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -272,6 +273,8 @@ export default function RegistraceForm() {
         </svg>
         {googleLoading ? "Přesměrovávám…" : "Registrovat se přes Google"}
       </button>
+
+      <MamKodZTestu />
 
       <div className="text-center text-sm text-slate-400">
         Máš účet?{" "}

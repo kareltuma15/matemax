@@ -31,6 +31,7 @@ import { AdventKarta } from "@/components/hexik/AdventniKalendar";
 import DomovHexika from "@/components/hexik/DomovHexika";
 import NovinkyDomov from "@/components/hexik/NovinkyDomov";
 import PropojenoKarta from "@/components/hexik/PropojenoKarta";
+import { KodNeplatnyHlaska, MamKodZTestu } from "@/components/hexik/KodZTestu";
 import DenniMise from "@/components/hexik/DenniMise";
 import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
@@ -455,9 +456,11 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
             </div>
           </div>
 
+          <KodNeplatnyHlaska />
           <PropojenoKarta />
           <AdventKarta den={localDateStr()} />
           <DomovHexika trida={trida} />
+          <MamKodZTestu varianta="domov" />
           <NovinkyDomov trida={trida} />
           <HexikUvod trida={trida} />
           <HexikRadi trida={trida} trenink={trenink} />

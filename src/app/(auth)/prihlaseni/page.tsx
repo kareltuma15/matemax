@@ -1,4 +1,5 @@
 "use client";
+import { MamKodZTestu } from "@/components/hexik/KodZTestu";
 
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -151,6 +152,8 @@ function PrihlaseniForm() {
         </svg>
         {googleLoading ? "Přesměrovávám…" : "Přihlásit se přes Google"}
       </button>
+
+      <MamKodZTestu />
 
       <div className="text-center text-sm text-slate-400">
         Nemáš účet?{" "}

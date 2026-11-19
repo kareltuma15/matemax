@@ -13,6 +13,14 @@ export type Trida2 = "m5" | "m9";
 export const NAVRAT_PRODUKCE = "https://vysledky.matematika-snadno.cz/api/matemax/navrat";
 export const NAVRAT_VYVOJ = "http://localhost:3001/api/matemax/navrat";
 
+/**
+ * Osobní kód z letáčku (dohoda s Vyhodnocením 19. 11. 2026): 12 znaků bez snadno zaměnitelných
+ * (0/O, 1/I/L, U), na letáčku po čtveřicích. Ověřuje ho Vyhodnocení na /q/<kód>.
+ */
+export const VYSLEDKY_QR = "https://vysledky.matematika-snadno.cz/q/";
+export const normalizujKod = (s: string) => s.toUpperCase().replace(/[\s\-–.]/g, "");
+export const platnyKod = (k: string) => /^[23456789ABCDEFGHJKMNPQRSTVWXYZ]{12}$/.test(k);
+
 export function povolenyNavrat(navrat: unknown, produkce: boolean): navrat is string {
   if (typeof navrat !== "string") return false;
   return navrat === NAVRAT_PRODUKCE || (!produkce && navrat === NAVRAT_VYVOJ);
