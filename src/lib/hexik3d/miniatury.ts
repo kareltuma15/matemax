@@ -9,8 +9,11 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { postavHexika } from "./model";
 import { animujOblicej } from "./oblicej";
 import { umi3D } from "./scena";
+import { postavTruhlu, type DruhModelu } from "./truhla-model";
+import type { Sklad } from "./doplnky";
 
-export type DruhMiniatury = "podoba" | "hlava" | "oci" | "krk" | "ruce" | "nohy";
+/** „truhla“ = 3D model truhly (klíč = druh modelu z truhla-model.ts) pro obchod a kartu testu. */
+export type DruhMiniatury = "podoba" | "hlava" | "oci" | "krk" | "ruce" | "nohy" | "truhla";
 
 /** Záběr kamery pro každé místo na těle (cíl, vzdálenost, výška, natočení Hexíka). */
 const RAMCE: Record<DruhMiniatury, { cil: [number, number, number]; z: number; y: number; rotY: number }> = {
@@ -20,6 +23,7 @@ const RAMCE: Record<DruhMiniatury, { cil: [number, number, number]; z: number; y
   krk: { cil: [0, -0.1, 0], z: 3.8, y: 0.5, rotY: -0.3 },
   ruce: { cil: [0.85, -0.12, 0], z: 3.4, y: 0.3, rotY: -0.7 },
   nohy: { cil: [0, -0.9, 0], z: 3.6, y: 0.2, rotY: -0.3 },
+  truhla: { cil: [0, 0.95, 0], z: 5.6, y: 2.2, rotY: -0.5 },
 };
 
 interface Pozadavek { druh: DruhMiniatury; klic: string; etapa: number; px: number; klicCache: string }
@@ -61,10 +65,33 @@ function zrusStudio() {
   studio = null;
 }
 
+/** Miniatura truhly: zavřená truhla daného druhu, mírně z boku a shora. */
+function vykresliTruhlu(p: Pozadavek): Promise<string | null> {
+  const { renderer, scene, camera } = studio!;
+  const veci: { dispose: () => void }[] = [];
+  const sklad: Sklad = { g: (x) => { veci.push(x); return x; }, m: (x) => { veci.push(x); return x; }, t: (x) => { veci.push(x); return x; } };
+  const model = postavTruhlu(sklad, p.klic as DruhModelu, new THREE.Color("#FFFFFF"));
+  const r = RAMCE.truhla;
+  model.root.rotation.y = r.rotY;
+  model.krok?.(0);
+  scene.add(model.root);
+  camera.position.set(0.2, r.y, r.z);
+  camera.lookAt(new THREE.Vector3(...r.cil));
+  camera.updateProjectionMatrix();
+  renderer.render(scene, camera);
+  return new Promise((hotovo) => {
+    const konec = (url: string | null) => { scene.remove(model.root); for (const v of veci) v.dispose(); hotovo(url); };
+    try {
+      renderer.domElement.toBlob((b) => konec(b ? URL.createObjectURL(b) : null), "image/webp", 0.9);
+    } catch { konec(null); }
+  });
+}
+
 function vykresli(p: Pozadavek): Promise<string | null> {
   if (!studio) zalozStudio();
   const { renderer, scene, camera } = studio!;
   renderer.setSize(p.px, p.px, false);
+  if (p.druh === "truhla") return vykresliTruhlu(p);
   const meritko = { value: p.px / (2 * Math.tan((camera.fov * Math.PI) / 360)) };
   const r = RAMCE[p.druh];
   const naTele = p.druh !== "podoba";

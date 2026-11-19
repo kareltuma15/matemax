@@ -16,6 +16,7 @@ import AdventniKalendar from "@/components/hexik/AdventniKalendar";
 import { denAdventu } from "@/lib/kalendar";
 import HexikUvod from "@/components/hexik/HexikUvod";
 import PozadiZive from "@/components/hexik/PozadiZive";
+import TruhlaMiniatura from "@/components/hexik/TruhlaMiniatura";
 import TruhlaScena from "@/components/hexik/TruhlaScena";
 import JakZiskat from "@/components/hexik/JakZiskat";
 import { zkontrolujUroven } from "@/lib/sbirka-trenink";
@@ -233,7 +234,7 @@ function Sbirka() {
               return (
                 <div key={t.id} className="mm-karta p-4 flex flex-col gap-3" data-testid={`truhla-${t.id}`}>
                   <div className="flex items-center gap-3">
-                    <span className="hx-truhla hx-mala shrink-0" data-druh={t.id}><span className="hx-vika" /><span className="hx-telo" /><span className="hx-zamek" /></span>
+                    <TruhlaMiniatura druh={t.id} />
                     <div className="min-w-0">
                       <p className="font-black text-lg leading-tight" style={{ color: "var(--text-primary)" }}>{t.id === "sezonni" ? aktualniSezona(den)?.truhla ?? t.nazev : t.nazev}</p>
                       <p className="text-xs" style={{ color: "#5F6982" }}>{t.jak}{zlataInfo}</p>

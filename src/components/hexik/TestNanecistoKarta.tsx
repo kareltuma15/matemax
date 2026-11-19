@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { uplatniKodGeneralky } from "@/lib/sbirka-test";
 import type { Trida } from "@/types";
+import TruhlaMiniatura from "./TruhlaMiniatura";
 
 function datum(den: string): string {
   const [y, m, d] = den.split("-").map(Number);
@@ -38,7 +39,7 @@ export default function TestNanecistoKarta({ trida }: { trida: Trida }) {
   return (
     <section className="mm-karta p-4 lg:p-5 flex flex-col gap-3" data-testid="test-nanecisto-karta">
       <div className="flex items-center gap-3">
-        <span className="hx-truhla hx-mala shrink-0" data-druh="generalka"><span className="hx-vika" /><span className="hx-telo" /><span className="hx-zamek" /></span>
+        <TruhlaMiniatura druh="generalka" />
         <div className="min-w-0">
           <p className="font-black text-lg leading-tight" style={{ color: "#0D1B3E" }}>Byl jsi na testu nanečisto?</p>
           <p className="text-xs" style={{ color: "#5F6982" }}>
