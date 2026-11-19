@@ -10,7 +10,7 @@
  */
 import * as THREE from "three";
 import { postavHexika, type HexikModel } from "../../../src/lib/hexik3d/model";
-import { doplnekNaSlot, chlupatyLem, texturaPleteni, type Doplnek, type Sklad } from "../../../src/lib/hexik3d/doplnky";
+import { doplnekNaSlot, chlupatyLem, type Doplnek, type Sklad } from "../../../src/lib/hexik3d/doplnky";
 import { podobaHexika } from "../../../src/lib/hexik-svg";
 import { klid, reakce, DELKA, type Reakce3D } from "../../../src/lib/hexik3d/animace";
 import { vytvorCastice, type Castice } from "../../../src/lib/hexik3d/castice";
@@ -222,7 +222,7 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
       if (nohy === "tenisky") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#FAFBFF", roughness: 0.45, clearcoat: 0.4 })); podrMat = mt(new THREE.MeshPhysicalMaterial({ color: "#5B55D6", roughness: 0.5 })); }
       if (nohy === "zimni") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#8A5A35", roughness: 0.75, sheen: 0.6, sheenColor: new THREE.Color("#E7C49A") })); podrMat = mt(new THREE.MeshStandardMaterial({ color: "#3A2618", roughness: 0.8 })); vys = 0.95; }
       if (nohy === "brusle") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 0.35, clearcoat: 0.6 })); podrMat = mt(new THREE.MeshStandardMaterial({ color: "#2B3A86", roughness: 0.5 })); vys = 1.05; }
-      if (nohy === "tenisky" || nohy === "zimni") { bot.rotation.y = sx * 0.42; postavBotu(bot, nohy, sx); continue; }
+      if (nohy === "tenisky" || nohy === "zimni") { bot.rotation.y = sx * 0.42; postavBotu(bot, nohy); continue; }
       const horni = new THREE.Mesh(botGeo, horniMat); horni.scale.set(1.08, vys, 1.32); horni.position.y = 0.03 + (vys - 0.62) * 0.08; bot.add(horni);
       const podr = new THREE.Mesh(podrGeo, podrMat); podr.position.y = -0.05; podr.scale.set(1.06, 1, 1); bot.add(podr);
       if (nohy === "brusle") {
@@ -236,7 +236,7 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
     }
   }
   /** Tenisky a zimní boty: podrážka podle obrysu chodidla, svršek nižší u špičky, tkaničky, jazyk, poutko, logo. */
-  function postavBotu(bot: THREE.Group, druh: Nohy, sx: number) {
+  function postavBotu(bot: THREE.Group, druh: Nohy) {
     const obrys = new THREE.Shape(); obrys.absellipse(0, 0.02, 0.165, 0.3, 0, Math.PI * 2, false);
     const vyt = (hl: number, bev: number) => { const ge = g(new THREE.ExtrudeGeometry(obrys, { depth: hl, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 3, curveSegments: 40 })); ge.rotateX(Math.PI / 2); return ge; };
     const zimni = druh === "zimni";
@@ -247,7 +247,7 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
     // svršek
     const vys = zimni ? 0.3 : 0.17;
     const sg = g(new THREE.SphereGeometry(1, 40, 20, 0, Math.PI * 2, 0, Math.PI / 2));
-    { const pp = sg.attributes.position; for (let i = 0; i < pp.count; i++) { let x = pp.getX(i) * 0.152, y = pp.getY(i) * vys, z = pp.getZ(i) * 0.285 + 0.02; const zn = (z - 0.02) / 0.285; y *= zn > 0 ? 1 - 0.58 * Math.pow(zn, 1.3) : 1; pp.setXYZ(i, x, y, z); } sg.computeVertexNormals(); }
+    { const pp = sg.attributes.position; for (let i = 0; i < pp.count; i++) { const x = pp.getX(i) * 0.152, z = pp.getZ(i) * 0.285 + 0.02; let y = pp.getY(i) * vys; const zn = (z - 0.02) / 0.285; y *= zn > 0 ? 1 - 0.58 * Math.pow(zn, 1.3) : 1; pp.setXYZ(i, x, y, z); } sg.computeVertexNormals(); }
     const barva = zimni ? "#8A5A35" : "#5B55D6";
     const svrsek = new THREE.Mesh(sg, mt(new THREE.MeshPhysicalMaterial({ color: barva, roughness: zimni ? 0.7 : 0.45, clearcoat: zimni ? 0.1 : 0.3, sheen: zimni ? 0.6 : 0, sheenColor: new THREE.Color("#E7C49A") }))); svrsek.position.y = 0.012; bot.add(svrsek);
     if (!zimni) {
