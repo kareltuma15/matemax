@@ -16,13 +16,26 @@
   },
   "zapisy": [
     {
+      "datum": null,
+      "oblast": "odmeny",
+      "popis": "Opravy z mobilu (Karel schválil 19. 11.): v tréninku větší 3D Hexík stojící na kartě s bublinou, profil s 3D Hexíkem místo písmene, na úvodní stránce 3D Hexíci a nové truhly místo 2D, karta Hra ve výhodách, novinky s vlastními obrázky a stavem Připravujeme",
+      "novinka": {
+        "nadpis": "Nový profil",
+        "text": "Tvůj 3D Hexík v profilu, krystaly a medaile na jednom místě. Ťukni na Hexíka a jdeš rovnou do šatníku.",
+        "vizual": "hexik",
+        "podoba": "klasik",
+        "etapa": 4,
+        "odkaz": "/profil"
+      }
+    },
+    {
       "datum": "2026-11-19",
       "oblast": "odmeny",
       "popis": "Sady podle nových pravidel (Karel schválil 19. 11.): 21 sad (10 pro 5. třídu, 11 pro 9.), každá jeden svět o 3–5 věcech různých druhů jen z neobvyklých a lepších věcí; za polovinu sady efekt kolem 3D Hexíka (sněžení, bubliny, jiskry…), za celou domov a bonus 50 krystalů za věc; nové sady Advent, Kouzelník, Superhrdina, Sportovec a Ninja; pojistka, že legenda z truhly doplní rozdělanou sadu",
       "novinka": {
         "nadpis": "Sady s efekty",
-        "text": "Nasbírej půlku sady a kolem Hexíka začne sněžit, bublat nebo jiskřit. Za celou sadu dostane Hexík domov.",
-        "vizual": "hexik",
+        "text": "Půlka sady a kolem Hexíka začne sněžit nebo bublat. Za celou sadu se Hexík nastěhuje do Vánočního pokojíčku.",
+        "vizual": "pokojicek",
         "odkaz": "/sbirka?tab=sady"
       }
     },
@@ -37,22 +50,16 @@
       "popis": "Vylepšený 3D Hexík (Karel schválil 19. 11.): obličej s hloubkou, živé oči, výrazy (radost, překvapení, povzbuzení, ospalý, stýská se mu), ťuknutí a pohlazení, sleduje prst; ručičky a botičky a nové sloty Ruce a Nohy s 10 doplňky pro každou třídu (palčáky, zimní boty a brusle v sezóně Zima)",
       "novinka": {
         "nadpis": "Hexík ožil",
-        "text": "Usmívá se, diví, povzbudí tě a sleduje tě očima. Pohlaď ho! A nově má ruce a nohy: palčáky, tenisky, brusle i raketové boty.",
+        "text": "Usmívá se, diví a sleduje tě očima. Pohlaď ho! Nově má ruce a nohy: palčáky, brusle i raketové boty.",
         "vizual": "hexik",
-        "odkaz": "/sbirka"
+        "odkaz": "/sbirka",
+        "podoba": "kocicka"
       }
     },
     {
       "datum": "2026-11-19",
       "oblast": "odmeny",
-      "popis": "Nové 3D truhly (Karel schválil 19. 11.): 9 druhů v hračkovém stylu Hexíka, Sezónní ve třech podobách (Vánoční, Zimní, Finiš), dutý vnitřek se sametem a znakem M², otevírání přes celou obrazovku, odměna vyletí ve 3D a Nasadit ji dá rovnou Hexíkovi; vydání 1. 12. s adventním kalendářem",
-      "novinka": {
-        "nadpis": "Nové truhly",
-        "text": "Vánoční truhla převázaná jako dárek. Odměna z ní vyletí ve 3D a jedním klepnutím ji má Hexík na sobě.",
-        "vizual": "truhla",
-        "odkaz": "/sbirka",
-        "od": "2026-12-01"
-      }
+      "popis": "Nové 3D truhly (Karel schválil 19. 11.): 9 druhů v hračkovém stylu Hexíka, Sezónní ve třech podobách (Vánoční, Zimní, Finiš), dutý vnitřek se sametem a znakem M², otevírání přes celou obrazovku, odměna vyletí ve 3D a Nasadit ji dá rovnou Hexíkovi; vydání 1. 12. s adventním kalendářem"
     },
     {
       "datum": "2026-11-18",
@@ -61,51 +68,33 @@
       "novinka": {
         "nadpis": "Odznaky jako 3D medaile",
         "text": "Medaile za každé téma a za pravidelnost, pilnost i testy. Každá roste přes bronz, stříbro a zlato až do diamantu.",
-        "vizual": "hexik",
+        "vizual": "medaile",
         "odkaz": "/profil"
       }
     },
     {
       "datum": "2026-11-18",
       "oblast": "odmeny",
-      "popis": "Herní systém: 145 odměn (+107), 3D Hexík s doplňky na hlavu, oči a krk, tanečky za úrovně, 30 XP úrovní, 3D otevírání truhel, Hexík radí, sezóny a sady",
-      "novinka": {
-        "nadpis": "Hexík ve 3D",
-        "text": "Obléká se, roste a tančí. Přes 70 věcí pro každou třídu a 30 úrovní, za každou odměna.",
-        "vizual": "hexik",
-        "odkaz": "/sbirka"
-      }
+      "popis": "Herní systém: 145 odměn (+107), 3D Hexík s doplňky na hlavu, oči a krk, tanečky za úrovně, 30 XP úrovní, 3D otevírání truhel, Hexík radí, sezóny a sady"
     },
     {
       "datum": "2026-11-18",
       "oblast": "odmeny",
-      "popis": "Truhly ve 3D: Hexík otevírá truhlu na tři klepnutí, záblesk vzácnosti",
-      "novinka": {
-        "nadpis": "Truhly ve 3D",
-        "text": "Tři klepnutí, záblesk vzácnosti a nová věc pro Hexíka.",
-        "vizual": "truhla",
-        "odkaz": "/sbirka"
-      }
+      "popis": "Truhly ve 3D: Hexík otevírá truhlu na tři klepnutí, záblesk vzácnosti"
     },
     {
       "datum": "2026-11-18",
       "oblast": "odmeny",
-      "popis": "Combo v tréninku: stupně se zářením, ohněm, duhou a zlatem, štít na jednu chybu, krystaly za milníky, rekord a 2 nové trofeje",
-      "novinka": {
-        "nadpis": "Combo v tréninku",
-        "text": "Odpovídej správně za sebou a Hexík září, hoří a nakonec zlátne. Na milnících krystaly.",
-        "vizual": "combo",
-        "odkaz": "/trenink"
-      }
+      "popis": "Combo v tréninku: stupně se zářením, ohněm, duhou a zlatem, štít na jednu chybu, krystaly za milníky, rekord a 2 nové trofeje"
     },
     {
       "datum": "2026-11-18",
       "oblast": "odmeny",
       "popis": "Adventní kalendář 1.–24. 12.: 24 okének, 7 věcí jen z kalendáře (Sobí parohy, Vánoční svetr, Sněhové koule, Adventní světýlka, Perníčkový / Polární Hexík, Rolničky, Zlatá hvězda) a trofej Adventní mistr",
       "novinka": {
-        "nadpis": "Adventní kalendář",
-        "text": "24 okének, každé po dokončeném tréninku. Sedm věcí, které jinde nezískáš, a na Štědrý den Zlatá hvězda.",
-        "vizual": "kalendar",
+        "nadpis": "Adventní kalendář a Vánoční truhla",
+        "text": "24 okének, každé po tréninku. Sedm věcí, které jinde nejsou, a truhla převázaná jako dárek.",
+        "vizual": "truhla-vanocni",
         "od": "2026-12-01",
         "odkaz": "/sbirka?tab=kalendar"
       }
@@ -113,7 +102,16 @@
     {
       "datum": "2026-11-17",
       "oblast": "testy",
-      "popis": "Cvičný test pro 5. třídu: 14 úloh, 70 minut, 50 bodů ve formátu přijímaček"
+      "popis": "Cvičný test pro 5. třídu: 14 úloh, 70 minut, 50 bodů ve formátu přijímaček",
+      "novinka": {
+        "nadpis": "Cvičný test zdarma",
+        "text": "14 úloh, 70 minut a 50 bodů jako u přijímaček. Zkus si ho nanečisto a uvidíš, kde ztrácíš body.",
+        "vizual": "test",
+        "odkaz": "/testy",
+        "tridy": [
+          5
+        ]
+      }
     },
     {
       "datum": "2026-11-16",

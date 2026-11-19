@@ -7,10 +7,11 @@
  */
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Hexik from "@/components/hexik/Hexik";
+import HexikObrazek from "@/components/hexik/HexikObrazek";
 import { reaguj } from "@/lib/hexik-efekty";
 import { odmenaUrovne } from "@/lib/urovne";
 import { localDateStr } from "@/lib/date";
-import { novinky, type NovinkaVeStavu } from "@/lib/novinky";
+import { novinky, PRIPRAVUJEME, type NovinkaVeStavu } from "@/lib/novinky";
 import { ODMENY, IKONA_ODMENY, VZACNOST, type Odmena } from "@/lib/sbirka";
 
 type T = 9 | 5;
@@ -152,9 +153,13 @@ function Odpocet({ od }: { od: string }) {
 }
 
 function VizualNovinky({ n }: { n: NovinkaVeStavu }) {
-  if (n.vizual === "hexik") return <Hexik podoba="malina" etapa={3} staticky style={{ width: 112, height: 112 }} />;
+  if (n.vizual === "hexik") return <HexikObrazek podoba={n.podoba ?? "klasik"} etapa={n.etapa ?? 3} px={256} style={{ width: 128, height: 128 }} />;
   if (n.vizual === "combo") return <span className="u-combo-mini">20×</span>;
-  if (n.vizual === "truhla") return <img src="/uvod/truhla-3d.webp" alt="" className="u-nov-img" loading="lazy" />;
+  if (n.vizual === "truhla") return <img src="/uvod/truhla-mistrovska.webp" alt="" className="u-nov-img" loading="lazy" />;
+  if (n.vizual === "truhla-vanocni") return <img src="/uvod/truhla-vanocni.webp" alt="" className="u-nov-img" loading="lazy" />;
+  if (n.vizual === "pokojicek") return <img src="/uvod/pokojicek.webp" alt="" className="u-nov-img" loading="lazy" style={{ objectPosition: "50% 60%" }} />;
+  if (n.vizual === "medaile") return <img src="/uvod/medaile.webp" alt="" className="u-nov-img" loading="lazy" style={{ objectFit: "contain", padding: 8 }} />;
+  if (n.vizual === "test") return <span className="u-nov-test" aria-hidden="true"><b>50</b><small>bodů · 70 min</small></span>;
   return <span className="u-mini-kal" aria-hidden="true">{[7, 15, 2, 20, 11, 4, 18, 9, 24, 13, 1, 23].map((d) => <i key={d} className={d === 24 ? "z" : ""}>{d}</i>)}</span>;
 }
 
@@ -179,13 +184,21 @@ export function NovinkySekce({ trida }: { trida: T }) {
               <p>{n.text}</p>
             </div>
           ))}
+          {PRIPRAVUJEME.map((p) => (
+            <div key={p.nadpis} className="u-nk" data-testid="novinka-pripravujeme">
+              <span className="u-nk-pill pripr">Připravujeme · {p.mesic}</span>
+              <div className="u-nk-obr"><HexikObrazek podoba={p.podoba} etapa={p.etapa ?? 3} px={256} style={{ width: 128, height: 128 }} /></div>
+              <h3>{p.nadpis}</h3>
+              <p>{p.text}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-type Polozka = { id: string; nazev: string; vz: string; podoba: string; etapa: number; sloty: Sloty; ikona?: string };
+type Polozka = { id: string; nazev: string; vz: string; podoba: string; etapa: number; sloty: Sloty; ikona?: string; druh?: { typ: "hlava" | "oci" | "krk"; klic: string } };
 
 function polozky(trida: T, druh: "podoby" | "doplnky"): Polozka[] {
   if (druh === "podoby") {
@@ -200,7 +213,7 @@ function polozky(trida: T, druh: "podoby" | "doplnky"): Polozka[] {
     : [["hlava", "cepice"], ["hlava", "venecek"], ["hlava", "klobouk"], ["oci", "srdce"], ["oci", "hvezdicky"], ["krk", "medaile"]];
   return klice.map(([typ, k]) => {
     const o = ODMENY[trida].find((x) => x.typ === typ && x.klic === k);
-    return { id: `${typ}-${k}`, nazev: o?.nazev ?? k, vz: o?.sezona ? "sezónní" : o ? VZACNOST[o.vz].nazev : "", podoba: "klasik", etapa: 3, sloty: { [typ]: k } as Sloty, ikona: IKONA_ODMENY[k] };
+    return { id: `${typ}-${k}`, nazev: o?.nazev ?? k, vz: o?.sezona ? "sezónní" : o ? VZACNOST[o.vz].nazev : "", podoba: "klasik", etapa: 3, sloty: { [typ]: k } as Sloty, ikona: IKONA_ODMENY[k], druh: { typ: typ as "hlava" | "oci" | "krk", klic: k } };
   });
 }
 
@@ -249,7 +262,7 @@ export function HexikOdmeny({ trida }: { trida: T }) {
             <div className="u-sat-mrizka">
               {seznam.map((x, j) => (
                 <button key={x.id} type="button" aria-pressed={j === vyb} onClick={() => setVyb(j)}>
-                  {x.ikona ? <span className="u-sat-ik" aria-hidden="true">{x.ikona}</span> : <Hexik podoba={x.podoba} etapa={x.etapa} staticky style={{ width: 56, height: 56 }} />}
+                  {x.druh ? <HexikObrazek podoba={x.druh.klic} druh={x.druh.typ} px={128} style={{ width: 56, height: 56 }} zalozni={<span className="u-sat-ik" aria-hidden="true">{x.ikona}</span>} /> : <HexikObrazek podoba={x.podoba} etapa={x.etapa} px={128} style={{ width: 56, height: 56 }} />}
                   <small>{x.nazev}</small><small className="vz">{x.vz}</small>
                 </button>
               ))}
@@ -274,7 +287,7 @@ export function HexikOdmeny({ trida }: { trida: T }) {
         </div>
 
         <div className="u-truhly3">
-          <img src="/uvod/truhla-3d.webp" alt="Hexík otevírá mistrovskou truhlu a padá legendární odměna" className="u-truhla-obr" loading="lazy" />
+          <img src="/uvod/truhla-mistrovska.webp" alt="Hexík otevírá mistrovskou truhlu a padá legendární odměna" className="u-truhla-obr" loading="lazy" />
           <div>
             <h3 className="u-h3b">Truhly, které otevírá Hexík</h3>
             <div className="u-kroky-t">
@@ -297,7 +310,7 @@ export function HexikOdmeny({ trida }: { trida: T }) {
           <div className="u-g5" style={{ alignItems: "end" }}>
             {([[1, "Nováček", "start", 74], [2, "Učeň", "od 15 bodů", 88], [3, "Zkušený", "od 25 bodů", 102], [4, "Expert", "od 35 bodů", 116], [5, "Mistr", "od 43 bodů", 132]] as const).map(([e, n, s, w]) => (
               <div key={n} style={{ textAlign: "center" }}>
-                <Hexik podoba="klasik" etapa={e} staticky={e !== 5} style={{ width: w, height: w, margin: "0 auto" }} />
+                <HexikObrazek podoba="klasik" etapa={e} px={256} style={{ width: w + 16, height: w + 16, margin: "0 auto", display: "block" }} />
                 <div style={{ fontWeight: 900, marginTop: 8, color: e === 5 ? "#FFD166" : "#fff" }}>{n}</div>
                 <div style={{ fontSize: 13, color: "#9FB4DA" }}>{s}</div>
               </div>

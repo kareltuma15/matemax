@@ -238,3 +238,18 @@
   .mmu .u-plov-combo { top: 10px; right: 6px; font-size: 13px; padding: 7px 10px; }
   .mmu .u-plov-combo b { font-size: 18px; }
 }
+
+/* Úvod nahoře (Karel 19. 11.): fakta jedním řádkem, tlačítka vedle sebe i na telefonu */
+.mmu .u-fakta { margin: 0; font-size: 15px; font-weight: 800; color: #CFE3F7; letter-spacing: .01em; }
+.mmu .u-hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 480px) {
+  .mmu .u-fakta { font-size: 13px; }
+  .mmu .u-hero-cta { flex-wrap: nowrap; gap: 8px; width: 100%; }
+  .mmu .u-hero-cta .u-tl { flex: 1; justify-content: center; text-align: center; padding-left: 10px; padding-right: 10px; font-size: 15px; white-space: nowrap; }
+}
+.mmu .u-hra-body { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; color: #4A5470; font-size: 15px; }
+.mmu .u-hra-body b { color: #0D1B3E; }
+.mmu .u-nk-pill.pripr { background: #C4B5FD; color: #2A1A6E; }
+.mmu .u-nov-test { display: grid; place-items: center; width: 116px; height: 116px; border-radius: 22px; background: linear-gradient(150deg,#FFD166,#F5A623); color: #4A2E00; box-shadow: 0 14px 28px -14px rgba(245,166,35,.8); }
+.mmu .u-nov-test b { font-size: 44px; font-weight: 900; line-height: 1; }
+.mmu .u-nov-test small { font-size: 12px; font-weight: 800; margin-top: -18px; }

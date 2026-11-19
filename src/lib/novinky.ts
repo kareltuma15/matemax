@@ -8,12 +8,16 @@
 import { KRONIKA, dnyMezi, type ZapisKroniky } from "./obsah-kronika";
 import type { Trida } from "@/types";
 
-export type VizualNovinky = "hexik" | "kalendar" | "combo" | "truhla";
+/** Obrázek novinky: 3D Hexík (podoba a etapa), hotové 3D rendery z public/uvod, kalendář, combo, test. */
+export type VizualNovinky = "hexik" | "kalendar" | "combo" | "truhla" | "truhla-vanocni" | "pokojicek" | "medaile" | "test";
 
 export interface Novinka {
   nadpis: string;
   text: string;
   vizual: VizualNovinky;
+  /** U vizuálu „hexik“: která podoba a etapa 3D Hexíka. */
+  podoba?: string;
+  etapa?: number;
   /** Den startu (YYYY-MM-DD). Dřív = „Brzy“ s odpočtem. */
   od?: string;
   /** Kam vede tlačítko v appce. */
@@ -39,3 +43,13 @@ export function novinky(den: string, trida?: Trida): NovinkaVeStavu[] {
     .filter((n) => n.stav === "brzy" || !n._d || dnyMezi(n._d, den) <= NOVE_DNI)
     .map(({ _d, ...n }) => { void _d; return n; });
 }
+
+/**
+ * Připravujeme (Karel 19. 11.): věci s domluveným měsícem, bez přesného data. Ukážou se za novinkami.
+ * Až budou hotové, přesunou se do kroniky jako běžná novinka.
+ */
+export interface Pripravujeme { nadpis: string; text: string; mesic: string; podoba: string; etapa?: number }
+export const PRIPRAVUJEME: Pripravujeme[] = [
+  { nadpis: "Domovy pro Hexíka", text: "Za každou sadu jiné 3D místo: podmořský svět, polární záře, kouzelnická věž.", mesic: "leden", podoba: "dracek", etapa: 4 },
+  { nadpis: "Vzhledy appky ve 3D", text: "Živé pozadí s hloubkou a Hexík v rohu obrazovky.", mesic: "únor", podoba: "neon", etapa: 4 },
+];

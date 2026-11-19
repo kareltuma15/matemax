@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
-import Hexik from "@/components/hexik/Hexik";
+import HexikObrazek from "@/components/hexik/HexikObrazek";
 import { readLocalTrida, saveLocalTrida } from "@/lib/trida";
 import { EXAMPLES_TEXT, EXAMPLES_LABEL } from "@/lib/site-stats";
 import { HeroScena, TemataObouTrid, NovinkySekce, HexikOdmeny } from "./UvodHra";
@@ -23,7 +23,7 @@ const TEXTY = {
   9: {
     h1a: "Přijímačky z matiky?", h1b: "Zvládneš je.",
     sub: "Deset minut denně, úlohy přesně ve stylu CERMAT a Hexík ve 3D, který s tebou roste. Za každý správný příklad krystaly, truhly a nové věci. Rodiče každé pondělí vědí, jak na tom jsi.",
-    chipy: [`Více než ${EXAMPLES_TEXT} úloh ve stylu CERMAT`, "30 úrovní s odměnami", "Na mobilu i počítači"],
+    chipy: [`${EXAMPLES_LABEL} úloh ve stylu CERMAT`, "30 úrovní s odměnami", "mobil i počítač"],
     testInfo: "Úloha 7 z 16 · 50 bodů",
     tema: "Zlomky", temaB: ["#C2366B", "#FCE7EF"],
     otazkaKolaz: "3/4 + 1/6 = ?", kolaz: ["11/12", "5/6", "7/12", "1/2"], postupKolaz: "9/12 + 2/12 = 11/12",
@@ -45,7 +45,7 @@ const TEXTY = {
   5: {
     h1a: "Na gymnázium", h1b: "hravě.",
     sub: "Krátké úlohy s obrázky, rýsováním a grafy jako v testu CERMAT pro páťáky. Hexík ve 3D fandí u každého příkladu a za snahu sbíráš odměny.",
-    chipy: ["8 okruhů jako v testu", "Rýsování přímo v appce", "První tři okruhy zdarma"],
+    chipy: ["8 okruhů jako v testu", "rýsování v appce", "3 okruhy zdarma"],
     testInfo: "Úloha 7 z 14 · rýsování",
     tema: "Jednotky, čas a peníze", temaB: ["#A66300", "#FDF0DA"],
     otazkaKolaz: "2 h 15 min = ? min", kolaz: ["135", "125", "215", "150"], postupKolaz: "120 + 15 = 135 minut",
@@ -140,7 +140,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
 
         <div className="u-wrap u-hero" style={{ position: "relative", zIndex: 2 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 22, alignItems: "flex-start", minWidth: 0 }}>
-            <a href="#novinky" className="u-pill" style={{ background: "rgba(255,255,255,.14)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.3)", textTransform: "none", letterSpacing: 0, fontSize: 14, padding: "5px 12px 5px 5px" }}><span style={{ background: "#34D399", color: "#05351F", borderRadius: 999, padding: "3px 9px", fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase" }}>Nově</span>Hexík ve 3D · adventní kalendář od 1. 12.</a>
+            <a href="#novinky" className="u-pill" style={{ background: "rgba(255,255,255,.14)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.3)", textTransform: "none", letterSpacing: 0, fontSize: 14, padding: "5px 12px 5px 5px" }}><span style={{ background: "#34D399", color: "#05351F", borderRadius: 999, padding: "3px 9px", fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase" }}>Nově</span>Sady s efekty · adventní kalendář od 1. 12.</a>
             <div role="group" aria-label="Třída" style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 999, background: "rgba(255,255,255,.10)", border: "1px solid rgba(255,255,255,.22)" }}>
               <button type="button" className="u-tr" aria-pressed={trida === 9} onClick={() => zvol(9)} style={trida === 9 ? aktivni : neaktivni}>🎒 9. třída</button>
               <button type="button" className="u-tr" aria-pressed={trida === 5} onClick={() => zvol(5)} style={trida === 5 ? aktivni : neaktivni}>✏️ 5. třída</button>
@@ -149,19 +149,16 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
               {t.h1a} <span style={{ color: "#7FE3F5" }}>{t.h1b}</span>
             </h1>
             <p style={{ margin: 0, fontSize: 19, color: "#D6E8FA", maxWidth: 540 }}>{t.sub}</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {t.chipy.map((c) => (
-                <span key={c} style={{ fontSize: 14, fontWeight: 700, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.22)", padding: "7px 13px", borderRadius: 999 }}>✓ {c}</span>
-              ))}
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            {/* Fakta jedním řádkem místo tří boxů (Karel 19. 11.) */}
+            <p className="u-fakta" data-testid="uvod-fakta">{t.chipy.join(" · ")}</p>
+            <div className="u-hero-cta">
               <Link className="u-tl" href={start} style={{ background: "#00B4D8", color: "#FFFFFF", boxShadow: "0 10px 24px rgba(0,180,216,.35)" }}>{startText}</Link>
               <a className="u-tl" href="#zkus" style={{ background: "rgba(255,255,255,.12)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.28)" }}>Zkusit příklad ↓</a>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               <div style={{ display: "flex" }} aria-hidden="true">
                 {([["klasik", 3], ["kocicka", 3], ["neon", 4], ["robutek", 4]] as const).map(([k, e]) => (
-                  <span key={k} className="u-hx-kruh"><Hexik podoba={k} etapa={e} staticky /></span>
+                  <span key={k} className="u-hx-kruh"><HexikObrazek podoba={k} etapa={e} px={128} style={{ width: "100%", height: "100%" }} /></span>
                 ))}
               </div>
               <p style={{ margin: 0, fontSize: 14, color: "#CFE3F7" }}>
@@ -220,7 +217,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
               ))}
             </div>
             <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 18, minHeight: 92 }} aria-live="polite">
-              <Hexik podoba="klasik" etapa={3} className={vybrano === null ? "" : vybrano === t.demoOk ? "hx-r-jasot" : "hx-r-poskok"} style={{ width: 78, height: 78, flex: "none" }} key={`${trida}-${vybrano}`} />
+              <HexikObrazek podoba="klasik" etapa={3} px={192} className={vybrano === null ? "" : vybrano === t.demoOk ? "hx-r-jasot" : "hx-r-poskok"} style={{ width: 84, height: 84, flex: "none" }} key={`${trida}-${vybrano}`} />
               <div style={{ flex: 1 }}>
                 {vybrano === null && <p style={{ margin: 0, background: "#F4F7FC", borderRadius: 14, padding: "12px 14px", fontWeight: 700, color: "#33405F" }}>Vyber odpověď, já ti fandím!</p>}
                 {vybrano !== null && vybrano === t.demoOk && <p style={{ margin: 0, background: "#E8F8EE", borderRadius: 14, padding: "12px 14px", fontWeight: 700, color: "#17663A" }}>Správně! +2 💎 {t.demoPostup}</p>}
@@ -307,12 +304,21 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
               <div style={{ padding: "20px 22px 24px" }}><h3>Odhad bodů</h3><p>Kolik bodů z 50 bys dnes asi získal. Vidíš, jak roste, a víš, co dotáhnout.</p></div>
             </div>
 
-            {/* 5 Hexík a truhly ve 3D */}
-            <div className="u-karta u-ukazka">
+            {/* 5 Hra (Karel 19. 11.: ve výhodách chyběl herní systém) */}
+            <div className="u-karta u-ukazka" data-testid="uvod-hra">
               <div className="u-ukazka-obr" style={{ background: "linear-gradient(160deg,#2B2370,#0D1B3E)", overflow: "hidden" }}>
-                <img src="/uvod/truhla-3d.webp" alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 22%", display: "block" }} />
+                <img src="/uvod/truhla-mistrovska.webp" alt="Hexík otevírá mistrovskou truhlu" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 40%", display: "block" }} />
               </div>
-              <div style={{ padding: "20px 22px 24px" }}><h3>Hexík a truhly ve 3D</h3><p>Za trénink krystaly, za krystaly truhly. Hexík je otevírá s tebou a nové věci si hned obleče.</p></div>
+              <div style={{ padding: "20px 22px 24px" }}>
+                <h3>Hra, která tě donutí trénovat</h3>
+                <ul className="u-hra-body">
+                  <li>🔥 <b>Combo:</b> správně za sebou, Hexík září a hoří</li>
+                  <li>🎁 <b>Truhly ve 3D:</b> za krystaly z tréninku, nic za peníze</li>
+                  <li>✨ <b>Sady s efekty:</b> půlka sady rozjede efekt kolem Hexíka, celá dá domov</li>
+                  <li>🏅 <b>3D medaile:</b> za každé téma od bronzu po diamant</li>
+                  <li>🎄 <b>Adventní kalendář:</b> 24 okének od 1. 12.</li>
+                </ul>
+              </div>
             </div>
 
             {/* 6 E-mail rodičům */}
@@ -415,7 +421,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
                   ["Kdykoli, i na mobilu", true, false, true],
                   ["Okamžitá kontrola a postup", true, true, false],
                   ["Týdenní přehled pro rodiče", true, false, false],
-                  ["Hexík ve 3D a odměny jen za učení", true, false, false],
+                  ["Hra s Hexíkem: combo, truhly, sady a medaile", true, false, false],
                 ] as const).map(([l, ...h]) => (
                   <tr key={l}><td>{l}</td>{h.map((v, j) => <td key={j}>{v ? <span className="u-ano" aria-label="ano">✓</span> : <span className="u-ne" aria-label="ne">✗</span>}</td>)}</tr>
                 ))}
@@ -475,7 +481,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
         <Sym c="π" style={{ top: "16%", left: "8%", fontSize: 40, opacity: 0.1 }} />
         <Sym c="√" style={{ top: "70%", left: "88%", fontSize: 40, opacity: 0.1, animationDelay: "1s" }} />
         <div className="u-wrap" style={{ position: "relative" }}>
-          <Hexik podoba="klasik" etapa={5} style={{ width: 140, height: 140, margin: "0 auto", filter: "drop-shadow(0 14px 22px rgba(0,0,0,.35))" }} />
+          <HexikObrazek podoba="klasik" etapa={5} px={320} style={{ width: 170, height: 170, margin: "0 auto", display: "block", filter: "drop-shadow(0 14px 22px rgba(0,0,0,.35))" }} />
           <h2 className="u-h2" style={{ marginTop: 18 }}>Přijímačky jsou za rohem.<br /><span style={{ color: "#7FE3F5" }}>Začni dnes.</span></h2>
           <p className="u-lead" style={{ color: "#D6E8FA" }}>Přijímačky 2027: {t.termin} Deset minut denně do té doby udělá velký rozdíl.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginTop: 28 }}>
