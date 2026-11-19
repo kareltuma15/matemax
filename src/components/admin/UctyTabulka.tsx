@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import type { AdminUser } from "@/app/api/admin/users/route";
+import DetailZaka from "./DetailZaka";
 
 type Filtr = "skutecne" | "testovaci" | "online" | "propojene" | "premium";
 
@@ -21,6 +22,7 @@ export default function UctyTabulka() {
   const [chyba, setChyba] = useState<string | null>(null);
   const [filtr, setFiltr] = useState<Filtr>("skutecne");
   const [menu, setMenu] = useState<string | null>(null);
+  const [detail, setDetail] = useState<string | null>(null);
 
   const nacti = useCallback(async () => {
     if (!supabase) return;
@@ -79,7 +81,7 @@ export default function UctyTabulka() {
               <tr key={u.id} className="border-t align-middle" style={{ borderColor: "#EEF0F6", opacity: u.testovaci ? 0.55 : 1 }} data-testid="ucet-radek">
                 <td className="p-2.5">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <b style={{ color: "#0D1B3E" }}>{u.name ?? u.email.split("@")[0]}</b>
+                    <button type="button" onClick={() => setDetail(u.id)} className="font-bold underline-offset-2 hover:underline" style={{ color: "#0D1B3E" }} data-testid="ucet-jmeno">{u.name ?? u.email.split("@")[0]}</button>
                     <span className="text-[11px] font-bold px-1.5 rounded" style={{ background: u.trida === 5 ? "#FFF4E6" : "#EEF0FF", color: u.trida === 5 ? "#A66300" : "#3B2F9E" }}>{u.trida}. tř.</span>
                     <span className="text-[11px] font-bold px-1.5 rounded" style={u.diagDone ? { background: "#E9F8EF", color: "#14663D" } : { background: "#F3F4F8", color: "#8A93AA" }} data-testid="ucet-diagnostika">
                       {u.diagDone ? "✓ diagnostika" : "bez diagnostiky"}
@@ -111,6 +113,7 @@ export default function UctyTabulka() {
           </tbody>
         </table>
       </div>
+      {detail && <DetailZaka id={detail} onZavrit={() => setDetail(null)} onZmena={() => void nacti()} />}
     </section>
   );
 }

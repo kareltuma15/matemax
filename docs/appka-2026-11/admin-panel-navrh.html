@@ -1,0 +1,152 @@
+<title>Řídicí panel MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: hlavní admin stránka jako „co dnes potřebuje moji pozornost“: proužek Dnes, seznam úkolů, byznys, učení, detail žáka; vpravo poznámky proč */
+:root{--bg:#EEF1F7;--karta:#FFFFFF;--ink:#0D1B3E;--muted:#5F6982;--line:#E3E7F0;--fial:#5B55D6;--zel:#1F9D55;--zel-bg:#E9F8EF;--oranz:#C2410C;--oranz-bg:#FFF4E6;--cerv:#B4232F;--cerv-bg:#FDECEC;--modr:#1E5FA8;--modr-bg:#E8F4FF;--f:"DM Sans",system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;--oranz-bg:#3B2A10;--cerv-bg:#3B1418;--modr-bg:#142B4A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;--oranz-bg:#3B2A10;--cerv-bg:#3B1418;--modr-bg:#142B4A;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14.5px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding-block:26px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:20px}
+h1{margin:0;font-size:28px;font-weight:900}h2{margin:0;font-size:19px;font-weight:900}h3{margin:0;font-size:15px;font-weight:900}p{margin:0}.muted{color:var(--muted)}
+.uvod{display:grid;gap:8px}
+.srov{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.box{background:var(--karta);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.box.dnes h3{color:var(--muted)}
+.box ul{margin:0;padding-left:18px;color:var(--muted)}
+.dnes{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.t{background:var(--karta);border:1px solid var(--line);border-radius:16px;padding:12px}
+.t small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.t b{font-size:24px;font-weight:900}.t span{font-size:12.5px;color:var(--muted)}
+.ukoly{display:grid;gap:8px}
+.ukol{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--karta);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.ukol .ik{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px}
+.ukol b{display:block}.ukol span{color:var(--muted);font-size:13px}
+.tl{font:inherit;font-size:12.5px;font-weight:800;border-radius:10px;padding:6px 10px;border:1px solid var(--line);background:var(--karta);color:var(--ink);white-space:nowrap}
+.tl.hl{background:var(--ink);color:var(--karta);border-color:var(--ink)}
+.c{background:var(--cerv-bg)}.o{background:var(--oranz-bg)}.m{background:var(--modr-bg)}.z{background:var(--zel-bg)}
+.radky{display:grid;gap:6px;font-size:13.5px}
+.radky div{display:flex;justify-content:space-between;gap:10px}
+.pruh{height:8px;border-radius:9px;background:var(--line);overflow:hidden}.pruh i{display:block;height:100%;background:var(--fial)}
+.detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px}
+.osa{display:grid;gap:7px;border-left:2px solid var(--line);padding-left:12px;font-size:13.5px}
+.osa div{position:relative}.osa div::before{content:"";position:absolute;left:-18px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--fial)}
+.osa small{color:var(--muted)}
+.akce{display:flex;flex-wrap:wrap;gap:6px}
+.otazky{display:grid;gap:10px}
+.otazka{background:var(--karta);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:4px}
+.otazka b{font-size:15px}.otazka span{color:var(--muted)}.dop{color:var(--zel);font-weight:700}
+@media (max-width:720px){.detail{grid-template-columns:minmax(0,1fr)}}
+</style>
+
+<div class="wrap">
+  <header class="uvod">
+    <h1>Řídicí panel MateMaxu</h1>
+    <p class="muted">Návrh, co by měla dělat hlavní stránka adminu. Čísla jsou ukázková. Na konci 3 otázky.</p>
+  </header>
+
+  <section class="srov" aria-label="Dnes a návrh">
+    <div class="box dnes">
+      <h3>Dnes hlavní panel ukazuje</h3>
+      <ul>
+        <li>počty uživatelů a diagnostik,</li>
+        <li>graf diagnostiky po tématech,</li>
+        <li>tabulku účtů s tlačítky Udělit Premium a Reset diagnostiky.</li>
+      </ul>
+      <p class="muted">Tabulku účtů teď má i Statistiky, a lépe. Panel tak ukazuje dvakrát totéž a nic neříká, co máš udělat.</p>
+    </div>
+    <div class="box">
+      <h3>Návrh: panel = co dnes potřebuje tvou pozornost</h3>
+      <ul>
+        <li><b style="color:var(--ink)">Statistiky</b> zůstanou na návštěvnost a chování (co se děje).</li>
+        <li><b style="color:var(--ink)">Řídicí panel</b> řekne, co udělat: komu pomoct, komu končí Premium, kdo odpadá, nová zpětná vazba, a ukáže byznys a učení jedním pohledem.</li>
+        <li>Akce u žáka (Premium, reset diagnostiky, testovací) budou na jednom místě v detailu žáka.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:10px">
+    <h2>1. Dnes jedním pohledem</h2>
+    <div class="dnes">
+      <div class="t"><small>Nové účty</small><b>3</b><span>týden 14 · +40 %</span></div>
+      <div class="t"><small>Trénovalo dnes</small><b>11</b><span>z 37 žáků</span></div>
+      <div class="t"><small>Online teď</small><b>2</b><span>Tomáš, Ema</span></div>
+      <div class="t"><small>Premium</small><b>4</b><span>2 platí · 1 ručně · 1 zkouší</span></div>
+      <div class="t"><small>Zpětná vazba</small><b>2</b><span>nepřečtené</span></div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:10px">
+    <h2>2. Potřebuje pozornost</h2>
+    <p class="muted">Seznam se sestaví sám každý den. Co vyřešíš, zmizí.</p>
+    <div class="ukoly">
+      <div class="ukol"><span class="ik c">⏳</span><span><b>Ema: Premium končí za 3 dny</b><span>ručně udělené do 22. 11., trénuje 5 dní v týdnu</span></span><button class="tl hl">Prodloužit</button></div>
+      <div class="ukol"><span class="ik o">📉</span><span><b>Jakub nechodí 6 dní</b><span>dřív trénoval denně, série spadla ze 12 na 0</span></span><button class="tl">Detail</button></div>
+      <div class="ukol"><span class="ik o">🩺</span><span><b>4 žáci bez diagnostiky déle než 2 dny</b><span>registrovali se, ale diagnostiku nespustili; bez ní appka neví, co trénovat</span></span><button class="tl">Kdo to je</button></div>
+      <div class="ukol"><span class="ik m">💬</span><span><b>Nová zpětná vazba (2)</b><span>„U zlomků mi to nebere 3/4 jako 0,75“ · Lucie, 9. tř.</span></span><button class="tl">Přečíst</button></div>
+      <div class="ukol"><span class="ik m">🔗</span><span><b>Nové propojení s Vyhodnocením</b><span>Tomáš, test 12. 12. · výsledky přišly, Generálka připsána</span></span><button class="tl">Detail</button></div>
+      <div class="ukol"><span class="ik c">⚠️</span><span><b>3 chyby v registraci za 24 h</b><span>„E-mail už je registrovaný“ (2), slabé heslo (1)</span></span><button class="tl">Statistiky</button></div>
+      <div class="ukol"><span class="ik z">📰</span><span><b>Novinky: 9 dní bez nové novinky</b><span>limit 14 dní, poslední: Opravy z mobilu</span></span><button class="tl">Obsah</button></div>
+    </div>
+  </section>
+
+  <section class="srov">
+    <div class="box">
+      <h2>3. Byznys</h2>
+      <div class="radky">
+        <div><span>Platící Premium</span><b>2</b></div>
+        <div><span>Ručně udělené (plány z webu)</span><b>1</b></div>
+        <div><span>Zkušební období</span><b>1 · končí do 7 dní: 1</b></div>
+        <div><span>Otevřeli stránku Premium (30 dní)</span><b>18</b></div>
+        <div><span>Začali platit / dokončili platbu</span><b>3 / 2</b></div>
+        <div><span>Ze zdarma na Premium (30 dní)</span><b>5 %</b></div>
+      </div>
+      <p class="muted" style="font-size:12.5px">Ceny a měsíční příjem se berou z ověřených faktů v kokpitu, ne z paměti.</p>
+    </div>
+    <div class="box">
+      <h2>4. Učení</h2>
+      <div class="radky">
+        <div><span>Průměrný odhad bodů (9. tř.)</span><b>24 / 50 · +3 za měsíc</b></div>
+        <div><span>Průměrný odhad bodů (5. tř.)</span><b>29 / 50</b></div>
+        <div><span>Nejslabší téma napříč žáky</span><b>Slovní úlohy o pohybu</b></div>
+        <div><span>Příkladů tento týden</span><b>1 840</b></div>
+      </div>
+      <div style="display:grid;gap:5px;font-size:12.5px">
+        <span>Úspěšnost po tématech</span>
+        <div class="pruh"><i style="width:78%"></i></div><span class="muted">Zlomky 78 %</span>
+        <div class="pruh"><i style="width:51%"></i></div><span class="muted">Slovní úlohy 51 %</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>5. Detail žáka (klepnutí na jméno kdekoli v adminu)</h2>
+    <div class="detail">
+      <div style="display:grid;gap:8px">
+        <h3>Tomáš · 9. třída · Premium</h3>
+        <p class="muted">tomas@… · reg. 3. 11. · ✓ diagnostika · propojený s Vyhodnocením</p>
+        <div class="radky">
+          <div><span>Čas v appce (týden / celkem)</span><b>1 h 42 min / 6 h 10 min</b></div>
+          <div><span>Odhad bodů</span><b>31 / 50</b></div>
+          <div><span>Série</span><b>12 dní</b></div>
+          <div><span>Krystaly · truhly · sady</span><b>820 · 14 · 2</b></div>
+        </div>
+        <div class="akce"><button class="tl hl">Udělit / prodloužit Premium</button><button class="tl">Reset diagnostiky</button><button class="tl">Označit jako testovací</button></div>
+      </div>
+      <div class="osa">
+        <div><b>Test nanečisto 12. 12.</b> · 31 bodů, Generálka připsána<br><small>před 2 dny</small></div>
+        <div><b>Propojil MateMax s Vyhodnocením</b> přes QR<br><small>před 3 dny</small></div>
+        <div><b>Dokončil sadu Vánoce</b>, nastěhoval se do pokojíčku<br><small>před 4 dny</small></div>
+        <div><b>Diagnostika:</b> nejslabší slovní úlohy a úhly<br><small>3. 11.</small></div>
+        <div><b>Registrace</b> z úvodní stránky (Instagram)<br><small>3. 11.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="otazky">
+    <h2>K rozhodnutí</h2>
+    <div class="otazka"><b>1. Líbí se ti panel jako „co dnes potřebuje pozornost“?</b><span>Statistiky zůstanou na návštěvnost, panel na úkoly, byznys, učení a detail žáka. Tabulka účtů bude jen ve Statistikách a akce u žáka v jeho detailu.</span><span class="dop">Doporučuju ano.</span></div>
+    <div class="otazka"><b>2. Které položky v „Potřebuje pozornost“ chceš?</b><span>Končící Premium, kdo odpadá, bez diagnostiky, zpětná vazba, nová propojení, chyby v registraci, novinky. Můžeš některé škrtnout nebo přidat.</span></div>
+    <div class="otazka"><b>3. Mají jít z panelu i akce směrem k rodičům?</b><span>Třeba tlačítko „Poslat rodiči připomínku diagnostiky“. Každý takový e-mail by šel nejdřív přes schválení textu v kokpitu. Na začátek bych to vynechal, panel jen ukáže, komu by to pomohlo.</span><span class="dop">Doporučuju zatím bez e-mailů.</span></div>
+  </section>
+</div>
