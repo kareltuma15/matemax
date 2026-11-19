@@ -10,15 +10,17 @@
  */
 import * as THREE from "three";
 import { postavHexika, type HexikModel } from "../../../src/lib/hexik3d/model";
-import { doplnekNaSlot, type Doplnek, type Sklad } from "../../../src/lib/hexik3d/doplnky";
+import { doplnekNaSlot, chlupatyLem, texturaPleteni, type Doplnek, type Sklad } from "../../../src/lib/hexik3d/doplnky";
 import { podobaHexika } from "../../../src/lib/hexik-svg";
 import { klid, reakce, DELKA, type Reakce3D } from "../../../src/lib/hexik3d/animace";
 import { vytvorCastice, type Castice } from "../../../src/lib/hexik3d/castice";
 import { vytvorStudio } from "../../../src/lib/hexik3d/studio";
 
 export type Vyraz = "neutral" | "radost" | "prekvapeni" | "povzbuzeni" | "ospaly" | "smutny";
-export interface HexikPlus { nastav(podoba: string, koruna: boolean): void; vyraz(v: Vyraz): void; mrkni(): void; znic(): void }
-export interface MoznostiPlus { podoba: string; etapa: number; koruna: boolean; interaktivni: boolean; zoom?: number; onVyraz?: (v: Vyraz) => void }
+export type Ruce = "" | "palcaky" | "boxerske";
+export type Nohy = "" | "tenisky" | "zimni" | "brusle";
+export interface HexikPlus { nastav(podoba: string, koruna: boolean, ruce?: Ruce, nohy?: Nohy): void; vyraz(v: Vyraz): void; mrkni(): void; znic(): void }
+export interface MoznostiPlus { podoba: string; etapa: number; koruna: boolean; ruce?: Ruce; nohy?: Nohy; vylepsitKoncetiny?: boolean; interaktivni: boolean; zoom?: number; onVyraz?: (v: Vyraz) => void }
 
 const N = "#0D1B3E";
 const cl = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -73,7 +75,7 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
 
   const obal = new THREE.Group(); scene.add(obal);
   let hx: HexikModel; let oci: Oko[] = []; let usta: Record<string, THREE.Object3D> = {}; let koruna: Doplnek | null = null; let tvare: THREE.Mesh[] = [];
-  let podoba = o.podoba, maKorunu = o.koruna;
+  let podoba = o.podoba, maKorunu = o.koruna, ruce: Ruce = o.ruce ?? "", nohy: Nohy = o.nohy ?? "";
 
   const blushTex = tx(kruhovaTextura([[0, "rgba(255,120,160,.85)"], [0.45, "rgba(255,130,170,.45)"], [1, "rgba(255,140,180,0)"]]));
   const durhovkaTex = tx(kruhovaTextura([[0, "rgba(120,160,255,0)"], [0.6, "rgba(80,115,235,.18)"], [0.86, "rgba(120,160,255,.55)"], [1, "rgba(150,185,255,0)"]]));
@@ -154,6 +156,72 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
       }
       koruna = doplnekNaSlot(sklad, "hlava", "koruna");
       if (koruna) { hx.body.add(koruna.obj); if (maUsi) { koruna.obj.position.y = 1.1; koruna.obj.scale.setScalar(0.88); } }
+    }
+    // 5) ruce a nohy: ručičky s palcem a baculaté botičky; nové sloty Ruce a Nohy
+    if (o.vylepsitKoncetiny !== false) koncetiny(barvaObliceje);
+  }
+  function koncetiny(barvaObliceje: THREE.Color) {
+    const bodyMat = (hx.armL.children[0] as THREE.Mesh).material as THREE.Material;
+    // ručička: měkký „palčák“ (zúžené rameno, kulatá dlaň) a palec
+    const profil = [[0, 0.03], [0.075, 0.02], [0.105, -0.05], [0.118, -0.17], [0.142, -0.3], [0.152, -0.39], [0.13, -0.47], [0.075, -0.515], [0, -0.525]].map(([x, y]) => new THREE.Vector2(x, y));
+    const ruckaGeo = g(new THREE.LatheGeometry(profil, 28));
+    const palecGeo = g(new THREE.SphereGeometry(0.056, 16, 12));
+    for (const [arm, sx] of [[hx.armL, -1], [hx.armR, 1]] as const) {
+      const stara = arm.children[0] as THREE.Mesh; stara.visible = false;
+      // ruce kousek dopředu, ať jsou vidět ručičky i rukavice
+      arm.position.set(sx * 0.98, -0.1, 0.2);
+      const r = new THREE.Mesh(ruckaGeo, bodyMat); r.scale.set(1.08, 1.05, 0.9); arm.add(r);
+      const pal = new THREE.Mesh(palecGeo, bodyMat); pal.scale.set(0.9, 1.25, 0.9); pal.position.set(-sx * 0.06, -0.33, 0.1); pal.rotation.z = sx * 0.5; arm.add(pal);
+      if (ruce === "palcaky") {
+        const plet = tx(texturaPleteni([3, 3])); const pm = mt(new THREE.MeshPhysicalMaterial({ map: plet, color: "#D9343F", roughness: 0.95, sheen: 1, sheenColor: new THREE.Color("#FF9AA2") }));
+        const prof2 = [[0.128, -0.2], [0.152, -0.3], [0.163, -0.395], [0.14, -0.485], [0.08, -0.535], [0, -0.548]].map(([x, y]) => new THREE.Vector2(x, y));
+        const pg = new THREE.Mesh(g(new THREE.LatheGeometry(prof2, 28)), pm); pg.scale.set(1, 1, 0.88); arm.add(pg);
+        const pp = new THREE.Mesh(palecGeo, pm); pp.scale.set(1.08, 1.4, 1.08); pp.position.set(-sx * 0.065, -0.33, 0.105); pp.rotation.z = sx * 0.5; arm.add(pp);
+        const lem = new THREE.Mesh(g(chlupatyLem(0.13, 0.04, 0.3)), mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") })));
+        lem.rotation.x = Math.PI / 2; lem.position.y = -0.2; lem.scale.set(1, 0.88, 1); arm.add(lem);
+      }
+      if (ruce === "boxerske") {
+        const bm = mt(new THREE.MeshPhysicalMaterial({ color: "#E5303C", roughness: 0.25, clearcoat: 1, clearcoatRoughness: 0.1 }));
+        const rk = new THREE.Mesh(g(new THREE.SphereGeometry(0.19, 28, 20)), bm); rk.scale.set(1, 1.08, 1.12); rk.position.set(0, -0.4, 0.02); arm.add(rk);
+        const pp = new THREE.Mesh(palecGeo, bm); pp.scale.set(1.3, 1.6, 1.2); pp.position.set(-sx * 0.1, -0.34, 0.13); pp.rotation.z = sx * 0.6; arm.add(pp);
+        const man = new THREE.Mesh(g(new THREE.CylinderGeometry(0.135, 0.15, 0.12, 24)), mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 0.4, clearcoat: 0.6 }))); man.position.y = -0.2; arm.add(man);
+        const pruh = new THREE.Mesh(g(new THREE.TorusGeometry(0.143, 0.012, 8, 32)), mt(new THREE.MeshStandardMaterial({ color: "#F5C542", metalness: 0.6, roughness: 0.3 }))); pruh.rotation.x = Math.PI / 2; pruh.position.y = -0.2; arm.add(pruh);
+      }
+    }
+    // botičky: baculaté fazolky se špičkou nahoru a světlejší podrážkou
+    const nohyStare = hx.root.children.filter((ch) => (ch as THREE.Mesh).isMesh && Math.abs(ch.position.y + 1.27) < 0.02) as THREE.Mesh[];
+    const botGeo = g(new THREE.SphereGeometry(0.22, 32, 20));
+    { const p = botGeo.attributes.position; for (let i = 0; i < p.count; i++) { const z = p.getZ(i), y = p.getY(i); if (z > 0) p.setY(i, y + Math.pow(z / 0.22, 3) * 0.06 * (y > -0.05 ? 1 : 0.4)); if (y < -0.1) p.setY(i, -0.1 - (y + 0.1) * 0.35); } botGeo.computeVertexNormals(); }
+    const podrGeo = g(new THREE.CylinderGeometry(0.2, 0.2, 0.05, 32)); podrGeo.scale(1, 1, 1.35);
+    for (const f of nohyStare) {
+      f.visible = false;
+      const sx = Math.sign(f.position.x);
+      const bot = new THREE.Group(); bot.position.set(sx * 0.42, -1.29, 0.16); bot.rotation.y = -sx * 0.12; bot.scale.setScalar(1.14); hx.root.add(bot);
+      let horniMat: THREE.Material = f.material as THREE.Material, podrMat: THREE.Material = mt(new THREE.MeshStandardMaterial({ color: barvaObliceje.clone().lerp(new THREE.Color("#FFFFFF"), 0.35), roughness: 0.6 }));
+      let vys = 0.62;
+      if (nohy === "tenisky") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#FAFBFF", roughness: 0.45, clearcoat: 0.4 })); podrMat = mt(new THREE.MeshPhysicalMaterial({ color: "#5B55D6", roughness: 0.5 })); }
+      if (nohy === "zimni") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#8A5A35", roughness: 0.75, sheen: 0.6, sheenColor: new THREE.Color("#E7C49A") })); podrMat = mt(new THREE.MeshStandardMaterial({ color: "#3A2618", roughness: 0.8 })); vys = 0.95; }
+      if (nohy === "brusle") { horniMat = mt(new THREE.MeshPhysicalMaterial({ color: "#FFFFFF", roughness: 0.35, clearcoat: 0.6 })); podrMat = mt(new THREE.MeshStandardMaterial({ color: "#2B3A86", roughness: 0.5 })); vys = 1.05; }
+      const horni = new THREE.Mesh(botGeo, horniMat); horni.scale.set(1.08, vys, 1.32); horni.position.y = 0.03 + (vys - 0.62) * 0.08; bot.add(horni);
+      const podr = new THREE.Mesh(podrGeo, podrMat); podr.position.y = -0.05; podr.scale.set(1.06, 1, 1); bot.add(podr);
+      if (nohy === "tenisky") {
+        const pm = mt(new THREE.MeshStandardMaterial({ color: "#5B55D6", roughness: 0.4 }));
+        const pruh = new THREE.Mesh(g(new THREE.TorusGeometry(0.15, 0.018, 8, 24, Math.PI * 0.9)), pm); pruh.rotation.set(0, sx * Math.PI / 2, -0.25); pruh.position.set(sx * 0.2, 0.02, 0.0); bot.add(pruh);
+        const tk = mt(new THREE.MeshStandardMaterial({ color: "#DDE3F0", roughness: 0.6 }));
+        for (const [z, y] of [[0.1, 0.085], [0.17, 0.07], [0.23, 0.05]] as const) { const t = new THREE.Mesh(g(new THREE.CapsuleGeometry(0.012, 0.11, 4, 8)), tk); t.rotation.z = Math.PI / 2; t.position.set(0, y, z); t.rotation.x = -0.4; bot.add(t); }
+      }
+      if (nohy === "zimni") {
+        const lem = new THREE.Mesh(g(chlupatyLem(0.15, 0.05, 0.35)), mt(new THREE.MeshPhysicalMaterial({ color: "#FFF8EE", roughness: 1, sheen: 1, sheenColor: new THREE.Color("#FFFFFF") })));
+        lem.rotation.x = Math.PI / 2; lem.position.set(0, 0.2, -0.03); lem.scale.set(1.15, 1, 1); bot.add(lem);
+      }
+      if (nohy === "brusle") {
+        const ocel = mt(new THREE.MeshPhysicalMaterial({ color: "#DDE6F2", metalness: 1, roughness: 0.15, envMapIntensity: 2 }));
+        const nuz = new THREE.Mesh(g(new THREE.BoxGeometry(0.018, 0.035, 0.58)), ocel); nuz.position.set(0, -0.16, 0.03); bot.add(nuz);
+        const spicka = new THREE.Mesh(g(new THREE.TorusGeometry(0.05, 0.009, 6, 16, Math.PI)), ocel); spicka.rotation.y = Math.PI / 2; spicka.position.set(0, -0.12, 0.32); bot.add(spicka);
+        for (const z of [-0.14, 0.18]) { const s = new THREE.Mesh(g(new THREE.CylinderGeometry(0.02, 0.025, 0.1, 10)), ocel); s.position.set(0, -0.11, z); bot.add(s); }
+        const tk = mt(new THREE.MeshStandardMaterial({ color: "#D9343F", roughness: 0.5 }));
+        for (const y of [0.12, 0.2]) { const t = new THREE.Mesh(g(new THREE.CapsuleGeometry(0.011, 0.12, 4, 8)), tk); t.rotation.z = Math.PI / 2; t.position.set(0, y, 0.16); bot.add(t); }
+      }
     }
   }
   postav();
@@ -290,7 +358,7 @@ export function vytvorHexikaPlus(canvas: HTMLCanvasElement, o: MoznostiPlus): He
   raf = requestAnimationFrame(snimek);
 
   return {
-    nastav(p, kor) { podoba = p; maKorunu = kor; postav(); },
+    nastav(p, kor, r, n) { podoba = p; maKorunu = kor; if (r !== undefined) ruce = r; if (n !== undefined) nohy = n; postav(); },
     vyraz: nastavVyraz,
     mrkni() { mrkStart = cas; },
     znic() {
