@@ -11,6 +11,8 @@ export interface Sloupec {
   /** Text bubliny při najetí nebo ťuknutí. */
   detail: string;
   zvyraznit?: boolean;
+  /** Rozdělení sloupce na části zdola nahoru (součet = hodnota), např. přihlášení a bez účtu. */
+  casti?: { hodnota: number; barva: string }[];
 }
 
 /** Hezké maximum osy (1, 2, 5, 10, 20, 50…), ať popisky vycházejí v kulatých číslech. */
@@ -25,16 +27,28 @@ function hezkeMax(n: number): number {
  * Sloupcový graf pro admin: osa Y s mřížkou a hodnotami, popisky dnů nebo hodin pod sloupci
  * (u mnoha sloupců jen každý n-tý), hodnota po najetí myší nebo ťuknutí, volitelná druhá řada.
  */
-export default function Graf({ data, barva = "#5B55D6", barva2 = "#F5A623", legenda, vyska = 180, testid }: {
+export default function Graf({ data, barva = "#5B55D6", barva2 = "#F5A623", legenda, vyska = 180, testid, onVyber, legendaCasti }: {
   data: Sloupec[]; barva?: string; barva2?: string; legenda?: [string, string?]; vyska?: number; testid?: string;
+  /** Klepnutí na sloupec (např. otevřít detail dne). */
+  onVyber?: (i: number) => void;
+  /** Legenda pro rozdělené sloupce: [název, barva]. */
+  legendaCasti?: [string, string][];
 }) {
-  const [vyb, setVyb] = useState<number | null>(null);
+  const [vybStav, setVyb] = useState<number | null>(null);
+  const [pevny, setPevny] = useState<number | null>(null);
+  const vyb = vybStav ?? pevny;
   const max = hezkeMax(Math.max(1, ...data.map((d) => Math.max(d.hodnota, d.hodnota2 ?? 0))));
   const krokPopisku = Math.max(1, Math.ceil(data.length / 10));
   const aktivni = vyb !== null ? data[vyb] : null;
   return (
     <div data-testid={testid}>
-      {legenda && (
+      {legendaCasti && (
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs mb-2" style={{ color: "#5F6982" }}>
+          {legendaCasti.map(([n, b]) => <span key={n} className="inline-flex items-center gap-1.5"><i className="inline-block w-3 h-3 rounded-sm" style={{ background: b }} />{n}</span>)}
+          {legenda?.[1] && <span className="inline-flex items-center gap-1.5"><i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: barva2 }} />{legenda[1]}</span>}
+        </div>
+      )}
+      {legenda && !legendaCasti && (
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs mb-2" style={{ color: "#5F6982" }}>
           <span className="inline-flex items-center gap-1.5"><i className="inline-block w-3 h-3 rounded-sm" style={{ background: barva }} />{legenda[0]}</span>
           {legenda[1] && <span className="inline-flex items-center gap-1.5"><i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: barva2 }} />{legenda[1]}</span>}
@@ -61,13 +75,19 @@ export default function Graf({ data, barva = "#5B55D6", barva2 = "#F5A623", lege
                   className="relative flex-1 h-full flex items-end justify-center group"
                   onMouseEnter={() => setVyb(i)}
                   onFocus={() => setVyb(i)}
-                  onClick={() => setVyb(i)}
+                  onClick={() => { setVyb(i); setPevny(i); onVyber?.(i); }}
                   aria-label={d.detail}
                 >
-                  <span
-                    className="block w-full rounded-t transition-opacity"
-                    style={{ height: `${d.hodnota ? Math.max(2, (d.hodnota / max) * 100) : 0}%`, background: d.zvyraznit ? "#F5A623" : barva, opacity: vyb === null || vyb === i ? 1 : 0.45, minHeight: d.hodnota ? 2 : 0 }}
-                  />
+                  {d.casti ? (
+                    <span className="flex flex-col-reverse w-full rounded-t overflow-hidden transition-opacity" style={{ height: `${d.hodnota ? Math.max(2, (d.hodnota / max) * 100) : 0}%`, opacity: vyb === null || vyb === i ? 1 : 0.45, outline: d.zvyraznit ? "2px solid #F5A623" : undefined, outlineOffset: 1 }}>
+                      {d.casti.map((c, k) => <span key={k} style={{ flex: `${c.hodnota} 0 0`, background: c.barva }} />)}
+                    </span>
+                  ) : (
+                    <span
+                      className="block w-full rounded-t transition-opacity"
+                      style={{ height: `${d.hodnota ? Math.max(2, (d.hodnota / max) * 100) : 0}%`, background: d.zvyraznit ? "#F5A623" : barva, opacity: vyb === null || vyb === i ? 1 : 0.45, minHeight: d.hodnota ? 2 : 0 }}
+                    />
+                  )}
                   {d.hodnota2 !== undefined && d.hodnota2 > 0 && (
                     <span className="absolute w-2 h-2 rounded-full -translate-y-1/2 left-1/2 -translate-x-1/2" style={{ bottom: `calc(${(d.hodnota2 / max) * 100}% - 4px)`, background: barva2, boxShadow: "0 0 0 1.5px #fff" }} />
                   )}

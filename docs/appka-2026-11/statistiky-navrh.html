@@ -1,0 +1,144 @@
+<title>Statistiky MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: návrh admin stránky po sekcích (účty, živě, graf, dění), každá s krátkým „proč“; na konci otázky */
+:root{--bg:#EEF1F7;--karta:#FFFFFF;--ink:#0D1B3E;--muted:#5F6982;--line:#E3E7F0;--fial:#5B55D6;--zel:#1F9D55;--zel-bg:#E9F8EF;--zlata:#F5A623;--cerv:#B4232F;--f:"DM Sans",system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14.5px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-block:26px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+h1{margin:0;font-size:28px;font-weight:900;text-wrap:balance}h2{margin:0;font-size:20px;font-weight:900}h3{margin:0;font-size:15px;font-weight:900}
+p{margin:0}.muted{color:var(--muted)}
+.blok{background:var(--karta);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;min-width:0}
+.proc{font-size:13.5px;color:var(--muted);border-left:3px solid var(--fial);padding-left:10px}
+.cislo{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--ink);color:var(--karta);font-weight:900;margin-right:8px;vertical-align:2px;font-size:14px}
+.tab{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:13.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.ucet b{display:block}.ucet small{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:2px 9px;font-weight:800;font-size:12px}
+.p-free{background:#EEF0F6;color:#33405F}.p-prem{background:#DFF7E8;color:#14663D}
+.p-link{background:#E8F4FF;color:#1E5FA8}.p-nolink{color:var(--muted)}
+.online{display:inline-flex;align-items:center;gap:6px;font-weight:800;color:var(--zel)}
+.online i{width:9px;height:9px;border-radius:50%;background:var(--zel);box-shadow:0 0 0 3px rgba(31,157,85,.2)}
+.bar{display:inline-block;height:8px;border-radius:9px;background:var(--fial);vertical-align:middle;margin-right:6px}
+.filtr{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-weight:800;font-size:13px;background:var(--karta);color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--karta);border-color:var(--ink)}
+.test{opacity:.45}
+.tlac{font:inherit;font-size:12px;font-weight:800;border-radius:9px;padding:4px 9px;border:1px solid var(--line);background:var(--karta);color:var(--ink)}
+.zive{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--bg);border-radius:14px;padding:12px}.tile small{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.tile b{font-size:24px;font-weight:900}
+.kdo{display:grid;gap:6px}
+.kdo div{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px}
+/* graf */
+.graf{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px}
+.osa{position:relative;height:170px;font-size:11px;color:var(--muted);text-align:right;min-width:22px}
+.osa span{position:absolute;right:0;transform:translateY(-50%)}
+.plocha{position:relative;height:170px;border-bottom:1px solid #C9CEDC}
+.mrizka{position:absolute;left:0;right:0;border-top:1px solid var(--line)}
+.sloupce{position:absolute;inset:0;display:flex;align-items:flex-end;gap:5px}
+.sl{flex:1;display:flex;flex-direction:column-reverse;border-radius:5px 5px 0 0;overflow:hidden;position:relative}
+.sl .n{background:#9D98F0}.sl .v{background:var(--fial)}
+.sl.vyb{outline:2px solid var(--zlata);outline-offset:2px}
+.xosa{display:flex;gap:5px;font-size:10.5px;color:var(--muted);margin-top:3px}.xosa span{flex:1;text-align:center}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}.leg i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.detail{background:var(--bg);border-radius:14px;padding:12px;display:grid;gap:8px}
+.navst{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13.5px}
+.navst .cesta{color:var(--muted);overflow-wrap:anywhere;white-space:normal}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:12px;color:#fff}
+.otazky{display:grid;gap:10px}
+.otazka{background:var(--karta);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:4px}
+.otazka b{font-size:15px}.otazka span{color:var(--muted)}.dop{color:var(--zel);font-weight:700}
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <h1>Statistiky MateMaxu</h1>
+    <p class="muted">Návrh přestavby admin stránky podle tvých přání z 19. 11. Čísla jsou ukázková. Na konci 4 otázky.</p>
+  </header>
+
+  <section class="blok">
+    <h2><span class="cislo">1</span>Přehled účtů</h2>
+    <p class="proc">Nové sloupce: propojení s Vyhodnocením testů, čas v appce za týden i celkem a kdo je právě online. Testovací účty jdou jedním klepnutím skrýt a nepočítají se ani do souhrnů a grafů.</p>
+    <div class="filtr">
+      <span class="chip on">Skutečné účty (37)</span><span class="chip">Testovací (6)</span><span class="chip">Online teď (3)</span><span class="chip">Propojené (9)</span><span class="chip">Premium (4)</span>
+      <span class="muted" style="margin-left:auto;font-size:12.5px">řadit: naposledy aktivní ▾</span>
+    </div>
+    <div class="tab"><table>
+      <thead><tr><th>Účet</th><th>Plán</th><th>Propojení</th><th>Teď</th><th>Čas tento týden</th><th>Čas celkem</th><th>Příklady</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="ucet"><b>Tomáš · 9. tř.</b><small>tomas@… · reg. 3. 11.</small></td><td><span class="pill p-prem">Premium</span></td><td><span class="pill p-link">✓ Vyhodnocení · test 12. 12.</span></td><td><span class="online"><i></i>online, Trénink</span></td><td><span class="bar" style="width:70px"></span>1 h 42 min</td><td>6 h 10 min</td><td>412</td><td><button class="tlac">⋯</button></td></tr>
+        <tr><td class="ucet"><b>Ema · 5. tř.</b><small>ema@… · reg. 10. 11.</small></td><td><span class="pill p-free">Zdarma</span></td><td><span class="pill p-link">✓ Vyhodnocení</span></td><td><span class="online"><i></i>online, Sbírka</span></td><td><span class="bar" style="width:38px"></span>52 min</td><td>2 h 05 min</td><td>188</td><td><button class="tlac">⋯</button></td></tr>
+        <tr><td class="ucet"><b>Jakub · 9. tř.</b><small>jakub@… · reg. 14. 11.</small></td><td><span class="pill p-free">Zdarma</span></td><td><span class="p-nolink">nepropojeno</span></td><td class="muted">před 2 h</td><td><span class="bar" style="width:14px"></span>18 min</td><td>18 min</td><td>41</td><td><button class="tlac">⋯</button></td></tr>
+        <tr class="test"><td class="ucet"><b>karel.tumatest@… · testovací</b><small>skrytý z přehledu</small></td><td><span class="pill p-prem">Premium</span></td><td class="muted">–</td><td class="muted">–</td><td class="muted">–</td><td class="muted">–</td><td>0</td><td><button class="tlac">Vrátit</button></td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted" style="font-size:12.5px">Menu ⋯ u účtu: Označit jako testovací · Detail · Premium. Klepnutí na řádek otevře detail: dny tréninku, čas po dnech, témata a propojení.</p>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">2</span>Živě: kdo je teď v appce</h2>
+    <p class="proc">Přihlášení jsou vidět jménem a stránkou, kde právě jsou. Nepřihlášení návštěvníci jen jako počet a stránka. Online = aktivita za poslední 2 minuty.</p>
+    <div class="zive">
+      <div class="tile"><small>Přihlášení online</small><b>3</b></div>
+      <div class="tile"><small>Návštěvníci bez účtu</small><b>5</b></div>
+      <div class="tile"><small>Dnes v appce</small><b>4 h 12 min</b></div>
+      <div class="tile"><small>Dnes trénovalo</small><b>11 žáků</b></div>
+    </div>
+    <div class="kdo">
+      <div><span class="online"><i></i>Tomáš</span><span class="muted">9. tř. · Trénink, Zlomky · 14 min · 📱</span></div>
+      <div><span class="online"><i></i>Ema</span><span class="muted">5. tř. · Sbírka, otevírá truhlu · 6 min · 💻</span></div>
+      <div><span class="online"><i></i>Lucie</span><span class="muted">9. tř. · Domov · 1 min · 📱</span></div>
+      <div><span class="muted">+ 5 návštěvníků bez účtu: úvodní stránka (3), ceník (1), registrace (1)</span></div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">3</span>Graf návštěvnosti: kolik lidí, ne jen kolik kliknutí</h2>
+    <p class="proc">Sloupec = lidé ten den, rozdělení na nové (světle) a vracející se (tmavě). Klepnutím na den se pod grafem ukáže, kdo to byl: každý návštěvník zvlášť, kolik stránek prošel a kudy. Hned je vidět, jestli 40 zobrazení udělal jeden člověk, nebo dvacet.</p>
+    <div class="leg"><span><i style="background:#5B55D6"></i>vracející se</span><span><i style="background:#9D98F0"></i>noví</span><span>bez tvých zařízení a testovacích účtů</span></div>
+    <div class="graf">
+      <div class="osa"><span style="top:0">20</span><span style="top:50%">10</span><span style="top:100%">0</span></div>
+      <div>
+        <div class="plocha">
+          <div class="mrizka" style="top:0"></div><div class="mrizka" style="top:50%"></div>
+          <div class="sloupce">
+            <div class="sl" style="height:30%"><div class="v" style="height:40%"></div><div class="n" style="height:60%"></div></div>
+            <div class="sl" style="height:45%"><div class="v" style="height:45%"></div><div class="n" style="height:55%"></div></div>
+            <div class="sl" style="height:25%"><div class="v" style="height:60%"></div><div class="n" style="height:40%"></div></div>
+            <div class="sl" style="height:55%"><div class="v" style="height:50%"></div><div class="n" style="height:50%"></div></div>
+            <div class="sl vyb" style="height:40%"><div class="v" style="height:62%"></div><div class="n" style="height:38%"></div></div>
+            <div class="sl" style="height:70%"><div class="v" style="height:40%"></div><div class="n" style="height:60%"></div></div>
+            <div class="sl" style="height:60%"><div class="v" style="height:55%"></div><div class="n" style="height:45%"></div></div>
+          </div>
+        </div>
+        <div class="xosa"><span>čt 13.</span><span>pá 14.</span><span>so 15.</span><span>ne 16.</span><span><b>po 17.</b></span><span>út 18.</span><span>st 19.</span></div>
+      </div>
+    </div>
+    <div class="detail">
+      <h3>Pondělí 17. 11. · 8 lidí, 41 stránek</h3>
+      <div class="navst"><span class="av" style="background:#5B55D6">1</span><span><b>Tomáš (přihlášený)</b> · 📱 · 18 stránek · 42 min<br><span class="cesta">Domov → Trénink (Zlomky) → Sbírka → Truhla → Trénink</span></span><span class="pill p-link">propojený</span></div>
+      <div class="navst"><span class="av" style="background:#9D98F0">2</span><span><b>Návštěvník bez účtu</b> · 💻 · 9 stránek · 6 min · přišel z Instagramu<br><span class="cesta">Úvod → Zkus příklad → Ceník → Registrace</span></span><span class="pill p-free">nový</span></div>
+      <div class="navst"><span class="av" style="background:#9D98F0">3</span><span><b>Návštěvník bez účtu</b> · 📱 · 2 stránky · 20 s<br><span class="cesta">Úvod → odešel</span></span><span class="pill p-free">nový</span></div>
+      <p class="muted" style="font-size:12.5px">+ 5 dalších · seřazeno podle počtu stránek</p>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">4</span>Tvoje zařízení se nepočítají</h2>
+    <p class="proc">Tlačítko „Nepočítat toto zařízení“ v adminu. Na telefonu i počítači, kde ho zmáčkneš, se návštěvy přestanou měřit. Testovací účty se skrývají zvlášť (bod 1).</p>
+    <div class="filtr"><button class="tlac" style="font-size:13px;padding:7px 12px">🚫 Nepočítat toto zařízení</button><span class="muted">Toto zařízení se nepočítá od 19. 11.</span></div>
+  </section>
+
+  <section class="otazky">
+    <h2>K rozhodnutí</h2>
+    <div class="otazka"><b>1. Které účty jsou testovací?</b><span>Z tvého obrázku: kareltuma.test@gmail.com, tuma-test@seznam.cz, karel.tumatest@gmail.com, tobi.tuma@gmail.com, kekhi05@seznam.cz, karel.tuma@matematika-snadno.cz. Označím je já, nebo si je odklikáš sám. E-maily se nikam do kódu nepíšou, jen se u účtu uloží značka.</span><span class="dop">Doporučuju: označím těch 6 já.</span></div>
+    <div class="otazka"><b>2. Smím u přihlášených měřit čas v appce a online stav?</b><span>Appka by u přihlášeného žáka jednou za minutu poslala „jsem tu“ s názvem stránky. Dnes se měří jen anonymně. Do zásad ochrany osobních údajů by přibyla věta, že měříme čas strávený v appce kvůli přehledu pro rodiče a zlepšování appky. Bez toho bude čas jen z tréninků (ukládá se od 17. 11.) a online jen jako počet bez jmen.</span><span class="dop">Doporučuju ano, větu do zásad pošlu ke schválení.</span></div>
+    <div class="otazka"><b>3. Ukazovat v grafu a dění i trasu jednotlivých návštěvníků bez účtu?</b><span>Je to anonymní (náhodné číslo platné jeden den), jen pořadí stránek. Pomůže vidět, kde lidé odcházejí.</span><span class="dop">Doporučuju ano.</span></div>
+    <div class="otazka"><b>4. Sedí pořadí: nahoře Živě, pod tím účty, pak graf a trychtýř?</b><span>Dnes je nahoře návštěvnost, účty jsou na jiné stránce adminu. Navrhuju spojit to do jedné stránky Statistiky.</span></div>
+  </section>
+</div>

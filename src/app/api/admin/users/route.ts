@@ -31,6 +31,16 @@ export interface AdminUser {
   level: string;
   totalXp: number;
   diagDone: boolean;
+  /** Testovací účet (značka v app_metadata): v přehledu skrytý a nepočítá se do souhrnů. */
+  testovaci: boolean;
+  /** Aktivní propojení s Vyhodnocením testů (od kdy, poslední test). */
+  propojeni: { od: string; posledniTest: string | null } | null;
+  /** Čas v appce v sekundách: max(měření „jsem tu“, součet tréninků). */
+  cas: { tyden: number; celkem: number };
+  /** Právě v appce (signál „jsem tu“ za poslední 2 minuty). */
+  online: { cesta: string | null; od: string } | null;
+  /** Poslední signál „jsem tu“. */
+  posledniAktivita: string | null;
 }
 
 export async function GET(req: NextRequest) {
@@ -74,6 +84,26 @@ export async function GET(req: NextRequest) {
       .select("user_id, is_premium, trial_expires_at, stripe_subscription_id, trial_granted_by")
       .in("user_id", userIds),
   ]);
+  const odZive = new Date(Date.now() - 120 * 86400000).toISOString();
+  const [{ data: propRows }, { data: testRows }, { data: procRows }, { data: ziveRows }] = await Promise.all([
+    supabaseAdmin.from("vysledky_propojeni").select("user_id, vytvoreno_at").is("zruseno_at", null),
+    supabaseAdmin.from("vysledky_testy").select("user_id, test_d").order("test_d", { ascending: false }),
+    supabaseAdmin.from("procvicovani").select("user_id, kdy, sekund").limit(50000),
+    supabaseAdmin.from("analytics_events").select("user_id, created_at, properties").eq("event_name", "zive").gte("created_at", odZive).not("user_id", "is", null).order("created_at", { ascending: false }).limit(50000),
+  ]);
+  const tydenOd = Date.now() - 7 * 86400000, ted = Date.now();
+  const propojeni = new Map<string, string>();
+  for (const r of propRows ?? []) if (!propojeni.has(r.user_id as string)) propojeni.set(r.user_id as string, r.vytvoreno_at as string);
+  const posledniTest = new Map<string, string>();
+  for (const r of testRows ?? []) if (!posledniTest.has(r.user_id as string)) posledniTest.set(r.user_id as string, r.test_d as string);
+  const trenink = new Map<string, { tyden: number; celkem: number }>();
+  for (const r of procRows ?? []) { const c = trenink.get(r.user_id as string) ?? { tyden: 0, celkem: 0 }; const sek = (r.sekund as number) ?? 0; c.celkem += sek; if (Date.parse(r.kdy as string) >= tydenOd) c.tyden += sek; trenink.set(r.user_id as string, c); }
+  // Signál „jsem tu“ chodí jednou za minutu, každý = 60 s v appce
+  const zive = new Map<string, { tyden: number; celkem: number; posledni: string; cesta: string | null }>();
+  for (const r of ziveRows ?? []) {
+    const uid = r.user_id as string; const c = zive.get(uid) ?? { tyden: 0, celkem: 0, posledni: r.created_at as string, cesta: ((r.properties as Record<string, string> | null)?.cesta) ?? null };
+    c.celkem += 60; if (Date.parse(r.created_at as string) >= tydenOd) c.tyden += 60; zive.set(uid, c);
+  }
 
   const premiumMap = new Map<string, { isPremium: boolean; trialUntil: string | null; source: AdminUser["source"] }>();
   for (const row of premiumRows ?? []) {
@@ -152,6 +182,11 @@ export async function GET(req: NextRequest) {
       level: xpInfo.level,
       totalXp: xpInfo.xp,
       diagDone: diagUserSet.has(u.id),
+      testovaci: !!(u.app_metadata as Record<string, unknown> | undefined)?.testovaci,
+      propojeni: propojeni.has(u.id) ? { od: propojeni.get(u.id)!, posledniTest: posledniTest.get(u.id) ?? null } : null,
+      cas: { tyden: Math.max(zive.get(u.id)?.tyden ?? 0, trenink.get(u.id)?.tyden ?? 0), celkem: Math.max(zive.get(u.id)?.celkem ?? 0, trenink.get(u.id)?.celkem ?? 0) },
+      online: zive.get(u.id) && ted - Date.parse(zive.get(u.id)!.posledni) <= 120_000 ? { cesta: zive.get(u.id)!.cesta, od: zive.get(u.id)!.posledni } : null,
+      posledniAktivita: zive.get(u.id)?.posledni ?? null,
     };
   });
 

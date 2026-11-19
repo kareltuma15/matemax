@@ -2,6 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+
+/** „Nepočítat toto zařízení“ (admin): Karlovy telefony a počítače se neměří. */
+export const NEMERIT_KEY = "matemax-nemerit";
+const nemerit = () => { try { return localStorage.getItem(NEMERIT_KEY) === "1"; } catch { return false; } };
 
 /**
  * Měření návštěvnosti bez cookies: každá stránka (navsteva) a proklik na důležité cesty
@@ -16,6 +21,7 @@ const DULEZITE = /^\/(registrace|vitej|prihlaseni|diagnostika|trenink|premium|ce
 const VEREJNE = /^\/($|registrace|prihlaseni|vitej|cenik|jak-to-funguje|zapomenute-heslo)/;
 
 export function mer(e: string, data: Record<string, string | number | undefined> = {}): void {
+  if (nemerit()) return;
   try {
     const q = new URLSearchParams(window.location.search);
     const telo = JSON.stringify({
@@ -34,6 +40,25 @@ export default function Mereni() {
   const pathname = usePathname();
   const posledni = useRef<string | null>(null);
   const pobyt = useRef<Pobyt | null>(null);
+  const cestaRef = useRef(pathname);
+  useEffect(() => { cestaRef.current = pathname; }, [pathname]);
+
+  // Signál „jsem tu“ přihlášeného žáka jednou za minutu, jen když je appka vidět (čas v appce, kdo je online)
+  useEffect(() => {
+    if (!supabase) return;
+    const posli = async () => {
+      if (document.hidden || nemerit() || !supabase) return;
+      const { data } = await supabase.auth.getSession();
+      const t = data.session?.access_token;
+      if (!t) return;
+      fetch("/api/zive", { method: "POST", headers: { Authorization: `Bearer ${t}` }, body: JSON.stringify({ p: cestaRef.current }), keepalive: true }).catch(() => {});
+    };
+    void posli();
+    const id = window.setInterval(() => void posli(), 60_000);
+    const vid = () => { if (!document.hidden) void posli(); };
+    document.addEventListener("visibilitychange", vid);
+    return () => { window.clearInterval(id); document.removeEventListener("visibilitychange", vid); };
+  }, []);
 
   // Odchod ze stránky (zavření, přepnutí jinam, přechod na jinou stránku appky)
   function odesliOdchod() {

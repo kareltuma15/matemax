@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import Graf, { Pruhy } from "@/components/admin/Graf";
+import UctyTabulka from "@/components/admin/UctyTabulka";
+import { NEMERIT_KEY } from "@/components/Mereni";
 
 interface Zive {
   cas: string;
@@ -14,13 +16,23 @@ interface Zive {
   poHodinach: { h: number; dnes: number; vcera: number }[];
   strankyTed: { k: string; n: number }[];
   posledni: { cas: string; co: string; kde?: string; zarizeni: string | null }[];
+  ziveUcty: { jmeno: string; trida: number; cesta: string | null; zarizeni: string | null; minutDnes: number }[];
+  bezUctuOnline: number;
+  bezUctuStranky: { k: string; n: number }[];
+  dnesMinut: number;
+  dnesTrenovalo: number;
+}
+
+interface DetailDne {
+  den: string; lidi: number; stranek: number;
+  navstevnici: { ucet: { jmeno: string; trida: number; propojeny: boolean } | null; stranek: number; kliku: number; trasa: string[]; dalsich: number; sekund: number; zarizeni: string | null; zdroj: string | null; od: string | null }[];
 }
 
 interface Data {
   dni: number;
   mereniOd: string | null;
   souhrn: { navstevniku: number; stranek: number; novychUctu: number };
-  poDnech: { den: string; navstevniku: number; stranek: number; ucty: number }[];
+  poDnech: { den: string; navstevniku: number; prihlaseni: number; bezUctu: number; stranek: number; ucty: number }[];
   zdroje: { k: string; n: number }[];
   stranky: { k: string; n: number }[];
   kliky: { k: string; n: number }[];
@@ -45,6 +57,22 @@ const DNY_TYDNE = ["ne", "po", "út", "st", "čt", "pá", "so"];
 const denTydne = (iso: string) => DNY_TYDNE[new Date(iso + "T12:00:00").getDay()];
 const pred = (iso: string, ted: number) => { const s = Math.max(0, Math.round((ted - Date.parse(iso)) / 1000)); return s < 60 ? `před ${s} s` : s < 3600 ? `před ${Math.round(s / 60)} min` : `před ${Math.floor(s / 3600)} h`; };
 const OBNOVA_S = 30;
+const trvani = (s: number) => (s < 60 ? `${s} s` : s < 3600 ? `${Math.round(s / 60)} min` : `${Math.floor(s / 3600)} h ${Math.round((s % 3600) / 60)} min`);
+const STR: Record<string, string> = { "/": "Úvod / Domov", "/trenink": "Trénink", "/sbirka": "Sbírka", "/profil": "Profil", "/registrace": "Registrace", "/prihlaseni": "Přihlášení", "/cenik": "Ceník", "/testy": "Testy", "/diagnostika": "Diagnostika" };
+const str = (c: string | null) => (c ? STR[c] ?? STR["/" + c.split("/")[1]] ?? c : "appka");
+
+/** „Nepočítat toto zařízení“: Karlovy návštěvy z tohoto prohlížeče se neměří (localStorage). */
+function NepocitatZarizeni() {
+  const [vyp, setVyp] = useState<boolean | null>(null);
+  useEffect(() => { try { setVyp(localStorage.getItem(NEMERIT_KEY) === "1"); } catch { setVyp(false); } }, []); // eslint-disable-line react-hooks/set-state-in-effect
+  if (vyp === null) return null;
+  const prepni = () => { try { if (vyp) localStorage.removeItem(NEMERIT_KEY); else localStorage.setItem(NEMERIT_KEY, "1"); setVyp(!vyp); } catch { /* bez úložiště */ } };
+  return (
+    <button type="button" onClick={prepni} className="px-3 py-1.5 rounded-full text-sm font-bold" style={vyp ? { background: "#E9F8EF", color: "#14663D", border: "1px solid #A8E0BE" } : { background: "#fff", color: "#0D1B3E", border: "1px solid #E4E6EF" }} data-testid="nepocitat-zarizeni">
+      {vyp ? "✓ Toto zařízení se nepočítá" : "🚫 Nepočítat toto zařízení"}
+    </button>
+  );
+}
 
 async function nacti<T>(url: string): Promise<{ data?: T; chyba?: string }> {
   if (!supabase) return { chyba: "Supabase není dostupné." };
@@ -63,6 +91,9 @@ export default function NavstevnostPage() {
   const [zive, setZive] = useState<Zive | null>(null);
   const [obnovovat, setObnovovat] = useState(true);
   const [ted, setTed] = useState(() => Date.now());
+  const [detail, setDetail] = useState<DetailDne | null>(null);
+  const [detailNacita, setDetailNacita] = useState(false);
+  const otevriDen = (denD: string) => { setDetailNacita(true); nacti<DetailDne>(`/api/admin/navstevnost?den=${denD}`).then((r) => { setDetailNacita(false); if (r.data) setDetail(r.data); }); };
 
   useEffect(() => {
     let zruseno = false;
@@ -95,10 +126,11 @@ export default function NavstevnostPage() {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
           <Link href="/admin" className="text-sm font-semibold mm-odkaz" style={{ color: "#4741B8" }}>← Admin</Link>
-          <h1 className="text-[26px] font-extrabold" style={{ color: "#0D1B3E" }}>Návštěvnost a registrace</h1>
+          <h1 className="text-[26px] font-extrabold" style={{ color: "#0D1B3E" }}>Statistiky</h1>
           <p className="text-sm" style={{ color: "#5F6982" }}>Měření bez cookies: unikátní návštěvník = stejné zařízení během jednoho dne.{data?.mereniOd ? ` Měří se od ${new Date(data.mereniOd).toLocaleDateString("cs-CZ")}.` : ""}</p>
         </div>
-        <div className="flex gap-1.5">
+        <div className="flex gap-1.5 flex-wrap">
+          <NepocitatZarizeni />
           {[7, 30, 90].map((d) => (
             <button key={d} type="button" onClick={() => setDni(d)} className="px-3 py-1.5 rounded-full text-sm font-bold" style={dni === d ? { background: "#0D1B3E", color: "#fff" } : { background: "#fff", color: "#0D1B3E", border: "1px solid #E4E6EF" }}>{d} dní</button>
           ))}
@@ -126,9 +158,9 @@ export default function NavstevnostPage() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[
-              ["Právě teď", String(zive.pet), "návštěvníků za 5 min"],
-              ["Posledních 30 min", String(zive.tricet), "návštěvníků"],
-              ["Dnes", String(zive.dnes.navstevniku), `${zive.dnes.stranek} stránek`],
+              ["Přihlášení online", String(zive.ziveUcty.length), "žáků v appce teď"],
+              ["Bez účtu", String(zive.bezUctuOnline), "návštěvníků za 5 min"],
+              ["Dnes v appce", zive.dnesMinut ? trvani(zive.dnesMinut * 60) : "–", `trénovalo ${zive.dnesTrenovalo} · ${zive.dnes.navstevniku} návštěvníků`],
               ["Proti včerejšku", `${rozdil > 0 ? "+" : ""}${rozdil}`, `včera do teď ${zive.vceraDoTed}, celý den ${zive.vceraCelkem}`],
             ].map(([l, v, p], i) => (
               <div key={l} className="rounded-xl p-3 min-w-0" style={{ background: "#F5F6FB" }} data-testid={`zive-${i}`}>
@@ -137,6 +169,18 @@ export default function NavstevnostPage() {
                 <p className="text-xs" style={{ color: "#5F6982" }}>{p}</p>
               </div>
             ))}
+          </div>
+
+          <div className="flex flex-col gap-1.5" data-testid="zive-kdo">
+            <b className="text-sm" style={{ color: "#0D1B3E" }}>Kdo je teď v appce</b>
+            {zive.ziveUcty.length === 0 && zive.bezUctuOnline === 0 && <p className="text-sm" style={{ color: "#8A93AA" }}>Teď tu nikdo není.</p>}
+            {zive.ziveUcty.map((u, i) => (
+              <div key={i} className="flex items-center gap-2 flex-wrap text-sm">
+                <span className="inline-flex items-center gap-1.5 font-bold" style={{ color: "#1F9D55" }}><i className="w-2 h-2 rounded-full" style={{ background: "#1F9D55", boxShadow: "0 0 0 3px rgba(31,157,85,.2)" }} />{u.jmeno}</span>
+                <span style={{ color: "#5F6982" }}>{u.trida}. tř. · {str(u.cesta)} · dnes {trvani(u.minutDnes * 60)} · {u.zarizeni === "mobil" ? "📱" : "💻"}</span>
+              </div>
+            ))}
+            {zive.bezUctuOnline > 0 && <p className="text-sm" style={{ color: "#5F6982" }}>+ {zive.bezUctuOnline} {zive.bezUctuOnline === 1 ? "návštěvník" : zive.bezUctuOnline < 5 ? "návštěvníci" : "návštěvníků"} bez účtu: {zive.bezUctuStranky.map((x) => `${str(x.k)} (${x.n})`).join(", ")}</p>}
           </div>
 
           <div>
@@ -175,6 +219,8 @@ export default function NavstevnostPage() {
         </section>
       )}
 
+      <UctyTabulka />
+
       {!data && !chyba && <div className="skeleton rounded-[20px]" style={{ height: 300 }} />}
 
       {data && (
@@ -187,15 +233,41 @@ export default function NavstevnostPage() {
 
           <div className="mm-karta p-4">
             <b className="text-sm" style={{ color: "#0D1B3E" }}>Návštěvníci po dnech</b>
-            <p className="text-xs mb-1" style={{ color: "#5F6982" }}>Unikátní návštěvníci za den (český čas). Tečka = nové účty ten den.</p>
+            <p className="text-xs mb-1" style={{ color: "#5F6982" }}>Lidé za den (český čas): přihlášení žáci a návštěvníci bez účtu. Tečka = nové účty. Klepni na den a uvidíš, kdo to byl. Bez testovacích účtů a tvých zařízení.</p>
             <Graf
               testid="graf-dny"
               legenda={["návštěvníci", "nové účty"]}
+              legendaCasti={[["přihlášení žáci", "#5B55D6"], ["bez účtu", "#A9A5F2"]]}
+              onVyber={(i) => otevriDen(data.poDnech[i].den)}
               data={data.poDnech.map((d, i) => ({
                 popisek: denCz(d.den), hodnota: d.navstevniku, hodnota2: d.ucty, zvyraznit: i === data.poDnech.length - 1,
-                detail: `${denTydne(d.den)} ${denCz(d.den)} · ${d.navstevniku} návštěvníků, ${d.stranek} stránek, ${d.ucty} ${d.ucty === 1 ? "nový účet" : d.ucty >= 2 && d.ucty <= 4 ? "nové účty" : "nových účtů"}`,
+                casti: [{ hodnota: d.prihlaseni, barva: "#5B55D6" }, { hodnota: d.bezUctu, barva: "#A9A5F2" }],
+                detail: `${denTydne(d.den)} ${denCz(d.den)} · ${d.navstevniku} lidí (${d.prihlaseni} přihlášených), ${d.stranek} stránek, ${d.ucty} ${d.ucty === 1 ? "nový účet" : d.ucty >= 2 && d.ucty <= 4 ? "nové účty" : "nových účtů"}`,
               }))}
             />
+            {detailNacita && <div className="skeleton rounded-xl mt-3" style={{ height: 120 }} />}
+            {detail && !detailNacita && (
+              <div className="mt-3 rounded-xl p-3 flex flex-col gap-2" style={{ background: "#F5F6FB" }} data-testid="detail-dne">
+                <div className="flex items-center justify-between gap-2">
+                  <b style={{ color: "#0D1B3E" }}>{denTydne(detail.den)} {denCz(detail.den)} · {detail.lidi} {detail.lidi === 1 ? "člověk" : detail.lidi < 5 ? "lidé" : "lidí"}, {detail.stranek} stránek</b>
+                  <button type="button" onClick={() => setDetail(null)} className="text-xs font-bold px-2 py-1 rounded-lg" style={{ background: "#fff", color: "#0D1B3E" }}>Zavřít</button>
+                </div>
+                {detail.navstevnici.length === 0 && <p className="text-sm" style={{ color: "#8A93AA" }}>Ten den tu nikdo nebyl.</p>}
+                {detail.navstevnici.map((n, i) => (
+                  <div key={i} className="grid gap-2.5 items-start text-sm" style={{ gridTemplateColumns: "28px minmax(0,1fr)" }} data-testid="detail-navstevnik">
+                    <span className="w-7 h-7 rounded-full grid place-items-center text-xs font-black text-white" style={{ background: n.ucet ? "#5B55D6" : "#A9A5F2" }}>{i + 1}</span>
+                    <div className="min-w-0">
+                      <div>
+                        <b style={{ color: "#0D1B3E" }}>{n.ucet ? `${n.ucet.jmeno} · ${n.ucet.trida}. tř.` : "Návštěvník bez účtu"}</b>
+                        {n.ucet?.propojeny ? <span className="ml-1.5 text-[11px] font-bold px-1.5 rounded" style={{ background: "#E8F4FF", color: "#1E5FA8" }}>propojený</span> : null}
+                        <span style={{ color: "#5F6982" }}> · {n.zarizeni === "mobil" ? "📱" : n.zarizeni ? "💻" : ""} {n.stranek} {n.stranek === 1 ? "stránka" : n.stranek < 5 ? "stránky" : "stránek"} · {trvani(n.sekund)}{n.zdroj ? ` · přišel z ${n.zdroj}` : ""}</span>
+                      </div>
+                      {n.trasa.length > 0 && <div className="text-xs break-words" style={{ color: "#5F6982" }}>{n.trasa.map(str).join(" → ")}{n.dalsich ? ` → … (+${n.dalsich})` : ""}</div>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="mm-karta p-4" data-testid="trychtyr">
