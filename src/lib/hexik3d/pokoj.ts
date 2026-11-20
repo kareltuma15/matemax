@@ -28,6 +28,8 @@ export interface UkolPokoje {
 
 export interface KontextPokoje {
   scene: THREE.Scene; svet: THREE.Group; camera: THREE.PerspectiveCamera; Y0: number; lehce: boolean;
+  /** Okno na zadní stěně (pokoj do něj může přidat třeba polární záři). */
+  okno: THREE.Group;
   reg: (obj: THREE.Object3D, klic: string) => THREE.Object3D;
   krok: (f: (t: number, dt: number) => void) => void;
   konfety: (kde: THREE.Vector3, sila?: number, barvy?: THREE.Color[]) => void;
@@ -211,7 +213,7 @@ export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled
   let skok = -10, oslavaOd = -10, vyraz: Vyraz3D = "neutral", vyrazDo = 0, mrk = 2, mrkStart = -1, dalsiProchazka = 6;
   const vRuce = (lok: THREE.Vector3) => { hx.root.updateMatrixWorld(true); return hx.root.localToWorld(lok.clone()); };
   const kontext: KontextPokoje = {
-    scene, svet, camera, Y0, lehce, reg, krok: (f) => krokFn.push(f), konfety,
+    scene, svet, camera, Y0, lehce, okno, reg, krok: (f) => krokFn.push(f), konfety,
     hexik: { pos: hxPos, root: () => hx.root, vRuce, skoc: () => { skok = cas; }, vyraz: (v, s) => { vyraz = v; vyrazDo = cas + s; }, otoc: (r) => { hxRot = r; }, cas: () => cas },
   };
   const obsah = vybav(kontext);
@@ -276,7 +278,8 @@ export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled
     if (!co || letOd >= 0) return;
     if (co === "podlaha") { ukol = null; jdiNa(zasahy[0].point); return; }
     if (co === "hexik") { skok = cas; vyraz = "radost"; vyrazDo = cas + 1.4; konfety(hxPos.clone().add(new THREE.Vector3(0, 1.0, 0)), 0.5); o.onKouzlo("hexik"); return; }
-    const u = ukolPruchodu(co) ?? obsah.ukol(co, zasahy[0]); if (u) zadej(u, co);
+    // Tabule a skříň patří základu; okno může pokoj nahradit vlastním kouzlem
+    const u = co === "tabule" || co === "skrin" ? ukolPruchodu(co) : obsah.ukol(co, zasahy[0]) ?? ukolPruchodu(co); if (u) zadej(u, co);
   };
   const dolu = (e: PointerEvent) => { prsty.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (prsty.size === 2) { const [a, b] = [...prsty.values()]; stipnuti = Math.hypot(a.x - b.x, a.y - b.y); tah = null; } else tah = { x: e.clientX, y: e.clientY, ujeto: 0, id: e.pointerId }; try { canvas.setPointerCapture(e.pointerId); } catch { /* starší prohlížeč */ } };
   const pohyb = (e: PointerEvent) => {
