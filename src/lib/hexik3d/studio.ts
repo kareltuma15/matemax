@@ -4,7 +4,8 @@
  */
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import type { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { slabeZarizeni, ostryComposer } from "./kvalita";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
@@ -22,15 +23,8 @@ export interface Studio {
   znic: () => void;
 }
 
-/** Slabé zařízení: málo jader nebo paměti, případně uživatel chce omezený pohyb. */
-export function slabeZarizeni(): boolean {
-  if (typeof window === "undefined") return true;
-  const n = navigator as Navigator & { deviceMemory?: number };
-  const jadra = n.hardwareConcurrency ?? 4;
-  const pamet = n.deviceMemory ?? 4;
-  const klidne = !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  return jadra <= 4 || pamet <= 3 || klidne;
-}
+/** Slabé zařízení: přesunuto do kvalita.ts (Safari na iPhonu hlásí málo jader a padal do rozmazaného režimu). */
+export { slabeZarizeni };
 
 /** Vykresluje se bez grafické karty (SwiftShader, llvmpipe)? Pak jen nejlehčí varianta. */
 export function softwarove(renderer: THREE.WebGLRenderer): boolean {
@@ -75,7 +69,7 @@ export function vytvorStudio(canvas: HTMLCanvasElement, mozn: { zare?: boolean }
 
   let composer: EffectComposer | null = null;
   if (zare) {
-    composer = new EffectComposer(renderer);
+    composer = ostryComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     composer.addPass(new UnrealBloomPass(new THREE.Vector2(256, 256), 0.4, 0.5, 1.15));
     composer.addPass(new OutputPass());

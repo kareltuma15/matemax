@@ -7,10 +7,10 @@
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { pomerPixelu, ostryComposer, ostreTextury, hlidacPlynulosti } from "./kvalita";
 import { postavHexika, type HexikModel, type SlotyHexika } from "./model";
 import { animujOblicej, type Vyraz3D } from "./oblicej";
 
@@ -95,8 +95,9 @@ const HX_S = 0.62; // Hexík v měřítku domova (model má nohy v −1,4 při m
 
 export function vytvorDiorama(canvas: HTMLCanvasElement, o: MoznostiDioramatu, postav: (k: Kontext) => ObsahDomova): Diorama {
   const lehce = !!o.lehce;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lehce, powerPreference: lehce ? "low-power" : "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lehce ? 1 : 2));
+  // Hrany vyhlazuje MSAA v composeru (ostryComposer), antialias plátna by se nepoužil.
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
+  renderer.setPixelRatio(pomerPixelu(lehce));
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
   renderer.shadowMap.enabled = !lehce; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
@@ -152,7 +153,7 @@ export function vytvorDiorama(canvas: HTMLCanvasElement, o: MoznostiDioramatu, p
   scene.add(klic);
 
   // ── záře ──
-  const composer = new EffectComposer(renderer);
+  const composer = ostryComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), obsah.zare ?? 0.38, 0.5, 0.9); if (!lehce) composer.addPass(bloom);
   composer.addPass(new OutputPass());
@@ -164,7 +165,7 @@ export function vytvorDiorama(canvas: HTMLCanvasElement, o: MoznostiDioramatu, p
   const cilBod = k0.cil ?? new THREE.Vector3(0, 0.6, -0.6);
   function velikost() {
     const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1;
-    renderer.setSize(w, h, false); composer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false); composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
     meritko.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan((camera.fov * Math.PI) / 360));
   }
 
@@ -259,11 +260,13 @@ export function vytvorDiorama(canvas: HTMLCanvasElement, o: MoznostiDioramatu, p
   let posledniSnimek = 0;
   function smycka(t: number) {
     if (!videt || document.hidden) { raf = 0; return; }
-    if (!lehce || t - posledniSnimek >= 32) { posledniSnimek = t; snimek(); }
+    if (!lehce || t - posledniSnimek >= 32) { posledniSnimek = t; snimek(); hlidac(t); }
     raf = requestAnimationFrame(smycka);
   }
   const spust = () => { if (!raf) { minule = performance.now(); raf = requestAnimationFrame(smycka); } };
   const io = new IntersectionObserver((z) => { videt = z.some((x) => x.isIntersecting); if (videt) spust(); }); io.observe(canvas);
+  ostreTextury(scene, renderer);
+  const hlidac = hlidacPlynulosti(renderer, velikost);
   const ro = new ResizeObserver(velikost); ro.observe(canvas); velikost();
   const vis = () => { if (!document.hidden) spust(); }; document.addEventListener("visibilitychange", vis);
   spust();

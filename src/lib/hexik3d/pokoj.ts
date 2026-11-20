@@ -8,10 +8,10 @@
  */
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { pomerPixelu, ostryComposer, ostreTextury, hlidacPlynulosti } from "./kvalita";
 import { postavHexika, type HexikModel, type SlotyHexika } from "./model";
 import { animujOblicej, type Vyraz3D } from "./oblicej";
 import { rnd, tex, plast, zaobleny, stin, BARVY_KONFET } from "./diorama";
@@ -78,8 +78,9 @@ const Y0 = -1.4;
 
 export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled: VzhledPokoje, vybav: (k: KontextPokoje) => ObsahPokoje): Pokoj3D {
   const lehce = !!o.lehce;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lehce, powerPreference: lehce ? "low-power" : "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lehce ? 1 : 2));
+  // Hrany vyhlazuje MSAA v composeru (ostryComposer), antialias plátna by se nepoužil.
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
+  renderer.setPixelRatio(pomerPixelu(lehce));
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
   renderer.shadowMap.enabled = !lehce; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
@@ -259,11 +260,11 @@ export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled
   };
 
   // ── záře a kamera ──
-  const composer = new EffectComposer(renderer); composer.addPass(new RenderPass(scene, camera));
+  const composer = ostryComposer(renderer); composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), 0.38, 0.5, 0.9); if (!lehce) composer.addPass(bloom); composer.addPass(new OutputPass());
   let azim = 0.28, cilAzim = 0.28, elev = 0.38, cilElev = 0.38, vzd = 17, cilVzd = 17;
   const cilBod = new THREE.Vector3(0.25, 0.7, -0.9);
-  const velikost = () => { const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1; renderer.setSize(w, h, false); composer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); meritko.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan((camera.fov * Math.PI) / 360)); };
+  const velikost = () => { const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1; renderer.setSize(w, h, false); composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); meritko.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan((camera.fov * Math.PI) / 360)); };
 
   // ── interakce ──
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
@@ -343,9 +344,11 @@ export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled
     hx.aktualizuj({ ay: 0, wx: 0, wy: 0, wz: 0, cas, dt }); hx.okoli.position.copy(hx.root.position);
     composer.render();
   }
-  function smycka(t: number) { if (!videt || document.hidden) { raf = 0; return; } if (!lehce || t - posledniSnimek >= 32) { posledniSnimek = t; snimek(); } raf = requestAnimationFrame(smycka); }
+  function smycka(t: number) { if (!videt || document.hidden) { raf = 0; return; } if (!lehce || t - posledniSnimek >= 32) { posledniSnimek = t; snimek(); hlidac(t); } raf = requestAnimationFrame(smycka); }
   const spust = () => { if (!raf) { minule = performance.now(); raf = requestAnimationFrame(smycka); } };
   const io = new IntersectionObserver((z) => { videt = z.some((x) => x.isIntersecting); if (videt) spust(); }); io.observe(canvas);
+  ostreTextury(scene, renderer);
+  const hlidac = hlidacPlynulosti(renderer, velikost);
   const ro = new ResizeObserver(velikost); ro.observe(canvas); velikost();
   const vis = () => { if (!document.hidden) spust(); }; document.addEventListener("visibilitychange", vis);
   spust();
