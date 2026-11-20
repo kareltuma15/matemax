@@ -205,6 +205,7 @@ test("Vánoční sada v Sadách: půlka zapne sněžení, celá nastěhuje Hexí
 });
 
 test("Vánoční pokojíček: po dokončení sady bydlí Hexík doma a domov jde vypnout", async ({ page }) => {
+  test.slow(); // 3D scéna bez grafické karty se v souběžných testech načítá pomalu
   await page.clock.setFixedTime(new Date("2026-12-10T10:00:00"));
   // Vánoční noc je legendární (jen z truhly), tady ji žák už má: při otevření Sbírky se sada dokončí
   await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); },
@@ -217,4 +218,19 @@ test("Vánoční pokojíček: po dokončení sady bydlí Hexík doma a domov jde
   await page.getByTestId("sada-domov-9-vanoce").click();
   await expect(page.getByTestId("domov-hexika")).toHaveCount(0);
   await expect(page.getByTestId("sada-domov-9-vanoce")).toHaveText("Nastěhovat Hexíka");
+});
+
+test("Vánoční pokojíček v kvalitě Hexíka: počítadlo kouzel a celá obrazovka", async ({ page }) => {
+  test.slow(); // 3D scéna bez grafické karty se v souběžných testech načítá pomalu
+  await page.clock.setFixedTime(new Date("2026-12-10T10:00:00"));
+  await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); localStorage.setItem("matemax-domov-kouzla-vanocni-pokojicek", JSON.stringify(["krb", "hrnek"])); },
+    stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"] }));
+  await page.goto("/sbirka?tab=sady");
+  const domov = page.getByTestId("domov-hexika");
+  await expect(page.getByTestId("domov-pocitadlo")).toHaveText("✨ 2 / 12 kouzel", { timeout: 30_000 });
+  await page.getByTestId("domov-cela").click();
+  await expect(domov).toHaveClass(/fixed/);
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
+  await page.keyboard.press("Escape");
+  await expect(domov).not.toHaveClass(/fixed/);
 });

@@ -3,17 +3,27 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSbirka } from "@/lib/use-sbirka";
+import { usePremium } from "@/lib/premium";
 import { domovHexika, nasazena, etapaHexika, slotyHexika, SADA_EVENT, SADY } from "@/lib/sbirka";
-import type { Domov3D } from "@/lib/hexik3d/domovy";
+import { dnesniTrenink } from "@/lib/dnesni-trenink";
+import { loadProgress } from "@/lib/progress";
+import type { Domov3D, KouzloDomova } from "@/lib/hexik3d/domovy";
 import type { Trida } from "@/types";
 
+const klicKouzel = (id: string) => `matemax-domov-kouzla-${id}`;
+const nactiObjevena = (id: string): string[] => { try { return JSON.parse(localStorage.getItem(klicKouzel(id)) ?? "[]") as string[]; } catch { return []; } };
+
+const dni = (n: number) => (n === 1 ? "den" : n >= 2 && n <= 4 ? "dny" : "dní");
+
 /**
- * Domov Hexíka: 3D místo za dokončenou sadu (zatím Vánoční pokojíček). Ukazuje se v profilu, na Domově
- * a v Sadách, jen když si ho žák nastavil (při dokončení sady se nastaví sám). 3D knihovna se načte až tady.
- * Bez WebGL se karta neukáže.
+ * Domov Hexíka: 3D diorama za dokončenou sadu (Vánoční pokojíček v kvalitě Hexíka, Karel 20. 11. 2026).
+ * Ťuknutí na věc = Hexík k ní dojde a udělá kouzlo, ťuknutí na podlahu = dojde tam. Počítadlo objevených
+ * kouzel (v tomto zařízení), bublina s popisem, celá obrazovka. Tabule ukazuje dnešní trénink a vede do něj.
+ * 3D knihovna se načte až tady; bez WebGL se karta neukáže.
  */
 export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odkaz?: boolean }) {
   const { stav, nacteno } = useSbirka();
+  const { isPremium } = usePremium();
   const domov = nacteno ? domovHexika(stav, trida) : null;
   const podoba = nasazena(stav, trida, "podoba").klic;
   const etapa = etapaHexika(stav.maxOdhad[trida]);
@@ -21,32 +31,61 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
   const slotyKlic = JSON.stringify(sloty);
   const plocha = useRef<HTMLDivElement>(null);
   const inst = useRef<Domov3D | null>(null);
-  const posledni = useRef({ podoba, etapa, sloty });
-  // Poslední podoba pro spuštění scény (efekt níž ji čte až po vykreslení)
-  useEffect(() => { posledni.current = { podoba, etapa, sloty }; });
+  const posledni = useRef({ podoba, etapa, sloty, isPremium });
+  useEffect(() => { posledni.current = { podoba, etapa, sloty, isPremium }; });
   const [bez3D, setBez3D] = useState(false);
+  const [cela, setCela] = useState(false);
+  const [kouzla, setKouzla] = useState<KouzloDomova[]>([]);
+  const [objevena, setObjevena] = useState<string[]>([]);
+  const [bublina, setBublina] = useState<{ text: string; nove: boolean; trenink?: string; id: number } | null>(null);
   const domovId = domov?.id ?? null;
 
   useEffect(() => {
     if (!domovId || !plocha.current) return;
     let zruseno = false;
     let canvas: HTMLCanvasElement | null = null;
-    Promise.all([import("@/lib/hexik3d/domovy"), import("@/lib/hexik3d/scena")]).then(([{ vytvorDomov, jeHotovyDomov }, { umi3D }]) => {
+    setObjevena(nactiObjevena(domovId));
+    Promise.all([import("@/lib/hexik3d/domovy"), import("@/lib/hexik3d/scena"), import("@/lib/hexik3d/studio")]).then(async ([dm, { umi3D }, { slabeZarizeni }]) => {
       if (zruseno || !plocha.current) return;
-      if (!umi3D() || !jeHotovyDomov(domovId)) { setBez3D(true); return; }
+      if (!umi3D() || !dm.jeHotovyDomov(domovId)) { setBez3D(true); return; }
+      const seznam = await dm.kouzlaDomova(domovId);
+      if (zruseno || !plocha.current) return;
+      setKouzla(seznam);
       canvas = document.createElement("canvas");
       canvas.className = "block w-full h-full";
       canvas.style.cursor = "grab";
       canvas.style.touchAction = "pan-y";
       plocha.current.appendChild(canvas);
+      const p = posledni.current;
+      const dnes = dnesniTrenink(trida, p.isPremium);
+      const serie = loadProgress().streak ?? 0;
+      const tabule = [
+        "Dnešní plán",
+        dnes ? `○ ${dnes.nazevDovednosti ?? dnes.nazevTematu}` : "○ Trénink podle tebe",
+        serie > 0 ? `🔥 série ${serie} ${dni(serie)}` : "🔥 začni sérii ještě dnes",
+        "Hexík: „Jdeme na to?“",
+      ];
+      const href = dnes?.href ?? "/trenink";
+      const popis = new Map(seznam.map((k) => [k.klic, k.popis]));
       try {
-        const p = posledni.current;
-        inst.current = vytvorDomov(canvas, domovId, p.podoba, p.etapa, p.sloty);
+        inst.current = await dm.vytvorDomov(canvas, domovId, {
+          podoba: p.podoba, etapa: p.etapa, sloty: p.sloty, tabule, lehce: slabeZarizeni(),
+          onKouzlo: (k) => {
+            const pred = nactiObjevena(domovId);
+            const nove = !pred.includes(k);
+            const po = nove ? [...pred, k] : pred;
+            if (nove) { try { localStorage.setItem(klicKouzel(domovId), JSON.stringify(po)); } catch { /* soukromé okno */ } }
+            setObjevena(po);
+            const vse = nove && po.length === seznam.length;
+            if (vse) inst.current?.oslava();
+            setBublina({ text: vse ? `Všech ${seznam.length} kouzel objeveno! 🎉` : popis.get(k) ?? "", nove, trenink: k === "tabule" ? href : undefined, id: Date.now() });
+          },
+        });
+        if (zruseno) { inst.current.znic(); inst.current = null; }
       } catch {
         canvas.remove(); canvas = null; setBez3D(true);
       }
     }).catch(() => setBez3D(true));
-    // Dokončená sada s tímhle domovem → Hexík se raduje
     const naSadu = (e: Event) => {
       const ids = (e as CustomEvent<{ ids: string[] }>).detail?.ids ?? [];
       if (SADY[trida].some((sd) => ids.includes(sd.id) && sd.domov.id === domovId)) inst.current?.oslava();
@@ -62,17 +101,63 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
 
   useEffect(() => { inst.current?.nastav(podoba, etapa, sloty); }, [podoba, etapa, slotyKlic]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Bublina zmizí sama (s odkazem na trénink zůstane déle)
+  useEffect(() => {
+    if (!bublina) return;
+    const t = setTimeout(() => setBublina(null), bublina.trenink ? 6000 : 2800);
+    return () => clearTimeout(t);
+  }, [bublina]);
+
+  // Celá obrazovka: přiblížení a náklon prstem, Esc zavře, stránka pod tím se neposouvá
+  useEffect(() => {
+    inst.current?.rezim(cela);
+    const canvas = plocha.current?.querySelector("canvas");
+    if (canvas) canvas.style.touchAction = cela ? "none" : "pan-y";
+    if (!cela) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setCela(false); };
+    window.addEventListener("keydown", esc);
+    const puvodni = document.body.style.overflow; document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", esc); document.body.style.overflow = puvodni; };
+  }, [cela]);
+
   if (!domov || bez3D) return null;
+  const ikona = SADY[trida].find((sd) => sd.domov.id === domov.id)?.ikona ?? "🏠";
   return (
-    <section className="mm-karta overflow-hidden p-0" data-testid="domov-hexika" data-domov={domov.id}>
-      <div ref={plocha} className="relative w-full" style={{ height: "clamp(220px, 42vw, 320px)", background: "#2A0F17" }} />
-      <div className="flex items-center gap-3 px-4 py-3">
-        <span className="text-2xl" aria-hidden="true">{SADY[trida].find((sd) => sd.domov.id === domov.id)?.ikona ?? "🏠"}</span>
+    <section
+      className={cela ? "fixed inset-0 z-[90] flex flex-col" : "mm-karta overflow-hidden p-0"}
+      style={cela ? { background: "#1B1236" } : undefined}
+      data-testid="domov-hexika" data-domov={domov.id}
+    >
+      <div ref={plocha} className={`relative w-full ${cela ? "flex-1 min-h-0" : ""}`} style={cela ? { background: "#1B1236" } : { height: "clamp(300px, 64vw, 460px)", background: "#1B1236" }}>
+        {kouzla.length > 0 && (
+          <span className="absolute top-3 left-3 z-10 text-xs font-extrabold px-2.5 py-1 rounded-full pointer-events-none" style={{ background: "rgba(13,27,62,.72)", color: "#FFE7A8", backdropFilter: "blur(4px)" }} data-testid="domov-pocitadlo">
+            ✨ {objevena.length} / {kouzla.length} kouzel
+          </span>
+        )}
+        <button
+          type="button"
+          onClick={() => setCela((c) => !c)}
+          className="absolute top-3 right-3 z-10 w-10 h-10 rounded-xl grid place-items-center text-lg font-black"
+          style={{ background: "rgba(13,27,62,.72)", color: "#fff", backdropFilter: "blur(4px)" }}
+          aria-label={cela ? "Zavřít celou obrazovku" : "Celá obrazovka"}
+          data-testid="domov-cela"
+        >
+          {cela ? "✕" : "⤢"}
+        </button>
+        {bublina && (
+          <div key={bublina.id} className="absolute left-1/2 -translate-x-1/2 bottom-3 z-10 max-w-[92%] rounded-2xl px-4 py-2.5 text-sm font-extrabold text-center flex flex-wrap items-center justify-center gap-x-3 gap-y-1 fade-in-up" style={{ background: "rgba(255,255,255,.95)", color: "#0D1B3E", boxShadow: "0 8px 24px rgba(0,0,0,.25)" }} data-testid="domov-bublina">
+            <span>{bublina.nove && <span style={{ color: "#B7791F" }}>Nové kouzlo! </span>}{bublina.text}</span>
+            {bublina.trenink && <Link href={bublina.trenink} className="px-3 py-1 rounded-lg" style={{ background: "#F5A623", color: "#0D1B3E" }}>Jdeme trénovat →</Link>}
+          </div>
+        )}
+      </div>
+      <div className={`flex items-center gap-3 px-4 py-3 ${cela ? "text-white" : ""}`}>
+        <span className="text-2xl" aria-hidden="true">{ikona}</span>
         <div className="flex-1 min-w-0">
-          <p className="font-black leading-tight" style={{ color: "#0D1B3E" }}>Hexík bydlí: {domov.nazev}</p>
-          <p className="text-xs" style={{ color: "#5F6982" }}>Táhni do stran, ťukni na Hexíka nebo na stromeček.</p>
+          <p className="font-black leading-tight" style={{ color: cela ? "#fff" : "#0D1B3E" }}>Hexík bydlí: {domov.nazev}</p>
+          <p className="text-xs" style={{ color: cela ? "#C9C7F5" : "#5F6982" }}>Ťukni na věc a Hexík ji udělá. Ťukni na podlahu a dojde tam. Táhni pro otočení.</p>
         </div>
-        {odkaz && <Link href="/sbirka?tab=sady" className="text-sm font-extrabold shrink-0" style={{ color: "#2E6DA4" }}>Sady</Link>}
+        {odkaz && !cela && <Link href="/sbirka?tab=sady" className="text-sm font-extrabold shrink-0" style={{ color: "#2E6DA4" }}>Sady</Link>}
       </div>
     </section>
   );
