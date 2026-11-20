@@ -1,7 +1,6 @@
 "use client";
 
 import OdmenaVizual from "./OdmenaVizual";
-import DomovHexika from "./DomovHexika";
 import { useSbirka } from "@/lib/use-sbirka";
 import { localDateStr } from "@/lib/date";
 import {
@@ -31,7 +30,6 @@ export default function Sady({ trida }: { trida: Trida }) {
 
   return (
     <section className="flex flex-col gap-3" data-testid="sady">
-      <DomovHexika trida={trida} odkaz={false} />
       <p className="text-sm" style={{ color: "#5F6982" }}>
         <b style={{ color: "#0D1B3E" }}>{hotovo} z {sady.length}</b> sad hotovo{efektu > 0 ? `, ${efektu} ${efektu === 1 ? "efekt" : efektu < 5 ? "efekty" : "efektů"} kolem Hexíka` : ""}.
         {" "}Za polovinu sady se kolem Hexíka rozběhne efekt, za celou sadu dostane Hexík domov.

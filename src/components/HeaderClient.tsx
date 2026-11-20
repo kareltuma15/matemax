@@ -7,10 +7,14 @@ import { loadProgress } from "@/lib/progress";
 import { supabase } from "@/lib/supabase";
 import { usePremium } from "@/lib/premium";
 import { STUDENT_ITEMS, jeAktivni } from "@/lib/navigace";
+import { useSbirka } from "@/lib/use-sbirka";
+import { krystaly } from "@/lib/sbirka";
 
 export default function HeaderClient() {
   const pathname = usePathname();
   const isParentSection = pathname.startsWith("/rodice");
+  // Krystaly v liště na všech stránkách, ťuknutí otevře Obchůdek (Karel 20. 11. 2026)
+  const { stav: sbirka, nacteno: sbirkaNactena } = useSbirka();
   const [xp, setXp]               = useState(0);
   const [streak, setStreak]       = useState(0);
   const [xpBump, setXpBump]       = useState(false);
@@ -110,7 +114,8 @@ export default function HeaderClient() {
           >
             M²
           </div>
-          <div className="min-w-0">
+          {/* Na úzkém telefonu (do 380 px) jen logo, ať se vejdou série, XP a krystaly */}
+          <div className="min-w-0 hidden min-[380px]:block">
             <p className="text-base font-bold leading-tight" style={{ color: "var(--text-primary)" }}>MateMax</p>
             <p className="text-xs text-slate-400 leading-tight">CERMAT přijímačky</p>
           </div>
@@ -159,6 +164,14 @@ export default function HeaderClient() {
             <span className="text-sm font-bold" style={{ color: "#2E6DA4" }}>{xp}</span>
             <span className="text-xs hidden sm:inline" style={{ color: "#2E6DA4" }}>XP</span>
           </div>
+
+          {/* Krystaly → Obchůdek */}
+          {sbirkaNactena && !isParentSection && (
+            <Link href="/sbirka?tab=obchudek" className="flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 border" style={{ background: "#E6F6FF", borderColor: "#BEE3F8" }} aria-label={`${krystaly(sbirka)} krystalů, otevřít Obchůdek`} data-testid="lista-krystaly">
+              <span className="text-sm leading-none" aria-hidden="true">💎</span>
+              <span className="text-sm font-bold" style={{ color: "#0E6BA8" }}>{krystaly(sbirka)}</span>
+            </Link>
+          )}
 
           {/* Premium badge / upsell — only when logged in and plan known */}
           {authReady && userEmail && !premiumLoading && (

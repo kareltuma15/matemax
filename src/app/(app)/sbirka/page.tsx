@@ -19,6 +19,8 @@ import PozadiZive from "@/components/hexik/PozadiZive";
 import TruhlaMiniatura from "@/components/hexik/TruhlaMiniatura";
 import TruhlaScena from "@/components/hexik/TruhlaScena";
 import JakZiskat from "@/components/hexik/JakZiskat";
+import DomovHexika from "@/components/hexik/DomovHexika";
+import Obchudek from "@/components/hexik/Obchudek";
 import { zkontrolujUroven } from "@/lib/sbirka-trenink";
 import { urovenZXP } from "@/lib/urovne";
 import { nactiTestyZVysledku } from "@/lib/sbirka-test";
@@ -35,7 +37,10 @@ import {
 } from "@/lib/sbirka";
 import type { Trida } from "@/types";
 
-type Zalozka = "kalendar" | "truhly" | "satnik" | "urovne" | "sady" | "trofeje";
+type Zalozka = "kalendar" | "truhly" | "satnik" | "obchudek" | "urovne" | "sady" | "trofeje";
+/** Šatník = jen věci na Hexíkovi; vzhled appky a pozadí jsou v Obchůdku (Karel 20. 11. 2026). */
+const TYPY_SATNIK: TypOdmeny[] = ["podoba", "hlava", "oci", "krk", "ruce", "nohy", "oslava", "efekt"];
+const TYPY_OBCHUDEK: TypOdmeny[] = ["vzhled", "pozadi"];
 
 function Krystal({ className = "" }: { className?: string }) {
   return <i className={`hx-krystal ${className}`} aria-hidden="true" />;
@@ -68,7 +73,7 @@ function Sbirka() {
   const params = useSearchParams();
   const tabParam = params.get("tab");
   const vAdventu = denAdventu(localDateStr()) !== null;
-  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "trofeje" || tabParam === "sady" || tabParam === "urovne" ? tabParam : tabParam === "kalendar" && vAdventu ? "kalendar" : "truhly");
+  const [zalozka, setZalozka] = useState<Zalozka>(tabParam === "satnik" || tabParam === "obchudek" || tabParam === "trofeje" || tabParam === "sady" || tabParam === "urovne" ? tabParam : tabParam === "kalendar" && vAdventu ? "kalendar" : "truhly");
   // Ohlášení nahoře (dokončená sada, nová trofej) jdou po sobě, nepřepisují se
   const [fronta, setFronta] = useState<string[]>([]);
   const novaTrofej = fronta[0] ?? null;
@@ -105,8 +110,17 @@ function Sbirka() {
   useEffect(() => { nactiTestyZVysledku().catch(() => {}); }, []);
   // Odměny za XP úrovně (i zpětně za XP z doby před herním systémem)
   useEffect(() => { zkontrolujUroven(trida); }, [trida]);
-  const [typ, setTyp] = useState<TypOdmeny>("podoba");
+  const [typ, setTyp] = useState<TypOdmeny>(tabParam === "obchudek" ? "vzhled" : "podoba");
   const [vybrana, setVybrana] = useState<string | null>(null);
+  const zalozkyRef = useRef<HTMLDivElement>(null);
+  /** Přepne záložku; Šatník a Obchůdek mají každý své druhy věcí. */
+  const prepni = (z: Zalozka) => {
+    setZalozka(z);
+    if (z === "satnik" && !TYPY_SATNIK.includes(typ)) { setTyp("podoba"); setVybrana(null); }
+    if (z === "obchudek" && !TYPY_OBCHUDEK.includes(typ)) { setTyp("vzhled"); setVybrana(null); }
+  };
+  // Ťuknutí na krystaly v liště, když už jsem v sekci Hexík (adresa se změní, stránka zůstane)
+  useEffect(() => { if (tabParam === "obchudek" || tabParam === "satnik") prepni(tabParam); }, [tabParam]); // eslint-disable-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   const [otevirani, setOtevirani] = useState<{ id: TruhlaId; faze: "tres" | "hotovo"; vysledek: VysledekTruhly | null } | null>(null);
   const nahledRef = useRef<HTMLSpanElement>(null);
   const den = localDateStr();
@@ -129,7 +143,7 @@ function Sbirka() {
   const pozadi = nasazena(stav, trida, "pozadi");
   const nahledPozadi = typ === "pozadi" ? vyb.klic : pozadi.klic;
   const nasazenyVzhled = nasazena(stav, trida, "vzhled").klic;
-  const nahledVzhled = zalozka === "satnik" && typ === "vzhled" ? vyb.klic : nasazenyVzhled;
+  const nahledVzhled = zalozka === "obchudek" && typ === "vzhled" ? vyb.klic : nasazenyVzhled;
 
   // Vzhled appky se v šatníku zkouší naživo na celé appce; po odchodu ze záložky se vrátí nasazený.
   useEffect(() => {
@@ -172,53 +186,71 @@ function Sbirka() {
 
   return (
     <div className="flex flex-col gap-5" data-testid="sbirka">
-      {/* Hlavička: Hexík, krystaly, etapa */}
-      <section
-        className="mm-banner rounded-3xl p-5 lg:p-7 text-white flex flex-col sm:flex-row gap-5 items-center"
-        style={pozadi.klic === "klasik" ? { background: "linear-gradient(140deg,#1F2F66,#0D1B3E 70%)" } : undefined}
-        data-pozadi={pozadi.klic === "klasik" ? undefined : pozadi.klic}
-        data-testid="sbirka-hlavicka"
-      >
-        <PozadiZive klic={pozadi.klic} />
-        <Hexik podoba={podoba.klic} etapa={etapa} d3 otacet doplnky={slotyHexika(stav, trida)} className="w-28 lg:w-36 shrink-0" />
-        <div className="flex-1 min-w-0 text-center sm:text-left">
-          <p className="text-xs font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>Tvůj Hexík · {etapaInfo.nazev}</p>
-          <h1 className="text-3xl lg:text-4xl font-black mt-1 flex items-center gap-2 justify-center sm:justify-start" data-testid="sbirka-krystaly">
-            <Krystal /> {krystaly(stav)} <span className="text-base font-bold" style={{ color: "#C9C7F5" }}>krystalů</span>
-          </h1>
-          <p className="text-sm mt-1" style={{ color: "#D9D8FE" }}>
-            <button type="button" onClick={() => setZalozka("urovne")} className="font-extrabold underline-offset-2 hover:underline" style={{ color: "#FFE08A" }} data-testid="sbirka-uroven">Úroveň {urovenXP.n}</button>
-            {" · "}Dnes za učení {dnesK} z {DENNI_STROP}.{" "}
-            {dalsiEtapa ? `Hexík povyroste na ${dalsiEtapa.nazev} od ${dalsiEtapa.od} bodů v odhadu.` : "Hexík je v nejvyšší podobě."}
-          </p>
-        </div>
-        <Link href="/trenink" className="mm-tlacitko shrink-0 rounded-2xl px-5 py-3 font-extrabold text-white" style={{ background: "#F5A623", color: "#0D1B3E" }}>
-          Trénovat
-        </Link>
-      </section>
+      {/* Hlavička: Hexíkův pokojíček ve 3D (Karel 20. 11. 2026), pod ním pruh s úrovní a krystaly za dnešek.
+          Bez WebGL zůstane původní karta s Hexíkem. */}
+      <DomovHexika
+        trida={trida}
+        hero
+        onSatnik={() => { prepni("satnik"); zalozkyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+        pod={(
+          <div
+            className="mm-banner px-4 py-3 text-center text-white"
+            style={pozadi.klic === "klasik" ? { background: "#0D1B3E" } : undefined}
+            data-pozadi={pozadi.klic === "klasik" ? undefined : pozadi.klic}
+            data-testid="sbirka-hlavicka"
+          >
+            <PozadiZive klic={pozadi.klic} />
+            <p className="relative text-[11px] font-extrabold uppercase tracking-widest" style={{ color: "#C9C7F5" }}>
+              Tvůj Hexík · {etapaInfo.nazev} · <span data-testid="sbirka-krystaly"><Krystal /> {krystaly(stav)} krystalů</span>
+            </p>
+            <p className="relative text-sm mt-1" style={{ color: "#D9D8FE" }}>
+              <button type="button" onClick={() => prepni("urovne")} className="font-extrabold underline-offset-2 hover:underline" style={{ color: "#FFE08A" }} data-testid="sbirka-uroven">Úroveň {urovenXP.n}</button>
+              {" · "}Dnes za učení {dnesK} z {DENNI_STROP}.{" "}
+              {dalsiEtapa ? `Hexík povyroste na ${dalsiEtapa.nazev} od ${dalsiEtapa.od} bodů v odhadu.` : "Hexík je v nejvyšší podobě."}
+            </p>
+          </div>
+        )}
+        zalozni={(
+          <section
+            className="mm-banner rounded-3xl p-5 lg:p-7 text-white flex flex-col sm:flex-row gap-5 items-center"
+            style={pozadi.klic === "klasik" ? { background: "linear-gradient(140deg,#1F2F66,#0D1B3E 70%)" } : undefined}
+            data-pozadi={pozadi.klic === "klasik" ? undefined : pozadi.klic}
+          >
+            <PozadiZive klic={pozadi.klic} />
+            <Hexik podoba={podoba.klic} etapa={etapa} d3 otacet doplnky={slotyHexika(stav, trida)} className="w-28 lg:w-36 shrink-0" />
+            <div className="flex-1" />
+            <Link href="/trenink" className="mm-tlacitko shrink-0 rounded-2xl px-5 py-3 font-extrabold text-white" style={{ background: "#F5A623", color: "#0D1B3E" }}>
+              Trénovat
+            </Link>
+          </section>
+        )}
+      />
 
       <HexikUvod trida={trida} naSbirce />
 
-      <div className="flex gap-2" role="tablist" aria-label="Sbírka">
-        {((vAdventu ? ["kalendar", "truhly", "satnik", "urovne", "sady", "trofeje"] : ["truhly", "satnik", "urovne", "sady", "trofeje"]) as Zalozka[]).map((z) => (
+      {/* Záložky: na telefonu se při 6–7 položkách dají posouvat do strany */}
+      <div ref={zalozkyRef} className="flex gap-1.5 sm:gap-2 overflow-x-auto -mx-1 px-1 pb-1" role="tablist" aria-label="Sbírka" style={{ scrollMarginTop: 80, scrollbarWidth: "none" }}>
+        {((vAdventu ? ["kalendar", "truhly", "satnik", "obchudek", "urovne", "sady", "trofeje"] : ["truhly", "satnik", "obchudek", "urovne", "sady", "trofeje"]) as Zalozka[]).map((z) => (
           <button
             key={z}
             type="button"
             role="tab"
             aria-selected={zalozka === z}
-            onClick={() => setZalozka(z)}
-            className={`flex-1 sm:flex-none rounded-2xl px-1 sm:px-5 py-2.5 text-[13px] sm:text-base font-extrabold flex flex-col sm:flex-row items-center justify-center sm:gap-1.5 leading-tight ${zalozka === z ? "text-white" : "mm-obrys"}`}
+            onClick={() => prepni(z)}
+            className={`flex-1 shrink-0 min-w-[64px] sm:flex-none rounded-2xl px-1.5 sm:px-5 py-2.5 text-[11.5px] sm:text-base font-extrabold flex flex-col sm:flex-row items-center justify-center sm:gap-1.5 leading-tight ${zalozka === z ? "text-white" : "mm-obrys"}`}
             style={zalozka === z ? { background: "#0D1B3E" } : undefined}
             data-testid={`zalozka-${z}`}
           >
-            <span aria-hidden="true">{z === "kalendar" ? "🎄" : z === "truhly" ? "🎁" : z === "satnik" ? "👕" : z === "urovne" ? "⭐" : z === "sady" ? "📚" : "🏆"}</span>
-            {z === "kalendar" ? "Kalendář" : z === "truhly" ? "Truhly" : z === "satnik" ? "Šatník" : z === "urovne" ? "Úrovně" : z === "sady" ? "Sady" : "Trofeje"}
+            <span aria-hidden="true">{z === "kalendar" ? "🎄" : z === "truhly" ? "🎁" : z === "satnik" ? "👕" : z === "obchudek" ? "🛍️" : z === "urovne" ? "⭐" : z === "sady" ? "📚" : "🏆"}</span>
+            {z === "kalendar" ? "Kalendář" : z === "truhly" ? "Truhly" : z === "satnik" ? "Šatník" : z === "obchudek" ? "Obchůdek" : z === "urovne" ? "Úrovně" : z === "sady" ? "Sady" : "Trofeje"}
           </button>
         ))}
       </div>
 
+      {zalozka === "obchudek" && <Obchudek />}
+
       {zalozka === "kalendar" && <AdventniKalendar trida={trida} den={localDateStr()} />}
-      {(zalozka === "truhly" || zalozka === "satnik") && <SezonaPruh trida={trida} />}
+      {(zalozka === "truhly" || zalozka === "satnik" || zalozka === "obchudek") && <SezonaPruh trida={trida} />}
 
       {zalozka === "truhly" && (
         <section className="flex flex-col gap-3">
@@ -271,8 +303,8 @@ function Sbirka() {
         </section>
       )}
 
-      {zalozka === "satnik" && (
-        <section className="grid gap-4 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] items-start">
+      {(zalozka === "satnik" || zalozka === "obchudek") && (
+        <section className="grid gap-4 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] items-start" data-testid={zalozka === "obchudek" ? "obchudek-vzhled" : "satnik"}>
           <div className="mm-karta p-5 flex flex-col items-center gap-3 lg:sticky lg:top-24">
             {typ === "pozadi" ? (
               <div
@@ -307,7 +339,7 @@ function Sbirka() {
 
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-2" role="tablist" aria-label="Druh odměny">
-              {(["podoba", "hlava", "oci", "krk", "ruce", "nohy", "oslava", "efekt", "vzhled", "pozadi"] as TypOdmeny[]).map((t) => (
+              {(zalozka === "obchudek" ? TYPY_OBCHUDEK : TYPY_SATNIK).map((t) => (
                 <button
                   key={t}
                   type="button"

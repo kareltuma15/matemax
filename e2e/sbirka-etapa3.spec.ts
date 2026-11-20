@@ -7,6 +7,9 @@ import { kodGeneralky, overKodGeneralky, normalizujKod } from "../src/lib/genera
 import { kandidatiNaBosse, bossTydne } from "../src/lib/boss";
 import { hexikSvg } from "../src/lib/hexik-svg";
 
+// Sekce Hexík načítá 3D pokojíček; bez grafické karty v souběžných testech pomalu
+test.beforeEach(() => test.slow());
+
 // Sbírka MateMax, 3. etapa (17. 11. 2026): test nanečisto (kód Generálka, zlepšení), Boss týdne, trofeje, nové odměny.
 
 const s0 = (zmeny: Partial<SbirkaStav> = {}): SbirkaStav => ({ ...vychoziStav(), ...zmeny });
@@ -152,7 +155,7 @@ test("Sbírka: po testu nanečisto je pozadí Generálka ve sbírce a truhly če
   await page.getByTestId("otevrit-legendarni").click();
   await expect(page.getByTestId("odhaleni")).toContainText("legendární", { timeout: 15000 });
   await page.getByTestId("odhaleni-hotovo").click();
-  await page.getByTestId("zalozka-satnik").click();
+  await page.getByTestId("zalozka-obchudek").click();
   await page.getByTestId("typ-pozadi").click();
   await expect(page.getByTestId("odmena-generalka")).toContainText("Máš");
 });

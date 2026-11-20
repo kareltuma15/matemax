@@ -67,6 +67,8 @@ export interface Pokoj3D {
 
 export interface MoznostiPokoje {
   podoba: string; etapa: number; sloty?: SlotyHexika; tabule?: string[]; lehce?: boolean; tabuleSviti?: boolean;
+  /** Vybavení z Obchůdku (místo → klíč věci); používá ho základní pokojíček. */
+  vybaveni?: Partial<Record<string, string>>;
   onKouzlo: (k: string) => void;
   onPruchod?: (k: Pruchod) => void;
 }

@@ -16,6 +16,17 @@
   },
   "zapisy": [
     {
+      "datum": "2026-11-20",
+      "oblast": "odmeny",
+      "popis": "Hexíkův pokojíček (Karel schválil 20. 11.): 3D pokojíček nahoře v sekci Hexík, základní zdarma pro všechny, za sady Vánoční pokojíček (od 1. 12.), Perníková chaloupka a Polární záře; Hexík sám dělá kouzla, tabule vede do tréninku, skříň do šatníku. Nová záložka Obchůdek: vybavení pokojíčku (6 míst, 18 věcí za 120/300/600 krystalů), vzhled appky a pozadí přesunuté ze šatníku; krystaly v horní liště.",
+      "novinka": {
+        "nadpis": "Hexíkův pokojíček",
+        "text": "Hexík má domov ve 3D. Ťukni na věc a udělá ji sám. Za sady další pokoje, v Obchůdku vybavení za krystaly.",
+        "vizual": "pokojicek-zakladni",
+        "odkaz": "/sbirka"
+      }
+    },
+    {
       "datum": "2026-11-19",
       "oblast": "odmeny",
       "popis": "Opravy z mobilu (Karel schválil 19. 11.): v tréninku větší 3D Hexík stojící na kartě s bublinou, profil s 3D Hexíkem místo písmene, na úvodní stránce 3D Hexíci a nové truhly místo 2D, karta Hra ve výhodách, novinky s vlastními obrázky a stavem Připravujeme",

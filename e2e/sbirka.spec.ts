@@ -6,6 +6,9 @@ import {
 } from "../src/lib/sbirka";
 import { allExamples } from "../src/data/examples";
 
+// Sekce Hexík načítá 3D pokojíček; bez grafické karty v souběžných testech pomalu
+test.beforeEach(() => test.slow());
+
 // Sbírka MateMax (1. etapa herního systému, 16. 11. 2026): Hexík u příkladu, krystaly, šatník a truhly.
 
 const s0 = (zmeny: Partial<SbirkaStav> = {}): SbirkaStav => ({ ...vychoziStav(), ...zmeny });

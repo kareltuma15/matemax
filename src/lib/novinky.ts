@@ -9,7 +9,7 @@ import { KRONIKA, dnyMezi, type ZapisKroniky } from "./obsah-kronika";
 import type { Trida } from "@/types";
 
 /** Obrázek novinky: 3D Hexík (podoba a etapa), hotové 3D rendery z public/uvod, kalendář, combo, test. */
-export type VizualNovinky = "hexik" | "kalendar" | "combo" | "truhla" | "truhla-vanocni" | "pokojicek" | "medaile" | "test";
+export type VizualNovinky = "hexik" | "kalendar" | "combo" | "truhla" | "truhla-vanocni" | "pokojicek" | "pokojicek-zakladni" | "medaile" | "test";
 
 export interface Novinka {
   nadpis: string;
@@ -50,6 +50,6 @@ export function novinky(den: string, trida?: Trida): NovinkaVeStavu[] {
  */
 export interface Pripravujeme { nadpis: string; text: string; mesic: string; podoba: string; etapa?: number }
 export const PRIPRAVUJEME: Pripravujeme[] = [
-  { nadpis: "Domovy pro Hexíka", text: "Za každou sadu jiné 3D místo: podmořský svět, polární záře, kouzelnická věž.", mesic: "leden", podoba: "dracek", etapa: 4 },
+  { nadpis: "Další pokojíčky", text: "Podmořský svět, kouzelnická věž a dódžó. Každý za jednu sadu.", mesic: "leden", podoba: "dracek", etapa: 4 },
   { nadpis: "Vzhledy appky ve 3D", text: "Živé pozadí s hloubkou a Hexík v rohu obrazovky.", mesic: "únor", podoba: "neon", etapa: 4 },
 ];

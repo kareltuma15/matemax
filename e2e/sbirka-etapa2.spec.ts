@@ -6,6 +6,9 @@ import {
 } from "../src/lib/sbirka";
 import { buildReportHtml } from "../src/lib/report-rodice";
 
+// Sekce Hexík načítá 3D pokojíček; bez grafické karty v souběžných testech pomalu
+test.beforeEach(() => test.slow());
+
 // Sbírka MateMax, 2. etapa (17. 11. 2026): vzhled appky, pozadí profilu, Truhla doporučení, denní mise, odměny v e-mailu rodičům.
 
 const s0 = (zmeny: Partial<SbirkaStav> = {}): SbirkaStav => ({ ...vychoziStav(), ...zmeny });
@@ -126,7 +129,8 @@ test.describe("2. etapa: pravidla", () => {
 
 const stav = (zmeny: Record<string, unknown>) => JSON.stringify({ ...vychoziStav(), t: 1, ...zmeny });
 
-test("vzhled appky: v šatníku se zkouší naživo, po koupi a nasazení platí v celé appce", async ({ page }) => {
+test("vzhled appky: v Obchůdku se zkouší naživo, po koupi a nasazení platí v celé appce", async ({ page }) => {
+  test.slow(); // sekce Hexík načítá 3D pokojíček, bez grafické karty pomalu
   await page.addInitScript((s) => {
     if (!sessionStorage.getItem("hotovo")) {
       localStorage.setItem("matemax-trida", "9");
@@ -134,7 +138,7 @@ test("vzhled appky: v šatníku se zkouší naživo, po koupi a nasazení platí
       sessionStorage.setItem("hotovo", "1");
     }
   }, stav({ ziskano: 2000 }));
-  await page.goto("/sbirka?tab=satnik");
+  await page.goto("/sbirka?tab=obchudek");
   await page.getByTestId("typ-vzhled").click();
   await page.getByTestId("odmena-mesto").click();
   await expect(page.locator("html")).toHaveAttribute("data-vzhled", "mesto");
@@ -143,7 +147,7 @@ test("vzhled appky: v šatníku se zkouší naživo, po koupi a nasazení platí
   await page.getByTestId("zalozka-truhly").click();
   await expect(page.locator("html")).not.toHaveAttribute("data-vzhled", /./);
 
-  await page.getByTestId("zalozka-satnik").click();
+  await page.getByTestId("zalozka-obchudek").click();
   await page.getByTestId("typ-vzhled").click();
   await page.getByTestId("odmena-ocean").click();
   await page.getByTestId("satnik-akce").click(); // koupit
@@ -166,7 +170,7 @@ test("pozadí profilu: nasazené pozadí je v hlavičce Sbírky a náhled pozad�
   }, stav({ mam: ["9-pozadi-synthwave"], nasazeno: { 9: { pozadi: "9-pozadi-synthwave" } } }));
   await page.goto("/sbirka");
   await expect(page.getByTestId("sbirka-hlavicka")).toHaveAttribute("data-pozadi", "synthwave");
-  await page.getByTestId("zalozka-satnik").click();
+  await page.getByTestId("zalozka-obchudek").click();
   await page.getByTestId("typ-pozadi").click();
   await page.getByTestId("odmena-zapad").click();
   await expect(page.getByTestId("satnik-nahled-pozadi")).toHaveAttribute("data-pozadi", "zapad");

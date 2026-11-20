@@ -5,6 +5,9 @@ import {
 } from "../src/lib/sbirka";
 import { hexikSvg } from "../src/lib/hexik-svg";
 
+// Sekce Hexík načítá 3D pokojíček; bez grafické karty v souběžných testech pomalu
+test.beforeEach(() => test.slow());
+
 // Sbírka MateMax: sezónní odměny a sady (17. 11. 2026).
 
 const s0 = (zmeny: Partial<SbirkaStav> = {}): SbirkaStav => ({ ...vychoziStav(), ...zmeny });
@@ -105,7 +108,9 @@ test.describe("sezóny a sady: pravidla", () => {
     // Celá sada: domov (pokojíček je hotový, nastaví se sám) a bonus
     const r = zapisSady({ ...s, mam: [...vanoce.polozky] }, "2026-12-08");
     expect(r.vysledek).toEqual({ ids: ["9-vanoce"], krystaly: vanoce.bonus, poloviny: [] });
-    expect(domovHexika(r.s, 9)?.id).toBe("vanocni-pokojicek");
+    expect(domovHexika(r.s, 9, "2026-12-08")?.id).toBe("vanocni-pokojicek");
+    // Vánoční pokojíček je k dispozici až od 1. 12. (v listopadu základní pokojíček)
+    expect(domovHexika(r.s, 9, "2026-11-25")).toBeNull();
     expect(r.s.okoli?.[9]).toBeNull();
     expect(zapisSady(r.s, "2026-12-09").vysledek.ids).toEqual([]);
     // Nehotový domov nejde nastavit, cizí třída taky ne
@@ -211,12 +216,13 @@ test("Vánoční pokojíček: po dokončení sady bydlí Hexík doma a domov jde
   await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); },
     stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"] }));
   await page.goto("/sbirka?tab=sady");
-  const domov = page.getByTestId("domov-hexika");
+  const domov = page.getByTestId("hexik-pokoj");
   await expect(domov).toHaveAttribute("data-domov", "vanocni-pokojicek", { timeout: 20_000 });
-  await expect(domov.locator("canvas")).toHaveCount(1);
+  await expect(domov.locator("canvas").first()).toBeVisible();
   await expect(page.getByTestId("sada-9-vanoce")).toHaveAttribute("data-hotovo", "1");
   await page.getByTestId("sada-domov-9-vanoce").click();
-  await expect(page.getByTestId("domov-hexika")).toHaveCount(0);
+  // bez pokoje ze sady bydlí Hexík v základním pokojíčku
+  await expect(page.getByTestId("hexik-pokoj")).toHaveAttribute("data-domov", "zakladni-pokojicek");
   await expect(page.getByTestId("sada-domov-9-vanoce")).toHaveText("Nastěhovat Hexíka");
 });
 
@@ -226,11 +232,37 @@ test("Vánoční pokojíček v kvalitě Hexíka: počítadlo kouzel a celá obra
   await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); localStorage.setItem("matemax-domov-kouzla-vanocni-pokojicek", JSON.stringify(["krb", "hrnek"])); },
     stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"] }));
   await page.goto("/sbirka?tab=sady");
-  const domov = page.getByTestId("domov-hexika");
+  const domov = page.getByTestId("hexik-pokoj");
   await expect(page.getByTestId("domov-pocitadlo")).toHaveText("✨ 2 / 8 kouzel", { timeout: 30_000 });
   await page.getByTestId("domov-cela").click();
   await expect(domov).toHaveClass(/fixed/);
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");
   await page.keyboard.press("Escape");
   await expect(domov).not.toHaveClass(/fixed/);
+});
+
+test("Vánoční pokojíček až od 1. 12.: v listopadu bydlí Hexík v základním pokojíčku", async ({ page }) => {
+  test.slow(); // 3D scéna bez grafické karty se v souběžných testech načítá pomalu
+  await page.clock.setFixedTime(new Date("2026-11-25T10:00:00"));
+  await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); },
+    stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"], sady: { "9-vanoce": "2026-11-24" }, domov: { 9: "9-vanoce" } }));
+  await page.goto("/sbirka");
+  await expect(page.getByTestId("hexik-pokoj")).toHaveAttribute("data-domov", "zakladni-pokojicek", { timeout: 30_000 });
+  await expect(page.getByTestId("pokoj-trenovat")).toBeVisible();
+});
+
+test("Obchůdek: vybavení za krystaly, vzhled appky a pozadí jsou tady, ne v šatníku", async ({ page }) => {
+  await page.addInitScript((s) => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-sbirka", s); }, stav({ ziskano: 500 }));
+  await page.goto("/sbirka?tab=obchudek");
+  await expect(page.getByTestId("obchudek-krystaly")).toHaveText("💎 500 krystalů");
+  await expect(page.getByTestId("typ-vzhled")).toBeVisible();
+  await page.getByTestId("koupit-obraz-mapa").click();
+  await expect(page.getByTestId("vec-obraz-mapa")).toContainText("V pokojíčku");
+  await expect(page.getByTestId("obchudek-krystaly")).toHaveText("💎 380 krystalů");
+  await expect(page.getByTestId("lista-krystaly")).toContainText("380");
+  await expect(page.getByTestId("koupit-obraz-hvezdy")).toBeDisabled();
+  await page.getByTestId("zalozka-satnik").click();
+  await expect(page.getByTestId("typ-podoba")).toBeVisible();
+  await expect(page.getByTestId("typ-vzhled")).toHaveCount(0);
+  await expect(page.getByTestId("typ-pozadi")).toHaveCount(0);
 });

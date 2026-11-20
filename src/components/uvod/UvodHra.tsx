@@ -158,6 +158,7 @@ function VizualNovinky({ n }: { n: NovinkaVeStavu }) {
   if (n.vizual === "truhla") return <img src="/uvod/truhla-mistrovska.webp" alt="" className="u-nov-img" loading="lazy" />;
   if (n.vizual === "truhla-vanocni") return <img src="/uvod/truhla-vanocni.webp" alt="" className="u-nov-img" loading="lazy" />;
   if (n.vizual === "pokojicek") return <img src="/uvod/pokojicek.webp" alt="" className="u-nov-img" loading="lazy" style={{ objectPosition: "50% 60%" }} />;
+  if (n.vizual === "pokojicek-zakladni") return <img src="/uvod/pokojicek-zakladni.webp" alt="" className="u-nov-img" loading="lazy" style={{ objectPosition: "45% 55%" }} />;
   if (n.vizual === "medaile") return <img src="/uvod/medaile.webp" alt="" className="u-nov-img" loading="lazy" style={{ objectFit: "contain", padding: 8 }} />;
   if (n.vizual === "test") return <span className="u-nov-test" aria-hidden="true"><b>50</b><small>bodů · 70 min</small></span>;
   return <span className="u-mini-kal" aria-hidden="true">{[7, 15, 2, 20, 11, 4, 18, 9, 24, 13, 1, 23].map((d) => <i key={d} className={d === 24 ? "z" : ""}>{d}</i>)}</span>;
@@ -265,6 +266,20 @@ export function HexikOdmeny({ trida }: { trida: T }) {
                   {x.druh ? <HexikObrazek podoba={x.druh.klic} druh={x.druh.typ} px={128} style={{ width: 56, height: 56 }} zalozni={<span className="u-sat-ik" aria-hidden="true">{x.ikona}</span>} /> : <HexikObrazek podoba={x.podoba} etapa={x.etapa} px={128} style={{ width: 56, height: 56 }} />}
                   <small>{x.nazev}</small><small className="vz">{x.vz}</small>
                 </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="u-pokoj" data-testid="u-pokojicek">
+          <img src="/uvod/pokojicek-zakladni.webp" alt="Hexíkův pokojíček ve 3D: tabule s dnešním plánem, postel, psací stůl a šatní skříň" className="u-pokoj-obr" loading="lazy" />
+          <div>
+            <h3 className="u-h3b">Hexíkův pokojíček</h3>
+            <p style={{ color: "#C4CEEA", margin: "6px 0 0" }}>Hexík má domov ve 3D a každý ho dostane zdarma. Ťukneš na věc a Hexík ji udělá sám: zalije květinu, kopne do míče, zdřímne si. Na tabuli je dnešní plán a cesta rovnou do tréninku, skříň vede do šatníku.</p>
+            <div className="u-chipy-t">{["Zdarma pro každého", "Hexík sám dělá kouzla", "Tabule s dnešním plánem", "Nové pokoje za sady", "Vybavení za krystaly"].map((c) => <span key={c}>{c}</span>)}</div>
+            <div className="u-pokoje-mini">
+              {([["/uvod/pokojicek.webp", "Vánoční pokojíček"], ["/uvod/pokojicek-chaloupka.webp", "Perníková chaloupka"], ["/uvod/pokojicek-polarni.webp", "Polární záře"]] as const).map(([src, jm]) => (
+                <figure key={src}><img src={src} alt={jm} loading="lazy" /><figcaption>{jm}</figcaption></figure>
               ))}
             </div>
           </div>

@@ -470,6 +470,8 @@ export interface SbirkaStav {
   odznaky?: Record<string, number>;
   /** Příklady, které žák pokazil a později vyřešil správně. */
   napraveno?: number;
+  /** Vybavení Hexíkova pokojíčku z Obchůdku (lib/vybaveni.ts): koupené věci a co stojí na kterém místě. */
+  vybaveni?: { mam: string[]; nasazeno: Partial<Record<string, string>> };
   /** Pondělí týdnů, kdy žák trénoval aspoň 5 dní. */
   tydny5?: string[];
   /** Nejdelší série dní s tréninkem. */
@@ -801,6 +803,7 @@ export function slucSbirku(a: SbirkaStav, b: SbirkaStav): SbirkaStav {
     tydny5: [...new Set([...(a.tydny5 ?? []), ...(b.tydny5 ?? [])])].sort(),
     maxSerieDni: Math.max(a.maxSerieDni ?? 0, b.maxSerieDni ?? 0),
     ...(a.advent || b.advent ? { advent: slucAdvent(a.advent, b.advent) } : {}),
+    ...(a.vybaveni || b.vybaveni ? { vybaveni: { mam: [...new Set([...(a.vybaveni?.mam ?? []), ...(b.vybaveni?.mam ?? [])])], nasazeno: { ...(a.vybaveni?.nasazeno ?? {}), ...(b.vybaveni?.nasazeno ?? {}), ...(novejsi.vybaveni?.nasazeno ?? {}) } } } : {}),
     t: Math.max(a.t, b.t),
   };
 }
@@ -1058,7 +1061,15 @@ export interface Sada {
 }
 
 /** Hotové 3D domovy. Ostatní se odemknou hned, Hexík se do nich nastěhuje, až budou scény hotové (leden). */
-export const HOTOVE_DOMOVY: readonly string[] = ["vanocni-pokojicek"];
+export const HOTOVE_DOMOVY: readonly string[] = ["vanocni-pokojicek", "pernikova-chaloupka", "polarni-zare"];
+
+/** Hexíkův pokojíček: základní domov zdarma pro všechny (Karel 20. 11. 2026), když žák nebydlí v pokoji ze sady. */
+export const ZAKLADNI_DOMOV: DomovSady = { id: "zakladni-pokojicek", nazev: "Hexíkův pokojíček", hotovy: true };
+
+/** Vánoční pokojíček je k dispozici až od 1. 12. (Karel 20. 11. 2026); v listopadu se ukáže základní pokojíček. */
+export function domovDostupny(id: string, den: string): boolean {
+  return id !== "vanocni-pokojicek" || den.slice(5, 7) !== "11";
+}
 
 const KRYSTALY_ZA_VEC = 50;
 const MAX_BONUS_SADY = 250;
@@ -1145,11 +1156,16 @@ export function efektHexika(s: SbirkaStav, trida: Trida): EfektSady | null {
 }
 
 /** Zvolený domov (jen hotová scéna), nebo null. */
-export function domovHexika(s: SbirkaStav, trida: Trida): DomovSady | null {
+export function domovHexika(s: SbirkaStav, trida: Trida, den: string = localDateStr()): DomovSady | null {
   const id = s.domov?.[trida];
   if (!id) return null;
   const sd = SADY[trida].find((x) => x.id === id);
-  return sd && sd.domov.hotovy && postupSady(s, sd).hotovo ? sd.domov : null;
+  return sd && sd.domov.hotovy && postupSady(s, sd).hotovo && domovDostupny(sd.domov.id, den) ? sd.domov : null;
+}
+
+/** Pokoj, kde Hexík právě bydlí: ze sady, jinak základní Hexíkův pokojíček. */
+export function pokojHexika(s: SbirkaStav, trida: Trida, den: string = localDateStr()): DomovSady {
+  return domovHexika(s, trida, den) ?? ZAKLADNI_DOMOV;
 }
 
 /** Zapne efekt sady (null = vypnout). Jde jen odemčený. */

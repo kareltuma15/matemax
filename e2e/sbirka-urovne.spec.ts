@@ -3,6 +3,9 @@ import { ODMENY, vychoziStav, krystaly, kupOdmenu, otevriTruhlu, naroku, slucSbi
 import { prahUrovne, urovenZXP, odmenaUrovne, zapisUroven, dalsiVelkaOdmena, krystalyZaUroven } from "../src/lib/urovne";
 import { hexikSvg } from "../src/lib/hexik-svg";
 
+// Sekce Hexík načítá 3D pokojíček; bez grafické karty v souběžných testech pomalu
+test.beforeEach(() => test.slow());
+
 // XP úrovně s odměnami a jeden společný boss (17. 11. 2026).
 
 const s0 = (zmeny: Partial<SbirkaStav> = {}): SbirkaStav => ({ ...vychoziStav(), ...zmeny });
@@ -93,6 +96,7 @@ test("Sbírka: cesta úrovní, věc za úroveň v šatníku a uvítání Hexíka
   // Odměny za úrovně 2–8 připsané zpětně: Včelka je v šatníku jako „Máš“
   await page.getByTestId("zalozka-satnik").click();
   await expect(page.getByTestId("odmena-vcelka")).toContainText("Máš");
+  await page.getByTestId("zalozka-obchudek").click();
   await page.getByTestId("typ-vzhled").click();
   await page.getByTestId("odmena-les").click();
   await expect(page.getByTestId("satnik-akce")).toHaveText("Odemkne úroveň 10");

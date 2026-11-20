@@ -253,3 +253,12 @@
 .mmu .u-nov-test { display: grid; place-items: center; width: 116px; height: 116px; border-radius: 22px; background: linear-gradient(150deg,#FFD166,#F5A623); color: #4A2E00; box-shadow: 0 14px 28px -14px rgba(245,166,35,.8); }
 .mmu .u-nov-test b { font-size: 44px; font-weight: 900; line-height: 1; }
 .mmu .u-nov-test small { font-size: 12px; font-weight: 800; margin-top: -18px; }
+
+/* Hexíkův pokojíček na úvodní stránce (Karel 20. 11. 2026) */
+.mmu .u-pokoj { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); gap: 32px; align-items: center; }
+.mmu .u-pokoj-obr { width: 100%; border-radius: 22px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); display: block; }
+.mmu .u-pokoje-mini { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-top: 14px; }
+.mmu .u-pokoje-mini figure { margin: 0; }
+.mmu .u-pokoje-mini img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 12px; display: block; }
+.mmu .u-pokoje-mini figcaption { font-size: 12px; font-weight: 800; color: #C4CEEA; margin-top: 4px; text-align: center; }
+@media (max-width: 860px) { .mmu .u-pokoj { grid-template-columns: minmax(0,1fr); } }
