@@ -1,0 +1,162 @@
+<title>Ochutnávka doporučených témat</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800;9..40,900&display=swap">
+<style>
+/* Layout: 1) jak to je dnes, 2) čtyři rozhodnutí s doporučením, 3) tři obrazovky v telefonu, 4) texty a otázky */
+:root{--bg:#EEF1F7;--karta:#FFFFFF;--ink:#0D1B3E;--muted:#5F6982;--line:#E3E7F0;--zel:#1F9D55;--zel-bg:#E9F8EF;--oranz:#A66300;--oranz-bg:#FFF6E5;--cerv:#B42318;--cerv-bg:#FDECEC;--f:"DM Sans",system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;--oranz-bg:#3B2A10;--cerv-bg:#3B1418;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;--oranz-bg:#3B2A10;--cerv-bg:#3B1418;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14.5px;line-height:1.5}
+.wrap{max-width:1060px;margin:0 auto;padding-block:26px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+h1{margin:0;font-size:28px;font-weight:900;text-wrap:balance}h2{margin:0;font-size:20px;font-weight:900}h3{margin:0;font-size:15px;font-weight:900}p{margin:0}.muted{color:var(--muted)}
+.blok{background:var(--karta);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;min-width:0}
+.cislo{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--ink);color:var(--karta);font-weight:900;margin-right:8px;vertical-align:2px;font-size:14px}
+.tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.vstup{border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:6px}
+.vstup b{font-size:14.5px}.vstup p{color:var(--muted);font-size:13.5px}
+.pozor{background:var(--cerv-bg);border-radius:14px;padding:12px 14px;font-size:13.5px}
+.tab{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ok{color:var(--zel);font-weight:800}
+.rozh{display:grid;gap:10px}
+.r{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:6px}
+.r b{font-size:15px}.moznosti{display:flex;flex-wrap:wrap;gap:6px}
+.m{border:1px solid var(--line);border-radius:99px;padding:4px 11px;font-size:13px;font-weight:700;color:var(--muted)}
+.m.dop{border-color:var(--zel);background:var(--zel-bg);color:var(--zel)}
+.telefony{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+.tl{display:grid;gap:8px;justify-items:center}
+.tl>span{font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* telefon: vždy světlá appka */
+.tel{width:300px;max-width:100%;border-radius:30px;border:8px solid #0D1B3E;background:#EEF1F7;color:#0D1B3E;overflow:hidden;font-size:13px}
+.tel *{box-sizing:border-box}
+.hl{background:linear-gradient(160deg,#1F2F66,#0D1B3E 70%);color:#fff;padding:14px}
+.hl small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#C9C7F5}
+.hl b{display:block;font-size:19px;line-height:1.15;margin-top:3px}
+.hl p{font-size:12px;color:#D9D8FE;margin-top:4px}
+.kt{background:#fff;border-radius:14px;margin:8px 10px;padding:10px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:9px;align-items:center}
+.ik{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:900}
+.kt b{display:block;font-size:13.5px}.kt small{color:#5F6982;font-size:11.5px}
+.stit{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:800;border-radius:99px;padding:2px 8px}
+.s-z{background:#E9F8EF;color:#14663D}.s-o{background:#FFF1DC;color:#9A5B00}
+.btn{display:block;margin:6px 10px;padding:11px;border-radius:14px;text-align:center;font-weight:900;font-size:13px}
+.b-z{background:#F5A623;color:#0D1B3E}.b-o{border:1.5px solid #E4E6EF;color:#0D1B3E;background:#fff}
+.tr{padding:10px}
+.tr-h{display:flex;align-items:center;gap:8px}.tr-h i{flex:1;height:6px;border-radius:9px;background:#E1E5EF;overflow:hidden}.tr-h i::after{content:"";display:block;height:100%;width:60%;background:#C2366B}
+.och{display:inline-flex;align-items:center;gap:5px;background:#FFF1DC;color:#9A5B00;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;margin-top:8px}
+.karta{background:#fff;border-radius:16px;padding:12px;margin-top:8px}
+.konec{padding:14px;display:grid;gap:10px}
+.rodice{border:1.5px dashed #C9CEDC;border-radius:14px;padding:10px;font-size:12px;color:#33405F;background:#F8F9FC}
+.rodice b{display:block;font-size:12.5px;margin-bottom:3px;color:#0D1B3E}
+.text{display:grid;gap:8px}
+.text div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;font-size:13.5px;border-bottom:1px solid var(--line);padding-bottom:7px}
+.text div span:first-child{color:var(--muted);font-weight:700}
+.nesmi{color:var(--cerv);text-decoration:line-through}
+@media (max-width:520px){.text div{grid-template-columns:minmax(0,1fr)}}
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <h1>Ochutnávka doporučených témat</h1>
+    <p class="muted">Návrh pro dítě bez Premium po testu nanečisto: jak to je dnes, co rozhodnout a jak by obrazovky vypadaly. Jména v obrazovkách jsou vymyšlená. Nic zatím není naprogramované.</p>
+  </header>
+
+  <section class="blok">
+    <h2><span class="cislo">1</span>Jak to je dnes bez Premium</h2>
+    <div class="tri">
+      <div class="vstup"><b>Po propojení z QR (/?z=qr&amp;propojeno=1)</b><p>Domov ukáže „✓ Propojeno s Testy nanečisto“ a odkaz na Truhlu Generálka. Když z Vyhodnocení přijde plán, Domov ukáže kartu „Plán po testu“ s doporučenými tématy a tlačítkem Trénovat podle plánu. Zamčení zatím vidět není, objeví se až po klepnutí.</p></div>
+      <div class="vstup"><b>Doporučeno po testu (/trenink?doporuceni=…)</b><p>Seznam doporučených témat. U zamčených je „🔒 V Premium“ a odkaz na stránku Premium. Tlačítko „Začít doporučený trénink · 10 příkladů“ vezme jen témata zdarma. Když jsou všechna doporučená témata zamčená, je místo něj jen „Doporučená témata jsou v Premium“.</p></div>
+      <div class="vstup"><b>Klik na zamčené téma</b><p>Vede rovnou na stránku Premium. Kdo se k zamčenému příkladu dostane jinou cestou, uvidí kartu „Toto téma je v Premium… Odemkni všech 9 témat za 99 Kč/měsíc“ s tlačítkem „Vyzkoušet Premium“.</p></div>
+    </div>
+    <p class="pozor"><b>Pozor, už dnes:</b> karta zamčeného tématu oslovuje dítě („Odemkni… za 99 Kč/měsíc“, „Vyzkoušet Premium“). To je přímá výzva ke koupi, před kterou Vyhodnocení varuje. Navrhuju ji v rámci ochutnávky přepsat stejně jako novou obrazovku (bod 4).</p>
+    <div class="tab"><table>
+      <thead><tr><th>Třída</th><th>Zdarma bez omezení</th><th>V Premium</th></tr></thead>
+      <tbody>
+        <tr><td><b>9. třída</b></td><td class="ok">Zlomky, Výrazy, Rovnice</td><td>Geometrie, Slovní úlohy, Grafy a logika, Konstrukční úlohy, Úhly, Souhrnné</td></tr>
+        <tr><td><b>5. třída</b></td><td class="ok">Počítání s čísly, Jednotky, čas a peníze, Slovní úlohy a úvaha</td><td>Zlomky a části celku, Obvod a obsah, Tělesa a souměrnost, Rýsování, Grafy, tabulky a vzory</td></tr>
+        <tr><td class="muted">Bez účtu</td><td>jen Zlomky (9. třída)</td><td class="muted">ostatní po registraci</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">2</span>Čtyři rozhodnutí</h2>
+    <div class="rozh">
+      <div class="r"><b>Co se počítá jako příklad?</b><div class="moznosti"><span class="m dop">✓ každá odeslaná odpověď (i špatná)</span><span class="m">jen správně vyřešená</span><span class="m">i přeskočený příklad</span></div><p class="muted">Doporučuju odeslanou odpověď. Přeskočení se nepočítá, ať dítě nepřijde o příklady omylem. Počítat jen správné by šlo obejít hádáním.</p></div>
+      <div class="r"><b>Deset na co?</b><div class="moznosti"><span class="m dop">✓ na doporučené téma (okruh)</span><span class="m">na dovednost (9. třída, např. slovní úlohy / poměr)</span></div><p class="muted">Doporučuju na téma. Když test doporučí dvě dovednosti ze slovních úloh, dítě má 10 příkladů na obě dohromady. Je to jednodušší vysvětlit a průběh je jedno číslo.</p></div>
+      <div class="r"><b>Jednou za účet, nebo po každém testu?</b><div class="moznosti"><span class="m dop">✓ po každém testu nanečisto znovu</span><span class="m">jen nová témata</span><span class="m">jednou za účet</span></div><p class="muted">Doporučuju po každém testu znovu 10 na každé doporučené téma, i když se opakuje. Test nanečisto tím dostane hodnotu navíc a dítě vidí, že se po testu má k čemu vrátit.</p></div>
+      <div class="r"><b>Jak ukázat průběh?</b><div class="moznosti"><span class="m dop">✓ štítek na kartě tématu + malý štítek v tréninku</span><span class="m">jen v tréninku</span></div><p class="muted">Na kartě „🎁 10 příkladů zdarma“, potom „zbývá 7 z 10“. V tréninku nahoře „Ochutnávka · 7 z 10“. U posledních dvou jemně „Ještě 2 příklady zdarma“.</p></div>
+    </div>
+    <p class="muted" style="font-size:13px">Technicky: počet se ukládá k účtu (z tréninků, které už MateMax zapisuje po tématech), takže nejde obejít smazáním prohlížeče. Dítě s Premium nic nového neuvidí. Témata zdarma zůstávají bez omezení.</p>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">3</span>Obrazovky</h2>
+    <div class="telefony">
+      <div class="tl"><span>A · Doporučeno po testu</span>
+        <div class="tel">
+          <div class="hl"><small>Doporučeno po testu nanečisto</small><b>Po 2. testu nanečisto (14. 11.)</b><p>Tady ti v testu utekly body. Když je potrénuješ, příště je získáš.</p></div>
+          <div style="margin:10px 10px 2px;border-radius:16px;padding:12px;background:linear-gradient(135deg,#FFE8B8,#FFD27A);display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:center">
+            <span style="font-size:32px;line-height:1">🎁</span>
+            <span><b style="display:block;font-size:14.5px;color:#5A3500">Dárek po testu</b><span style="font-size:12px;color:#6B4A10">Ze všech doporučených témat máš zdarma 10 příkladů. I z těch, která jinak patří do Premium.</span></span>
+          </div>
+          <div class="kt"><span class="ik" style="background:#C2366B">½</span><span><b>Zlomky a části celku</b><small>v testu 2 z 8 bodů</small><br><span class="stit s-o">🎁 10 příkladů zdarma</span></span></div>
+          <div class="kt"><span class="ik" style="background:#5B55D6">◻</span><span><b>Obvod a obsah</b><small>v testu 1 z 6 bodů</small><br><span class="stit s-o">🎁 zbývá 7 z 10</span></span></div>
+          <div class="kt"><span class="ik" style="background:#1F9D55">+</span><span><b>Počítání s čísly</b><small>v testu 4 z 8 bodů</small><br><span class="stit s-z">zdarma</span></span></div>
+          <div class="btn b-z">🎁 Začít dárkový trénink · 10 příkladů</div>
+          <p style="font-size:11px;color:#5F6982;text-align:center;margin:0 10px 6px">Míchá všechna doporučená témata, i ta z Premium</p>
+          <div class="btn b-o">Uložit do mého plánu</div>
+        </div>
+      </div>
+      <div class="tl"><span>B · V tréninku</span>
+        <div class="tel">
+          <div class="tr">
+            <div class="tr-h"><span style="font-weight:900;color:#5F6982">✕</span><i></i><span style="font-weight:900;color:#5B55D6">+30</span></div>
+            <span class="och">🎁 Ochutnávka · 7 z 10</span>
+            <div class="karta">
+              <span class="stit s-o" style="margin:0;background:#FCE7EF;color:#C2366B">Zlomky a části celku</span>
+              <p style="font-size:17px;font-weight:900;margin-top:8px">Kolik je polovina z třetiny čísla 60?</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">
+                <span style="border:2px solid #E1E5EF;border-radius:10px;padding:8px;text-align:center;font-weight:800">10</span><span style="border:2px solid #E1E5EF;border-radius:10px;padding:8px;text-align:center;font-weight:800">20</span>
+                <span style="border:2px solid #E1E5EF;border-radius:10px;padding:8px;text-align:center;font-weight:800">15</span><span style="border:2px solid #E1E5EF;border-radius:10px;padding:8px;text-align:center;font-weight:800">30</span>
+              </div>
+            </div>
+            <p style="font-size:11.5px;color:#9A5B00;margin-top:8px;text-align:center">U 9. a 10. příkladu: „Ještě 2 příklady zdarma“</p>
+          </div>
+        </div>
+      </div>
+      <div class="tl"><span>C · Po 10 příkladech</span>
+        <div class="tel">
+          <div class="konec">
+            <div style="text-align:center;font-size:40px">🎁</div>
+            <b style="font-size:18px;text-align:center;display:block">Ochutnávka zlomků je za tebou</b>
+            <p style="text-align:center;color:#5F6982">Vyřešila jsi 10 příkladů, 7 správně. Další příklady z tohoto tématu jsou v Premium.</p>
+            <div class="btn b-z" style="margin:0">Pokračovat tématem zdarma: Počítání s čísly</div>
+            <div class="btn b-o" style="margin:0">Zpět na doporučení</div>
+            <div class="rodice"><b>Pro rodiče</b>MateMax Premium odemkne všechna témata pro 5. třídu, odhad bodů a týdenní e-mail o pokroku. Stojí 99 Kč měsíčně a jde kdykoli zrušit. Zapnete ho v profilu dítěte v části Premium.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:13px"><b>Zámky se na této stránce neukazují.</b> Dokud dárek trvá, dítě nevidí „🔒 V Premium“, jen 🎁 a kolik mu zbývá. Zmínka o Premium se objeví až ve chvíli, kdy dárek z tématu vyčerpá (obrazovka C).</p>
+    <p class="muted" style="font-size:13px">Na Domově na kartě „Plán po testu“ budou stejné štítky („🎁 10 příkladů zdarma“, „zbývá 7 z 10“), ať dítě ochutnávku najde i bez odkazu z e-mailu.</p>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">4</span>Texty pro dítě a pro rodiče</h2>
+    <div class="text">
+      <div><span>Dítěti ano</span><span>„Další příklady z tohoto tématu jsou v Premium.“ · „Ještě 2 příklady zdarma.“ · „Pokračovat tématem zdarma.“</span></div>
+      <div><span>Dítěti nikdy</span><span><span class="nesmi">Kup si Premium</span> · <span class="nesmi">Řekni rodičům, ať ti ho koupí</span> · <span class="nesmi">Odemkni všech 9 témat za 99 Kč</span> · <span class="nesmi">Vyzkoušet Premium →</span> jako hlavní tlačítko</span></div>
+      <div><span>Pro rodiče</span><span>Oddělený rámeček „Pro rodiče“: co Premium dává, cena 99 Kč měsíčně (ověřený fakt z kokpitu), že jde zrušit, a kde ho zapnout. Bez tlačítka koupit pro dítě.</span></div>
+      <div><span>Stávající karta</span><span>Kartu zamčeného tématu a odkaz „🔒 V Premium“ přepíšu ve stejném duchu: dítěti věcná informace, cena jen v části Pro rodiče.</span></div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>K rozhodnutí</h2>
+    <p>1. Sedí doporučené nastavení (každá odeslaná odpověď · na téma · po každém testu znovu · štítek na kartě i v tréninku)?</p>
+    <p>2. Přepsat i dnešní kartu zamčeného tématu, aby neoslovovala dítě cenou? <b class="ok">Doporučuju ano.</b></p>
+    <p>3. Má Vyhodnocení na stránce dítěte u karty MateMax psát „10 příkladů zdarma z doporučených témat“? <b class="ok">Doporučuju ano.</b></p>
+    <p class="muted" style="font-size:13px">Texty pro rodiče a e-maily pošlu před nasazením ke schválení v kokpitu.</p>
+  </section>
+</div>

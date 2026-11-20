@@ -108,6 +108,8 @@ interface Uloha { id: string; tema: string; obtiznost: number; dovednost?: strin
  * Doporučená sada: 10 příkladů z témat v pořadí doporučení, z každého tématu nejdřív úlohy
  * na cílové obtížnosti, pak nejbližší vedlejší. Zamčená témata (bez Premium) se vynechají a jejich
  * díl připadne ostatním. `dovednostUlohy` vrací dovednost úlohy (stejně jako běžný trénink).
+ * `strop` = kolik příkladů smí téma dát nejvýš (dárek po testu: kolik z 10 zbývá); co téma
+ * nedá, připadne dalším tématům v pořadí.
  */
 export function sestavDoporucenouSadu(
   top: DoporuceneTema[],
@@ -115,10 +117,27 @@ export function sestavDoporucenouSadu(
   jeZamceno: (tema: string) => boolean,
   dovednostUlohy: (u: Uloha) => string | undefined,
   nahoda: () => number = Math.random,
+  strop: (tema: string) => number = () => Infinity,
 ): string[] {
-  const volna = top.filter((t) => !jeZamceno(t.k));
+  const volna = top.filter((t) => !jeZamceno(t.k) && strop(t.k) > 0);
   if (volna.length === 0) return [];
   const pocty = rozdeleni(volna.length);
+  // Strop tématu (sdílený, když je téma v doporučení víckrát s různou dovedností)
+  const volno = new Map<string, number>();
+  for (const t of volna) if (!volno.has(t.k)) volno.set(t.k, strop(t.k));
+  let navic = 0;
+  volna.forEach((t, i) => {
+    const dat = Math.min(pocty[i], volno.get(t.k)!);
+    navic += pocty[i] - dat;
+    pocty[i] = dat;
+    volno.set(t.k, volno.get(t.k)! - dat);
+  });
+  // Co omezené téma nedalo, dostanou další témata v pořadí, dokud mají volno
+  for (let i = 0; navic > 0 && i < volna.length; i++) {
+    const pridat = Math.min(navic, volno.get(volna[i].k)!);
+    pocty[i] += pridat; navic -= pridat;
+    volno.set(volna[i].k, volno.get(volna[i].k)! - pridat);
+  }
   const vybrane = new Set<string>();
   const vysledek: string[] = [];
   volna.forEach((t, i) => {

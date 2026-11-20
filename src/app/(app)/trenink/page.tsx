@@ -66,8 +66,10 @@ import { odmenaZaBosse } from "@/lib/sbirka-test";
 import { bossTydne } from "@/lib/boss";
 import { ODPOVED_EVENT } from "@/lib/sound";
 import { getReadiness } from "@/lib/readiness";
-import DoporuceniPoTestu from "@/components/DoporuceniPoTestu";
+import DoporuceniPoTestu, { type DarekSezeni } from "@/components/DoporuceniPoTestu";
 import { nactiPlan, type PlanPoTestu } from "@/lib/plan-po-testu";
+import { zapocitejDarek, zbyva, DAREK_NA_TEMA } from "@/lib/ochutnavka";
+import OchutnavkaKonec from "@/components/OchutnavkaKonec";
 
 /** Třída z prohlížeče pro první sestavení sezení (hook se v tu chvíli ještě nemusel načíst). */
 function readTridaForSession(): Trida {
@@ -93,6 +95,8 @@ type SessionDraft = {
   /** Dovednost v tématu (src/lib/dovednosti.ts), "testove" = testové příklady. Starší koncepty pole nemají. */
   dovednostFilter?: string | null;
   rezimFilter: "chyby" | "sm2" | null;
+  /** Dárkový trénink po testu nanečisto (lib/ochutnavka.ts): bez něj by se Premium příklady po návratu zamkly. */
+  darek?: DarekSezeni | null;
 };
 
 function saveSessionDraft(draft: SessionDraft) {
@@ -376,6 +380,8 @@ function TreningPageInner() {
   const [freezeUsedToday, setFreezeUsedToday] = useState(false);
   const [doporuceniNeplatne, setDoporuceniNeplatne] = useState(false);
   const [planPoTestu, setPlanPoTestu] = useState<PlanPoTestu | null>(null);
+  // Dárek po testu: Premium témata, která smí tento trénink ukázat, a kolik z 10 je vyčerpáno
+  const [darek, setDarek] = useState<DarekSezeni | null>(null);
   const oznacNeplatne = useCallback(() => setDoporuceniNeplatne(true), []);
 
   useEffect(() => {
@@ -504,6 +510,7 @@ function TreningPageInner() {
         setCorrect(draft.correct);
         setSkipped(draft.skipped);
         setWrongAnswers(draft.wrongAnswers);
+        if (draft.darek) setDarek(draft.darek);
       } else if (urlBoss) {
         const boss = bossTydne(readTridaForSession(), localDateStr());
         if (boss) { bossIdRef.current = boss.id; setSessionIds([boss.id]); }
@@ -659,6 +666,13 @@ function TreningPageInner() {
       const exId = sessionIds[currentIdx];
       const example = allExamples.find((ex) => ex.id === exId);
       if (example) odpovediRef.current.push({ tema: example.tema, ...(example.dovednost ? { dovednost: example.dovednost } : {}), ok: wasCorrect });
+      // Dárek po testu: každá odeslaná odpověď na dárkový příklad se počítá (přeskočení ne)
+      let darekPo = darek;
+      if (example && darek?.temata.includes(example.tema) && isTopicLocked(example.tema, isPremium)) {
+        const lokal = zapocitejDarek(darek.klic, example.tema);
+        darekPo = { ...darek, pouzito: { ...darek.pouzito, [example.tema]: Math.max((darek.pouzito[example.tema] ?? 0) + 1, lokal[example.tema] ?? 0) } };
+        setDarek(darekPo);
+      }
       const existing = cards.find((c) => c.exampleId === exId) ?? createCard(exId);
       const quality: 0 | 1 | 2 | 3 | 4 | 5 = wasCorrect ? 4 : 1;
       const updated = reviewCard(existing, quality);
@@ -820,6 +834,7 @@ function TreningPageInner() {
           podtemaFilter: podtemaFilter ?? null,
           dovednostFilter: dovednostFilter ?? null,
           rezimFilter: rezimFilter ?? null,
+          darek: darekPo,
         });
       }
       if (isLastAnswer) {
@@ -872,11 +887,12 @@ function TreningPageInner() {
         setCurrentIdx((i) => i + 1);
       }
     },
-    [cards, sessionIds, currentIdx, correct, gamState, wrongAnswers]
+    [cards, sessionIds, currentIdx, correct, gamState, wrongAnswers, darek, isPremium]
   );
 
   function restart(rezim?: "chyby" | "sm2" | null) {
     clearSessionDraft();
+    setDarek(null);
     setRezimFilter(rezim ?? null);
     setSessionIds(buildSession(cards, temaFilter, rezim ?? null, isGuest ?? false, podtemaFilter, trida, dovednostFilter));
     setCurrentIdx(0);
@@ -929,7 +945,7 @@ function TreningPageInner() {
         isGuest={!!isGuest}
         isPremium={isPremium}
         tridaZaka={trida}
-        onStart={(ids) => { setSessionIds(ids); window.scrollTo({ top: 0 }); }}
+        onStart={(ids, d) => { setDarek(d ?? null); setSessionIds(ids); window.scrollTo({ top: 0 }); }}
         onNeplatne={oznacNeplatne}
       />
     );
@@ -1134,6 +1150,7 @@ function TreningPageInner() {
         {noveUrovne.length > 0 && !urovneVidel && (
           <UrovenModal urovne={noveUrovne} trida={trida} onClose={() => setUrovneVidel(true)} />
         )}
+        {darek && !isPremium && <OchutnavkaKonec darek={darek} trida={trida} />}
         <SessionSummary
           correct={correct}
           total={sessionIds.length - skipped}
@@ -1204,6 +1221,7 @@ function TreningPageInner() {
         temaFilter,
         podtemaFilter: podtemaFilter ?? null,
         rezimFilter: rezimFilter ?? null,
+        darek,
       });
     }
     setSkipped((n) => n + 1);
@@ -1211,7 +1229,9 @@ function TreningPageInner() {
     else setCurrentIdx((i) => i + 1);
   }
 
-  if (isTopicLocked(currentExample.tema, isPremium)) {
+  // Dárkový příklad (Premium téma z doporučení po testu): ukáže se, i když téma jinak patří do Premium
+  const darekTema = !!darek?.temata.includes(currentExample.tema) && isTopicLocked(currentExample.tema, isPremium);
+  if (isTopicLocked(currentExample.tema, isPremium) && !darekTema) {
     return (
       <>
         {currentToast && (useOverlay
@@ -1265,13 +1285,22 @@ function TreningPageInner() {
         </p>
       )}
 
+      {darek && darekTema && (() => {
+        const zb = zbyva(darek.pouzito, currentExample.tema);
+        return (
+          <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-extrabold px-3 py-1 rounded-full" style={{ background: "#FFF1DC", color: "#9A5B00" }} data-testid="darek-v-treninku">
+            🎁 Dárek po testu · {zb <= 2 ? (zb <= 1 ? "poslední příklad zdarma" : `ještě ${zb} příklady zdarma`) : `zbývá ${zb} z ${DAREK_NA_TEMA}`}
+          </p>
+        );
+      })()}
+
       {/* Pro e2e testy: název vybrané dovednosti (žák ho vidí na kartě úlohy). */}
       {temaFilter && dovednostFilter && nazevDovednosti(temaFilter, dovednostFilter) && (
         <span hidden data-testid="nazev-dovednosti">· {nazevDovednosti(temaFilter, dovednostFilter)}</span>
       )}
 
       {/* Pro e2e testy: která úloha je na řadě a z čeho se sezení skládá. */}
-      <span hidden data-testid="sezeni" data-aktualni={currentExample.id} data-ulohy={sessionIds.join(",")} />
+      <span hidden data-testid="sezeni" data-aktualni={currentExample.id} data-ulohy={sessionIds.join(",")} data-darek={darek?.temata.join(",") ?? ""} />
 
       {/* Hexík stojí na horní hraně karty, proto těsně nad ní */}
       <HexikParta trida={trida} />

@@ -34,6 +34,7 @@ import PropojenoKarta from "@/components/hexik/PropojenoKarta";
 import { KodNeplatnyHlaska, MamKodZTestu } from "@/components/hexik/KodZTestu";
 import DenniMise from "@/components/hexik/DenniMise";
 import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
+import { darekZDoporuceni, pouzitoLokalne, zbyva, DAREK_NA_TEMA } from "@/lib/ochutnavka";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
@@ -294,6 +295,19 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
                   </span>
                 ))}
               </div>
+              {(() => {
+                // Dárek po testu: Premium témata z doporučení, 10 příkladů zdarma na každé (lib/ochutnavka.ts)
+                const dk = darekZDoporuceni(plan.doporuceni, isPremium, false);
+                if (!dk) return null;
+                const pz = pouzitoLokalne(dk.klic);
+                const zb = dk.temata.filter((k) => zbyva(pz, k) > 0);
+                if (zb.length === 0) return null;
+                return (
+                  <span className="text-sm font-bold px-3 py-2 rounded-xl" style={{ background: "#FFF1DC", color: "#7A4A00" }} data-testid="domov-plan-darek">
+                    🎁 Dárek po testu: {zb.map((k) => `${TEMA_LABELS[k] ?? k} ${zbyva(pz, k)} z ${DAREK_NA_TEMA}`).join(", ")} příkladů zdarma
+                  </span>
+                );
+              })()}
               {plan.doporuceni.dalsi && (() => {
                 const zbyva = dniDo(plan.doporuceni.dalsi);
                 const nejslabsi = [...plan.doporuceni.top].sort((a, b) => a.pts / a.max - b.pts / b.max)[0];
