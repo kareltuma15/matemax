@@ -541,6 +541,8 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
 
   // ── interakce ──
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+  // Pára, jiskry a sníh jsou body: bez malé tolerance by „chytaly“ ťuknutí i na věci za nimi
+  ray.params.Points = { threshold: 0.02 };
   let tah: { x: number; y: number; ujeto: number; id: number } | null = null;
   const prsty = new Map<number, { x: number; y: number }>(); let stipnuti = 0;
   const kouzlo = (k: Kouzlo) => o.onKouzlo(k);
