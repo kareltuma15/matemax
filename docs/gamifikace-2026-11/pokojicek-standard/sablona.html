@@ -72,7 +72,7 @@ html,body{margin:0;background:#D9DEEA;font-family:"DM Sans",system-ui,sans-serif
   function ukaz(h) { bub.innerHTML = h; bub.classList.add("vid"); clearTimeout(tt); tt = setTimeout(function () { bub.classList.remove("vid"); }, 2600); }
   var p = D.vytvor(document.getElementById("scena"), {
     podoba: "klasik", etapa: 3, sloty: { hlava: "cepice", okoli: "snih" }, tabuleSviti: true,
-    tabule: ["Dnešní plán", "○ Výrazy: Mocniny · 7 příkladů", "🔥 série 6 dní", "Do testu nanečisto 22 dní"],
+    tabule: ["Dnešní plán", "Mocniny · 7 příkladů", "🔥 série 6 dní"],
     onKouzlo: function (k) {
       if (!D.KOUZLA[k]) return;
       var nove = !nalez[k]; nalez[k] = 1; var n = Object.keys(nalez).length;

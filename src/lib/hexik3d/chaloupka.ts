@@ -72,7 +72,7 @@ export function vytvorChaloupku(canvas: HTMLCanvasElement, o: MoznostiPokoje): P
     kob.position.set(0.2, Y0 + 0.03, 0.4); stin(kob, false, true); svet.add(kob); reg(kob, "podlaha");
 
     // ── pec na perníčky u levé stěny ──
-    const pec = new THREE.Group(); pec.position.set(-4.6, Y0, -1.0); pec.rotation.y = Math.PI / 2; svet.add(pec);
+    const pec = new THREE.Group(); pec.position.set(-4.6, Y0, 0.35); pec.rotation.y = Math.PI / 2; svet.add(pec);
     const telo = new THREE.Mesh(zaobleny(2.4, 1.9, 1.1, 0.3), plast("#D0794A", { roughness: 0.7 })); telo.position.set(0, 0.95, 0.15); pec.add(telo);
     const cihly = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 1.8), new THREE.MeshStandardMaterial({ map: tex(256, 192, (x) => { x.fillStyle = "#C46A3E"; x.fillRect(0, 0, 256, 192); x.strokeStyle = "rgba(255,240,220,.6)"; x.lineWidth = 3; for (let r = 0; r < 8; r++) { x.beginPath(); x.moveTo(0, r * 24); x.lineTo(256, r * 24); x.stroke(); for (let c = 0; c < 6; c++) { const xx = c * 48 + (r % 2) * 24; x.beginPath(); x.moveTo(xx, r * 24); x.lineTo(xx, r * 24 + 24); x.stroke(); } } }), roughness: 0.85, transparent: true, opacity: 0.55 }));
     cihly.position.set(0, 0.95, 0.71); pec.add(cihly);
@@ -101,21 +101,35 @@ export function vytvorChaloupku(canvas: HTMLCanvasElement, o: MoznostiPokoje): P
 
     // ── bonbónový stromek v levém zadním rohu ──
     const strom = new THREE.Group(); strom.position.set(-3.2, Y0, -3.0); svet.add(strom);
-    const kmen = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.2, 0.5, 12), plast("#7A4A2A")); kmen.position.y = 0.25; strom.add(kmen);
-    const kvet = new THREE.Mesh(zaobleny(0.8, 0.45, 0.8, 0.12), plast("#FF5A7A", { clearcoat: 0.9 })); kvet.position.y = 0.22; strom.add(kvet);
-    const zele = new THREE.Mesh(new THREE.ConeGeometry(1.25, 2.9, 24), plast("#3FAE6A", { roughness: 0.5, clearcoat: 0.6 })); zele.position.y = 1.9; strom.add(zele);
+    // Stromek z perníkových hvězdiček: patra hvězd s polevou, na každém cípu svítící bonbón
+    const kmen = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.7, 12), plast("#8A4E24", { roughness: 0.8 })); kmen.position.y = 0.45; strom.add(kmen);
+    const kvet = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.34, 0.45, 20), plast("#FF5A7A", { clearcoat: 0.9 })); kvet.position.y = 0.22; strom.add(kvet);
+    const lem = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.06, 8, 24), plast("#FFFFFF", { clearcoat: 1 })); lem.rotation.x = Math.PI / 2; lem.position.y = 0.45; strom.add(lem);
+    const hvezdice = (r: number) => { const sh = new THREE.Shape(); for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2, rr = i % 2 ? r * 0.64 : r; const px = Math.cos(a) * rr, py = Math.sin(a) * rr; if (i) sh.lineTo(px, py); else sh.moveTo(px, py); } sh.closePath(); return sh; };
+    const pernikStrom = new THREE.MeshPhysicalMaterial({ map: pernikTex(128, 128, false), roughness: 0.6, clearcoat: 0.3 });
+    const polevaZel = plast("#5CC98A", { roughness: 0.25, clearcoat: 1 });
     const bonbony: { m: THREE.MeshStandardMaterial; i: number }[] = [];
-    for (let i = 0; i < 46; i++) { const t = i / 46, y = 0.6 + t * 2.5, r = (1 - t) * 1.2 + 0.08, a = t * Math.PI * 9;
-      const mat = new THREE.MeshStandardMaterial({ color: CUKR[i % 5], emissive: CUKR[i % 5], emissiveIntensity: 0.6, roughness: 0.3 });
-      const b = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 10), mat); b.scale.y = 0.75; b.position.set(Math.cos(a) * r, y, Math.sin(a) * r); strom.add(b); bonbony.push({ m: mat, i }); }
-    const hvezda = new THREE.Mesh(new THREE.OctahedronGeometry(0.28), new THREE.MeshStandardMaterial({ color: "#FFD45A", emissive: "#FFB000", emissiveIntensity: 1.8 })); hvezda.position.y = 3.5; strom.add(hvezda);
+    const PATRA = 7;
+    for (let p = 0; p < PATRA; p++) {
+      const r = 1.3 * (1 - p / (PATRA + 0.6)) + 0.18, y = 0.75 + p * 0.4, natoc = (p % 2) * (Math.PI / 6);
+      const susenka = new THREE.Mesh(new THREE.ExtrudeGeometry(hvezdice(r), { depth: 0.14, bevelEnabled: true, bevelSize: 0.04, bevelThickness: 0.04, bevelSegments: 2 }), pernikStrom);
+      susenka.rotation.set(-Math.PI / 2, 0, natoc); susenka.position.y = y; strom.add(susenka);
+      const poleva = new THREE.Mesh(new THREE.ExtrudeGeometry(hvezdice(r * 0.93), { depth: 0.03, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.02, bevelSegments: 2 }), polevaZel);
+      poleva.rotation.set(-Math.PI / 2, 0, natoc); poleva.position.y = y + 0.19; strom.add(poleva);
+      for (let c = 0; c < 6; c++) {
+        const a = (c / 6) * Math.PI * 2 - natoc, i = p * 6 + c;
+        const mat = new THREE.MeshStandardMaterial({ color: CUKR[i % 5], emissive: CUKR[i % 5], emissiveIntensity: 0.6, roughness: 0.25 });
+        const b = new THREE.Mesh(new THREE.SphereGeometry(0.075, 12, 10), mat); b.position.set(Math.cos(a) * r * 0.9, y + 0.24, -Math.sin(a) * r * 0.9); strom.add(b); bonbony.push({ m: mat, i });
+      }
+    }
+    const hvezda = new THREE.Mesh(new THREE.OctahedronGeometry(0.28), new THREE.MeshStandardMaterial({ color: "#FFD45A", emissive: "#FFB000", emissiveIntensity: 1.8 })); hvezda.position.y = 3.65; strom.add(hvezda);
     const stromSvetlo = new THREE.PointLight("#FFD9A0", 2, 5, 1.8); stromSvetlo.position.set(0.5, 1.8, 1); strom.add(stromSvetlo);
     stin(strom); reg(strom, "stromek");
     let stromOd = -10;
     krok((t) => { const u = t - stromOd; hvezda.rotation.y = t; for (const b of bonbony) b.m.emissiveIntensity = u < 3 ? 0.4 + 1.4 * Math.max(0, Math.sin(u * 8 - b.i * 0.35)) : 0.5 + 0.3 * Math.sin(t * 2 + b.i); });
 
     // ── kotlík s horkou čokoládou vlevo vepředu ──
-    const kotlik = new THREE.Group(); kotlik.position.set(-3.8, Y0, 1.3); svet.add(kotlik);
+    const kotlik = new THREE.Group(); kotlik.position.set(-2.4, Y0, 1.95); svet.add(kotlik);
     const body: THREE.Vector2[] = []; for (let i = 0; i <= 10; i++) { const t = i / 10; body.push(new THREE.Vector2(0.15 + Math.sin(t * Math.PI * 0.9) * 0.45, t * 0.75)); }
     const hrnec = new THREE.Mesh(new THREE.LatheGeometry(body, 32), plast("#3A3A46", { metalness: 0.7, roughness: 0.35, side: THREE.DoubleSide })); hrnec.position.y = 0.2; kotlik.add(hrnec);
     for (let i = 0; i < 3; i++) { const a = (i / 3) * Math.PI * 2; const n = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.3, 8), plast("#3A3A46", { metalness: 0.7 })); n.position.set(Math.cos(a) * 0.35, 0.12, Math.sin(a) * 0.35); kotlik.add(n); }
@@ -157,7 +171,7 @@ export function vytvorChaloupku(canvas: HTMLCanvasElement, o: MoznostiPokoje): P
     krok((t) => { const u = t - tanecOd; if (u < 3) { panacek.position.y = Y0 + Math.abs(Math.sin(u * 8)) * 0.3; panacek.rotation.y = u * 4.2; panacek.rotation.z = Math.sin(u * 8) * 0.25; } else { panacek.position.y = Y0; panacek.rotation.set(0, Math.sin(t * 0.8) * 0.15 + 0.3, 0); } });
 
     // ── hodiny s kukačkou nad pecí ──
-    const hodiny = new THREE.Group(); hodiny.position.set(-5.02, Y0 + 3.5, 0.85); hodiny.rotation.y = Math.PI / 2; svet.add(hodiny);
+    const hodiny = new THREE.Group(); hodiny.position.set(-5.02, Y0 + 3.55, 1.9); hodiny.rotation.y = Math.PI / 2; svet.add(hodiny);
     const domek = new THREE.Mesh(zaobleny(0.8, 0.8, 0.3, 0.06), plast("#8A5A3B", { clearcoat: 0.6 })); hodiny.add(domek);
     const stit = new THREE.Mesh(new THREE.ConeGeometry(0.62, 0.38, 4), plast("#FFFFFF", { clearcoat: 1 })); stit.rotation.y = Math.PI / 4; stit.scale.z = 0.4; stit.position.y = 0.58; hodiny.add(stit);
     const cifernik = new THREE.Mesh(new THREE.CircleGeometry(0.26, 32), new THREE.MeshStandardMaterial({ map: tex(128, 128, (x) => { x.fillStyle = "#FFF8EC"; x.beginPath(); x.arc(64, 64, 62, 0, 7); x.fill(); x.fillStyle = "#3A2A20"; for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; x.beginPath(); x.arc(64 + Math.cos(a) * 50, 64 + Math.sin(a) * 50, 4, 0, 7); x.fill(); } }) }));
@@ -173,27 +187,27 @@ export function vytvorChaloupku(canvas: HTMLCanvasElement, o: MoznostiPokoje): P
 
     // ── úkoly pro Hexíka ──
     const ukol = (klic: string): UkolPokoje | null => {
-      if (klic === "pec") { const bod = new THREE.Vector3(-3.4, 0, -1.0); return { bod, smer: -Math.PI / 2, trvani: 3.2, efektPo: 0.4,
+      if (klic === "pec") { const bod = new THREE.Vector3(-3.35, 0, 0.35); return { bod, smer: -Math.PI / 2, trvani: 3.2, efektPo: 0.4,
         ruce: (u) => (u < 0.3 ? u * 5 : 1.5),
         prubeh: (u) => { vRuce.visible = u > 0.4 && u < 0.95; if (vRuce.visible) { vRuce.position.copy(hexik.vRuce(new THREE.Vector3(0, 0.6, 1.0))); vRuce.rotation.set(0, hexik.root().rotation.y, 0); } },
         efekt: () => { pecOd = cas(); hexik.vyraz("radost", 1.6); konfety(pec.localToWorld(new THREE.Vector3(0, 1.0, 1.0)), 0.4, [new THREE.Color("#FFD45A"), new THREE.Color("#FFFFFF")]); },
         konec: () => { vRuce.visible = false; const n = upeceno.length < 7 ? new THREE.Mesh(pernGeo, pernMat) : upeceno.shift()!; n.rotation.set(-Math.PI / 2, 0, rnd(-0.6, 0.6)); n.position.set(rnd(-0.12, 0.12), 1.13 + upeceno.length * 0.045, rnd(-0.1, 0.1)); n.castShadow = true; stul.add(n); upeceno.push(n); konfety(stul.localToWorld(new THREE.Vector3(0, 1.3, 0)), 0.3); } }; }
       if (klic === "stromek") { const bod = new THREE.Vector3(-1.75, 0, -1.35); return { bod, smer: smerK(bod, strom.position), trvani: 1.8, efektPo: 0.45, ruce: (u) => zvedni(u, 0.45),
         efekt: () => { stromOd = cas(); konfety(new THREE.Vector3(-3.2, Y0 + 3.4, -3.0), 0.6); hexik.vyraz("radost", 1.4); } }; }
-      if (klic === "kotlik") { const bod = new THREE.Vector3(-2.85, 0, 1.7); return { bod, smer: smerK(bod, kotlik.position), trvani: 2.8, efektPo: 0.15, ruce: () => 1.0 + Math.sin(cas() * 6) * 0.25,
+      if (klic === "kotlik") { const bod = new THREE.Vector3(-1.45, 0, 2.5); return { bod, smer: smerK(bod, kotlik.position), trvani: 2.8, efektPo: 0.15, ruce: () => 1.0 + Math.sin(cas() * 6) * 0.25,
         efekt: () => { micha = cas(); paraPuf = 1.5; hexik.vyraz("radost", 2.6); } }; }
       if (klic === "pufik") return { bod: PUF_PRED, smer: PUF_YAW, trvani: 0.7, efektPo: 0.99, ruce: (u) => 0.3 + u * 0.6, sedni: 0.62,
         prubeh: (u) => { hexik.pos.lerpVectors(PUF_PRED, PUFIK, Math.min(1, u * 1.3)); }, efekt: () => { hexik.vyraz("ospaly", 0.1); } };
       if (klic === "panacek") { const bod = new THREE.Vector3(-0.75, 0, -1.6); return { bod, smer: smerK(bod, panacek.position), trvani: 2.2, efektPo: 0.25, ruce: (u) => 1.4 + Math.abs(Math.sin(u * 18)) * 0.5,
         efekt: () => { tanecOd = cas(); hexik.vyraz("radost", 2.4); konfety(panacek.localToWorld(new THREE.Vector3(0, 1.2, 0)), 0.4); } }; }
-      if (klic === "kukacka") { const bod = new THREE.Vector3(-3.3, 0, 0.3); return { bod, smer: smerK(bod, new THREE.Vector3(-5, 0, 0.85)), trvani: 2.0, efektPo: 0.35, ruce: (u) => zvedni(u, 0.35),
+      if (klic === "kukacka") { const bod = new THREE.Vector3(-3.4, 0, 2.3); return { bod, smer: smerK(bod, new THREE.Vector3(-5, 0, 1.9)), trvani: 2.0, efektPo: 0.35, ruce: (u) => zvedni(u, 0.35),
         prubeh: (u) => { if (u > 0.1 && u < 0.16) hexik.skoc(); }, efekt: () => { kukOd = cas(); hexik.vyraz("prekvapeni", 1.6); } }; }
       return null;
     };
 
     return {
       kouzla: KOUZLA_CHALOUPKY,
-      prekazky: [[-3.2, -3.0, 1.45], [-4.55, -1.8, 0.8], [-4.55, -0.2, 0.8], [-3.8, 1.3, 0.65], [3.95, -0.1, 0.85], [4.7, 1.55, 0.7], [-1.4, -2.4, 0.4]],
+      prekazky: [[-3.2, -3.0, 1.45], [-4.55, -0.45, 0.8], [-4.55, 1.15, 0.8], [-2.4, 1.95, 0.65], [3.95, -0.1, 0.85], [4.7, 1.55, 0.7], [-1.4, -2.4, 0.4]],
       ukol,
     };
   });

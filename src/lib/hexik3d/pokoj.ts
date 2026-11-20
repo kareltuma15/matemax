@@ -137,25 +137,26 @@ export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled
   // ── velká tabule s dnešním plánem (průchod do tréninku) ──
   const st = vzhled.tabule;
   const tabule = new THREE.Group(); tabule.position.set(-1.0, Y0 + 2.15, -4.12); svet.add(tabule);
-  const tabTex = tex(768, 512, (x) => {
-    const g = x.createRadialGradient(384, 256, 60, 384, 256, 460); g.addColorStop(0, st.deska[0]); g.addColorStop(1, st.deska[1]); x.fillStyle = g; x.fillRect(0, 0, 768, 512);
-    for (let i = 0; i < 1200; i++) { x.fillStyle = `rgba(255,255,255,${rnd(0, 0.03)})`; x.fillRect(rnd(0, 768), rnd(0, 512), rnd(2, 18), 2); }
-    const [nadpis, ...radky] = o.tabule?.length ? o.tabule : ["Dnešní plán", "○ Trénink podle tebe", "🔥 začni sérii ještě dnes", "Hexík: „Jdeme na to?“"];
+  // Na telefonu je tabule malá: málo textu, velké písmo, bez záře kolem písmen (jinak se rozmaže)
+  const tabTex = tex(1024, 680, (x) => {
+    const g = x.createRadialGradient(512, 340, 80, 512, 340, 620); g.addColorStop(0, st.deska[0]); g.addColorStop(1, st.deska[1]); x.fillStyle = g; x.fillRect(0, 0, 1024, 680);
+    for (let i = 0; i < 1400; i++) { x.fillStyle = `rgba(255,255,255,${rnd(0, 0.025)})`; x.fillRect(rnd(0, 1024), rnd(0, 680), rnd(2, 22), 2); }
+    const [nadpis, ...radky] = o.tabule?.length ? o.tabule : ["Dnešní plán", "○ Trénink podle tebe", "🔥 začni sérii ještě dnes"];
     const pismo = (vel: number, tucne = false) => `${tucne ? "bold " : ""}${vel}px 'Comic Sans MS', 'Chalkboard SE', 'DM Sans', sans-serif`;
-    const napis = (t: string, xx: number, y: number, vel: number, barva: string, tucne = false, max = 690) => {
-      let v = vel; x.font = pismo(v, tucne); while (v > 18 && x.measureText(t).width > max) { v -= 2; x.font = pismo(v, tucne); }
-      x.fillStyle = barva; x.shadowColor = barva; x.shadowBlur = 6; x.fillText(t, xx, y); x.shadowBlur = 0;
+    const napis = (t: string, xx: number, y: number, vel: number, barva: string, tucne = true, max = 930) => {
+      let v = vel; x.font = pismo(v, tucne); while (v > 24 && x.measureText(t).width > max) { v -= 2; x.font = pismo(v, tucne); }
+      x.fillStyle = barva; x.fillText(t, xx, y);
     };
-    napis(nadpis, 40, 78, 58, st.text, true);
-    x.strokeStyle = st.text; x.globalAlpha = 0.6; x.lineWidth = 4; x.beginPath(); x.moveTo(40, 98); x.bezierCurveTo(200, 92, 420, 104, 560, 96); x.stroke(); x.globalAlpha = 1;
-    radky.slice(0, 3).forEach((r, i) => napis(r, 44, 168 + i * 66, i === 2 ? 34 : 42, i === 0 ? st.zvyrazneni : i === 1 ? st.tlacitko : st.text));
-    x.strokeStyle = st.tlacitko; x.lineWidth = 6; x.shadowColor = st.tlacitko; x.shadowBlur = 10; x.beginPath(); x.roundRect(40, 392, 420, 82, 26); x.stroke(); x.shadowBlur = 0;
-    napis("Jdeme trénovat →", 70, 448, 42, st.tlacitko, true, 370);
-    x.strokeStyle = st.text; x.lineWidth = 5; x.beginPath();
-    for (let i = 0; i <= 6; i++) { const a = Math.PI / 3 * i + Math.PI / 6; const px = 640 + Math.cos(a) * 62, py = 400 + Math.sin(a) * 62; if (i) x.lineTo(px, py); else x.moveTo(px, py); } x.stroke();
-    x.fillStyle = st.text; x.beginPath(); x.arc(620, 392, 7, 0, 7); x.arc(660, 392, 7, 0, 7); x.fill(); x.beginPath(); x.arc(640, 410, 18, 0.2, Math.PI - 0.2); x.stroke();
+    napis(nadpis, 52, 108, 88, st.text);
+    x.strokeStyle = st.text; x.globalAlpha = 0.55; x.lineWidth = 6; x.beginPath(); x.moveTo(52, 134); x.bezierCurveTo(260, 126, 540, 140, 720, 130); x.stroke(); x.globalAlpha = 1;
+    radky.slice(0, 2).forEach((r, i) => napis(r.replace(/^○\s*/, ""), 56, 250 + i * 104, i === 0 ? 76 : 64, i === 0 ? st.zvyrazneni : st.tlacitko));
+    x.strokeStyle = st.tlacitko; x.lineWidth = 9; x.beginPath(); x.roundRect(52, 486, 640, 128, 40); x.stroke();
+    napis("Jdeme trénovat →", 92, 572, 66, st.tlacitko, true, 570);
+    x.strokeStyle = st.text; x.lineWidth = 7; x.beginPath();
+    for (let i = 0; i <= 6; i++) { const a = Math.PI / 3 * i + Math.PI / 6; const px = 860 + Math.cos(a) * 82, py = 548 + Math.sin(a) * 82; if (i) x.lineTo(px, py); else x.moveTo(px, py); } x.stroke();
+    x.fillStyle = st.text; x.beginPath(); x.arc(834, 538, 9, 0, 7); x.arc(886, 538, 9, 0, 7); x.fill(); x.beginPath(); x.arc(860, 562, 24, 0.2, Math.PI - 0.2); x.stroke();
   });
-  const deskaTab = new THREE.Mesh(new THREE.PlaneGeometry(2.62, 1.76), new THREE.MeshStandardMaterial({ map: tabTex, roughness: 0.95, emissive: "#FFFFFF", emissiveMap: tabTex, emissiveIntensity: 0.12 }));
+  const deskaTab = new THREE.Mesh(new THREE.PlaneGeometry(2.62, 1.76), new THREE.MeshStandardMaterial({ map: tabTex, roughness: 0.95, emissive: "#FFFFFF", emissiveMap: tabTex, emissiveIntensity: 0.05 }));
   deskaTab.position.z = 0.08; tabule.add(deskaTab);
   const ramTab = new THREE.Mesh(zaobleny(2.86, 2.0, 0.1, 0.06), plast(st.ram, { clearcoat: 0.7, roughness: 0.4 })); tabule.add(ramTab);
   const zlatyRam = new THREE.Mesh(zaobleny(3.08, 2.22, 0.04, 0.1), new THREE.MeshStandardMaterial({ color: "#FFD45A", emissive: "#FFB000", emissiveIntensity: 0, toneMapped: false })); zlatyRam.position.z = -0.02; tabule.add(zlatyRam);
@@ -164,7 +165,7 @@ export function vytvorPokoj(canvas: HTMLCanvasElement, o: MoznostiPokoje, vzhled
   let tabuleOd = -10; const sviti = o.tabuleSviti !== false;
   krokFn.push((t) => {
     const u = t - tabuleOd, puls = sviti ? 0.5 + 0.5 * Math.sin(t * 2.4) : 0;
-    (deskaTab.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.12 + puls * 0.08 + (u < 2 ? Math.sin((u / 2) * Math.PI) * 0.3 : 0);
+    (deskaTab.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.05 + puls * 0.04 + (u < 2 ? Math.sin((u / 2) * Math.PI) * 0.2 : 0);
     (zlatyRam.material as THREE.MeshStandardMaterial).emissiveIntensity = puls * 1.6; zlatyRam.visible = sviti; tabSvetlo.intensity = 0.6 + puls * 1.2;
     tabule.scale.setScalar(1 + (u < 0.35 ? Math.sin((u / 0.35) * Math.PI) * 0.04 : 0));
   });
