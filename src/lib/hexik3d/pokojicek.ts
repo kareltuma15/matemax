@@ -142,7 +142,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   for (const [w, d, x, z] of [[11, 0.16, 0, -4.12], [0.16, 8.3, -5.02, -0.3]] as const) { const l = new THREE.Mesh(zaobleny(w, 0.3, d, 0.06), plast("#FFFFFF", { roughness: 0.35 })); l.position.set(x, Y0 + 0.15, z); stin(l); svet.add(l); }
 
   // ── okno se zimní nocí ──
-  const okno = new THREE.Group(); okno.position.set(2.05, Y0 + 2.9, -4.15); svet.add(okno);
+  const okno = new THREE.Group(); okno.position.set(2.2, Y0 + 2.9, -4.15); okno.scale.setScalar(0.85); svet.add(okno);
   const nebe = tex(256, 256, (x) => { const g = x.createLinearGradient(0, 0, 0, 256); g.addColorStop(0, "#0E1240"); g.addColorStop(0.65, "#2B3D8A"); g.addColorStop(1, "#8FB2E8"); x.fillStyle = g; x.fillRect(0, 0, 256, 256);
     for (let i = 0; i < 70; i++) { x.fillStyle = `rgba(255,255,255,${rnd(0.3, 1)})`; x.beginPath(); x.arc(rnd(0, 256), rnd(0, 170), rnd(0.4, 1.4), 0, 7); x.fill(); }
     x.fillStyle = "#F1F6FF"; x.beginPath(); x.moveTo(0, 256); for (let i = 0; i <= 256; i += 32) x.lineTo(i, 222 + Math.sin(i * 0.05) * 10); x.lineTo(256, 256); x.fill();
@@ -326,7 +326,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   });
 
   // ── křeslo s dekou ──
-  const kreslo = new THREE.Group(); kreslo.position.set(2.9, Y0, -2.3); kreslo.rotation.y = -0.55; svet.add(kreslo);
+  const kreslo = new THREE.Group(); kreslo.position.set(3.15, Y0, -0.75); kreslo.rotation.y = -0.95; svet.add(kreslo);
   const cal = plast("#4A63C8", { roughness: 0.85, sheen: 0.9, sheenColor: new THREE.Color("#A9B8FF"), clearcoat: 0 });
   const sedak = new THREE.Mesh(zaobleny(1.6, 0.55, 1.4, 0.25), cal); sedak.position.y = 0.5; kreslo.add(sedak);
   const operadlo = new THREE.Mesh(zaobleny(1.6, 1.4, 0.4, 0.2), cal); operadlo.position.set(0, 1.1, -0.55); kreslo.add(operadlo);
@@ -336,7 +336,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   stin(kreslo); reg(kreslo, "kreslo");
 
   // ── stolek, lampa, hrnek ──
-  const stolek = new THREE.Group(); stolek.position.set(4.1, Y0, -0.7); svet.add(stolek);
+  const stolek = new THREE.Group(); stolek.position.set(4.35, Y0, 0.75); svet.add(stolek);
   const deska = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.1, 32), plast("#8A5A3B", { clearcoat: 0.8, roughness: 0.3 })); deska.position.y = 1.0; stolek.add(deska);
   const noha = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.1, 1.0, 12), deska.material); noha.position.y = 0.5; stolek.add(noha);
   const lampa = new THREE.Group(); lampa.position.set(-0.15, 1.05, -0.1); stolek.add(lampa);
@@ -373,9 +373,9 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   krokFn.push((t) => { const n = t - hodinyNat < 2 ? 1 + (2 - (t - hodinyNat)) : 1; kyvadlo.rotation.z = Math.sin(t * 3.1) * 0.28 * n; rucicka.rotation.z = -t * (t - hodinyNat < 2 ? 6 : 0.12); hodiny.scale.setScalar(1 + (t - hodinyNat < 0.4 ? Math.sin((t - hodinyNat) / 0.4 * Math.PI) * 0.08 : 0)); });
 
   // ── police se sněžítkem ──
-  const police = new THREE.Mesh(zaobleny(1.6, 0.12, 0.45, 0.05), plast("#8A5A3B", { clearcoat: 0.6 })); police.position.set(-0.65, Y0 + 3.72, -4.0); stin(police); svet.add(police);
-  for (let i = 0; i < 4; i++) { const k = new THREE.Mesh(zaobleny(0.16, rnd(0.35, 0.48), 0.32, 0.03), plast(["#5B8CFF", "#F4C430", "#2E8B57", "#E63946"][i])); k.position.set(-1.25 + i * 0.19, Y0 + 3.98, -4.0); k.rotation.z = i === 3 ? -0.18 : 0; stin(k); svet.add(k); }
-  const globe = new THREE.Group(); globe.position.set(-0.2, Y0 + 3.78, -3.95); svet.add(globe);
+  const police = new THREE.Mesh(zaobleny(1.6, 0.12, 0.45, 0.05), plast("#8A5A3B", { clearcoat: 0.6 })); police.position.set(-1.0, Y0 + 3.72, -4.0); stin(police); svet.add(police);
+  for (let i = 0; i < 4; i++) { const k = new THREE.Mesh(zaobleny(0.16, rnd(0.35, 0.48), 0.32, 0.03), plast(["#5B8CFF", "#F4C430", "#2E8B57", "#E63946"][i])); k.position.set(-1.6 + i * 0.19, Y0 + 3.98, -4.0); k.rotation.z = i === 3 ? -0.18 : 0; stin(k); svet.add(k); }
+  const globe = new THREE.Group(); globe.position.set(-0.55, Y0 + 3.78, -3.95); svet.add(globe);
   const podstavec = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.26, 0.14, 24), plast("#6E3E25", { clearcoat: 0.8 })); podstavec.position.y = 0.07; globe.add(podstavec);
   const koule = new THREE.Mesh(new THREE.SphereGeometry(0.3, 32, 24), new THREE.MeshPhysicalMaterial({ color: "#DFF3FF", transparent: true, opacity: 0.22, roughness: 0.02, clearcoat: 1, metalness: 0 })); koule.position.y = 0.42; globe.add(koule);
   const mini = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.24, 10), plast("#2E8B57")); mini.position.y = 0.3; globe.add(mini);
@@ -403,7 +403,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
 
   // ── velká tabule s dnešním plánem na zadní stěně, čelem ke kameře (průchod do tréninku) ──
   // Mezi stromečkem a oknem, ve výšce očí. Svítí, dokud dnešní trénink není hotový.
-  const tabule = new THREE.Group(); tabule.position.set(-0.62, Y0 + 2.15, -4.12); svet.add(tabule);
+  const tabule = new THREE.Group(); tabule.position.set(-1.0, Y0 + 2.15, -4.12); svet.add(tabule);
   const tabTex = tex(768, 512, (x) => {
     const g = x.createRadialGradient(384, 256, 60, 384, 256, 460); g.addColorStop(0, "#2C5A47"); g.addColorStop(1, "#1C3D30"); x.fillStyle = g; x.fillRect(0, 0, 768, 512);
     for (let i = 0; i < 1400; i++) { x.fillStyle = `rgba(255,255,255,${rnd(0, 0.035)})`; x.fillRect(rnd(0, 768), rnd(0, 512), rnd(2, 20), 2); }
@@ -428,14 +428,14 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
     x.fillStyle = "rgba(247,243,232,.9)"; x.beginPath(); x.arc(620, 392, 7, 0, 7); x.arc(660, 392, 7, 0, 7); x.fill();
     x.beginPath(); x.arc(640, 410, 18, 0.2, Math.PI - 0.2); x.stroke();
   });
-  const deskaTab = new THREE.Mesh(new THREE.PlaneGeometry(2.85, 1.9), new THREE.MeshStandardMaterial({ map: tabTex, roughness: 0.95, emissive: "#FFFFFF", emissiveMap: tabTex, emissiveIntensity: 0.12 }));
+  const deskaTab = new THREE.Mesh(new THREE.PlaneGeometry(2.62, 1.76), new THREE.MeshStandardMaterial({ map: tabTex, roughness: 0.95, emissive: "#FFFFFF", emissiveMap: tabTex, emissiveIntensity: 0.12 }));
   deskaTab.position.z = 0.08; tabule.add(deskaTab);
-  const ramTab = new THREE.Mesh(zaobleny(3.1, 2.15, 0.1, 0.06), plast("#A06C40", { clearcoat: 0.7, roughness: 0.4 })); tabule.add(ramTab);
+  const ramTab = new THREE.Mesh(zaobleny(2.86, 2.0, 0.1, 0.06), plast("#A06C40", { clearcoat: 0.7, roughness: 0.4 })); tabule.add(ramTab);
   // Zlatá záře kolem rámu (deska o kus větší za rámem): pulzuje, dokud dnešní trénink není hotový
-  const zlatyRam = new THREE.Mesh(zaobleny(3.32, 2.37, 0.04, 0.1), new THREE.MeshStandardMaterial({ color: "#FFD45A", emissive: "#FFB000", emissiveIntensity: 0, toneMapped: false }));
+  const zlatyRam = new THREE.Mesh(zaobleny(3.08, 2.22, 0.04, 0.1), new THREE.MeshStandardMaterial({ color: "#FFD45A", emissive: "#FFB000", emissiveIntensity: 0, toneMapped: false }));
   zlatyRam.position.z = -0.02; tabule.add(zlatyRam);
-  const kridy = new THREE.Mesh(zaobleny(1.5, 0.07, 0.2, 0.02), ramTab.material); kridy.position.set(0, -1.12, 0.1); tabule.add(kridy);
-  for (const [cx, c] of [[-0.3, "#FFFFFF"], [0.0, "#FFD45A"], [0.3, "#FF8AE0"]] as const) { const k = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.18, 8), plast(c)); k.rotation.z = Math.PI / 2; k.position.set(cx, -1.06, 0.15); tabule.add(k); }
+  const kridy = new THREE.Mesh(zaobleny(1.5, 0.07, 0.2, 0.02), ramTab.material); kridy.position.set(0, -1.05, 0.1); tabule.add(kridy);
+  for (const [cx, c] of [[-0.3, "#FFFFFF"], [0.0, "#FFD45A"], [0.3, "#FF8AE0"]] as const) { const k = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.18, 8), plast(c)); k.rotation.z = Math.PI / 2; k.position.set(cx, -0.99, 0.15); tabule.add(k); }
   const tabSvetlo = new THREE.PointLight("#FFE3A0", 0, 3.5, 1.8); tabSvetlo.position.set(0, 0.4, 1.2); tabule.add(tabSvetlo);
   stin(tabule); reg(tabule, "tabule");
   let tabuleOd = -10;
@@ -449,7 +449,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   });
 
   // ── šatní skříň u boční stěny (průchod do šatníku) ──
-  const skrin = new THREE.Group(); skrin.position.set(4.45, Y0, -3.75); skrin.rotation.y = 0; svet.add(skrin);
+  const skrin = new THREE.Group(); skrin.position.set(4.6, Y0, -3.75); skrin.rotation.y = 0; svet.add(skrin);
   const drevo = plast("#C0835A", { clearcoat: 0.6, roughness: 0.4 });
   // dutá skříň: záda + boky + strop a dno, ať je po otevření vidět dovnitř
   const zada = new THREE.Mesh(zaobleny(1.75, 2.75, 0.3, 0.08), drevo); zada.position.set(0, 1.375, -0.25); skrin.add(zada);
@@ -487,7 +487,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   let skok = -10, oslavaOd = -10, vyraz: Vyraz3D = "neutral", vyrazDo = 0, mrk = 2, mrkStart = -1;
   let hrejeRuce = 0;
   // Nábytek na podlaze jako kruhy (x, z, poloměr): Hexík ho obchází, cíl uvnitř posune na okraj
-  const PREKAZKY: [number, number, number][] = [[-3.2, -3.0, 1.55], [-2.05, -2.25, 0.72], [-4.55, -1.8, 0.8], [-4.55, -0.2, 0.8], [2.9, -2.3, 1.05], [4.1, -0.7, 0.72], [4.45, -3.45, 0.95]];
+  const PREKAZKY: [number, number, number][] = [[-3.2, -3.0, 1.55], [-2.05, -2.25, 0.72], [-4.55, -1.8, 0.8], [-4.55, -0.2, 0.8], [3.15, -0.75, 1.05], [4.35, 0.75, 0.72], [4.6, -3.45, 0.95]];
   const vMistnosti = (v: THREE.Vector3) => new THREE.Vector3(THREE.MathUtils.clamp(v.x, -4.2, 4.6), 0, THREE.MathUtils.clamp(v.z, -3.2, 3.4));
   const venZPrekazek = (v: THREE.Vector3) => { for (const [x, z, r] of PREKAZKY) { const d = new THREE.Vector3(v.x - x, 0, v.z - z); if (d.length() < r) { if (d.lengthSq() < 1e-4) d.set(0, 0, 1); v.set(x, 0, z).addScaledVector(d.normalize(), r + 0.05); } } return vMistnosti(v); };
   const naplanuj = (a: THREE.Vector3, b: THREE.Vector3, hloubka = 0): THREE.Vector3[] => {
@@ -521,7 +521,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
     letKam.copy(objekt.localToWorld(predem)); letOd = cas; o.onPruchod?.(k);
   };
   // Křeslo: Hexík dojde před něj, otočí se zády k opěradlu a vyskočí na sedák
-  const KRESLO = new THREE.Vector3(2.9, 0, -2.3), KRESLO_YAW = -0.55, vpred = new THREE.Vector3(Math.sin(KRESLO_YAW), 0, Math.cos(KRESLO_YAW));
+  const KRESLO = new THREE.Vector3(3.15, 0, -0.75), KRESLO_YAW = -0.95, vpred = new THREE.Vector3(Math.sin(KRESLO_YAW), 0, Math.cos(KRESLO_YAW));
   const KRESLO_PRED = KRESLO.clone().addScaledVector(vpred, 1.35), KRESLO_SEDAK = KRESLO.clone().addScaledVector(vpred, 0.12);
   // Poleno, které Hexík hodí do krbu, a hrnek, který si vezme do ruky
   const poleno = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.42, 10), plast("#7A4A2A", { roughness: 0.9 })); poleno.visible = false; stin(poleno); svet.add(poleno);
@@ -580,10 +580,10 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
       efekt: () => { vzorek = (vzorek + 1) % 3; vzorekOd = cas; vystrelKonfety(new THREE.Vector3(-3.2, Y0 + 3.4, -3.0), 0.6); vyraz = "radost"; vyrazDo = cas + 1.4; } }); }
     if (co === "snezitko") zadej({ k: "snezitko", bod: new THREE.Vector3(3.65, 0, -3.1), smer: Math.PI, trvani: 1.8, efektPo: 0.4, ruce: (u) => zvedni(u, 0.4),
       prubeh: (u) => { if (u > 0.05 && u < 0.1 && cas - skok > 0.7) skok = cas; }, efekt: () => { globeTres = cas; vyraz = "radost"; vyrazDo = cas + 1.2; } });
-    if (co === "okno") zadej({ k: "okno", bod: new THREE.Vector3(2.05, 0, -3.2), smer: Math.PI, trvani: 2.8, efektPo: 0.3, ruce: (u) => (u < 0.3 ? u * 4 : 1.2 + Math.sin(cas * 3) * 0.1),
+    if (co === "okno") zadej({ k: "okno", bod: new THREE.Vector3(2.2, 0, -3.2), smer: Math.PI, trvani: 2.8, efektPo: 0.3, ruce: (u) => (u < 0.3 ? u * 4 : 1.2 + Math.sin(cas * 3) * 0.1),
       efekt: () => { hvezdaCas = cas; narazSnehu = 1; vyraz = "prekvapeni"; vyrazDo = cas + 1.8; } });
     if (co === "lampa" || co === "hrnek") {
-      const bod = new THREE.Vector3(3.3, 0, -0.3), smer = smerK(bod, new THREE.Vector3(4.1, 0, -0.7));
+      const bod = new THREE.Vector3(3.75, 0, 1.65), smer = smerK(bod, new THREE.Vector3(4.35, 0, 0.75));
       if (co === "lampa") zadej({ k: "lampa", bod, smer, trvani: 1.3, efektPo: 0.5, ruce: (u) => zvedni(u, 0.5), efekt: () => { lampaZap = !lampaZap; } });
       else zadej({ k: "hrnek", bod, smer, trvani: 3.2, efektPo: 0.25,
         ruce: (u) => (u < 0.2 ? u * 7 : u < 0.85 ? 1.45 : 1.45 - (u - 0.85) * 8),
@@ -602,7 +602,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
     if (co === "tabule") { const bod = new THREE.Vector3(-0.75, 0, -2.75); zadej({ k: "trenink", bod, smer: Math.PI, trvani: 1.4, efektPo: 0.45, ruce: (u) => (u < 0.45 ? u * 4 : 1.8),
       efekt: () => { tabuleOd = cas; skok = cas; vyraz = "radost"; vyrazDo = cas + 2; prolet("trenink", tabule, new THREE.Vector3(0, -0.1, 1.6)); } }); }
     // Skříň: Hexík otevře dvířka, vleze dovnitř a kamera za ním (průchod do šatníku)
-    if (co === "skrin") { const PRED = new THREE.Vector3(4.3, 0, -2.25), UVNITR = new THREE.Vector3(4.4, 0, -3.3);
+    if (co === "skrin") { const PRED = new THREE.Vector3(4.5, 0, -2.3), UVNITR = new THREE.Vector3(4.55, 0, -3.3);
       zadej({ k: "satnik", bod: PRED, smer: Math.PI, trvani: 1.8, efektPo: 0.3, ruce: (u) => (u < 0.3 ? 0.4 + u * 4 : 1.6),
         prubeh: (u) => { if (u > 0.4) hxPos.lerpVectors(PRED, UVNITR, Math.min(1, (u - 0.4) / 0.5)); },
         efekt: () => { skrinOd = cas; vyraz = "radost"; vyrazDo = cas + 2; prolet("satnik", skrin, new THREE.Vector3(0, 1.5, 1.7)); } }); }
