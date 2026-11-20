@@ -227,7 +227,7 @@ test("Vánoční pokojíček v kvalitě Hexíka: počítadlo kouzel a celá obra
     stav({ ziskano: 500, mam: ["9-podoba-santa", "9-hlava-cepice", "9-vzhled-snezeni", "9-pozadi-vanoce"] }));
   await page.goto("/sbirka?tab=sady");
   const domov = page.getByTestId("domov-hexika");
-  await expect(page.getByTestId("domov-pocitadlo")).toHaveText("✨ 2 / 12 kouzel", { timeout: 30_000 });
+  await expect(page.getByTestId("domov-pocitadlo")).toHaveText("✨ 2 / 8 kouzel", { timeout: 30_000 });
   await page.getByTestId("domov-cela").click();
   await expect(domov).toHaveClass(/fixed/);
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("hidden");

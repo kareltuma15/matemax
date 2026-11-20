@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSbirka } from "@/lib/use-sbirka";
+import { localDateStr } from "@/lib/date";
 import { usePremium } from "@/lib/premium";
 import { domovHexika, nasazena, etapaHexika, slotyHexika, SADA_EVENT, SADY } from "@/lib/sbirka";
 import { dnesniTrenink } from "@/lib/dnesni-trenink";
@@ -31,8 +33,13 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
   const slotyKlic = JSON.stringify(sloty);
   const plocha = useRef<HTMLDivElement>(null);
   const inst = useRef<Domov3D | null>(null);
-  const posledni = useRef({ podoba, etapa, sloty, isPremium });
-  useEffect(() => { posledni.current = { podoba, etapa, sloty, isPremium }; });
+  // Tabule svítí, dokud dnes nebyl dokončený trénink
+  const dnesHotovo = stav.denniOdemcena === localDateStr();
+  const posledni = useRef({ podoba, etapa, sloty, isPremium, dnesHotovo });
+  useEffect(() => { posledni.current = { podoba, etapa, sloty, isPremium, dnesHotovo }; });
+  const router = useRouter();
+  // Průchod tabulí (trénink) nebo skříní (šatník): krátký přechod, pak nová stránka; ťuknutí ho přeskočí
+  const [pruchod, setPruchod] = useState<{ k: "trenink" | "satnik"; href: string } | null>(null);
   const [bez3D, setBez3D] = useState(false);
   const [cela, setCela] = useState(false);
   const [kouzla, setKouzla] = useState<KouzloDomova[]>([]);
@@ -69,8 +76,10 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
       const popis = new Map(seznam.map((k) => [k.klic, k.popis]));
       try {
         inst.current = await dm.vytvorDomov(canvas, domovId, {
-          podoba: p.podoba, etapa: p.etapa, sloty: p.sloty, tabule, lehce: slabeZarizeni(),
+          podoba: p.podoba, etapa: p.etapa, sloty: p.sloty, tabule, lehce: slabeZarizeni(), tabuleSviti: !p.dnesHotovo,
+          onPruchod: (k) => setPruchod({ k, href: k === "trenink" ? href : "/sbirka?tab=satnik" }),
           onKouzlo: (k) => {
+            if (!popis.has(k)) return;
             const pred = nactiObjevena(domovId);
             const nove = !pred.includes(k);
             const po = nove ? [...pred, k] : pred;
@@ -78,7 +87,7 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
             setObjevena(po);
             const vse = nove && po.length === seznam.length;
             if (vse) inst.current?.oslava();
-            setBublina({ text: vse ? `Všech ${seznam.length} kouzel objeveno! 🎉` : popis.get(k) ?? "", nove, trenink: k === "tabule" ? href : undefined, id: Date.now() });
+            setBublina({ text: vse ? `Všech ${seznam.length} kouzel objeveno! 🎉` : popis.get(k) ?? "", nove, id: Date.now() });
           },
         });
         if (zruseno) { inst.current.znic(); inst.current = null; }
@@ -101,12 +110,19 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
 
   useEffect(() => { inst.current?.nastav(podoba, etapa, sloty); }, [podoba, etapa, slotyKlic]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Bublina zmizí sama (s odkazem na trénink zůstane déle)
+  // Bublina zmizí sama
   useEffect(() => {
     if (!bublina) return;
-    const t = setTimeout(() => setBublina(null), bublina.trenink ? 6000 : 2800);
+    const t = setTimeout(() => setBublina(null), 2800);
     return () => clearTimeout(t);
   }, [bublina]);
+
+  // Průchod: kamera letí za Hexíkem, po 1,2 s se otevře trénink nebo šatník
+  useEffect(() => {
+    if (!pruchod) return;
+    const t = setTimeout(() => router.push(pruchod.href), 1200);
+    return () => clearTimeout(t);
+  }, [pruchod, router]);
 
   // Celá obrazovka: přiblížení a náklon prstem, Esc zavře, stránka pod tím se neposouvá
   useEffect(() => {
@@ -147,8 +163,12 @@ export default function DomovHexika({ trida, odkaz = true }: { trida: Trida; odk
         {bublina && (
           <div key={bublina.id} className="absolute left-1/2 -translate-x-1/2 bottom-3 z-10 max-w-[92%] rounded-2xl px-4 py-2.5 text-sm font-extrabold text-center flex flex-wrap items-center justify-center gap-x-3 gap-y-1 fade-in-up" style={{ background: "rgba(255,255,255,.95)", color: "#0D1B3E", boxShadow: "0 8px 24px rgba(0,0,0,.25)" }} data-testid="domov-bublina">
             <span>{bublina.nove && <span style={{ color: "#B7791F" }}>Nové kouzlo! </span>}{bublina.text}</span>
-            {bublina.trenink && <Link href={bublina.trenink} className="px-3 py-1 rounded-lg" style={{ background: "#F5A623", color: "#0D1B3E" }}>Jdeme trénovat →</Link>}
           </div>
+        )}
+        {pruchod && (
+          <button type="button" onClick={() => router.push(pruchod.href)} className="absolute inset-0 z-20 domov-pruchod grid place-items-center" aria-label={pruchod.k === "trenink" ? "Otevřít trénink" : "Otevřít šatník"} data-testid="domov-pruchod">
+            <span className="domov-pruchod-text text-white text-lg font-black">{pruchod.k === "trenink" ? "Jdeme trénovat →" : "Do šatníku →"}</span>
+          </button>
         )}
       </div>
       <div className={`flex items-center gap-3 px-4 py-3 ${cela ? "text-white" : ""}`}>

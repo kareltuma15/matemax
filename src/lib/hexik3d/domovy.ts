@@ -18,8 +18,13 @@ export interface Domov3D {
   rezim: (celaObrazovka: boolean) => void;
   /** Hexík se raduje (po dokončení sady). */
   oslava: () => void;
+  /** Vrátí kameru po průchodu (když se stránka nepřepne). */
+  zpet: () => void;
   znic: () => void;
 }
+
+/** Průchody z pokojíčku: tabule vede do tréninku, skříň do šatníku. */
+export type PruchodDomova = "trenink" | "satnik";
 
 export interface MoznostiDomova {
   podoba: string;
@@ -28,7 +33,10 @@ export interface MoznostiDomova {
   /** Řádky na tabuli s dnešním plánem (první = nadpis). */
   tabule?: string[];
   lehce?: boolean;
+  /** Tabule svítí, dokud dnešní trénink není hotový. */
+  tabuleSviti?: boolean;
   onKouzlo: (klic: string) => void;
+  onPruchod?: (k: PruchodDomova) => void;
 }
 
 const HOTOVE: readonly DruhDomova[] = ["vanocni-pokojicek"];

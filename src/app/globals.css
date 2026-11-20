@@ -1097,3 +1097,13 @@ html[data-vzhled="lava"], .mm-swatch[data-vz="lava"] { --vz-pozadi: radial-gradi
   .hx-parta-hx { width: 8rem; }
   .hx-bublina-sipka::after { display: none; }
 }
+
+/* Průchod z Hexíkova pokojíčku (tabule → trénink, skříň → šatník): kruh se zavře do barvy značky */
+@keyframes domov-pruchod {
+  0%, 45% { clip-path: circle(0% at 50% 50%); }
+  100% { clip-path: circle(75% at 50% 50%); }
+}
+@keyframes domov-pruchod-text { 0%, 70% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: none; } }
+.domov-pruchod { background: radial-gradient(circle at 50% 50%, #5B55D6, #0D1B3E 70%); animation: domov-pruchod 1.15s cubic-bezier(.6,0,.4,1) forwards; }
+.domov-pruchod-text { animation: domov-pruchod-text 1.15s ease-out forwards; }
+@media (prefers-reduced-motion: reduce) { .domov-pruchod, .domov-pruchod-text { animation-duration: .01s; } }

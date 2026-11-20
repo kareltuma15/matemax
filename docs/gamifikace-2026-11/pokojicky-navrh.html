@@ -1,0 +1,131 @@
+<title>Pokojíčky: umístění a hospodaření</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800;9..40,900&display=swap">
+<style>
+/* Návrh: 1) kam pokojíčky v appce (dvě varianty v telefonu), 2) jak se získávají a co stojí vybavení, 3) rozhodnutí */
+:root{--bg:#EEF1F7;--karta:#fff;--ink:#0D1B3E;--muted:#5F6982;--line:#E3E7F0;--zel:#1F9D55;--zel-bg:#E9F8EF;--lav:#5B55D6;--lav-bg:#EBEAFE}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;--lav-bg:#25235A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;--lav-bg:#25235A;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:14.5px;line-height:1.5}
+.wrap{max-width:1060px;margin:0 auto;padding-block:26px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+h1{margin:0;font-size:28px;font-weight:900}h2{margin:0;font-size:20px;font-weight:900}p{margin:0}.muted{color:var(--muted)}
+.blok{background:var(--karta);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;min-width:0}
+.cislo{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--ink);color:var(--karta);font-weight:900;margin-right:8px;font-size:14px;vertical-align:2px}
+.telefony{display:flex;flex-wrap:wrap;gap:22px;justify-content:center}
+.tl{display:grid;gap:8px;justify-items:center;max-width:300px}
+.tl>b{font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.tl>p{font-size:13px;color:var(--muted);text-align:center}
+.dop{display:inline-block;background:var(--zel-bg);color:var(--zel);font-weight:800;border-radius:99px;padding:2px 10px;font-size:12px}
+.tel{width:280px;border-radius:30px;border:8px solid #0D1B3E;background:#EEF1F7;color:#0D1B3E;overflow:hidden;font-size:12px;height:560px;display:flex;flex-direction:column}
+.hlavicka{background:#fff;padding:10px 12px;display:flex;justify-content:space-between;font-weight:900;font-size:13px}
+.zal{display:flex;gap:4px;padding:8px 10px;overflow:hidden}
+.zal span{flex:1;text-align:center;padding:6px 2px;border-radius:10px;font-weight:800;font-size:10.5px;color:#5F6982}
+.zal span.a{background:#0D1B3E;color:#fff}
+.pokoj{margin:0 10px;border-radius:16px;height:200px;position:relative;overflow:hidden;background:linear-gradient(180deg,#B8484F 0 55%,#C98F5E 55%)}
+.pokoj .okno{position:absolute;left:58%;top:14%;width:22%;height:28%;background:#24407A;border:3px solid #fff;border-radius:4px}
+.pokoj .tab{position:absolute;left:8%;top:12%;width:32%;height:26%;background:#24493A;border:3px solid #9A6A42;border-radius:4px;color:#F5F1E6;font-size:8px;padding:3px;font-weight:800}
+.pokoj .dv{position:absolute;bottom:35%;width:13%;height:30%;border-radius:6px 6px 0 0;font-size:7px;font-weight:900;color:#fff;display:grid;place-items:end center;padding-bottom:2px}
+.pokoj .hx{position:absolute;left:44%;bottom:12%;width:34px;height:36px;background:#AFACFB;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.pokoj .cnt{position:absolute;left:6px;top:6px;background:rgba(13,27,62,.7);color:#FFE7A8;border-radius:99px;padding:1px 7px;font-size:9px;font-weight:800}
+.radek{margin:8px 10px 0;background:#fff;border-radius:12px;padding:8px 10px;display:flex;gap:8px;align-items:center;font-weight:800}
+.radek small{display:block;font-weight:600;color:#5F6982}
+.nav{margin-top:auto;background:#fff;display:flex;justify-content:space-around;padding:8px 0;font-size:9.5px;font-weight:800;color:#5F6982}
+.nav b{color:#0D1B3E;background:#EBEAFE;border-radius:8px;padding:2px 6px}
+.otaz{position:absolute;right:8px;top:6px;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;font-weight:900;font-size:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px}
+.tab-w{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mista{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.misto{border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:4px}
+.misto b{font-size:14px}.misto span{font-size:12.5px;color:var(--muted)}
+.rozh{display:grid;gap:8px}
+.r{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:6px}
+.moz{display:flex;flex-wrap:wrap;gap:6px}
+.m{border:1px solid var(--line);border-radius:99px;padding:4px 11px;font-size:13px;font-weight:700;color:var(--muted)}
+.m.d{border-color:var(--zel);background:var(--zel-bg);color:var(--zel)}
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:6px">
+    <h1>Pokojíčky: kam v appce a jak se získávají</h1>
+    <p class="muted">Dva návrhy z milníku „Domovy Hexíka“. Obrázky jsou jen schéma rozložení, skutečný pokojíček bude 3D jako v prototypu.</p>
+  </header>
+
+  <section class="blok">
+    <h2><span class="cislo">1</span>Kde budou pokojíčky</h2>
+    <div class="telefony">
+      <div class="tl"><b>A · Záložka v sekci Hexík <span class="dop">doporučuju</span></b>
+        <div class="tel">
+          <div class="hlavicka"><span>Hexík</span><span>💎 1620</span></div>
+          <div class="zal"><span class="a">Pokojíček</span><span>Šatník</span><span>Truhly</span><span>Sady</span><span>Trofeje</span></div>
+          <div class="pokoj"><span class="cnt">✨ 3 / 8 kouzel</span><span class="otaz">?</span><div class="tab">Dnešní plán<br>○ Mocniny<br>🔥 6 dní</div><div class="okno"></div><div class="dv" style="left:2%;background:#7A4A2A">Šatník</div><div class="dv" style="right:2%;background:#2E6DA4">Trénink</div><div class="hx"></div></div>
+          <div class="radek">🔥<span>6 dní v řadě · mise 1/3<small>Dnes ještě 2 mise</small></span></div>
+          <div class="radek">🎁<span>Denní truhla čeká<small>Za dnešní trénink</small></span></div>
+          <div class="nav"><span>Domů</span><span>Trénink</span><span>Testy</span><b>Hexík</b><span>Profil</span></div>
+        </div>
+        <p>Pokojíček je první, co dítě v sekci Hexík uvidí. Dveře vedou do šatníku (vedlejší záložka) a do tréninku. Vysvětlení, co je Hexík, je pod „?“. Dolní lišta zůstane s 5 položkami.</p>
+      </div>
+      <div class="tl"><b>B · Vlastní sekce Domov Hexíka</b>
+        <div class="tel">
+          <div class="hlavicka"><span>Pokojíček</span><span>💎 1620</span></div>
+          <div class="pokoj" style="height:300px;margin-top:10px"><span class="cnt">✨ 3 / 8 kouzel</span><div class="tab">Dnešní plán<br>○ Mocniny<br>🔥 6 dní</div><div class="okno"></div><div class="dv" style="left:2%;background:#7A4A2A">Šatník</div><div class="dv" style="right:2%;background:#2E6DA4">Trénink</div><div class="hx"></div></div>
+          <div class="radek">🏠<span>Vánoční pokojíček<small>Za Vánoční sadu</small></span></div>
+          <div class="nav" style="font-size:8.5px"><span>Domů</span><span>Trénink</span><span>Testy</span><b>Pokoj</b><span>Hexík</span><span>Profil</span></div>
+        </div>
+        <p>Pokojíček má celou obrazovku pro sebe, ale dolní lišta má 6 položek a na malém telefonu je natěsno. Šatník a truhly jsou v jiné sekci, takže dveře „přeskakují“ mezi sekcemi.</p>
+      </div>
+    </div>
+    <p class="muted" style="font-size:13px">V obou variantách se pokojíček ukáže i jako menší karta na Domově (dnešní stav: Hexík doma, tabule s plánem). Dveře fungují i z karty.</p>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">2</span>Jak se pokojíčky získávají</h2>
+    <div class="tab-w"><table>
+      <thead><tr><th>Co</th><th>Jak</th><th>Proč</th></tr></thead>
+      <tbody>
+        <tr><td><b>Základní pokojíček</b></td><td>Zdarma pro všechny hned po registraci (útulný pokoj bez sezónního motivu)</td><td>Bez něj by pokojíček většina dětí nikdy neviděla. Zároveň je to místo pro první vybavení.</td></tr>
+        <tr><td><b>Tematické pokoje</b></td><td>Za dokončenou sadu, jak platí od 19. 11. (Vánoce → Vánoční pokojíček, Advent → Perníková chaloupka…)</td><td>Sady dostanou velký a viditelný cíl. Pokoj se nedá koupit, jen vysloužit učením.</td></tr>
+        <tr><td><b>Truhly</b></td><td>Pokoje ne. Truhly dál dávají věci do sad, a tím k pokojům vedou.</td><td>Pokoj je velká odměna, nemá padat náhodou.</td></tr>
+        <tr><td><b>Za krystaly</b></td><td>Zatím ne. Později možná jen pokoje uplynulých sezón (kdo Vánoce nestihl), za vyšší cenu.</td><td>Necháme si to na jaro podle toho, jak budou děti sady dokončovat.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">3</span>Vybavení: zvládnutelná verze</h2>
+    <p>V každém pokoji 6 pevných míst. Na každé místo jde ťuknout a vybrat věc z malého společného katalogu. Věc platí ve všech pokojích (koupíš jednou). Střed pokoje zůstává volný pro Hexíka.</p>
+    <div class="mista">
+      <div class="misto"><b>🖼️ Obraz na zdi</b><span>4 varianty: Hexík na pláži, mapa, diplom, hvězdy</span></div>
+      <div class="misto"><b>🟣 Koberec</b><span>4 varianty: kulatý, šestiúhelník, pruhy, mraky</span></div>
+      <div class="misto"><b>💡 Lampa</b><span>3 varianty: stojací, lávová, lampičky</span></div>
+      <div class="misto"><b>🪴 Květina</b><span>3 varianty: kaktus, monstera, bonsaj</span></div>
+      <div class="misto"><b>📚 Polička</b><span>3 varianty: knížky, trofeje, modely</span></div>
+      <div class="misto"><b>🪟 Výhled z okna</b><span>3 varianty: hory, město, moře</span></div>
+    </div>
+    <div class="tab-w"><table>
+      <thead><tr><th>Cena</th><th>Kolik věcí</th><th>Kolik to je učení</th></tr></thead>
+      <tbody>
+        <tr><td><b>120 krystalů</b> (běžné)</td><td>8 věcí</td><td>Zhruba 2 dny s jedním tréninkem denně</td></tr>
+        <tr><td><b>300 krystalů</b> (lepší)</td><td>8 věcí</td><td>Zhruba týden pravidelného učení</td></tr>
+        <tr><td><b>600 krystalů</b> (výjimečné, svítí nebo se hýbou)</td><td>4 věci</td><td>Zhruba 1,5 až 2 týdny</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted" style="font-size:13px">Odhad příjmu z dnešních pravidel: aktivní dítě (1 trénink denně, mise, denní truhla, občas Boss) získá zhruba 300–500 krystalů týdně, denní strop za učení je 250. Celý katalog (20 věcí) stojí asi 5 800 krystalů, tedy dlouhodobý cíl na celou zimu. Věci za krystaly nepadají z truhel, aby se nemíchaly se šatníkem.</p>
+  </section>
+
+  <section class="blok">
+    <h2><span class="cislo">4</span>Jak to bude žít</h2>
+    <p>· <b>Každý den:</b> tabule ukáže dnešní trénink a svítí, dokud není hotový. Dveře „Trénink“ do něj vedou. Po tréninku je Hexík doma spokojený.</p>
+    <p>· <b>Každý týden:</b> pár krystalů navíc stačí na novou věc do pokoje.</p>
+    <p>· <b>Každá sezóna:</b> nový tematický pokoj za sadu.</p>
+  </section>
+
+  <section class="blok">
+    <h2>K rozhodnutí</h2>
+    <div class="rozh">
+      <div class="r"><b>Kde budou pokojíčky?</b><div class="moz"><span class="m d">✓ A · záložka v sekci Hexík</span><span class="m">B · vlastní sekce</span></div></div>
+      <div class="r"><b>Základní pokojíček zdarma pro všechny?</b><div class="moz"><span class="m d">✓ ano</span><span class="m">ne, jen za sady</span></div></div>
+      <div class="r"><b>Vybavení?</b><div class="moz"><span class="m d">✓ ano, 6 míst a 20 věcí za krystaly (120 / 300 / 600)</span><span class="m">jiné ceny</span><span class="m">zatím ne</span></div></div>
+    </div>
+  </section>
+</div>
