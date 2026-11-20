@@ -326,7 +326,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   });
 
   // ── křeslo s dekou ──
-  const kreslo = new THREE.Group(); kreslo.position.set(3.15, Y0, -0.75); kreslo.rotation.y = -0.95; svet.add(kreslo);
+  const kreslo = new THREE.Group(); kreslo.position.set(3.95, Y0, -0.1); kreslo.rotation.y = -0.95; svet.add(kreslo);
   const cal = plast("#4A63C8", { roughness: 0.85, sheen: 0.9, sheenColor: new THREE.Color("#A9B8FF"), clearcoat: 0 });
   const sedak = new THREE.Mesh(zaobleny(1.6, 0.55, 1.4, 0.25), cal); sedak.position.y = 0.5; kreslo.add(sedak);
   const operadlo = new THREE.Mesh(zaobleny(1.6, 1.4, 0.4, 0.2), cal); operadlo.position.set(0, 1.1, -0.55); kreslo.add(operadlo);
@@ -336,7 +336,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   stin(kreslo); reg(kreslo, "kreslo");
 
   // ── stolek, lampa, hrnek ──
-  const stolek = new THREE.Group(); stolek.position.set(4.35, Y0, 0.75); svet.add(stolek);
+  const stolek = new THREE.Group(); stolek.position.set(4.7, Y0, 1.55); svet.add(stolek);
   const deska = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.1, 32), plast("#8A5A3B", { clearcoat: 0.8, roughness: 0.3 })); deska.position.y = 1.0; stolek.add(deska);
   const noha = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.1, 1.0, 12), deska.material); noha.position.y = 0.5; stolek.add(noha);
   const lampa = new THREE.Group(); lampa.position.set(-0.15, 1.05, -0.1); stolek.add(lampa);
@@ -487,7 +487,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
   let skok = -10, oslavaOd = -10, vyraz: Vyraz3D = "neutral", vyrazDo = 0, mrk = 2, mrkStart = -1;
   let hrejeRuce = 0;
   // Nábytek na podlaze jako kruhy (x, z, poloměr): Hexík ho obchází, cíl uvnitř posune na okraj
-  const PREKAZKY: [number, number, number][] = [[-3.2, -3.0, 1.55], [-2.05, -2.25, 0.72], [-4.55, -1.8, 0.8], [-4.55, -0.2, 0.8], [3.15, -0.75, 1.05], [4.35, 0.75, 0.72], [4.6, -3.45, 0.95]];
+  const PREKAZKY: [number, number, number][] = [[-3.2, -3.0, 1.55], [-2.05, -2.25, 0.72], [-4.55, -1.8, 0.8], [-4.55, -0.2, 0.8], [3.95, -0.1, 1.05], [4.7, 1.55, 0.72], [4.6, -3.45, 0.95]];
   const vMistnosti = (v: THREE.Vector3) => new THREE.Vector3(THREE.MathUtils.clamp(v.x, -4.2, 4.6), 0, THREE.MathUtils.clamp(v.z, -3.2, 3.4));
   const venZPrekazek = (v: THREE.Vector3) => { for (const [x, z, r] of PREKAZKY) { const d = new THREE.Vector3(v.x - x, 0, v.z - z); if (d.length() < r) { if (d.lengthSq() < 1e-4) d.set(0, 0, 1); v.set(x, 0, z).addScaledVector(d.normalize(), r + 0.05); } } return vMistnosti(v); };
   const naplanuj = (a: THREE.Vector3, b: THREE.Vector3, hloubka = 0): THREE.Vector3[] => {
@@ -521,7 +521,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
     letKam.copy(objekt.localToWorld(predem)); letOd = cas; o.onPruchod?.(k);
   };
   // Křeslo: Hexík dojde před něj, otočí se zády k opěradlu a vyskočí na sedák
-  const KRESLO = new THREE.Vector3(3.15, 0, -0.75), KRESLO_YAW = -0.95, vpred = new THREE.Vector3(Math.sin(KRESLO_YAW), 0, Math.cos(KRESLO_YAW));
+  const KRESLO = new THREE.Vector3(3.95, 0, -0.1), KRESLO_YAW = -0.95, vpred = new THREE.Vector3(Math.sin(KRESLO_YAW), 0, Math.cos(KRESLO_YAW));
   const KRESLO_PRED = KRESLO.clone().addScaledVector(vpred, 1.35), KRESLO_SEDAK = KRESLO.clone().addScaledVector(vpred, 0.12);
   // Poleno, které Hexík hodí do krbu, a hrnek, který si vezme do ruky
   const poleno = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.42, 10), plast("#7A4A2A", { roughness: 0.9 })); poleno.visible = false; stin(poleno); svet.add(poleno);
@@ -583,7 +583,7 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
     if (co === "okno") zadej({ k: "okno", bod: new THREE.Vector3(2.2, 0, -3.2), smer: Math.PI, trvani: 2.8, efektPo: 0.3, ruce: (u) => (u < 0.3 ? u * 4 : 1.2 + Math.sin(cas * 3) * 0.1),
       efekt: () => { hvezdaCas = cas; narazSnehu = 1; vyraz = "prekvapeni"; vyrazDo = cas + 1.8; } });
     if (co === "lampa" || co === "hrnek") {
-      const bod = new THREE.Vector3(3.75, 0, 1.65), smer = smerK(bod, new THREE.Vector3(4.35, 0, 0.75));
+      const bod = new THREE.Vector3(3.85, 0, 2.4), smer = smerK(bod, new THREE.Vector3(4.7, 0, 1.55));
       if (co === "lampa") zadej({ k: "lampa", bod, smer, trvani: 1.3, efektPo: 0.5, ruce: (u) => zvedni(u, 0.5), efekt: () => { lampaZap = !lampaZap; } });
       else zadej({ k: "hrnek", bod, smer, trvani: 3.2, efektPo: 0.25,
         ruce: (u) => (u < 0.2 ? u * 7 : u < 0.85 ? 1.45 : 1.45 - (u - 0.85) * 8),
