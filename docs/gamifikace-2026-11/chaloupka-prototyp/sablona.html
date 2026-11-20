@@ -1,0 +1,63 @@
+<title>Perníková chaloupka</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap">
+<style>
+/* Jediná obrazovka: 3D pokojíček přes celou plochu, nahoře panel s objevenými kouzly, dole nápověda */
+:root{--ink:#FFFFFF;--muted:#D6CCF5;--panel:rgba(20,12,48,.62);--zlata:#FFD45A;--zel:#4CD38A;color-scheme:dark}
+html,body{height:100%;margin:0;background:#16204A;color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;overflow:hidden}
+#scena{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.horni{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));display:flex;justify-content:space-between;gap:10px;align-items:flex-start;pointer-events:none}
+.karta{background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:10px 14px;pointer-events:auto}
+.nadpis b{display:block;font-size:17px;font-weight:900}.nadpis span{font-size:12.5px;color:var(--muted)}
+.kouzla{max-width:330px}
+.kouzla summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap}
+.kouzla summary::-webkit-details-marker{display:none}
+.pocet{font-variant-numeric:tabular-nums;color:var(--zlata)}
+.bar{height:6px;border-radius:9px;background:rgba(255,255,255,.15);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FFD45A,#FF8AE0);transition:width .5s}
+.seznam{display:grid;gap:4px;margin-top:8px;font-size:13px}
+.seznam div{display:flex;gap:8px;align-items:center;color:var(--muted)}
+.seznam div.ok{color:var(--ink)}
+.seznam div::before{content:"○";width:16px;text-align:center;color:rgba(255,255,255,.4)}
+.seznam div.ok::before{content:"✓";color:var(--zel);font-weight:900}
+.dolni{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font-size:13px;color:var(--muted);text-align:center;width:min(92vw,520px);pointer-events:none}
+.toast{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%) scale(.9);opacity:0;transition:all .35s;background:rgba(20,12,48,.85);border:1px solid rgba(255,212,90,.5);border-radius:20px;padding:14px 20px;text-align:center;pointer-events:none;font-weight:900}
+.toast.vid{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.toast small{display:block;font-weight:600;color:var(--muted);margin-top:2px}
+@media (max-width:520px){.kouzla{max-width:200px}.nadpis span{display:none}}
+@media (prefers-reduced-motion: reduce){.toast{transition:none}}
+</style>
+<canvas id="scena" aria-label="3D Perníková chaloupka s Hexíkem"></canvas>
+<div class="horni">
+  <div class="karta nadpis"><b>🍪 Perníková chaloupka</b><span>Hexíkův domov za sadu Advent</span></div>
+  <details class="karta kouzla" id="kouzla" open>
+    <summary>✨ Kouzla <span class="pocet" id="pocet">0 / 11</span></summary>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="seznam" id="seznam"></div>
+  </details>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<p class="dolni">Ťukni na věc na pasece a Hexík ji půjde udělat · ťukni na sníh a dojde tam · táhni pro otočení</p>
+<script>__DOMOV_JS__</script>
+<script>
+(function () {
+  var D = window.Domov, nalezeno = {};
+  var klice = Object.keys(D.KOUZLA), seznam = document.getElementById("seznam");
+  klice.forEach(function (k) { var d = document.createElement("div"); d.id = "k-" + k; d.textContent = D.KOUZLA[k]; seznam.appendChild(d); });
+  if (window.matchMedia("(max-width:520px)").matches) document.getElementById("kouzla").open = false;
+  var toast = document.getElementById("toast"), tt;
+  function ukaz(t, s) { toast.innerHTML = t + (s ? "<small>" + s + "</small>" : ""); toast.classList.add("vid"); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove("vid"); }, 1800); }
+  var p = D.vytvor(document.getElementById("scena"), {
+    podoba: "klasik", etapa: 3, sloty: { hlava: "cepice", okoli: "drobky" },
+    onKouzlo: function (k) {
+      if (nalezeno[k]) return;
+      nalezeno[k] = 1;
+      var n = Object.keys(nalezeno).length;
+      document.getElementById("k-" + k).classList.add("ok");
+      document.getElementById("pocet").textContent = n + " / " + klice.length;
+      document.getElementById("bar").style.width = (n / klice.length * 100) + "%";
+      if (n === klice.length) { ukaz("🎉 Všechna kouzla objevena!", "Hexík má radost"); p.oslava(); }
+      else ukaz("✨ " + D.KOUZLA[k], "Objeveno " + n + " z " + klice.length);
+    }
+  });
+})();
+</script>

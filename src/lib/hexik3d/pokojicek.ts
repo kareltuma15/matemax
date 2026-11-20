@@ -542,6 +542,8 @@ export function vytvorPokojicek(canvas: HTMLCanvasElement, o: MoznostiPokojicku)
     const asp = camera.aspect, d = vzd * (asp < 1 ? Math.min(2.1, 0.95 / asp) : 1);
     camera.position.set(Math.sin(azim + dych) * Math.cos(elev) * d, Math.sin(elev) * d + 1, Math.cos(azim + dych) * Math.cos(elev) * d);
     camera.lookAt(cilBod);
+    // Mlha podle vzdálenosti kamery (na výšku je kamera dál a pevná mlha by scénu ztmavila)
+    if (scene.fog instanceof THREE.Fog) { scene.fog.near = d + 5; scene.fog.far = d + 23; }
     for (const f of krokFn) f(cas, dt);
     // Hexík: chůze k cíli s poskakováním, občas se sám projde
     let hop = 0, jde = false;
