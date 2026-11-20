@@ -77,6 +77,13 @@ for (const file of FILES) {
     }
 
     for (const [kde, text] of pole) {
+      // 0) LaTeX mimo dolary — v řetězci s „$" se text mezi nimi nesází, takže
+      //    „$\frac{3}{5}$ \cdot $…$" ukáže dítěti doslova „\cdot" (Karel 20. 11. 2026).
+      if (text.includes("$")) {
+        const venku = text.split(/\$[^$]*\$/g).join(" ");
+        const mimo = venku.match(/\\[a-zA-Z]+|\\[,;!]|[\^_{}]/g);
+        if (mimo) nalezy.push({ file: file.split("/").pop(), id: ex.id, kde, text: text.slice(0, 70), problemy: [`LaTeX mimo dolary (${[...new Set(mimo)].join(" ")})`] });
+      }
       for (const { tex } of katexKusy(text)) {
         const problemy = [];
         // 1) parse
