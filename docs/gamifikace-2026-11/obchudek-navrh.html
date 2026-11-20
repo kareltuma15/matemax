@@ -1,0 +1,103 @@
+<title>Obchůdek s krystaly</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800;9..40,900&display=swap">
+<style>
+/* Mockup: 1) záložky sekce Hexík se 6 položkami, 2) obsah Obchůdku, 3) šatník po přesunu, 4) rozhodnutí */
+:root{--bg:#EEF1F7;--karta:#fff;--ink:#0D1B3E;--muted:#5F6982;--line:#E3E7F0;--zel:#1F9D55;--zel-bg:#E9F8EF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1430;--karta:#121E42;--ink:#EEF2FF;--muted:#A3AECB;--line:#26345E;--zel-bg:#123726;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:14.5px;line-height:1.5}
+.wrap{max-width:1060px;margin:0 auto;padding-block:26px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+h1{margin:0;font-size:28px;font-weight:900}h2{margin:0;font-size:20px;font-weight:900}p{margin:0}.muted{color:var(--muted)}
+.blok{background:var(--karta);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;min-width:0}
+.telefony{display:flex;flex-wrap:wrap;gap:22px;justify-content:center}
+.tl{display:grid;gap:8px;justify-items:center;max-width:300px}.tl>b{font-size:13px;text-transform:uppercase;letter-spacing:.06em}.tl>p{font-size:13px;color:var(--muted);text-align:center}
+.tel{width:290px;border-radius:30px;border:8px solid #0D1B3E;background:#EEF1F7;color:#0D1B3E;overflow:hidden;font-size:12px;height:600px;display:flex;flex-direction:column}
+.hl{background:#fff;padding:9px 12px;display:flex;align-items:center;gap:6px;font-weight:900;font-size:13px}
+.hl span:first-child{flex:1}.chip{border-radius:10px;padding:3px 7px;font-size:11px;font-weight:800}
+.chip.k{background:#E6F6FF;color:#0E6BA8;outline:2px solid #5B55D6}
+.zal{display:flex;gap:3px;padding:8px 8px 6px}
+.zal span{flex:1;text-align:center;padding:5px 1px;border-radius:10px;font-weight:800;font-size:9.5px;color:#33405F;line-height:1.2}
+.zal span.a{background:#0D1B3E;color:#fff}
+.obsah{padding:0 10px;display:grid;gap:8px;overflow:hidden}
+.kr{background:linear-gradient(150deg,#1F2F66,#0D1B3E);color:#fff;border-radius:14px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.kr b{font-size:20px}.kr small{color:#C9C7F5;font-size:10.5px;display:block}
+.sek{font-weight:900;font-size:12.5px;margin-top:4px;display:flex;justify-content:space-between}.sek em{font-style:normal;color:#5F6982;font-weight:700;font-size:10.5px}
+.mrizka{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vec{background:#fff;border-radius:10px;padding:6px;text-align:center;font-size:10px;font-weight:800}
+.vec i{display:block;font-style:normal;font-size:22px;height:30px;line-height:30px;border-radius:8px;background:#F3F1FF;margin-bottom:3px}
+.vec span{display:block;color:#0E6BA8;font-size:10px}
+.vec.ma span{color:var(--zel)}
+.radek{background:#fff;border-radius:10px;padding:7px 9px;display:flex;justify-content:space-between;font-weight:800;font-size:11px}
+.radek em{font-style:normal;color:#0E6BA8}
+.nav{margin-top:auto;background:#fff;display:flex;justify-content:space-around;padding:8px 0;font-size:9.5px;font-weight:800;color:#5F6982}.nav b{color:#0D1B3E;background:#EBEAFE;border-radius:8px;padding:2px 6px}
+.typy{display:flex;flex-wrap:wrap;gap:4px}.typy span{background:#fff;border-radius:8px;padding:4px 8px;font-weight:800;font-size:10.5px}.typy span.a{background:#5B55D6;color:#fff}
+.typy span.pryc{text-decoration:line-through;color:#A0A8BD;background:#F3F4F8}
+.r{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:6px}
+.moz{display:flex;flex-wrap:wrap;gap:6px}.m{border:1px solid var(--line);border-radius:99px;padding:4px 11px;font-size:13px;font-weight:700;color:var(--muted)}.m.d{border-color:var(--zel);background:var(--zel-bg);color:var(--zel)}
+</style>
+<div class="wrap">
+  <header style="display:grid;gap:6px">
+    <h1>Obchůdek: jedno místo pro krystaly</h1>
+    <p class="muted">Šatník bude jen pro věci na Hexíkovi. Obchůdek dostane vybavení pokojíčku, vzhled appky a pozadí. Krystaly v horní liště povedou do Obchůdku.</p>
+  </header>
+
+  <section class="blok">
+    <h2>Obrazovky</h2>
+    <div class="telefony">
+      <div class="tl"><b>A · Obchůdek</b>
+        <div class="tel">
+          <div class="hl"><span>Hexík</span><span class="chip" style="background:#FFF4E6;color:#C25A00">🔥 6</span><span class="chip k">💎 1620</span></div>
+          <div class="zal"><span>🎁<br>Truhly</span><span>👕<br>Šatník</span><span class="a">🛍️<br>Obchůdek</span><span>⭐<br>Úrovně</span><span>📚<br>Sady</span><span>🏆<br>Trofeje</span></div>
+          <div class="obsah">
+            <div class="kr"><span><small>Máš</small><b>💎 1620</b></span><span style="text-align:right"><small>Dnes za učení</small>0 z 250</span></div>
+            <div class="sek">Vybavení pokojíčku <em>platí ve všech pokojích</em></div>
+            <div class="typy"><span class="a">🖼️ Obraz</span><span>🟣 Koberec</span><span>💡 Lampa</span><span>🪴 Květina</span><span>📚 Polička</span><span>🪟 Okno</span></div>
+            <div class="mrizka">
+              <div class="vec ma"><i>🏖️</i>Hexík na pláži<span>✓ Máš</span></div>
+              <div class="vec"><i>🗺️</i>Mapa<span>💎 120</span></div>
+              <div class="vec"><i>📜</i>Diplom<span>💎 300</span></div>
+              <div class="vec"><i>✨</i>Hvězdy (svítí)<span>💎 600</span></div>
+            </div>
+            <div class="sek">Vzhled appky <em>přesunuto ze šatníku</em></div>
+            <div class="radek">🌙 Noční<em>💎 400</em></div>
+            <div class="sek">Pozadí <em>přesunuto ze šatníku</em></div>
+            <div class="radek">🏔️ Hory<em>💎 150</em></div>
+          </div>
+          <div class="nav"><span>Domů</span><span>Trénink</span><span>Testy</span><b>Hexík</b><span>Profil</span></div>
+        </div>
+        <p>Šest záložek se na telefonu vejde s ikonou nad textem. Krystaly v liště mají rámeček, protože se na ně dá ťuknout.</p>
+      </div>
+      <div class="tl"><b>B · Šatník po přesunu</b>
+        <div class="tel">
+          <div class="hl"><span>Hexík</span><span class="chip" style="background:#FFF4E6;color:#C25A00">🔥 6</span><span class="chip k">💎 1620</span></div>
+          <div class="zal"><span>🎁<br>Truhly</span><span class="a">👕<br>Šatník</span><span>🛍️<br>Obchůdek</span><span>⭐<br>Úrovně</span><span>📚<br>Sady</span><span>🏆<br>Trofeje</span></div>
+          <div class="obsah">
+            <div class="sek">Na Hexíkovi</div>
+            <div class="typy"><span class="a">Podoba</span><span>Hlava</span><span>Oči</span><span>Krk</span><span>Ruce</span><span>Nohy</span><span>Tanečky</span><span>Efekt</span><span class="pryc">Vzhled appky</span><span class="pryc">Pozadí</span></div>
+            <div class="mrizka">
+              <div class="vec ma"><i>🟣</i>Hexík<span>✓ Nasazeno</span></div>
+              <div class="vec"><i>⚫</i>Grafitový<span>💎 150</span></div>
+              <div class="vec"><i>🟢</i>Mátový<span>💎 150</span></div>
+              <div class="vec"><i>🔥</i>Ohnivý<span>💎 150</span></div>
+              <div class="vec"><i>🧊</i>Ledový<span>💎 150</span></div>
+              <div class="vec"><i>💠</i>Neon<span>💎 400</span></div>
+            </div>
+            <p style="font-size:11px;color:#5F6982">Vzhled appky a Pozadí odtud zmizí a najdeš je v Obchůdku. Všechno ostatní v šatníku zůstává jako dnes.</p>
+          </div>
+          <div class="nav"><span>Domů</span><span>Trénink</span><span>Testy</span><b>Hexík</b><span>Profil</span></div>
+        </div>
+        <p>Šatník bude čistě o oblékání Hexíka. Skříň v pokojíčku vede sem.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>K rozhodnutí</h2>
+    <div class="r"><b>Truhly za krystaly (Krystalová, Velká, Mistrovská, Sezónní)</b>
+      <div class="moz"><span class="m d">✓ nechat v záložce Truhly jako dnes</span><span class="m">přesunout do Obchůdku</span></div>
+      <p class="muted">Doporučuju nechat. Chtěl jsi zachovat dnešní uspořádání pod Hexíkem a truhly jsou tam pohromadě, ty za odměnu i ty za krystaly.</p></div>
+    <div class="r"><b>Krystaly v horní liště na všech stránkách appky</b>
+      <div class="moz"><span class="m d">✓ ano, ťuknutí otevře Obchůdek</span><span class="m">jen v sekci Hexík</span></div></div>
+  </section>
+</div>
