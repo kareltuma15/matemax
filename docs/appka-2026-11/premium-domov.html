@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premium na Domově</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0D1B3E; --oranz:#F5A623; --fial:#5B55D6; --sedy:#5F6982; --pozadi:#EEF1F8; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"DM Sans",system-ui,sans-serif; background:#F4F5FA; color:var(--navy); }
+  header.u { max-width:1200px; margin:0 auto; padding:28px 16px 8px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  .u p { color:var(--sedy); margin:4px 0; max-width:820px; line-height:1.5; }
+  .varianty { max-width:1200px; margin:0 auto; padding:16px; display:grid; gap:28px; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); }
+  .var h2 { font-size:18px; margin:0 0 4px; }
+  .var .pop { color:var(--sedy); font-size:14px; margin:0 0 12px; line-height:1.45; min-height:60px; }
+  .doporuceno { display:inline-block; background:var(--oranz); color:var(--navy); font-size:11px; font-weight:800; padding:2px 8px; border-radius:99px; margin-left:6px; vertical-align:middle; }
+  .tel { width:340px; max-width:100%; margin:0 auto; background:var(--pozadi); border:10px solid #111; border-radius:42px; overflow:hidden; height:720px; position:relative; }
+  .obsah { padding:12px; display:flex; flex-direction:column; gap:10px; height:100%; overflow:hidden; }
+  .lista { display:flex; justify-content:space-between; align-items:center; background:#fff; margin:-12px -12px 0; padding:10px 12px; border-bottom:1px solid #E4E6EF; font-size:12px; }
+  .lista b { font-size:15px; }
+  .chip { padding:3px 8px; border-radius:10px; font-weight:700; font-size:12px; border:1px solid #E4E6EF; }
+  .hlav { background:linear-gradient(160deg,#1B2A5C,#0D1B3E); color:#fff; border-radius:20px; padding:14px; }
+  .hlav small { color:#D9D8FE; } .hlav h3 { margin:2px 0 8px; font-size:19px; }
+  .bar { height:6px; border-radius:9px; background:rgba(255,255,255,.18); } .bar i { display:block; width:12%; height:100%; background:var(--oranz); border-radius:9px; }
+  .karta { background:#fff; border:1px solid #E4E6EF; border-radius:18px; padding:12px; }
+  .stitek { font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+  .btn { display:block; text-align:center; border-radius:14px; padding:10px; font-weight:800; background:var(--oranz); color:var(--navy); font-size:14px; }
+  .novy { outline:3px dashed #E5484D; outline-offset:3px; position:relative; }
+  .novy::after { content:"NOVÉ"; position:absolute; top:-10px; right:10px; background:#E5484D; color:#fff; font-size:10px; font-weight:800; padding:1px 7px; border-radius:99px; }
+  .pruh { display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid #C9C7F5; border-radius:16px; padding:10px 12px; font-size:13.5px; }
+  .pruh .zamky { display:flex; gap:2px; font-size:14px; }
+  .hexy { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:8px; }
+  .hex { border-radius:12px; padding:8px 4px; text-align:center; font-size:11px; font-weight:700; line-height:1.2; border:1px solid #E4E6EF; background:#fff; }
+  .hex .ik { font-size:20px; display:block; }
+  .hex.z { background:#F7F8FC; border-style:dashed; color:#7A8199; }
+  .rodice { background:linear-gradient(150deg,#EBEAFE 0%,#F7F6FF 60%,#FFF6E5 100%); border:1.5px solid #C9C7F5; border-radius:18px; padding:12px; font-size:13px; }
+  .rodice .tag { background:var(--navy); color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:99px; text-transform:uppercase; letter-spacing:.05em; }
+  .rodice ul { margin:6px 0; padding:0; list-style:none; color:#33405F; } .rodice li::before { content:"✓ "; color:var(--fial); }
+  .odkaz { color:#4741B8; font-weight:800; font-size:13px; }
+  .mlha { color:#A0A8BD; font-size:12px; text-align:center; border:1px dashed #C8CDDB; border-radius:14px; padding:10px; }
+  .nav { position:absolute; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #E4E6EF; display:flex; justify-content:space-around; padding:8px 0 14px; font-size:11px; color:#8A93AA; }
+  .nav b { color:var(--navy); }
+  .pozn { max-width:1200px; margin:8px auto 40px; padding:0 16px; }
+  .pozn div { background:#fff; border:1px solid #E4E6EF; border-radius:16px; padding:14px 16px; color:#33405F; line-height:1.55; font-size:14.5px; }
+  .pozn b { color:var(--navy); }
+</style>
+</head>
+<body>
+<header class="u">
+  <h1>Premium na Domově (mobil): 3 varianty</h1>
+  <p>Teď je karta Premium až dvanáctá v pořadí, pod misemi a Bossem. Skoro nikdo k ní nedoscrolluje. Všechny tři varianty ji posouvají do první obrazovky.</p>
+  <p>Dodržují pravidla z 20. 11.: dítěti nic neříkáme formou „kup si“ ani „řekni rodičům“ a cena je jen v rámečku <b>Pro rodiče</b>. Dnešní karta tohle porušuje, protože dítěti ukazuje „99 Kč měsíčně“.</p>
+</header>
+
+<section class="varianty">
+
+  <!-- A -->
+  <div class="var">
+    <h2>A · Pruh hned pod hlavičkou</h2>
+    <p class="pop">Jeden řádek s věcnou informací, co je zamčené. Vede na stránku Premium. Nejmenší zásah, je vidět hned po otevření appky. Cena je až na stránce Premium.</p>
+    <div class="tel"><div class="obsah">
+      <div class="lista"><b>MateMax</b><span><span class="chip">🔥 2</span> <span class="chip">💎 503</span></span></div>
+      <div class="hlav"><small>Ahoj, Karle!</small><h3>Do přijímaček zbývá 147 dní</h3><div class="bar"><i></i></div></div>
+      <div class="pruh novy">
+        <span class="zamky">🔒</span>
+        <span style="flex:1"><b>6 z 9 témat</b> je v Premium<br><span style="color:var(--sedy);font-size:12px">Úlohy, testové příklady, odznaky</span></span>
+        <span class="odkaz">Co v nich je ›</span>
+      </div>
+      <div class="karta"><span class="stitek" style="color:#2E6DA4">Dnešní trénink</span><br><b style="font-size:17px">Výrazy: Mocniny</b><p style="color:var(--sedy);font-size:13px;margin:4px 0 8px">7 příkladů · asi 8 minut</p><span class="btn">Pokračovat →</span></div>
+      <div class="mlha">odhad · tento týden · advent · Hexík · mise · Boss…</div>
+    </div><div class="nav"><b>Domů</b><span>Trénink</span><span>Testy</span><span>Hexík</span><span>Profil</span></div></div>
+  </div>
+
+  <!-- B -->
+  <div class="var">
+    <h2>B · Mapa témat se zámky + Pro rodiče <span class="doporuceno">doporučuju</span></h2>
+    <p class="pop">Hned pod Dnešním tréninkem jsou všechna témata jako dlaždice: otevřená barevně, zamčená šedě se zámkem. Dítě na první pohled vidí, kolik mu chybí. Klepnutí na zamčené téma otevře ochutnávku. Pod mapou je rámeček Pro rodiče s cenou.</p>
+    <div class="tel"><div class="obsah">
+      <div class="lista"><b>MateMax</b><span><span class="chip">🔥 2</span> <span class="chip">💎 503</span></span></div>
+      <div class="hlav"><small>Ahoj, Karle!</small><h3>Do přijímaček zbývá 147 dní</h3><div class="bar"><i></i></div></div>
+      <div class="karta"><span class="stitek" style="color:#2E6DA4">Dnešní trénink</span><br><b style="font-size:17px">Výrazy: Mocniny</b><span class="btn" style="margin-top:8px">Pokračovat →</span></div>
+      <div class="karta novy">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><b>Tvoje témata</b><span style="font-size:12px;color:var(--sedy)">3 otevřená · 6 v Premium</span></div>
+        <div class="hexy">
+          <div class="hex"><span class="ik">🔢</span>Počítání s čísly</div>
+          <div class="hex"><span class="ik">±</span>Výrazy</div>
+          <div class="hex"><span class="ik">⚖️</span>Rovnice</div>
+          <div class="hex z"><span class="ik">🔒</span>Zlomky</div>
+          <div class="hex z"><span class="ik">🔒</span>Slovní úlohy</div>
+          <div class="hex z"><span class="ik">🔒</span>Geometrie</div>
+          <div class="hex z"><span class="ik">🔒</span>Konstrukce</div>
+          <div class="hex z"><span class="ik">🔒</span>Grafy</div>
+          <div class="hex z"><span class="ik">🔒</span>Souhrnné</div>
+        </div>
+      </div>
+      <div class="rodice novy">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="tag">Pro rodiče</span><b>99 Kč měsíčně</b></div>
+        <b style="display:block;margin-top:6px">MateMax Premium: celá příprava v jedné appce</b>
+        <span class="odkaz">Co Premium obsahuje →</span>
+      </div>
+    </div><div class="nav"><b>Domů</b><span>Trénink</span><span>Testy</span><span>Hexík</span><span>Profil</span></div></div>
+  </div>
+
+  <!-- C -->
+  <div class="var">
+    <h2>C · Dnešní karta, jen posunutá výš</h2>
+    <p class="pop">Stávající tmavá karta jde hned pod Dnešní trénink. Text pro dítě bude věcný, „Co je v Premium“ místo „Odemkni“. Místo ceny je rámeček Pro rodiče. Nejméně práce, ale je to zjevná reklama a zabírá celou obrazovku.</p>
+    <div class="tel"><div class="obsah">
+      <div class="lista"><b>MateMax</b><span><span class="chip">🔥 2</span> <span class="chip">💎 503</span></span></div>
+      <div class="hlav"><small>Ahoj, Karle!</small><h3>Do přijímaček zbývá 147 dní</h3><div class="bar"><i></i></div></div>
+      <div class="karta"><span class="stitek" style="color:#2E6DA4">Dnešní trénink</span><br><b style="font-size:17px">Výrazy: Mocniny</b><span class="btn" style="margin-top:8px">Pokračovat →</span></div>
+      <div class="novy" style="background:linear-gradient(160deg,#1B2A5C,#0D1B3E);color:#fff;border-radius:18px;padding:12px">
+        <span style="background:var(--oranz);color:var(--navy);font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px">MateMax Premium</span>
+        <b style="display:block;font-size:17px;margin:6px 0">Co je v Premium</b>
+        <div style="font-size:13px;color:#E4E5FF;line-height:1.6">✓ Všech 9 témat, přes 1 200 úloh<br>✓ Testové příklady v každém tématu<br>✓ Všechny odznaky a výzvy</div>
+        <span class="btn" style="margin-top:8px">Ukázat víc</span>
+      </div>
+      <div class="rodice novy"><div style="display:flex;justify-content:space-between"><span class="tag">Pro rodiče</span><b>99 Kč měsíčně</b></div></div>
+    </div><div class="nav"><b>Domů</b><span>Trénink</span><span>Testy</span><span>Hexík</span><span>Profil</span></div></div>
+  </div>
+</section>
+
+<section class="pozn"><div>
+  <b>Doporučuju B.</b> Nepůsobí jako reklama, ale jako mapa přípravy. Zámky dělají práci samy a klepnutí na zamčené téma vede do ochutnávky (10 příkladů zdarma), kde se dítě do tématu dostane. Tím vzniká chuť na Premium. Rámeček Pro rodiče mluví k rodiči, který telefon dítěte často vidí.<br><br>
+  <b>Na počítači</b> mapa témat už je, jen bez rámečku Pro rodiče. Ten přidám i tam do pravého sloupce nahoru.<br>
+  <b>Premium uživatel</b> uvidí mapu bez zámků a místo rámečku Pro rodiče kartu „Pozvi rodiče“ (report každé pondělí), stejně jako teď.<br>
+  <b>Páťák</b> uvidí stejné, jen 8 okruhů.<br>
+  <b>Varianty jde kombinovat</b>, například A + B. Pruh nahoře je ale už dost, doporučuju jen B.
+</div></section>
+</body>
+</html>

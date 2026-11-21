@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 import { createHmac } from "node:crypto";
 import { overDoporuceni } from "../src/lib/doporuceni-server";
 import { normalizujDoporuceni, sestavDoporucenouSadu, proc, cilovaObtiznost } from "../src/lib/doporuceni";
+import { lokalniPlanPatri } from "../src/lib/plan-po-testu";
+import { pondeliTydne, localDateStr } from "../src/lib/date";
 
 // Doporučení po testu nanečisto z appky Vyhodnocení testů (dohodnutý formát v1).
 
@@ -86,4 +88,22 @@ test("host s platným odkazem vidí doporučení a registraci, neplatný odkaz u
   await page.goto(`/trenink?doporuceni=${UKAZKA.slice(0, -3)}abc`);
   await expect(page.getByTestId("doporuceni-neplatne")).toBeVisible();
   await expect(page.getByTestId("doporuceni-po-testu")).toHaveCount(0);
+});
+
+test("plán po testu v prohlížeči patří jen svému účtu (sdílený telefon)", () => {
+  expect(lokalniPlanPatri({ uid: "A" }, "A")).toBe(true);
+  expect(lokalniPlanPatri({ uid: "A" }, "B")).toBe(false);
+  expect(lokalniPlanPatri({}, "B")).toBe(false); // stará kopie bez účtu se přihlášenému neukáže
+  expect(lokalniPlanPatri({}, null)).toBe(true); // host vidí svou
+  expect(lokalniPlanPatri({ uid: "A" }, null)).toBe(false);
+  expect(lokalniPlanPatri(null, "A")).toBe(false);
+});
+
+test("kalendář aktivity: poslední sloupec je tento týden, začátek pondělí o 7 týdnů dřív", () => {
+  // sobota 21. 11. 2026 → tento týden začíná 16. 11., mřížka 28. 9.–22. 11.
+  expect(localDateStr(pondeliTydne(new Date(2026, 10, 21), 0))).toBe("2026-11-16");
+  expect(localDateStr(pondeliTydne(new Date(2026, 10, 21), 7))).toBe("2026-09-28");
+  // neděle patří k týdnu, který začal v pondělí
+  expect(localDateStr(pondeliTydne(new Date(2026, 10, 22), 0))).toBe("2026-11-16");
+  expect(localDateStr(pondeliTydne(new Date(2026, 10, 16), 0))).toBe("2026-11-16");
 });

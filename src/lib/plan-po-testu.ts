@@ -6,6 +6,8 @@
  *   aby se po registraci neztratil. Na server se nic neposílá, dokud si žák plán sám neuloží.
  * - Uložený plán: tabulka plan_po_testu (jeden na účet) + kopie v prohlížeči, kdyby tabulka ještě nebyla.
  * - Splněno: v každém doporučeném tématu aspoň 10 správných odpovědí od uložení plánu.
+ * - Kopie v prohlížeči patří jednomu účtu (uid). Na sdíleném telefonu ji jiný účet nevidí –
+ *   dřív se plán jednoho žáka ukazoval každému, kdo se na tom zařízení přihlásil.
  */
 import { supabase } from "./supabase";
 import { reportDbError } from "./db-error";
@@ -21,6 +23,14 @@ export interface PlanPoTestu {
   zaklad: Record<string, number>;
   ulozeno: string;
   splneno?: string | null;
+  /** Účet, kterému kopie v prohlížeči patří (bez uid = uložil host). */
+  uid?: string | null;
+}
+
+/** Smí tenhle účet použít kopii plánu z prohlížeče? Host jen svou (bez uid), přihlášený jen svou. */
+export function lokalniPlanPatri(plan: Pick<PlanPoTestu, "uid"> | null, userId: string | null): boolean {
+  if (!plan) return false;
+  return userId ? plan.uid === userId : !plan.uid;
 }
 
 // ── odkaz čekající na přihlášení ──
@@ -55,12 +65,11 @@ function lokalniPlan(): PlanPoTestu | null {
 
 /** Uloží doporučení jako plán k účtu (přepíše starší). Vrací false, když žák není přihlášený. */
 export async function ulozPlan(doporuceni: Doporuceni): Promise<boolean> {
-  const plan: PlanPoTestu = { doporuceni, zaklad: spravneTed(), ulozeno: new Date().toISOString(), splneno: null };
+  const uid = supabase ? (await supabase.auth.getSession()).data.session?.user.id ?? null : null;
+  const plan: PlanPoTestu = { doporuceni, zaklad: spravneTed(), ulozeno: new Date().toISOString(), splneno: null, uid };
   try { localStorage.setItem(KLIC_PLAN, JSON.stringify(plan)); } catch { /* nic */ }
   zapomenOdkaz();
   if (!supabase) return true;
-  const { data } = await supabase.auth.getSession();
-  const uid = data.session?.user.id;
   if (!uid) return false;
   const { error } = await supabase.from("plan_po_testu").upsert({
     user_id: uid, zdroj: "nanecisto", doporuceni, zaklad: plan.zaklad, ulozeno_at: plan.ulozeno, splneno_at: null,
@@ -71,7 +80,8 @@ export async function ulozPlan(doporuceni: Doporuceni): Promise<boolean> {
 
 /** Plán přihlášeného žáka: ze serveru, jinak z prohlížeče. Novější vyhrává. */
 export async function nactiPlan(userId: string | null): Promise<PlanPoTestu | null> {
-  const lokal = lokalniPlan();
+  const ulozeny = lokalniPlan();
+  const lokal = lokalniPlanPatri(ulozeny, userId) ? ulozeny : null;
   if (!supabase || !userId) return lokal;
   const { data, error } = await supabase
     .from("plan_po_testu")
@@ -89,7 +99,7 @@ export async function nactiPlan(userId: string | null): Promise<PlanPoTestu | nu
     const { error: e } = await supabase.from("plan_po_testu").update({ zaklad }).eq("user_id", userId);
     reportDbError("plan_po_testu.zaklad", e);
   }
-  const server: PlanPoTestu = { doporuceni: d, zaklad, ulozeno: data.ulozeno_at as string, splneno: data.splneno_at as string | null };
+  const server: PlanPoTestu = { doporuceni: d, zaklad, ulozeno: data.ulozeno_at as string, splneno: data.splneno_at as string | null, uid: userId };
   const vysledek = lokal && lokal.ulozeno > server.ulozeno ? lokal : server;
   try { localStorage.setItem(KLIC_PLAN, JSON.stringify(vysledek)); } catch { /* nic */ }
   return vysledek;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { localLoadSessions } from "@/lib/storage";
-import { localDateStr } from "@/lib/date";
+import { localDateStr, pondeliTydne } from "@/lib/date";
 
 const DAY_LABELS = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
 
@@ -22,11 +22,10 @@ export default function ActivityHeatmap() {
   todayDate.setHours(0, 0, 0, 0);
   const todayStr = localDateStr(todayDate);
 
-  // Start from Monday 8 weeks ago
-  const startDate = new Date(todayDate);
-  startDate.setDate(startDate.getDate() - 55);
-  const dow = startDate.getDay(); // 0=Sun,1=Mon…
-  startDate.setDate(startDate.getDate() - (dow === 0 ? 6 : dow - 1));
+  // Poslední sloupec = tento týden (Po–Ne), začátek = pondělí o 7 týdnů dřív.
+  // (Dřív se počítalo „dnes − 55 dní → pondělí“, takže mřížka končila minulou nedělí
+  // a trénink z tohoto týdne se v ní nikdy nezabarvil.)
+  const startDate = pondeliTydne(todayDate, 7);
 
   // 8 weeks × 7 days matrix [row=weekday][col=week]
   const grid: Array<Array<{ date: string; practiced: boolean; isToday: boolean; isFuture: boolean }>> =
