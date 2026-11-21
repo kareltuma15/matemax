@@ -36,6 +36,7 @@ import DenniMise from "@/components/hexik/DenniMise";
 import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { darekZDoporuceni, pouzitoLokalne, zbyva, DAREK_NA_TEMA } from "@/lib/ochutnavka";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
+import ProRodice from "@/components/ProRodice";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
 /** První jednotný termín přijímaček na víceletá gymnázia (ověřený fakt: 14.–15. 4. 2027). */
@@ -377,46 +378,71 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
             </div>
           ) : null}
 
-          {/* Počítač: všechna témata s postupem (na telefonu jsou v Tréninku) */}
-          {temata.length > 0 && (
-            <section className="hidden lg:flex flex-col gap-3" data-testid="domov-temata">
-              <div className="flex items-baseline justify-between">
-                <h2 className="text-lg font-extrabold" style={{ color: "#0D1B3E" }}>{g5 ? "Tvoje okruhy" : "Tvoje témata"}</h2>
-                <Link href="/trenink" className="text-sm font-semibold mm-odkaz" style={{ color: "#4741B8" }}>Celý trénink →</Link>
-              </div>
-              <div className="grid grid-cols-2 xl:grid-cols-3 gap-3">
-                {temata.map((t) => (
-                  <Link
-                    key={t.tema}
-                    href={t.zamceno ? "/premium" : maDovednosti(t.tema) ? `/trenink?vyber=${t.tema}` : `/trenink?tema=${t.tema}`}
-                    data-tema={t.tema}
-                    className="mm-karta mm-klik p-3.5 flex flex-col gap-2.5"
-                    style={{ ...temaStyl(t.tema), ...(t.zamceno ? { background: "#F7F8FC", borderStyle: "dashed" } : {}) }}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <HexIkona tema={t.tema} velikost={36} />
-                      <span className="min-w-0 flex-1 text-[14.5px] font-bold leading-tight" style={{ color: "#0D1B3E" }}>{TEMA_LABELS[t.tema] ?? t.tema}</span>
-                      <span className="mm-sipka text-lg" style={{ color: "#A0A8BD" }} aria-hidden>{t.zamceno ? "🔒" : "›"}</span>
+          {/* Mapa všech témat s postupem a zámky (Karel 21. 11.: varianta B – Premium vidět hned, ne až dole).
+              Telefon: dlaždice 3 vedle sebe, počítač: karty s pruhem postupu. */}
+          {temata.length > 0 && (() => {
+            const zamcenych = temata.filter((t) => t.zamceno).length;
+            return (
+              <section className="flex flex-col gap-2.5 lg:gap-3" data-testid="domov-temata">
+                <div className="flex items-baseline justify-between gap-2">
+                  <h2 className="text-base lg:text-lg font-extrabold" style={{ color: "#0D1B3E" }}>{g5 ? "Tvoje okruhy" : "Tvoje témata"}</h2>
+                  {zamcenych > 0 ? (
+                    <span className="text-xs lg:text-sm font-semibold" style={{ color: "#5F6982" }} data-testid="domov-temata-souhrn">
+                      {temata.length - zamcenych} {temata.length - zamcenych === 1 ? "otevřené" : temata.length - zamcenych <= 4 ? "otevřená" : "otevřených"} · {zamcenych} v Premium
                     </span>
-                    {t.zamceno ? (
-                      <span className="text-xs font-bold" style={{ color: "#8A5A00" }}>V Premium</span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        <span className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "var(--tema-tint)" }}>
-                          <i className="block h-full rounded-full" style={{ width: `${Math.max(3, Math.round(t.podil * 100))}%`, background: "var(--tema-barva)" }} />
+                  ) : (
+                    <Link href="/trenink" className="text-sm font-semibold mm-odkaz" style={{ color: "#4741B8" }}>Celý trénink →</Link>
+                  )}
+                </div>
+                <div className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-2 lg:gap-3">
+                  {temata.map((t) => (
+                    <Link
+                      key={t.tema}
+                      href={t.zamceno ? "/premium" : maDovednosti(t.tema) ? `/trenink?vyber=${t.tema}` : `/trenink?tema=${t.tema}`}
+                      data-tema={t.tema}
+                      data-zamceno={t.zamceno ? "1" : undefined}
+                      className="mm-karta mm-klik p-2.5 lg:p-3.5 flex flex-col items-center text-center lg:items-stretch lg:text-left gap-1.5 lg:gap-2.5 min-w-0"
+                      style={{ ...temaStyl(t.tema), ...(t.zamceno ? { background: "#F7F8FC", borderStyle: "dashed" } : {}) }}
+                    >
+                      <span className="flex flex-col lg:flex-row items-center gap-1 lg:gap-2.5 w-full">
+                        <span className="relative shrink-0" style={t.zamceno ? { opacity: 0.55, filter: "grayscale(1)" } : undefined}>
+                          <HexIkona tema={t.tema} velikost={36} />
                         </span>
-                        <span className="text-xs font-bold tabular-nums tema-text">{Math.round(t.podil * 100)} %</span>
+                        <span className="min-w-0 lg:flex-1 text-[12px] lg:text-[14.5px] font-bold leading-tight break-words" style={{ color: t.zamceno ? "#6B7390" : "#0D1B3E" }}>{TEMA_LABELS[t.tema] ?? t.tema}</span>
+                        <span className="mm-sipka hidden lg:inline text-lg" style={{ color: "#A0A8BD" }} aria-hidden>{t.zamceno ? "🔒" : "›"}</span>
                       </span>
-                    )}
-                  </Link>
-                ))}
-              </div>
-            </section>
+                      {t.zamceno ? (
+                        <span className="text-[11px] lg:text-xs font-bold mt-auto whitespace-nowrap" style={{ color: "#8A5A00" }}><span className="lg:hidden"><span aria-hidden>🔒 </span>Premium</span><span className="hidden lg:inline">V Premium</span></span>
+                      ) : (
+                        <span className="flex items-center gap-1.5 lg:gap-2 w-full mt-auto">
+                          <span className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "var(--tema-tint)" }}>
+                            <i className="block h-full rounded-full" style={{ width: `${Math.max(3, Math.round(t.podil * 100))}%`, background: "var(--tema-barva)" }} />
+                          </span>
+                          <span className="text-[11px] lg:text-xs font-bold tabular-nums tema-text">{Math.round(t.podil * 100)} %</span>
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* Telefon: cena jen v rámečku Pro rodiče, hned pod mapou témat (na počítači je nahoře v pravém sloupci) */}
+          {!isPremium && nacteno && (
+            <div className="lg:hidden" data-testid="domov-pro-rodice">
+              <ProRodice trida={trida} kompaktni />
+            </div>
           )}
         </div>
 
         {/* ── Pravý sloupec: odhad, týden, Premium ── */}
         <div className="flex flex-col gap-4 lg:gap-6">
+          {!isPremium && nacteno && (
+            <div className="hidden lg:block" data-testid="domov-pro-rodice-pc">
+              <ProRodice trida={trida} kompaktni />
+            </div>
+          )}
           <div className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 lg:gap-6">
             <Link href="/profil" className="mm-karta mm-klik p-3 lg:p-5 flex flex-col gap-1 text-[13px]" style={{ color: "#5F6982" }} data-testid="domov-odhad">
               <span className="flex items-center justify-between">
@@ -481,33 +507,12 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
           <DenniMise streak={streak} odkaz />
           <BossKarta trida={trida} jenCeka />
 
-          {isPremium ? (
+          {isPremium && (
             <div className="mm-karta p-4 lg:p-5 flex flex-col gap-2.5">
               <b style={{ color: "#0D1B3E" }}>Pozvi rodiče</b>
               <span className="text-sm" style={{ color: "#5F6982" }}>Každé pondělí jim přijde přehled, jak ti to jde: odhad bodů, vývoj a témata.</span>
               <Link href="/profil#rodice" className="w-full py-3 rounded-2xl text-center font-bold mm-obrys" style={{ color: "#0D1B3E", border: "1.5px solid #E4E6EF" }}>
                 Nastavit report pro rodiče
-              </Link>
-            </div>
-          ) : (
-            <div className="rounded-[20px] p-4 lg:p-5 flex flex-col gap-2.5 text-white" style={{ background: "linear-gradient(160deg, #1B2A5C, #0D1B3E)" }} data-testid="domov-premium">
-              <span className="self-start text-[11px] font-extrabold px-2 py-0.5 rounded-full" style={{ background: "#F5A623", color: "#0D1B3E" }}>MateMax Premium</span>
-              <h3 className="text-[19px] font-extrabold leading-tight">
-                {g5 ? "Odemkni všech 8 okruhů a připrav se celý" : "Odemkni všech 9 témat a připrav se celý"}
-              </h3>
-              <ul className="flex flex-col gap-1.5 text-sm" style={{ color: "#E4E5FF" }}>
-                {[
-                  g5 ? "Všechny úlohy ve všech okruzích" : "Přes 1 200 úloh ve stylu CERMAT",
-                  "Testové příklady jako u přijímaček v každém tématu",
-                  "Rodiče dostanou každé pondělí report e-mailem",
-                  "Všechny odznaky a výzvy",
-                ].map((t) => (
-                  <li key={t} className="grid grid-cols-[20px_1fr] gap-1.5"><span className="font-extrabold" style={{ color: "#F5A623" }}>✓</span>{t}</li>
-                ))}
-              </ul>
-              <span className="text-[13px]" style={{ color: "#D9D8FE" }}>99 Kč měsíčně</span>
-              <Link href="/premium" className="w-full py-3.5 rounded-2xl text-center text-base font-extrabold mm-tlacitko" style={{ background: "#F5A623", color: "#0D1B3E" }}>
-                Co všechno získám
               </Link>
             </div>
           )}

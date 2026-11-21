@@ -78,3 +78,39 @@ test("dárek z tématu se počítá: zbývá 3 z 10 → trénink tématu má 3 p
   await expect(page.getByTestId("darek-v-treninku")).toContainText(/zbývá|zdarma/);
   await expect(page.getByTestId("upgrade-card")).toHaveCount(0);
 });
+
+// Premium na Domově (Karel 21. 11. 2026, varianta B): mapa témat se zámky hned pod Dnešním tréninkem,
+// pod ní rámeček Pro rodiče s cenou. Dítěti jinde žádná cena, stará tmavá karta „Odemkni…“ je pryč.
+for (const sirka of [320, 375]) {
+  test(`Domov bez Premium ${sirka} px: mapa témat se zámky a Pro rodiče nahoře, cena jen pro rodiče`, async ({ page, context }, info) => {
+    test.skip(info.project.name !== "mobile", "telefon");
+    await page.setViewportSize({ width: sirka, height: 800 });
+    await falesnaRelace(context);
+    await page.addInitScript(() => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-hexik-uvod", "1"); localStorage.setItem("matemax-diag-done", "1"); });
+    await page.goto("/");
+    const mapa = page.getByTestId("domov-temata");
+    await expect(mapa).toBeVisible({ timeout: 20_000 });
+    await expect(mapa.locator("a[data-tema]")).toHaveCount(9);
+    await expect(mapa.locator("a[data-zamceno]")).toHaveCount(6);
+    await expect(mapa.locator("a[data-zamceno]").first()).toHaveAttribute("href", "/premium");
+    await expect(page.getByTestId("domov-temata-souhrn")).toHaveText("3 otevřená · 6 v Premium");
+    const rodice = page.getByTestId("domov-pro-rodice");
+    await expect(rodice).toBeVisible();
+    await expect(rodice).toContainText("99 Kč měsíčně");
+    await expect(page.getByTestId("domov-premium")).toHaveCount(0);
+    // Rámeček je v horní části Domova (dřív byla karta až pod misemi a Bossem)
+    const y = (await rodice.boundingBox())!.y;
+    expect(y).toBeLessThan(1400);
+    // Cena nikde mimo rámeček Pro rodiče
+    const mimo = await page.evaluate(() => {
+      const kopie = document.body.cloneNode(true) as HTMLElement;
+      kopie.querySelectorAll("[data-testid=pro-rodice]").forEach((x) => x.remove());
+      return /Kč/.test(kopie.innerText);
+    });
+    expect(mimo).toBe(false);
+    // Nic mimo obrazovku
+    const sirokych = await mapa.evaluate((el, W) => Array.from(el.querySelectorAll<HTMLElement>("*")).filter((x) => x.getBoundingClientRect().right > W + 1).length, sirka);
+    expect(sirokych).toBe(0);
+    await page.screenshot({ path: `.shots/domov-premium-${sirka}.png`, fullPage: true });
+  });
+}
