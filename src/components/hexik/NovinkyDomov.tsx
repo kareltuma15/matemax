@@ -17,13 +17,13 @@ function videne(): string[] {
  * Novinky na Domově žáka (Karel 18. 11. 2026): nahoře karta s novinkou (ukáže se, dokud ji žák nezavře
  * nebo nevyzkouší) a pod ní „Brzy“ s odpočtem, ať ví, na co se těšit. Data z kroniky (lib/novinky.ts).
  */
-export default function NovinkyDomov({ trida }: { trida: Trida }) {
+export default function NovinkyDomov({ trida, bezBrzy = false }: { trida: Trida; /** Odpočet ukazuje velká karta ChystaSe */ bezBrzy?: boolean }) {
   const [stav, setStav] = useState<{ nova: NovinkaVeStavu | null; brzy: NovinkaVeStavu | null } | null>(null);
   useEffect(() => {
     const seznam = novinky(localDateStr(), trida);
     const v = videne();
-    setStav({ nova: seznam.find((n) => n.stav === "nove" && !v.includes(n.klic)) ?? null, brzy: seznam.find((n) => n.stav === "brzy") ?? null }); // eslint-disable-line react-hooks/set-state-in-effect
-  }, [trida]);
+    setStav({ nova: seznam.find((n) => n.stav === "nove" && !v.includes(n.klic)) ?? null, brzy: bezBrzy ? null : seznam.find((n) => n.stav === "brzy") ?? null }); // eslint-disable-line react-hooks/set-state-in-effect
+  }, [trida, bezBrzy]);
   if (!stav || (!stav.nova && !stav.brzy)) return null;
   const zavri = (klic: string) => {
     try { localStorage.setItem(KLIC, JSON.stringify([...videne(), klic].slice(-30))); } catch { /* bez paměti */ }

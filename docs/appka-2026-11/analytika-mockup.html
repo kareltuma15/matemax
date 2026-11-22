@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytika MateMaxu</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0D1B3E; --sedy:#5F6982; --muted:#8A93AA; --cara:#E4E6EF; --pozadi:#F4F5FA; --surface:#fcfcfb;
+    --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+    --q1:#cde2fb; --q2:#9ec5f4; --q3:#6da7ec; --q4:#3987e5; --q5:#256abf; --q6:#184f95;
+    --good:#14753A; --bad:#B4232F; --warn:#9A6200;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"DM Sans",system-ui,sans-serif; background:var(--pozadi); color:var(--navy); }
+  .obal { max-width:1240px; margin:0 auto; padding:24px 16px 48px; display:flex; flex-direction:column; gap:18px; }
+  h1 { font-size:26px; margin:0; } h2 { font-size:18px; margin:0; } h3 { font-size:14px; margin:0; }
+  p { margin:0; }
+  .uvod p { color:var(--sedy); line-height:1.5; max-width:920px; margin-top:6px; }
+  .ukazka { display:inline-block; background:#FFF3D6; color:#7A4A00; font-size:12px; font-weight:800; padding:3px 10px; border-radius:99px; margin-top:8px; }
+  .karta { background:var(--surface); border:1px solid var(--cara); border-radius:18px; padding:16px 18px; min-width:0; }
+  .sekce { display:flex; flex-direction:column; gap:12px; }
+  .sekce-hl { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .sekce-hl .cislo { width:26px; height:26px; border-radius:8px; background:var(--navy); color:#fff; display:grid; place-items:center; font-size:13px; font-weight:800; flex-shrink:0; align-self:center; }
+  .sekce-hl small { color:var(--sedy); font-size:13px; }
+  .novy { font-size:10px; font-weight:800; background:#E5484D; color:#fff; padding:1px 7px; border-radius:99px; text-transform:uppercase; letter-spacing:.04em; }
+  /* filtry */
+  .filtry { position:sticky; top:0; z-index:5; background:rgba(244,245,250,.92); backdrop-filter:blur(6px); padding:10px 0; display:flex; gap:8px; flex-wrap:wrap; align-items:center; border-bottom:1px solid var(--cara); }
+  .seg { display:inline-flex; background:#fff; border:1px solid var(--cara); border-radius:12px; padding:3px; }
+  .seg span { padding:5px 11px; border-radius:9px; font-size:13px; font-weight:700; color:var(--sedy); cursor:pointer; }
+  .seg span.on { background:var(--navy); color:#fff; }
+  .vyber { background:#fff; border:1px solid var(--cara); border-radius:12px; padding:7px 12px; font-size:13px; font-weight:700; }
+  .vyber small { color:var(--muted); font-weight:600; margin-right:4px; }
+  .prepinac { display:inline-flex; gap:6px; align-items:center; font-size:13px; font-weight:700; color:var(--sedy); }
+  .prepinac i { width:30px; height:18px; border-radius:99px; background:var(--s1); position:relative; display:inline-block; }
+  .prepinac i::after { content:""; position:absolute; right:2px; top:2px; width:14px; height:14px; border-radius:50%; background:#fff; }
+  /* KPI */
+  .kpi { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  .tile { background:var(--surface); border:1px solid var(--cara); border-radius:16px; padding:14px; display:flex; flex-direction:column; gap:4px; }
+  .tile .lbl { font-size:12px; font-weight:700; color:var(--sedy); }
+  .tile .val { font-size:28px; font-weight:900; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .tile .val small { font-size:14px; color:var(--sedy); font-weight:700; }
+  .tile .d { font-size:12px; font-weight:800; }
+  .up { color:var(--good); } .down { color:var(--bad); } .neu { color:var(--muted); }
+  .tile .pozn { font-size:11.5px; color:var(--muted); }
+  .spark { height:26px; margin-top:2px; }
+  /* layout */
+  .g2 { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:12px; }
+  .g2r { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .g3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+  .hl { display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
+  .hl small { color:var(--muted); font-size:12px; }
+  .legenda { display:flex; gap:14px; font-size:12px; color:var(--sedy); flex-wrap:wrap; }
+  .legenda span { display:inline-flex; align-items:center; gap:6px; }
+  .legenda i { width:10px; height:10px; border-radius:3px; display:inline-block; }
+  svg text { font-family:"DM Sans",system-ui,sans-serif; }
+  .tab { width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; }
+  .tab th { text-align:right; font-size:11.5px; color:var(--muted); font-weight:700; padding:6px 8px; border-bottom:1px solid var(--cara); white-space:nowrap; }
+  .tab th:first-child, .tab td:first-child { text-align:left; }
+  .tab td { text-align:right; padding:8px; border-bottom:1px solid #F0F2F7; color:#33405F; }
+  .tab td b { color:var(--navy); }
+  .tab tr.hl2 td { background:#F2F7FE; }
+  .tab .vstup { display:inline-block; border:1.5px dashed #9ec5f4; border-radius:8px; padding:1px 8px; color:var(--s1); font-weight:800; }
+  .tag { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; padding:2px 8px; border-radius:99px; }
+  .tag.ok { background:#E3F5EA; color:var(--good); } .tag.pozor { background:#FFF3D6; color:var(--warn); } .tag.spatne { background:#FDE7E8; color:var(--bad); }
+  .scroll { overflow-x:auto; }
+  /* trychtýř */
+  .tr-krok { display:grid; grid-template-columns:200px minmax(0,1fr) 120px; gap:10px; align-items:center; font-size:13px; padding:4px 0; }
+  .tr-bar { height:22px; display:flex; gap:2px; }
+  .tr-bar i { display:block; height:100%; border-radius:4px; }
+  .tr-n { text-align:right; font-variant-numeric:tabular-nums; } .tr-n b { font-size:14px; }
+  .tr-ztrata { font-size:11.5px; color:var(--bad); font-weight:700; margin-left:6px; }
+  /* kohorty */
+  .koh td { text-align:center; font-weight:700; font-size:12.5px; padding:8px 4px; border:2px solid var(--surface); border-radius:6px; }
+  .koh th { font-size:11.5px; color:var(--muted); font-weight:700; padding:4px; text-align:center; }
+  .koh td:first-child, .koh th:first-child { text-align:left; color:#33405F; background:none; font-weight:700; }
+  /* aktivační checklist */
+  .akt { display:flex; flex-direction:column; gap:10px; }
+  .akt-r { display:grid; grid-template-columns:minmax(0,1fr) 60px; gap:10px; align-items:center; font-size:13px; }
+  .akt-bar { height:8px; border-radius:99px; background:#EEF0F6; margin-top:5px; } .akt-bar i { display:block; height:100%; border-radius:99px; background:var(--s1); }
+  .upoz { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:12px; font-size:13px; line-height:1.45; }
+  .upoz.spatne { background:#FDE7E8; } .upoz.pozor { background:#FFF3D6; } .upoz.ok { background:#E3F5EA; }
+  .upoz b { display:block; }
+  .tip { position:fixed; pointer-events:none; background:#0D1B3E; color:#fff; font-size:12px; padding:7px 10px; border-radius:10px; line-height:1.4; z-index:20; display:none; box-shadow:0 6px 20px rgba(0,0,0,.18); }
+  .tip b { font-weight:800; }
+  .postav { background:linear-gradient(135deg,#0D1B3E,#1B2A5C); color:#fff; border-radius:20px; padding:20px 22px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  .postav h3 { color:#FFD66B; font-size:15px; margin-bottom:6px; }
+  .postav p, .postav li { color:#D9D8FE; font-size:13.5px; line-height:1.5; }
+  .postav ul { margin:0; padding-left:18px; }
+  @media (max-width:980px) { .kpi { grid-template-columns:repeat(2,minmax(0,1fr)); } .g2, .g2r, .g3, .postav { grid-template-columns:1fr; } .tr-krok { grid-template-columns:120px minmax(0,1fr) 92px; } }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<div class="obal">
+
+  <div class="uvod">
+    <h1>Analytika MateMaxu: návrh profesionálního přehledu</h1>
+    <p>Dnes umí admin počítat návštěvy, kliky, hrubý trychtýř a od dneška i zdroje. Chybí ale odpovědi na otázky, které rozhodují o penězích. Kolik stál jeden nový žák z reklamy? Vrací se lidé po týdnu? Kde přesně odpadají? Které úlohy jsou moc těžké? Vyplácí se Premium? Tenhle přehled na ně odpovídá jednou obrazovkou s filtry, srovnáním s minulým obdobím a upozorněními.</p>
+    <span class="ukazka">Čísla jsou ukázková, slouží jen k posouzení vzhledu a obsahu</span>
+  </div>
+
+  <!-- FILTRY -->
+  <div class="filtry">
+    <span class="seg"><span>Dnes</span><span class="on">7 dní</span><span>30 dní</span><span>90 dní</span><span>Vlastní…</span></span>
+    <span class="prepinac"><i></i> Srovnat s předchozími 7 dny</span>
+    <span class="vyber"><small>Třída</small>obě</span>
+    <span class="vyber"><small>Zdroj</small>všechny</span>
+    <span class="vyber"><small>Zařízení</small>vše</span>
+    <span class="vyber" style="margin-left:auto">⬇ Export CSV</span>
+  </div>
+
+  <!-- 1 PŘEHLED -->
+  <section class="sekce">
+    <div class="sekce-hl"><span class="cislo">1</span><h2>Přehled</h2><small>8 čísel, která řeknou, jestli MateMax roste. Šipka ukazuje srovnání s předchozím obdobím.</small></div>
+    <div class="kpi">
+      <div class="tile"><span class="lbl">Návštěvníci</span><span class="val">412</span><span class="d up">▲ +318 % <span class="neu">(proti 99)</span></span><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline fill="none" stroke="var(--s1)" stroke-width="2" points="0,22 14,21 28,22 42,20 56,8 70,6 84,9 100,7"/></svg></div>
+      <div class="tile"><span class="lbl">Nové účty</span><span class="val">23</span><span class="d up">▲ +15 <span class="neu">(proti 8)</span></span><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline fill="none" stroke="var(--s1)" stroke-width="2" points="0,23 14,22 28,23 42,21 56,12 70,9 84,14 100,10"/></svg></div>
+      <div class="tile"><span class="lbl">Návštěva → účet</span><span class="val">5,6 <small>%</small></span><span class="d down">▼ −2,5 b. <span class="neu">(proti 8,1 %)</span></span><span class="pozn">Reklama přivádí víc lidí, kteří se jen dívají</span></div>
+      <div class="tile"><span class="lbl">Aktivní žáci za týden</span><span class="val">31</span><span class="d up">▲ +12</span><span class="pozn">aspoň 1 dokončený trénink</span></div>
+      <div class="tile"><span class="lbl">Trénují 3+ dny v týdnu</span><span class="val">11</span><span class="d up">▲ +4</span><span class="pozn">jádro, které se připravuje doopravdy</span></div>
+      <div class="tile"><span class="lbl">Platící Premium</span><span class="val">6</span><span class="d up">▲ +2</span><span class="pozn">kartou přes Stripe, bez dárků a zkoušek</span></div>
+      <div class="tile"><span class="lbl">Měsíční příjem z Premium</span><span class="val">594 <small>Kč</small></span><span class="d up">▲ +198 Kč</span><span class="pozn">ze Stripe, po zrušeních</span></div>
+      <div class="tile"><span class="lbl">Cena za nového žáka z reklamy</span><span class="val">87 <small>Kč</small></span><span class="d neu">útrata 1 400 Kč ÷ 16 účtů</span><span class="pozn">útratu zadáš v adminu nebo se načte z Meta</span></div>
+    </div>
+
+    <div class="g2">
+      <div class="karta">
+        <div class="hl"><h3>Návštěvníci po dnech</h3><small>čárkovaně předchozí období · svislé značky = události</small></div>
+        <svg id="graf-navstevy" viewBox="0 0 640 210" style="width:100%;height:auto;display:block"></svg>
+        <div class="hl" style="margin-top:10px"><h3>Nové účty po dnech</h3><small>sloupec = účty toho dne</small></div>
+        <svg id="graf-ucty" viewBox="0 0 640 120" style="width:100%;height:auto;display:block"></svg>
+      </div>
+      <div class="karta" style="display:flex;flex-direction:column;gap:10px">
+        <div class="hl" style="margin:0"><h3>Upozornění</h3><small>hlídá se samo, přijde i do kokpitu</small></div>
+        <div class="upoz spatne"><span>⛔</span><div><b>Potvrzení e-mailu: 9 z 23 účtů ho za 24 h nepotvrdilo</b>Nejvíc z Facebooku na mobilu. E-mail jde často do Promo/Hromadné.</div></div>
+        <div class="upoz pozor"><span>⚠️</span><div><b>Registrace: 6× chyba „heslo krátké“</b>Formulář chybu ukazuje až po odeslání. Lidé odcházejí.</div></div>
+        <div class="upoz pozor"><span>⚠️</span><div><b>Úloha Zlomky L2 #48: 81 % chyb</b>Podezřele těžká, nebo špatný klíč. Projít.</div></div>
+        <div class="upoz ok"><span>✅</span><div><b>Reklama „herní systém“ běží 4 dny</b>Cena za účet klesá: 112 → 87 Kč.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 REKLAMA A ZDROJE -->
+  <section class="sekce">
+    <div class="sekce-hl"><span class="cislo">2</span><h2>Reklama a zdroje</h2><span class="novy">nové</span><small>Co přinesla která kampaň, od kliku po platbu. Útrata a kliky přijdou z Meta, zbytek z appky.</small></div>
+    <div class="karta scroll">
+      <table class="tab">
+        <thead><tr><th>Zdroj / kampaň</th><th>Útrata</th><th>Kliky (Meta)</th><th>Návštěvníci</th><th>Odeslali registraci</th><th>Nové účty</th><th>Cena za účet</th><th>Potvrdili e-mail</th><th>Trénovali</th><th>3+ dny</th><th>Platí</th><th>Příjem</th><th>Návratnost</th></tr></thead>
+        <tbody>
+          <tr class="hl2"><td><b>facebook · herni-system</b> <span class="tag ok">reklama</span></td><td><span class="vstup">1 400 Kč</span></td><td>402</td><td>311</td><td>19</td><td><b>16</b></td><td><b>87 Kč</b></td><td>10</td><td>9</td><td>3</td><td>2</td><td>198 Kč/měs.</td><td><span class="tag pozor">14 % za 1. měsíc</span></td></tr>
+          <tr><td><b>facebook</b> <span class="neu">(post, bez reklamy)</span></td><td>—</td><td>—</td><td>38</td><td>3</td><td>3</td><td>—</td><td>3</td><td>2</td><td>1</td><td>0</td><td>—</td><td>—</td></tr>
+          <tr><td><b>letak</b> <span class="neu">(QR z testu nanečisto)</span></td><td>—</td><td>—</td><td>14</td><td>2</td><td>2</td><td>—</td><td>2</td><td>2</td><td>2</td><td>1</td><td>99 Kč/měs.</td><td>—</td></tr>
+          <tr><td><b>přímo</b> <span class="neu">(napsaná adresa, záložka)</span></td><td>—</td><td>—</td><td>49</td><td>2</td><td>2</td><td>—</td><td>2</td><td>2</td><td>1</td><td>0</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">Návratnost = příjem od žáků z kampaně ÷ útrata. Počítá se za 1 měsíc a výhled za celou přípravu do dubna (Premium se platí měsíčně).</p>
+    </div>
+    <div class="g2r">
+      <div class="karta">
+        <div class="hl"><h3>Trychtýř podle zdroje</h3><small>podíl z návštěvníků daného zdroje</small></div>
+        <div class="legenda" style="margin-bottom:8px"><span><i style="background:var(--s1)"></i>Facebook reklama</span><span><i style="background:var(--s2)"></i>Leták z testu</span><span><i style="background:var(--s3)"></i>Přímo</span></div>
+        <svg id="graf-zdroje" viewBox="0 0 520 230" style="width:100%;height:auto;display:block"></svg>
+      </div>
+      <div class="karta">
+        <div class="hl"><h3>Reklama po dnech</h3><small>útrata a cena za účet, zadané nebo z Meta</small></div>
+        <table class="tab">
+          <thead><tr><th>Den</th><th>Útrata</th><th>Kliky</th><th>Návštěvníci</th><th>Účty</th><th>Cena za účet</th></tr></thead>
+          <tbody>
+            <tr><td>Ne 22. 11.</td><td>350 Kč</td><td>96</td><td>71</td><td>3</td><td>117 Kč</td></tr>
+            <tr><td>Po 23. 11.</td><td>350 Kč</td><td>104</td><td>83</td><td>4</td><td>88 Kč</td></tr>
+            <tr><td>Út 24. 11.</td><td>350 Kč</td><td>99</td><td>79</td><td>4</td><td>88 Kč</td></tr>
+            <tr><td>St 25. 11.</td><td>350 Kč</td><td>103</td><td>78</td><td>5</td><td>70 Kč</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">Bez napojení na Meta zadáš útratu jednou za den, zabere to 10 vteřin. S napojením se načte sama.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 TRYCHTÝŘ -->
+  <section class="sekce">
+    <div class="sekce-hl"><span class="cislo">3</span><h2>Trychtýř: kde lidé odpadají</h2><small>Každý krok s procentem ztráty. Klepnutím na krok uvidíš, co lidé dělali těsně předtím, než odešli.</small></div>
+    <div class="karta">
+      <div class="legenda" style="margin-bottom:10px"><span><i style="background:var(--s1)"></i>Mobil</span><span><i style="background:var(--s2)"></i>Počítač</span></div>
+      <div id="trychtyr"></div>
+    </div>
+  </section>
+
+  <!-- 4 AKTIVACE + 5 RETENCE -->
+  <div class="g2r">
+    <section class="sekce">
+      <div class="sekce-hl"><span class="cislo">4</span><h2>Aktivace nových žáků</h2><small>Co udělají v prvních 24 hodinách</small></div>
+      <div class="karta akt">
+        <div class="akt-r"><div>Potvrdil e-mail<div class="akt-bar"><i style="width:61%"></i></div></div><b style="text-align:right">61 %</b></div>
+        <div class="akt-r"><div>Udělal diagnostiku<div class="akt-bar"><i style="width:48%"></i></div></div><b style="text-align:right">48 %</b></div>
+        <div class="akt-r"><div>Dokončil první trénink<div class="akt-bar"><i style="width:43%"></i></div></div><b style="text-align:right">43 %</b></div>
+        <div class="akt-r"><div>Otevřel truhlu / šatník Hexíka<div class="akt-bar"><i style="width:30%"></i></div></div><b style="text-align:right">30 %</b></div>
+        <div class="akt-r"><div>Vrátil se druhý den<div class="akt-bar"><i style="width:26%"></i></div></div><b style="text-align:right">26 %</b></div>
+        <p style="font-size:12.5px;color:var(--sedy)">Od registrace do prvního tréninku: <b>medián 6 min</b>. Kdo trénuje do 24 h, vrací se po týdnu 3× častěji.</p>
+      </div>
+    </section>
+    <section class="sekce">
+      <div class="sekce-hl"><span class="cislo">5</span><h2>Retence: vracejí se?</h2><small>Podíl žáků, kteří po registraci zase trénovali</small></div>
+      <div class="karta scroll">
+        <table class="koh" style="width:100%;border-collapse:separate">
+          <thead><tr><th>Registrace v týdnu</th><th>Žáků</th><th>Den 1</th><th>Den 7</th><th>Den 14</th><th>Den 30</th></tr></thead>
+          <tbody id="kohorty"></tbody>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">Tmavší = víc se jich vrátilo. Prázdné = ještě neuplynulo. Srovnání s odměnami (combo, mise, advent) ukáže, jestli herní systém drží žáky déle.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- 6 ZAPOJENÍ -->
+  <section class="sekce">
+    <div class="sekce-hl"><span class="cislo">6</span><h2>Zapojení a herní systém</h2><small>Jestli appka baví a které části se doopravdy používají</small></div>
+    <div class="g3">
+      <div class="tile"><span class="lbl">Minut v appce na aktivního žáka / týden</span><span class="val">47 <small>min</small></span><span class="d up">▲ +9 min</span></div>
+      <div class="tile"><span class="lbl">Příkladů na aktivního žáka / týden</span><span class="val">96</span><span class="d up">▲ +21</span></div>
+      <div class="tile"><span class="lbl">Úspěšnost odpovědí</span><span class="val">68 <small>%</small></span><span class="d neu">● beze změny</span></div>
+    </div>
+    <div class="karta">
+      <div class="hl"><h3>Kolik aktivních žáků za týden použilo…</h3><small>podíl ze 31 aktivních</small></div>
+      <svg id="graf-funkce" viewBox="0 0 1180 230" style="width:100%;height:auto;display:block"></svg>
+    </div>
+  </section>
+
+  <!-- 7 PENÍZE + 8 OBSAH -->
+  <div class="g2r">
+    <section class="sekce">
+      <div class="sekce-hl"><span class="cislo">7</span><h2>Peníze</h2><small>Premium od zobrazení po platbu a zrušení</small></div>
+      <div class="karta">
+        <div class="tr-krok" style="grid-template-columns:150px minmax(0,1fr) 60px"><span>Otevřeli Premium</span><span class="tr-bar"><i style="width:100%;background:var(--s1)"></i></span><span class="tr-n"><b>74</b></span></div>
+        <div class="tr-krok" style="grid-template-columns:150px minmax(0,1fr) 60px"><span>Začali platit</span><span class="tr-bar"><i style="width:16%;background:var(--s1)"></i></span><span class="tr-n"><b>12</b><span class="tr-ztrata">−84 %</span></span></div>
+        <div class="tr-krok" style="grid-template-columns:150px minmax(0,1fr) 60px"><span>Zaplatili</span><span class="tr-bar"><i style="width:8%;background:var(--s1)"></i></span><span class="tr-n"><b>6</b><span class="tr-ztrata">−50 %</span></span></div>
+        <div class="tr-krok" style="grid-template-columns:150px minmax(0,1fr) 60px"><span>Zrušili do měsíce</span><span class="tr-bar"><i style="width:1.4%;background:var(--s1)"></i></span><span class="tr-n"><b>1</b></span></div>
+        <p style="font-size:12.5px;color:var(--sedy);margin-top:8px">Polovina lidí odejde na stránce platby Stripe. Ukáže se i důvod: zavřeli okno, nebo karta neprošla.</p>
+      </div>
+    </section>
+    <section class="sekce">
+      <div class="sekce-hl"><span class="cislo">8</span><h2>Obsah: které úlohy dělají problém</h2></div>
+      <div class="karta scroll">
+        <table class="tab">
+          <thead><tr><th>Úloha</th><th>Pokusů</th><th>Chybovost</th><th>Přeskočeno</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>Zlomky L2 #48</b> <span class="neu">dělení smíšeného čísla</span></td><td>57</td><td>81 %</td><td>9</td><td><span class="tag spatne">projít klíč</span></td></tr>
+            <tr><td><b>Slovní úlohy L3 #12</b> <span class="neu">pohyb, dva vlaky</span></td><td>33</td><td>74 %</td><td>11</td><td><span class="tag pozor">moc těžká?</span></td></tr>
+            <tr><td><b>Geometrie L1 #07</b> <span class="neu">obvod obdélníku</span></td><td>88</td><td>4 %</td><td>0</td><td><span class="tag ok">moc lehká</span></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">Úloha s chybovostí nad 70 % se sama nahlásí do upozornění.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- 9 REPORT A KVALITA DAT -->
+  <section class="sekce">
+    <div class="sekce-hl"><span class="cislo">9</span><h2>Týdenní report a kvalita dat</h2></div>
+    <div class="g2r">
+      <div class="karta" style="font-size:13.5px;line-height:1.6;color:#33405F">
+        <h3 style="margin-bottom:6px">Každé pondělí v 7:00 do kokpitu (a e-mailem, pokud chceš)</h3>
+        <b>Týden 23.–29. 11.:</b> 412 návštěvníků (▲ 318 %), 23 nových účtů, 11 trénuje 3+ dny. Reklama přinesla 16 účtů po 87 Kč. Největší ztráta je potvrzení e-mailu (39 % ho nepotvrdí). Doporučení: přidat přihlášení přes Google na první místo.
+      </div>
+      <div class="karta" style="font-size:13px;line-height:1.6;color:#33405F">
+        <h3 style="margin-bottom:6px">Na čem čísla stojí</h3>
+        ✓ Testovací účty a tvoje zařízení se nepočítají.<br>
+        ✓ Měření bez cookies: návštěvník = anonymní otisk na jeden den. Účty a tréninky jsou přesné.<br>
+        ✓ Zdroj se uloží k účtu při registraci (od 22. 11.).<br>
+        ⚠ Kdo přijde z reklamy a zaregistruje se až další den v jiném okně, počítá se jako „přímo“. Proto u kampaně ukazuju i celkový nárůst účtů proti týdnu předtím.
+      </div>
+    </div>
+  </section>
+
+  <!-- JAK TO POSTAVÍME -->
+  <section class="postav">
+    <div><h3>1. Vlastní přehled v adminu (doporučuju)</h3><p>Všech 9 částí postavím nad daty, která už máme: návštěvy, účty, tréninky, odpovědi na úlohy a Stripe. Žádný nový nástroj, žádné cookies, data zůstávají u nás. Doplní se jen pár nových událostí, třeba „otevřel truhlu“, „zavřel platbu“ a „přeskočil úlohu“.</p></div>
+    <div><h3>2. Útrata z Meta</h3><ul><li>hned: políčko v adminu, kam zadáš útratu za den;</li><li>později: automatické načtení z Meta. Potřebuje přístupový klíč k reklamnímu účtu, ten založíš ty.</li></ul></div>
+    <div><h3>3. Volitelně: nahrávky a heatmapy</h3><p>Nástroj jako PostHog (EU servery, zdarma do 1 milionu událostí) umí přehrát, jak člověk klikal, a ukázat heatmapy. Potřebuje ale lištu se souhlasem s cookies, což u dětské appky nedoporučuju hned. Rozhodneme později.</p></div>
+  </section>
+
+</div>
+
+<script>
+const tip = document.getElementById("tip");
+function ukaz(e, html) { tip.innerHTML = html; tip.style.display = "block"; tip.style.left = Math.min(window.innerWidth - 200, e.clientX + 14) + "px"; tip.style.top = (e.clientY + 14) + "px"; }
+function skryj() { tip.style.display = "none"; }
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, a, rodic) => { const x = document.createElementNS(NS, tag); for (const k in a) x.setAttribute(k, a[k]); if (rodic) rodic.appendChild(x); return x; };
+const dny = ["19. 11.","20. 11.","21. 11.","22. 11.","23. 11.","24. 11.","25. 11."];
+
+// Návštěvníci: čára + předchozí období čárkovaně + anotace
+(function () {
+  const svg = document.getElementById("graf-navstevy");
+  const ted = [11, 12, 9, 84, 97, 95, 104], pred = [14, 9, 18, 13, 15, 16, 14];
+  const L = 36, R = 628, T = 14, B = 180, max = 120;
+  const x = i => L + i * (R - L) / 6, y = v => B - v / max * (B - T);
+  [0, 40, 80, 120].forEach(v => { el("line", { x1: L, x2: R, y1: y(v), y2: y(v), stroke: "#EEF0F6" }, svg); el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#8A93AA" }, svg).textContent = v; });
+  dny.forEach((d, i) => el("text", { x: x(i), y: 200, "text-anchor": "middle", "font-size": 11, fill: "#8A93AA" }, svg).textContent = d);
+  // anotace 22. 11.
+  el("line", { x1: x(3), x2: x(3), y1: T, y2: B, stroke: "#5F6982", "stroke-dasharray": "3 3" }, svg);
+  el("text", { x: x(3) + 6, y: T + 10, "font-size": 11, fill: "#33405F", "font-weight": 700 }, svg).textContent = "📣 Spuštěna reklama";
+  el("polyline", { points: pred.map((v, i) => `${x(i)},${y(v)}`).join(" "), fill: "none", stroke: "#A0A8BD", "stroke-width": 2, "stroke-dasharray": "5 4" }, svg);
+  el("polyline", { points: ted.map((v, i) => `${x(i)},${y(v)}`).join(" "), fill: "none", stroke: "var(--s1)", "stroke-width": 2, "stroke-linejoin": "round" }, svg);
+  ted.forEach((v, i) => el("circle", { cx: x(i), cy: y(v), r: 4, fill: "var(--s1)", stroke: "#fcfcfb", "stroke-width": 2 }, svg));
+  el("text", { x: R, y: y(104) - 10, "text-anchor": "end", "font-size": 11, fill: "#33405F", "font-weight": 700 }, svg).textContent = "tento týden";
+  el("text", { x: R, y: y(14) - 8, "text-anchor": "end", "font-size": 11, fill: "#8A93AA" }, svg).textContent = "předchozí týden";
+  const kurzor = el("line", { y1: T, y2: B, stroke: "#0D1B3E", "stroke-opacity": .25, visibility: "hidden" }, svg);
+  const plocha = el("rect", { x: L, y: T, width: R - L, height: B - T, fill: "transparent" }, svg);
+  plocha.addEventListener("mousemove", e => {
+    const r = svg.getBoundingClientRect(); const px = (e.clientX - r.left) / r.width * 640;
+    const i = Math.max(0, Math.min(6, Math.round((px - L) / ((R - L) / 6))));
+    kurzor.setAttribute("x1", x(i)); kurzor.setAttribute("x2", x(i)); kurzor.setAttribute("visibility", "visible");
+    ukaz(e, `<b>${dny[i]}</b><br>Návštěvníci: <b>${ted[i]}</b><br>Předchozí týden: ${pred[i]}`);
+  });
+  plocha.addEventListener("mouseleave", () => { kurzor.setAttribute("visibility", "hidden"); skryj(); });
+})();
+
+// Nové účty: sloupce
+(function () {
+  const svg = document.getElementById("graf-ucty");
+  const v = [1, 1, 0, 4, 5, 5, 7], L = 36, R = 628, T = 8, B = 92, max = 8;
+  const sirka = (R - L) / 7, bw = Math.min(40, sirka - 14);
+  [0, 4, 8].forEach(t => { el("line", { x1: L, x2: R, y1: B - t / max * (B - T), y2: B - t / max * (B - T), stroke: "#EEF0F6" }, svg); el("text", { x: L - 8, y: B - t / max * (B - T) + 4, "text-anchor": "end", "font-size": 11, fill: "#8A93AA" }, svg).textContent = t; });
+  v.forEach((n, i) => {
+    const cx = L + sirka * (i + .5), h = Math.max(n ? 3 : 0, n / max * (B - T));
+    const p = el("path", { d: `M${cx - bw / 2},${B} v${-h + 4} q0,-4 4,-4 h${bw - 8} q4,0 4,4 v${h - 4} z`, fill: "var(--s1)" }, svg);
+    if (n) el("text", { x: cx, y: B - h - 5, "text-anchor": "middle", "font-size": 11, fill: "#33405F", "font-weight": 700 }, svg).textContent = n;
+    el("text", { x: cx, y: 112, "text-anchor": "middle", "font-size": 11, fill: "#8A93AA" }, svg).textContent = dny[i];
+    const hit = el("rect", { x: cx - sirka / 2, y: T, width: sirka, height: B - T, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", e => ukaz(e, `<b>${dny[i]}</b><br>Nové účty: <b>${n}</b>`)); hit.addEventListener("mouseleave", skryj);
+  });
+})();
+
+// Trychtýř podle zdroje: seskupené vodorovné pruhy
+(function () {
+  const svg = document.getElementById("graf-zdroje");
+  const kroky = ["Návštěva", "Klik na registraci", "Účet", "Trénoval", "Platí"];
+  const data = { "Facebook reklama": [100, 14, 5.1, 2.9, 0.6], "Leták z testu": [100, 36, 14, 14, 7], "Přímo": [100, 12, 4.1, 4.1, 0] };
+  const barvy = ["var(--s1)", "var(--s2)", "var(--s3)"], jm = Object.keys(data);
+  const L = 118, R = 470, rowH = 44, bh = 10;
+  kroky.forEach((k, ki) => {
+    const y0 = 8 + ki * rowH;
+    el("text", { x: 0, y: y0 + 18, "font-size": 12, fill: "#33405F", "font-weight": 600 }, svg).textContent = k;
+    jm.forEach((z, zi) => {
+      const v = data[z][ki], w = Math.max(2, v / 100 * (R - L)), y = y0 + zi * (bh + 2);
+      el("rect", { x: L, y, width: w, height: bh, rx: 3, fill: barvy[zi] }, svg);
+      el("text", { x: L + w + 6, y: y + bh - 1, "font-size": 10.5, fill: "#33405F", "font-weight": 700 }, svg).textContent = (v % 1 ? v.toFixed(1).replace(".", ",") : v) + " %";
+      const hit = el("rect", { x: L, y: y - 1, width: R - L + 50, height: bh + 2, fill: "transparent" }, svg);
+      hit.addEventListener("mousemove", e => ukaz(e, `<b>${z}</b><br>${k}: <b>${String(v).replace(".", ",")} %</b> návštěvníků`)); hit.addEventListener("mouseleave", skryj);
+    });
+  });
+})();
+
+// Trychtýř: kroky, mobil / počítač
+(function () {
+  const box = document.getElementById("trychtyr");
+  const kroky = [["Návštěvníci", 352, 60], ["Otevřeli úvodní stránku", 330, 58], ["Klikli na Začít / registraci", 49, 15], ["Otevřeli registraci", 44, 14], ["Odeslali registraci", 21, 7], ["Potvrdili e-mail", 11, 5], ["Dokončili diagnostiku", 9, 4], ["Dokončili trénink", 8, 4], ["Otevřeli Premium", 6, 3], ["Zaplatili", 1, 1]];
+  const max = kroky[0][1] + kroky[0][2];
+  kroky.forEach(([k, m, p], i) => {
+    const celk = m + p, pred = i ? kroky[i - 1][1] + kroky[i - 1][2] : null;
+    const ztrata = pred ? Math.round((1 - celk / pred) * 100) : null;
+    const r = document.createElement("div"); r.className = "tr-krok";
+    r.innerHTML = `<span>${k}</span><span class="tr-bar"><i style="width:${m / max * 100}%;background:var(--s1)"></i><i style="width:${p / max * 100}%;background:var(--s2)"></i></span><span class="tr-n"><b>${celk}</b>${ztrata > 0 ? `<span class="tr-ztrata">−${ztrata} %</span>` : ""}</span>`;
+    r.addEventListener("mousemove", e => ukaz(e, `<b>${k}</b><br>Mobil: <b>${m}</b> · Počítač: <b>${p}</b>${ztrata > 0 ? `<br>Ztráta proti předchozímu kroku: ${ztrata} %` : ""}`));
+    r.addEventListener("mouseleave", skryj);
+    box.appendChild(r);
+  });
+})();
+
+// Kohorty
+(function () {
+  const tb = document.getElementById("kohorty");
+  const rows = [["26. 10.", 6, [50, 33, 33, 17]], ["2. 11.", 9, [44, 33, 22, 22]], ["9. 11.", 12, [58, 42, 33, null]], ["16. 11.", 8, [63, 50, null, null]], ["23. 11.", 23, [35, null, null, null]]];
+  const stupne = [[0, "#F0F4FA", "#33405F"], [15, "var(--q1)", "#0D1B3E"], [30, "var(--q2)", "#0D1B3E"], [40, "var(--q3)", "#0D1B3E"], [50, "var(--q4)", "#fff"], [60, "var(--q5)", "#fff"]];
+  rows.forEach(([t, n, v]) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${t}</td><td style="background:none;color:#33405F">${n}</td>` + v.map(x => {
+      if (x === null) return `<td style="background:#fff;border:1px dashed #E4E6EF;color:#C8CDDB">·</td>`;
+      const s = [...stupne].reverse().find(([min]) => x >= min);
+      return `<td style="background:${s[1]};color:${s[2]}" title="${x} %">${x} %</td>`;
+    }).join("");
+    tb.appendChild(tr);
+  });
+})();
+
+// Funkce herního systému
+(function () {
+  const svg = document.getElementById("graf-funkce");
+  const d = [["Denní mise", 71], ["Truhly za krystaly", 58], ["Šatník Hexíka", 52], ["Combo", 45], ["Boss týdne", 29], ["Pokojíček", 23], ["Sady", 16]];
+  const L = 180, R = 1100, rowH = 31;
+  d.forEach(([k, v], i) => {
+    const y = 6 + i * rowH, w = v / 100 * (R - L);
+    el("text", { x: L - 10, y: y + 15, "text-anchor": "end", "font-size": 12, fill: "#33405F", "font-weight": 600 }, svg).textContent = k;
+    el("rect", { x: L, y: y + 3, width: R - L, height: 16, rx: 4, fill: "#F0F2F7" }, svg);
+    el("rect", { x: L, y: y + 3, width: w, height: 16, rx: 4, fill: "var(--s1)" }, svg);
+    el("text", { x: L + w + 6, y: y + 15, "font-size": 11.5, fill: "#33405F", "font-weight": 700 }, svg).textContent = v + " %";
+    const hit = el("rect", { x: 0, y, width: 1180, height: rowH, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", e => ukaz(e, `<b>${k}</b><br>${v} % aktivních žáků (${Math.round(v * 31 / 100)} z 31)`)); hit.addEventListener("mouseleave", skryj);
+  });
+})();
+</script>
+</body>
+</html>

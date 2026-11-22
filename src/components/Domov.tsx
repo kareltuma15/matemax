@@ -37,6 +37,7 @@ import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { darekZDoporuceni, pouzitoLokalne, zbyva, DAREK_NA_TEMA } from "@/lib/ochutnavka";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import ProRodice from "@/components/ProRodice";
+import ChystaSe from "@/components/hexik/ChystaSe";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
 /** První jednotný termín přijímaček na víceletá gymnázia (ověřený fakt: 14.–15. 4. 2027). */
@@ -231,8 +232,10 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
         className="flex-1 w-full max-w-xl lg:max-w-6xl mx-auto px-4 lg:px-8 pt-4 lg:pt-8 pb-28 lg:pb-12 grid gap-4 lg:gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start"
         data-testid={g5 ? "dashboard-5" : "domov"}
       >
-        {/* ── Levý sloupec: kdo jsem, co dnes, všechna témata ── */}
-        <div className="flex flex-col gap-4 lg:gap-6 min-w-0">
+        {/* ── Levý sloupec: kdo jsem, co dnes, všechna témata, mise a Boss, co se chystá ──
+            Telefon: sloupce jsou „contents“ (jeden proud karet), pořadí drží order-*; počítač: dva sloupce
+            (Karel 22. 11.: vlevo bylo prázdno a všechno natlačené v úzkém pravém sloupci). */}
+        <div className="contents lg:flex lg:flex-col lg:gap-6 lg:min-w-0">
           <HlavickaZnacky>
             <div className="flex items-center justify-between gap-4">
               <p className="text-sm lg:text-base" style={{ color: "#D9D8FE" }}>{jmeno ? `Ahoj, ${vokativ(jmeno)}!` : "Ahoj!"}</p>
@@ -434,10 +437,21 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
               <ProRodice trida={trida} kompaktni />
             </div>
           )}
+
+          {/* Mise a Boss vedle sebe (na telefonu zůstávají dole, jako dřív) */}
+          <div className="order-1 lg:order-none grid gap-4 lg:grid-cols-2 lg:items-stretch empty:hidden lg:[&:has(>*:only-child)]:grid-cols-1" data-testid="domov-mise-boss">
+            <DenniMise streak={streak} odkaz />
+            <BossKarta trida={trida} jenCeka />
+          </div>
+
+          {/* Chystá se: velký odpočet akce; v adventu místo něj samotný kalendář */}
+          <ChystaSe trida={trida} />
+          <AdventKarta den={localDateStr()} />
+          <HexikUvod trida={trida} />
         </div>
 
-        {/* ── Pravý sloupec: odhad, týden, Premium ── */}
-        <div className="flex flex-col gap-4 lg:gap-6">
+        {/* ── Pravý sloupec: jen přehledy (rodiče, odhad, týden, pokojíček, kód z testu, rada) ── */}
+        <div className="contents lg:flex lg:flex-col lg:gap-6">
           {!isPremium && nacteno && (
             <div className="hidden lg:block" data-testid="domov-pro-rodice-pc">
               <ProRodice trida={trida} kompaktni />
@@ -498,17 +512,13 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
 
           <KodNeplatnyHlaska />
           <PropojenoKarta />
-          <AdventKarta den={localDateStr()} />
           <DomovHexika trida={trida} />
           <MamKodZTestu varianta="domov" />
-          <NovinkyDomov trida={trida} />
-          <HexikUvod trida={trida} />
+          <NovinkyDomov trida={trida} bezBrzy />
           <HexikRadi trida={trida} trenink={trenink} />
-          <DenniMise streak={streak} odkaz />
-          <BossKarta trida={trida} jenCeka />
 
           {isPremium && (
-            <div className="mm-karta p-4 lg:p-5 flex flex-col gap-2.5">
+            <div className="order-2 lg:order-none mm-karta p-4 lg:p-5 flex flex-col gap-2.5">
               <b style={{ color: "#0D1B3E" }}>Pozvi rodiče</b>
               <span className="text-sm" style={{ color: "#5F6982" }}>Každé pondělí jim přijde přehled, jak ti to jde: odhad bodů, vývoj a témata.</span>
               <Link href="/profil#rodice" className="w-full py-3 rounded-2xl text-center font-bold mm-obrys" style={{ color: "#0D1B3E", border: "1.5px solid #E4E6EF" }}>
@@ -517,7 +527,7 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
             </div>
           )}
 
-          <PushSubscribeNudge streak={streak} userId={session.user.id} />
+          <div className="order-2 lg:order-none empty:hidden"><PushSubscribeNudge streak={streak} userId={session.user.id} /></div>
         </div>
       </main>
       <BottomNav />

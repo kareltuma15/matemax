@@ -11,7 +11,7 @@ import type { Trida } from "@/types";
 const BARVY_GIRLANDY = ["#FF5E5E", "#FFD25E", "#5EE38F", "#5EB8FF", "#FF8AD8"];
 
 /** Popisek okénka (co je za ním) pro otevřená okénka a seznam odměn. */
-function obsahOkna(d: number, trida: Trida): { ik: string; text: string } {
+export function obsahOkna(d: number, trida: Trida): { ik: string; text: string } {
   const o = OKNA[d];
   if (o.druh === "krystaly") return { ik: "💎", text: `${o.n} krystalů` };
   if (o.druh === "truhla") return { ik: "🎁", text: "Sezónní truhla" };

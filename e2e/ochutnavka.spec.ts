@@ -132,5 +132,39 @@ test("Domov na počítači: týden i s tréninky z jiného zařízení, kroky He
   const kroky = page.getByTestId("hexik-uvod").locator("ol > li");
   await expect(kroky).toHaveCount(3);
   const sirky = await kroky.evaluateAll((li) => li.map((x) => x.getBoundingClientRect().width));
-  for (const w of sirky) expect(w).toBeGreaterThan(250);
+  // v širokém levém sloupci tři vedle sebe, každý krok dost široký na text (dřív ~70 px = slovo na řádek)
+  for (const w of sirky) expect(w).toBeGreaterThan(180);
+});
+
+// Karel 22. 11. 2026 (mockup domov-pocitac.html): na počítači mise a Boss vlevo vedle sebe, velký odpočet adventu
+// místo řádku „Za 9 dní“, vpravo jen přehledy. Na telefonu odpočet hned pod rámečkem Pro rodiče, mise dole.
+test("Domov: rozložení na počítači a velký odpočet adventu", async ({ page, context }, info) => {
+  await page.clock.setFixedTime(new Date("2026-11-22T10:00:00"));
+  await falesnaRelace(context);
+  await page.addInitScript(() => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-diag-done", "1"); });
+  const pc = info.project.name === "desktop";
+  await page.setViewportSize(pc ? { width: 1366, height: 900 } : { width: 375, height: 800 });
+  await page.goto("/");
+  const odpocet = page.getByTestId("chysta-se");
+  await expect(odpocet).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId("chysta-se-dni")).toContainText("9");
+  await expect(odpocet).toContainText("7 věcí, které jinde nejsou");
+  await odpocet.getByRole("button", { name: "Podívat se, co bude v okénkách" }).click();
+  await expect(page.getByTestId("chysta-se-veci").locator("li")).toHaveCount(7);
+  // malý řádek „Za 9 dní…“ v novinkách už není
+  await expect(page.getByTestId("novinky-domov")).not.toContainText("Za 9 dní");
+  const mise = page.getByTestId("domov-mise-boss");
+  const box = async (l: import("@playwright/test").Locator) => (await l.boundingBox())!;
+  if (pc) {
+    // Mise i odpočet jsou v levém (širokém) sloupci, odhad vpravo
+    const odhad = await box(page.getByTestId("domov-odhad"));
+    expect((await box(mise)).x + (await box(mise)).width).toBeLessThan(odhad.x);
+    expect((await box(odpocet)).width).toBeGreaterThan(600);
+  } else {
+    // Telefon: odpočet nad odhadem, mise pod ním
+    const odhad = await box(page.getByTestId("domov-odhad"));
+    expect((await box(odpocet)).y).toBeLessThan(odhad.y);
+    if (await mise.isVisible()) expect((await box(mise)).y).toBeGreaterThan(odhad.y);
+  }
+  await page.screenshot({ path: `.shots/domov-rozlozeni-${info.project.name}.png`, fullPage: true });
 });
