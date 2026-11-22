@@ -510,6 +510,7 @@ export default function ProfilPage() {
       "matemax-diag-done", "matemax-diag-results", "matemax-today",
       "matemax-streak-milestones", "matemax-freeze-used", "matemax-first-session-done",
       "matemax-session-history", "matemax-session-draft", "matemax-progress-milestones",
+      "matemax-dny-server", // počty příkladů po dnech ze serveru (dnyTreninku)
       "matemax-sbirka", // krystaly a odměny: přihlášenému se obnoví ze zálohy
       "matemax-trida", // jinak by si další účet na stejném zařízení převzal třídu toho předchozího
     ];

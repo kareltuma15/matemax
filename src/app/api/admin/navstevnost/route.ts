@@ -215,6 +215,45 @@ export async function GET(req: NextRequest) {
     { krok: "Začali platit", n: vSet((e) => e.event_name === "platba_start") },
   ];
 
+  // ── Kampaně: co který zdroj přinesl (Karel 22. 11. 2026, reklama na Facebooku) ──
+  // Návštěvník (denní otisk v) patří zdroji první návštěvy s kampaní / cizím webem, jinak „přímo“.
+  // Účty: zdroj uložený při registraci (user_metadata.zdroj, od 22. 11.), starší účty „neuvedeno“.
+  const zdrojUdalosti = (e: Ev): string => {
+    const x = p(e);
+    if (x.utm_source) return [x.utm_source, x.utm_campaign].filter(Boolean).join(" · ");
+    const r = x.ref ?? "";
+    if (/(^|\.)facebook\.com$|^fb\.me$/.test(r)) return "facebook";
+    if (/(^|\.)instagram\.com$/.test(r)) return "instagram";
+    return r || "přímo";
+  };
+  const zdrojV = new Map<string, string>();
+  for (const e of navstevy) {
+    const v = p(e).v; if (!v) continue;
+    const z = zdrojUdalosti(e);
+    if (!zdrojV.has(v) || (zdrojV.get(v) === "přímo" && z !== "přímo")) zdrojV.set(v, z);
+  }
+  const [{ data: premRows }, { data: trenRows }] = await Promise.all([
+    supabaseAdmin.from("user_premium").select("user_id, is_premium, stripe_subscription_id"),
+    supabaseAdmin.from("sessions").select("user_id").gte("date", od.slice(0, 10)).limit(20000),
+  ]);
+  const placeni = new Set((premRows ?? []).filter((r) => r.is_premium && r.stripe_subscription_id).map((r) => r.user_id as string));
+  const trenovali = new Set((trenRows ?? []).map((r) => r.user_id as string));
+  const kampMap = new Map<string, { zdroj: string; navstevniku: number; klikRegistrace: number; odeslali: number; ucty: number; potvrdili: number; trenovali: number; platici: number }>();
+  const kamp = (z: string) => kampMap.get(z) ?? kampMap.set(z, { zdroj: z, navstevniku: 0, klikRegistrace: 0, odeslali: 0, ucty: 0, potvrdili: 0, trenovali: 0, platici: 0 }).get(z)!;
+  for (const z of zdrojV.values()) kamp(z).navstevniku++;
+  const klikV = new Set(ev.filter((e) => e.event_name === "klik" && /^\/(registrace|vitej)/.test(p(e).cil ?? "")).map((e) => p(e).v).filter(Boolean) as string[]);
+  for (const v of klikV) kamp(zdrojV.get(v) ?? "přímo").klikRegistrace++;
+  for (const e of ev) if (e.event_name === "registrace_odeslana" || e.event_name === "registrace_google") kamp(p(e).v ? zdrojV.get(p(e).v!) ?? zdrojUdalosti(e) : zdrojUdalosti(e)).odeslali++;
+  for (const u of uzivatele) {
+    const z = (u.user_metadata as Record<string, unknown> | undefined)?.zdroj;
+    const k = kamp(typeof z === "string" && z ? z : "neuvedeno (účty před 22. 11.)");
+    k.ucty++;
+    if (u.email_confirmed_at || u.last_sign_in_at) k.potvrdili++;
+    if (trenovali.has(u.id)) k.trenovali++;
+    if (placeni.has(u.id)) k.platici++;
+  }
+  const kampane = [...kampMap.values()].sort((a, b) => b.ucty - a.ucty || b.navstevniku - a.navstevniku).slice(0, 20);
+
   // Trénink po týdnech (ověření, že odměny pomáhají): dny tréninku a příklady na žáka, úspěšnost.
   // Z tabulky sessions (jeden řádek = dokončený trénink). Jen souhrny, žádné jednotlivé účty.
   const tydnu = 8;
@@ -279,6 +318,6 @@ export async function GET(req: NextRequest) {
     trenink, odmeny,
     mereniOd: navstevy[0]?.created_at ?? null,
     souhrn: { navstevniku: unik(navstevy), stranek: navstevy.length, novychUctu: uzivatele.length },
-    poDnech, zdroje, stranky, kliky, zarizeni, trychtyr,
+    poDnech, zdroje, stranky, kliky, zarizeni, trychtyr, kampane,
   });
 }

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domov na počítači</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0D1B3E; --oranz:#F5A623; --fial:#5B55D6; --sedy:#5F6982; --pozadi:#EEF1F8; --cara:#E4E6EF; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"DM Sans",system-ui,sans-serif; background:#F4F5FA; color:var(--navy); }
+  .u { max-width:1240px; margin:0 auto; padding:28px 16px 6px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  .u p { color:var(--sedy); margin:4px 0; max-width:900px; line-height:1.5; }
+  .stitky { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 0; }
+  .stitky span { font-size:12px; font-weight:700; padding:3px 10px; border-radius:99px; background:#fff; border:1px solid var(--cara); }
+  .stitky b { color:#E5484D; }
+  .platno { max-width:1240px; margin:16px auto; padding:0 16px; }
+  .okno { background:var(--pozadi); border:1px solid #D5D9E6; border-radius:18px; overflow:hidden; box-shadow:0 10px 40px rgba(13,27,62,.08); }
+  .lista { background:#fff; border-bottom:1px solid var(--cara); display:flex; align-items:center; gap:22px; padding:10px 28px; font-size:13px; }
+  .lista .logo { display:flex; align-items:center; gap:8px; font-weight:800; }
+  .lista .logo i { width:30px; height:30px; border-radius:9px; background:var(--navy); display:inline-block; }
+  .lista nav { display:flex; gap:16px; color:#5F6982; font-weight:600; } .lista nav b { color:var(--navy); background:#EEF1F8; padding:4px 10px; border-radius:9px; }
+  .lista .chips { margin-left:auto; display:flex; gap:6px; } .lista .chips span { border:1px solid var(--cara); border-radius:9px; padding:3px 8px; font-weight:700; font-size:12px; }
+  .mrizka { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:22px; padding:24px 28px 30px; align-items:start; }
+  .sl { display:flex; flex-direction:column; gap:18px; min-width:0; }
+  .karta { background:#fff; border:1px solid var(--cara); border-radius:20px; padding:16px; }
+  .hlav { background:linear-gradient(160deg,#1B2A5C,#0D1B3E); color:#fff; border-radius:22px; padding:20px 22px; }
+  .hlav small { color:#D9D8FE; } .hlav h3 { margin:2px 0 12px; font-size:28px; }
+  .bar { height:7px; border-radius:9px; background:rgba(255,255,255,.18); } .bar i { display:block; width:12%; height:100%; background:var(--oranz); border-radius:9px; }
+  .stit { font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--sedy); }
+  .btn { display:inline-block; text-align:center; border-radius:14px; padding:10px 22px; font-weight:800; background:var(--oranz); color:var(--navy); font-size:14px; }
+  .trenink { display:grid; grid-template-columns:150px 1fr; border:2px solid #C2185B; border-radius:20px; overflow:hidden; background:#fff; }
+  .trenink .ik { background:#FCE4EC; display:grid; place-items:center; font-size:46px; }
+  .trenink .t { padding:16px 18px; }
+  .temata { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px; }
+  .tema { background:#fff; border:1px solid var(--cara); border-radius:14px; padding:10px 12px; font-size:13px; font-weight:700; }
+  .tema.z { background:#F7F8FC; border-style:dashed; color:#7A8199; } .tema small { display:block; font-size:11px; color:#8A5A00; margin-top:4px; }
+  .tema .pr { height:5px; border-radius:9px; background:#EEF0F6; margin-top:7px; } .tema .pr i { display:block; height:100%; width:15%; background:#C2185B; border-radius:9px; }
+  .dva { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .mise li { display:flex; justify-content:space-between; font-size:13px; padding:5px 0; border-top:1px solid #F0F2F7; } .mise ul { list-style:none; padding:0; margin:8px 0 0; }
+  .boss { background:linear-gradient(135deg,#6C5CE7,#2D2A6E); color:#fff; border-radius:20px; padding:16px; display:flex; flex-direction:column; gap:6px; }
+  .boss .stit { color:#D9D8FE; }
+  .novy { outline:3px dashed #E5484D; outline-offset:4px; position:relative; }
+  .novy::after { content:attr(data-novy); position:absolute; top:-11px; right:12px; background:#E5484D; color:#fff; font-size:10px; font-weight:800; padding:1px 8px; border-radius:99px; white-space:nowrap; }
+  /* Chystá se: advent */
+  .event { border-radius:24px; overflow:hidden; color:#fff; background:radial-gradient(120% 140% at 0% 0%,#1F6F4A 0%,#0E3B2B 55%,#0B2A20 100%); display:grid; grid-template-columns:minmax(0,1fr) 300px; position:relative; }
+  .event .txt { padding:22px 24px; display:flex; flex-direction:column; gap:10px; }
+  .event .odpocet { display:flex; align-items:baseline; gap:10px; }
+  .event .odpocet b { font-size:64px; line-height:.9; color:#FFD66B; font-weight:900; }
+  .event .odpocet span { font-size:15px; color:#CFEBDD; font-weight:700; }
+  .event h3 { margin:0; font-size:24px; }
+  .event p { margin:0; color:#CFEBDD; font-size:14px; line-height:1.45; }
+  .event .body { display:flex; flex-wrap:wrap; gap:8px; }
+  .event .body span { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); border-radius:99px; padding:4px 10px; font-size:12px; font-weight:700; }
+  .event .okenka { padding:18px; display:grid; grid-template-columns:repeat(6,1fr); gap:6px; align-content:center; background:rgba(0,0,0,.18); }
+  .event .okenka i { aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); display:grid; place-items:center; font-style:normal; font-size:11px; font-weight:800; color:#9FD3B9; }
+  .event .okenka i.d { background:#FFD66B; color:#0E3B2B; border-color:#FFD66B; }
+  .event .okenka i.t { background:linear-gradient(135deg,#E5484D,#B4232F); color:#fff; border-color:#FF8A8F; grid-column:span 2; grid-row:span 2; aspect-ratio:auto; font-size:22px; }
+  .event .btn { background:#FFD66B; align-self:flex-start; }
+  .snih { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(2px 2px at 10% 20%,#fff8,transparent),radial-gradient(2px 2px at 40% 70%,#fff6,transparent),radial-gradient(1.5px 1.5px at 70% 30%,#fff8,transparent),radial-gradient(2px 2px at 85% 80%,#fff5,transparent),radial-gradient(1.5px 1.5px at 25% 85%,#fff7,transparent); }
+  .uvod { background:linear-gradient(135deg,#EEEDFE,#FFF6E5); border:1.5px solid #DCD9FB; border-radius:22px; padding:16px; }
+  .uvod ol { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; list-style:none; padding:0; margin:10px 0 0; }
+  .uvod li { background:#fff; border:1px solid var(--cara); border-radius:14px; padding:10px; font-size:12.5px; color:var(--sedy); } .uvod li b { display:block; color:var(--navy); font-size:14px; }
+  .rodice { background:linear-gradient(150deg,#EBEAFE 0%,#F7F6FF 60%,#FFF6E5 100%); border:1.5px solid #C9C7F5; border-radius:20px; padding:14px; font-size:13px; }
+  .rodice .tag { background:var(--navy); color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:99px; text-transform:uppercase; }
+  .tyden .sloupce { display:flex; gap:6px; align-items:flex-end; height:70px; margin-top:10px; }
+  .tyden .sloupce i { flex:1; border-radius:6px; background:#EEF0F6; } .tyden .sloupce i.a { background:#FDBA74; } .tyden .sloupce i.d { background:var(--oranz); }
+  .tyden .dny { display:flex; gap:6px; font-size:11px; color:#8A93AA; margin-top:4px; } .tyden .dny span { flex:1; text-align:center; }
+  .pokoj { border-radius:20px; overflow:hidden; background:linear-gradient(160deg,#6C5CE7,#4B6CB7); color:#fff; padding:14px; display:flex; gap:12px; align-items:center; }
+  .pokoj .obr { width:84px; height:70px; border-radius:12px; background:rgba(255,255,255,.18); display:grid; place-items:center; font-size:34px; flex-shrink:0; }
+  .pozn { max-width:1240px; margin:8px auto 18px; padding:0 16px; }
+  .pozn div { background:#fff; border:1px solid var(--cara); border-radius:16px; padding:14px 18px; color:#33405F; line-height:1.6; font-size:14.5px; }
+  .pozn b { color:var(--navy); }
+  .mobil { max-width:1240px; margin:0 auto 40px; padding:0 16px; display:grid; grid-template-columns:360px 1fr; gap:24px; align-items:start; }
+  .tel { width:360px; background:var(--pozadi); border:10px solid #111; border-radius:40px; padding:14px 12px; }
+  .tel .event { grid-template-columns:1fr; }
+  .tel .event .okenka { grid-template-columns:repeat(8,1fr); padding:12px 14px 16px; }
+  .tel .event .odpocet b { font-size:48px; }
+  .tel .event h3 { font-size:20px; }
+  @media (max-width:900px) { .mrizka { grid-template-columns:1fr; } .mobil { grid-template-columns:1fr; } .tel { width:100%; max-width:360px; } .event { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header class="u">
+  <h1>Domov na počítači: vyvážené sloupce a velký odpočet adventu</h1>
+  <p>Teď je levý sloupec pod tématy prázdný a všechno ostatní je natlačené v úzkém pravém sloupci: mise, Boss, Hexík radí, novinky i uvítání. Nově je široký obsah vlevo a v pravém sloupci zůstávají jen malé přehledy.</p>
+  <div class="stitky"><span><b>①</b> Mise + Boss vedle sebe vlevo</span><span><b>②</b> Chystá se: velký odpočet adventu</span><span><b>③</b> Uvítání Hexíka na celou šířku</span><span><b>④</b> Vpravo jen přehledy</span></div>
+</header>
+
+<section class="platno">
+  <div class="okno">
+    <div class="lista">
+      <span class="logo"><i></i>MateMax</span>
+      <nav><b>Domů</b><span>Trénink</span><span>Testy</span><span>Hexík</span><span>Profil</span></nav>
+      <span class="chips"><span>🔥 2 dny</span><span>⚡ 656 XP</span><span>💎 503</span></span>
+    </div>
+    <div class="mrizka">
+      <!-- LEVÝ -->
+      <div class="sl">
+        <div class="hlav"><small>Ahoj, Karle!</small><h3>Do přijímaček zbývá 146 dní</h3><div class="bar"><i></i></div></div>
+        <div class="trenink"><div class="ik">±</div><div class="t"><span class="stit" style="color:#C2185B">Dnešní trénink</span><h3 style="margin:4px 0 2px;font-size:22px">Výrazy: Mocniny</h3><p style="color:var(--sedy);font-size:13px;margin:0 0 12px">7 příkladů · asi 8 minut</p><span class="btn">Pokračovat →</span></div></div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:17px">Tvoje témata</b><span style="font-size:13px;color:var(--sedy)">3 otevřená · 6 v Premium</span></div>
+          <div class="temata">
+            <div class="tema">Zlomky<div class="pr"><i></i></div></div><div class="tema">Výrazy<div class="pr"><i style="width:4%;background:#2E6DA4"></i></div></div><div class="tema">Rovnice<div class="pr"><i style="width:2%;background:#5B55D6"></i></div></div>
+            <div class="tema z">🔒 Geometrie<small>V Premium</small></div><div class="tema z">🔒 Slovní úlohy<small>V Premium</small></div><div class="tema z">🔒 Grafy a logika<small>V Premium</small></div>
+          </div>
+        </div>
+
+        <div class="dva novy" data-novy="① PŘESUNUTO VLEVO">
+          <div class="karta mise">
+            <span class="stit">Denní mise</span>
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:17px">2 dny v řadě</b><span style="color:var(--sedy);font-weight:700">0/3</span></div>
+            <ul><li><span>Dokonči dnešní trénink</span><span style="color:#2E6DA4">+15 💎</span></li><li><span>Vyřeš správně 3 příklady 2.–3. úrovně</span><span style="color:#2E6DA4">0/3</span></li><li><span>Odpověz správně na 20 příkladů</span><span style="color:#2E6DA4">0/20</span></li></ul>
+          </div>
+          <div class="boss">
+            <span class="stit">Boss týdne · Rovnice</span>
+            <b style="font-size:20px">👾 Těžká úloha ve stylu přijímaček</b>
+            <span style="font-size:13px;color:#E4E5FF">Jeden pokus za týden. Výhra: trofej, +100 krystalů a +50 XP.</span>
+            <span class="btn" style="align-self:flex-start;margin-top:auto">Utkat se</span>
+          </div>
+        </div>
+
+        <div class="event novy" data-novy="② CHYSTÁ SE: VELKÝ ODPOČET">
+          <div class="snih"></div>
+          <div class="txt">
+            <span class="stit" style="color:#9FD3B9">Chystá se v MateMaxu</span>
+            <div class="odpocet"><b>9</b><span>dní do 1. prosince</span></div>
+            <h3>🎄 Adventní kalendář s Hexíkem</h3>
+            <p>24 okének, každý den jedno po tréninku. Uvnitř krystaly, tři sezónní truhly a sedm věcí pro Hexíka, které jinde nejsou. Kdo otevře všech 24, dostane navíc 300 krystalů.</p>
+            <div class="body"><span>🦌 7 věcí, které jinde nejsou</span><span>🎁 3 sezónní truhly</span><span>💎 +300 za všech 24</span></div>
+            <span class="btn">Podívat se, co bude v okénkách</span>
+          </div>
+          <div class="okenka">
+            <i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i>14</i><i>15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i><i>22</i><i>23</i><i class="d">⭐</i>
+          </div>
+        </div>
+
+        <div class="uvod novy" data-novy="③ NA CELOU ŠÍŘKU">
+          <b style="font-size:17px">Ahoj, já jsem Hexík!</b> <span style="color:var(--sedy);font-size:13px">Budu s tebou u každého příkladu. Takhle to funguje:</span>
+          <ol><li><b>1. Řeš příklady</b>Za každou správnou odpověď dostaneš krystaly a XP. Za rychlé tipování nic.</li><li><b>2. Sbírej úrovně</b>S XP rosteš v úrovních. Každá dá krystaly, některé i věc, kterou jinde nezískáš.</li><li><b>3. Otevírej truhly</b>Za krystaly otevřeš truhly a oblékneš mě. Nic se nekupuje za peníze.</li></ol>
+        </div>
+      </div>
+
+      <!-- PRAVÝ -->
+      <div class="sl novy" data-novy="④ JEN PŘEHLEDY">
+        <div class="rodice"><div style="display:flex;justify-content:space-between"><span class="tag">Pro rodiče</span><b>99 Kč měsíčně</b></div><b style="display:block;margin:6px 0 4px">MateMax Premium: celá příprava v jedné appce</b><span style="color:#4741B8;font-weight:800">Co Premium obsahuje →</span></div>
+        <div class="karta"><span class="stit">Odhad u přijímaček</span><div style="font-size:30px;font-weight:900;margin-top:4px">18 <span style="font-size:16px;color:var(--sedy)">/ 50 b.</span></div><span style="font-size:12px;color:#14753A;font-weight:700">↑ +3 b. za 2 týdny</span></div>
+        <div class="karta tyden"><span class="stit">Tento týden</span><div style="font-size:24px;font-weight:900">28 příkladů</div>
+          <div class="sloupce"><i style="height:10%"></i><i style="height:10%"></i><i style="height:10%"></i><i class="a" style="height:50%"></i><i class="a" style="height:100%"></i><i class="a" style="height:50%"></i><i class="d" style="height:25%"></i></div>
+          <div class="dny"><span>Po</span><span>Út</span><span>St</span><span>Čt</span><span>Pá</span><span>So</span><span><b style="color:var(--navy)">Ne</b></span></div>
+          <span style="font-size:12px;color:#C2410C;font-weight:700">🔥 2 dny v řadě</span></div>
+        <div class="pokoj"><div class="obr">🏠</div><div><b>Hexíkův pokojíček</b><div style="font-size:12.5px;color:#E4E5FF">Hexík má domov ve 3D. Ťukni na věc a udělá ji sám.</div></div></div>
+        <div class="karta" style="font-size:13px"><b>📝 Mám kód z testu</b><div style="color:var(--sedy)">Kód z letáčku z testu nanečisto, když nemáš čím naskenovat QR.</div></div>
+        <div class="karta" style="font-size:13px"><b>💡 Hexík radí</b><div style="color:var(--sedy)">Téma Výrazy: Mocniny ti zatím jde nejhůř. Až ho dotáhneš, dostaneš Truhlu doporučení.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pozn"><div>
+  <b>① Mise a Boss</b> jsou vedle sebe pod tématy, takže levý sloupec nekončí prázdný. „Hexík radí“ se zmenší na krátkou kartu vpravo.<br>
+  <b>② Chystá se:</b> místo malého řádku „Za 9 dní…“ je velký odpočet s mřížkou 24 okének a tím, co v nich bude. Od 1. 12. se ze stejného místa stane samotný kalendář: dnešní okénko svítí a tlačítko „Otevřít“. Až advent skončí, místo dostane další chystaná akce (sezóna Zima 7. 1.), nebo zmizí.<br>
+  <b>③ Uvítání Hexíka</b> je jen pro nové žáky a teď má tři kroky vedle sebe na celou šířku. Úzký sloupec, ve kterém byl jeden řádek po slovu, je pryč. Tahle chyba je už opravená i v současné podobě.<br>
+  <b>④ Vpravo</b> zůstávají malé přehledy: rodiče, odhad, týden, pokojíček, kód z testu. Na mobilu se pořadí skoro nemění, jen odpočet adventu je větší (viz níže).
+</div></section>
+
+<section class="mobil">
+  <div class="tel">
+    <div class="event novy" data-novy="② NA MOBILU">
+      <div class="snih"></div>
+      <div class="txt">
+        <span class="stit" style="color:#9FD3B9">Chystá se v MateMaxu</span>
+        <div class="odpocet"><b>9</b><span>dní do 1. prosince</span></div>
+        <h3>🎄 Adventní kalendář s Hexíkem</h3>
+        <p>24 okének, každý den jedno po tréninku. Sedm věcí pro Hexíka, které jinde nejsou.</p>
+        <span class="btn">Co bude v okénkách</span>
+      </div>
+      <div class="okenka">
+        <i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i>14</i><i>15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i><i>22</i><i>23</i><i class="d">24</i>
+      </div>
+    </div>
+  </div>
+  <div class="pozn" style="margin:0;padding:0"><div>
+    <b>Mobil:</b> odpočet je hned pod mapou témat a rámečkem Pro rodiče, ještě před misemi. Je vidět po jednom posunutí prstem.<br><br>
+    <b>Texty:</b> obsah okének a sedm věcí beru z hotového adventního kalendáře v appce. Nic nového se neslibuje a o ceně tu není nic, takže to neporušuje pravidla pro děti.
+  </div></div>
+</section>
+</body>
+</html>

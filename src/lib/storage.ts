@@ -1,7 +1,7 @@
 // Storage facade — localStorage now, Supabase once a user is logged in
 import { supabase } from "./supabase";
 import { reportDbError } from "./db-error";
-import { localDateStr } from "./date";
+import { localDateStr, localDateDaysAgo } from "./date";
 import { temataTreninku } from "./vysledky";
 import { SM2Card, UserProgress } from "@/types";
 import { loadGamification, saveGamification, GamificationState } from "./gamification";
@@ -143,6 +143,26 @@ export function localLoadSessions(): SessionHistoryEntry[] {
     const raw = localStorage.getItem(SESSION_HISTORY_KEY);
     return raw ? (JSON.parse(raw) as SessionHistoryEntry[]) : [];
   } catch { return []; }
+}
+
+// ── Dny s tréninkem (z prohlížeče + ze serveru) ─────────────────────────────
+// Historie tréninků výše žije jen v prohlížeči. Kdo trénoval na telefonu a otevře appku na počítači,
+// viděl prázdný týden i kalendář, přestože mu běžela série dní (ta se obnovuje ze serveru).
+// hydrateFromRemote proto uloží počty příkladů po dnech z tabulky sessions a tady se sloučí s místními.
+
+const DNY_SERVER_KEY = "matemax-dny-server";
+
+/** Počet příkladů po dnech (YYYY-MM-DD): za každý den vyšší z čísel prohlížeč / server. */
+export function dnyTreninku(): Map<string, number> {
+  const dny = new Map<string, number>();
+  for (const s of localLoadSessions()) dny.set(s.date, (dny.get(s.date) ?? 0) + (s.total ?? 0));
+  if (typeof window !== "undefined") {
+    try {
+      const server = JSON.parse(localStorage.getItem(DNY_SERVER_KEY) ?? "{}") as Record<string, number>;
+      for (const [d, n] of Object.entries(server)) if (n > (dny.get(d) ?? 0)) dny.set(d, n);
+    } catch { /* nic */ }
+  }
+  return dny;
 }
 
 export async function remoteSyncBadges(userId: string, badgeIds: string[]): Promise<void> {
@@ -297,12 +317,16 @@ export async function hydrateFromRemote(userId: string): Promise<HydrateResult |
     try {
       // Datum = kalendářní den uživatele (viz lib/date.ts), stejně jako u zapisovatelů.
       const todayStr = localDateStr();
-      const { data: todayRows } = await supabase
+      // Rovnou počty za posledních 10 týdnů: týden na Domově a kalendář aktivity v profilu (dnyTreninku)
+      const { data: dnyRows } = await supabase
         .from("sessions")
-        .select("total")
+        .select("date, total")
         .eq("user_id", userId)
-        .eq("date", todayStr);
-      const serverToday = (todayRows ?? []).reduce((s, r) => s + ((r.total as number) ?? 0), 0);
+        .gte("date", localDateStr(localDateDaysAgo(70)));
+      const poDnech: Record<string, number> = {};
+      for (const r of dnyRows ?? []) poDnech[r.date as string] = (poDnech[r.date as string] ?? 0) + ((r.total as number) ?? 0);
+      localStorage.setItem(DNY_SERVER_KEY, JSON.stringify(poDnech));
+      const serverToday = poDnech[todayStr] ?? 0;
       if (serverToday > 0) {
         let local = 0;
         try {

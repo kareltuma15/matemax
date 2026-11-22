@@ -38,6 +38,7 @@ interface Data {
   kliky: { k: string; n: number }[];
   zarizeni: { k: string; n: number }[];
   trychtyr: { krok: string; n: number }[];
+  kampane?: { zdroj: string; navstevniku: number; klikRegistrace: number; odeslali: number; ucty: number; potvrdili: number; trenovali: number; platici: number }[];
   trenink: { tyden: string; zaku: number; dniNaZaka: number; prikladuNaZaka: number; uspesnost: number | null }[];
   uvod: { zobrazeni: number; navstevniku: number; odesliHned: number; bezKliku: number; medianSekund: number | null; scroll: { min: number; podil: number }[]; posledniSekce: { k: string; n: number }[]; kliky: { k: string; n: number }[]; pokracovali: number; formular: { k: string; n: number }[]; chyby: { k: string; n: number }[] };
   odmeny: { zaku: number; ziskano: number; utraceno: number; truhel: number; odmen: number } | null;
@@ -269,6 +270,46 @@ export default function NavstevnostPage() {
               </div>
             )}
           </div>
+
+          {data.kampane && data.kampane.length > 0 && (
+            <div className="mm-karta p-4" data-testid="kampane">
+              <b className="text-sm" style={{ color: "#0D1B3E" }}>Co přinesl který zdroj (za {data.dni} dní)</b>
+              <p className="text-xs mt-0.5" style={{ color: "#5F6982" }}>
+                Návštěvník patří zdroji, odkud ten den poprvé přišel (reklama s utm, klik z Facebooku, Google…). Účty podle zdroje uloženého při registraci, měří se od 22. 11. 2026.
+                Trénovali = aspoň jeden dokončený trénink, platí = Premium přes kartu.
+              </p>
+              <div className="overflow-x-auto mt-3">
+                <table className="w-full text-sm tabular-nums" style={{ color: "#33405F" }}>
+                  <thead>
+                    <tr className="text-left text-xs" style={{ color: "#8A93AA" }}>
+                      <th className="py-1 pr-3 font-semibold">Zdroj</th>
+                      <th className="py-1 px-2 font-semibold text-right">Návštěvníci</th>
+                      <th className="py-1 px-2 font-semibold text-right">Klik na registraci</th>
+                      <th className="py-1 px-2 font-semibold text-right">Odeslali registraci</th>
+                      <th className="py-1 px-2 font-semibold text-right">Nové účty</th>
+                      <th className="py-1 px-2 font-semibold text-right">Potvrdili</th>
+                      <th className="py-1 px-2 font-semibold text-right">Trénovali</th>
+                      <th className="py-1 pl-2 font-semibold text-right">Platí</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.kampane.map((k) => (
+                      <tr key={k.zdroj} className="border-t" style={{ borderColor: "#EEF0F6" }}>
+                        <td className="py-1.5 pr-3 font-bold break-words" style={{ color: "#0D1B3E" }}>{k.zdroj}</td>
+                        <td className="py-1.5 px-2 text-right">{k.navstevniku}</td>
+                        <td className="py-1.5 px-2 text-right">{k.klikRegistrace}</td>
+                        <td className="py-1.5 px-2 text-right">{k.odeslali}</td>
+                        <td className="py-1.5 px-2 text-right font-bold" style={{ color: "#0D1B3E" }}>{k.ucty}</td>
+                        <td className="py-1.5 px-2 text-right">{k.potvrdili}</td>
+                        <td className="py-1.5 px-2 text-right">{k.trenovali}</td>
+                        <td className="py-1.5 pl-2 text-right">{k.platici}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           <div className="mm-karta p-4" data-testid="trychtyr">
             <b className="text-sm" style={{ color: "#0D1B3E" }}>Kde lidé odpadají (za {data.dni} dní)</b>

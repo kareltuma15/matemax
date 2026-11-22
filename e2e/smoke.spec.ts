@@ -152,3 +152,28 @@ test("úvodní stránka: měření pošle odchod s časem, scrollem a poslední 
   expect(typeof odchod.sk).toBe("string");
   expect(udalosti.some((u) => u.e === "klik")).toBe(true);
 });
+
+// Reklama na Facebooku (22. 11. 2026): klik z Facebooku (fbclid) nebo utm se drží celou návštěvu,
+// takže i registrace o pár stránek dál se přiřadí ke kampani.
+test("kampaň: zdroj z první stránky (fbclid / utm) se posílá i z dalších stránek", async ({ page }) => {
+  const udalosti: Record<string, unknown>[] = [];
+  await page.route("**/api/t", async (route) => {
+    try { udalosti.push(JSON.parse(route.request().postData() ?? "{}")); } catch { /* ignoruj */ }
+    await route.fulfill({ status: 204 });
+  });
+  await page.goto("/?fbclid=IwAR0test");
+  await expect(page.locator('[data-sekce="uvod"]')).toBeVisible();
+  await page.locator('a[href^="/registrace"]:visible').first().click();
+  await page.waitForURL(/registrace/);
+  await expect.poll(() => udalosti.find((u) => u.e === "navsteva" && u.p === "/registrace")).toBeTruthy();
+  const reg = udalosti.find((u) => u.e === "navsteva" && u.p === "/registrace")!;
+  expect(reg.us).toBe("facebook");
+  expect(reg.um).toBe("fbclid");
+
+  await page.goto("/?utm_source=facebook&utm_medium=reklama&utm_campaign=herni-system&fbclid=x");
+  await expect(page.locator('[data-sekce="uvod"]')).toBeVisible();
+  await page.goto("/registrace");
+  await expect.poll(() => udalosti.filter((u) => u.e === "navsteva" && u.p === "/registrace").length).toBeGreaterThan(1);
+  const reg2 = udalosti.filter((u) => u.e === "navsteva" && u.p === "/registrace").pop()!;
+  expect(reg2.uc).toBe("herni-system");
+});

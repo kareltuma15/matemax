@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { hydrateFromRemote } from "@/lib/storage";
 import { obnovSbirku, zalohujSbirku } from "@/lib/sbirka-sync";
 import { SBIRKA_EVENT } from "@/lib/sbirka";
+import { zdrojProUcet } from "@/components/Mereni";
 
 /**
  * Obnoví postup ze serveru po přihlášení (nález #17).
@@ -51,7 +52,15 @@ export default function ProgressSync() {
       }
     }
 
+    // Nový účet přes Google: zdroj (kampaň) se při registraci nedá poslat jako u e-mailu, doplní se po přihlášení
+    async function doplnZdroj(user: { created_at: string; user_metadata?: Record<string, unknown> }) {
+      if (!supabase || user.user_metadata?.zdroj || Date.now() - Date.parse(user.created_at) > 3600_000) return;
+      const { error } = await supabase.auth.updateUser({ data: { zdroj: zdrojProUcet() } });
+      if (error) console.warn("[zdroj]", error.message);
+    }
+
     supabase.auth.getSession().then(({ data }) => {
+      if (data.session && !cancelled) void doplnZdroj(data.session.user);
       if (data.session && !cancelled) run(data.session.user.id);
     });
 

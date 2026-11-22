@@ -9,7 +9,7 @@ import { reportDbError } from "@/lib/db-error";
 import { PENDING_REF_KEY } from "@/lib/referral";
 import { saveLocalTrida } from "@/lib/trida";
 import type { Trida } from "@/types";
-import { mer } from "@/components/Mereni";
+import { mer, zdrojProUcet } from "@/components/Mereni";
 import { navratPoRegistraci } from "@/lib/bezpecny-next";
 
 export default function RegistraceForm() {
@@ -77,6 +77,8 @@ export default function RegistraceForm() {
           first_name: callName,
           full_name: callName || undefined,
           trida,
+          // Odkud žák přišel (reklama, post, Google…), ať jde v adminu spočítat, co která kampaň přinesla
+          zdroj: zdrojProUcet(),
         },
       },
     });

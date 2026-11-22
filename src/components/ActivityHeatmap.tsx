@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { localLoadSessions } from "@/lib/storage";
+import { dnyTreninku } from "@/lib/storage";
 import { localDateStr, pondeliTydne } from "@/lib/date";
 
 const DAY_LABELS = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
@@ -11,10 +11,15 @@ export default function ActivityHeatmap() {
   const [totalPracticed, setTotalPracticed] = useState(0);
 
   useEffect(() => {
-    const sessions = localLoadSessions();
-    const dates = new Set(sessions.map((s) => s.date));
-    setPracticeSet(dates);
-    setTotalPracticed(dates.size);
+    // Tréninky z prohlížeče i ze serveru (trénink na telefonu je vidět i na počítači); po obnově ze serveru znovu
+    function nacti() {
+      const dates = new Set([...dnyTreninku()].filter(([, n]) => n > 0).map(([d]) => d));
+      setPracticeSet(dates);
+      setTotalPracticed(dates.size);
+    }
+    nacti();
+    window.addEventListener("matemax-progress-update", nacti);
+    return () => window.removeEventListener("matemax-progress-update", nacti);
   }, []);
 
   // Build grid: 8 columns (weeks) × 7 rows (Mon–Sun)

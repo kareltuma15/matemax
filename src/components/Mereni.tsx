@@ -20,13 +20,48 @@ const nemerit = () => { try { return localStorage.getItem(NEMERIT_KEY) === "1"; 
 const DULEZITE = /^\/(registrace|vitej|prihlaseni|diagnostika|trenink|premium|cenik|testy|rodice|matemax|jak-to-funguje)(\/|\?|$)/;
 const VEREJNE = /^\/($|registrace|prihlaseni|vitej|cenik|jak-to-funguje|zapomenute-heslo)/;
 
+/**
+ * Odkud návštěvník přišel (kampaň), platí po celou dobu v záložce (sessionStorage, žádný identifikátor).
+ * Bez toho měla utm jen první stránka: registrace o dvě stránky dál už se ke kampani nepřiřadila.
+ * Klik z Facebooku (reklama i post) přidá do adresy fbclid → zdroj „facebook“, i když reklama nemá utm.
+ */
+const ZDROJ_KEY = "matemax-zdroj";
+type Zdroj = { us?: string; um?: string; uc?: string };
+function zdrojZAdresy(): Zdroj | null {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const us = q.get("utm_source") ?? undefined, um = q.get("utm_medium") ?? undefined, uc = q.get("utm_campaign") ?? undefined;
+    if (us || um || uc) return { us: us ?? (q.has("fbclid") ? "facebook" : undefined), um, uc };
+    if (q.has("fbclid")) return { us: "facebook", um: "fbclid" };
+  } catch { /* nic */ }
+  return null;
+}
+function zdroj(): Zdroj {
+  const z = zdrojZAdresy();
+  try {
+    if (z) { sessionStorage.setItem(ZDROJ_KEY, JSON.stringify(z)); return z; }
+    return JSON.parse(sessionStorage.getItem(ZDROJ_KEY) ?? "{}") as Zdroj;
+  } catch { return z ?? {}; }
+}
+/** Název zdroje jako v adminu: „facebook · herni-system“, „google.com“, „přímo“. Ukládá se k novému účtu. */
+export function zdrojProUcet(): string {
+  if (typeof window === "undefined") return "přímo";
+  const z = zdroj();
+  if (z.us) return [z.us, z.uc].filter(Boolean).join(" · ").slice(0, 100);
+  try {
+    const r = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : "";
+    if (r && !r.endsWith(window.location.hostname)) return /(^|\.)facebook\.com$|^fb\.me$/.test(r) ? "facebook" : /(^|\.)instagram\.com$/.test(r) ? "instagram" : r.slice(0, 100);
+  } catch { /* nic */ }
+  return "přímo";
+}
+
 export function mer(e: string, data: Record<string, string | number | undefined> = {}): void {
   if (nemerit()) return;
   try {
-    const q = new URLSearchParams(window.location.search);
+    const z = zdroj();
     const telo = JSON.stringify({
       e, p: window.location.pathname, r: document.referrer || undefined,
-      us: q.get("utm_source") ?? undefined, um: q.get("utm_medium") ?? undefined, uc: q.get("utm_campaign") ?? undefined,
+      us: z.us, um: z.um, uc: z.uc,
       ...data,
     });
     if (navigator.sendBeacon) navigator.sendBeacon("/api/t", new Blob([telo], { type: "text/plain" }));

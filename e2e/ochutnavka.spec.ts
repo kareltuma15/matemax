@@ -114,3 +114,23 @@ for (const sirka of [320, 375]) {
     await page.screenshot({ path: `.shots/domov-premium-${sirka}.png`, fullPage: true });
   });
 }
+
+// Karel 22. 11. 2026 z počítače: trénoval na telefonu, na počítači „2 dny v řadě“, ale týden prázdný.
+// Počty po dnech ze serveru (matemax-dny-server, plní je obnova po přihlášení) se počítají do týdne;
+// uvítání Hexíka v úzkém pravém sloupci má kroky pod sebou, ne jedno slovo na řádek.
+test("Domov na počítači: týden i s tréninky z jiného zařízení, kroky Hexíka čitelné", async ({ page, context }, info) => {
+  test.skip(info.project.name !== "desktop", "počítač");
+  await page.setViewportSize({ width: 1366, height: 900 });
+  await falesnaRelace(context);
+  // Server: dnes 7 a včera 14 příkladů (tabulka sessions), prohlížeč počítače nemá nic
+  const d = new Date(); const k = (x: Date) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
+  const vcera = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
+  await context.route("**/rest/v1/sessions**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify([{ date: k(d), total: 7 }, { date: k(vcera), total: 14 }]) }));
+  await page.addInitScript(() => { localStorage.setItem("matemax-trida", "9"); localStorage.setItem("matemax-diag-done", "1"); });
+  await page.goto("/");
+  await expect(page.getByText("21 příkladů")).toBeVisible({ timeout: 20_000 });
+  const kroky = page.getByTestId("hexik-uvod").locator("ol > li");
+  await expect(kroky).toHaveCount(3);
+  const sirky = await kroky.evaluateAll((li) => li.map((x) => x.getBoundingClientRect().width));
+  for (const w of sirky) expect(w).toBeGreaterThan(250);
+});

@@ -15,7 +15,7 @@ import { getDaysUntilCermat } from "@/lib/cermat-date";
 import { urovenZXP, dalsiVelkaOdmena } from "@/lib/urovne";
 import { krystaly } from "@/lib/sbirka";
 import { useSbirka } from "@/lib/use-sbirka";
-import { localLoadSessions } from "@/lib/storage";
+import { dnyTreninku } from "@/lib/storage";
 import { localDateStr, localDateDaysAgo } from "@/lib/date";
 import { temaStyl } from "@/lib/barvy-temat";
 import { isTopicLocked } from "@/lib/subscription";
@@ -62,7 +62,7 @@ interface Den { popis: string; pocet: number; dnes: boolean }
 function tentoTyden(): { prikladu: number; dny: Den[] } {
   const data = Array.from({ length: 7 }, (_, i) => localDateDaysAgo(6 - i));
   const pocty = new Map(data.map((d) => [localDateStr(d), 0]));
-  for (const s of localLoadSessions()) if (pocty.has(s.date)) pocty.set(s.date, (pocty.get(s.date) ?? 0) + s.total);
+  for (const [d, n] of dnyTreninku()) if (pocty.has(d)) pocty.set(d, n);
   const dny = data.map((d, i) => ({ popis: ZKRATKY_DNU[d.getDay()], pocet: pocty.get(localDateStr(d)) ?? 0, dnes: i === 6 }));
   return { prikladu: dny.reduce((a, d) => a + d.pocet, 0), dny };
 }

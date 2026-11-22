@@ -32,7 +32,7 @@ export default function HexikUvod({ trida, naSbirce = false }: { trida: Trida; n
   ];
 
   return (
-    <section className="rounded-3xl p-4 lg:p-5 flex flex-col gap-3" style={{ background: "linear-gradient(135deg,#EEEDFE,#FFF6E5)", border: "1.5px solid #DCD9FB" }} data-testid="hexik-uvod">
+    <section className="@container rounded-3xl p-4 lg:p-5 flex flex-col gap-3" style={{ background: "linear-gradient(135deg,#EEEDFE,#FFF6E5)", border: "1.5px solid #DCD9FB" }} data-testid="hexik-uvod">
       <div className="flex items-center gap-3">
         <Hexik podoba={nasazena(stav, trida, "podoba").klic} className="w-14 shrink-0" />
         <div className="min-w-0">
@@ -40,7 +40,8 @@ export default function HexikUvod({ trida, naSbirce = false }: { trida: Trida; n
           <p className="text-sm" style={{ color: "#5F6982" }}>Budu s tebou u každého příkladu. Takhle to funguje:</p>
         </div>
       </div>
-      <ol className="grid gap-2 sm:grid-cols-3">
+      {/* Tři vedle sebe jen když je na to místo (ne v úzkém pravém sloupci Domova na počítači) */}
+      <ol className="grid gap-2 @lg:grid-cols-3">
         {kroky.map((k, i) => (
           <li key={k.nadpis} className="rounded-2xl bg-white p-3 flex gap-2.5" style={{ border: "1px solid #E4E6EF" }}>
             <span className="w-8 h-8 rounded-xl grid place-items-center text-lg shrink-0" style={{ background: "#EEEDFE" }} aria-hidden="true">{k.ikona}</span>
