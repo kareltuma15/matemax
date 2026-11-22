@@ -111,6 +111,11 @@ export default function Mereni() {
     pobyt.current = null;
     if (pathname.startsWith("/admin") || pathname.startsWith("/nahled")) return;
     mer("navsteva");
+    // Návrat ze Stripe bez zaplacení (zavřel platbu / karta neprošla): trychtýř Peníze v analytice
+    try {
+      const q = new URLSearchParams(window.location.search);
+      if (q.get("canceled") === "1" || q.get("platba") === "zrusena") mer("platba_zrusena", { c: pathname });
+    } catch { /* nic */ }
     if (VEREJNE.test(pathname)) pobyt.current = { cesta: pathname, od: Date.now(), scroll: 0, kliky: 0, sekce: undefined, odeslano: false, formular: false };
   }, [pathname]);
 

@@ -1,5 +1,7 @@
 "use client";
 
+import { merFunkci } from "@/lib/analytics";
+import { useEffect } from "react";
 import OdmenaVizual from "./OdmenaVizual";
 import { useSbirka } from "@/lib/use-sbirka";
 import { localDateStr } from "@/lib/date";
@@ -18,6 +20,7 @@ function datum(den: string): string {
  * (3D místo) a bonus krystalů. Sezónní sady jdou sbírat jen v sezóně, Advent jen z adventního kalendáře.
  */
 export default function Sady({ trida }: { trida: Trida }) {
+  useEffect(() => { merFunkci("sady"); }, []);
   const { stav, nacteno } = useSbirka();
   if (!nacteno) return <div className="mm-karta h-64 animate-pulse" aria-hidden="true" />;
   const den = localDateStr();

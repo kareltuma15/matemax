@@ -9,7 +9,7 @@ import { SM2Card } from "@/types";
 import { createCard, reviewCard, isDue } from "@/lib/sm2";
 import { loadProgress, saveProgress, recordActivity } from "@/lib/progress";
 import { remoteLogSession, remoteLogProcvicovani, remoteSyncXP, remoteSyncBadges, remoteSaveSM2Card, remoteSyncGamification, localSaveSession } from "@/lib/storage";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, merFunkci } from "@/lib/analytics";
 import { supabase } from "@/lib/supabase";
 import { reportDbError } from "@/lib/db-error";
 import { localDateStr } from "@/lib/date";
@@ -354,6 +354,7 @@ function TreningPageInner() {
   const urlPlan       = searchParams.get("plan") === "1";
   // ?boss=1 = Boss týdne ze Sbírky: jedna těžká úloha, jeden pokus za týden
   const urlBoss       = searchParams.get("boss") === "1";
+  useEffect(() => { if (urlBoss) merFunkci("boss"); }, [urlBoss]);
   const bossIdRef     = useRef<string | null>(null);
   const [bossVysledek, setBossVysledek] = useState<{ vyhra: boolean; krystaly: number } | "uz" | null>(null);
   const bossHotovoRef = useRef(false);
@@ -410,6 +411,8 @@ function TreningPageInner() {
   const sessionStartRef                 = useRef(new Date());
   // Odpovědi tohoto tréninku po tématech (souhrn do tabulky procvicovani, viz lib/vysledky.ts)
   const odpovediRef                     = useRef<{ tema: string; dovednost?: string; ok: boolean }[]>([]);
+  // Analytika obsahu (admin → Obsah: které úlohy dělají problém): [id úlohy, 1 správně / 0 špatně / 2 přeskočeno]
+  const ulohyRef                        = useRef<[string, 0 | 1 | 2][]>([]);
   // Snímek připravenosti před tréninkem — pro posun „před → po" v souhrnu
   const readinessBeforeRef              = useRef<Record<string, number> | null>(null);
   const misePocetRef                    = useRef(0);
@@ -559,6 +562,7 @@ function TreningPageInner() {
     // Sbírka: dokončený trénink (krystaly jednou denně, denní a zlatá truhla, rekord odhadu)
     const odm = odmenaZaKonecTreninku(trida, answered, { pred: readinessBeforeRef.current, po: snapshotReadiness(), prah: MASTERED });
     setOdmenaKonec({ krystaly: krystalySezeniRef.current + odm.krystaly + odm.odhad, denni: odm.denniNove, zlata: odm.zlataNove, doporuceni: odm.doporuceni, mise: misePocetRef.current });
+    if (misePocetRef.current > 0) merFunkci("mise");
 
     // Feedback after 5th session (once per account)
     try {
@@ -576,8 +580,10 @@ function TreningPageInner() {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) {
         const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+        const u = ulohyRef.current.slice(0, 80);
+        ulohyRef.current = [];
         trackEvent(data.session.user.id, "session_completed", {
-          correct, total: answered, accuracy, topics: practiceTopics,
+          correct, total: answered, accuracy, topics: practiceTopics, u,
         }).catch(() => {});
 
         // Count total sessions from localStorage for Loops personalization
@@ -666,6 +672,7 @@ function TreningPageInner() {
       const exId = sessionIds[currentIdx];
       const example = allExamples.find((ex) => ex.id === exId);
       if (example) odpovediRef.current.push({ tema: example.tema, ...(example.dovednost ? { dovednost: example.dovednost } : {}), ok: wasCorrect });
+      if (exId) ulohyRef.current.push([exId, wasCorrect ? 1 : 0]);
       // Dárek po testu: každá odeslaná odpověď na dárkový příklad se počítá (přeskočení ne)
       let darekPo = darek;
       if (example && darek?.temata.includes(example.tema) && isTopicLocked(example.tema, isPremium)) {
@@ -906,6 +913,7 @@ function TreningPageInner() {
     setOdmenaKonec(null);
     sessionStartRef.current = new Date();
     odpovediRef.current = [];
+    ulohyRef.current = [];
   }
 
   // Badge toast queue: show one at a time
@@ -1211,6 +1219,7 @@ function TreningPageInner() {
 
   function handleSkip() {
     const isLast = currentIdx + 1 >= sessionIds.length;
+    if (sessionIds[currentIdx]) ulohyRef.current.push([sessionIds[currentIdx], 2]);
     if (!isLast) {
       saveSessionDraft({
         sessionIds,

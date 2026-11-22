@@ -1,5 +1,6 @@
 "use client";
 
+import { merFunkci } from "@/lib/analytics";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -170,12 +171,14 @@ function Sbirka() {
       if (!ok) return;
     }
     upravSbirku((s) => nasadOdmenu(s, vyb.id));
+    merFunkci("satnik");
     predved(vyb);
   }
 
   // Výsledek se losuje hned, 3D truhla ho pak ukáže (dítě klepe, Hexík otevírá)
   function otevri(id: TruhlaId) {
     const vysledek = upravSbirku((s) => otevriTruhlu(s, id, trida, localDateStr()));
+    merFunkci("truhla");
     setOtevirani({ id, faze: vysledek ? "tres" : "hotovo", vysledek });
   }
   function odhal() {

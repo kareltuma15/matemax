@@ -46,7 +46,7 @@ export default function AdminPanel() {
           <h1 className="text-2xl font-black text-white">Řídicí panel</h1>
         </div>
         <div className="flex flex-wrap gap-2">
-          {[["/admin/navstevnost", "📊 Statistiky"], ["/admin/testy", "📝 Testy"], ["/admin/obsah", "📚 Obsah"]].map(([h, t]) => (
+          {[["/admin/analytika", "📈 Analytika"], ["/admin/navstevnost", "📊 Statistiky"], ["/admin/testy", "📝 Testy"], ["/admin/obsah", "📚 Obsah"]].map(([h, t]) => (
             <Link key={h} href={h} className="px-3 py-2 rounded-xl text-sm font-bold" style={{ background: "rgba(255,255,255,.14)", color: "#fff", border: "1px solid rgba(255,255,255,.25)" }}>{t}</Link>
           ))}
         </div>

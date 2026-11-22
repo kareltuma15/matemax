@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { merFunkci } from "@/lib/analytics";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSbirka } from "@/lib/use-sbirka";
@@ -95,6 +96,7 @@ export default function DomovHexika({ trida, odkaz = true, hero = false, pod, za
             setObjevena(po);
             const vse = nove && po.length === seznam.length;
             if (vse) inst.current?.oslava();
+            merFunkci("pokojicek");
             setBublina({ text: vse ? `Všech ${seznam.length} kouzel objeveno! 🎉` : popis.get(k) ?? "", nove, id: Date.now() });
           },
         });

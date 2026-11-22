@@ -177,3 +177,11 @@ test("kampaň: zdroj z první stránky (fbclid / utm) se posílá i z dalších 
   const reg2 = udalosti.filter((u) => u.e === "navsteva" && u.p === "/registrace").pop()!;
   expect(reg2.uc).toBe("herni-system");
 });
+
+// Analytika (22. 11. 2026): jen pro admina, bez přihlášení nic neprozradí ani nic nezapíše
+test("analytika: API bez přihlášení vrátí 401 a nic neuloží", async ({ request }) => {
+  expect((await request.get("/api/admin/analytika?dni=7")).status()).toBe(401);
+  expect((await request.post("/api/admin/analytika", { data: { akce: "utrata", den: "2026-11-22", zdroj: "x", castka: 1 } })).status()).toBe(401);
+  const cron = await request.post("/api/cron/tydenni-analytika");
+  expect(cron.status()).toBe(401);
+});

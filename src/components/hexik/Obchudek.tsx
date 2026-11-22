@@ -1,5 +1,6 @@
 "use client";
 
+import { merFunkci } from "@/lib/analytics";
 import { useState } from "react";
 import { useSbirka } from "@/lib/use-sbirka";
 import { useTrida } from "@/lib/trida";
@@ -56,7 +57,7 @@ export default function Obchudek() {
                 ) : ma ? (
                   <button type="button" onClick={() => upravSbirku((s) => postavVec(s, v.id))} className="mm-tlacitko w-full rounded-xl py-2 text-sm font-extrabold text-white" style={{ background: "#5B55D6" }} data-testid={`postavit-${v.id}`}>Postavit</button>
                 ) : (
-                  <button type="button" disabled={chybi} onClick={() => upravSbirku((s) => kupVec(s, v.id))} className="mm-tlacitko w-full rounded-xl py-2 text-sm font-extrabold text-white disabled:opacity-55 disabled:cursor-not-allowed" style={{ background: "#5B55D6" }} data-testid={`koupit-${v.id}`}>
+                  <button type="button" disabled={chybi} onClick={() => { upravSbirku((s) => kupVec(s, v.id)); merFunkci("obchudek"); }} className="mm-tlacitko w-full rounded-xl py-2 text-sm font-extrabold text-white disabled:opacity-55 disabled:cursor-not-allowed" style={{ background: "#5B55D6" }} data-testid={`koupit-${v.id}`}>
                     {chybi ? `Chybí ${v.cena - mam} 💎` : `Koupit za ${v.cena} 💎`}
                   </button>
                 )}

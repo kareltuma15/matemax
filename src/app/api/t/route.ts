@@ -10,7 +10,7 @@ import { pragueDateStr } from "@/lib/date";
  * návštěvníka platný jeden den (hash IP + prohlížeče + denní sůl, sůl se nikam neukládá).
  * Žádné jméno, e-mail, IP ani ID účtu, takže to nepotřebuje souhlas s cookies.
  */
-const UDALOSTI = new Set(["navsteva", "klik", "registrace_odeslana", "registrace_google", "premium_zobrazeno", "platba_start", "doporuceni_otevreno", "odchod", "formular_start", "formular_chyba"]);
+const UDALOSTI = new Set(["navsteva", "klik", "registrace_odeslana", "registrace_google", "premium_zobrazeno", "platba_start", "doporuceni_otevreno", "odchod", "formular_start", "formular_chyba", "platba_zrusena"]);
 const BOT = /bot|crawl|spider|slurp|preview|headless|lighthouse|vercel|facebookexternalhit|whatsapp/i;
 
 const kratke = (v: unknown, n: number) => (typeof v === "string" ? v.slice(0, n) : undefined);

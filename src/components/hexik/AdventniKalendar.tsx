@@ -1,5 +1,6 @@
 "use client";
 
+import { merFunkci } from "@/lib/analytics";
 import { useEffect, useRef, useState } from "react";
 import { useSbirka } from "@/lib/use-sbirka";
 import { upravSbirku, nasadOdmenu, nasazena, slotyHexika, etapaHexika, IKONA_ODMENY, VZACNOST, TYP_NAZEV, SLOTY, type Odmena } from "@/lib/sbirka";
@@ -77,6 +78,7 @@ export default function AdventniKalendar({ trida, den }: { trida: Trida; den: st
     if (st === "budouci") { setHlaska(`Okénko ${d} je zatím zavřené. Počkej na ${d}. prosince.`); return; }
     if (st !== "dnes" && st !== "dohnat") return;
     const v = upravSbirku((s) => otevriOkno(s, trida, den, d));
+    merFunkci("kalendar");
     if (!v) return;
     setHlaska(null);
     setOteviram(d);

@@ -31,3 +31,23 @@ export async function trackEvent(
     // Graceful fail — table may not exist yet or RLS blocks it
   }
 }
+
+/**
+ * Použití herní funkce (admin → Analytika → Zapojení): jednou za den a funkci na zařízení,
+ * ať se v tabulce nehromadí stovky řádků za každé klepnutí. Jen přihlášený žák.
+ */
+export type Funkce = "truhla" | "satnik" | "obchudek" | "boss" | "mise" | "pokojicek" | "sady" | "kalendar";
+export function merFunkci(f: Funkce): void {
+  if (!supabase || typeof window === "undefined") return;
+  try {
+    const d = new Date();
+    const den = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    const klic = `matemax-funkce-${f}`;
+    if (localStorage.getItem(klic) === den) return;
+    localStorage.setItem(klic, den);
+  } catch { /* bez úložiště měříme i tak */ }
+  void supabase.auth.getSession().then(({ data }) => {
+    const uid = data.session?.user.id;
+    if (uid) void trackEvent(uid, "funkce", { f });
+  });
+}
