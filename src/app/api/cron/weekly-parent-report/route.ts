@@ -5,6 +5,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { odhadDitete, ulozTydenniOdhad } from "@/lib/odhad-server";
 import { buildReportHtml } from "@/lib/report-rodice";
 import { tydenSbirky, type SbirkaStav } from "@/lib/sbirka";
+import { overenaPropojeni } from "@/lib/propojeni-rodice";
 
 // Každé pondělí 06:00 UTC (≈ 08:00 SEČ) přes Vercel Cron.
 // Týdenní e-mail rodičům s ověřeným propojením: odhad bodů u přijímaček, vývoj po týdnech, témata, tip.
@@ -38,14 +39,14 @@ async function handler() {
   const { Resend } = await import("resend");
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  // All verified parent-child links
-  const { data: links, error: linksError } = await supabaseAdmin
-    .from("parent_child_link")
-    .select("parent_email, child_user_id")
-    .eq("verified", true);
-
-  if (linksError) return NextResponse.json({ error: linksError.message }, { status: 500 });
-  if (!links || links.length === 0) return NextResponse.json({ ok: true, sent: 0 });
+  // Jen propojení, která dítě potvrdilo (neověřená žádost report nikdy nedostane).
+  let links: Awaited<ReturnType<typeof overenaPropojeni>>;
+  try {
+    links = await overenaPropojeni(supabaseAdmin);
+  } catch (e) {
+    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 });
+  }
+  if (links.length === 0) return NextResponse.json({ ok: true, sent: 0 });
 
   const weekAgo = pragueDateStr(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
   const weekDate = new Date().toLocaleDateString("cs-CZ", { day: "numeric", month: "long", year: "numeric" });
@@ -59,7 +60,7 @@ async function handler() {
   const twoWeeksAgo = pragueDateStr(new Date(Date.now() - 14 * 24 * 60 * 60 * 1000));
   const zpracovaneDeti = new Set<string>();
 
-  for (const link of links as { parent_email: string; child_user_id: string }[]) {
+  for (const link of links) {
     try {
       const parentEmail = link.parent_email;
       if (!parentEmail) continue;

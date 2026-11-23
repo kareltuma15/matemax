@@ -6,6 +6,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { SkeletonLine } from "@/components/Skeleton";
 import OdhadRodic from "@/components/OdhadRodic";
+import CekaNaPotvrzeni from "@/components/rodice/CekaNaPotvrzeni";
 import type { OdhadDitete } from "@/lib/odhad-server";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
@@ -19,6 +20,8 @@ type TopicRow = {
 
 type DashboardData = {
   linked: boolean;
+  /** E-maily dětí, kterým rodič poslal žádost a ještě ji nepotvrdily (žádná data dítěte). */
+  cekajici?: string[];
   childId?: string;
   childName?: string;
   childEmail?: string;
@@ -259,6 +262,12 @@ export default function RodiceDashboard() {
     );
   }
 
+  // ─── Čeká na potvrzení dítětem ──────────────────────────────────────────────
+
+  if (!data?.linked && (data?.cekajici?.length ?? 0) > 0) {
+    return <CekaNaPotvrzeni emaily={data!.cekajici!} onZruseno={() => setData({ linked: false, cekajici: [] })} />;
+  }
+
   // ─── Not linked ─────────────────────────────────────────────────────────────
 
   if (!data?.linked) {
@@ -308,6 +317,12 @@ export default function RodiceDashboard() {
 
   return (
     <div className="flex flex-col gap-5 pb-10 fade-in-up">
+
+      {(data.cekajici?.length ?? 0) > 0 && (
+        <p className="rounded-xl px-4 py-3 text-sm break-words" style={{ background: "#fef3c7", color: "#78350f" }} data-testid="rodic-ceka-dalsi">
+          ⏳ Čeká na potvrzení dítětem: <strong>{data.cekajici!.join(", ")}</strong>
+        </p>
+      )}
 
       {/* ── PARENT PORTAL HEADER ─────────────────────────────────────── */}
       <div

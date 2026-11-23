@@ -37,6 +37,7 @@ import { nazevTematu, kratkeDatum, dniDo } from "@/lib/doporuceni";
 import { darekZDoporuceni, pouzitoLokalne, zbyva, DAREK_NA_TEMA } from "@/lib/ochutnavka";
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import ProRodice from "@/components/ProRodice";
+import ZadostiRodicu from "@/components/ZadostiRodicu";
 import ChystaSe from "@/components/hexik/ChystaSe";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
@@ -272,6 +273,9 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
               </div>
             </div>
           )}
+
+          {/* Žádost rodiče o propojení: bez souhlasu dítěte rodič nic nevidí */}
+          <ZadostiRodicu misto="domov" />
 
           {cekajiciOdkaz && !plan && (
             <Link href={`/trenink?doporuceni=${encodeURIComponent(cekajiciOdkaz)}`} className="mm-karta mm-klik p-4 flex items-center gap-3" style={{ ["--tema-barva" as string]: "#A66300", background: "#FFF6E5", borderColor: "#F3D9A0" }} data-testid="domov-doporuceni-odkaz">

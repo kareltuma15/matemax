@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { allExamples as examples } from "@/data/examples";
 import { odhadDitete } from "@/lib/odhad-server";
+import { stavRodice } from "@/lib/propojeni-rodice";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -32,30 +33,31 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
   }
 
-  // Use parent's JWT so RLS filters parent_child_link by their email
   const supabaseParent = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     global: { headers: { Authorization: authHeader } },
   });
 
   const { data: { user }, error: userError } = await supabaseParent.auth.getUser();
   if (userError || !user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  // Get verified child links for this parent
-  const { data: links, error: linkError } = await supabaseParent
-    .from("parent_child_link")
-    .select("child_user_id, verified")
-    .eq("verified", true);
-
-  if (linkError) return NextResponse.json({ error: linkError.message }, { status: 500 });
-  if (!links || links.length === 0) {
-    return NextResponse.json({ linked: false });
-  }
-
-  const childId = links[0].child_user_id as string;
+  if (!user.email) return NextResponse.json({ linked: false, cekajici: [] });
 
   if (!supabaseAdmin) {
     return NextResponse.json({ error: "Admin client not configured — add SUPABASE_SERVICE_ROLE_KEY" }, { status: 503 });
   }
+
+  // Data dítěte jen s propojením, které dítě potvrdilo. Čekající žádost = jen e-mail, který rodič sám zadal.
+  let stav: Awaited<ReturnType<typeof stavRodice>>;
+  try {
+    stav = await stavRodice(supabaseAdmin, user.email);
+  } catch (e) {
+    console.error("[parent-dashboard]", e);
+    return NextResponse.json({ error: "Nepodařilo se načíst propojení." }, { status: 500 });
+  }
+  if (!stav.overeneDite) {
+    return NextResponse.json({ linked: false, cekajici: stav.cekajici });
+  }
+
+  const childId = stav.overeneDite;
 
   // Child display name (email prefix from auth.users)
   const { data: authUser } = await supabaseAdmin.auth.admin.getUserById(childId);
@@ -161,6 +163,7 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     linked: true,
+    cekajici: stav.cekajici,
     childId,
     childName,
     childEmail,

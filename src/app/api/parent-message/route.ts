@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { jeOvereno } from "@/lib/propojeni-rodice";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -38,6 +39,11 @@ export async function POST(req: NextRequest) {
 
   if (!supabaseAdmin) {
     return NextResponse.json({ error: "Admin client not configured" }, { status: 503 });
+  }
+
+  // Psát smí jen rodič s propojením, které dítě potvrdilo (dřív stačilo znát ID dítěte).
+  if (!user.email || !(await jeOvereno(supabaseAdmin, user.email, childUserId).catch(() => false))) {
+    return NextResponse.json({ error: "Zprávu můžete poslat, až dítě propojení potvrdí." }, { status: 403 });
   }
 
   const { error } = await supabaseAdmin.from("parent_messages").insert({

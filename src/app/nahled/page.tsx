@@ -17,6 +17,9 @@ import TreninkTemata from "@/components/TreninkTemata";
 import PostupPrehled from "@/components/PostupPrehled";
 import OdhadRodic from "@/components/OdhadRodic";
 import TemaDovednosti from "@/components/TemaDovednosti";
+import ZadostiRodicu from "@/components/ZadostiRodicu";
+import PropojitDite from "@/components/rodice/PropojitDite";
+import CekaNaPotvrzeni from "@/components/rodice/CekaNaPotvrzeni";
 import batch from "@/data/nahled-batch.json";
 
 const batchExamples = (batch.examples as unknown as DBExample[]);
@@ -36,6 +39,8 @@ function Karta({ ex, i, total }: { ex: DBExample; i: number; total: number }) {
  * `/nahled?ids=P5_VIC_01,P5_VIC_02` ukáže úlohy z databáze podle id (kontrola hotových úloh, e2e testy karet); bez `ids` dávka k schválení.
  * `/nahled?vyber=zlomky` ukáže výběr dovedností tématu (jako po kliknutí na téma v tréninku).
  * `/nahled?postup=5` nebo `?postup=9` ukáže přehled postupu z profilu (odhad bodů, vývoj, témata) z dat v prohlížeči.
+ * `/nahled?propojit=1` formulář rodiče „Propojit s dítětem“, `?rodic=ceka` přehled rodiče před potvrzením dítětem,
+ *   `?zadosti=profil` propojení s rodičem v Profilu dítěte (stránky jsou jinak za přihlášením v proxy; e2e testy).
  * `/nahled?mapa=5` nebo `?mapa=9` ukáže výběr témat v Tréninku pro danou třídu bez přihlášení, `&premium=1` s odemčenými okruhy (kontrola vzhledu, e2e testy).
  */
 function NahledPage() {
@@ -47,8 +52,18 @@ function NahledPage() {
     ? ids.split(",").map((id) => allExamples.find((e) => e.id === id.trim()) ?? batchExamples.find((e) => e.id === id.trim())).filter((e): e is DBExample => !!e)
     : batchExamples;
   const [reseni, setReseni] = useState(false);
+  const [cekaZruseno, setCekaZruseno] = useState(false);
   const noop = () => {};
   const vyber = params.get("vyber");
+  if (params.get("propojit") === "1") return <div className="mx-auto max-w-lg p-4"><PropojitDite /></div>;
+  if (params.get("zadosti") === "profil") return <div className="mx-auto max-w-lg p-4 bg-white"><ZadostiRodicu misto="profil" /></div>;
+  if (params.get("rodic") === "ceka") {
+    return (
+      <div className="mx-auto max-w-lg p-4">
+        {cekaZruseno ? <p>Žádné propojené dítě</p> : <CekaNaPotvrzeni emaily={["dite@example.com"]} onZruseno={() => setCekaZruseno(true)} />}
+      </div>
+    );
+  }
   if (vyber) return <div className="mx-auto max-w-lg p-4"><TemaDovednosti tema={vyber} onStart={noop} onBack={noop} /></div>;
   // ?rodic=1: odhad bodů, jak ho vidí rodič v rodičovském přehledu (ukázková data)
   if (params.get("rodic") === "1") {

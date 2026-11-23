@@ -11,6 +11,7 @@ import { urovenZXP } from "@/lib/urovne";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import PropojeniVysledky from "@/components/PropojeniVysledky";
+import ZadostiRodicu from "@/components/ZadostiRodicu";
 import { TEMA_LABELS, TEMATA_ORDER, TEMATA_ORDER_5, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import MedailovaStena, { NejblizsiMedaileKarta } from "@/components/odznaky/MedailovaStena";
@@ -1216,6 +1217,9 @@ export default function ProfilPage() {
 
           {/* Propojení s Testy nanečisto (appka Vyhodnocení testů) */}
           <PropojeniVysledky />
+
+          {/* Propojení s rodičem: čekající žádosti a kdo vidí přehled */}
+          <ZadostiRodicu misto="profil" />
 
           {/* Rodičovský portál */}
           <Link
