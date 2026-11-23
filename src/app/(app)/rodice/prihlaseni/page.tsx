@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 export default function RodicePrihlaseni() {
+  return <Suspense fallback={null}><RodicePrihlaseniObsah /></Suspense>;
+}
+
+function RodicePrihlaseniObsah() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<"login" | "register">("login");
+  // Odkaz „Vytvořit účet rodiče“ ze stránky /rodice otevře rovnou registraci
+  const rezim = useSearchParams().get("rezim");
+  const [mode, setMode] = useState<"login" | "register">(rezim === "registrace" ? "register" : "login");
   const [done, setDone] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
