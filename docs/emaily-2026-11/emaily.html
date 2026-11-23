@@ -1,0 +1,424 @@
+<title>E-maily MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&display=swap">
+<style>
+/* Mockup všech e-mailů MateMaxu: přehled stavu, mapa podle cesty uživatele, prohlížeč e-mailů (seznam vlevo, poštovní klient vpravo, Dnes / Návrh), push notifikace, pravidla a plán. */
+:root{
+  --bg:#EEF1F8; --plocha:#FFFFFF; --fg:#0D1B3E; --tl:#56617D; --linka:#DCE2EE;
+  --navy:#0D1B3E; --amber:#F5A623; --lev:#AFACFB; --fialova:#5B55D6; --zelena:#2FA36B; --cervena:#E5484D; --oranz:#C77700;
+  --font:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--plocha:#121C36;--fg:#EEF2FB;--tl:#A3AECB;--linka:#26324F;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+.obal{max-width:1220px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 64px;display:grid;gap:38px}
+.mock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#E9EEFA;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700;justify-self:start;max-width:100%}
+.mock b{color:var(--amber)}
+.hlava{display:grid;gap:12px}
+.hlava h1{font-size:clamp(1.8rem,4.2vw,2.7rem);font-weight:900;letter-spacing:-.025em}
+.hlava p{color:var(--tl);max-width:76ch}
+.cisla{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.cisla{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cisla div{background:var(--plocha);border:1px solid var(--linka);border-radius:16px;padding:14px 16px;display:grid;gap:2px}
+.cisla b{font-size:1.9rem;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.cisla span{color:var(--tl);font-size:.88rem}
+.sekce{display:grid;gap:16px}
+.sekce>h2{font-size:clamp(1.3rem,2.6vw,1.65rem);font-weight:900;letter-spacing:-.015em}
+.sekce>p.uvod{color:var(--tl);max-width:76ch}
+.blok{background:var(--plocha);border:1px solid var(--linka);border-radius:18px;padding:18px 20px;display:grid;gap:12px;min-width:0}
+.blok h3{font-size:1.08rem;font-weight:900}
+.tl{color:var(--tl);font-size:.92rem}
+ul.cisty{margin:0;padding-left:18px;display:grid;gap:7px}
+button{font:inherit}
+button:focus-visible{outline:3px solid #7FD8EE;outline-offset:2px}
+.stav{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:900;border-radius:999px;padding:2px 9px;white-space:nowrap;letter-spacing:.02em}
+.s-bezi{background:color-mix(in srgb,var(--zelena) 16%,transparent);color:var(--zelena)}
+.s-opravit{background:color-mix(in srgb,var(--cervena) 15%,transparent);color:var(--cervena)}
+.s-novy{background:color-mix(in srgb,var(--fialova) 16%,transparent);color:var(--fialova)}
+.s-schvalovani{background:color-mix(in srgb,var(--amber) 22%,transparent);color:var(--oranz)}
+
+/* mapa */
+.mapa{display:grid;grid-template-columns:120px repeat(5,minmax(0,1fr));gap:6px;min-width:860px}
+.mapa-obal{overflow-x:auto;border:1px solid var(--linka);border-radius:18px;background:var(--plocha);padding:14px}
+.mapa .hl{font-size:.72rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--tl);padding:4px 6px}
+.mapa .kdo{font-weight:900;font-size:.9rem;padding:8px 6px;display:flex;align-items:center;gap:6px}
+.mapa .bunka{display:flex;flex-direction:column;gap:5px;padding:4px;border-radius:12px;background:color-mix(in srgb,var(--bg) 60%,var(--plocha))}
+.mapa .bunka button{all:unset;cursor:pointer;font-size:.8rem;font-weight:800;border-radius:9px;padding:6px 8px;background:var(--plocha);border:1px solid var(--linka);display:flex;gap:6px;align-items:center}
+.mapa .bunka button:hover{border-color:var(--fialova)}
+.mapa .bunka button:focus-visible{outline:3px solid #7FD8EE}
+.tecka{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.t-bezi{background:var(--zelena)} .t-opravit{background:var(--cervena)} .t-novy{background:var(--fialova)} .t-schvalovani{background:var(--amber)}
+
+/* prohlížeč */
+.prohlizec{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:920px){.prohlizec{grid-template-columns:1fr}}
+.seznam{display:grid;gap:10px;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding-right:2px}
+@media (max-width:920px){.seznam{position:static;max-height:none}}
+.filtry{display:flex;gap:6px;flex-wrap:wrap}
+.filtry button{border-radius:999px;padding:6px 12px;border:1px solid var(--linka);background:var(--plocha);color:var(--fg);font-weight:800;font-size:.82rem;cursor:pointer}
+.filtry button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+:root[data-theme="dark"] .filtry button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .filtry button[aria-pressed="true"]{background:var(--lev);color:#0D1B3E}}
+.polozka{all:unset;cursor:pointer;display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;background:var(--plocha);border:1px solid var(--linka);border-radius:14px;padding:8px 10px}
+.polozka:focus-visible{outline:3px solid #7FD8EE}
+.polozka[aria-current="true"]{border-color:var(--fialova);box-shadow:0 0 0 2px color-mix(in srgb,var(--fialova) 35%,transparent)}
+.polozka img{width:44px;height:44px;object-fit:contain;border-radius:10px;background:color-mix(in srgb,var(--lev) 22%,var(--plocha))}
+.polozka .em{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:1.3rem;background:color-mix(in srgb,var(--lev) 22%,var(--plocha))}
+.polozka b{display:block;font-size:.9rem;line-height:1.25}
+.polozka small{display:flex;gap:6px;align-items:center;color:var(--tl);font-size:.76rem;margin-top:2px;flex-wrap:wrap}
+.detail{display:grid;gap:14px;min-width:0}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:700px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.meta div{background:var(--plocha);border:1px solid var(--linka);border-radius:12px;padding:9px 12px}
+.meta small{display:block;font-size:.7rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--tl)}
+.meta span{font-weight:700;font-size:.9rem}
+.lista-detail{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.lista-detail h3{font-size:1.3rem;font-weight:900}
+.prep{display:inline-flex;border:1px solid var(--linka);border-radius:999px;background:var(--plocha);padding:3px}
+.prep button{border:0;background:transparent;color:var(--fg);font-weight:800;font-size:.82rem;border-radius:999px;padding:5px 12px;cursor:pointer}
+.prep button[aria-pressed="true"]{background:var(--fialova);color:#fff}
+.prep button:disabled{opacity:.4;cursor:not-allowed}
+.klient{background:#fff;color:#0D1B3E;border-radius:16px;border:1px solid var(--linka);overflow:hidden;box-shadow:0 24px 50px -32px rgba(13,27,62,.55);margin:0 auto;width:100%;transition:max-width .25s}
+.klient.telefon{max-width:400px;border-radius:30px;border:10px solid #0B1022}
+.klient-hl{background:#F6F7FB;border-bottom:1px solid #E4E8F2;padding:12px 16px;display:grid;gap:3px;font-size:.84rem;color:#56617D}
+.klient-hl b{color:#0D1B3E}
+.klient-hl .pre{color:#8A93AB}
+.klient iframe{display:block;width:100%;border:0;height:760px;background:#F3F5FA}
+.klient.telefon iframe{height:640px}
+.poznamka{background:color-mix(in srgb,var(--amber) 14%,var(--plocha));border:1px solid color-mix(in srgb,var(--amber) 40%,var(--linka));border-radius:14px;padding:12px 14px;display:grid;gap:6px;font-size:.92rem}
+.poznamka b{font-weight:900}
+.textova{background:var(--plocha);border:1px dashed var(--linka);border-radius:16px;padding:22px;display:grid;gap:8px;text-align:center;color:var(--tl)}
+
+/* push */
+.push-dvojice{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:24px;align-items:center}
+@media (max-width:820px){.push-dvojice{grid-template-columns:1fr}}
+.zamek{border-radius:36px;border:10px solid #0B1022;background:linear-gradient(160deg,#3A4A9B,#141E52 60%,#0B1022);color:#fff;padding:28px 14px 40px;display:grid;gap:10px;max-width:360px;width:100%;margin:0 auto}
+.zamek .cas{text-align:center;font-size:3.2rem;font-weight:800;line-height:1}
+.zamek .den{text-align:center;font-size:.9rem;opacity:.85;margin-bottom:14px}
+.notif{background:rgba(255,255,255,.88);color:#0D1B3E;border-radius:18px;padding:10px 12px;display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:start;backdrop-filter:blur(8px)}
+.notif .ik{width:36px;height:36px;border-radius:9px;background:#0D1B3E;color:#fff;display:grid;place-items:center;font-weight:900;font-size:.8rem}
+.notif b{display:block;font-size:.88rem}
+.notif span{font-size:.84rem;color:#33405F}
+.notif small{font-size:.72rem;color:#56617D}
+
+.tab{overflow-x:auto;border:1px solid var(--linka);border-radius:16px;background:var(--plocha)}
+table.t{border-collapse:collapse;width:100%;min-width:700px;font-size:.92rem}
+.t th,.t td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--linka)}
+.t th{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--tl);background:color-mix(in srgb,var(--plocha) 85%,var(--lev) 15%)}
+.t tr:last-child td{border-bottom:0}
+.t td b{display:block}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.dve{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.dve{grid-template-columns:1fr}}
+.rozh{background:var(--navy);color:#E9EEFA;border-radius:18px;padding:18px 20px;display:grid;gap:10px}
+.rozh h3{color:#fff}
+.rozh li{color:#D7DDF0}
+</style>
+
+<div class="obal">
+  <header class="hlava">
+    <span class="mock"><b>Návrh 23. 11. 2026</b> · mockup, nic z nového se zatím neposílá</span>
+    <h1>E-maily MateMaxu</h1>
+    <p>Všechny e-maily, které MateMax posílá dnes, a ty, které navrhuju přidat. U běžících přepneš „Dnes“ (vygenerováno přímo z kódu appky) a „Návrh“ (nová společná šablona s Hexíkem). Dětem tykáme a mluví k nim Hexík, rodičům vykáme a píše jim Matematika Snadno. Všechny nové texty půjdou před spuštěním ke schválení přes MS Dashboard.</p>
+    <div class="cisla" id="cisla"></div>
+  </header>
+
+  <section class="sekce" aria-labelledby="h-mapa">
+    <h2 id="h-mapa">Kdo co dostane a kdy</h2>
+    <p class="uvod">Řádky jsou příjemci, sloupce cesta uživatele. Klikni na e-mail a otevře se níž v prohlížeči.</p>
+    <div class="mapa-obal"><div class="mapa" id="mapa"></div></div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-prohlizec">
+    <h2 id="h-prohlizec">Prohlížeč e-mailů</h2>
+    <div class="prohlizec">
+      <div class="seznam">
+        <div class="filtry" role="group" aria-label="Komu" id="filtry"></div>
+        <div id="seznam" style="display:grid;gap:8px"></div>
+      </div>
+      <div class="detail" id="detail"></div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-push">
+    <h2 id="h-push">Push notifikace</h2>
+    <div class="push-dvojice">
+      <div class="zamek" aria-label="Ukázka zamčené obrazovky telefonu">
+        <div class="cas">18:30</div><div class="den">úterý 15. prosince</div>
+        <div class="notif"><span class="ik">M²</span><div><b>Hexík</b><span>Série 5 dní 🔥 Dnes stačí jeden krátký trénink a pokračuje.</span></div><small>teď</small></div>
+        <div class="notif"><span class="ik">M²</span><div><b>Hexík</b><span>Máš u mě neotevřenou truhlu 🎁</span></div><small>včera</small></div>
+        <div class="notif"><span class="ik">M²</span><div><b>MateMax</b><span>Online test nanečisto začíná za hodinu. Připrav si arch a tužku.</span></div><small>so 9:00</small></div>
+      </div>
+      <div class="blok">
+        <h3>Push místo některých e-mailů</h3>
+        <ul class="cisty tl">
+          <li><b>Série v ohrožení</b> jen jako push večer (dnes v 16:00), ne e-mailem. Max jednou denně a jen když dnes ještě netrénoval.</li>
+          <li><b>„Za hodinu začínáme“</b> u online testu jako push. E-mail se dnes kvůli dennímu cronu stejně nikdy neodešle.</li>
+          <li><b>Nový tón:</b> píše Hexík, bez „streak“ a bez „necvičil/a“. Dnešní texty jsou ze září.</li>
+          <li><b>Zapínání:</b> notifikace si zatím nezapnul nikdo (k 19. 10. žádný záznam). Nabídnout je po prvním splněném tréninku s jasnou větou, k čemu jsou, a na iPhonu s návodem „Přidat na plochu“.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-pravidla">
+    <h2 id="h-pravidla">Pravidla, aby e-maily neotravovaly</h2>
+    <div class="dve">
+      <div class="blok"><h3>Frekvence a čas</h3><ul class="cisty tl">
+        <li>Dítě nejvýš <b>2 e-maily týdně</b> (mimo heslo a testy), rodič nejvýš <b>1 týdně</b>.</li>
+        <li>Posílat mezi 7:00 a 20:00, nejlépe odpoledne po škole.</li>
+        <li>Po 7 dnech bez tréninku poslední připomínka, pak ticho až do návratu.</li>
+        <li>Kdo dnes trénoval, nedostane připomínku tréninku.</li>
+      </ul></div>
+      <div class="blok"><h3>Odhlášení a souhlas</h3><ul class="cisty tl">
+        <li>V každém e-mailu odkaz <b>Odhlásit jedním klikem</b> a <b>Nastavení e-mailů</b> (nově v Profilu, po typech). Dnes chybí, uvítání slibuje „Odhlásit se z emailů kdykoliv“ bez odkazu.</li>
+        <li>Připomínky učení a odměn jsou servisní: smí chodit dětem.</li>
+        <li>Nabídka Premium je obchodní sdělení: jen rodičům se souhlasem (zaškrtnutí při propojení), nikdy dětem.</li>
+        <li>Rodičům z minulé sezóny nepíšeme (ověřený fakt). Starým přihláškám z formuláře /rodice proto hromadně nepíšu.</li>
+      </ul></div>
+    </div>
+    <div class="blok"><h3>Technika: všechno v kódu</h3>
+      <p class="tl">Navrhuju posílat všechny e-maily z appky přes Resend (už ho používáme) a jeden denní cron, místo automatizací v Loops. Texty pak budou v repu, česky, s Hexíkem a napojené na skutečná data (série, truhly, odhad bodů). Teď nevidíme, co Loops posílá, a jeho obsah je nejspíš z května. Loops bych po přechodu vypnul. Upozornění na chyby přepnout z testovací adresy Resendu na naši doménu.</p>
+    </div>
+  </section>
+
+  <section class="sekce" aria-labelledby="h-plan">
+    <h2 id="h-plan">Plán a odhady</h2>
+    <div class="tab"><table class="t">
+      <thead><tr><th>Krok</th><th>Co</th><th>Odhad</th></tr></thead>
+      <tbody>
+        <tr><td><b>1. Základ</b></td><td>Společná šablona e-mailu, obrázky Hexíka, odhlášení jedním klikem, nastavení e-mailů v Profilu, strop frekvence, denní cron, oprava odesílatele chyb</td><td class="num">5–6 h</td></tr>
+        <tr><td><b>2. Dítě</b></td><td>Uvítání nově, Plán po diagnostice, Ještě jsi nezačal, Stýská se mi (3 dny), Hexík usnul (7 dní), Neotevřená truhla</td><td class="num">5–6 h</td></tr>
+        <tr><td><b>3. Sezóna</b></td><td>Adventní kalendář 1. 12. (jednorázově), odpočet 100 / 50 / 30 dní, měsíční novinky z kroniky</td><td class="num">3–4 h</td></tr>
+        <tr><td><b>4. Rodiče a Premium</b></td><td>Pozvánka od dítěte (propojení potvrzuje dítě, opraví i bezpečnost), ukázka pro rodiče bez Premium, Vítejte v Premium, nezdařená platba (webhook Stripe)</td><td class="num">6–8 h</td></tr>
+        <tr><td><b>5. Push</b></td><td>Nové texty, série večer, online test za hodinu, nabídka zapnutí po tréninku</td><td class="num">2–3 h</td></tr>
+      </tbody>
+    </table></div>
+    <div class="rozh">
+      <h3>Co potřebuju od tebe</h3>
+      <ul class="cisty">
+        <li>Sedí ti tón (dětem píše Hexík, rodičům Matematika Snadno) a společná šablona?</li>
+        <li>Adventní e-mail 1. 12. chceš? Musel by být hotový a schválený do pátku 27. 11.</li>
+        <li>Rodiče bez Premium: první 2 týdenní přehledy zdarma, pak měsíční výtah s nabídkou Premium. Souhlasíš?</li>
+        <li>Mám začít krokem 1 a 2 a texty poslat ke schválení do dashboardu?</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script src="dnes.js"></script>
+<script>
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var A = "https://matemax.matematika-snadno.cz";
+  /* Společná šablona e-mailu (tabulky a inline styly, jak to e-mailové klienty potřebují). */
+  function sablona(e){
+    var esc = function(s){ return s; };
+    var odst = (e.odstavce || []).map(function(p){ return '<p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#33405F">' + p + '</p>'; }).join("");
+    var box = e.box ? '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4F3FF;border-radius:14px;margin:4px 0 20px"><tr><td style="padding:16px 18px;font-size:15px;line-height:1.7;color:#0D1B3E">' + e.box + '</td></tr></table>' : "";
+    var tl = e.tlacitko ? '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px auto 10px"><tr><td style="background:#F5A623;border-radius:14px"><a href="' + A + '" style="display:inline-block;padding:15px 30px;font-size:16px;font-weight:800;color:#0D1B3E;text-decoration:none;font-family:Arial,sans-serif">' + e.tlacitko + '</a></td></tr></table>' : "";
+    var druhe = e.druhe ? '<p style="margin:6px 0 0;text-align:center;font-size:14px"><a href="' + A + '" style="color:#5B55D6;font-weight:700">' + e.druhe + '</a></p>' : "";
+    var obr = e.img ? '<tr><td align="center" style="background:radial-gradient(circle at 50% 45%,#E9E7FF,#F7F6FF 70%);background-color:#F1F0FF;padding:14px 0 0"><img src="img/' + e.img + '.png" width="190" height="190" alt="Hexík" style="display:block;width:190px;height:190px"></td></tr>' : "";
+    var podpis = e.rodic ? 'Karel Tůma · Matematika Snadno' : 'Hexík a Karel z MateMaxu';
+    return '<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:#F3F5FA;font-family:Arial,Helvetica,sans-serif">' +
+      '<div style="display:none;max-height:0;overflow:hidden">' + (e.pre || "") + '</div>' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F3F5FA;padding:24px 12px"><tr><td align="center">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:18px;overflow:hidden">' +
+      '<tr><td style="background:#0D1B3E;padding:14px 22px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="width:34px;height:34px;background:#ffffff;border-radius:9px;text-align:center;font-weight:900;font-size:14px;color:#0D1B3E">M²</td><td style="padding-left:10px;color:#ffffff;font-weight:800;font-size:17px">MateMax</td></tr></table></td></tr>' +
+      obr +
+      '<tr><td style="padding:26px 30px 8px"><h1 style="margin:0 0 16px;font-size:24px;line-height:1.25;color:#0D1B3E">' + e.nadpis + '</h1>' + odst + box + tl + druhe + '</td></tr>' +
+      '<tr><td style="padding:18px 30px 26px"><p style="margin:0;font-size:15px;color:#33405F">' + (e.rodic ? "S pozdravem" : "Drž se!") + '<br><b>' + podpis + '</b></p></td></tr>' +
+      '<tr><td style="background:#F7F8FC;border-top:1px solid #E8ECF4;padding:16px 30px;font-size:12px;line-height:1.6;color:#8A93AB;text-align:center">' + (e.pata || (e.rodic ? "Tento e-mail dostáváte, protože jste propojeni s účtem dítěte v MateMaxu." : "Tento e-mail dostáváš, protože máš účet v MateMaxu.")) + '<br><a href="' + A + '" style="color:#5B55D6">Nastavení e-mailů</a> · <a href="' + A + '" style="color:#5B55D6">Odhlásit jedním klikem</a><br>Matematika Snadno · Týn nad Vltavou</td></tr>' +
+      '</table></td></tr></table></body></html>';
+  }
+  var KDO = { dite:"Dítě", rodic:"Rodič", test:"Testy nanečisto", interni:"Interní" };
+  var STAV = { bezi:"Běží", opravit:"Opravit", novy:"Nový", schvalovani:"Ve schvalování" };
+  var FAZE = ["Registrace", "První dny", "Každý týden", "Sezóna", "Platby a testy"];
+  var E = [
+    { id:"uvitani", kdo:"dite", faze:0, stav:"opravit", img:"uvitani", dnes:"uvitani", nazev:"Uvítání",
+      kdy:"Hned po registraci", odesila:"Appka (Resend), Loops jako první volba", strop:"Jednou",
+      predmet:"Ahoj, já jsem Hexík 👋 Začneme?", pre:"Za pár minut zjistíme, co ti jde, a sestavím ti trénink.",
+      nadpis:"Vítej v MateMaxu!", odstavce:["Ahoj! Jsem Hexík a budu s tebou u každého příkladu.","Začneme krátkou diagnostikou. Za pár minut zjistíme, co ti jde, a já ti z toho sestavím trénink na míru."],
+      box:"🎯 Diagnostika je zdarma a zabere pár minut<br>🎁 Za správné příklady dostaneš krystaly a truhly s věcmi pro mě<br>📈 Uvidíš odhad bodů u přijímaček, který poroste s tebou", tlacitko:"Spustit diagnostiku",
+      pozn:"Dnes: chybí odkaz na odhlášení (jen věta „Odhlásit se z emailů kdykoliv“), text „SM-2 algoritmus“ dětem nic neřekne a „udělal“ je jen v mužském rodě. Hexík v e-mailu není." },
+    { id:"plan", kdo:"dite", faze:1, stav:"novy", img:"plan", nazev:"Plán po diagnostice",
+      kdy:"Den po diagnostice, když ještě nebyl trénink", odesila:"Appka (cron)", strop:"Jednou",
+      predmet:"Tvůj plán je hotový: začni Slovními úlohami", pre:"5 příkladů, asi 10 minut.",
+      nadpis:"Tvůj plán je připravený", odstavce:["Z diagnostiky vím, kde můžeš přidat nejvíc bodů: <b>Slovní úlohy (pohyb)</b>.","Připravil jsem ti 5 příkladů, od lehčích k těžším. Po každém uvidíš, jak to šlo."],
+      box:"📈 Tvůj odhad dnes: <b>24 z 50 bodů</b><br>🎯 Nejvíc přidáš ve Slovních úlohách", tlacitko:"Začít trénink (5 příkladů)",
+      pozn:"Řeší otevřený úkol „po diagnostice nepřecházejí do tréninku“. Odkaz vede rovnou do tréninku nejslabšího tématu. Čísla jsou v e-mailu skutečná z diagnostiky." },
+    { id:"nezacal", kdo:"dite", faze:1, stav:"novy", img:"nezacal", nazev:"Ještě jsi nezačal",
+      kdy:"3 dny po registraci bez diagnostiky i tréninku", odesila:"Appka (cron)", strop:"Jednou",
+      predmet:"Hexík pořád čeká na tvůj první příklad", pre:"Stačí jeden příklad, zabere minutu.",
+      nadpis:"Zkusíme první příklad?", odstavce:["Od registrace uběhly tři dny a já pořád čekám, až spolu spočítáme první příklad.","Nemusíš hned dělat diagnostiku. Klidně si zkus jeden příklad, zabere minutu."],
+      tlacitko:"Zkusit jeden příklad", druhe:"Nebo spustit diagnostiku",
+      pozn:"Nahradí Loops D+3. Bez tlaku: jeden příklad je menší krok než celá diagnostika." },
+    { id:"styska", kdo:"dite", faze:1, stav:"novy", img:"styska", nazev:"Stýská se mi (3 dny)",
+      kdy:"3 dny bez tréninku (kdo dřív trénoval)", odesila:"Appka (cron)", strop:"Jednou za pauzu",
+      predmet:"Stýská se mi 🥺 Dáme dnes 10 minut?", pre:"Mám pro tebe 5 příkladů na rozjezd.",
+      nadpis:"Stýská se mi", odstavce:["Naposledy jsme trénovali v pátek. Série 6 dní skončila, ale nová začne jediným tréninkem.","Mám pro tebe 5 příkladů z témat, která ti jdou, ať se rozjedeš lehce."],
+      box:"🎁 Čeká na tebe 1 neotevřená truhla<br>💎 Máš 340 krystalů", tlacitko:"Pokračovat v tréninku",
+      pozn:"Stejná nálada jako smutný Hexík na Domově. Čísla (série, truhly, krystaly) jsou skutečná ze Sbírky." },
+    { id:"spi", kdo:"dite", faze:1, stav:"novy", img:"spi", nazev:"Hexík usnul (7 dní)",
+      kdy:"7 dní bez tréninku, poslední připomínka", odesila:"Appka (cron)", strop:"Jednou, pak ticho",
+      predmet:"Hexík usnul 😴 Probudíš ho?", pre:"Jeden krátký trénink a jsme zase v rytmu.",
+      nadpis:"Hexík usnul", odstavce:["Do přijímaček zbývá 140 dní. Nemusíš dohánět všechno najednou, stačí jeden krátký trénink a jsme zase v rytmu.","Tohle je moje poslední připomínka. Pak tě nechám v klidu, dokud se nevrátíš."],
+      tlacitko:"Probudit Hexíka",
+      pozn:"Počet dní je k prvnímu termínu přijímaček 12. 4. 2027 (ověřený fakt), počítá se z data odeslání. Po tomhle e-mailu už žádné připomínky." },
+    { id:"truhla", kdo:"dite", faze:2, stav:"novy", img:"truhla", nazev:"Neotevřená truhla",
+      kdy:"Truhla neotevřená 3 dny", odesila:"Appka (cron)", strop:"Nejvýš 1× týdně",
+      predmet:"Máš u mě neotevřenou truhlu 🎁", pre:"Co v ní je, uvidíš, až ji otevřeš.",
+      nadpis:"Máš tu truhlu!", odstavce:["Za trénink ti zůstala <b>Denní truhla</b>. Co v ní je, uvidíš, až ji otevřeš.","Možná v ní je něco, co mi bude slušet."],
+      box:"🛡️ Pojistka: vzácná nebo lepší věc nejpozději za 4 truhly", tlacitko:"Otevřít truhlu" },
+    { id:"advent", kdo:"dite", faze:3, stav:"novy", img:"advent", nazev:"Adventní kalendář (1. 12.)",
+      kdy:"1. 12. ráno, jednorázově všem aktivním", odesila:"Appka (jednorázově)", strop:"Jednou",
+      predmet:"Adventní kalendář je tady 🎄 Otevři první okénko", pre:"Každý den po tréninku jedno okénko až do Štědrého dne.",
+      nadpis:"Adventní kalendář je tady!", odstavce:["Od dneška do Štědrého dne se každý den po tréninku otevře jedno okénko. Uvnitř jsou věci pro mě, které jinde nejsou, a mezi nimi i legendární Zlatá hvězda.","Navíc od dneška: <b>Vánoční truhla</b> a <b>Vánoční pokojíček</b>."],
+      tlacitko:"Otevřít 1. okénko",
+      pozn:"Aby stihl 1. 12., musí být schválený do 27. 11." },
+    { id:"odpocet", kdo:"dite", faze:3, stav:"novy", img:"odpocet", nazev:"Odpočet 100 / 50 / 30 dní",
+      kdy:"100, 50 a 30 dní před přijímačkami", odesila:"Appka (cron)", strop:"3× za sezónu",
+      predmet:"Do přijímaček zbývá 100 dní 💪", pre:"Tady je plán, jak je využít.",
+      nadpis:"Zbývá 100 dní", odstavce:["Za 100 dní (12. 4. 2027) je první termín přijímaček. To je spousta času, když ho využijeme chytře."],
+      box:"📅 <b>Leden:</b> dotáhni Slovní úlohy a Zlomky<br>⏱️ <b>Únor:</b> jednou týdně cvičný test na čas<br>🏁 <b>Březen a duben:</b> opakování a testy nanečisto", tlacitko:"Otevřít můj plán",
+      pozn:"Termín z ověřených faktů (jpz_2027). U 5. třídy 14. 4. Plán se skládá z nejslabších témat dítěte." },
+    { id:"novinky", kdo:"dite", faze:3, stav:"novy", img:"novinky", nazev:"Co je nového (měsíčně)",
+      kdy:"První pondělí v měsíci", odesila:"Appka (z kroniky novinek)", strop:"1× měsíčně",
+      predmet:"Co je nového v MateMaxu: prosinec", pre:"Pokojíček, šatník ve 3D a adventní kalendář.",
+      nadpis:"Novinky za listopad", odstavce:["Tohle jsme pro tebe tenhle měsíc přidali:"],
+      box:"🏠 <b>Hexíkův pokojíček</b> ve 3D: vybav si ho v Obchůdku<br>👕 <b>Šatník ve 3D</b>: každou věc vidíš na Hexíkovi<br>🎄 <b>Adventní kalendář</b> od 1. 12.", tlacitko:"Podívat se",
+      pozn:"Skládá se samo z kroniky novinek (data v appce), takže texty se nepíšou dvakrát." },
+    { id:"heslo", kdo:"dite", faze:0, stav:"opravit", img:"heslo", nazev:"Zapomenuté heslo",
+      kdy:"Na žádost na stránce Zapomenuté heslo", odesila:"Supabase (šablona v Supabase)", strop:"Na žádost",
+      predmet:"Nové heslo do MateMaxu", pre:"Odkaz pro nastavení nového hesla.",
+      nadpis:"Nastav si nové heslo", odstavce:["Někdo (nejspíš ty) požádal o nové heslo do MateMaxu. Klikni na tlačítko a nastav si ho.","Pokud o změnu nežádáš, e-mail klidně smaž. Heslo zůstane stejné."],
+      tlacitko:"Nastavit nové heslo",
+      pozn:"Šablonu posílá Supabase. Z kódu nevidím, jestli je česky. Karel: Supabase → Authentication → Email Templates. Stejně potvrzení registrace, pokud je zapnuté." },
+    { id:"pozvanka", kdo:"rodic", faze:0, stav:"novy", img:"rodic", rodic:true, nazev:"Pozvánka od dítěte",
+      kdy:"Dítě v appce zadá e-mail rodiče", odesila:"Appka", strop:"Jednou (opakovaně na žádost)",
+      predmet:"Tomáš vás zve do MateMaxu", pre:"Uvidíte, jak se připravuje na přijímačky.",
+      nadpis:"Tomáš vás zve do MateMaxu", odstavce:["Dobrý den,","Tomáš se v MateMaxu připravuje na přijímačky z matematiky a chce, abyste viděli, jak mu to jde.","Po propojení uvidíte v rodičovském přehledu, kolik trénuje, odhad bodů u přijímaček a témata, na kterých pracuje."],
+      tlacitko:"Propojit se s Tomášem", pata:"Tento e-mail přišel, protože vaši adresu zadal Tomáš v MateMaxu. Pokud Tomáše neznáte, e-mail smažte.",
+      pozn:"Propojení začne dítě, takže zároveň řeší bezpečnostní díru: dnes se rodič může propojit s kýmkoli jen podle e-mailu." },
+    { id:"report", kdo:"rodic", faze:2, stav:"bezi", dnes:"report", rodic:true, img:"rodic", nazev:"Týdenní přehled",
+      kdy:"Každé pondělí v 8:00", odesila:"Appka (Resend, cron)", strop:"1× týdně",
+      predmet:"Týdenní přehled: Tomáš má odhad 31 z 50 bodů", pre:"",
+      pozn:"Chodí jen rodičům s ověřeným propojením a jen u dětí s Premium. V ukázce je zapnutý blok „Odměny za učení“, který je hotový a čeká na schválení. Návrh: jen sladit hlavičku a patičku se společnou šablonou a doplnit odhlášení." },
+    { id:"ukazka", kdo:"rodic", faze:2, stav:"novy", img:"rodic", rodic:true, nazev:"Ukázka pro rodiče bez Premium",
+      kdy:"Propojený rodič, dítě bez Premium: 2 přehledy zdarma, pak 1× měsíčně", odesila:"Appka (cron)", strop:"1× měsíčně",
+      predmet:"Tomáš v listopadu: 12 tréninků a odhad 29 bodů", pre:"Krátký výtah z měsíce.",
+      nadpis:"Tomáš v listopadu", odstavce:["Dobrý den, tady je krátký výtah z Tomášova měsíce v MateMaxu."],
+      box:"🏋️ <b>12 tréninků</b>, 186 příkladů<br>📈 Odhad u přijímaček <b>29 z 50 bodů</b> (+4 za měsíc)<br>🎯 Nejvíc bodů přidá ve Slovních úlohách",
+      tlacitko:"Zobrazit Premium", druhe:"Otevřít rodičovský přehled",
+      pozn:"Celý týdenní přehled s tématy a tipem je součást Premium za 99 Kč měsíčně (ověřený fakt). Obchodní sdělení: jen se souhlasem rodiče, odhlášení jedním klikem." },
+    { id:"premium", kdo:"rodic", faze:4, stav:"novy", img:"premium", rodic:true, nazev:"Vítejte v Premium",
+      kdy:"Hned po zaplacení Premium", odesila:"Appka (webhook Stripe)", strop:"Jednou",
+      predmet:"Vítejte v MateMax Premium 👑", pre:"Co se odemklo a jak zapnout týdenní přehled.",
+      nadpis:"Děkujeme, Premium je aktivní", odstavce:["Dobrý den, děkujeme za důvěru. MateMax Premium je od teď aktivní."],
+      box:"🔓 Všechna témata a úrovně<br>📬 Týdenní přehled pro rodiče každé pondělí", tlacitko:"Propojit účet rodiče", druhe:"Otevřít MateMax",
+      pozn:"Dnes po zaplacení Premium nechodí náš e-mail, jen účtenka od Stripe (pokud je zapnutá). Výčet výhod sladit s obrazovkou Premium. Kde se předplatné ruší, doplnit podle skutečnosti." },
+    { id:"platba", kdo:"rodic", faze:4, stav:"novy", img:"platba", rodic:true, nazev:"Platba se nepovedla",
+      kdy:"Stripe hlásí nezdařenou platbu", odesila:"Appka (webhook Stripe)", strop:"Při každém selhání",
+      predmet:"Platba za MateMax Premium se nepovedla", pre:"Prosím zkontrolujte platební kartu.",
+      nadpis:"Platba se nepovedla", odstavce:["Dobrý den, poslední platbu za MateMax Premium (99 Kč) se nepodařilo provést. Premium zatím běží dál.","Prosím zkontrolujte platební kartu. Pokud je vše v pořádku, platbu zkusíme znovu."],
+      tlacitko:"Zkontrolovat platbu",
+      pozn:"Kolikrát a kdy Stripe platbu zkouší znovu, doplnit podle nastavení Stripe." },
+    { id:"potvrzeni", kdo:"test", faze:4, stav:"bezi", dnes:"potvrzeni", rodic:true, img:"test", nazev:"Online test: přihlášení potvrzeno",
+      kdy:"Po zaplacení online testu", odesila:"Appka (Resend)", strop:"Jednou",
+      predmet:"Přihlášení potvrzeno: Online test nanečisto", pre:"Kdy test začíná a co si připravit.",
+      nadpis:"Máte místo na testu nanečisto", odstavce:["Dobrý den, přihláška na online test nanečisto je potvrzená."],
+      box:"📅 <b>Kdy:</b> sobota 12. prosince, 10:00<br>💻 <b>Kde:</b> online, přímo v MateMaxu<br>🖨️ Den předem pošleme záznamový arch k vytištění", tlacitko:"Přidat do kalendáře",
+      pozn:"Funguje. Návrh: stejný obsah ve společné šabloně a tlačítko Přidat do kalendáře." },
+    { id:"zitra", kdo:"test", faze:4, stav:"bezi", dnes:"zitra", rodic:true, img:"test", nazev:"Online test: zítra",
+      kdy:"Večer před testem", odesila:"Appka (denní cron)", strop:"Jednou",
+      predmet:"Zítra test nanečisto: vytiskněte si arch", pre:"Arch, tužka, pravítko a kružítko.",
+      nadpis:"Zítra je test nanečisto", odstavce:["Dobrý den, zítra v 10:00 začíná online test nanečisto."],
+      box:"🖨️ Vytiskněte si záznamový arch (odkaz níž)<br>✏️ Tužka, pravítko, kružítko<br>⏱️ 70 minut, 16 úloh, 50 bodů", tlacitko:"Stáhnout arch",
+      pozn:"Funguje. Formát testu z ověřených faktů (cermat_format). Pro 5. třídu 14 úloh." },
+    { id:"hodina", kdo:"test", faze:4, stav:"opravit", nazev:"Online test: za hodinu", em:"⏰",
+      kdy:"Hodinu před testem", odesila:"Appka (potřebuje hodinový cron)", strop:"Jednou",
+      predmet:"Za hodinu začínáme", textova:"Tenhle e-mail je v kódu, ale nikdy se neodešle: cron běží jednou denně. Návrh: nahradit push notifikací (viz níž), nebo e-mail vyřadit." },
+    { id:"arch", kdo:"test", faze:4, stav:"bezi", dnes:"arch", rodic:true, img:"vysledek", nazev:"Online test: arch přijat",
+      kdy:"Po odevzdání archu", odesila:"Appka (Resend)", strop:"Jednou",
+      predmet:"Arch přijat, výsledky do 48 hodin", pre:"Hotovo! Teď je řada na nás.",
+      nadpis:"Arch máme", odstavce:["Dobrý den, záznamový arch dorazil v pořádku. Výsledky s rozborem pošleme do 48 hodin.","Mezitím může Tomáš v MateMaxu procvičovat, co mu v testu dělalo potíže."],
+      tlacitko:"Otevřít MateMax", pozn:"Funguje. Návrh jen sjednotí vzhled." },
+    { id:"vysledek", kdo:"test", faze:4, stav:"bezi", nazev:"Online test: výsledek", em:"📝",
+      kdy:"Když Karel v adminu odešle opravu", odesila:"Appka (Resend, z adminu)", strop:"Jednou",
+      predmet:"Výsledek testu nanečisto: 34 z 50 bodů", textova:"Posíláš ho ty z adminu po opravení: body, motivační věta podle výsledku a pozvánka na další termín. Funguje. Návrh: sjednotit vzhled a přidat odkaz na plán tréninku v MateMaxu (doporučení po testu)." },
+    { id:"vyhodnoceni", kdo:"rodic", faze:3, stav:"schvalovani", img:"rodic", rodic:true, nazev:"Testy nanečisto: propojeno",
+      kdy:"Po propojení přes osobní QR (posílá Vyhodnocení testů)", odesila:"Appka Vyhodnocení testů", strop:"Jednou",
+      predmet:"MateMax je propojený s Testy nanečisto", pre:"Po každém testu se do MateMaxu pošlou body po tématech.",
+      nadpis:"MateMax je propojený s Testy nanečisto", odstavce:["Dobrý den,","účet v MateMaxu je od dneška propojený s Testy nanečisto. Po každém testu se do MateMaxu pošlou body po tématech a MateMax z nich sestaví plán, co trénovat do dalšího testu. V Testech nanečisto pak uvidíte, kolik a co vaše dítě procvičilo. Jméno ani e-mail se mezi appkami nepředávají.","Pokud propojení nechcete, zrušíte ho jedním kliknutím."],
+      tlacitko:"Zrušit propojení", pozn:"Text už čeká ve Schvalování (návrh „E-mail: blok s osobním QR…“). Spolu s ním i nový blok v připomínce testu." },
+    { id:"tyden", kdo:"interni", faze:2, stav:"bezi", nazev:"Týden v číslech (Karlovi)", em:"📊",
+      kdy:"Každé pondělí v 7:00", odesila:"Appka (cron)", strop:"1× týdně", predmet:"MateMax: týden v číslech",
+      textova:"Shrnutí analytiky za posledních 7 dní proti předchozím. Chodí jen na adresu nastavenou ve Vercelu. Beze změn." },
+    { id:"chyby", kdo:"interni", faze:2, stav:"opravit", nazev:"Upozornění na chyby (Karlovi)", em:"⚠️",
+      kdy:"Při chybě v appce (nejvýš 1× za 5 minut na chybu)", odesila:"Appka (Resend)", strop:"Podle chyb", predmet:"⚠️ Client error …",
+      textova:"Odchází z testovací adresy Resendu (onboarding@resend.dev), ne z naší domény, takže může padat do spamu. Opravit odesílatele na noreply@matematika-snadno.cz." }
+  ];
+
+  // čísla
+  var pocet = function(s){ return E.filter(function(x){ return x.stav === s; }).length; };
+  el("cisla").innerHTML = [["bezi","běží dnes"],["opravit","k opravě"],["novy","nových"],["schvalovani","ve schvalování"]].map(function(p){ return "<div><b>" + pocet(p[0]) + "</b><span><span class='stav s-" + p[0] + "'>" + STAV[p[0]] + "</span> " + p[1] + "</span></div>"; }).join("");
+
+  // mapa
+  var m = '<span></span>' + FAZE.map(function(f){ return '<span class="hl">' + f + '</span>'; }).join("");
+  ["dite","rodic","test","interni"].forEach(function(k){
+    m += '<span class="kdo">' + KDO[k] + '</span>';
+    for (var f = 0; f < FAZE.length; f++) {
+      m += '<div class="bunka">' + E.filter(function(x){ return x.kdo === k && x.faze === f; }).map(function(x){ return '<button type="button" data-id="' + x.id + '"><span class="tecka t-' + x.stav + '"></span>' + x.nazev + '</button>'; }).join("") + '</div>';
+    }
+  });
+  el("mapa").innerHTML = m;
+  el("mapa").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ vyber(b.dataset.id); el("h-prohlizec").scrollIntoView({ behavior: "smooth" }); }); });
+
+  // filtry a seznam
+  var filtr = "vse", aktivni = null, verze = "navrh", zarizeni = "pc";
+  el("filtry").innerHTML = [["vse","Vše"],["dite","Dítě"],["rodic","Rodič"],["test","Testy"],["interni","Interní"]].map(function(f){ return '<button type="button" data-f="' + f[0] + '" aria-pressed="' + (f[0] === filtr) + '">' + f[1] + '</button>'; }).join("");
+  el("filtry").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ filtr = b.dataset.f; el("filtry").querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); }); seznam(); }); });
+  function seznam(){
+    el("seznam").innerHTML = E.filter(function(x){ return filtr === "vse" || x.kdo === filtr; }).map(function(x){
+      var ik = x.img ? '<img src="img/' + x.img + '.png" alt="">' : '<span class="em" aria-hidden="true">' + (x.em || "✉️") + '</span>';
+      return '<button type="button" class="polozka" data-id="' + x.id + '" aria-current="' + (x.id === aktivni) + '">' + ik + '<span><b>' + x.nazev + '</b><small><span class="stav s-' + x.stav + '">' + STAV[x.stav] + '</span>' + KDO[x.kdo] + '</small></span></button>';
+    }).join("");
+    el("seznam").querySelectorAll(".polozka").forEach(function(b){ b.addEventListener("click", function(){ vyber(b.dataset.id); }); });
+  }
+  function vyber(id){
+    aktivni = id; var x = E.find(function(e){ return e.id === id; });
+    verze = x.nadpis ? "navrh" : (x.dnes ? "dnes" : "navrh");
+    if (filtr !== "vse" && x.kdo !== filtr) { filtr = "vse"; el("filtry").querySelectorAll("button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.f === "vse")); }); }
+    seznam(); detail();
+  }
+  function detail(){
+    var x = E.find(function(e){ return e.id === aktivni; });
+    var maDnes = !!(x.dnes && window.DNES && DNES[x.dnes]), maNavrh = !!x.nadpis;
+    var h = '<div class="lista-detail"><h3>' + x.nazev + ' <span class="stav s-' + x.stav + '">' + STAV[x.stav] + '</span></h3><div style="display:flex;gap:8px;flex-wrap:wrap">';
+    if (!x.textova) {
+      h += '<div class="prep" role="group" aria-label="Verze"><button type="button" data-v="dnes" aria-pressed="' + (verze === "dnes") + '"' + (maDnes ? "" : " disabled") + '>Dnes</button><button type="button" data-v="navrh" aria-pressed="' + (verze === "navrh") + '"' + (maNavrh ? "" : " disabled") + '>Návrh</button></div>';
+      h += '<div class="prep" role="group" aria-label="Zařízení"><button type="button" data-z="pc" aria-pressed="' + (zarizeni === "pc") + '">Počítač</button><button type="button" data-z="tel" aria-pressed="' + (zarizeni === "tel") + '">Telefon</button></div>';
+    }
+    h += '</div></div>';
+    h += '<div class="meta"><div><small>Komu</small><span>' + KDO[x.kdo] + '</span></div><div><small>Kdy</small><span>' + x.kdy + '</span></div><div><small>Posílá</small><span>' + x.odesila + '</span></div><div><small>Strop</small><span>' + x.strop + '</span></div></div>';
+    if (x.textova) {
+      h += '<div class="textova"><span style="font-size:2rem">' + (x.em || "✉️") + '</span><b style="color:var(--fg)">Předmět: ' + x.predmet + '</b><span>' + x.textova + '</span></div>';
+    } else {
+      var predmet = verze === "dnes" && maDnes ? DNES[x.dnes].subject : x.predmet;
+      h += '<div class="klient' + (zarizeni === "tel" ? " telefon" : "") + '"><div class="klient-hl"><span>Od: <b>' + (x.rodic ? "Matematika Snadno · MateMax" : "Hexík z MateMaxu") + '</b> &lt;noreply@matematika-snadno.cz&gt;</span><span>Předmět: <b>' + predmet + '</b></span>' + (verze === "navrh" && x.pre ? '<span class="pre">Náhled: ' + x.pre + '</span>' : "") + '</div><iframe title="Náhled e-mailu ' + x.nazev + '" id="ramec"></iframe></div>';
+    }
+    if (x.pozn) h += '<div class="poznamka"><b>Poznámka</b><span>' + x.pozn + '</span></div>';
+    el("detail").innerHTML = h;
+    var r = el("ramec");
+    if (r) r.srcdoc = verze === "dnes" && maDnes ? DNES[x.dnes].html.replace("<head>", '<head><base href="' + document.baseURI + '">') : sablona(x).replace("<head>", '<head><base href="' + document.baseURI + '">');
+    el("detail").querySelectorAll("[data-v]").forEach(function(b){ b.addEventListener("click", function(){ verze = b.dataset.v; detail(); }); });
+    el("detail").querySelectorAll("[data-z]").forEach(function(b){ b.addEventListener("click", function(){ zarizeni = b.dataset.z; detail(); }); });
+  }
+  seznam(); vyber("uvitani");
+})();
+</script>
