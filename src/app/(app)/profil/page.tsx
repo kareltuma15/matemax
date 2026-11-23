@@ -11,6 +11,7 @@ import { urovenZXP } from "@/lib/urovne";
 import { getReadiness } from "@/lib/readiness";
 import { localLoadSessions, SessionHistoryEntry } from "@/lib/storage";
 import PropojeniVysledky from "@/components/PropojeniVysledky";
+import ReportRodicum from "@/components/ReportRodicum";
 import { TEMA_LABELS, TEMATA_ORDER, TEMATA_ORDER_5, SM2Card } from "@/types";
 import { examplesIndex } from "@/data/examples-index";
 import MedailovaStena, { NejblizsiMedaileKarta } from "@/components/odznaky/MedailovaStena";
@@ -1217,21 +1218,8 @@ export default function ProfilPage() {
           {/* Propojení s Testy nanečisto (appka Vyhodnocení testů) */}
           <PropojeniVysledky />
 
-          {/* Rodičovský portál */}
-          <Link
-            id="rodice"
-            href="/rodice/dashboard"
-            className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-xl">👨‍👩‍👧</span>
-              <div>
-                <p className="text-sm font-semibold text-slate-800">Rodičovský portál</p>
-                <p className="text-xs text-slate-400">Přehled pokroku pro rodiče</p>
-              </div>
-            </div>
-            <span className="text-slate-300 text-lg">→</span>
-          </Link>
+          {/* Týdenní report pro rodiče: komu chodí, pozvání rodiče, společný e-mail (mockup 23. 11.) */}
+          <ReportRodicum />
 
           {/* Logout */}
           <button

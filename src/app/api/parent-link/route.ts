@@ -1,53 +1,64 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import crypto from "crypto";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import {
+  uzivatelZPozadavku, najdiUcetPodleEmailu, pocetRodicu, novyToken, normEmail, platnyEmail,
+  MAX_RODICU,
+} from "@/lib/rodic-link";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-
+/**
+ * Rodič požádá o propojení s dítětem podle e-mailu dítěte.
+ * Propojení NEplatí hned: dítě ho musí povolit v appce (karta na Domově). Odpověď je vždy stejná,
+ * ať účet s tím e-mailem existuje, nebo ne, takže se nedá zjišťovat, kdo má v MateMaxu účet.
+ * (Dřív: propojení bylo ověřené okamžitě a 404 prozradilo, že e-mail nemá účet.)
+ */
 export async function POST(req: NextRequest) {
   if (!rateLimit(`parent-link:${clientIp(req)}`, 10, 10 * 60_000)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    return NextResponse.json({ error: "Příliš mnoho pokusů. Zkuste to za pár minut." }, { status: 429 });
   }
-
-  const authHeader = req.headers.get("Authorization");
-  if (!authHeader) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const { childEmail } = (await req.json()) as { childEmail?: string };
-  if (!childEmail) return NextResponse.json({ error: "Chybí email dítěte" }, { status: 400 });
-
-  const supabaseParent = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    global: { headers: { Authorization: authHeader } },
-  });
-  const { data: { user }, error } = await supabaseParent.auth.getUser();
-  if (error || !user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
+  const user = await uzivatelZPozadavku(req);
+  if (!user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   if (!supabaseAdmin) return NextResponse.json({ error: "Admin not configured" }, { status: 503 });
-
-  // Find child user by email
-  const { data: childUsers, error: listErr } = await supabaseAdmin.auth.admin.listUsers();
-  if (listErr) return NextResponse.json({ error: listErr.message }, { status: 500 });
-
-  const child = childUsers.users.find((u) => u.email?.toLowerCase() === childEmail.toLowerCase());
-  if (!child) {
-    return NextResponse.json({ error: "Uživatel s tímto emailem neexistuje v MateMax." }, { status: 404 });
+  if (!rateLimit(`parent-link-den:${user.id}`, 5, 24 * 3600_000)) {
+    return NextResponse.json({ error: "Dnes jste odeslali už 5 žádostí. Další půjde poslat zítra." }, { status: 429 });
   }
 
-  const token = crypto.randomBytes(16).toString("hex");
+  const { childEmail } = (await req.json().catch(() => ({}))) as { childEmail?: string };
+  const email = normEmail(childEmail);
+  if (!platnyEmail(email)) return NextResponse.json({ error: "Zadejte platný e-mail dítěte." }, { status: 400 });
 
-  const { error: insertErr } = await supabaseAdmin.from("parent_child_link").upsert(
+  // Společný e-mail: rodič je přihlášený přímo účtem dítěte. Report se zapíná v profilu dítěte.
+  if (email === normEmail(user.email)) {
+    return NextResponse.json({ ok: true, stejnyEmail: true });
+  }
+
+  const odpoved = NextResponse.json({ ok: true });
+  let dite;
+  try { dite = await najdiUcetPodleEmailu(email); } catch (e) {
+    console.error("[parent-link] hledání účtu selhalo:", e);
+    return NextResponse.json({ error: "Žádost se nepodařilo odeslat. Zkuste to znovu." }, { status: 500 });
+  }
+  if (!dite) return odpoved;
+
+  const { data: existujici } = await supabaseAdmin
+    .from("parent_child_link").select("id, verified, created_at")
+    .eq("parent_email", normEmail(user.email)).eq("child_user_id", dite.id).maybeSingle();
+  if (existujici?.verified) return odpoved;
+  if (!existujici && (await pocetRodicu(dite.id)) >= MAX_RODICU) return odpoved;
+
+  const { error } = await supabaseAdmin.from("parent_child_link").upsert(
     {
-      parent_email: user.email,
-      child_user_id: child.id,
-      verified: true,
-      token,
-      verified_at: new Date().toISOString(),
+      parent_email: normEmail(user.email),
+      child_user_id: dite.id,
+      verified: false,
+      verified_at: null,
+      token: novyToken("dite"),
+      created_at: new Date().toISOString(),
     },
-    { onConflict: "parent_email,child_user_id" }
+    { onConflict: "parent_email,child_user_id" },
   );
-
-  if (insertErr) return NextResponse.json({ error: insertErr.message }, { status: 500 });
-  return NextResponse.json({ ok: true, childName: childEmail.split("@")[0] });
+  // Chyba se jen zaloguje: jiná odpověď by prozradila, že účet existuje.
+  if (error) console.error("[parent-link] uložení žádosti selhalo:", error.message);
+  return odpoved;
 }
+

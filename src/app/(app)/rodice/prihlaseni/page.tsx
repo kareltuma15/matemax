@@ -19,6 +19,7 @@ function RodicePrihlaseniObsah() {
   const rezim = useSearchParams().get("rezim");
   const [mode, setMode] = useState<"login" | "register">(rezim === "registrace" ? "register" : "login");
   const [done, setDone] = useState(false);
+  const [obsazeno, setObsazeno] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,8 +38,14 @@ function RodicePrihlaseniObsah() {
         }
         router.push("/rodice/dashboard");
       } else {
-        const { error: err } = await supabase.auth.signUp({ email, password });
+        const { data, error: err } = await supabase.auth.signUp({ email, password });
         if (err) { setError(err.message); return; }
+        // E-mail už má účet (nejčastěji účet dítěte). Supabase to neřekne chybou, jen vrátí účet bez identit
+        // a žádný potvrzovací e-mail nepřijde, takže rodič dřív čekal marně.
+        if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+          setObsazeno(true);
+          return;
+        }
         setDone(true);
       }
     } finally {
@@ -137,6 +144,18 @@ function RodicePrihlaseniObsah() {
         {error && (
           <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
             {error}
+          </div>
+        )}
+
+        {obsazeno && mode === "register" && (
+          <div className="text-sm rounded-xl px-4 py-3 flex flex-col gap-2" style={{ background: "#fff4f2", border: "1px solid #f7cdc6", color: "#9a2b1c" }} data-testid="rodice-email-obsazeny">
+            <p>
+              Tento e-mail už v MateMaxu používá jiný účet, nejspíš vašeho dítěte. Týdenní report pak zapnete přímo v jeho profilu: <b>Profil → Týdenní report pro rodiče → Na tento e-mail</b>.
+            </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              <button type="button" onClick={() => { setMode("login"); setObsazeno(false); }} className="font-bold underline">Přihlásit se tímto e-mailem</button>
+              <button type="button" onClick={() => { setEmail(""); setObsazeno(false); }} className="font-bold underline">Použít jiný e-mail</button>
+            </div>
           </div>
         )}
 

@@ -11,6 +11,7 @@ export default function RodicePropojeni() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [stejny, setStejny] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
@@ -40,14 +41,15 @@ export default function RodicePropojeni() {
         body: JSON.stringify({ childEmail }),
       });
 
-      const json = (await res.json()) as { ok?: boolean; error?: string; childName?: string };
+      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; stejnyEmail?: boolean };
 
       if (!res.ok) {
-        setError(json.error ?? "Nepodařilo se propojit účet.");
+        setError(json.error ?? "Žádost se nepodařilo odeslat. Zkuste to znovu.");
         return;
       }
 
-      setSuccess(json.childName ?? childEmail.split("@")[0]);
+      setStejny(!!json.stejnyEmail);
+      setSuccess(childEmail.trim());
     } finally {
       setLoading(false);
     }
@@ -62,23 +64,28 @@ export default function RodicePropojeni() {
   }
 
   if (success) {
+    // Stejná odpověď, ať účet s tím e-mailem existuje, nebo ne (nedá se zjišťovat, kdo má v MateMaxu účet).
     return (
-      <div className="max-w-sm mx-auto flex flex-col gap-6 items-center text-center pt-8">
-        <span className="text-6xl">🔗</span>
-        <div>
-          <h2 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>Propojení úspěšné!</h2>
-          <p className="mt-2 text-slate-500 text-sm leading-relaxed">
-            Váš účet byl propojen s účtem dítěte <strong>{success}</strong>.
-            Nyní můžete sledovat jeho pokrok v přípravě na přijímačky.
+      <div className="max-w-sm mx-auto flex flex-col gap-5 pt-8" data-testid="rodice-propojeni-odeslano">
+        <span className="text-5xl" aria-hidden="true">{stejny ? "👨‍👩‍👧" : "📨"}</span>
+        <h2 className="text-2xl font-extrabold" style={{ color: "var(--text-primary)" }}>{stejny ? "Používáte společný e-mail" : "Žádost je odeslaná"}</h2>
+        {stejny ? (
+          <p className="text-sm text-slate-500 leading-relaxed">
+            Jste přihlášeni přímo účtem dítěte. Týdenní report zapnete v jeho profilu: <b>Profil → Týdenní report pro rodiče → Na tento e-mail</b>.
           </p>
-        </div>
+        ) : (
+          <div className="rounded-2xl p-4 text-sm leading-relaxed" style={{ background: "#ecfdf3", border: "1px solid #bbf0cf", color: "#166534" }}>
+            Pokud je dítě v MateMaxu registrované pod e-mailem <b className="break-all">{success}</b>, uvidí žádost při příštím otevření appky. Jakmile ji povolí, uvidíte v rodičovském přehledu jeho pokrok.
+          </div>
+        )}
+        <p className="text-sm text-slate-500">Máte s dítětem společný e-mail? Report zapnete přímo v jeho profilu.</p>
         <button
           type="button"
-          onClick={() => router.push("/rodice/dashboard")}
-          className="w-full py-4 rounded-2xl text-white font-extrabold text-base shadow-md transition-transform active:scale-95"
-          style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
+          onClick={() => router.push(stejny ? "/profil#rodice" : "/rodice/dashboard")}
+          className="w-full py-4 rounded-2xl text-white font-extrabold text-base"
+          style={{ background: "#0D1B3E" }}
         >
-          Přejít na dashboard →
+          {stejny ? "Otevřít profil" : "Rodičovský přehled"}
         </button>
       </div>
     );
@@ -99,7 +106,7 @@ export default function RodicePropojeni() {
         </h1>
         <p className="mt-1 text-sm text-slate-500 leading-relaxed">
           Zadejte email, pod kterým je dítě registrované v MateMax.
-          Po propojení získáte přístup k jeho statistikám.
+          Dítě pak žádost povolí v appce a vy uvidíte jeho pokrok.
         </p>
       </div>
 
@@ -111,8 +118,8 @@ export default function RodicePropojeni() {
         <p className="text-xs font-bold uppercase tracking-wide" style={{ color: "#2E6DA4" }}>Jak to funguje</p>
         {[
           { icon: "1️⃣", text: "Zadejte email dítěte z MateMax účtu" },
-          { icon: "2️⃣", text: "Systém ověří, že účet existuje" },
-          { icon: "3️⃣", text: "Okamžitě získáte přístup k dashboardu" },
+          { icon: "2️⃣", text: "Dítěti se v appce ukáže vaše žádost" },
+          { icon: "3️⃣", text: "Po povolení uvidíte jeho přehled a začne chodit report" },
         ].map(({ icon, text }) => (
           <div key={text} className="flex items-center gap-2">
             <span className="text-base">{icon}</span>
@@ -150,7 +157,7 @@ export default function RodicePropojeni() {
           className="w-full py-3.5 rounded-xl text-white font-extrabold text-base disabled:opacity-50 transition-opacity"
           style={{ background: "linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%)" }}
         >
-          {loading ? "Ověřuji…" : "Propojit účet →"}
+          {loading ? "Odesílám…" : "Poslat žádost"}
         </button>
       </form>
 

@@ -38,6 +38,7 @@ import { darekZDoporuceni, pouzitoLokalne, zbyva, DAREK_NA_TEMA } from "@/lib/oc
 import { nactiVyvoj, type Vyvoj } from "@/lib/odhad-bodu";
 import ProRodice from "@/components/ProRodice";
 import ChystaSe from "@/components/hexik/ChystaSe";
+import SouhlasRodice from "@/components/SouhlasRodice";
 import { TEMATA_ORDER, TEMATA_ORDER_5, TEMA_LABELS, type Trida } from "@/types";
 
 /** První jednotný termín přijímaček na víceletá gymnázia (ověřený fakt: 14.–15. 4. 2027). */
@@ -261,6 +262,8 @@ export default function Domov({ session, trida, xp, streak, diagDone }: Props) {
               </Link>
             </div>
           </HlavickaZnacky>
+
+          <SouhlasRodice g5={g5} />
 
           {vzkaz && (
             <div className="rounded-2xl px-4 py-3.5 flex items-start gap-3" style={{ background: "#fffbeb", border: "1.5px solid #fde68a" }}>

@@ -1,0 +1,209 @@
+<title>Propojení s rodičem</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800&display=swap">
+<style>
+/* Layout: dokument s krátkým úvodem, pak řada telefonů (obrazovky appky), pod nimi pravidla a otázky */
+:root {
+  --bg: #eef2f7; --fg: #0D1B3E; --muted: #52607a; --line: #d5dce7; --panel: #ffffff;
+  --navy: #0D1B3E; --blue: #2E6DA4; --ok: #15803d; --okbg: #e8f6ec; --warn: #b45309; --warnbg: #fdf3e3;
+  /* obrazovky appky jsou vždy ve světlém režimu appky */
+  --scr-bg: #f8fafc; --scr-card: #ffffff; --scr-fg: #0D1B3E; --scr-muted: #64748b; --scr-line: #e2e8f0;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1729; --fg: #e8edf6; --muted: #9aa8c0; --line: #2a3650; --panel: #16213a;
+  --ok: #4ade80; --okbg: #12301f; --warn: #fbbf24; --warnbg: #33260c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1729; --fg: #e8edf6; --muted: #9aa8c0; --line: #2a3650; --panel: #16213a;
+  --ok: #4ade80; --okbg: #12301f; --warn: #fbbf24; --warnbg: #33260c; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 32px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 36px; }
+h1 { font-size: 30px; line-height: 1.15; margin: 0; font-weight: 800; text-wrap: balance; }
+h2 { font-size: 20px; margin: 0 0 12px; font-weight: 800; text-wrap: balance; }
+p { margin: 0; }
+.lead { max-width: 68ch; color: var(--muted); margin-top: 10px; }
+.cesty { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.cesta { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cesta b { font-size: 15px; }
+.cesta span { color: var(--muted); font-size: 14px; }
+.stav { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--okbg); color: var(--ok); align-self: flex-start; }
+.stav.novy { background: var(--warnbg); color: var(--warn); }
+
+.telefony { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px 20px; align-items: start; }
+figure { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+figcaption { font-size: 14px; color: var(--muted); max-width: 46ch; }
+figcaption b { color: var(--fg); display: block; font-size: 15px; }
+.tel { background: var(--scr-bg); color: var(--scr-fg); border: 8px solid #1b2436; border-radius: 30px; max-width: 340px; width: 100%;
+  padding: 18px 14px 22px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; font-size: 14px; }
+.lista { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; }
+.lista small { font-weight: 600; color: var(--scr-muted); font-size: 12px; }
+.k { background: var(--scr-card); border: 1px solid var(--scr-line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(13,27,62,.06); }
+.k h3 { margin: 0; font-size: 15px; font-weight: 800; }
+.k .t { color: var(--scr-muted); font-size: 13px; }
+.volba { border: 1.5px solid var(--scr-line); border-radius: 12px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; background: #fff; }
+.volba.vybrana { border-color: #2E6DA4; background: #f0f6fc; }
+.kolecko { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #94a3b8; flex-shrink: 0; margin-top: 2px; box-sizing: border-box; }
+.vybrana .kolecko { border: 5px solid #2E6DA4; }
+.volba b { display: block; font-size: 14px; }
+.volba span { font-size: 12.5px; color: var(--scr-muted); }
+.pole { border: 1px solid var(--scr-line); border-radius: 10px; padding: 9px 11px; font-size: 13.5px; color: var(--scr-fg); background: #fff; }
+.pole.ph { color: #94a3b8; }
+.btn { border-radius: 12px; padding: 11px 12px; font-weight: 800; font-size: 14px; text-align: center; background: #0D1B3E; color: #fff; }
+.btn.sv { background: #fff; color: #0D1B3E; border: 1px solid var(--scr-line); }
+.radek { display: flex; gap: 8px; } .radek > * { flex: 1; }
+.ok { background: #ecfdf3; border: 1px solid #bbf0cf; color: #166534; border-radius: 12px; padding: 10px 12px; font-size: 13px; }
+.ceka { background: #fff8eb; border: 1px solid #f6dfb0; color: #8a4b0a; border-radius: 12px; padding: 10px 12px; font-size: 13px; }
+.chyba { background: #fff4f2; border: 1px solid #f7cdc6; color: #9a2b1c; border-radius: 12px; padding: 10px 12px; font-size: 13px; }
+.odkaz { color: #2E6DA4; font-weight: 700; font-size: 13px; }
+.rodic { border: 2px solid #0D1B3E; }
+.stitek { align-self: flex-start; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; background: #0D1B3E; color: #fff; padding: 3px 9px; border-radius: 99px; }
+.souhlas { border: 2px solid #2E6DA4; background: linear-gradient(180deg, #f0f6fc, #fff 60%); }
+.seznam { margin: 0; padding-left: 18px; font-size: 13px; color: var(--scr-muted); display: flex; flex-direction: column; gap: 2px; }
+.mail { background: #fff; color: #0D1B3E; border: 1px solid var(--scr-line); border-radius: 14px; overflow: hidden; max-width: 340px; width: 100%; font-size: 14px; }
+.mail .hl { background: #0D1B3E; color: #fff; padding: 14px 16px; font-weight: 800; }
+.mail .hl small { display: block; font-weight: 400; opacity: .8; font-size: 12px; }
+.mail .telo { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.mail .pata { padding: 10px 16px; border-top: 1px solid var(--scr-line); font-size: 11.5px; color: var(--scr-muted); }
+
+.dve { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.blok { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; min-width: 0; }
+.blok ul, .blok ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.blok li { max-width: 70ch; }
+.blok li b { color: var(--fg); }
+.pozn { color: var(--muted); font-size: 13.5px; margin-top: 12px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Propojení rodiče s dítětem</h1>
+    <p class="lead">Mockup ke schválení. Řeší dvě věci najednou: rodiny, kde dítě i rodič používají stejný e-mail, a bezpečnostní díru, kdy se kdokoli mohl propojit s cizím dítětem jen podle e-mailu. Nic z toho zatím není v appce.</p>
+  </header>
+
+  <section>
+    <h2>Tři cesty, jak zapnout týdenní report</h2>
+    <div class="cesty">
+      <div class="cesta"><span class="stav novy">nové</span><b>Společný e-mail</b><span>Dítě (nebo rodič u dítěte) v profilu zvolí „Na tento e-mail“. Report chodí hned, rodič nepotřebuje žádný další účet.</span></div>
+      <div class="cesta"><span class="stav novy">nové</span><b>Dítě pozve rodiče</b><span>Dítě zadá e-mail rodiče. Rodiči přijde e-mail a odběr potvrdí jedním kliknutím. Bez potvrzení nic nechodí.</span></div>
+      <div class="cesta"><span class="stav">upravené</span><b>Rodič požádá dítě</b><span>Rodič s vlastním účtem zadá e-mail dítěte. Propojení platí až ve chvíli, kdy ho dítě v appce povolí.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Obrazovky</h2>
+    <div class="telefony">
+
+      <figure>
+        <div class="tel">
+          <div class="lista">Profil <small>9. třída</small></div>
+          <div class="k">
+            <h3>Týdenní report pro rodiče</h3>
+            <p class="t">Každé pondělí ráno přijde rodiči přehled: kolik příkladů jsi vyřešil(a), jak ti to jde a co procvičit dál.</p>
+            <div class="volba vybrana"><div class="kolecko"></div><div><b>Na tento e-mail</b><span>Používáte s rodičem stejný e-mail (jan.novak@seznam.cz)</span></div></div>
+            <div class="volba"><div class="kolecko"></div><div><b>Rodič má jiný e-mail</b><span>Pošleme mu e-mail, odběr si potvrdí sám</span></div></div>
+            <div class="btn">Zapnout report</div>
+          </div>
+        </div>
+        <figcaption><b>1 · Profil žáka: výběr</b>Nová karta v profilu. Ceny ani Premium tu nejsou, karta mluví k dítěti.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tel">
+          <div class="lista">Profil <small>9. třída</small></div>
+          <div class="k">
+            <h3>Týdenní report pro rodiče</h3>
+            <div class="ok">✓ Report chodí na <b>jan.novak@seznam.cz</b>. První přijde v pondělí ráno.</div>
+            <div class="ceka">Čeká na potvrzení: <b>petra.novakova@email.cz</b>. Jakmile rodič klikne na odkaz v e-mailu, report začne chodit i jemu.</div>
+            <div class="radek"><div class="btn sv">Přidat rodiče</div><div class="btn sv">Vypnout</div></div>
+          </div>
+        </div>
+        <figcaption><b>2 · Profil žáka: zapnuto</b>Dítě vidí, komu report chodí, a může ho kdykoli vypnout. Nejvýš 3 rodiče na jedno dítě.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tel">
+          <div class="lista">Domov <small>🔥 4 dny</small></div>
+          <div class="k souhlas">
+            <h3>Rodič chce vidět tvůj pokrok</h3>
+            <p class="t">Účet <b style="color:#0D1B3E">petra.novakova@email.cz</b> žádá o týdenní přehled tvého tréninku:</p>
+            <ul class="seznam"><li>kolik příkladů vyřešíš a s jakou úspěšností</li><li>odhad bodů u přijímaček</li><li>témata, která ti jdou a nejdou</li></ul>
+            <div class="radek"><div class="btn">Povolit</div><div class="btn sv">Tohohle neznám</div></div>
+            <p class="t">Povolení můžeš kdykoli zrušit v profilu.</p>
+          </div>
+          <div class="k"><h3>Dnešní mise</h3><p class="t">Zlomky · 8 příkladů</p></div>
+        </div>
+        <figcaption><b>3 · Domov žáka: souhlas</b>Karta nahoře na Domově, dokud ji dítě nevyřídí. „Tohohle neznám“ žádost smaže a rodič se nic nedozví.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tel">
+          <div class="lista">Rodičovský přehled</div>
+          <div class="k rodic">
+            <span class="stitek">Pro rodiče</span>
+            <h3>Propojení s dítětem</h3>
+            <div class="pole">jan.novak@seznam.cz</div>
+            <div class="ok">Žádost je odeslaná. Pokud je dítě v MateMaxu registrované pod tímto e-mailem, uvidí ji při příštím otevření appky. Jakmile ji povolí, uvidíte tady jeho přehled.</div>
+            <p class="t"><b style="color:#0D1B3E">Čeká na povolení:</b> jan.novak@seznam.cz</p>
+            <p class="t">Máte s dítětem společný e-mail? Report zapnete přímo v jeho profilu.</p>
+          </div>
+        </div>
+        <figcaption><b>4 · Rodič: žádost odeslána</b>Stejná odpověď, ať účet existuje, nebo ne. Kdo zkouší cizí e-maily, nic se nedozví.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tel">
+          <div class="lista">Účet rodiče</div>
+          <div class="k rodic">
+            <span class="stitek">Pro rodiče</span>
+            <h3>Vytvořit účet rodiče</h3>
+            <div class="pole">jan.novak@seznam.cz</div>
+            <div class="pole ph">Heslo</div>
+            <div class="chyba">Tento e-mail už v MateMaxu používá jiný účet, nejspíš vašeho dítěte. Týdenní report pak zapnete přímo v jeho profilu: <b>Profil → Týdenní report pro rodiče → Na tento e-mail</b>.</div>
+            <div class="btn">Přihlásit se tímto e-mailem</div>
+            <span class="odkaz">Použít jiný e-mail</span>
+          </div>
+        </div>
+        <figcaption><b>5 · Rodič: e-mail už je obsazený</b>Místo dnešního „zkontrolujte e-mail“, po kterém nic nepřijde.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="mail">
+          <div class="hl">MateMax<small>Potvrďte odběr týdenního reportu</small></div>
+          <div class="telo">
+            <p>Dobrý den,</p>
+            <p><b>Jan</b> v MateMaxu (příprava na přijímačky z matematiky) zadal tento e-mail, aby vám každé pondělí ráno chodil přehled jeho tréninku.</p>
+            <div class="btn">Potvrdit odběr</div>
+            <p style="font-size:13px;color:#64748b">Pokud nic neznáte, e-mail ignorujte. Bez potvrzení vám nic dalšího nepošleme.</p>
+          </div>
+          <div class="pata">Matematika Snadno · Odhlásit se lze v každém reportu.</div>
+        </div>
+        <figcaption><b>6 · E-mail rodiči: potvrzení</b>Přijde jen při cestě „Rodič má jiný e-mail“. Text projde schválením jako ostatní e-maily.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section class="dve">
+    <div class="blok">
+      <h2>Co se změní pod kapotou</h2>
+      <ul>
+        <li><b>Propojení platí jen se souhlasem.</b> Rodič → potvrdí dítě v appce. Dítě → potvrdí rodič v e-mailu. Společný e-mail platí hned, protože obě strany čtou stejnou schránku.</li>
+        <li><b>Odpověď nic neprozradí.</b> Rodič vždy uvidí „žádost je odeslaná“, i když takový účet neexistuje.</li>
+        <li><b>Dítě se najde vždy.</b> Dnes se hledá jen mezi prvními 50 účty, oprava hledá přímo podle e-mailu.</li>
+        <li><b>Žádost vyprší po 14 dnech</b> a z jednoho účtu jde poslat nejvýš 5 žádostí denně.</li>
+        <li><b>Obě strany můžou propojení zrušit:</b> dítě v profilu, rodič v nastavení přehledu.</li>
+        <li><b>Report dál chodí jen k Premium,</b> beze změny. Platí i pro společný e-mail. Informace o Premium je jen v rámečku Pro rodiče, ne v kartě pro dítě.</li>
+      </ul>
+    </div>
+    <div class="blok">
+      <h2>Potřebuju od tebe rozhodnout</h2>
+      <ol>
+        <li><b>4 dnešní propojení.</b> Všechna vznikla bez souhlasu dítěte, nejspíš jsou to tvoje testy. Nechat je, nebo je převést na „čeká na povolení“?</li>
+        <li><b>Karta souhlasu i u páťáků?</b> Navrhuju ano, stejně pro obě třídy.</li>
+        <li><b>Texty.</b> Karty, hlášky i e-mail rodiči jsou texty pro zákazníky. Po schválení mockupu je pošlu ke schválení do kokpitu.</li>
+      </ol>
+      <p class="pozn">Odhad práce: zhruba 6 hodin včetně testů na mobilu (320 a 375 px) a testu, že se cizí rodič s dítětem nepropojí.</p>
+    </div>
+  </section>
+</div>
