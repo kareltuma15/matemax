@@ -20,7 +20,7 @@ export default function RodicePage() {
   const kroky = [
     { cislo: "1", nadpis: "Účet rodiče", text: "Vytvořte si vlastní účet rodiče (e-mail a heslo), nebo se přihlaste." },
     { cislo: "2", nadpis: "Propojení s dítětem", text: "Zadejte e-mail, pod kterým je dítě registrované v MateMaxu." },
-    { cislo: "3", nadpis: "Každé pondělí v 8:00", text: "Přijde přehled. Kdykoli ho najdete i v rodičovském přehledu." },
+    { cislo: "3", nadpis: "Každé pondělí ráno", text: "Přijde přehled. Kdykoli ho najdete i v rodičovském přehledu." },
   ];
 
   return (
