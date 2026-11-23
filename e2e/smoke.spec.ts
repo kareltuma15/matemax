@@ -44,6 +44,17 @@ test.describe("chráněné trasy přesměrují nepřihlášeného", () => {
   });
 });
 
+// Stará stránka /rodice slibovala týdenní report každému, kdo vyplní e-mail (23. 11. 2026 zrušeno).
+test("/rodice přesměruje na přihlášení rodiče a nic neslibuje ani neodesílá", async ({ page }) => {
+  const odeslano: string[] = [];
+  page.on("request", (r) => { if (r.method() === "POST" && r.url().includes("/api/parent-subscribe")) odeslano.push(r.url()); });
+  await page.goto("/rodice");
+  await expect(page).toHaveURL(/\/rodice\/prihlaseni$/);
+  await expect(page.getByText("Týdenní report pro rodiče")).toHaveCount(0);
+  await expect(page.getByText(/Přihlásit k odběru/)).toHaveCount(0);
+  expect(odeslano).toEqual([]);
+});
+
 // Admin není kryté proxy — stránka se přesměruje na klientu a data chrání API (Bearer token).
 test.describe("admin není dostupný bez přihlášení", () => {
   test("/admin → /prihlaseni", async ({ page }) => {
@@ -106,6 +117,16 @@ test.describe("zapisující trasy odmítnou nepřihlášeného", () => {
       data: { userId: "00000000-0000-0000-0000-000000000000", action: "grant" },
     });
     expect(res.status()).toBe(401);
+  });
+
+  // Stará přihláška k „týdennímu reportu“ (23. 11. 2026): nepřihlášená trasa poslala e-mail na libovolnou adresu
+  // a slibovala report, který nikdy nechodil. Trasa je pryč — nic nezapíše a nic neodešle.
+  test("/api/parent-subscribe už neexistuje (nepošle e-mail na cizí adresu)", async ({ request }) => {
+    const res = await request.post("/api/parent-subscribe", {
+      data: { parentEmail: "nekdo@example.com", childEmail: "dite@example.com" },
+    });
+    expect(res.status()).toBe(404);
+    expect((await request.get("/api/parent-subscribe")).status()).toBe(404);
   });
 
   test("/api/push-subscribe s neplatným odběrem → 400", async ({ request }) => {

@@ -48,7 +48,7 @@ Postup se ukládá nejdřív v prohlížeči (localStorage) a po přihlášení 
 | `parent_child_link` | 4 | propojení rodič (e-mail) ↔ dítě, s ověřovacím tokenem | používá se |
 | `parent_settings` | 1 | rodičovy volby reportů (frekvence, den, upozornění na nečinnost) | používá se |
 | `parent_messages` | 0 | zprávy od rodiče dítěti | zatím prázdné |
-| `parent_subscriptions` | 0 | starší přihláška rodiče k reportům (e-mail rodiče + dítěte) | pravděpodobně nahrazeno `parent_child_link` |
+| `parent_subscriptions` | 0 | starší přihláška rodiče k reportům (e-mail rodiče + dítěte) | **nepoužívá se** od 23. 11. 2026 (trasa `/api/parent-subscribe` odstraněna, `/rodice` přesměruje na `/rodice/prihlaseni`); tabulka zůstává, smazat jen se schválením |
 | `premium_waitlist` | 1 | e-maily zájemců o Premium | používá se |
 | `user_feedback` | 1 | hodnocení + nápad od žáka | používá se |
 | `analytics_events` | 16 | jednoduché události (bez cookies třetích stran) | používá se |
@@ -65,7 +65,7 @@ Kód navíc odkazuje na tabulku `user_progress`, která v databázi **neexistuje
 
 - Row Level Security je zapnuté na všech tabulkách (potvrzeno výpisem `pg_policies` 19. 9.). Anonymní návštěvník nevidí nic kromě publikovaných `online_test_sessions`.
 - Zápisy z aplikace jdou na citlivá místa přes server (service role): `user_premium`, `referrals`, `push_subscriptions`. Žák si **nemůže sám nastavit Premium** — politika dovoluje jen zrušit vlastní trial (`is_premium=false`).
-- Veřejné vkládání (`premium_waitlist`, `parent_subscriptions`, `user_feedback` bez uživatele) nemá rate-limit → viz doporučení v `docs/INTEGRACE-navrhy-2026-10.md`.
+- Veřejné vkládání (`premium_waitlist`, `user_feedback` bez uživatele; `parent_subscriptions` už aplikace nepíše od 23. 11. 2026) nemá rate-limit → viz doporučení v `docs/INTEGRACE-navrhy-2026-10.md`.
 - `supabase/rls_audit.sql` **nespouštět** (smaže politiky novějších tabulek).
 
 ## 5. Nálezy a doporučení
