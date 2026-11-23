@@ -2,8 +2,8 @@
 -- 1) Hledání účtu dítěte podle e-mailu přímo v auth.users. Dřív /api/parent-link četl jen první stránku
 --    auth.admin.listUsers() (50 účtů), takže s přibývajícími účty dítě přestalo jít najít.
 --    Funkci smí volat jen service role (server), ne prohlížeč – jinak by šlo zjišťovat, kdo má účet.
--- 2) Nic se tu nemaže ani nemění na existujících řádcích parent_child_link. Co s dosavadními
---    verified = true rozhoduje Karel zvlášť (supabase/navrhy/2026-11-23_propojeni_stare_radky.sql).
+-- 2) Nic se tu nemaže ani nemění na existujících řádcích parent_child_link. Dosavadní propojení
+--    s verified = true zůstávají ověřená (Karel 23. 11. 2026: jsou v pořádku).
 -- Bez téhle migrace appka funguje dál (projde listUsers po stránkách), jen pomaleji.
 
 CREATE OR REPLACE FUNCTION public.najdi_ucet_podle_emailu(p_email text)
