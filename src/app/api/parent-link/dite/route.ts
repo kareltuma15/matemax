@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Nepodařilo se uložit. Zkus to znovu." }, { status: 500 });
     }
     if (!stejny) {
-      const odeslano = await posliPozvanku(email, jmenoDitete(user), token.split(":")[1]);
+      const odeslano = await posliPozvanku(email, jmenoDitete(user), token.split(":")[1], user.id);
       if (!odeslano) {
         await tabulka().delete().eq("parent_email", email).eq("child_user_id", user.id).eq("verified", false);
         return NextResponse.json({ error: "E-mail rodiči se nepodařilo odeslat. Zkontroluj adresu a zkus to znovu." }, { status: 502 });
@@ -110,6 +110,6 @@ export async function POST(req: NextRequest) {
 }
 
 /** E-mail rodiči: potvrzení odběru (společná šablona, src/lib/emaily/rodice.ts). Bez potvrzení nic dalšího nechodí. */
-async function posliPozvanku(komu: string, jmeno: string, t: string): Promise<boolean> {
-  return posliEmail(komu, pozvankaRodice(jmeno, `${APP_URL}/rodice/potvrdit?t=${encodeURIComponent(t)}`), "pozvanka");
+async function posliPozvanku(komu: string, jmeno: string, t: string, diteId: string): Promise<boolean> {
+  return posliEmail(komu, pozvankaRodice(jmeno, `${APP_URL}/rodice/potvrdit?t=${encodeURIComponent(t)}`), "pozvanka", {}, { userId: diteId });
 }

@@ -212,7 +212,7 @@ export function buildReportHtml(r: ReportData): string {
           </td></tr>
 
           <tr><td style="padding:0 32px 30px;text-align:center;">
-            <a href="${app}/rodice/dashboard" style="display:inline-block;background:${NAVY};color:#fff;text-decoration:none;font-weight:800;font-size:15px;padding:15px 32px;border-radius:12px;">Otevřít rodičovský přehled →</a>
+            <a href="${app}/rodice/dashboard?utm_source=email&amp;utm_campaign=report" style="display:inline-block;background:${NAVY};color:#fff;text-decoration:none;font-weight:800;font-size:15px;padding:15px 32px;border-radius:12px;">Otevřít rodičovský přehled →</a>
           </td></tr>
 
           <tr><td style="padding:16px 32px 22px;border-top:1px solid #F0F1F6;text-align:center;">

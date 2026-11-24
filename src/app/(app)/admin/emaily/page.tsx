@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import Analytika from "./Analytika";
 
 /** Admin → E-maily (Karel 24. 11. 2026): náhled každého e-mailu, kdo by ho dnes dostal, co naposledy odešlo. */
 interface Nahled { id: string; trida: 0 | 5 | 9; nazev: string; kdy: string; pripominka: boolean; predmet: string; pre: string; html: string }
@@ -47,6 +48,10 @@ export default function AdminEmaily() {
         <h1 className="text-2xl font-black" style={{ color: "#0D1B3E" }}>E-maily</h1>
         <Link href="/admin" className="text-sm font-bold underline" style={{ color: "#2E6DA4" }}>← Admin</Link>
       </div>
+
+      <Analytika />
+
+      <h2 className="text-lg font-black mt-2" style={{ color: "#0D1B3E" }}>Náhledy e-mailů</h2>
 
       <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,620px)] items-start">
         <div className="flex flex-col gap-2">

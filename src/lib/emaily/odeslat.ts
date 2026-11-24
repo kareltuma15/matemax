@@ -94,5 +94,10 @@ export async function nastavOdhlaseni(userId: string, odhlaseno: boolean): Promi
   const { error: e2 } = await supabaseAdmin.auth.admin.updateUserById(userId, {
     app_metadata: { ...data.user.app_metadata, emaily: { ...stav, odhlaseno } },
   });
+  if (!e2 && odhlaseno && !stav.odhlaseno) {
+    // Analytika: po kterém e-mailu se odhlásil (poslední odeslaná připomínka)
+    const posledni = Object.entries(stav.odeslano ?? {}).sort((a, b) => String(b[1]).localeCompare(String(a[1])))[0]?.[0];
+    await supabaseAdmin.from("analytics_events").insert({ user_id: userId, event_name: "email_odhlaseni", properties: { druh: "zak", ...(posledni ? { posledni } : {}) } });
+  }
   return !e2;
 }

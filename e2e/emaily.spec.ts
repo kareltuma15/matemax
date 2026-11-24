@@ -174,3 +174,47 @@ test.describe("krok 2: rodiče, platby, testy", () => {
     expect(volano).toEqual({ odhlaseno: true });
   });
 });
+
+test.describe("analytika e-mailů", () => {
+  test("API: bez admina nic, webhook Resendu bez podpisu neprojde", async ({ request }) => {
+    expect((await request.get("/api/admin/emaily/analytika?dni=30")).status()).toBe(401);
+    expect((await request.post("/api/resend/webhook", { data: { type: "email.delivered", data: {} } })).status()).toBe(401);
+  });
+
+  test("admin → E-maily ukáže dlaždice, tabulku, graf a doručitelnost", async ({ page, context }) => {
+    const fs = await import("fs");
+    const env = fs.readFileSync(".env.local", "utf8");
+    const ref = new URL(env.match(/NEXT_PUBLIC_SUPABASE_URL=(\S+)/)![1].replace(/["']/g, "")).hostname.split(".")[0];
+    const user = { id: "00000000-0000-4000-8000-000000000000", aud: "authenticated", role: "authenticated", email: "admin@example.com", app_metadata: {}, user_metadata: {}, created_at: "2026-10-01T00:00:00Z" };
+    const relace = { access_token: "x", refresh_token: "y", token_type: "bearer", expires_in: 3600, expires_at: Math.floor(Date.now() / 1000) + 86400, user };
+    await context.addCookies([{ name: `sb-${ref}-auth-token`, value: "base64-" + Buffer.from(JSON.stringify(relace)).toString("base64url"), domain: "localhost", path: "/" }]);
+    await context.route("**/auth/v1/user**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(user) }));
+    await context.route("**/rest/v1/**", (r) => r.fulfill({ status: 200, contentType: "application/json", body: "[]" }));
+    await page.route("**/api/admin/emaily", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ dnes: "2026-11-25", nahledy: [], ostatni: [], dnesBy: [], chybaBehu: null, odeslane: [] }) }));
+    const dny = Array.from({ length: 30 }, (_, i) => ({ den: `2026-11-${String(i + 1).padStart(2, "0")}`, zak: i % 3, servis: 1, rodic: i % 7 === 0 ? 4 : 0 }));
+    const analytika = {
+      dni: 30,
+      souhrn: { odeslano: 184, odeslanoPred: 122, zakum: 141, rodicum: 43, prokliky: 57, proklikyPred: 40, navrat: 0.38, navratPred: 0.32, odhlaseno: 3, odhlasenoZak: 2, odhlasenoReport: 1, prijemcu: 160 },
+      postreh: "Nejvíc vrací do appky „Stýská se mi“: 46 % žáků do 2 dnů trénovalo.",
+      radky: [
+        { id: "styska", nazev: "Stýská se mi (3 dny)", druh: "zak", odeslano: 26, prokliky: 9, cilText: "46 %", cilPodil: 0.46, odhlaseno: 0 },
+        { id: "report", nazev: "Týdenní report", druh: "rodic", odeslano: 32, prokliky: 9, cilText: "dítě trénovalo: 59 %", cilPodil: 0.59, odhlaseno: 1 },
+      ],
+      poDnech: dny,
+      trychtyr: { odeslano: 93, proklik: 25, trenink: 35 },
+      dorucitelnost: { zapnuto: false, doruceno: 0, nedoruceno: 0, spam: 0, otevreno: 0 },
+    };
+    let dotazy = 0;
+    await page.route("**/api/admin/emaily/analytika**", (r) => { dotazy++; return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(analytika) }); });
+    await page.goto("/admin/emaily");
+    const sekce = page.getByTestId("admin-emaily-analytika");
+    await expect(sekce).toContainText("184", { timeout: 20_000 });
+    await expect(sekce).toContainText("38 %");
+    await expect(sekce).toContainText("dítě trénovalo: 59 %");
+    await expect(page.getByTestId("admin-emaily-postreh")).toContainText("Stýská se mi");
+    await expect(page.getByTestId("admin-emaily-dorucitelnost")).toContainText("čeká na nastavení");
+    await expect(sekce.locator("svg rect")).not.toHaveCount(0);
+    await sekce.getByRole("button", { name: "7 dní" }).click();
+    await expect.poll(() => dotazy).toBeGreaterThan(1);
+  });
+});

@@ -132,7 +132,7 @@ export async function POST(req: Request) {
           );
           // Potvrzení „Vítejte v Premium“ plátci (rodiči), vedlejší efekt, nesmí shodit webhook
           const komu = session.customer_details?.email ?? session.customer_email;
-          if (komu) await posliEmail(komu, premiumAktivni(), "premium").catch(() => false);
+          if (komu) await posliEmail(komu, premiumAktivni(), "premium", {}, { userId: session.metadata?.supabase_user_id ?? null }).catch(() => false);
         }
         // Jednorázová platba za online test nanečisto
         if (session.mode === "payment" && session.metadata?.type === "online_test") {
@@ -182,7 +182,7 @@ export async function POST(req: Request) {
           const castka = typeof invoice.amount_due === "number"
             ? new Intl.NumberFormat("cs-CZ", { style: "currency", currency: (invoice.currency || "czk").toUpperCase(), maximumFractionDigits: 0 }).format(invoice.amount_due / 100)
             : null;
-          await posliEmail(invoice.customer_email, platbaSeNepovedla(castka, invoice.hosted_invoice_url ?? null), "platba").catch(() => false);
+          await posliEmail(invoice.customer_email, platbaSeNepovedla(castka, invoice.hosted_invoice_url ?? null), "platba", {}, { vlastnosti: invoice.id ? { faktura: invoice.id } : {} }).catch(() => false);
         }
         break;
       }

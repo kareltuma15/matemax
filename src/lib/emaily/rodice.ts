@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { supabaseAdmin } from "../supabase-admin";
 import { esc, odkaz, sestavHtml, sestavText, APP_URL, type ObsahEmailu } from "./sablona";
 
 /**
@@ -20,7 +21,7 @@ export function pozvankaRodice(jmenoDitete: string, odkazPotvrzeni: string): Obs
       `v MateMaxu (příprava na přijímačky z matematiky) zadal(a) <b>${j}</b> tento e-mail, aby vám každé pondělí ráno chodil přehled jeho/jejího tréninku.`,
       "V přehledu uvidíte, kolik trénuje, odhad bodů u přijímaček a témata, na kterých pracuje.",
     ],
-    tlacitko: { text: "Potvrdit odběr", href: odkazPotvrzeni },
+    tlacitko: { text: "Potvrdit odběr", href: odkazPotvrzeni + (odkazPotvrzeni.includes("?") ? "&" : "?") + "utm_source=email&utm_campaign=pozvanka" },
     img: "rodic",
     rodic: true,
     bezOdhlaseni: true,
@@ -64,7 +65,7 @@ export function platbaSeNepovedla(castka: string | null, odkazPlatby: string | n
   };
 }
 
-export async function posliEmail(komu: string, obsah: ObsahEmailu, stitek: string, odkazy: { nastaveni?: string; odhlasit?: string; api?: string } = {}): Promise<boolean> {
+export async function posliEmail(komu: string, obsah: ObsahEmailu, stitek: string, odkazy: { nastaveni?: string; odhlasit?: string; api?: string } = {}, zaznam: { userId?: string | null; vlastnosti?: Record<string, string> } = {}): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) { console.warn(`[emaily] RESEND_API_KEY chybí, ${stitek} neodeslán`); return false; }
   try {
     const { Resend } = await import("resend");
@@ -75,6 +76,8 @@ export async function posliEmail(komu: string, obsah: ObsahEmailu, stitek: strin
       tags: [{ name: "email", value: stitek }],
     });
     if (error) { console.error(`[emaily] ${stitek}: Resend odmítl`, error); return false; }
+    // Záznam pro analytiku e-mailů (Admin → E-maily)
+    await supabaseAdmin?.from("analytics_events").insert({ user_id: zaznam.userId ?? null, event_name: "email_odeslan", properties: { e: stitek, ...(zaznam.vlastnosti ?? {}) } });
     return true;
   } catch (e) {
     console.error(`[emaily] ${stitek}: výjimka`, e);

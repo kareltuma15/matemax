@@ -1,0 +1,175 @@
+<title>Analytika e-mailů</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800&display=swap">
+<style>
+/* Layout: mockup sekce Admin → E-maily → Analytika; nad ní filtr, dlaždice, tabulka po e-mailech, graf po dnech, trychtýř, doručitelnost */
+:root {
+  --bg: #F3F5FA; --karta: #ffffff; --fg: #0D1B3E; --sedy: #5F6982; --muted: #8A93AA; --cara: #E4E6EF;
+  --akcent: #2a78d6; --akcent2: #9ec5f4; --akcent3: #cde2fb; --good: #14753A; --bad: #B4232F; --warn: #9A6200;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1729; --karta: #16213a; --fg: #e8edf6; --sedy: #a9b4ca; --muted: #8592ab; --cara: #2a3650;
+  --akcent: #5aa0f0; --akcent2: #2f5f99; --akcent3: #24426a; --good: #4ade80; --bad: #f87171; --warn: #fbbf24; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1729; --karta: #16213a; --fg: #e8edf6; --sedy: #a9b4ca; --muted: #8592ab; --cara: #2a3650;
+  --akcent: #5aa0f0; --akcent2: #2f5f99; --akcent3: #24426a; --good: #4ade80; --bad: #f87171; --warn: #fbbf24; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px; }
+h1 { margin: 0; font-size: 26px; font-weight: 800; }
+h2 { margin: 0 0 12px; font-size: 17px; font-weight: 800; }
+p { margin: 0; }
+.uvod { color: var(--sedy); max-width: 75ch; }
+.ukazka { display: inline-block; font-size: 12px; font-weight: 700; color: var(--warn); border: 1px solid var(--warn); border-radius: 99px; padding: 1px 9px; margin-top: 6px; }
+.karta { background: var(--karta); border: 1px solid var(--cara); border-radius: 16px; padding: 16px 18px; min-width: 0; }
+.radek { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+.filtr { display: flex; gap: 6px; }
+.filtr span { padding: 6px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid var(--cara); background: var(--karta); }
+.filtr .on { background: var(--fg); color: var(--karta); border-color: var(--fg); }
+.dlazdice { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.dl b { display: block; font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.dl .n { font-size: 13px; font-weight: 700; color: var(--sedy); }
+.dl .d { font-size: 12.5px; font-weight: 700; }
+.dl .p { font-size: 12px; color: var(--muted); }
+.up { color: var(--good); } .down { color: var(--bad); }
+.tab { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+th { text-align: left; font-size: 12px; color: var(--sedy); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--cara); }
+td { padding: 9px 10px; border-bottom: 1px solid var(--cara); font-variant-numeric: tabular-nums; }
+td.c, th.c { text-align: right; }
+.skupina td { font-size: 12px; font-weight: 800; color: var(--muted); padding-top: 14px; border-bottom: none; }
+.pruh { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.pruh i { display: block; height: 8px; border-radius: 4px; background: var(--akcent); }
+.pruh s { display: block; width: 90px; height: 8px; border-radius: 4px; background: var(--akcent3); text-decoration: none; overflow: hidden; }
+.dve { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+.leg { display: flex; gap: 14px; font-size: 12.5px; color: var(--sedy); margin-top: 8px; flex-wrap: wrap; }
+.leg i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+svg text { fill: var(--sedy); font-family: var(--font); font-size: 11px; }
+.trych { display: flex; flex-direction: column; gap: 10px; }
+.trych .r { display: grid; grid-template-columns: 170px 1fr 70px; gap: 10px; align-items: center; font-size: 14px; }
+.trych .bar { height: 26px; border-radius: 8px; background: var(--akcent); }
+.trych .r:nth-child(2) .bar { background: var(--akcent2); }
+.trych .r:nth-child(3) .bar { background: var(--akcent3); }
+.trych b { font-variant-numeric: tabular-nums; text-align: right; }
+.vhled { border-left: 4px solid var(--good); }
+.pozn { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+.nezapnuto { border-style: dashed; }
+.mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px; }
+.mini div { border: 1px solid var(--cara); border-radius: 12px; padding: 10px 12px; color: var(--muted); }
+.mini b { display: block; font-size: 20px; color: var(--muted); }
+.blok ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+@media (max-width: 520px) { .trych .r { grid-template-columns: 110px 1fr 54px; font-size: 13px; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Admin → E-maily → Analytika</h1>
+    <p class="uvod">Mockup ke schválení. Nová část nahoře v sekci E-maily (náhledy e-mailů zůstanou pod ní). Ukazuje, kolik e-mailů odešlo a hlavně jestli vracejí lidi do appky.</p>
+    <span class="ukazka">ukázková čísla, skutečná se doplní po nasazení</span>
+  </header>
+
+  <div class="radek">
+    <h2 style="margin:0">Jak fungují e-maily</h2>
+    <div class="filtr" aria-label="Období"><span>7 dní</span><span class="on">30 dní</span><span>90 dní</span></div>
+  </div>
+
+  <section class="dlazdice" aria-label="Souhrn">
+    <div class="karta dl"><span class="n">Odesláno e-mailů</span><b>184</b><span class="d up">▲ +62 proti předchozím 30 dnům</span><span class="p">žákům 141 · rodičům a plátcům 43</span></div>
+    <div class="karta dl"><span class="n">Prokliky do appky</span><b>57</b><span class="d up">▲ 31 % odeslaných</span><span class="p">lidé, kteří přišli přes tlačítko v e-mailu</span></div>
+    <div class="karta dl"><span class="n">Vrátili se k tréninku do 2 dnů</span><b>38 %</b><span class="d up">▲ +6 bodů</span><span class="p">z žáků, kterým přišla připomínka</span></div>
+    <div class="karta dl"><span class="n">Odhlášeno</span><b>3</b><span class="d">1,6 % příjemců</span><span class="p">připomínky 2 · týdenní report 1</span></div>
+  </section>
+
+  <section class="karta vhled" aria-label="Postřeh">
+    <b>Nejvíc vrací do appky „Stýská se mi“:</b> 46 % žáků do 2 dnů trénovalo. Nejslabší je „Hexík usnul“ (14 %), ale je to poslední připomínka, pak už nic nechodí.
+    <p class="pozn">Postřeh se počítá sám z čísel níž, jen když má e-mail aspoň 10 odeslaných.</p>
+  </section>
+
+  <section class="karta" aria-label="Po e-mailech">
+    <h2>Po jednotlivých e-mailech</h2>
+    <div class="tab">
+      <table>
+        <thead><tr><th>E-mail</th><th class="c">Odesláno</th><th class="c">Prokliky</th><th class="c">Míra prokliku</th><th class="c">Trénink do 2 dnů</th><th class="c">Odhlášeno</th></tr></thead>
+        <tbody>
+          <tr class="skupina"><td colspan="6">Žákům</td></tr>
+          <tr><td>Uvítání</td><td class="c">48</td><td class="c">29</td><td class="c">60 %</td><td class="c"><div class="pruh">52 %<s><i style="width:52%"></i></s></div></td><td class="c">0</td></tr>
+          <tr><td>Ještě jsi nezačal(a)</td><td class="c">21</td><td class="c">6</td><td class="c">29 %</td><td class="c"><div class="pruh">24 %<s><i style="width:24%"></i></s></div></td><td class="c">1</td></tr>
+          <tr><td>Plán po diagnostice</td><td class="c">17</td><td class="c">8</td><td class="c">47 %</td><td class="c"><div class="pruh">41 %<s><i style="width:41%"></i></s></div></td><td class="c">0</td></tr>
+          <tr><td>Stýská se mi</td><td class="c">26</td><td class="c">9</td><td class="c">35 %</td><td class="c"><div class="pruh">46 %<s><i style="width:46%"></i></s></div></td><td class="c">0</td></tr>
+          <tr><td>Hexík usnul</td><td class="c">14</td><td class="c">2</td><td class="c">14 %</td><td class="c"><div class="pruh">14 %<s><i style="width:14%"></i></s></div></td><td class="c">1</td></tr>
+          <tr><td>Adventní kalendář</td><td class="c">15</td><td class="c">—</td><td class="c">—</td><td class="c"><div class="pruh">—</div></td><td class="c">—</td></tr>
+          <tr class="skupina"><td colspan="6">Rodičům a plátcům</td></tr>
+          <tr><td>Týdenní report</td><td class="c">32</td><td class="c">9</td><td class="c">28 %</td><td class="c">dítě trénovalo do 2 dnů: 59 %</td><td class="c">1</td></tr>
+          <tr><td>Pozvánka rodiči</td><td class="c">6</td><td class="c">—</td><td class="c">—</td><td class="c">potvrdilo odběr: 4 z 6</td><td class="c">—</td></tr>
+          <tr><td>Vítejte v Premium</td><td class="c">4</td><td class="c">2</td><td class="c">50 %</td><td class="c">propojilo rodiče: 1 z 4</td><td class="c">—</td></tr>
+          <tr><td>Platba se nepovedla</td><td class="c">1</td><td class="c">1</td><td class="c">—</td><td class="c">zaplaceno do 7 dnů: 1 z 1</td><td class="c">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pozn">„Trénink do 2 dnů“: kolik příjemců mělo do 48 hodin od e-mailu aspoň jeden trénink. U rodičů vždy to, co má e-mail způsobit. Pomlčka = e-mail ještě nemá dost dat (advent odejde 1. 12.).</p>
+  </section>
+
+  <div class="dve">
+    <section class="karta" aria-label="Odesláno po dnech">
+      <h2>Odesláno po dnech</h2>
+      <svg viewBox="0 0 520 190" width="100%" role="img" aria-label="Sloupcový graf odeslaných e-mailů za 30 dní">
+        <g id="osa"></g>
+        <line x1="34" y1="160" x2="512" y2="160" stroke="var(--cara)"/>
+        <line x1="34" y1="90" x2="512" y2="90" stroke="var(--cara)" stroke-dasharray="3 4"/>
+        <line x1="34" y1="20" x2="512" y2="20" stroke="var(--cara)" stroke-dasharray="3 4"/>
+        <text x="26" y="164" text-anchor="end">0</text><text x="26" y="94" text-anchor="end">10</text><text x="26" y="24" text-anchor="end">20</text>
+        <g id="sloupce"></g>
+        <text x="40" y="178">26. 10.</text><text x="270" y="178" text-anchor="middle">10. 11.</text><text x="512" y="178" text-anchor="end">24. 11.</text>
+      </svg>
+      <div class="leg"><span><i style="background:var(--akcent)"></i>připomínky a novinky žákům</span><span><i style="background:var(--akcent2)"></i>uvítání a servisní</span><span><i style="background:var(--akcent3)"></i>rodičům</span></div>
+    </section>
+
+    <section class="karta" aria-label="Trychtýř připomínek">
+      <h2>Trychtýř připomínek</h2>
+      <div class="trych">
+        <div class="r"><span>Odesláno</span><div class="bar" style="width:100%"></div><b>93</b></div>
+        <div class="r"><span>Proklik do appky</span><div class="bar" style="width:27%"></div><b>25</b></div>
+        <div class="r"><span>Trénink do 2 dnů</span><div class="bar" style="width:38%"></div><b>35</b></div>
+      </div>
+      <p class="pozn">Trénink může být vyšší než proklik: část žáků e-mail přečte a appku otevře sama, ne přes tlačítko.</p>
+    </section>
+  </div>
+
+  <section class="karta nezapnuto" aria-label="Doručitelnost">
+    <h2>Doručitelnost (zapne se po jednom nastavení v Resendu)</h2>
+    <p class="uvod">Kolik e-mailů opravdu dorazilo, kolik se vrátilo jako nedoručitelné a kolik lidí je označilo jako spam. Resend to appce řekne sám, jen musíš v Resendu jednou přidat adresu, kam to má posílat (dám ti přesný postup).</p>
+    <div class="mini"><div>Doručeno<b>–</b></div><div>Nedoručeno<b>–</b></div><div>Označeno jako spam<b>–</b></div><div>Otevřeno<b>–</b></div></div>
+    <p class="pozn">Otevření je jen orientační: iPhony otevírají e-maily samy, aby schovaly soukromí, takže číslo bývá nafouknuté. Rozhodující je proklik a návrat k tréninku.</p>
+  </section>
+
+  <section class="karta blok" aria-label="Jak se to počítá">
+    <h2>Odkud čísla jsou</h2>
+    <ul>
+      <li><b>Odesláno:</b> appka si zapisuje každý odeslaný e-mail (komu, který, kdy).</li>
+      <li><b>Prokliky:</b> každé tlačítko v e-mailu má v odkazu označení e-mailu, takže měření návštěv pozná, odkud kdo přišel.</li>
+      <li><b>Trénink do 2 dnů:</b> porovnání odeslaných e-mailů s tréninky příjemce. Jen čísla, žádná jména v grafech.</li>
+      <li><b>Odhlášeno:</b> z odkazu „Odhlásit jedním klikem“ v patičce.</li>
+      <li>Testovací účty se nepočítají, stejně jako v hlavní analytice.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(function () {
+  // ukázková data: 30 dní, tři druhy (připomínky, servisní, rodiče)
+  var data = [[2,1,0],[1,2,0],[3,1,4],[2,0,0],[1,1,0],[4,2,0],[2,1,0],[3,2,5],[1,1,0],[2,0,1],[5,2,0],[3,1,0],[2,2,0],[4,1,6],[3,2,0],[2,1,0],[6,2,1],[3,0,0],[4,2,0],[2,1,0],[5,1,7],[3,2,0],[4,1,0],[6,2,1],[3,1,0],[5,2,0],[4,1,0],[7,2,8],[5,1,0],[6,2,1]];
+  var barvy = ["var(--akcent)", "var(--akcent2)", "var(--akcent3)"];
+  var g = document.getElementById("sloupce"), krok = 478 / data.length, sirka = krok - 4, sk = 7; // 1 e-mail = 7 px (0 až 20 = 140 px, osa 160 → 20)
+  data.forEach(function (d, i) {
+    var y = 160;
+    d.forEach(function (n, k) {
+      if (!n) return;
+      var h = n * sk, r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      r.setAttribute("x", (36 + i * krok).toFixed(1)); r.setAttribute("y", (y - h).toFixed(1));
+      r.setAttribute("width", sirka.toFixed(1)); r.setAttribute("height", h); r.setAttribute("rx", 2); r.setAttribute("fill", barvy[k]);
+      g.appendChild(r); y -= h;
+    });
+  });
+})();
+</script>
