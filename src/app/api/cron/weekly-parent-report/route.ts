@@ -5,6 +5,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { odhadDitete, ulozTydenniOdhad } from "@/lib/odhad-server";
 import { buildReportHtml } from "@/lib/report-rodice";
 import { tydenSbirky, type SbirkaStav } from "@/lib/sbirka";
+import { odkazyReportu } from "@/lib/emaily/rodice";
 
 // Každé pondělí 06:00 UTC (≈ 08:00 SEČ) přes Vercel Cron.
 // Týdenní e-mail rodičům s ověřeným propojením: odhad bodů u přijímaček, vývoj po týdnech, témata, tip.
@@ -41,7 +42,7 @@ async function handler() {
   // All verified parent-child links
   const { data: links, error: linksError } = await supabaseAdmin
     .from("parent_child_link")
-    .select("parent_email, child_user_id")
+    .select("id, parent_email, child_user_id")
     .eq("verified", true);
 
   if (linksError) return NextResponse.json({ error: linksError.message }, { status: 500 });
@@ -59,10 +60,14 @@ async function handler() {
   const twoWeeksAgo = pragueDateStr(new Date(Date.now() - 14 * 24 * 60 * 60 * 1000));
   const zpracovaneDeti = new Set<string>();
 
-  for (const link of links as { parent_email: string; child_user_id: string }[]) {
+  // Rodiče, kteří report odhlásili (odkaz „Odhlásit jedním klikem“ → parent_settings.report_frequency = vypnuto)
+  const { data: vypnuti } = await supabaseAdmin.from("parent_settings").select("parent_email").eq("report_frequency", "vypnuto");
+  const odhlaseni = new Set((vypnuti ?? []).map((v: { parent_email: string }) => v.parent_email.toLowerCase()));
+
+  for (const link of links as { id: string; parent_email: string; child_user_id: string }[]) {
     try {
       const parentEmail = link.parent_email;
-      if (!parentEmail) continue;
+      if (!parentEmail || odhlaseni.has(parentEmail.toLowerCase())) continue;
       const { data: childAuth } = await supabaseAdmin.auth.admin.getUserById(link.child_user_id);
       const child = childAuth?.user;
       if (!child) continue;
@@ -114,7 +119,7 @@ async function handler() {
       }
 
       const childName = krestniJmeno(child);
-      const html = buildReportHtml({ childName, weekDate, weekTotal, lastWeekTotal, streak, accuracy, odhad, odmeny });
+      const html = buildReportHtml({ childName, weekDate, weekTotal, lastWeekTotal, streak, accuracy, odhad, odmeny, odhlasitHref: odkazyReportu(link.id).odhlasit });
 
       if (!ODESILAT) { pripraveno++; continue; }
 
@@ -127,6 +132,7 @@ async function handler() {
         to: parentEmail,
         subject,
         html,
+        headers: { "List-Unsubscribe": `<${odkazyReportu(link.id).api}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" },
       });
       if (sendErr) throw sendErr;
       sent++;

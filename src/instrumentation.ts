@@ -63,7 +63,7 @@ export const onRequestError: Instrumentation.onRequestError = async (
     // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error };
     // aspoň zalogovat, ať selhání alertu není úplně neviditelné.
     const { error: sendErr } = await resend.emails.send({
-      from: "MateMax Errors <onboarding@resend.dev>",
+      from: "MateMax chyby <noreply@matematika-snadno.cz>",
       to: alertEmail,
       subject: `🚨 Server error [${context.routeType}]: ${error.message?.slice(0, 60) ?? "Unknown"}`,
       html,

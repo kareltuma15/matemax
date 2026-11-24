@@ -114,3 +114,51 @@ for (const sirka of [320, 375]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(sirka);
   });
 }
+
+test.describe("krok 2: rodiče, platby, testy", () => {
+  test("pozvánka, Premium a platba ve společné šabloně bez odhlášení a proměnných", async () => {
+    const { pozvankaRodice, premiumAktivni, platbaSeNepovedla } = await import("../src/lib/emaily/rodice");
+    for (const o of [pozvankaRodice("Ema <b>", "https://matemax.matematika-snadno.cz/rodice/potvrdit?t=abc"), premiumAktivni(), platbaSeNepovedla("99 Kč", null)]) {
+      const html = sestavHtml(o);
+      expect(html).not.toMatch(/\{\{|undefined|NaN|vercel\.app|<b>Ema <b>/);
+      expect(html).not.toContain("Odhlásit jedním klikem");
+      expect(html).toContain("Všemyslice");
+      expect(html).toContain("Karel Tůma · Matematika Snadno");
+    }
+    expect(sestavHtml(platbaSeNepovedla(null, null))).not.toContain("()");
+  });
+  test("týdenní report: odhlášení jedním klikem a adresa v patičce", async () => {
+    const { buildReportHtml } = await import("../src/lib/report-rodice");
+    const html = buildReportHtml({
+      childName: "Tomáš", weekDate: "30. listopadu 2026", weekTotal: 10, lastWeekTotal: 5, streak: 2, accuracy: 70,
+      odhad: { trida: 9, celkem: 20, max: 50, bezDat: false, cil: null, temata: [], nejvicBodu: null, tydny: [], zmena: null },
+      odhlasitHref: "https://matemax.matematika-snadno.cz/rodice/odhlasit?l=x&t=y",
+    });
+    expect(html).toContain("Odhlásit jedním klikem");
+    expect(html).toContain("/rodice/odhlasit?l=x&amp;t=y");
+    expect(html).toContain("Všemyslice");
+  });
+  test("e-maily k testu nanečisto: nový vzhled a správný kontakt", async () => {
+    const { buildEnrollmentConfirmation, buildSubmissionReceived } = await import("../src/lib/online-test-emails");
+    const t = { jmeno: "Tom", title: "Test 12. 12.", scheduledAt: "2026-12-12T09:00:00Z", sessionId: "x" };
+    for (const e of [buildEnrollmentConfirmation(t), buildSubmissionReceived({ ...t, photoCount: 2 })]) {
+      expect(e.html).toContain("karel.tuma@matematika-snadno.cz");
+      expect(e.html).not.toContain("karel@matematika-snadno.cz");
+      expect(e.html).toContain("#F5A623");
+      expect(e.html).toContain("Všemyslice");
+    }
+  });
+  test("odhlášení reportu: neplatný podpis neprojde, stránka odhlásí tlačítkem", async ({ page, request }) => {
+    expect((await request.post("/api/rodice/odhlasit?l=00000000-0000-4000-8000-000000000000&t=spatne")).status()).toBe(400);
+    let volano: unknown = null;
+    await page.route("**/api/rodice/odhlasit**", (r) => { volano = r.request().postDataJSON(); return r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true,"odhlaseno":true}' }); });
+    await page.setViewportSize({ width: 320, height: 700 });
+    await page.goto("/rodice/odhlasit?l=abc&t=def");
+    await expect(page.getByTestId("rodice-odhlasit-tlacitko")).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+    expect(volano).toBeNull();
+    await page.getByTestId("rodice-odhlasit-tlacitko").click();
+    await expect(page.getByTestId("rodice-odhlaseno")).toBeVisible();
+    expect(volano).toEqual({ odhlaseno: true });
+  });
+});

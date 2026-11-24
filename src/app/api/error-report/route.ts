@@ -96,7 +96,7 @@ ${cleanStack ? `<h3 style="color:#f97316;margin:20px 0 8px;">Stack trace</h3><pr
     // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error };
     // aspoň zalogovat, ať selhání alertu není úplně neviditelné.
     const { error: sendErr } = await resend.emails.send({
-      from: "MateMax Errors <onboarding@resend.dev>",
+      from: "MateMax chyby <noreply@matematika-snadno.cz>",
       to: alertEmail,
       subject: `⚠️ Client error [${type}]: ${cleanMessage.slice(0, 55)}`,
       html,

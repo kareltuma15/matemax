@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { rateLimit } from "@/lib/rate-limit";
-import { esc } from "@/lib/online-test-emails";
+import { posliEmail, pozvankaRodice } from "@/lib/emaily/rodice";
 import {
   uzivatelZPozadavku, novyToken, normEmail, platnyEmail, druhTokenu, propadla, pocetRodicu, jmenoDitete,
   MAX_RODICU, type LinkRow,
@@ -110,38 +109,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ error: "Neznámá akce." }, { status: 400 });
 }
 
-/** E-mail rodiči: potvrzení odběru (schválený mockup, obrazovka 6). Bez potvrzení nic dalšího nechodí. */
+/** E-mail rodiči: potvrzení odběru (společná šablona, src/lib/emaily/rodice.ts). Bez potvrzení nic dalšího nechodí. */
 async function posliPozvanku(komu: string, jmeno: string, t: string): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn("[parent-link/dite] RESEND_API_KEY chybí, pozvánka neodeslána");
-    return false;
-  }
-  const odkaz = `${APP_URL}/rodice/potvrdit?t=${encodeURIComponent(t)}`;
-  const html = `<!DOCTYPE html><html lang="cs"><head><meta charset="UTF-8"><title>Potvrďte odběr týdenního reportu</title></head>
-<body style="margin:0;padding:0;background:#F8FAFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#F8FAFF;padding:32px 16px;"><tr><td align="center">
-<table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;">
-<tr><td style="background:#0D1B3E;padding:18px 24px;color:#fff;font-weight:800;font-size:17px;">MateMax<div style="font-weight:400;font-size:13px;opacity:.8;margin-top:2px;">Potvrďte odběr týdenního reportu</div></td></tr>
-<tr><td style="padding:24px;color:#0D1B3E;font-size:15px;line-height:1.6;">
-<p style="margin:0 0 12px;">Dobrý den,</p>
-<p style="margin:0 0 18px;">v MateMaxu (příprava na přijímačky z matematiky) zadal(a) <b>${esc(jmeno)}</b> tento e-mail, aby vám každé pondělí ráno chodil přehled jeho/jejího tréninku.</p>
-<p style="margin:0 0 18px;"><a href="${odkaz}" style="display:inline-block;background:#0D1B3E;color:#fff;text-decoration:none;font-weight:800;padding:12px 22px;border-radius:12px;">Potvrdit odběr</a></p>
-<p style="margin:0;font-size:13px;color:#64748b;">Pokud nic neznáte, e-mail ignorujte. Bez potvrzení vám nic dalšího nepošleme.</p>
-</td></tr>
-<tr><td style="padding:12px 24px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;">Matematika Snadno · Odhlásit se lze v každém reportu.</td></tr>
-</table></td></tr></table></body></html>`;
-  try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const { error } = await resend.emails.send({
-      from: "MateMax <noreply@matematika-snadno.cz>",
-      to: komu,
-      subject: `Potvrďte odběr týdenního reportu MateMax`,
-      html,
-    });
-    if (error) { console.error("[parent-link/dite] Resend:", error); return false; }
-    return true;
-  } catch (e) {
-    console.error("[parent-link/dite] Resend výjimka:", e);
-    return false;
-  }
+  return posliEmail(komu, pozvankaRodice(jmeno, `${APP_URL}/rodice/potvrdit?t=${encodeURIComponent(t)}`), "pozvanka");
 }

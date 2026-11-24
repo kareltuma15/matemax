@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { stripe } from "@/lib/stripe";
 import { sendEnrollmentConfirmation } from "@/lib/online-test-emails";
 import type Stripe from "stripe";
+import { posliEmail, premiumAktivni, platbaSeNepovedla } from "@/lib/emaily/rodice";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -129,6 +130,9 @@ export async function POST(req: Request) {
             true,
             session.subscription as string
           );
+          // Potvrzení „Vítejte v Premium“ plátci (rodiči), vedlejší efekt, nesmí shodit webhook
+          const komu = session.customer_details?.email ?? session.customer_email;
+          if (komu) await posliEmail(komu, premiumAktivni(), "premium").catch(() => false);
         }
         // Jednorázová platba za online test nanečisto
         if (session.mode === "payment" && session.metadata?.type === "online_test") {
@@ -173,6 +177,13 @@ export async function POST(req: Request) {
         // O stavu rozhodují události customer.subscription.updated/deleted.
         const invoice = event.data.object as Stripe.Invoice;
         console.warn("webhook: selhala platba faktury", invoice.id, "zákazník", invoice.customer);
+        // Náš e-mail jen při prvním selhání (Stripe pak zkouší znovu a případně posílá vlastní upozornění)
+        if (invoice.attempt_count === 1 && invoice.customer_email) {
+          const castka = typeof invoice.amount_due === "number"
+            ? new Intl.NumberFormat("cs-CZ", { style: "currency", currency: (invoice.currency || "czk").toUpperCase(), maximumFractionDigits: 0 }).format(invoice.amount_due / 100)
+            : null;
+          await posliEmail(invoice.customer_email, platbaSeNepovedla(castka, invoice.hosted_invoice_url ?? null), "platba").catch(() => false);
+        }
         break;
       }
     }

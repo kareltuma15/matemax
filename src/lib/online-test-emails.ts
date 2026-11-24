@@ -2,6 +2,7 @@
 // Všechny sdílí jeden layout, aby vypadaly jako jedna rodina zpráv.
 // Odesílání nikdy nevyhazuje — email je vedlejší efekt, nesmí shodit platbu
 // ani odevzdání archu. Volající dostane true/false.
+import { ADRESA_FIRMY } from "./emaily/sablona";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://matemax.matematika-snadno.cz";
 
@@ -25,36 +26,37 @@ function fmtTime(iso: string): string {
   });
 }
 
+/** Vzhled jako ostatní e-maily MateMaxu (společná šablona, mockup e-mailů 24. 11. 2026): tmavý pruh s logem,
+ *  Hexík, oranžové tlačítko, patička s adresou. Obsah e-mailů beze změny. */
 function shell(opts: {
   badge: string;
   heading: string;
   bodyHtml: string;
   ctaHref?: string;
   ctaLabel?: string;
+  img?: "test" | "vysledek";
 }): string {
-  const { badge, heading, bodyHtml, ctaHref, ctaLabel } = opts;
+  const { badge, heading, bodyHtml, ctaHref, ctaLabel, img = "test" } = opts;
   return `<!DOCTYPE html>
 <html lang="cs">
 <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${esc(heading)}</title></head>
-<body style="margin:0;padding:0;background:#F8FAFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#F8FAFF;padding:32px 16px;">
+<body style="margin:0;padding:0;background:#F3F5FA;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F3F5FA;padding:24px 12px;">
 <tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(13,27,62,0.08);">
-  <tr><td style="background:linear-gradient(135deg,#0D1B3E 0%,#2E6DA4 100%);padding:32px 40px;">
-    <div style="font-size:12px;color:#93c5fd;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">${esc(badge)}</div>
-    <div style="font-size:24px;font-weight:800;color:#fff;margin-top:6px;">${esc(heading)}</div>
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:18px;overflow:hidden;">
+  <tr><td style="background:#0D1B3E;padding:14px 22px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="width:34px;height:34px;background:#ffffff;border-radius:9px;text-align:center;font-weight:900;font-size:14px;color:#0D1B3E">M²</td><td style="padding-left:10px;color:#ffffff;font-weight:800;font-size:17px">MateMax</td></tr></table></td></tr>
+  <tr><td align="center" style="background-color:#F1F0FF;padding:14px 0 0"><img src="${APP_URL}/emaily/${img}.png" width="170" height="170" alt="Hexík" style="display:block;width:170px;height:170px;border:0"></td></tr>
+  <tr><td style="padding:26px 30px 0;">
+    <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#5B55D6;">${esc(badge)}</p>
+    <h1 style="margin:0 0 16px;font-size:24px;line-height:1.25;color:#0D1B3E;">${esc(heading)}</h1>
+    <div style="font-size:16px;line-height:1.6;color:#33405F;">${bodyHtml}</div>
   </td></tr>
-  <tr><td style="padding:32px 40px 0;">${bodyHtml}</td></tr>
-  ${ctaHref && ctaLabel ? `
-  <tr><td style="padding:28px 40px;">
-    <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-      <a href="${ctaHref}" style="display:inline-block;background:#2E6DA4;color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 32px;border-radius:10px;">${esc(ctaLabel)}</a>
-    </td></tr></table>
-  </td></tr>` : `<tr><td style="padding:0 0 28px;"></td></tr>`}
-  <tr><td style="padding:20px 40px;border-top:1px solid #e5e7eb;">
-    <div style="font-size:14px;color:#0D1B3E;font-weight:700;">Karel Tůma</div>
-    <div style="font-size:13px;color:#64748b;margin-top:2px;">720 477 336 · karel@matematika-snadno.cz</div>
+  ${ctaHref && ctaLabel ? `<tr><td style="padding:22px 30px 6px;"><table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto"><tr><td style="background:#F5A623;border-radius:14px"><a href="${ctaHref}" style="display:inline-block;padding:15px 30px;font-size:16px;font-weight:800;color:#0D1B3E;text-decoration:none;font-family:Arial,sans-serif">${esc(ctaLabel.replace(/s*→$/, ""))}</a></td></tr></table></td></tr>` : ""}
+  <tr><td style="padding:20px 30px 24px;">
+    <p style="margin:0;font-size:15px;color:#33405F;">S pozdravem<br><b>Karel Tůma · Matematika Snadno</b></p>
+    <p style="margin:4px 0 0;font-size:13px;color:#64748b;">720 477 336 · karel.tuma@matematika-snadno.cz</p>
   </td></tr>
+  <tr><td style="background:#F7F8FC;border-top:1px solid #E8ECF4;padding:16px 30px;font-size:12px;line-height:1.6;color:#8A93AB;text-align:center">E-mail k přihlášce na test nanečisto v MateMaxu.<br>${ADRESA_FIRMY}</td></tr>
 </table>
 </td></tr>
 </table>
@@ -163,6 +165,7 @@ export function buildSubmissionReceived(opts: {
   const { jmeno, title, sessionId, photoCount } = opts;
   const html = shell({
     badge: "Arch přijat",
+    img: "vysledek",
     heading: "Máme to! ✅",
     bodyHtml:
       p(`Ahoj ${esc(jmeno)}, tvůj záznamový arch z testu <strong>${esc(title)}</strong> dorazil (${photoCount} ${photoCount === 1 ? "fotka" : photoCount < 5 ? "fotky" : "fotek"}).`) +

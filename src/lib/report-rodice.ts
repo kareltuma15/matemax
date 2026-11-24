@@ -5,6 +5,7 @@
  */
 import type { OdhadDitete } from "./odhad-server";
 import type { TydenSbirky } from "./sbirka";
+import { ADRESA_FIRMY } from "./emaily/sablona";
 
 export interface ReportData {
   childName: string;
@@ -17,6 +18,8 @@ export interface ReportData {
   /** Odměny za učení z Hexíkovy Sbírky (dny tréninku, mise, truhly). null = blok se nezobrazí. */
   odmeny?: TydenSbirky | null;
   appUrl?: string;
+  /** Podepsaný odkaz „Odhlásit jedním klikem“ (src/lib/emaily/rodice.ts odkazyReportu). */
+  odhlasitHref?: string;
 }
 
 const NAVY = "#0D1B3E";
@@ -174,15 +177,9 @@ export function buildReportHtml(r: ReportData): string {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F8;padding:32px 12px;">
   <tr><td align="center">
     <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
-      <tr><td style="padding:0 0 18px;text-align:center;">
-        <table cellpadding="0" cellspacing="0" style="display:inline-table;"><tr>
-          <td style="width:34px;height:34px;background:${NAVY};border-radius:9px;text-align:center;vertical-align:middle;font-weight:900;font-size:14px;color:#fff;line-height:34px;">M²</td>
-          <td style="padding-left:10px;font-size:16px;font-weight:800;color:${NAVY};vertical-align:middle;">MateMax</td>
-        </tr></table>
-      </td></tr>
-
       <tr><td style="background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 6px 28px rgba(13,27,62,0.10);">
         <table width="100%" cellpadding="0" cellspacing="0">
+          <tr><td style="background:${NAVY};padding:14px 22px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="width:34px;height:34px;background:#ffffff;border-radius:9px;text-align:center;font-weight:900;font-size:14px;color:${NAVY};line-height:34px;">M²</td><td style="padding-left:10px;color:#ffffff;font-weight:800;font-size:17px">MateMax</td></tr></table></td></tr>
           <tr><td style="padding:28px 32px 0;">
             <p style="margin:0 0 6px;font-size:12px;font-weight:800;color:${VIOLET};text-transform:uppercase;letter-spacing:0.08em;">Týdenní přehled · ${esc(weekDate)}</p>
             <h1 style="margin:0;font-size:25px;font-weight:900;color:${NAVY};letter-spacing:-0.3px;">Jak se daří: ${jmeno}</h1>
@@ -220,7 +217,7 @@ export function buildReportHtml(r: ReportData): string {
 
           <tr><td style="padding:16px 32px 22px;border-top:1px solid #F0F1F6;text-align:center;">
             <p style="color:#8A93AA;font-size:12px;line-height:1.6;margin:0 0 6px;">Odhad bodů je orientační: počítá se z úspěšnosti v appce a z toho, kolik bodů za jednotlivá témata bývá v testu CERMAT.</p>
-            <p style="color:#A0A8BD;font-size:11px;margin:0;">E-mail dostáváte, protože jste v MateMaxu propojeni jako rodič. <a href="${app}/rodice/nastaveni" style="color:#8A93AA;">Nastavení reportu</a></p>
+            <p style="color:#A0A8BD;font-size:11px;line-height:1.6;margin:0;">E-mail dostáváte, protože jste v MateMaxu propojeni jako rodič.<br><a href="${app}/rodice/nastaveni" style="color:#5B55D6;">Nastavení reportu</a>${r.odhlasitHref ? ` · <a href="${esc(r.odhlasitHref)}" style="color:#5B55D6;">Odhlásit jedním klikem</a>` : ""}<br>${ADRESA_FIRMY}</p>
           </td></tr>
         </table>
       </td></tr>

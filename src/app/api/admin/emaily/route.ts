@@ -5,6 +5,8 @@ import { pragueDateStr } from "@/lib/date";
 import { obsahEmailu, ukazkovaData, NAZVY, KDY, PRIPOMINKY, type EmailZaka } from "@/lib/emaily/katalog";
 import { sestavHtml } from "@/lib/emaily/sablona";
 import { denniBeh } from "@/lib/emaily/denni-beh";
+import { pozvankaRodice, premiumAktivni, platbaSeNepovedla } from "@/lib/emaily/rodice";
+import { buildEnrollmentConfirmation, buildReminder24h, buildSubmissionReceived } from "@/lib/online-test-emails";
 
 /**
  * Admin → E-maily: náhledy všech e-mailů (ukázková data, pro 5. i 9. třídu), kdo by je dnes dostal (nanečisto,
@@ -24,6 +26,18 @@ export async function GET(req: NextRequest) {
     return { id, trida, nazev: NAZVY[id], kdy: KDY[id], pripominka: PRIPOMINKY.includes(id), predmet: obsah.predmet, pre: obsah.pre, html: sestavHtml(obsah, UKAZKA_ODKAZY) };
   }));
 
+  // Rodiče, platby a testy nanečisto (ukázková data). Týdenní report má vlastní náhled /report-preview.
+  const t = { jmeno: "Tomáš", title: "Online test nanečisto 12. 12.", scheduledAt: "2026-12-12T09:00:00Z", sessionId: "ukazka", archUrl: "#" };
+  const zaznam = (id: string, nazev: string, kdy: string, predmet: string, html: string) => ({ id, trida: 0 as const, nazev, kdy, pripominka: false, predmet, pre: "", html });
+  const ostatni = [
+    (() => { const o = pozvankaRodice("Tomáš", "#potvrdit"); return zaznam("pozvanka", "Pozvánka rodiči", "Dítě v profilu zadá e-mail rodiče", o.predmet, sestavHtml(o)); })(),
+    (() => { const o = premiumAktivni(); return zaznam("premium", "Vítejte v Premium", "Hned po zaplacení Premium (Stripe)", o.predmet, sestavHtml(o)); })(),
+    (() => { const o = platbaSeNepovedla("99 Kč", null); return zaznam("platba", "Platba se nepovedla", "Při prvním selhání platby (Stripe)", o.predmet, sestavHtml(o)); })(),
+    (() => { const e = buildEnrollmentConfirmation(t); return zaznam("test-potvrzeni", "Test: přihlášení potvrzeno", "Po zaplacení online testu", e.subject, e.html); })(),
+    (() => { const e = buildReminder24h(t); return zaznam("test-zitra", "Test: zítra", "Večer před testem", e.subject, e.html); })(),
+    (() => { const e = buildSubmissionReceived({ ...t, photoCount: 2 }); return zaznam("test-arch", "Test: arch přijat", "Po odevzdání archu", e.subject, e.html); })(),
+  ];
+
   let dnesBy: { trida: 5 | 9; posle: EmailZaka; email: string }[] = [];
   let chybaBehu: string | null = null;
   try {
@@ -34,5 +48,5 @@ export async function GET(req: NextRequest) {
     .select("created_at, user_id, properties").eq("event_name", "email_odeslan")
     .order("created_at", { ascending: false }).limit(50);
 
-  return NextResponse.json({ dnes, nahledy, dnesBy, chybaBehu, odeslane: ev ?? [] });
+  return NextResponse.json({ dnes, nahledy, ostatni, dnesBy, chybaBehu, odeslane: ev ?? [] });
 }

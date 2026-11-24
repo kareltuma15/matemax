@@ -5,10 +5,11 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 /** Admin → E-maily (Karel 24. 11. 2026): náhled každého e-mailu, kdo by ho dnes dostal, co naposledy odešlo. */
-interface Nahled { id: string; trida: 5 | 9; nazev: string; kdy: string; pripominka: boolean; predmet: string; pre: string; html: string }
+interface Nahled { id: string; trida: 0 | 5 | 9; nazev: string; kdy: string; pripominka: boolean; predmet: string; pre: string; html: string }
 interface Data {
   dnes: string;
   nahledy: Nahled[];
+  ostatni: Nahled[];
   dnesBy: { trida: 5 | 9; posle: string; email: string }[];
   chybaBehu: string | null;
   odeslane: { created_at: string; user_id: string | null; properties: { e?: string; trida?: number } }[];
@@ -36,7 +37,8 @@ export default function AdminEmaily() {
   if (!data) return <div className="p-6 text-sm text-slate-500">Načítám…</div>;
 
   const typy = data.nahledy.filter((n) => n.trida === 9);
-  const nahled = data.nahledy.find((n) => n.id === vybrany && n.trida === trida);
+  const ostatni = data.ostatni.find((n) => n.id === vybrany);
+  const nahled = ostatni ?? data.nahledy.find((n) => n.id === vybrany && n.trida === trida);
   const nazev = (id?: string) => data.nahledy.find((n) => n.id === id)?.nazev ?? id ?? "?";
 
   return (
@@ -55,10 +57,21 @@ export default function AdminEmaily() {
               <span className="text-[11px] font-bold" style={{ color: n.pripominka ? "#9A6200" : "#14753A" }}>{n.pripominka ? "Připomínka · lze odhlásit · strop 2 týdně" : "Servisní · chodí vždy"}</span>
             </button>
           ))}
+          <p className="text-xs font-bold mt-2 px-1" style={{ color: "#8A93AA" }}>Rodiče, platby a testy</p>
+          {data.ostatni.map((n) => (
+            <button key={n.id} type="button" onClick={() => setVybrany(n.id)} className="mm-karta p-3 text-left flex flex-col gap-0.5" style={{ border: vybrany === n.id ? "2px solid #5B55D6" : undefined }} data-testid={`admin-email-${n.id}`}>
+              <b className="text-sm" style={{ color: "#0D1B3E" }}>{n.nazev}</b>
+              <span className="text-xs" style={{ color: "#5F6982" }}>{n.kdy}</span>
+            </button>
+          ))}
+          <a href="/report-preview" className="mm-karta p-3 text-left flex flex-col gap-0.5">
+            <b className="text-sm" style={{ color: "#0D1B3E" }}>Týdenní přehled rodičům</b>
+            <span className="text-xs" style={{ color: "#5F6982" }}>Každé pondělí ráno · vlastní náhled ↗</span>
+          </a>
         </div>
 
         <div className="flex flex-col gap-3 min-w-0">
-          <div className="flex gap-2">
+          <div className="flex gap-2" hidden={!!ostatni}>
             {([9, 5] as const).map((t) => (
               <button key={t} type="button" onClick={() => setTrida(t)} className="px-3 py-1.5 rounded-xl text-sm font-bold" style={{ background: trida === t ? "#0D1B3E" : "#fff", color: trida === t ? "#fff" : "#0D1B3E", border: "1px solid #E4E6EF" }}>{t}. třída</button>
             ))}
