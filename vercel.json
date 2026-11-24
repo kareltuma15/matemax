@@ -11,6 +11,10 @@
     {
       "path": "/api/cron/tydenni-analytika",
       "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/cron/emaily-zakum",
+      "schedule": "0 15 * * *"
     }
   ]
 }

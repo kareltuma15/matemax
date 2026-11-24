@@ -1,7 +1,7 @@
 # Loops: opravy automatických e-mailů (24. 11. 2026)
 
 Karel 24. 11.: „musíme všechno ihned opravit“. **NAHRÁNO 24. 11. 17:43** (Karel automatizace pozastavil, Claude nahrál texty + českou patičku přes API, náhled ověřen).
-a přes API se automatizace pozastavit nedá. Postup: Karel pozastaví 3 automatizace → Claude nahraje texty níž → Karel je znovu spustí.
+Loops nedovolí upravit e-mail v běžící automatizaci a přes API ji pozastavit nejde. Postup: Karel pozastaví 3 automatizace → Claude nahraje texty níž → Karel je znovu spustí.
 
 Všem třem e-mailům se zároveň nastavila nová česká patička „Česká patička MateMax“. Jazyk „cs“ Loops nepodporuje, zůstává výchozí.
 
