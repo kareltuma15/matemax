@@ -170,7 +170,9 @@ export function buildReportHtml(r: ReportData): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+  <style>:root{color-scheme:light only}</style>
   <title>Týdenní přehled MateMax</title>
 </head>
 <body style="margin:0;padding:0;background:#EEF0F8;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
