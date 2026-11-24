@@ -49,6 +49,18 @@ test.describe("kdo dostane jaký e-mail", () => {
     expect(v({ ...zaklad, stav: { historie: ["2026-11-24T08:00:00Z"] } })).toBeNull();
     expect(v({ ...zaklad, stav: { historie: ["2026-11-10T15:00:00Z", "2026-11-21T15:00:00Z"] } })).toBe("styska");
   });
+  test("adventní e-mail: 1. 12. jednou, jen kdo trénoval v posledních 30 dnech, přednost před stropem", () => {
+    const den = { dnes: "2026-12-01", ted: "2026-12-01T15:00:00Z" };
+    expect(v({ ...den, treninky: ["2026-11-25"] })).toBe("advent");
+    expect(v({ ...den, treninky: ["2026-12-01"] })).toBe("advent");
+    expect(v({ ...den, treninky: ["2026-10-20"] })).toBeNull(); // déle než 30 dní: ne
+    expect(v({ ...den, treninky: [], registrace: "2026-11-28" })).toBe("nezacal"); // bez tréninku: běžná pravidla
+    expect(v({ ...den, treninky: ["2026-11-25"], stav: { odeslano: { advent: "2026-12-01T15:00:00Z" } } })).toBe("styska");
+    expect(v({ ...den, treninky: ["2026-11-25"], stav: { historie: ["2026-11-26T15:00:00Z", "2026-11-28T15:00:00Z"] } })).toBe("advent");
+    expect(v({ ...den, treninky: ["2026-11-25"], stav: { odhlaseno: true } })).toBeNull();
+    expect(v({ ...den, treninky: ["2026-11-25"], stav: { historie: ["2026-12-01T09:00:00Z"] } })).toBeNull();
+    expect(v({ dnes: "2026-12-02", ted: "2026-12-02T15:00:00Z", treninky: ["2026-12-01"] })).toBeNull();
+  });
   test("série a dny do přijímaček", () => {
     expect(serie(["2026-11-18", "2026-11-19", "2026-11-20", "2026-11-15"])).toBe(3);
     expect(serie([])).toBe(0);
@@ -59,7 +71,7 @@ test.describe("kdo dostane jaký e-mail", () => {
 
 test.describe("obsah e-mailů", () => {
   const ODKAZY = { nastaveni: "https://matemax.matematika-snadno.cz/emaily?u=x&t=y", odhlasit: "https://matemax.matematika-snadno.cz/emaily?u=x&t=y&odhlasit=1" };
-  for (const id of ["uvitani", "nezacal", "plan", "styska", "spi"] as EmailZaka[]) {
+  for (const id of ["uvitani", "nezacal", "plan", "styska", "spi", "advent"] as EmailZaka[]) {
     for (const trida of [5, 9] as const) {
       test(`${id} · ${trida}. třída`, () => {
         const obsah = obsahEmailu(id, ukazkovaData(trida, "2026-11-24"));
@@ -86,7 +98,7 @@ test.describe("obsah e-mailů", () => {
 });
 
 test("obrázky Hexíka pro e-maily jsou veřejně dostupné", async ({ request }) => {
-  for (const img of ["uvitani", "nezacal", "plan", "styska", "spi"]) {
+  for (const img of ["uvitani", "nezacal", "plan", "styska", "spi", "advent", "rodic", "premium", "platba", "test", "vysledek"]) {
     const r = await request.get(`/emaily/${img}.png`);
     expect(r.status(), img).toBe(200);
     expect(r.headers()["content-type"]).toContain("image/png");

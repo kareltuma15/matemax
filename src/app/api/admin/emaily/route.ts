@@ -12,7 +12,7 @@ import { buildEnrollmentConfirmation, buildReminder24h, buildSubmissionReceived 
  * Admin → E-maily: náhledy všech e-mailů (ukázková data, pro 5. i 9. třídu), kdo by je dnes dostal (nanečisto,
  * nic se neposílá) a co naposledy odešlo.
  */
-const PORADI: EmailZaka[] = ["uvitani", "nezacal", "plan", "styska", "spi"];
+const PORADI: EmailZaka[] = ["uvitani", "nezacal", "plan", "styska", "spi", "advent"];
 const UKAZKA_ODKAZY = { nastaveni: "#nastaveni", odhlasit: "#odhlasit" };
 
 export async function GET(req: NextRequest) {

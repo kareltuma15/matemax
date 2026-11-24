@@ -48,13 +48,13 @@ export default function AdminEmaily() {
         <Link href="/admin" className="text-sm font-bold underline" style={{ color: "#2E6DA4" }}>← Admin</Link>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)] items-start">
+      <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,620px)] items-start">
         <div className="flex flex-col gap-2">
           {typy.map((n) => (
             <button key={n.id} type="button" onClick={() => setVybrany(n.id)} className="mm-karta p-3 text-left flex flex-col gap-0.5" style={{ border: vybrany === n.id ? "2px solid #5B55D6" : undefined }} data-testid={`admin-email-${n.id}`}>
               <b className="text-sm" style={{ color: "#0D1B3E" }}>{n.nazev}</b>
               <span className="text-xs" style={{ color: "#5F6982" }}>{n.kdy}</span>
-              <span className="text-[11px] font-bold" style={{ color: n.pripominka ? "#9A6200" : "#14753A" }}>{n.pripominka ? "Připomínka · lze odhlásit · strop 2 týdně" : "Servisní · chodí vždy"}</span>
+              <span className="text-[11px] font-bold" style={{ color: n.pripominka ? "#9A6200" : "#14753A" }}>{n.id === "advent" ? "Novinka · lze odhlásit · jednou za rok" : n.pripominka ? "Připomínka · lze odhlásit · strop 2 týdně" : "Servisní · chodí vždy"}</span>
             </button>
           ))}
           <p className="text-xs font-bold mt-2 px-1" style={{ color: "#8A93AA" }}>Rodiče, platby a testy</p>
@@ -80,7 +80,8 @@ export default function AdminEmaily() {
             <div className="mm-karta p-3 flex flex-col gap-2 min-w-0">
               <p className="text-sm break-words"><b>Předmět:</b> {nahled.predmet}</p>
               <p className="text-xs break-words" style={{ color: "#5F6982" }}><b>Náhled ve schránce:</b> {nahled.pre}</p>
-              <iframe title={`Náhled e-mailu ${nahled.nazev}`} srcDoc={nahled.html} className="w-full rounded-xl border border-slate-200" style={{ height: 900, background: "#F3F5FA" }} data-testid="admin-email-nahled" />
+              <iframe title={`Náhled e-mailu ${nahled.nazev}`} srcDoc={nahled.html} className="w-full rounded-xl border border-slate-200" style={{ height: 900, background: "#F3F5FA" }} data-testid="admin-email-nahled"
+                onLoad={(e) => { const f = e.currentTarget; const h = f.contentDocument?.documentElement.scrollHeight; if (h) f.style.height = `${h + 8}px`; }} />
               <p className="text-[11px]" style={{ color: "#8A93AA" }}>Náhled s ukázkovými daty (odhad 24 z 50, série 6 dní, 340 krystalů). Skutečný e-mail má data žáka.</p>
             </div>
           )}

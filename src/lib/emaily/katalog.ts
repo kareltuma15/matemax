@@ -9,9 +9,10 @@ import { esc, odkaz, type ObsahEmailu } from "./sablona";
  * - plan: den po diagnostice, když ještě nebyl trénink
  * - styska: 3 dny bez tréninku (kdo dřív trénoval)
  * - spi: 7 dní bez tréninku, poslední připomínka, pak ticho (nahrazuje Loops D+7)
+ * - advent: 1. 12. jednorázově všem, kdo trénovali v posledních 30 dnech (Karel 25. 11. 2026)
  */
-export type EmailZaka = "uvitani" | "nezacal" | "plan" | "styska" | "spi";
-export const PRIPOMINKY: EmailZaka[] = ["nezacal", "plan", "styska", "spi"];
+export type EmailZaka = "uvitani" | "nezacal" | "plan" | "styska" | "spi" | "advent";
+export const PRIPOMINKY: EmailZaka[] = ["nezacal", "plan", "styska", "spi", "advent"];
 
 export const NAZVY: Record<EmailZaka, string> = {
   uvitani: "Uvítání",
@@ -19,6 +20,7 @@ export const NAZVY: Record<EmailZaka, string> = {
   plan: "Plán po diagnostice",
   styska: "Stýská se mi (3 dny)",
   spi: "Hexík usnul (7 dní)",
+  advent: "Adventní kalendář (1. 12.)",
 };
 
 export const KDY: Record<EmailZaka, string> = {
@@ -27,6 +29,7 @@ export const KDY: Record<EmailZaka, string> = {
   plan: "Den po diagnostice, když ještě netrénoval(a)",
   styska: "3 dny bez tréninku (kdo už trénoval)",
   spi: "7 dní bez tréninku, poslední připomínka",
+  advent: "1. 12. v 16:00, jednou, kdo trénoval v posledních 30 dnech",
 };
 
 export interface DataZaka {
@@ -134,6 +137,18 @@ export function obsahEmailu(id: EmailZaka, d: DataZaka): ObsahEmailu {
         img: "spi",
       };
     }
+    case "advent":
+      return {
+        predmet: "Adventní kalendář je tady 🎄 Otevři první okénko",
+        pre: "Každý den po tréninku jedno okénko až do Štědrého dne.",
+        nadpis: "Adventní kalendář je tady!",
+        odstavce: [
+          "Od dneška do Štědrého dne se každý den po tréninku otevře jedno okénko. Uvnitř jsou věci pro mě, které jinde nejsou, a mezi nimi i legendární Zlatá hvězda.",
+          "Navíc od dneška: <b>Vánoční truhla</b> a <b>Vánoční pokojíček</b>.",
+        ],
+        tlacitko: { text: "Otevřít 1. okénko", href: o("/sbirka?tab=kalendar") },
+        img: "advent",
+      };
   }
 }
 

@@ -9,6 +9,8 @@ import type { EmailZaka } from "./katalog";
 
 export const ZACATEK_SEZONY = "2026-09-01";
 export const MAX_ZA_TYDEN = 2;
+/** Adventní e-mail jde jednou, 1. 12., těm, kdo trénovali v posledních 30 dnech (Karel 25. 11. 2026). */
+export const ADVENT_DEN = "2026-12-01";
 
 export interface EmailovyStav {
   odhlaseno?: boolean;
@@ -54,12 +56,17 @@ export function coPoslat(v: VstupRozhodnuti): EmailZaka | null {
 
   const tyden = Date.parse(v.ted) - 7 * 86400000;
   const nedavne = (stav.historie ?? []).filter((t) => Date.parse(t) > tyden);
-  if (nedavne.length >= MAX_ZA_TYDEN) return null;
+  // Nikdy dva e-maily za jeden den (ani adventní)
   if (nedavne.some((t) => Date.parse(t) > Date.parse(v.ted) - 20 * 3600000)) return null;
 
   const dny = [...new Set(v.treninky)].sort();
   const posledni = dny[dny.length - 1];
   const odeslanoDen = (id: EmailZaka) => stav.odeslano?.[id]?.slice(0, 10) ?? null;
+
+  // Adventní kalendář: jednorázová novinka, má přednost a nepodléhá týdennímu stropu
+  if (dnes === ADVENT_DEN && !odeslanoDen("advent") && posledni && rozdilDni(posledni, dnes) <= 30) return "advent";
+
+  if (nedavne.length >= MAX_ZA_TYDEN) return null;
 
   if (!posledni) {
     if (v.diagnostika) {
