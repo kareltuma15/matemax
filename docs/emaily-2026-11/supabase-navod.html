@@ -47,15 +47,15 @@ textarea { width:100%; height:150px; box-sizing:border-box; font-family:ui-monos
         Ulož (Save).
       </li>
       <li><b>Supabase → Authentication → Rate Limits:</b> „Rate limit for sending emails“ nastav na <code>60</code> za hodinu. Bez vlastního SMTP pustí Supabase jen pár e-mailů za hodinu pro celou appku, takže při víc registracích najednou mohla potvrzení čekat nebo nedorazit.</li>
-      <li><b>Supabase → Authentication → Emails (Templates) → Confirm signup:</b> do Subject vlož předmět a do Body (Source) celé HTML z první šablony níž. Ulož.</li>
-      <li><b>Stejně Reset Password</b> s druhou šablonou. Ulož.</li>
+      <li><b>Supabase → Authentication → Emails (Templates) → Reset Password:</b> do Subject vlož předmět a do Body (Source) celé HTML ze šablony „Zapomenuté heslo“ níž. Ulož.</li>
+      <li><b>Confirm signup teď přeskoč.</b> Potvrzení registrace je vypnuté (lidé se registrují bez potvrzovacího e-mailu), takže se neposílá. Šablona je níž připravená pro případ, že bys ho někdy zapnul.</li>
       <li><b>Napiš mi „hotovo“.</b> Ověřím, že vše chodí: nejjednodušší je, když si na <code>matemax.matematika-snadno.cz/zapomenute-heslo</code> pošleš nové heslo na svůj e-mail a řekneš mi, jak vypadá.</li>
     </ol>
     <p class="pozn" style="margin-top:12px">Nic se tím nemění na tom, jak registrace funguje, jen odkud a jak e-mail přijde. Kdyby se cokoli pokazilo, stačí v kroku 2 vypnout Custom SMTP a vše se vrátí.</p>
   </section>
 
-  <section class="karta" aria-labelledby="h-s1"><h2 id="h-s1">1. Confirm signup (potvrzení e-mailu)</h2><div id="s-potvrzeni"></div></section>
-  <section class="karta" aria-labelledby="h-s2"><h2 id="h-s2">2. Reset Password (zapomenuté heslo)</h2><div id="s-heslo"></div></section>
+  <section class="karta" aria-labelledby="h-s2"><h2 id="h-s2">Reset Password (zapomenuté heslo) · vložit teď</h2><div id="s-heslo"></div></section>
+  <section class="karta" aria-labelledby="h-s1"><h2 id="h-s1">Confirm signup (potvrzení e-mailu) · jen pro případ, že ho zapneš</h2><div id="s-potvrzeni"></div></section>
 </div>
 
 <script>
