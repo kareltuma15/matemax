@@ -1,0 +1,93 @@
+<title>Přihlašovací e-maily MateMaxu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800&display=swap">
+<style>
+/* Layout: návod po krocích nahoře, pod ním dvě šablony (náhled dítě/rodič + kopírování předmětu a HTML) */
+:root { --bg:#F3F5FA; --karta:#fff; --fg:#0D1B3E; --sedy:#5F6982; --muted:#8A93AA; --cara:#E4E6EF; --akcent:#5B55D6; --ok:#14753A; --okbg:#ecfdf3; --kod:#F7F8FC; --font:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0f1729; --karta:#16213a; --fg:#e8edf6; --sedy:#a9b4ca; --muted:#8592ab; --cara:#2a3650; --akcent:#9d98ff; --ok:#4ade80; --okbg:#12301f; --kod:#0f1a30; color-scheme: dark } }
+:root[data-theme="dark"] { --bg:#0f1729; --karta:#16213a; --fg:#e8edf6; --sedy:#a9b4ca; --muted:#8592ab; --cara:#2a3650; --akcent:#9d98ff; --ok:#4ade80; --okbg:#12301f; --kod:#0f1a30; color-scheme: dark }
+body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size:15px; line-height:1.55; }
+.wrap { max-width:1100px; margin:0 auto; padding-block:28px 60px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); display:flex; flex-direction:column; gap:20px; }
+h1 { margin:0; font-size:26px; font-weight:800; text-wrap:balance; } h2 { margin:0 0 10px; font-size:18px; font-weight:800; } p { margin:0; }
+.uvod { color:var(--sedy); max-width:72ch; margin-top:6px; }
+.karta { background:var(--karta); border:1px solid var(--cara); border-radius:16px; padding:18px 20px; min-width:0; }
+ol.kroky { margin:0; padding-left:22px; display:flex; flex-direction:column; gap:12px; }
+ol.kroky li { max-width:78ch; }
+.hodnoty { display:grid; grid-template-columns:max-content 1fr auto; gap:6px 12px; align-items:center; margin-top:8px; }
+.hodnoty span { color:var(--sedy); font-size:14px; }
+code { font-family: ui-monospace, Consolas, monospace; background:var(--kod); border:1px solid var(--cara); border-radius:8px; padding:2px 8px; font-size:13.5px; overflow-wrap:anywhere; }
+button.kop { font:inherit; font-size:13px; font-weight:700; border:1px solid var(--cara); background:var(--karta); color:var(--fg); border-radius:10px; padding:5px 11px; cursor:pointer; }
+button.kop:focus-visible, .prep button:focus-visible { outline:2px solid var(--akcent); outline-offset:2px; }
+button.kop.ok { background:var(--okbg); color:var(--ok); border-color:var(--ok); }
+.sablona { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; }
+@media (max-width:860px) { .sablona { grid-template-columns:1fr; } .hodnoty { grid-template-columns:1fr auto; } .hodnoty span { grid-column:1 / -1; } }
+.prep { display:flex; gap:6px; margin-bottom:8px; }
+.prep button { font:inherit; font-size:13px; font-weight:700; border:1px solid var(--cara); background:var(--karta); color:var(--fg); border-radius:10px; padding:5px 12px; cursor:pointer; }
+.prep button[aria-pressed="true"] { background:var(--fg); color:var(--karta); border-color:var(--fg); }
+iframe { width:100%; height:640px; border:1px solid var(--cara); border-radius:12px; background:#F3F5FA; }
+textarea { width:100%; height:150px; box-sizing:border-box; font-family:ui-monospace,Consolas,monospace; font-size:12px; border:1px solid var(--cara); border-radius:10px; padding:10px; background:var(--kod); color:var(--fg); resize:vertical; }
+.pole { display:flex; flex-direction:column; gap:8px; }
+.radek { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+.pozn { font-size:13px; color:var(--muted); }
+.stav { display:inline-block; font-size:12px; font-weight:700; color:var(--ok); background:var(--okbg); border-radius:99px; padding:2px 10px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Přihlašovací e-maily přes Resend</h1>
+    <p class="uvod">Potvrzení e-mailu po registraci a zapomenuté heslo posílá Supabase. Tímhle nastavením půjdou z adresy MateMaxu přes Resend a budou vypadat jako ostatní e-maily. Dítěti píše Hexík, rodiči se vyká (Supabase to pozná sám podle toho, jestli je účet žáka).</p>
+  </header>
+
+  <section class="karta" aria-labelledby="h-postup">
+    <h2 id="h-postup">Postup (asi 10 minut)</h2>
+    <ol class="kroky">
+      <li><b>Resend → API Keys → Create API Key.</b> Název <code>Supabase SMTP</code>, oprávnění <b>Sending access</b>, doména <b>matematika-snadno.cz</b>. Klíč (začíná <code>re_</code>) si zkopíruj, Resend ho ukáže jen jednou.</li>
+      <li><b>Supabase → Authentication → Emails → SMTP Settings → Enable Custom SMTP</b> (ve starší podobě Supabase je to v Project Settings → Authentication) a vyplň:
+        <div class="hodnoty" id="smtp"></div>
+        Ulož (Save).
+      </li>
+      <li><b>Supabase → Authentication → Rate Limits:</b> „Rate limit for sending emails“ nastav na <code>60</code> za hodinu. Bez vlastního SMTP pustí Supabase jen pár e-mailů za hodinu pro celou appku, takže při víc registracích najednou mohla potvrzení čekat nebo nedorazit.</li>
+      <li><b>Supabase → Authentication → Emails (Templates) → Confirm signup:</b> do Subject vlož předmět a do Body (Source) celé HTML z první šablony níž. Ulož.</li>
+      <li><b>Stejně Reset Password</b> s druhou šablonou. Ulož.</li>
+      <li><b>Napiš mi „hotovo“.</b> Ověřím, že vše chodí: nejjednodušší je, když si na <code>matemax.matematika-snadno.cz/zapomenute-heslo</code> pošleš nové heslo na svůj e-mail a řekneš mi, jak vypadá.</li>
+    </ol>
+    <p class="pozn" style="margin-top:12px">Nic se tím nemění na tom, jak registrace funguje, jen odkud a jak e-mail přijde. Kdyby se cokoli pokazilo, stačí v kroku 2 vypnout Custom SMTP a vše se vrátí.</p>
+  </section>
+
+  <section class="karta" aria-labelledby="h-s1"><h2 id="h-s1">1. Confirm signup (potvrzení e-mailu)</h2><div id="s-potvrzeni"></div></section>
+  <section class="karta" aria-labelledby="h-s2"><h2 id="h-s2">2. Reset Password (zapomenuté heslo)</h2><div id="s-heslo"></div></section>
+</div>
+
+<script>
+var D = __DATA__;
+function kopiruj(btn, text) {
+  var hotovo = function () { btn.textContent = "Zkopírováno ✓"; btn.classList.add("ok"); setTimeout(function () { btn.textContent = "Zkopírovat"; btn.classList.remove("ok"); }, 1800); };
+  try { navigator.clipboard.writeText(text).then(hotovo, function () { vyber(btn); }); } catch (e) { vyber(btn); }
+}
+function vyber(btn) { var t = btn.closest(".pole") && btn.closest(".pole").querySelector("textarea"); if (t) { t.focus(); t.select(); btn.textContent = "Označeno, stiskni Ctrl+C"; } }
+function tl(text) { var b = document.createElement("button"); b.type = "button"; b.className = "kop"; b.textContent = "Zkopírovat"; b.addEventListener("click", function () { kopiruj(b, text); }); return b; }
+
+// SMTP hodnoty
+[["Sender email", "noreply@matematika-snadno.cz"], ["Sender name", "MateMax"], ["Host", "smtp.resend.com"], ["Port", "465"], ["Username", "resend"], ["Password", "API klíč z kroku 1"]].forEach(function (r) {
+  var box = document.getElementById("smtp");
+  var s = document.createElement("span"); s.textContent = r[0];
+  var c = document.createElement("code"); c.textContent = r[1];
+  box.appendChild(s); box.appendChild(c);
+  box.appendChild(r[0] === "Password" ? document.createElement("i") : tl(r[1]));
+});
+
+function sablona(id, klicDite, klicRodic) {
+  var s = D.sablony[id], el = document.getElementById("s-" + id);
+  el.innerHTML = '<div class="sablona"><div><div class="prep" role="group" aria-label="Verze náhledu"><button type="button" aria-pressed="true">Dítě</button><button type="button" aria-pressed="false">Rodič</button></div><iframe title="Náhled e-mailu"></iframe></div><div class="pole"><div class="radek"><b>Subject</b></div><div class="radek"><code></code></div><div class="radek"><b>Body (HTML)</b><span class="stav">obsahuje verzi pro dítě i rodiče</span></div><textarea readonly spellcheck="false"></textarea><p class="pozn">Do Supabase vlož celé HTML najednou. {{ .ConfirmationURL }} je odkaz, který Supabase sám doplní.</p></div></div>';
+  var f = el.querySelector("iframe"), tb = el.querySelectorAll(".prep button");
+  var ukaz = function (dite) { f.srcdoc = D.nahledy[dite ? klicDite : klicRodic]; tb[0].setAttribute("aria-pressed", dite); tb[1].setAttribute("aria-pressed", !dite); };
+  tb[0].addEventListener("click", function () { ukaz(true); }); tb[1].addEventListener("click", function () { ukaz(false); });
+  ukaz(true);
+  var radky = el.querySelectorAll(".pole .radek");
+  radky[1].querySelector("code").textContent = s.predmet; radky[1].appendChild(tl(s.predmet));
+  radky[2].appendChild(tl(s.html));
+  el.querySelector("textarea").value = s.html;
+}
+sablona("potvrzeni", "potvrzeniDite", "potvrzeniRodic");
+sablona("heslo", "hesloDite", "hesloRodic");
+</script>

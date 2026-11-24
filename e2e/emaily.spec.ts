@@ -98,7 +98,7 @@ test.describe("obsah e-mailů", () => {
 });
 
 test("obrázky Hexíka pro e-maily jsou veřejně dostupné", async ({ request }) => {
-  for (const img of ["uvitani", "nezacal", "plan", "styska", "spi", "advent", "rodic", "premium", "platba", "test", "vysledek"]) {
+  for (const img of ["uvitani", "nezacal", "plan", "styska", "spi", "advent", "rodic", "premium", "platba", "test", "vysledek", "heslo"]) {
     const r = await request.get(`/emaily/${img}.png`);
     expect(r.status(), img).toBe(200);
     expect(r.headers()["content-type"]).toContain("image/png");
@@ -216,5 +216,26 @@ test.describe("analytika e-mailů", () => {
     await expect(sekce.locator("svg rect")).not.toHaveCount(0);
     await sekce.getByRole("button", { name: "7 dní" }).click();
     await expect.poll(() => dotazy).toBeGreaterThan(1);
+  });
+});
+
+test.describe("krok 3: šablony pro Supabase", () => {
+  test("potvrzení a heslo: verze pro dítě i rodiče, odkaz ze Supabase, bez odhlášení", async () => {
+    const { sablonySupabase } = await import("../src/lib/emaily/supabase-sablony");
+    const s = sablonySupabase();
+    for (const { html, predmet } of [s.potvrzeni, s.heslo]) {
+      expect(predmet.length).toBeGreaterThan(5);
+      expect(html.startsWith("{{ if .Data.trida }}")).toBe(true);
+      expect(html.endsWith("{{ end }}")).toBe(true);
+      expect(html.match(/\{\{ else \}\}/g)).toHaveLength(1);
+      expect(html.match(/href="\{\{ \.ConfirmationURL \}\}"/g)).toHaveLength(2);
+      expect(html).not.toMatch(/undefined|NaN|vercel\.app|Odhlásit jedním klikem/);
+      expect(html).toContain("Všemyslice");
+      // jiné {{ … }} než povolené Supabase nezná
+      const vyrazy = html.match(/\{\{[^}]*\}\}/g) ?? [];
+      for (const v of vyrazy) expect(["{{ if .Data.trida }}", "{{ else }}", "{{ end }}", "{{ .ConfirmationURL }}"]).toContain(v);
+    }
+    expect(s.potvrzeni.html).toContain("Ahoj! Jsem Hexík");
+    expect(s.potvrzeni.html).toContain("Dobrý den, děkujeme");
   });
 });
