@@ -65,7 +65,7 @@ export function sestavHtml(e: ObsahEmailu, odkazy: { nastaveni?: string; odhlasi
   const odhlaseni = e.bezOdhlaseni || !odkazy.odhlasit
     ? ""
     : `<br>${odkazy.nastaveni ? `<a href="${esc(odkazy.nastaveni)}" style="color:#5B55D6">${e.rodic ? "Nastavení reportu" : "Nastavení e-mailů"}</a> · ` : ""}<a href="${esc(odkazy.odhlasit)}" style="color:#5B55D6">Odhlásit jedním klikem</a>`;
-  return `<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(e.predmet)}</title></head><body style="margin:0;padding:0;background:#F3F5FA;font-family:Arial,Helvetica,sans-serif">`
+  return `<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"><style>:root{color-scheme:light only}</style><title>${esc(e.predmet)}</title></head><body style="margin:0;padding:0;background:#F3F5FA;font-family:Arial,Helvetica,sans-serif">`
     + `<div style="display:none;max-height:0;overflow:hidden">${esc(e.pre)}</div>`
     + `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F3F5FA;padding:24px 12px"><tr><td align="center">`
     + `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:18px;overflow:hidden">`

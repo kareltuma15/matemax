@@ -39,7 +39,7 @@ function shell(opts: {
   const { badge, heading, bodyHtml, ctaHref, ctaLabel, img = "test" } = opts;
   return `<!DOCTYPE html>
 <html lang="cs">
-<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${esc(heading)}</title></head>
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"><style>:root{color-scheme:light only}</style><title>${esc(heading)}</title></head>
 <body style="margin:0;padding:0;background:#F3F5FA;font-family:Arial,Helvetica,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#F3F5FA;padding:24px 12px;">
 <tr><td align="center">
