@@ -1,0 +1,48 @@
+{
+  "id": "hexik-03",
+  "nazev": "Stihneš to dřív než Hexík?",
+  "podoba": "klasik",
+  "delka": 30,
+  "hlas": "hlas/hexik-03-hlas.m4a",
+  "utm": "?utm_source=tiktok&utm_campaign=hexik-03",
+  "bloky": [
+    {
+      "od": 0, "do": 4,
+      "rika": "Stihneš to dřív než já? Máš deset sekund.",
+      "titulky": ["Stihneš to dřív než já?", "Máš 10 sekund."],
+      "vyraz": "prekvapeni",
+      "tabule": [
+        { "t": 0.1, "radek": 0, "text": "Obdélník: obvod 30 cm" },
+        { "t": 1.3, "radek": 1, "text": "jedna strana 9 cm" },
+        { "t": 2.5, "radek": 2, "text": "Obsah  =  ?" }
+      ]
+    },
+    {
+      "od": 4, "do": 14,
+      "bezReci": true,
+      "rika": "(bez řeči, tikání)",
+      "odpocet": { "od": 0, "do": 10, "z": 10 },
+      "gesta": [{ "t": 0.8, "gesto": "premysli" }, { "t": 3.6, "gesto": "premysli" }, { "t": 6.4, "gesto": "premysli" }]
+    },
+    {
+      "od": 14, "do": 24,
+      "rika": "Obvod je třicet, takže dvě strany dohromady patnáct. Druhá strana je šest. Devět krát šest je padesát čtyři.",
+      "titulky": ["Obvod je 30, takže dvě strany dohromady 15.", "Druhá strana je 6.", "9 krát 6 je 54."],
+      "pohledNaTabuli": true,
+      "tabule": [
+        { "t": 1.4, "radek": 3, "text": "9 + b  =  15" },
+        { "t": 4.6, "radek": 4, "text": "b  =  6" },
+        { "t": 7.0, "radek": 5, "text": "S  =  9 · 6  =  54 cm²" }
+      ]
+    },
+    {
+      "od": 24, "do": 30,
+      "rika": "Padesát čtyři čtverečních centimetrů. Dal jsi to? Napiš do komentáře, za kolik sekund.",
+      "titulky": ["54 čtverečních centimetrů.", "Dal jsi to? Napiš do komentáře, za kolik sekund."],
+      "vyraz": "radost",
+      "tabule": [{ "t": 0.2, "radek": 5, "text": "S  =  9 · 6  =  54 cm²", "styl": "zlaty" }],
+      "reakce": [{ "t": 2.6, "id": "tanec" }],
+      "zaver": true, "zaverT": 3.4
+    }
+  ]
+}

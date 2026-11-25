@@ -1,0 +1,13 @@
+{
+  "name": "hexik-video",
+  "private": true,
+  "type": "module",
+  "description": "Výroba krátkých videí s 3D Hexíkem z MateMaxu (TikTok, Reels, Shorts, 1080x1920). Mimo appku.",
+  "scripts": {
+    "video": "node render.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.2",
+    "ffmpeg-static": "5.2.0"
+  }
+}

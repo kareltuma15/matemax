@@ -48,3 +48,9 @@ next-env.d.ts
 
 # Oficiální testy CERMAT (cizí autorská práva) – jen lokálně, nikdy do gitu
 /docs/cermat-5/
+
+# Výroba videí s Hexíkem (tools/hexik-video): závislosti, nahrávky a hotová videa se necommitují
+/tools/hexik-video/node_modules
+/tools/hexik-video/vystup
+/tools/hexik-video/hlas
+/tools/hexik-video/dist

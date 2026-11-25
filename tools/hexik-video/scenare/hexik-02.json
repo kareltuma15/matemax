@@ -1,0 +1,54 @@
+{
+  "id": "hexik-02",
+  "nazev": "(x + 3)² není x² + 9",
+  "podoba": "klasik",
+  "delka": 32,
+  "hlas": "hlas/hexik-02-hlas.m4a",
+  "utm": "?utm_source=tiktok&utm_campaign=hexik-02",
+  "bloky": [
+    {
+      "od": 0, "do": 3.6,
+      "rika": "Kolik je x plus tři na druhou? Jestli říkáš x na druhou plus devět, počkej.",
+      "titulky": ["Kolik je (x + 3)²?", "Jestli říkáš x² + 9, počkej."],
+      "vyraz": "prekvapeni",
+      "tabule": [{ "t": 0.1, "radek": 0, "text": "(x + 3)²  =  x² + 9  ?" }]
+    },
+    {
+      "od": 3.6, "do": 8,
+      "rika": "Zkusíme to za x dosadit jedničku.",
+      "titulky": ["Zkusíme za x dosadit jedničku."],
+      "gesta": [{ "t": 0.4, "gesto": "krida" }],
+      "tabule": [{ "t": 1.2, "radek": 1, "text": "x = 1:" }]
+    },
+    {
+      "od": 8, "do": 16,
+      "rika": "Jedna plus tři je čtyři, na druhou šestnáct. Ale jedna plus devět je deset. To nesedí.",
+      "titulky": ["1 + 3 je 4, na druhou 16.", "Ale 1 + 9 je 10.", "To nesedí."],
+      "tabule": [
+        { "t": 0.3, "radek": 1, "text": "x = 1:   (1 + 3)²  =  16" },
+        { "t": 3.6, "radek": 2, "text": "1 + 9  =  10" },
+        { "t": 6.2, "radek": 0, "preskrtni": true }
+      ],
+      "gesta": [{ "t": 6.2, "gesto": "vrteni" }]
+    },
+    {
+      "od": 16, "do": 25,
+      "rika": "Správně je to x na druhou plus šest x plus devět. Prostřední člen je dvakrát x krát tři.",
+      "titulky": ["Správně je to x² + 6x + 9.", "Prostřední člen je 2 · x · 3."],
+      "vyraz": "radost",
+      "tabule": [
+        { "t": 0.3, "radek": 3, "text": "(x + 3)²  =  x² + 6x + 9", "styl": "zlaty" },
+        { "t": 4.8, "radek": 4, "text": "2 · x · 3  =  6x" }
+      ]
+    },
+    {
+      "od": 25, "do": 32,
+      "rika": "Kontrola: jedna plus šest plus devět je šestnáct. Sedí. Víc vzorců v MateMaxu.",
+      "titulky": ["Kontrola: 1 + 6 + 9 = 16. Sedí.", "Víc vzorců v MateMaxu."],
+      "vyraz": "radost",
+      "tabule": [{ "t": 0.3, "radek": 5, "text": "1 + 6 + 9  =  16  ✔", "styl": "zvyrazni" }],
+      "reakce": [{ "t": 3.2, "id": "tanec" }],
+      "zaver": true, "zaverT": 3.6
+    }
+  ]
+}
