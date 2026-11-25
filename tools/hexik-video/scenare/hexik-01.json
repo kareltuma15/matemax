@@ -7,43 +7,127 @@
   "utm": "?utm_source=tiktok&utm_campaign=hexik-01",
   "bloky": [
     {
-      "od": 0, "do": 3.2,
+      "od": 0,
+      "do": 3.2,
       "rika": "Zdražíš o dvacet procent, pak zlevníš o dvacet procent. Je to zase stejně?",
-      "titulky": ["Zdražíš o 20 %, pak zlevníš o 20 %.", "Je to zase stejně?"],
+      "titulky": [
+        "Zdražíš o 20 %, pak zlevníš o 20 %.",
+        "Je to zase stejně?"
+      ],
       "vyraz": "prekvapeni",
-      "tabule": [{ "t": 0.1, "radek": 0, "text": "+20 %  …  −20 %  =  ?" }]
-    },
-    {
-      "od": 3.2, "do": 7,
-      "rika": "Spousta lidí řekne: jasně, stejně. Jenže…",
-      "titulky": ["Spousta lidí řekne: jasně, stejně.", "Jenže…"],
-      "gesta": [{ "t": 0.6, "gesto": "kyv" }, { "t": 2.6, "gesto": "vrteni" }]
-    },
-    {
-      "od": 7, "do": 19,
-      "rika": "Vezmi tisíc korun. Plus dvacet procent je tisíc dvě stě. Teď minus dvacet procent, ale z tisíce dvou set. To je dvě stě čtyřicet. Zbyde devět set šedesát.",
-      "titulky": ["Vezmi 1000 Kč.", "Plus 20 % je 1200.", "Teď minus 20 %, ale z 1200.", "To je 240.", "Zbyde 960."],
-      "pohledNaTabuli": true,
       "tabule": [
-        { "t": 0.2, "radek": 1, "text": "1000 Kč" },
-        { "t": 1.8, "radek": 1, "text": "1000 Kč  →  1200 Kč" },
-        { "t": 5.2, "radek": 2, "text": "20 % z 1200 = 240" },
-        { "t": 8.8, "radek": 3, "text": "1200 − 240 = 960" }
+        {
+          "t": 0.1,
+          "radek": 0,
+          "text": "+20 %  …  −20 %  =  ?"
+        }
+      ],
+      "bubliny": [
+        {
+          "t": 1,
+          "co": "?"
+        }
       ]
     },
     {
-      "od": 19, "do": 26,
-      "rika": "Je to o čtyřicet korun levnější. Procenta se počítají z toho, co je zrovna teď.",
-      "titulky": ["Je to o 40 Kč levnější.", "Procenta se počítají z toho, co je zrovna teď."],
-      "vyraz": "radost",
-      "tabule": [{ "t": 0.3, "radek": 4, "text": "960 Kč  <  1000 Kč", "styl": "zvyrazni" }]
+      "od": 3.2,
+      "do": 7,
+      "rika": "Spousta lidí řekne: jasně, stejně. Jenže…",
+      "titulky": [
+        "Spousta lidí řekne: jasně, stejně.",
+        "Jenže…"
+      ],
+      "gesta": [
+        {
+          "t": 0.6,
+          "gesto": "kyv"
+        },
+        {
+          "t": 2.6,
+          "gesto": "vrteni"
+        }
+      ],
+      "bubliny": [
+        {
+          "t": 2.5,
+          "co": "!"
+        }
+      ]
     },
     {
-      "od": 26, "do": 32,
-      "rika": "Chceš víc takových záludností? Trénuj se mnou v MateMaxu.",
-      "titulky": ["Chceš víc takových záludností?", "Trénuj se mnou v MateMaxu."],
+      "od": 7,
+      "do": 19,
+      "rika": "Vezmi tisíc korun. Plus dvacet procent je tisíc dvě stě. Teď minus dvacet procent, ale z tisíce dvou set. To je dvě stě čtyřicet. Zbyde devět set šedesát.",
+      "titulky": [
+        "Vezmi 1000 Kč.",
+        "Plus 20 % je 1200.",
+        "Teď minus 20 %, ale z 1200.",
+        "To je 240.",
+        "Zbyde 960."
+      ],
+      "pohledNaTabuli": true,
+      "tabule": [
+        {
+          "t": 0.2,
+          "radek": 1,
+          "text": "1000 Kč"
+        },
+        {
+          "t": 1.8,
+          "radek": 1,
+          "text": "1000 Kč  →  1200 Kč"
+        },
+        {
+          "t": 5.2,
+          "radek": 2,
+          "text": "20 % z 1200 = 240"
+        },
+        {
+          "t": 8.8,
+          "radek": 3,
+          "text": "1200 − 240 = 960"
+        }
+      ]
+    },
+    {
+      "od": 19,
+      "do": 26,
+      "rika": "Je to o čtyřicet korun levnější. Procenta se počítají z toho, co je zrovna teď.",
+      "titulky": [
+        "Je to o 40 Kč levnější.",
+        "Procenta se počítají z toho, co je zrovna teď."
+      ],
       "vyraz": "radost",
-      "reakce": [{ "t": 3.0, "id": "tanec" }],
+      "tabule": [
+        {
+          "t": 0.3,
+          "radek": 4,
+          "text": "960 Kč  <  1000 Kč",
+          "styl": "zvyrazni"
+        }
+      ],
+      "bubliny": [
+        {
+          "t": 0.4,
+          "co": "💡"
+        }
+      ]
+    },
+    {
+      "od": 26,
+      "do": 32,
+      "rika": "Chceš víc takových záludností? Trénuj se mnou v MateMaxu.",
+      "titulky": [
+        "Chceš víc takových záludností?",
+        "Trénuj se mnou v MateMaxu."
+      ],
+      "vyraz": "radost",
+      "reakce": [
+        {
+          "t": 3,
+          "id": "tanec"
+        }
+      ],
       "zaver": true
     }
   ]

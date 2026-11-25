@@ -33,5 +33,8 @@ Video je rozdělené na bloky (řádky tabulky ze scénáře). Časy uvnitř blo
 | `odpocet` | `{ "od", "do", "z" }` velké kolo s čísly na tabuli + tikání |
 | `bezReci` | blok bez řeči (odpočet), délka zůstává ze scénáře |
 | `zaver`, `zaverT` | tabule se smaže a objeví se logo MateMax a `matemax.matematika-snadno.cz` |
+| `bubliny` | `{ "t", "co": "?" }` bublina vedle Hexíkovy hlavy (?, !, 💡, ✔) |
+
+Scéna (`src/scena.ts`): 3D pokoj ze stejných dílů jako pokojíčky v appce (okno se sněžením, blikající světýlka, lampa, kytka, police, prach ve světle), kamera najede na začátku, přiblíží se k tabuli při psaní a k Hexíkovi při tanci, titulky zvýrazňují právě vyslovované slovo. První verze s kresleným pozadím je v `src/scena-v1.ts`.
 
 Logo vpravo dole je jen MateMax (pravidlo značky). Odkaz na TikToku patří do bio s UTM ze scénáře (`utm`).
