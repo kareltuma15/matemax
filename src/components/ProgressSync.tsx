@@ -6,6 +6,7 @@ import { hydrateFromRemote } from "@/lib/storage";
 import { obnovSbirku, zalohujSbirku } from "@/lib/sbirka-sync";
 import { SBIRKA_EVENT } from "@/lib/sbirka";
 import { zdrojProUcet } from "@/components/Mereni";
+import { dokonciRegistraci } from "@/lib/registrace-dokonceni";
 
 /**
  * Obnoví postup ze serveru po přihlášení (nález #17).
@@ -61,11 +62,13 @@ export default function ProgressSync() {
 
     supabase.auth.getSession().then(({ data }) => {
       if (data.session && !cancelled) void doplnZdroj(data.session.user);
+      // Registrace přes Google: souhlasy a „odkud ses dozvěděl“ čekají v sessionStorage
+      if (data.session && !cancelled) void dokonciRegistraci(data.session.access_token);
       if (data.session && !cancelled) run(data.session.user.id);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) run(session.user.id);
+      if (event === "SIGNED_IN" && session) { run(session.user.id); void dokonciRegistraci(session.access_token); }
       if (event === "SIGNED_OUT") { userId = null; if (casovac) clearTimeout(casovac); }
     });
 

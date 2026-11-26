@@ -14,6 +14,7 @@ function ExMath({ ex, text, large }: { ex: DBExample; text: string; large?: bool
 }
 import { playCorrect, playWrong } from "@/lib/sound";
 import { jenPro9 } from "@/components/JenPro9";
+import { nastavRezim, ukonciRezim, zacniUlohu, oznacOdeslani, dokonciUlohu } from "@/lib/odpovedi-log";
 
 const TOTAL_TIME = 60;
 const QUESTION_COUNT = 10;
@@ -63,6 +64,7 @@ function RychlyMod() {
   }, []);
 
   function startGame() {
+    nastavRezim("rychly");
     const qs = pickQuestions();
     setQuestions(qs);
     setIdx(0);
@@ -93,6 +95,8 @@ function RychlyMod() {
 
     const q = questions[idx];
     const ok = checkAnswer(input, q.odpoved);
+    oznacOdeslani(ok, input);
+    dokonciUlohu(q, { spravne: ok, odpoved: input });
 
     const isLast = idx + 1 >= QUESTION_COUNT;
 
@@ -118,6 +122,10 @@ function RychlyMod() {
       setTimeout(() => inputRef.current?.focus(), 30);
     }
   }
+
+  // Log odpovědí: čas na úlohu běží od zobrazení otázky
+  useEffect(() => { if (phase === "playing" && questions[idx]) zacniUlohu(questions[idx].id); }, [phase, idx, questions]);
+  useEffect(() => () => ukonciRezim(), []);
 
   // keyboard: Enter submits, also shortcut while done
   useEffect(() => {

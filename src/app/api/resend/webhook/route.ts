@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
   const typ = TYPY[udalost.type ?? ""];
   if (!typ || !supabaseAdmin) return NextResponse.json({ ok: true, ignorovano: true });
   const e = stitekEmailu(udalost.data?.tags);
-  await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_dorucitelnost", properties: { typ, ...(e ? { e } : {}) } });
+  await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_status_received", properties: { typ, ...(e ? { e } : {}) } });
 
   // Spam nebo nedoručitelná adresa (bez potvrzení registrace např. překlep): už žádné připomínky na tuhle adresu,
   // ať opakované nedoručené e-maily nekazí pověst odesílatele

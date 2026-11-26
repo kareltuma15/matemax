@@ -10,6 +10,7 @@ import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "@/components/VideoLessonHint";
 import KrokyReseni from "@/components/KrokyReseni";
 import { temaStyl } from "@/lib/barvy-temat";
+import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
 
 /**
  * Úloha s více odpověďmi — dva tvary z CERMAT testů pro 5. třídu:
@@ -41,7 +42,9 @@ function Text({ ex, text }: { ex: DBExample; text: string }) {
   return ex.latex ? <MathDisplay tex={text} /> : <MathText text={text} />;
 }
 
-export default function VicOdpovediCard({ example, cardNumber, total, onResult, onSkip, videoHint = false }: Props) {
+export default function VicOdpovediCard({ example, cardNumber, total, onResult: onResultRodic, onSkip: onSkipRodic, videoHint = false }: Props) {
+  // Log odpovědí (čas, odpověď, přeskočení): obalí onResult a onSkip, rodič se volá stejně
+  const { onResult, onSkip } = useZaznamOdpovedi(example, onResultRodic, onSkipRodic);
   const podulohy = example.podulohy ?? [];
   const prirazeni = example.prirazeni;
   const tvrzeni = example.tvrzeni ?? [];

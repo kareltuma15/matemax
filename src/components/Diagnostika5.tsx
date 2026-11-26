@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { examples5, maVicOdpovedi } from "@/data/examples";
@@ -17,6 +17,7 @@ import MoznostiCard from "@/components/MoznostiCard";
 import VicOdpovediCard from "@/components/VicOdpovediCard";
 import PracticeCard from "@/components/PracticeCard";
 import ConstructionMarkCard from "@/components/ConstructionMarkCard";
+import { nastavRezim, ukonciRezim } from "@/lib/odpovedi-log";
 
 type Vysledky = Record<string, { correct: number; total: number }>;
 
@@ -88,6 +89,8 @@ function Otazka({ example, cardNumber, onResult }: { example: DBExample; cardNum
  * a podle nich se odemykají úrovně v tréninku.
  */
 export default function Diagnostika5() {
+  // Log odpovědí: tahle stránka je režim „diagnostika“
+  useEffect(() => { nastavRezim("diagnostika"); return () => ukonciRezim(); }, []);
   const router = useRouter();
   const { isPremium } = usePremium();
   const [alreadyDone, setAlreadyDone] = useState(() => hasDone5());
@@ -105,7 +108,7 @@ export default function Diagnostika5() {
   function startTraining(t: string | null) {
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
-        trackEvent(data.session?.user.id ?? null, "diagnostika_prvni_trenink", { tema: t, zdroj: "vysledky", trida: 5 }).catch(() => {});
+        trackEvent(data.session?.user.id ?? null, "diagnostic_training_started", { tema: t, zdroj: "vysledky", trida: 5 }).catch(() => {});
       });
     }
     router.push(t ? `/trenink?tema=${t}` : "/trenink");
@@ -121,7 +124,7 @@ export default function Diagnostika5() {
         const uid = data.session.user.id;
         remoteSyncDiagResults(uid, final5).catch(() => {});
         const weak = Object.values(final5).filter((v) => v.correct / v.total < DIAG_WEAK_BELOW).length;
-        trackEvent(uid, "diagnostika_dokoncena", { weak_topics: weak, trida: 5 }).catch(() => {});
+        trackEvent(uid, "diagnostic_completed", { weak_topics: weak, trida: 5 }).catch(() => {});
         fetch("/api/loops-event", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${data.session.access_token}` },

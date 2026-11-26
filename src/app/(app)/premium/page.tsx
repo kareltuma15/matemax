@@ -18,14 +18,14 @@ export default function PremiumPage() {
   const { isPremium } = usePremium();
   const { trida, ready } = useTrida();
   const [stav, setStav] = useState<"idle" | "loading" | "error">("idle");
-  useEffect(() => { mer("premium_zobrazeno"); }, []);
+  useEffect(() => { mer("premium_viewed"); }, []);
 
   async function zaplatit() {
     if (!supabase) { router.push("/registrace?next=/premium"); return; }
     const { data } = await supabase.auth.getSession();
     if (!data.session) { router.push("/prihlaseni?next=/premium"); return; }
     setStav("loading");
-    mer("platba_start");
+    mer("checkout_started");
     try {
       const res = await fetch("/api/stripe/create-checkout", { method: "POST", headers: { Authorization: `Bearer ${data.session.access_token}` } });
       if (!res.ok) throw new Error("checkout");

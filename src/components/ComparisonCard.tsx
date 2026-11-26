@@ -7,6 +7,7 @@ import MathText from "@/components/MathText";
 import { playCorrect, playWrong } from "@/lib/sound";
 import KrokyReseni from "@/components/KrokyReseni";
 import { temaStyl } from "@/lib/barvy-temat";
+import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
 
 /**
  * Porovnávání zlomků/čísel klikem na znaménko.
@@ -42,7 +43,9 @@ function Strana({ ex, text }: { ex: DBExample; text: string }) {
   return <MathText text={text} large />;
 }
 
-export default function ComparisonCard({ example, cardNumber, total, onResult, onSkip }: Props) {
+export default function ComparisonCard({ example, cardNumber, total, onResult: onResultRodic, onSkip: onSkipRodic }: Props) {
+  // Log odpovědí (čas, odpověď, přeskočení): obalí onResult a onSkip, rodič se volá stejně
+  const { onResult, onSkip } = useZaznamOdpovedi(example, onResultRodic, onSkipRodic);
   const p = example.porovnani;
   const [picked, setPicked] = useState<"<" | "=" | ">" | null>(null);
 

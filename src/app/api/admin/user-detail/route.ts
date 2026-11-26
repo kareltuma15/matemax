@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { normalizujDoporuceni, nazevTematu } from "@/lib/doporuceni";
+import { zapisAudit } from "@/lib/admin-audit";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -47,7 +48,7 @@ export async function GET(req: NextRequest) {
     supabaseAdmin.from("sessions").select("date, xp_earned, correct, total").eq("user_id", id).order("date", { ascending: false }).limit(10),
     supabaseAdmin.from("user_badges").select("*", { count: "exact", head: true }).eq("user_id", id),
     supabaseAdmin.from("sm2_cards").select("*", { count: "exact", head: true }).eq("user_id", id),
-    supabaseAdmin.from("analytics_events").select("event_name, created_at").eq("user_id", id).order("created_at", { ascending: false }).limit(10),
+    supabaseAdmin.from("analytics_events").select("event_name, created_at").eq("user_id", id).not("event_name", "in", "(app_heartbeat,page_left,zive)").order("created_at", { ascending: false }).limit(10),
     supabaseAdmin.from("user_onboarding").select("current_state").eq("user_id", id).maybeSingle(),
     supabaseAdmin.from("parent_child_link").select("*", { count: "exact", head: true }).eq("child_user_id", id),
     supabaseAdmin.from("user_xp").select("total_xp, current_level, streak").eq("user_id", id).maybeSingle(),
@@ -56,6 +57,7 @@ export async function GET(req: NextRequest) {
     supabaseAdmin.from("plan_po_testu").select("doporuceni, splneno_at").eq("user_id", id).maybeSingle(),
   ]);
   const dop = normalizujDoporuceni(plan.data?.doporuceni);
+  await zapisAudit({ adminId: user.id, akce: "karta_otevrena", cilUserId: id });
 
   const detail: AdminUserDetail = {
     diagnostics: (diag.data ?? []).map((r) => ({ tema: r.tema as string, correct: r.correct as number, total: r.total as number })),

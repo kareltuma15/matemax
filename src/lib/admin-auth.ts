@@ -6,6 +6,11 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "karel.tuma15@gmail.com")
   .split(",")
   .map((e) => e.trim().toLowerCase());
 
+/** Je e-mail adminem? Admin se nikam nepočítá (měření, statistiky, online). */
+export function jeAdminEmail(email: string | null | undefined): boolean {
+  return !!email && ADMIN_EMAILS.includes(email.toLowerCase());
+}
+
 export type AdminAuthResult =
   | { ok: true; userId: string; email: string }
   | { ok: false; status: 401 | 403; error: string };
@@ -28,5 +33,19 @@ export async function requireAdmin(req: Request): Promise<AdminAuthResult> {
     return { ok: false, status: 403, error: "Forbidden" };
   }
 
+  void zapisRoliAdmina(user.id);
   return { ok: true, userId: user.id, email: user.email ?? "" };
+}
+
+/** Role admina v tabulce admin_role (SY-01, model rolí pro fázi D). Zapisuje se jednou za běh serveru. */
+const zapsaneRole = new Set<string>();
+async function zapisRoliAdmina(userId: string): Promise<void> {
+  if (zapsaneRole.has(userId)) return;
+  zapsaneRole.add(userId);
+  try {
+    const { supabaseAdmin } = await import("./supabase-admin");
+    if (!supabaseAdmin) return;
+    const { error } = await supabaseAdmin.from("admin_role").upsert({ user_id: userId, role: "admin" }, { onConflict: "user_id", ignoreDuplicates: true });
+    if (error) zapsaneRole.delete(userId);
+  } catch { zapsaneRole.delete(userId); }
 }

@@ -7,6 +7,7 @@ import {
 } from "@/lib/construct-geom";
 import { playCorrect, playWrong } from "@/lib/sound";
 import MathText from "@/components/MathText";
+import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
 
 /**
  * Rýsování (CERMAT „Sestrojte…"): žák má v obrázku pravítko a kružítko, klepnutí se přichytává
@@ -126,7 +127,9 @@ function Element({ el, w, h, color, sw, dashed, u }: { el: SceneElement; w: numb
   }
 }
 
-export default function ConstructionMarkCard({ example, cardNumber, total, onResult, onSkip, vTestu }: Props) {
+export default function ConstructionMarkCard({ example, cardNumber, total, onResult: onResultRodic, onSkip: onSkipRodic, vTestu }: Props) {
+  // Log odpovědí (čas, odpověď, přeskočení): obalí onResult a onSkip, rodič se volá stejně
+  const { onResult, onSkip } = useZaznamOdpovedi(example, onResultRodic, onSkipRodic);
   const scene = example.konstrukce_scena!;
   const svgRef = useRef<SVGSVGElement>(null);
   const idRef = useRef(1);

@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Admin: žádná indexace a žádné veřejné cachování (admin 2.1, KO-10). Stejné hlavičky dává i proxy.
+        source: "/admin/:path*",
+        headers: [
+          { key: "Cache-Control", value: "private, no-store, max-age=0" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+        ],
+      },
+      {
         // Service worker se NESMÍ cachovat. Když prohlížeč drží starou verzi
         // sw.js, servíruje staré stránky a uživatel uvízne na neaktuálním kódu,
         // ze kterého se sám nedostane (viz nález #18).

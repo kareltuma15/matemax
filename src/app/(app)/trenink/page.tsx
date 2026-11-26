@@ -70,6 +70,7 @@ import DoporuceniPoTestu, { type DarekSezeni } from "@/components/DoporuceniPoTe
 import { nactiPlan, type PlanPoTestu } from "@/lib/plan-po-testu";
 import { zapocitejDarek, zbyva, DAREK_NA_TEMA } from "@/lib/ochutnavka";
 import OchutnavkaKonec from "@/components/OchutnavkaKonec";
+import { nastavRezim, ukonciRezim } from "@/lib/odpovedi-log";
 
 /** Třída z prohlížeče pro první sestavení sezení (hook se v tu chvíli ještě nemusel načíst). */
 function readTridaForSession(): Trida {
@@ -374,6 +375,13 @@ function TreningPageInner() {
   const [dovednostFilter, setDovednostFilter] = useState<string | null>(urlDovednost);
   const [vybraneTema, setVybraneTema] = useState<string | null>(urlVyber);
   const [rezimFilter, setRezimFilter]   = useState<"chyby" | "sm2" | null>(urlRezim);
+  // Log odpovědí: každá nová sada úloh = nová sada v logu, režim podle toho, co žák trénuje
+  const sadaKlic = sessionIds.join(",");
+  useEffect(() => {
+    if (!sadaKlic) return;
+    nastavRezim(urlBoss ? "boss" : rezimFilter === "chyby" ? "chyby" : rezimFilter === "sm2" ? "opakovani" : "trenink");
+    return () => ukonciRezim();
+  }, [sadaKlic, rezimFilter, urlBoss]);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [streakMilestone, setStreakMilestone] = useState<{ streak: number; xpBonus: number } | null>(null);
   const [progressMilestone, setProgressMilestone] = useState<{ count: number; xpBonus: number } | null>(null);
@@ -582,7 +590,7 @@ function TreningPageInner() {
         const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
         const u = ulohyRef.current.slice(0, 80);
         ulohyRef.current = [];
-        trackEvent(data.session.user.id, "session_completed", {
+        trackEvent(data.session.user.id, "training_completed", {
           correct, total: answered, accuracy, topics: practiceTopics, u,
         }).catch(() => {});
 

@@ -77,7 +77,7 @@ export async function posliEmail(komu: string, obsah: ObsahEmailu, stitek: strin
     });
     if (error) { console.error(`[emaily] ${stitek}: Resend odmítl`, error); return false; }
     // Záznam pro analytiku e-mailů (Admin → E-maily)
-    await supabaseAdmin?.from("analytics_events").insert({ user_id: zaznam.userId ?? null, event_name: "email_odeslan", properties: { e: stitek, ...(zaznam.vlastnosti ?? {}) } });
+    await supabaseAdmin?.from("analytics_events").insert({ user_id: zaznam.userId ?? null, event_name: "email_sent", properties: { e: stitek, ...(zaznam.vlastnosti ?? {}) } });
     return true;
   } catch (e) {
     console.error(`[emaily] ${stitek}: výjimka`, e);

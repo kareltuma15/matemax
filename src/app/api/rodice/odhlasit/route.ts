@@ -34,6 +34,6 @@ export async function POST(req: NextRequest) {
     console.error("[rodice/odhlasit]", error.message);
     return NextResponse.json({ error: "Nepodařilo se uložit. Napište nám prosím na karel.tuma@matematika-snadno.cz." }, { status: 500 });
   }
-  if (odhlaseno) await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_odhlaseni", properties: { druh: "report" } });
+  if (odhlaseno) await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_unsubscribed", properties: { druh: "report" } });
   return NextResponse.json({ ok: true, odhlaseno });
 }

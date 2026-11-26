@@ -18,6 +18,7 @@ import { FREE_TOPICS, GUEST_FREE_TOPICS } from "@/lib/subscription";
 import { jenPro9 } from "@/components/JenPro9";
 import { useTrida } from "@/lib/trida";
 import Diagnostika5 from "@/components/Diagnostika5";
+import { nastavRezim, ukonciRezim } from "@/lib/odpovedi-log";
 
 const CARDS_KEY = "matemax-cards";
 const SEED_PER_WEAK_TOPIC = 10; // kolik nejlehčích karet přidáme pro každé slabé téma
@@ -114,6 +115,8 @@ function levelText(correct: number, total: number): string {
 }
 
 function DiagnostikaPage() {
+  // Log odpovědí: tahle stránka je režim „diagnostika“
+  useEffect(() => { nastavRezim("diagnostika"); return () => ukonciRezim(); }, []);
   const router = useRouter();
   const [alreadyDone, setAlreadyDone] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
@@ -141,7 +144,7 @@ function DiagnostikaPage() {
   function startTraining(tema: string | null, source: "okno" | "vysledky" | "tema") {
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
-        trackEvent(data.session?.user.id ?? null, "diagnostika_prvni_trenink", { tema, zdroj: source }).catch(() => {});
+        trackEvent(data.session?.user.id ?? null, "diagnostic_training_started", { tema, zdroj: source }).catch(() => {});
       });
     }
     router.push(tema ? `/trenink?tema=${tema}` : "/trenink");
@@ -163,7 +166,7 @@ function DiagnostikaPage() {
           const token = data.session.access_token;
           remoteSyncDiagResults(uid, finalResults).catch(() => {});
           const weakCount = Object.values(finalResults).filter(v => v.total > 0 && v.correct / v.total < DIAG_WEAK_BELOW).length;
-          trackEvent(uid, "diagnostika_dokoncena", { weak_topics: weakCount }).catch(() => {});
+          trackEvent(uid, "diagnostic_completed", { weak_topics: weakCount }).catch(() => {});
           // Notify Loops so D+1/D+3/D+7 automations can branch on diagDone
           fetch("/api/loops-event", {
             method: "POST",

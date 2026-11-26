@@ -2,6 +2,14 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getWeekKey, type LeaderboardEntry } from "@/lib/weekly-challenge";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+
+/**
+ * Žebříček týdenní výzvy: top 10 a vlastní řádek. Čte server (service role), prohlížeč dostane
+ * jen přezdívku, avatar a výsledek. ID účtů ostatních žáků se neposílají (SY-13). Skryté řádky
+ * (admin je vyřadil) se neukazují ostatním, jen jejich majiteli.
+ */
+const SLOUPCE = "user_id, nickname, avatar_emoji, score, total, time_seconds, xp_earned, skryty";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -15,13 +23,16 @@ export async function GET() {
       },
     }
   );
+  if (!supabaseAdmin) return NextResponse.json({ error: "Server není nastavený" }, { status: 503 });
 
   const weekKey = getWeekKey();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("weekly_leaderboard")
-    .select("user_id, nickname, avatar_emoji, score, total, time_seconds, xp_earned")
+    .select(SLOUPCE)
     .eq("week_key", weekKey)
+    .eq("skryty", false)
     .order("score", { ascending: false })
     .order("time_seconds", { ascending: true })
     .limit(10);
@@ -30,49 +41,37 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const { data: { user } } = await supabase.auth.getUser();
-
-  const entries: LeaderboardEntry[] = (data ?? []).map((row, i) => ({
-    rank: i + 1,
-    user_id: row.user_id,
+  type Radek = { user_id: string; nickname: string; avatar_emoji: string; score: number; total: number; time_seconds: number; xp_earned: number };
+  const zaznam = (row: Radek, rank: number): LeaderboardEntry => ({
+    rank,
     nickname: row.nickname,
     avatar_emoji: row.avatar_emoji,
     score: row.score,
     total: row.total,
     time_seconds: row.time_seconds,
     xp_earned: row.xp_earned,
-    is_own: row.user_id === user?.id,
-  }));
+    is_own: !!user && row.user_id === user.id,
+  });
+  const entries: LeaderboardEntry[] = ((data ?? []) as Radek[]).map((row, i) => zaznam(row, i + 1));
 
-  // If user is authenticated but not in top 10, fetch their own entry
+  // Vlastní řádek, když žák není v top 10 (nebo ho admin skryl ostatním)
   let ownEntry: LeaderboardEntry | null = null;
   if (user && !entries.some((e) => e.is_own)) {
-    const { data: own } = await supabase
+    const { data: own } = await supabaseAdmin
       .from("weekly_leaderboard")
-      .select("user_id, nickname, avatar_emoji, score, total, time_seconds, xp_earned")
+      .select(SLOUPCE)
       .eq("week_key", weekKey)
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
 
     if (own) {
-      // Get rank by counting entries with better score
-      const { count } = await supabase
+      const { count } = await supabaseAdmin
         .from("weekly_leaderboard")
         .select("id", { count: "exact", head: true })
         .eq("week_key", weekKey)
+        .eq("skryty", false)
         .or(`score.gt.${own.score},and(score.eq.${own.score},time_seconds.lt.${own.time_seconds})`);
-
-      ownEntry = {
-        rank: (count ?? 0) + 1,
-        user_id: own.user_id,
-        nickname: own.nickname,
-        avatar_emoji: own.avatar_emoji,
-        score: own.score,
-        total: own.total,
-        time_seconds: own.time_seconds,
-        xp_earned: own.xp_earned,
-        is_own: true,
-      };
+      ownEntry = zaznam(own as Radek, (count ?? 0) + 1);
     }
   }
 

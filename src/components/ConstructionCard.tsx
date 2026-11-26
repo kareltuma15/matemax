@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import { playCorrect, playWrong } from "@/lib/sound";
+import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
 
 interface Props {
   example: DBExample;
@@ -26,7 +27,9 @@ function shuffled<T>(arr: T[], seed: number): T[] {
   return out.map((o) => o.v);
 }
 
-export default function ConstructionCard({ example, cardNumber, total, onResult, onSkip }: Props) {
+export default function ConstructionCard({ example, cardNumber, total, onResult: onResultRodic, onSkip: onSkipRodic }: Props) {
+  // Log odpovědí (čas, odpověď, přeskočení): obalí onResult a onSkip, rodič se volá stejně
+  const { onResult, onSkip } = useZaznamOdpovedi(example, onResultRodic, onSkipRodic);
   const steps = example.kroky_volby ?? [];
   const [stepIdx, setStepIdx] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);   // index ve zamíchaných volbách

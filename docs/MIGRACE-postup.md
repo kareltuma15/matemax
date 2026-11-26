@@ -132,3 +132,17 @@ Po prvním tréninku tam má být jeden řádek s nenulovým `vyreseno`.
 | Postup se nevrátil, tabulka prázdná | Nedokončil se trénink (viz krok 2 výše) |
 | Postup se nevrátil, tabulka má řádek | Chyba v obnově — pošli mi výpis z konzole prohlížeče |
 | „permission denied for table" | Chybí RLS politika — pusť migraci znovu |
+
+---
+
+## Admin 2.1, fáze A1 (26. 11. 2026): dvě migrace, pořadí je důležité
+
+1. **Před nasazením kódu:** `supabase/migrations/20261126_admin_a1.sql`
+   - Vytvoří tabulky `odpovedi`, `souhlasy`, `admin_audit`, `admin_role` a `navstevy_ucet`.
+   - Žebříček výzvy přepne na čtení jen přes server.
+   - Na konci vypíše 5× `true`.
+2. **Hned po nasazení:** `supabase/migrations/20261126_admin_a1_udalosti.sql`
+   - Přejmenuje staré události měření podle plánu měření (docs/tracking-plan.md).
+   - Uklidí kliky s textem tlačítka.
+   - Na konci vypíše seznam událostí. Nesmí v něm být žádný starý český název (navsteva, zive, klik…).
+   - Druhý den ji pusť ještě jednou, kdyby dobíhaly staré verze appky z mezipaměti.

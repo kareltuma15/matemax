@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
   } catch (e) { chybaBehu = e instanceof Error ? e.message : String(e); }
 
   const { data: ev } = await supabaseAdmin.from("analytics_events")
-    .select("created_at, user_id, properties").eq("event_name", "email_odeslan")
+    .select("created_at, user_id, properties").eq("event_name", "email_sent")
     .order("created_at", { ascending: false }).limit(50);
 
   return NextResponse.json({ dnes, nahledy, ostatni, dnesBy, chybaBehu, odeslane: ev ?? [] });

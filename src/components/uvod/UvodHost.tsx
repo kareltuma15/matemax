@@ -9,6 +9,7 @@ import { EXAMPLES_TEXT, EXAMPLES_LABEL } from "@/lib/site-stats";
 import { HeroScena, TemataObouTrid, NovinkySekce, HexikOdmeny } from "./UvodHra";
 import { ODMENY } from "@/lib/sbirka";
 import "@/app/uvod.css";
+import { mer } from "@/components/Mereni";
 
 /**
  * Úvodní stránka pro nepřihlášené (schválený návrh 16. 11. 2026). Přepínač 9. / 5. třída mění texty
@@ -145,8 +146,8 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
             <KodNeplatnyHlaska style={{ width: "100%", maxWidth: 540 }} />
             <a href="#novinky" className="u-pill" style={{ background: "rgba(255,255,255,.14)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.3)", textTransform: "none", letterSpacing: 0, fontSize: 14, padding: "5px 12px 5px 5px" }}><span style={{ background: "#34D399", color: "#05351F", borderRadius: 999, padding: "3px 9px", fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase" }}>Nově</span>Sady s efekty · adventní kalendář od 1. 12.</a>
             <div role="group" aria-label="Třída" style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 999, background: "rgba(255,255,255,.10)", border: "1px solid rgba(255,255,255,.22)" }}>
-              <button type="button" className="u-tr" aria-pressed={trida === 9} onClick={() => zvol(9)} style={trida === 9 ? aktivni : neaktivni}>🎒 9. třída</button>
-              <button type="button" className="u-tr" aria-pressed={trida === 5} onClick={() => zvol(5)} style={trida === 5 ? aktivni : neaktivni}>✏️ 5. třída</button>
+              <button type="button" className="u-tr" aria-pressed={trida === 9} onClick={() => zvol(9)} data-track="uvod-trida-9" style={trida === 9 ? aktivni : neaktivni}>🎒 9. třída</button>
+              <button type="button" className="u-tr" aria-pressed={trida === 5} onClick={() => zvol(5)} data-track="uvod-trida-5" style={trida === 5 ? aktivni : neaktivni}>✏️ 5. třída</button>
             </div>
             <h1 className="u-h1" style={{ margin: 0, fontSize: 60, lineHeight: 1.04, fontWeight: 900, letterSpacing: "-.025em", textWrap: "balance" }}>
               {t.h1a} <span style={{ color: "#7FE3F5" }}>{t.h1b}</span>
@@ -212,7 +213,7 @@ export default function UvodHost({ diagDone }: { diagDone: boolean }) {
                   type="button"
                   className="u-moz"
                   disabled={vybrano !== null}
-                  onClick={() => setVybrano(i)}
+                  onClick={() => { setVybrano(i); mer("sample_answered", { o: m.slice(0, 20), ok: i === t.demoOk ? 1 : 0, trida }); }}
                   style={vybrano === null ? undefined : i === t.demoOk ? { background: "#1F9D55", borderColor: "#1F9D55", color: "#FFFFFF" } : i === vybrano ? { background: "#D64550", borderColor: "#D64550", color: "#FFFFFF" } : { opacity: 0.5 }}
                 >
                   {m}

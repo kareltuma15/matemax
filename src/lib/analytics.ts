@@ -48,6 +48,6 @@ export function merFunkci(f: Funkce): void {
   } catch { /* bez úložiště měříme i tak */ }
   void supabase.auth.getSession().then(({ data }) => {
     const uid = data.session?.user.id;
-    if (uid) void trackEvent(uid, "funkce", { f });
+    if (uid) void trackEvent(uid, "feature_used", { f });
   });
 }

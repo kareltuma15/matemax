@@ -1,7 +1,7 @@
 "use client";
 import { MamKodZTestu } from "@/components/hexik/KodZTestu";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -11,6 +11,8 @@ import { saveLocalTrida } from "@/lib/trida";
 import type { Trida } from "@/types";
 import { mer, zdrojProUcet } from "@/components/Mereni";
 import { navratPoRegistraci } from "@/lib/bezpecny-next";
+import { ODKAZ_PODMINKY, ODKAZ_ZASADY, ODKUD_MOZNOSTI, ODKUD_NAZVY } from "@/lib/souhlasy";
+import { dokonciRegistraci, ulozCekajici } from "@/lib/registrace-dokonceni";
 
 export default function RegistraceForm() {
   const router = useRouter();
@@ -22,8 +24,15 @@ export default function RegistraceForm() {
   const [password, setPassword]     = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError]           = useState<string | null>(null);
+  // Souhlasy (podmínky povinné, novinky nepovinné) a „odkud ses o nás dozvěděl“ (nepovinné), admin 2.1 A1
+  const [podminky, setPodminky]     = useState(false);
+  const [novinky, setNovinky]       = useState(false);
+  const [odkud, setOdkud]           = useState("");
+  // Chyba u konkrétního pole (třída, podmínky) se ukáže u něj, ne až dole pod tlačítkem
+  const [chybaPole, setChybaPole]   = useState<"trida" | "podminky" | null>(null);
+  const tridaRef = useRef<HTMLDivElement>(null);
   // Měření: na čem se lidé v registraci / přihlášení zaseknou (jen naše texty chyb, žádné údaje)
-  useEffect(() => { if (error) mer("formular_chyba", { c: error.slice(0, 80) }); }, [error]);
+  useEffect(() => { if (error) mer("form_error_shown", { c: error.slice(0, 80) }); }, [error]);
   const [loading, setLoading]       = useState(false);
   const [done, setDone]             = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -38,9 +47,12 @@ export default function RegistraceForm() {
 
   async function handleGoogleSignup() {
     if (!supabase) return;
+    if (!trida) { oznacChybu("trida", "Vyber, jestli jsi v 5. nebo 9. třídě."); return; }
+    if (!podminky) { oznacChybu("podminky", "Potvrď souhlas s podmínkami a zásadami ochrany údajů."); return; }
+    ulozCekajici({ podminky, novinky, odkud: odkud || null });
     if (trida) saveLocalTrida(trida);
     setGoogleLoading(true);
-    mer("registrace_google");
+    mer("signup_google_started");
     const ref = searchParams.get("ref");
     const next = pokracovat ?? (ref ? `/vitej?ref=${encodeURIComponent(ref)}` : "/vitej");
     await supabase.auth.signInWithOAuth({
@@ -50,6 +62,12 @@ export default function RegistraceForm() {
     setGoogleLoading(false);
   }
 
+  function oznacChybu(pole: "trida" | "podminky", text: string) {
+    setChybaPole(pole);
+    setError(text);
+    if (pole === "trida") tridaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!supabase) {
@@ -57,7 +75,11 @@ export default function RegistraceForm() {
       return;
     }
     if (!trida) {
-      setError("Vyber, jestli jsi v 5. nebo 9. třídě.");
+      oznacChybu("trida", "Vyber, jestli jsi v 5. nebo 9. třídě.");
+      return;
+    }
+    if (!podminky) {
+      oznacChybu("podminky", "Potvrď souhlas s podmínkami a zásadami ochrany údajů.");
       return;
     }
     if (password.length < 8) {
@@ -65,6 +87,7 @@ export default function RegistraceForm() {
       return;
     }
     setError(null);
+    setChybaPole(null);
     setLoading(true);
 
     const callName = name.trim();
@@ -79,6 +102,8 @@ export default function RegistraceForm() {
           trida,
           // Odkud žák přišel (reklama, post, Google…), ať jde v adminu spočítat, co která kampaň přinesla
           zdroj: zdrojProUcet(),
+          // „Odkud ses o nás dozvěděl?“ (nepovinné): doplní zdroje, které měření nevidí
+          ...(odkud ? { odkud } : {}),
         },
       },
     });
@@ -100,7 +125,7 @@ export default function RegistraceForm() {
     }
 
     saveLocalTrida(trida);
-    mer("registrace_odeslana", { c: `trida-${trida}` });
+    mer("signup_submitted", { c: `trida-${trida}` });
 
     if (data.user) {
       const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] ?? "";
@@ -112,6 +137,8 @@ export default function RegistraceForm() {
     }
 
     if (data.session) {
+      // Souhlasy, odkud a spojení dnešních návštěv tohoto zařízení s novým účtem
+      void dokonciRegistraci(data.session.access_token, { podminky, novinky, odkud: odkud || null });
       supabase
         .from("user_onboarding")
         .upsert(
@@ -122,6 +149,8 @@ export default function RegistraceForm() {
 
       router.push(pokracovat ?? "/vitej");
     } else {
+      // Potvrzení e-mailem: souhlasy se odešlou po prvním přihlášení
+      ulozCekajici({ podminky, novinky, odkud: odkud || null });
       setDone(true);
     }
   }
@@ -167,8 +196,8 @@ export default function RegistraceForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <div className="flex flex-col gap-1" role="group" aria-label="Třída">
-          <span className="text-xs font-medium text-slate-500">Jsi v 5. nebo 9. třídě?</span>
+        <div ref={tridaRef} className="flex flex-col gap-1 rounded-xl" role="group" aria-label="Třída" aria-invalid={chybaPole === "trida"} style={chybaPole === "trida" ? { outline: "2px solid #dc2626", outlineOffset: 4 } : undefined}>
+          <span className="text-xs font-medium text-slate-500">Jsi v 5. nebo 9. třídě? <span className="font-normal text-slate-400">(povinné)</span></span>
           <div className="grid grid-cols-2 gap-2">
             {([
               { t: 5 as Trida, ikona: "🎒", nadpis: "5. třída", popis: "Přijímačky na víceletá gymnázia" },
@@ -177,7 +206,8 @@ export default function RegistraceForm() {
               <button
                 key={o.t}
                 type="button"
-                onClick={() => { setTrida(o.t); setError(null); }}
+                onClick={() => { setTrida(o.t); setError(null); setChybaPole(null); }}
+                data-track={`registrace-trida-${o.t}`}
                 aria-pressed={trida === o.t}
                 data-testid={`trida-${o.t}`}
                 className="rounded-xl border-2 px-3 py-3 text-center transition-colors"
@@ -189,6 +219,7 @@ export default function RegistraceForm() {
               </button>
             ))}
           </div>
+          {chybaPole === "trida" && <span className="text-xs font-semibold text-red-600" role="alert" data-testid="chyba-trida">{error}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -234,13 +265,40 @@ export default function RegistraceForm() {
               className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold"
               style={{ color: "#2E6DA4" }}
               aria-label={showPassword ? "Skrýt heslo" : "Zobrazit heslo"}
+              data-track="registrace-heslo-zobrazit"
             >
               {showPassword ? "Skrýt" : "Zobrazit"}
             </button>
           </div>
         </div>
 
-        {error && (
+        <div className="flex flex-col gap-1">
+          <label htmlFor="reg-odkud" className="text-xs font-medium text-slate-500">Odkud ses o nás dozvěděl? <span className="font-normal text-slate-400">(nepovinné)</span></label>
+          <select
+            id="reg-odkud"
+            name="odkud"
+            value={odkud}
+            onChange={(e) => setOdkud(e.target.value)}
+            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors bg-white"
+            data-testid="reg-odkud"
+          >
+            <option value="">Vyber…</option>
+            {ODKUD_MOZNOSTI.map((k) => <option key={k} value={k}>{ODKUD_NAZVY[k]}</option>)}
+          </select>
+        </div>
+
+        <label className="flex items-start gap-2.5 text-xs text-slate-600 leading-snug cursor-pointer rounded-lg" style={chybaPole === "podminky" ? { outline: "2px solid #dc2626", outlineOffset: 4 } : undefined}>
+          <input id="reg-podminky" name="podminky" type="checkbox" checked={podminky} onChange={(e) => { setPodminky(e.target.checked); if (e.target.checked && chybaPole === "podminky") { setChybaPole(null); setError(null); } }} className="mt-0.5 h-4 w-4 shrink-0 accent-[#2E6DA4]" data-testid="reg-podminky" />
+          <span>Souhlasím s <a href={ODKAZ_PODMINKY} target="_blank" rel="noopener noreferrer" className="font-semibold underline" style={{ color: "#2E6DA4" }}>obchodními podmínkami</a> a <a href={ODKAZ_ZASADY} target="_blank" rel="noopener noreferrer" className="font-semibold underline" style={{ color: "#2E6DA4" }}>zásadami ochrany osobních údajů</a>. <span className="text-slate-400">(povinné)</span></span>
+        </label>
+        {chybaPole === "podminky" && <span className="text-xs font-semibold text-red-600 -mt-1" role="alert" data-testid="chyba-podminky">{error}</span>}
+
+        <label className="flex items-start gap-2.5 text-xs text-slate-600 leading-snug cursor-pointer">
+          <input id="reg-novinky" name="novinky" type="checkbox" checked={novinky} onChange={(e) => setNovinky(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[#2E6DA4]" data-testid="reg-novinky" />
+          <span>Chci tipy a novinky z MateMaxu e-mailem. <span className="text-slate-400">(nepovinné, odhlásíš se jedním klepnutím)</span></span>
+        </label>
+
+        {error && !chybaPole && (
           <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
             {error}
           </p>
@@ -249,6 +307,7 @@ export default function RegistraceForm() {
         <button
           type="submit"
           disabled={loading}
+          data-track="registrace-odeslat"
           className="w-full py-3 text-white font-semibold rounded-xl text-sm disabled:opacity-60 transition-opacity mt-1"
           style={{ background: "#0D1B3E" }}
         >
@@ -265,6 +324,7 @@ export default function RegistraceForm() {
         type="button"
         onClick={handleGoogleSignup}
         disabled={googleLoading}
+        data-track="registrace-google"
         className="w-full flex items-center justify-center gap-3 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-60"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">

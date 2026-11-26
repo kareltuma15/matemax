@@ -32,6 +32,14 @@ export async function proxy(request: NextRequest) {
   const isParentProtected = matches(pathname, PARENT_PROTECTED);
   const isAuthPage = matches(pathname, AUTH_PAGES);
 
+  // Admin (stránky i rozhraní): žádná indexace vyhledávači a žádné veřejné cachování (admin 2.1, KO-10)
+  if (matches(pathname, ["/admin", "/api/admin"])) {
+    const res = withSecurityHeaders(NextResponse.next());
+    res.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    res.headers.set("Cache-Control", "private, no-store, max-age=0");
+    return res;
+  }
+
   // Skip auth check for routes that don't need it — just add security headers
   if (!isStudentProtected && !isParentProtected && !isAuthPage) {
     return withSecurityHeaders(NextResponse.next());

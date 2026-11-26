@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/report-preview", "/api/"],
+      disallow: ["/report-preview", "/api/", "/admin"],
     },
     sitemap: "https://matemax.matematika-snadno.cz/sitemap.xml",
   };

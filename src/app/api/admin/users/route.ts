@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { pragueDateStr } from "@/lib/date";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { nactiVse, vsechnyUcty, jeVyloucenyUcet } from "@/lib/admin-data";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -58,7 +59,7 @@ export async function GET(req: NextRequest) {
 
   if (!supabaseAdmin) return NextResponse.json({ error: "Admin client not configured" }, { status: 503 });
 
-  const { data: authData } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
+  const authData = { users: await vsechnyUcty() };
   const authUsers = authData?.users ?? [];
 
   const userIds = authUsers.map((u) => u.id);
@@ -88,8 +89,8 @@ export async function GET(req: NextRequest) {
   const [{ data: propRows }, { data: testRows }, { data: procRows }, { data: ziveRows }] = await Promise.all([
     supabaseAdmin.from("vysledky_propojeni").select("user_id, vytvoreno_at").is("zruseno_at", null),
     supabaseAdmin.from("vysledky_testy").select("user_id, test_d").order("test_d", { ascending: false }),
-    supabaseAdmin.from("procvicovani").select("user_id, kdy, sekund").limit(50000),
-    supabaseAdmin.from("analytics_events").select("user_id, created_at, properties").eq("event_name", "zive").gte("created_at", odZive).not("user_id", "is", null).order("created_at", { ascending: false }).limit(50000),
+    nactiVse<{ user_id: string; kdy: string; sekund: number }>((a, b) => supabaseAdmin!.from("procvicovani").select("user_id, kdy, sekund").order("kdy").range(a, b)).then((data) => ({ data })),
+    nactiVse<{ user_id: string; created_at: string; properties: Record<string, unknown> | null }>((a, b) => supabaseAdmin!.from("analytics_events").select("user_id, created_at, properties").eq("event_name", "app_heartbeat").gte("created_at", odZive).not("user_id", "is", null).order("created_at", { ascending: false }).range(a, b)).then((data) => ({ data })),
   ]);
   const tydenOd = Date.now() - 7 * 86400000, ted = Date.now();
   const propojeni = new Map<string, string>();
@@ -182,7 +183,7 @@ export async function GET(req: NextRequest) {
       level: xpInfo.level,
       totalXp: xpInfo.xp,
       diagDone: diagUserSet.has(u.id),
-      testovaci: !!(u.app_metadata as Record<string, unknown> | undefined)?.testovaci,
+      testovaci: jeVyloucenyUcet(u),
       propojeni: propojeni.has(u.id) ? { od: propojeni.get(u.id)!, posledniTest: posledniTest.get(u.id) ?? null } : null,
       cas: { tyden: Math.max(zive.get(u.id)?.tyden ?? 0, trenink.get(u.id)?.tyden ?? 0), celkem: Math.max(zive.get(u.id)?.celkem ?? 0, trenink.get(u.id)?.celkem ?? 0) },
       online: zive.get(u.id) && ted - Date.parse(zive.get(u.id)!.posledni) <= 120_000 ? { cesta: zive.get(u.id)!.cesta, od: zive.get(u.id)!.posledni } : null,

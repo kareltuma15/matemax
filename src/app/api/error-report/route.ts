@@ -54,7 +54,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       .from("analytics_events")
       .insert({
         user_id: null,
-        event_name: "error_client",
+        event_name: "client_error_reported",
         properties: { type, message: cleanMessage, stack: cleanStack, source, lineno, colno, url, digest },
       });
   }

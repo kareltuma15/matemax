@@ -25,7 +25,7 @@ function PrihlaseniForm() {
   const [password, setPassword]   = useState("");
   const [error, setError]         = useState<string | null>(null);
   // Měření: na čem se lidé v registraci / přihlášení zaseknou (jen naše texty chyb, žádné údaje)
-  useEffect(() => { if (error) mer("formular_chyba", { c: error.slice(0, 80) }); }, [error]);
+  useEffect(() => { if (error) mer("form_error_shown", { c: error.slice(0, 80) }); }, [error]);
   const [loading, setLoading]     = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 

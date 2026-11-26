@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { spocitejAnalytiku, shrnutiTydne, type FiltryAnalytiky } from "@/lib/analytika-server";
+import { zapisAudit } from "@/lib/admin-audit";
 
 /**
  * Analytika pro admina (Karel 22. 11. 2026). GET = celý přehled podle filtrů,
@@ -21,7 +22,7 @@ export async function GET(req: NextRequest) {
   try {
     const [a, posledniReport] = await Promise.all([
       spocitejAnalytiku(f),
-      supabaseAdmin!.from("analytics_events").select("created_at, properties").eq("event_name", "tydenni_report").order("created_at", { ascending: false }).limit(1).maybeSingle(),
+      supabaseAdmin!.from("analytics_events").select("created_at, properties").eq("event_name", "weekly_report_created").order("created_at", { ascending: false }).limit(1).maybeSingle(),
     ]);
     const report = posledniReport.data ? { kdy: posledniReport.data.created_at as string, text: String((posledniReport.data.properties as Record<string, unknown>)?.text ?? "") } : null;
     return NextResponse.json({ ...a, report, shrnuti: dni === 7 ? shrnutiTydne(a) : null });
@@ -43,15 +44,17 @@ export async function POST(req: NextRequest) {
     const castka = Math.max(0, Math.min(1_000_000, Math.round(Number(b.castka) || 0)));
     const kliky = Math.max(0, Math.min(1_000_000, Math.round(Number(b.kliky) || 0)));
     if (!zdroj) return NextResponse.json({ error: "Chybí zdroj" }, { status: 400 });
-    const { error } = await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "admin_utrata", properties: { den, zdroj, castka, kliky } });
+    const { error } = await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "ad_spend_saved", properties: { den, zdroj, castka, kliky } });
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    await zapisAudit({ adminId: auth.userId, akce: "utrata_zapsana", detail: { den, zdroj, castka, kliky } });
     return NextResponse.json({ ok: true });
   }
   if (b.akce === "poznamka") {
     const text = typeof b.text === "string" ? b.text.trim().slice(0, 80) : "";
     if (!text) return NextResponse.json({ error: "Chybí text" }, { status: 400 });
-    const { error } = await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "admin_poznamka", properties: { den, text } });
+    const { error } = await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "chart_note_added", properties: { den, text } });
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    await zapisAudit({ adminId: auth.userId, akce: "poznamka_zapsana", detail: { den } });
     return NextResponse.json({ ok: true });
   }
   return NextResponse.json({ error: "Neznámá akce" }, { status: 400 });

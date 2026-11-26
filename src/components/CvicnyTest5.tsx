@@ -264,7 +264,7 @@ export default function CvicnyTest5() {
     setVyprselo(casVyprsel);
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
-        trackEvent(data.session?.user.id ?? null, "cermat_test_dokoncen", {
+        trackEvent(data.session?.user.id ?? null, "mock_test_completed", {
           trida: 5, body: v.body, max: v.max, pct: zaznam.pct, timed_out: casVyprsel,
           minut: Math.round((Date.now() - start) / 60000),
         }).catch(() => {});

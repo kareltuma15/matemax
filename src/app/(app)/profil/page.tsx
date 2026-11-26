@@ -31,6 +31,7 @@ import PozadiZive from "@/components/hexik/PozadiZive";
 import DomovHexika from "@/components/hexik/DomovHexika";
 import { useSbirka } from "@/lib/use-sbirka";
 import { nasazena, etapaHexika, slotyHexika, krystaly, ETAPY_HEXIKA } from "@/lib/sbirka";
+import { chybaPrezdivky, vychoziPrezdivka } from "@/lib/prezdivka";
 
 interface CermatEntry { date: string; score: number; total: number; pct: number; }
 
@@ -237,6 +238,8 @@ export default function ProfilPage() {
   const [showPersonaForm, setShowPersonaForm] = useState(false);
   const [firstNameInput, setFirstNameInput] = useState("");
   const [lastNameInput, setLastNameInput]   = useState("");
+  // Přezdívka v žebříčku týdenní výzvy (ostatní žáci nevidí jméno, SY-13)
+  const [prezdivkaInput, setPrezdivkaInput] = useState("");
   const [selectedEmoji, setSelectedEmoji]   = useState("");
   const [personaSaving, setPersonaSaving]   = useState(false);
   const [personaMsg, setPersonaMsg]         = useState<{ ok: boolean; text: string } | null>(null);
@@ -293,6 +296,8 @@ export default function ProfilPage() {
         setFirstNameInput(fn || fullName.split(" ")[0]);
         setLastNameInput(ln || fullName.split(" ").slice(1).join(" "));
         setSelectedEmoji(meta?.avatar_emoji ?? "");
+        const uid = data.session?.user.id;
+        setPrezdivkaInput(meta?.prezdivka ?? (uid ? vychoziPrezdivka(uid) : ""));
         const cil = Number((data.session?.user.user_metadata as Record<string, unknown> | undefined)?.cil_body);
         if (cil > 0) setCilUctu(cil);
       });
@@ -483,6 +488,9 @@ export default function ProfilPage() {
   async function handleSavePersona(e: React.FormEvent) {
     e.preventDefault();
     if (!supabase) return;
+    const prezdivka = prezdivkaInput.trim().replace(/\s+/g, " ");
+    const chybaP = prezdivka ? chybaPrezdivky(prezdivka, [firstNameInput, lastNameInput]) : null;
+    if (chybaP) { setPersonaMsg({ ok: false, text: chybaP }); return; }
     setPersonaSaving(true);
     const fullName = `${firstNameInput.trim()} ${lastNameInput.trim()}`.trim();
     const { error } = await supabase.auth.updateUser({
@@ -491,6 +499,7 @@ export default function ProfilPage() {
         last_name: lastNameInput.trim() || null,
         full_name: fullName || null,
         avatar_emoji: selectedEmoji || null,
+        prezdivka: prezdivka || null,
       },
     });
     setPersonaSaving(false);
@@ -1085,6 +1094,21 @@ export default function ProfilPage() {
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
                     />
                   </div>
+                </div>
+
+                {/* Přezdívka v žebříčku */}
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="profil-prezdivka" className="text-xs font-medium text-slate-500">Přezdívka v žebříčku výzvy</label>
+                  <input
+                    id="profil-prezdivka"
+                    type="text"
+                    value={prezdivkaInput}
+                    onChange={(e) => setPrezdivkaInput(e.target.value)}
+                    maxLength={20}
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-indigo-400 transition-colors"
+                    data-testid="profil-prezdivka"
+                  />
+                  <span className="text-[11px] text-slate-400">Ostatní žáci uvidí jen přezdívku, nikdy tvoje jméno ani e-mail.</span>
                 </div>
 
                 {personaMsg && (

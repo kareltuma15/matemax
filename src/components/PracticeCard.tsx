@@ -15,6 +15,7 @@ import FitMath, { splitPrompt } from "./FitMath";
 import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "./VideoLessonHint";
 import { klavesnice } from "@/lib/klavesnice";
+import { useZaznamOdpovedi, oznacOdeslani, oznacNapovedu, oznacPostup } from "@/lib/odpovedi-log";
 
 /** Renderuje text nebo LaTeX podle typu příkladu */
 function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
@@ -37,7 +38,9 @@ interface Props {
 const HVEZDY: Record<number, string> = { 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐" };
 const NAZEV_OBTIZNOSTI: Record<number, string> = { 1: "Lehká", 2: "Střední", 3: "Těžká" };
 
-export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult, onSkip, noRetry }: Props) {
+export default function PracticeCard({ example, cardNumber, total, consecutiveCorrect, onResult: onResultRodic, onSkip: onSkipRodic, noRetry }: Props) {
+  // Log odpovědí (čas, odpověď, nápověda, přeskočení): obalí onResult a onSkip, rodič se volá stejně
+  const { onResult, onSkip } = useZaznamOdpovedi(example, onResultRodic, onSkipRodic);
   const [input, setInput]               = useState("");
   const [status, setStatus]             = useState<"idle" | "correct" | "wrong">("idle");
   const [showSolution, setShowSolution] = useState(false);
@@ -73,6 +76,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
 
   /** Žák chce postup hned po první chybě: pokus tím končí (výsledek už uvidí), otevře se vysvětlení. */
   function ukazPostup() {
+    oznacPostup();
     setWrongAttempts(2);
     setShowSolution(true);
   }
@@ -119,6 +123,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
     if (status !== "idle" || !input.trim()) return;
 
     const correct = checkAnswer(input, example.odpoved);
+    oznacOdeslani(correct, input);
     if (correct) {
       setStatus("correct");
       setFlashColor("green");
@@ -167,6 +172,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
 
   async function fetchAiHint() {
     if (aiHintLoading || aiHint) return;
+    oznacNapovedu();
     setAiHintLoading(true);
     setAiHintError(false);
     try {
@@ -373,7 +379,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
           <div className="-mt-2">
             <button
               type="button"
-              onClick={() => setShowTip(!showTip)}
+              onClick={() => { if (!showTip) oznacNapovedu(); setShowTip(!showTip); }}
               className="text-sm font-semibold"
               style={{ color: "#4741B8" }}
             >
@@ -489,7 +495,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <div className="flex flex-col gap-2">
               <button
                 type="button"
-                onClick={() => setShowSolution(!showSolution)}
+                onClick={() => { if (!showSolution) oznacPostup(); setShowSolution(!showSolution); }}
                 className="flex items-center justify-between text-sm font-bold"
                 style={{ color: "#0D1B3E" }}
               >
@@ -502,7 +508,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#E4E6EF" }}>
               <button
                 type="button"
-                onClick={() => setShowSolution(!showSolution)}
+                onClick={() => { if (!showSolution) oznacPostup(); setShowSolution(!showSolution); }}
                 className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold"
                 style={{ background: "#f8fafc", color: "var(--text-primary)" }}
               >

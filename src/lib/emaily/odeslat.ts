@@ -82,7 +82,7 @@ export async function posliEmailZakovi(user: User, id: EmailZaka, data: DataZaka
     historie: PRIPOMINKY.includes(id) ? [...(stav.historie ?? []), ted].slice(-6) : stav.historie,
   };
   await supabaseAdmin.auth.admin.updateUserById(user.id, { app_metadata: { ...meta, emaily: novy } }).catch(() => {});
-  await supabaseAdmin.from("analytics_events").insert({ user_id: user.id, event_name: "email_odeslan", properties: { e: id, trida: data.trida } });
+  await supabaseAdmin.from("analytics_events").insert({ user_id: user.id, event_name: "email_sent", properties: { e: id, trida: data.trida } });
   return { ok: true };
 }
 
@@ -97,7 +97,7 @@ export async function nastavOdhlaseni(userId: string, odhlaseno: boolean): Promi
   if (!e2 && odhlaseno && !stav.odhlaseno) {
     // Analytika: po kterém e-mailu se odhlásil (poslední odeslaná připomínka)
     const posledni = Object.entries(stav.odeslano ?? {}).sort((a, b) => String(b[1]).localeCompare(String(a[1])))[0]?.[0];
-    await supabaseAdmin.from("analytics_events").insert({ user_id: userId, event_name: "email_odhlaseni", properties: { druh: "zak", ...(posledni ? { posledni } : {}) } });
+    await supabaseAdmin.from("analytics_events").insert({ user_id: userId, event_name: "email_unsubscribed", properties: { druh: "zak", ...(posledni ? { posledni } : {}) } });
   }
   return !e2;
 }

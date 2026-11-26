@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { pragueDateStr } from "@/lib/date";
+import { nactiVse, vsechnyUcty, vylouceneUcty } from "@/lib/admin-data";
 
 /**
  * Návštěvnost a trychtýř pro admina (Karel): z analytics_events (měření bez cookies) a z účtů.
@@ -15,8 +16,8 @@ const hodinaPraha = (d: Date) => Number(new Intl.DateTimeFormat("cs-CZ", { timeZ
 const denPred = (n: number) => pragueDateStr(new Date(Date.now() - n * 86400000));
 
 const POPIS_UDALOSTI: Record<string, string> = {
-  navsteva: "otevřel stránku", klik: "klikl", odchod: "odešel ze stránky", registrace_odeslana: "odeslal registraci", registrace_google: "registrace přes Google",
-  premium_zobrazeno: "otevřel Premium", platba_start: "začal platit", formular_start: "začal vyplňovat", formular_chyba: "chyba ve formuláři", doporuceni_otevreno: "otevřel doporučení",
+  page_viewed: "otevřel stránku", element_clicked: "klikl", page_left: "odešel ze stránky", signup_submitted: "odeslal registraci", signup_google_started: "registrace přes Google",
+  premium_viewed: "otevřel Premium", checkout_started: "začal platit", form_started: "začal vyplňovat", form_error_shown: "chyba ve formuláři", recommendation_opened: "otevřel doporučení",
 };
 
 /**
@@ -25,9 +26,8 @@ const POPIS_UDALOSTI: Record<string, string> = {
  */
 /** Účty pro statistiky: jména a testovací účty (značka app_metadata.testovaci). */
 async function nactiUcty() {
-  const { data } = await supabaseAdmin!.auth.admin.listUsers({ perPage: 1000 });
-  const users = data?.users ?? [];
-  const testovaci = new Set(users.filter((u) => (u.app_metadata as Record<string, unknown> | undefined)?.testovaci).map((u) => u.id));
+  const users = await vsechnyUcty();
+  const testovaci = vylouceneUcty(users);
   const jmena = new Map(users.map((u) => {
     const m = (u.user_metadata ?? {}) as Record<string, unknown>;
     const jm = (typeof m.first_name === "string" && m.first_name) || (typeof m.full_name === "string" && m.full_name) || (u.email ?? "").split("@")[0];
@@ -42,7 +42,7 @@ async function nactiUcty() {
  */
 function parujUcty(ev: Ev[], testovaci: Set<string>) {
   const vUcet = new Map<string, string>();
-  for (const e of ev) if (e.event_name === "zive" && e.user_id && e.properties?.v) vUcet.set(e.properties.v, e.user_id);
+  for (const e of ev) if (e.event_name === "app_heartbeat" && e.user_id && e.properties?.v) vUcet.set(e.properties.v, e.user_id);
   const testV = new Set([...vUcet].filter(([, u]) => testovaci.has(u)).map(([v]) => v));
   const cista = ev.filter((e) => !(e.user_id && testovaci.has(e.user_id)) && !(e.properties?.v && testV.has(e.properties.v)));
   return { vUcet, cista };
@@ -51,7 +51,7 @@ function parujUcty(ev: Ev[], testovaci: Set<string>) {
 async function zive() {
   const ted = Date.now();
   const [{ data, error }, ucty] = await Promise.all([
-    supabaseAdmin!.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", new Date(ted - 50 * 3600000).toISOString()).order("created_at", { ascending: false }).limit(20000),
+    nactiVse<Ev>((a, b) => supabaseAdmin!.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", new Date(ted - 50 * 3600000).toISOString()).order("created_at", { ascending: false }).range(a, b)).then((data) => ({ data, error: null as { message: string } | null })),
     nactiUcty(),
   ]);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -60,7 +60,7 @@ async function zive() {
   const dnesD = pragueDateStr();
   const prihlaseni = new Map<string, { jmeno: string; trida: number; cesta: string | null; zarizeni: string | null; minutDnes: number }>();
   for (const e of ev) {
-    if (e.event_name !== "zive" || !e.user_id) continue;
+    if (e.event_name !== "app_heartbeat" || !e.user_id) continue;
     const ucet = ucty.jmena.get(e.user_id);
     if (!ucet) continue;
     const c = prihlaseni.get(e.user_id);
@@ -70,18 +70,20 @@ async function zive() {
     if (x && pragueDateStr(new Date(e.created_at)) === dnesD) x.minutDnes += 1;
   }
   const bezUctu = new Map<string, string>();
-  for (const e of ev) if (e.event_name === "navsteva" && ted - Date.parse(e.created_at) <= 300_000 && e.properties?.v && !vUcet.has(e.properties.v) && !bezUctu.has(e.properties.v)) bezUctu.set(e.properties.v, e.properties.cesta ?? "?");
+  for (const e of ev) if (e.event_name === "page_viewed" && ted - Date.parse(e.created_at) <= 300_000 && e.properties?.v && !vUcet.has(e.properties.v) && !bezUctu.has(e.properties.v)) bezUctu.set(e.properties.v, e.properties.cesta ?? "?");
   const ziveUcty = [...prihlaseni.values()];
   const bezUctuStranky = [...[...bezUctu.values()].reduce((m, c) => m.set(c, (m.get(c) ?? 0) + 1), new Map<string, number>())].map(([k, n]) => ({ k, n })).sort((a, b) => b.n - a.n);
-  const dnesMinut = ev.filter((e) => e.event_name === "zive" && pragueDateStr(new Date(e.created_at)) === dnesD).length;
-  const dnesTrenovalo = new Set(ev.filter((e) => e.event_name === "zive" && pragueDateStr(new Date(e.created_at)) === dnesD && (e.properties?.cesta ?? "").startsWith("/trenink")).map((e) => e.user_id)).size;
+  const dnesMinut = ev.filter((e) => e.event_name === "app_heartbeat" && pragueDateStr(new Date(e.created_at)) === dnesD).length;
+  // Trénoval = dokončil aspoň 1 trénink dnes (stejná definice jako Řídicí panel, docs/metriky.md), ne jen otevřel stránku
+  const { data: dnesTren } = await supabaseAdmin!.from("procvicovani").select("user_id").eq("datum", dnesD).limit(1000);
+  const dnesTrenovalo = new Set((dnesTren ?? []).map((r) => r.user_id as string).filter((u) => !ucty.testovaci.has(u))).size;
   const v = (arr: typeof ev) => new Set(arr.map((e) => e.properties?.v).filter(Boolean)).size;
   const za = (min: number) => ev.filter((e) => ted - Date.parse(e.created_at) <= min * 60000);
   const dnes = pragueDateStr(), vcera = denPred(1);
   const hodinaTed = hodinaPraha(new Date(ted));
   const dneska = ev.filter((e) => pragueDateStr(new Date(e.created_at)) === dnes);
   const vcerejsi = ev.filter((e) => pragueDateStr(new Date(e.created_at)) === vcera);
-  const navstevy = (arr: typeof ev) => arr.filter((e) => e.event_name === "navsteva");
+  const navstevy = (arr: typeof ev) => arr.filter((e) => e.event_name === "page_viewed");
   const poHodinach = Array.from({ length: 24 }, (_, h) => ({
     h,
     dnes: v(navstevy(dneska).filter((e) => hodinaPraha(new Date(e.created_at)) === h)),
@@ -99,9 +101,9 @@ async function zive() {
     vceraCelkem: v(navstevy(vcerejsi)),
     hodinaTed, poHodinach, strankyTed,
     ziveUcty, bezUctuOnline: bezUctu.size, bezUctuStranky, dnesMinut, dnesTrenovalo,
-    posledni: ev.filter((e) => e.event_name !== "odchod" && e.event_name !== "zive").slice(0, 20).map((e) => ({
+    posledni: ev.filter((e) => e.event_name !== "page_left" && e.event_name !== "app_heartbeat").slice(0, 20).map((e) => ({
       cas: e.created_at, co: POPIS_UDALOSTI[e.event_name] ?? e.event_name,
-      kde: e.event_name === "klik" ? (e.properties?.text || e.properties?.cil) : e.properties?.cesta, zarizeni: e.properties?.zarizeni ?? null,
+      kde: e.event_name === "element_clicked" ? (e.properties?.text || e.properties?.cil) : e.properties?.cesta, zarizeni: e.properties?.zarizeni ?? null,
     })),
   });
 }
@@ -114,7 +116,7 @@ async function detailDne(denD: string) {
   const od = new Date(Date.parse(denD + "T00:00:00Z") - 3 * 3600000).toISOString();
   const doo = new Date(Date.parse(denD + "T00:00:00Z") + 27 * 3600000).toISOString();
   const [{ data, error }, ucty, { data: prop }] = await Promise.all([
-    supabaseAdmin!.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", od).lt("created_at", doo).order("created_at", { ascending: true }).limit(20000),
+    nactiVse<Ev>((a, b) => supabaseAdmin!.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", od).lt("created_at", doo).order("created_at", { ascending: true }).range(a, b)).then((data) => ({ data, error: null as { message: string } | null })),
     nactiUcty(),
     supabaseAdmin!.from("vysledky_propojeni").select("user_id").is("zruseno_at", null),
   ]);
@@ -123,23 +125,23 @@ async function detailDne(denD: string) {
   const vDne = ((data ?? []) as Ev[]).filter((e) => pragueDateStr(new Date(e.created_at)) === denD);
   const { vUcet, cista } = parujUcty(vDne, ucty.testovaci);
   const poV = new Map<string, Ev[]>();
-  for (const e of cista) { const v = e.properties?.v; if (!v || e.event_name === "zive") continue; poV.set(v, [...(poV.get(v) ?? []), e]); }
+  for (const e of cista) { const v = e.properties?.v; if (!v || e.event_name === "app_heartbeat") continue; poV.set(v, [...(poV.get(v) ?? []), e]); }
   // Přihlášení, kteří ten den nic veřejného neotevřeli, ale byli v appce (jen signál „jsem tu“)
-  for (const e of cista) if (e.event_name === "zive" && e.properties?.v && !poV.has(e.properties.v)) poV.set(e.properties.v, []);
+  for (const e of cista) if (e.event_name === "app_heartbeat" && e.properties?.v && !poV.has(e.properties.v)) poV.set(e.properties.v, []);
   const navstevnici = [...poV].map(([v, evs]) => {
-    const nav = evs.filter((e) => e.event_name === "navsteva");
+    const nav = evs.filter((e) => e.event_name === "page_viewed");
     const trasa: string[] = [];
     for (const e of nav) { const c = e.properties?.cesta ?? "?"; if (trasa[trasa.length - 1] !== c) trasa.push(c); }
-    const casy = [...evs, ...cista.filter((e) => e.event_name === "zive" && e.properties?.v === v)].map((e) => Date.parse(e.created_at));
-    const ziveMinut = cista.filter((e) => e.event_name === "zive" && e.properties?.v === v).length;
-    const odchodSek = evs.filter((e) => e.event_name === "odchod").reduce((a, e) => a + (Number(e.properties?.sekund) || 0), 0);
+    const casy = [...evs, ...cista.filter((e) => e.event_name === "app_heartbeat" && e.properties?.v === v)].map((e) => Date.parse(e.created_at));
+    const ziveMinut = cista.filter((e) => e.event_name === "app_heartbeat" && e.properties?.v === v).length;
+    const odchodSek = evs.filter((e) => e.event_name === "page_left").reduce((a, e) => a + (Number(e.properties?.sekund) || 0), 0);
     const trvani = Math.max(ziveMinut * 60, casy.length > 1 ? (Math.max(...casy) - Math.min(...casy)) / 1000 : 0, odchodSek);
     const prvni = nav[0]?.properties ?? evs[0]?.properties ?? {};
     const uid = vUcet.get(v);
     const ucet = uid ? ucty.jmena.get(uid) : undefined;
     return {
       ucet: ucet ? { jmeno: ucet.jmeno, trida: ucet.trida, propojeny: propojeni.has(uid!) } : null,
-      stranek: nav.length, kliku: evs.filter((e) => e.event_name === "klik").length,
+      stranek: nav.length, kliku: evs.filter((e) => e.event_name === "element_clicked").length,
       trasa: trasa.slice(0, 14), dalsich: Math.max(0, trasa.length - 14),
       sekund: Math.round(trvani), zarizeni: prvni.zarizeni ?? null,
       zdroj: prvni.utm_source ? `utm: ${prvni.utm_source}` : prvni.ref ?? null,
@@ -161,7 +163,7 @@ export async function GET(req: NextRequest) {
   const od = new Date(Date.now() - dni * 86400000).toISOString();
 
   const [{ data: evRows, error }, ucty] = await Promise.all([
-    supabaseAdmin.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", od).order("created_at", { ascending: true }).limit(50000),
+    nactiVse<Ev>((a, b) => supabaseAdmin!.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", od).order("created_at", { ascending: true }).range(a, b)).then((data) => ({ data, error: null as { message: string } | null })),
     nactiUcty(),
   ]);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -169,7 +171,7 @@ export async function GET(req: NextRequest) {
   const { vUcet, cista: ev } = parujUcty((evRows ?? []) as Ev[], ucty.testovaci);
   const p = (e: Ev) => e.properties ?? {};
 
-  const navstevy = ev.filter((e) => e.event_name === "navsteva");
+  const navstevy = ev.filter((e) => e.event_name === "page_viewed");
   const unik = (arr: Ev[]) => new Set(arr.map((e) => p(e).v).filter(Boolean)).size;
   // Den podle Prahy (ne UTC: noční návštěvy by jinak padaly do předchozího dne)
   const den = (iso: string) => pragueDateStr(new Date(iso));
@@ -196,23 +198,23 @@ export async function GET(req: NextRequest) {
 
   const zdroje = pocitej(navstevy, (e) => p(e).utm_source ? `utm: ${p(e).utm_source}` : p(e).ref ?? "přímo / neznámo");
   const stranky = pocitej(navstevy, (e) => p(e).cesta);
-  const kliky = pocitej(ev.filter((e) => e.event_name === "klik"), (e) => p(e).cil);
+  const kliky = pocitej(ev.filter((e) => e.event_name === "element_clicked"), (e) => p(e).cil);
   const zarizeni = pocitej(navstevy, (e) => p(e).zarizeni);
 
   const vSet = (f: (e: Ev) => boolean) => new Set(ev.filter(f).map((e) => p(e).v).filter(Boolean)).size;
   const uzivatele = (authData?.users ?? []).filter((u) => u.created_at >= od);
   const trychtyr = [
     { krok: "Návštěvníci MateMaxu", n: unik(navstevy) },
-    { krok: "Otevřeli úvodní stránku", n: vSet((e) => e.event_name === "navsteva" && (p(e).cesta === "/" || p(e).cesta === "/matemax")) },
-    { krok: "Klikli na registraci / Začít", n: vSet((e) => e.event_name === "klik" && /^\/(registrace|vitej)/.test(p(e).cil ?? "")) },
-    { krok: "Otevřeli registraci", n: vSet((e) => e.event_name === "navsteva" && (p(e).cesta ?? "").startsWith("/registrace")) },
-    { krok: "Odeslali registraci", n: ev.filter((e) => e.event_name === "registrace_odeslana" || e.event_name === "registrace_google").length },
+    { krok: "Otevřeli úvodní stránku", n: vSet((e) => e.event_name === "page_viewed" && (p(e).cesta === "/" || p(e).cesta === "/matemax")) },
+    { krok: "Klikli na registraci / Začít", n: vSet((e) => e.event_name === "element_clicked" && /^\/(registrace|vitej)/.test(p(e).cil ?? "")) },
+    { krok: "Otevřeli registraci", n: vSet((e) => e.event_name === "page_viewed" && (p(e).cesta ?? "").startsWith("/registrace")) },
+    { krok: "Odeslali registraci", n: ev.filter((e) => e.event_name === "signup_submitted" || e.event_name === "signup_google_started").length },
     { krok: "Nové účty", n: uzivatele.length },
     { krok: "Potvrdili e-mail / přihlásili se", n: uzivatele.filter((u) => u.email_confirmed_at || u.last_sign_in_at).length },
-    { krok: "Dokončili diagnostiku", n: new Set(ev.filter((e) => e.event_name === "diagnostika_dokoncena").map((e) => e.user_id ?? e.created_at)).size },
-    { krok: "Dokončili trénink", n: new Set(ev.filter((e) => e.event_name === "session_completed").map((e) => e.user_id ?? e.created_at)).size },
-    { krok: "Otevřeli Premium", n: vSet((e) => e.event_name === "premium_zobrazeno") },
-    { krok: "Začali platit", n: vSet((e) => e.event_name === "platba_start") },
+    { krok: "Dokončili diagnostiku", n: new Set(ev.filter((e) => e.event_name === "diagnostic_completed").map((e) => e.user_id ?? e.created_at)).size },
+    { krok: "Dokončili trénink", n: new Set(ev.filter((e) => e.event_name === "training_completed").map((e) => e.user_id ?? e.created_at)).size },
+    { krok: "Otevřeli Premium", n: vSet((e) => e.event_name === "premium_viewed") },
+    { krok: "Začali platit", n: vSet((e) => e.event_name === "checkout_started") },
   ];
 
   // ── Kampaně: co který zdroj přinesl (Karel 22. 11. 2026, reklama na Facebooku) ──
@@ -234,16 +236,16 @@ export async function GET(req: NextRequest) {
   }
   const [{ data: premRows }, { data: trenRows }] = await Promise.all([
     supabaseAdmin.from("user_premium").select("user_id, is_premium, stripe_subscription_id"),
-    supabaseAdmin.from("sessions").select("user_id").gte("date", od.slice(0, 10)).limit(20000),
+    nactiVse<{ user_id: string }>((a, b) => supabaseAdmin!.from("sessions").select("user_id").gte("date", od.slice(0, 10)).order("date").range(a, b)).then((data) => ({ data })),
   ]);
   const placeni = new Set((premRows ?? []).filter((r) => r.is_premium && r.stripe_subscription_id).map((r) => r.user_id as string));
   const trenovali = new Set((trenRows ?? []).map((r) => r.user_id as string));
   const kampMap = new Map<string, { zdroj: string; navstevniku: number; klikRegistrace: number; odeslali: number; ucty: number; potvrdili: number; trenovali: number; platici: number }>();
   const kamp = (z: string) => kampMap.get(z) ?? kampMap.set(z, { zdroj: z, navstevniku: 0, klikRegistrace: 0, odeslali: 0, ucty: 0, potvrdili: 0, trenovali: 0, platici: 0 }).get(z)!;
   for (const z of zdrojV.values()) kamp(z).navstevniku++;
-  const klikV = new Set(ev.filter((e) => e.event_name === "klik" && /^\/(registrace|vitej)/.test(p(e).cil ?? "")).map((e) => p(e).v).filter(Boolean) as string[]);
+  const klikV = new Set(ev.filter((e) => e.event_name === "element_clicked" && /^\/(registrace|vitej)/.test(p(e).cil ?? "")).map((e) => p(e).v).filter(Boolean) as string[]);
   for (const v of klikV) kamp(zdrojV.get(v) ?? "přímo").klikRegistrace++;
-  for (const e of ev) if (e.event_name === "registrace_odeslana" || e.event_name === "registrace_google") kamp(p(e).v ? zdrojV.get(p(e).v!) ?? zdrojUdalosti(e) : zdrojUdalosti(e)).odeslali++;
+  for (const e of ev) if (e.event_name === "signup_submitted" || e.event_name === "signup_google_started") kamp(p(e).v ? zdrojV.get(p(e).v!) ?? zdrojUdalosti(e) : zdrojUdalosti(e)).odeslali++;
   for (const u of uzivatele) {
     const z = (u.user_metadata as Record<string, unknown> | undefined)?.zdroj;
     const k = kamp(typeof z === "string" && z ? z : "neuvedeno (účty před 22. 11.)");
@@ -261,7 +263,7 @@ export async function GET(req: NextRequest) {
   const prvniPondeli = pondeli(new Date(Date.now() - (tydnu - 1) * 7 * 86400000));
   const odData = prvniPondeli.toISOString().slice(0, 10);
   const [{ data: sesRows }, sbirkaRes] = await Promise.all([
-    supabaseAdmin.from("sessions").select("user_id, date, total, correct").gte("date", odData).limit(20000),
+    nactiVse<{ user_id: string; date: string; total: number; correct: number }>((a, b) => supabaseAdmin!.from("sessions").select("user_id, date, total, correct").gte("date", odData).order("date").range(a, b)).then((data) => ({ data })),
     supabaseAdmin.from("user_sbirka").select("user_id, state").limit(5000),
   ]);
   const trenink = Array.from({ length: tydnu }, (_, i) => {
@@ -293,7 +295,7 @@ export async function GET(req: NextRequest) {
   };
 
   // Úvodní stránka: co návštěvníci dělají (od 16. 11. 2026, událost odchod)
-  const odchody = ev.filter((e) => e.event_name === "odchod" && p(e).cesta === "/");
+  const odchody = ev.filter((e) => e.event_name === "page_left" && p(e).cesta === "/");
   const sek = odchody.map((e) => p(e).sekund ?? 0).sort((a, b) => a - b);
   const median = sek.length ? sek[Math.floor(sek.length / 2)] : null;
   const scrollPodil = (min: number) => odchody.length ? Math.round((odchody.filter((e) => (p(e).scroll ?? 0) >= min).length / odchody.length) * 100) : 0;
@@ -307,10 +309,10 @@ export async function GET(req: NextRequest) {
     medianSekund: median,
     scroll: [25, 50, 75, 90].map((min) => ({ min, podil: scrollPodil(min) })),
     posledniSekce: pocitej(odchody, (e) => p(e).sekce ?? "úplně nahoře", false),
-    kliky: pocitej(ev.filter((e) => e.event_name === "klik" && p(e).cesta === "/"), (e) => p(e).text || p(e).cil, false),
+    kliky: pocitej(ev.filter((e) => e.event_name === "element_clicked" && p(e).cesta === "/"), (e) => p(e).text || p(e).cil, false),
     pokracovali,
-    formular: pocitej(ev.filter((e) => e.event_name === "formular_start"), (e) => p(e).cesta),
-    chyby: pocitej(ev.filter((e) => e.event_name === "formular_chyba"), (e) => `${p(e).cesta}: ${p(e).cil}`, false),
+    formular: pocitej(ev.filter((e) => e.event_name === "form_started"), (e) => p(e).cesta),
+    chyby: pocitej(ev.filter((e) => e.event_name === "form_error_shown"), (e) => `${p(e).cesta}: ${p(e).cil}`, false),
   };
 
   return NextResponse.json({

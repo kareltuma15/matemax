@@ -14,6 +14,7 @@
 import { supabaseAdmin } from "./supabase-admin";
 import { pragueDateStr } from "./date";
 import { allExamples } from "@/data/examples";
+import { vsechnyUcty, vylouceneUcty } from "./admin-data";
 
 const DEN = 86_400_000;
 
@@ -115,7 +116,7 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
 
   const [evRows, usersRes, sesRows, sbirkaRows, premRows, predplatne] = await Promise.all([
     nactiVse<Ev>((a, b) => db.from("analytics_events").select("event_name, created_at, user_id, properties").gte("created_at", new Date(nacistOd).toISOString()).order("created_at", { ascending: true }).range(a, b)),
-    db.auth.admin.listUsers({ perPage: 1000 }),
+    vsechnyUcty().then((users) => ({ data: { users } })),
     nactiVse<{ user_id: string; date: string; total: number; correct: number }>((a, b) => db.from("sessions").select("user_id, date, total, correct").gte("date", pragueDateStr(new Date(nacistOd))).order("date", { ascending: true }).range(a, b)),
     nactiVse<{ user_id: string; state: { otevreno?: number } | null }>((a, b) => db.from("user_sbirka").select("user_id, state").range(a, b)).catch(() => []),
     nactiVse<{ user_id: string; is_premium: boolean; stripe_subscription_id: string | null }>((a, b) => db.from("user_premium").select("user_id, is_premium, stripe_subscription_id").range(a, b)).catch(() => []),
@@ -124,11 +125,11 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
 
   // ── Účty (bez testovacích) ──
   const vsichni = usersRes.data?.users ?? [];
-  const testovaci = new Set(vsichni.filter((u) => (u.app_metadata as Props | undefined)?.testovaci).map((u) => u.id));
+  const testovaci = vylouceneUcty(vsichni);
   // Denní otisk v → účet (signál „jsem tu“), otisky testovacích účtů pryč ze všeho
   const vUcet = new Map<string, string>();
   const zarizeniUctu = new Map<string, Zarizeni>();
-  for (const e of evRows) if (e.event_name === "zive" && e.user_id) {
+  for (const e of evRows) if (e.event_name === "app_heartbeat" && e.user_id) {
     const v = s(e.properties?.v); if (v) vUcet.set(v, e.user_id);
     if (!zarizeniUctu.has(e.user_id)) { const z = s(e.properties?.zarizeni); if (z === "mobil" || z === "pocitac") zarizeniUctu.set(e.user_id, z); }
   }
@@ -147,7 +148,7 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   const uctyById = new Map(ucty.map((u) => [u.id, u]));
 
   // ── Návštěvníci (denní otisk v) se zdrojem a zařízením ──
-  const navstevy = ev.filter((e) => e.event_name === "navsteva");
+  const navstevy = ev.filter((e) => e.event_name === "page_viewed");
   const zdrojV = new Map<string, string>(), zarV = new Map<string, Zarizeni>();
   for (const e of navstevy) {
     const v = s(e.properties?.v); if (!v) continue;
@@ -164,7 +165,7 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   const pridej = (m: Map<string, Set<string>>, u: string, d: string) => { const x = m.get(u) ?? new Set<string>(); x.add(d); m.set(u, x); };
   const ses = sesRows.filter((r) => !testovaci.has(r.user_id));
   for (const r of ses) { pridej(aktivniDny, r.user_id, r.date); pridej(treninkDny, r.user_id, r.date); }
-  for (const e of ev) if (e.event_name === "zive" && e.user_id) pridej(aktivniDny, e.user_id, denPraha(e.created_at));
+  for (const e of ev) if (e.event_name === "app_heartbeat" && e.user_id) pridej(aktivniDny, e.user_id, denPraha(e.created_at));
   const denVCur = (d: string) => vCur(pulnocPraha(d) + 12 * 3600_000) || d === dnes;
   const denVPrev = (d: string) => { const t = pulnocPraha(d) + 12 * 3600_000; return f.dni === 1 ? d === posunDen(dnes, -1) : vPrev(t); };
 
@@ -182,10 +183,10 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   const utrataMap = new Map<string, Utrata>(); // poslední zápis pro den+zdroj vyhrává
   const poznamky: { den: string; text: string }[] = [];
   for (const e of evRows) {
-    if (e.event_name === "admin_utrata") {
+    if (e.event_name === "ad_spend_saved") {
       const den = s(e.properties?.den), zdroj = s(e.properties?.zdroj);
       if (den && zdroj) utrataMap.set(`${den}|${zdroj}`, { den, zdroj, castka: n(e.properties?.castka), kliky: n(e.properties?.kliky) });
-    } else if (e.event_name === "admin_poznamka") {
+    } else if (e.event_name === "chart_note_added") {
       const den = s(e.properties?.den), text = s(e.properties?.text);
       if (den && text) poznamky.push({ den, text });
     }
@@ -242,9 +243,9 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   const kamp = (z: string) => kampMap.get(z) ?? kampMap.set(z, { zdroj: z, utrata: 0, kliky: 0, navstevnici: 0, odeslali: 0, ucty: 0, potvrdili: 0, trenovali: 0, jadro: 0, platici: 0, prijem: 0, klikRegistrace: 0 }).get(z)!;
   const vCurSet = new Set(navCurEv.map((e) => s(e.properties?.v)).filter(Boolean) as string[]);
   for (const v of vCurSet) if (!f.zarizeni || zarV.get(v) === f.zarizeni) kamp(zdrojV.get(v) ?? "přímo").navstevnici++;
-  const klikRegV = new Set(ev.filter((e) => vCur(cas(e)) && e.event_name === "klik" && /^\/(registrace|vitej)/.test(s(e.properties?.cil) ?? "")).map((e) => s(e.properties?.v)).filter(Boolean) as string[]);
+  const klikRegV = new Set(ev.filter((e) => vCur(cas(e)) && e.event_name === "element_clicked" && /^\/(registrace|vitej)/.test(s(e.properties?.cil) ?? "")).map((e) => s(e.properties?.v)).filter(Boolean) as string[]);
   for (const v of klikRegV) if (!f.zarizeni || zarV.get(v) === f.zarizeni) kamp(zdrojV.get(v) ?? "přímo").klikRegistrace++;
-  for (const e of ev) if (vCur(cas(e)) && (e.event_name === "registrace_odeslana" || e.event_name === "registrace_google")) {
+  for (const e of ev) if (vCur(cas(e)) && (e.event_name === "signup_submitted" || e.event_name === "signup_google_started")) {
     const v = s(e.properties?.v); if (f.zarizeni && v && zarV.get(v) !== f.zarizeni) continue;
     kamp(v ? zdrojV.get(v) ?? zdrojUdalosti(e.properties) : zdrojUdalosti(e.properties)).odeslali++;
   }
@@ -294,29 +295,29 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
     return out;
   };
   const segU = (arr: Ucet[]): Seg => { const out: Seg = { mobil: 0, pocitac: 0, nezname: 0 }; for (const u of arr) out[u.zarizeni ?? "nezname"]++; return out; };
-  const diagUcty = new Set(ev.filter((e) => e.event_name === "diagnostika_dokoncena" && e.user_id).map((e) => e.user_id!));
+  const diagUcty = new Set(ev.filter((e) => e.event_name === "diagnostic_completed" && e.user_id).map((e) => e.user_id!));
   const zaplatiliCur = subs.filter((p) => vCur(p.vytvoreno));
   const segZapl: Seg = { mobil: 0, pocitac: 0, nezname: 0 };
   for (const p of zaplatiliCur) { const u = p.userId ? uctyById.get(p.userId) : undefined; if (u && !filtrIds.has(u.id)) continue; segZapl[u?.zarizeni ?? "nezname"]++; }
   const trychtyr = [
-    { krok: "Návštěvníci", ...segV((e) => e.event_name === "navsteva") },
-    { krok: "Otevřeli úvodní stránku", ...segV((e) => e.event_name === "navsteva" && (s(e.properties?.cesta) === "/" || s(e.properties?.cesta) === "/matemax")) },
-    { krok: "Klikli na Začít / registraci", ...segV((e) => e.event_name === "klik" && /^\/(registrace|vitej)/.test(s(e.properties?.cil) ?? "")) },
-    { krok: "Otevřeli registraci", ...segV((e) => e.event_name === "navsteva" && (s(e.properties?.cesta) ?? "").startsWith("/registrace")) },
-    { krok: "Odeslali registraci", ...segE((e) => e.event_name === "registrace_odeslana" || e.event_name === "registrace_google") },
+    { krok: "Návštěvníci", ...segV((e) => e.event_name === "page_viewed") },
+    { krok: "Otevřeli úvodní stránku", ...segV((e) => e.event_name === "page_viewed" && (s(e.properties?.cesta) === "/" || s(e.properties?.cesta) === "/matemax")) },
+    { krok: "Klikli na Začít / registraci", ...segV((e) => e.event_name === "element_clicked" && /^\/(registrace|vitej)/.test(s(e.properties?.cil) ?? "")) },
+    { krok: "Otevřeli registraci", ...segV((e) => e.event_name === "page_viewed" && (s(e.properties?.cesta) ?? "").startsWith("/registrace")) },
+    { krok: "Odeslali registraci", ...segE((e) => e.event_name === "signup_submitted" || e.event_name === "signup_google_started") },
     { krok: "Nové účty", ...segU(uctyCur) },
     { krok: "Potvrdili e-mail", ...segU(uctyCur.filter((u) => u.potvrzeno)) },
     { krok: "Dokončili diagnostiku", ...segU(uctyCur.filter((u) => diagUcty.has(u.id))) },
     { krok: "Dokončili trénink", ...segU(uctyCur.filter((u) => treninkDny.get(u.id)?.size)) },
-    { krok: "Otevřeli Premium", ...segV((e) => e.event_name === "premium_zobrazeno") },
+    { krok: "Otevřeli Premium", ...segV((e) => e.event_name === "premium_viewed") },
     { krok: "Zaplatili", ...segZapl },
   ];
 
   // ═════════ 4. AKTIVACE (účty z období, prvních 24 h) ═════════
   const prvniTrenink = new Map<string, number>();
-  for (const e of ev) if (e.event_name === "session_completed" && e.user_id && !prvniTrenink.has(e.user_id)) prvniTrenink.set(e.user_id, cas(e));
+  for (const e of ev) if (e.event_name === "training_completed" && e.user_id && !prvniTrenink.has(e.user_id)) prvniTrenink.set(e.user_id, cas(e));
   const prvniDiag = new Map<string, number>();
-  for (const e of ev) if (e.event_name === "diagnostika_dokoncena" && e.user_id && !prvniDiag.has(e.user_id)) prvniDiag.set(e.user_id, cas(e));
+  for (const e of ev) if (e.event_name === "diagnostic_completed" && e.user_id && !prvniDiag.has(e.user_id)) prvniDiag.set(e.user_id, cas(e));
   const truhla = new Set((sbirkaRows as { user_id: string; state: { otevreno?: number } | null }[]).filter((r) => (r.state?.otevreno ?? 0) > 0).map((r) => r.user_id));
   const do24 = (u: Ucet, t: number | undefined | null) => t != null && t - u.vytvoreno <= DEN && t >= u.vytvoreno - 60_000;
   const trenoval24 = (u: Ucet) => do24(u, prvniTrenink.get(u.id)) || (!prvniTrenink.has(u.id) && [...(treninkDny.get(u.id) ?? [])].some((d) => dnyMezi(u.den, d) <= 1 && dnyMezi(u.den, d) >= 0));
@@ -359,23 +360,23 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
     const akt2 = trenovaliV(pred);
     const r = ses.filter((x) => akt2.has(x.user_id) && pred(x.date));
     const prikladu = r.reduce((a, x) => a + (x.total ?? 0), 0), spravne = r.reduce((a, x) => a + (x.correct ?? 0), 0);
-    const min = ev.filter((e) => e.event_name === "zive" && e.user_id && akt2.has(e.user_id) && vObd(cas(e))).length;
+    const min = ev.filter((e) => e.event_name === "app_heartbeat" && e.user_id && akt2.has(e.user_id) && vObd(cas(e))).length;
     return { aktivnich: akt2.size, minutNaZaka: akt2.size ? Math.round(min / akt2.size / tydnu) : null, prikladuNaZaka: akt2.size ? Math.round(prikladu / akt2.size / tydnu) : null, uspesnost: prikladu ? Math.round((spravne / prikladu) * 100) : null };
   };
   const zapCur = zapoj(denVCur, vCur), zapPrev = zapoj(denVPrev, vPrev);
   const aktCurSet = trenovaliV(denVCur);
   const FUNKCE: [string, string][] = [["mise", "Denní mise"], ["truhla", "Truhly"], ["satnik", "Šatník Hexíka"], ["obchudek", "Obchůdek"], ["boss", "Boss týdne"], ["pokojicek", "Pokojíček"], ["sady", "Sady"], ["kalendar", "Adventní kalendář"]];
   const funkceUziti = FUNKCE.map(([k, nazev]) => {
-    const uz = new Set(ev.filter((e) => e.event_name === "funkce" && s(e.properties?.f) === k && e.user_id && aktCurSet.has(e.user_id) && vCur(cas(e))).map((e) => e.user_id!));
+    const uz = new Set(ev.filter((e) => e.event_name === "feature_used" && s(e.properties?.f) === k && e.user_id && aktCurSet.has(e.user_id) && vCur(cas(e))).map((e) => e.user_id!));
     return { k, nazev, zaku: uz.size, podil: aktCurSet.size ? Math.round((uz.size / aktCurSet.size) * 100) : 0 };
   });
-  const funkceMeriOd = ev.find((e) => e.event_name === "funkce")?.created_at ?? null;
+  const funkceMeriOd = ev.find((e) => e.event_name === "feature_used")?.created_at ?? null;
 
   // ═════════ 7. PENÍZE ═════════
   const penize = {
-    otevreliPremium: unikV(ev.filter((e) => vCur(cas(e)) && e.event_name === "premium_zobrazeno")),
-    zacaliPlatit: unikV(ev.filter((e) => vCur(cas(e)) && e.event_name === "platba_start")),
-    zavreliPlatbu: unikV(ev.filter((e) => vCur(cas(e)) && e.event_name === "platba_zrusena")),
+    otevreliPremium: unikV(ev.filter((e) => vCur(cas(e)) && e.event_name === "premium_viewed")),
+    zacaliPlatit: unikV(ev.filter((e) => vCur(cas(e)) && e.event_name === "checkout_started")),
+    zavreliPlatbu: unikV(ev.filter((e) => vCur(cas(e)) && e.event_name === "checkout_canceled")),
     zaplatili: predplatne ? zaplatiliCur.length : null,
     zrusili: predplatne ? subs.filter((p) => p.zruseno !== null && vCur(p.zruseno)).length : null,
     platici: prehled.platici.ted, prijemMesicne: prehled.prijemMesicne.ted,
@@ -385,7 +386,7 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   const obsahOd = Math.min(curOd, ted - 30 * DEN);
   const ulohy = new Map<string, { ok: number; spatne: number; preskok: number }>();
   for (const e of ev) {
-    if (e.event_name !== "session_completed" || cas(e) < obsahOd || (e.user_id && !filtrIds.has(e.user_id) && uctyById.has(e.user_id))) continue;
+    if (e.event_name !== "training_completed" || cas(e) < obsahOd || (e.user_id && !filtrIds.has(e.user_id) && uctyById.has(e.user_id))) continue;
     const u = e.properties?.u;
     if (!Array.isArray(u)) continue;
     for (const x of u) {
@@ -403,7 +404,7 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   };
   const vsechnyUlohy = [...ulohy].map(radek);
   const obsah = {
-    meriOd: ev.find((e) => e.event_name === "session_completed" && Array.isArray(e.properties?.u))?.created_at ?? null,
+    meriOd: ev.find((e) => e.event_name === "training_completed" && Array.isArray(e.properties?.u))?.created_at ?? null,
     odpovedi: vsechnyUlohy.reduce((a, x) => a + x.pokusu, 0),
     tezke: vsechnyUlohy.filter((x) => x.pokusu >= 5 && (x.chybovost ?? 0) >= 60).sort((a, b) => (b.chybovost ?? 0) - (a.chybovost ?? 0)).slice(0, 12),
     preskakovane: vsechnyUlohy.filter((x) => x.preskoceno >= 3).sort((a, b) => b.preskoceno - a.preskoceno).slice(0, 8),
@@ -416,7 +417,7 @@ export async function spocitejAnalytiku(f: FiltryAnalytiky) {
   const nepotvrdili = starsi24.filter((u) => !u.potvrzeno);
   if (nepotvrdili.length >= 2 && nepotvrdili.length / starsi24.length >= 0.25) upozorneni.push({ uroven: "spatne", nadpis: `Potvrzení e-mailu: ${nepotvrdili.length} z ${starsi24.length} účtů ho do 24 h nepotvrdilo`, text: "Bez potvrzení se žák nepřihlásí a nezačne trénovat. E-mail často padá do Promo / Hromadné." });
   const chybyForm = new Map<string, number>();
-  for (const e of ev) if (vCur(cas(e)) && e.event_name === "formular_chyba") { const k = s(e.properties?.cil) ?? "?"; chybyForm.set(k, (chybyForm.get(k) ?? 0) + 1); }
+  for (const e of ev) if (vCur(cas(e)) && e.event_name === "form_error_shown") { const k = s(e.properties?.cil) ?? "?"; chybyForm.set(k, (chybyForm.get(k) ?? 0) + 1); }
   const nejChyba = [...chybyForm].sort((a, b) => b[1] - a[1])[0];
   if (nejChyba && nejChyba[1] >= 3) upozorneni.push({ uroven: "pozor", nadpis: `Formuláře: ${nejChyba[1]}× chyba „${nejChyba[0]}“`, text: "Lidé narážejí na stejnou chybu. Projít text chyby a kdy se ukazuje." });
   for (const x of obsah.tezke.filter((x) => (x.chybovost ?? 0) >= 70).slice(0, 2)) upozorneni.push({ uroven: "pozor", nadpis: `Úloha ${x.id}: ${x.chybovost} % chyb (${x.pokusu} pokusů)`, text: "Podezřele těžká, nebo špatný klíč. Projít zadání a odpověď." });

@@ -12,6 +12,7 @@ import { trackEvent } from "@/lib/analytics";
 import { localDateStr } from "@/lib/date";
 import { useTrida } from "@/lib/trida";
 import CvicnyTest5 from "@/components/CvicnyTest5";
+import { nastavRezim, ukonciRezim } from "@/lib/odpovedi-log";
 
 const TEST_SIZE = 15;
 const TEST_SECONDS = 25 * 60; // 25 minutes
@@ -55,6 +56,8 @@ function getRating(pct: number): { emoji: string; label: string; color: string }
 }
 
 function CermatTestPage() {
+  // Log odpovědí: tahle stránka je režim „test“
+  useEffect(() => { nastavRezim("test"); return () => ukonciRezim(); }, []);
   const [phase, setPhase] = useState<"intro" | "test" | "results">("intro");
   const [testExamples] = useState(() => pickRandom(TEST_SIZE));
   const [userAnswers, setUserAnswers] = useState<string[]>(Array(TEST_SIZE).fill(""));
@@ -83,7 +86,7 @@ function CermatTestPage() {
     if (supabase) {
       supabase.auth.getSession().then(({ data }) => {
         const uid = data.session?.user.id ?? null;
-        trackEvent(uid, "cermat_test_dokoncen", {
+        trackEvent(uid, "mock_test_completed", {
           score: result.score, total: result.total, pct: result.pct, timed_out: false,
         }).catch(() => {});
       });

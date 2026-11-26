@@ -10,6 +10,7 @@ import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "@/components/VideoLessonHint";
 import KrokyReseni from "@/components/KrokyReseni";
 import { temaStyl } from "@/lib/barvy-temat";
+import { useZaznamOdpovedi, oznacOdeslani } from "@/lib/odpovedi-log";
 
 /**
  * Výběr z možností (A–E) — formát těžších CERMAT úloh. Žák klikne na jednu
@@ -42,7 +43,9 @@ function Text({ ex, text }: { ex: DBExample; text: string }) {
   return ex.latex ? <MathDisplay tex={text} /> : <MathText text={text} />;
 }
 
-export default function MoznostiCard({ example, cardNumber, total, onResult, onSkip, videoHint = false }: Props) {
+export default function MoznostiCard({ example, cardNumber, total, onResult: onResultRodic, onSkip: onSkipRodic, videoHint = false }: Props) {
+  // Log odpovědí (čas, odpověď, přeskočení): obalí onResult a onSkip, rodič se volá stejně
+  const { onResult, onSkip } = useZaznamOdpovedi(example, onResultRodic, onSkipRodic);
   const [picked, setPicked] = useState<number | null>(null);
 
   useEffect(() => { setPicked(null); }, [example.id]);
@@ -165,7 +168,7 @@ export default function MoznostiCard({ example, cardNumber, total, onResult, onS
           )}
           {videoHint && !spravneVybrano && <VideoLessonHint tema={example.tema} podtema={example.podtema} />}
           <button
-            onClick={() => onResult(spravneVybrano, moznosti[picked])}
+            onClick={() => { oznacOdeslani(spravneVybrano, String.fromCharCode(65 + picked)); onResult(spravneVybrano, moznosti[picked]); }}
             className="rounded-xl px-4 py-3 text-sm font-bold text-white"
             style={{ background: "#2E6DA4" }}
           >

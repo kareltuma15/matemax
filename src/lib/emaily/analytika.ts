@@ -2,6 +2,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { pragueDateStr } from "@/lib/date";
 import { stripe } from "@/lib/stripe";
 import { NAZVY, PRIPOMINKY, type EmailZaka } from "./katalog";
+import { jeVyloucenyUcet } from "../admin-data";
 
 /**
  * Analytika e-mailů pro Admin → E-maily (mockup schválený Karlem 25. 11. 2026, docs/emaily-2026-11/analytika-emailu-mockup.html).
@@ -73,22 +74,22 @@ export async function spocitejAnalytikuEmailu(dni: 7 | 30 | 90): Promise<Analyti
   for (let page = 1; page <= 50; page++) {
     const { data, error } = await supabaseAdmin.auth.admin.listUsers({ page, perPage: 1000 });
     if (error) throw error;
-    for (const u of data.users) if (u.app_metadata?.testovaci) testovaci.add(u.id);
+    for (const u of data.users) if (jeVyloucenyUcet(u)) testovaci.add(u.id);
     if (data.users.length < 1000) break;
   }
 
   const ev = (await vsechny<Ev>((a, b) => supabaseAdmin!.from("analytics_events")
     .select("created_at, user_id, event_name, properties")
-    .in("event_name", ["email_odeslan", "email_odhlaseni", "email_dorucitelnost"])
+    .in("event_name", ["email_sent", "email_unsubscribed", "email_status_received"])
     .gte("created_at", odPred).order("created_at").range(a, b)))
     .filter((e) => !(e.user_id && testovaci.has(e.user_id)));
   const navstevy = await vsechny<Ev>((a, b) => supabaseAdmin!.from("analytics_events")
     .select("created_at, user_id, event_name, properties")
-    .eq("event_name", "navsteva").eq("properties->>utm_source", "email")
+    .eq("event_name", "page_viewed").eq("properties->>utm_source", "email")
     .gte("created_at", odPred).order("created_at").range(a, b));
 
   const vObdobi = (e: { created_at: string }) => e.created_at >= od;
-  const odeslane = ev.filter((e) => e.event_name === "email_odeslan");
+  const odeslane = ev.filter((e) => e.event_name === "email_sent");
   const ted_ = odeslane.filter(vObdobi), pred = odeslane.filter((e) => !vObdobi(e));
 
   // Prokliky: unikátní návštěvník (denní otisk v) za e-mail a den
@@ -129,7 +130,7 @@ export async function spocitejAnalytikuEmailu(dni: 7 | 30 | 90): Promise<Analyti
   const jePripominka = (e: Ev) => PRIPOMINKY.includes(s(e.properties?.e) as EmailZaka);
 
   // Cíle u e-mailů rodičům
-  const odhlaseni = ev.filter((e) => e.event_name === "email_odhlaseni");
+  const odhlaseni = ev.filter((e) => e.event_name === "email_unsubscribed");
   const odhlTed = odhlaseni.filter(vObdobi);
   const { data: potvrzene } = await supabaseAdmin.from("parent_child_link").select("token, verified, verified_at").like("token", "rodic:%");
   const potvrzenoVObdobi = ((potvrzene ?? []) as { verified: boolean; verified_at: string | null }[]).filter((p) => p.verified && p.verified_at && p.verified_at >= od).length;
@@ -190,7 +191,7 @@ export async function spocitejAnalytikuEmailu(dni: 7 | 30 | 90): Promise<Analyti
 
   const pripominky = ted_.filter(jePripominka);
   const proklikyPripominek = [...proklikyTed.entries()].filter(([k]) => PRIPOMINKY.includes(k as EmailZaka)).reduce((a, [, v]) => a + v.size, 0);
-  const dor = ev.filter((e) => e.event_name === "email_dorucitelnost" && vObdobi(e));
+  const dor = ev.filter((e) => e.event_name === "email_status_received" && vObdobi(e));
   const typ = (t: string) => dor.filter((e) => s(e.properties?.typ) === t).length;
   const prijemcu = new Set(ted_.map((e) => e.user_id ?? s(e.properties?.komu) ?? e.created_at)).size;
 

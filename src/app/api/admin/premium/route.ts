@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { zapisAudit } from "@/lib/admin-audit";
 
 /**
  * Ruční udělení / odebrání Premium z admin přehledu (jen pro adminy).
@@ -53,7 +54,8 @@ export async function POST(req: Request) {
       .update({ is_premium: false, trial_expires_at: null })
       .eq("user_id", userId);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    console.log(`[admin] premium REVOKE pro ${userId} (${target.user.email}) od ${auth.email}`);
+    console.log(`[admin] premium REVOKE pro ${userId} od ${auth.email}`);
+    await zapisAudit({ adminId: auth.userId, akce: "premium_odebrano", cilUserId: userId });
     return NextResponse.json({ ok: true, plan: "free", trialUntil: null });
   }
 
@@ -78,6 +80,7 @@ export async function POST(req: Request) {
     );
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  console.log(`[admin] premium GRANT pro ${userId} (${target.user.email}) do ${expiresAt ?? "bez omezení"} od ${auth.email}`);
+  console.log(`[admin] premium GRANT pro ${userId} do ${expiresAt ?? "bez omezení"} od ${auth.email}`);
+  await zapisAudit({ adminId: auth.userId, akce: "premium_udeleno", cilUserId: userId, detail: { do: expiresAt } });
   return NextResponse.json({ ok: true, plan: expiresAt ? "trial" : "paid", trialUntil: expiresAt });
 }

@@ -16,7 +16,7 @@ export default function VideoLessonHint({ tema, podtema, maly }: { tema: string;
   function zmerit() {
     if (!supabase) return;
     supabase.auth.getSession().then(({ data }) => {
-      trackEvent(data.session?.user.id ?? null, "videolekce_klik", { lekce: lekce.id, tema, podtema: podtema ?? null, presna }).catch(() => {});
+      trackEvent(data.session?.user.id ?? null, "video_lesson_opened", { lekce: lekce.id, tema, podtema: podtema ?? null, presna }).catch(() => {});
     });
   }
 

@@ -137,7 +137,7 @@ async function handler() {
       if (sendErr) throw sendErr;
       sent++;
       // Záznam pro analytiku e-mailů (dítě kvůli návratu k tréninku)
-      await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_odeslan", properties: { e: "report", dite: child.id } });
+      await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_sent", properties: { e: "report", dite: child.id } });
     } catch (err) {
       console.error("[weekly-parent-report] chyba u propojení", link.child_user_id, err);
       failed++;

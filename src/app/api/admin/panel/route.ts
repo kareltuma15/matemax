@@ -3,6 +3,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { pragueDateStr } from "@/lib/date";
 import { KRONIKA, dnyMezi } from "@/lib/obsah-kronika";
+import { nactiVse, vsechnyUcty, vylouceneUcty } from "@/lib/admin-data";
 
 /**
  * Řídicí panel adminu (Karel 19. 11. 2026): co dnes potřebuje pozornost, byznys a učení jedním pohledem.
@@ -33,19 +34,19 @@ export async function GET(req: NextRequest) {
   const dnes = pragueDateStr();
 
   const [{ data: authData }, { data: premRows }, { data: diagRows }, { data: procRows }, { data: ziveRows }, { data: fbRows }, { data: propRows }, { data: evRows }, sbirkaRes] = await Promise.all([
-    supabaseAdmin.auth.admin.listUsers({ perPage: 1000 }),
+    vsechnyUcty().then((users) => ({ data: { users } })),
     supabaseAdmin.from("user_premium").select("user_id, is_premium, trial_expires_at, stripe_subscription_id, trial_granted_by"),
     supabaseAdmin.from("diagnostic_results").select("user_id"),
-    supabaseAdmin.from("procvicovani").select("user_id, datum, temata").gte("datum", pragueDateStr(new Date(ted - 30 * DEN))).limit(50000),
-    supabaseAdmin.from("analytics_events").select("user_id, created_at").eq("event_name", "zive").gte("created_at", new Date(ted - 21 * DEN).toISOString()).not("user_id", "is", null).limit(50000),
+    nactiVse<{ user_id: string; datum: string; temata: unknown }>((a, b) => supabaseAdmin!.from("procvicovani").select("user_id, datum, temata").gte("datum", pragueDateStr(new Date(ted - 30 * DEN))).order("kdy").range(a, b)).then((data) => ({ data })),
+    nactiVse<{ user_id: string; created_at: string }>((a, b) => supabaseAdmin!.from("analytics_events").select("user_id, created_at").eq("event_name", "app_heartbeat").gte("created_at", new Date(ted - 21 * DEN).toISOString()).not("user_id", "is", null).order("created_at").range(a, b)).then((data) => ({ data })),
     supabaseAdmin.from("user_feedback").select("user_id, rating, liked, suggestion, created_at").gte("created_at", new Date(ted - 7 * DEN).toISOString()).order("created_at", { ascending: false }),
     supabaseAdmin.from("vysledky_propojeni").select("user_id, vytvoreno_at").is("zruseno_at", null).gte("vytvoreno_at", new Date(ted - 7 * DEN).toISOString()),
-    supabaseAdmin.from("analytics_events").select("event_name, created_at, properties").in("event_name", ["formular_chyba", "premium_zobrazeno", "platba_start"]).gte("created_at", new Date(ted - 30 * DEN).toISOString()).limit(20000),
+    nactiVse<{ event_name: string; created_at: string; properties: unknown }>((a, b) => supabaseAdmin!.from("analytics_events").select("event_name, created_at, properties").in("event_name", ["form_error_shown", "premium_viewed", "checkout_started"]).gte("created_at", new Date(ted - 30 * DEN).toISOString()).order("created_at").range(a, b)).then((data) => ({ data })),
     supabaseAdmin.from("user_sbirka").select("user_id, state").limit(5000),
   ]);
 
   const vsichni = authData?.users ?? [];
-  const testovaci = new Set(vsichni.filter((u) => (u.app_metadata as Record<string, unknown> | undefined)?.testovaci).map((u) => u.id));
+  const testovaci = vylouceneUcty(vsichni);
   const users = vsichni.filter((u) => !testovaci.has(u.id));
   const ids = new Set(users.map((u) => u.id));
   const jmeno = (id: string) => {
@@ -91,7 +92,7 @@ export async function GET(req: NextRequest) {
 
   // ── Události ──
   const ev = evRows ?? [];
-  const chyby24 = ev.filter((e) => e.event_name === "formular_chyba" && ted - Date.parse(e.created_at as string) <= DEN);
+  const chyby24 = ev.filter((e) => e.event_name === "form_error_shown" && ted - Date.parse(e.created_at as string) <= DEN);
   const chybyPodle = [...chyby24.reduce((m, e) => { const k = ((e.properties as Record<string, string> | null)?.cil) ?? "?"; return m.set(k, (m.get(k) ?? 0) + 1); }, new Map<string, number>())];
   const unikV = (n: string) => new Set(ev.filter((e) => e.event_name === n).map((e) => (e.properties as Record<string, string> | null)?.v)).size;
 
@@ -132,7 +133,7 @@ export async function GET(req: NextRequest) {
   const panel: Panel = {
     dnes: { noveUcty, noveTyden, noveMinulyTyden, trenovalo, zaku: users.length, online, premium: { plati, rucne, zkousi }, zpetnaVazba: fb.length },
     pozornost,
-    byznys: { plati, rucne, zkousi, konciDo7: konci.length, premiumZobrazeno: unikV("premium_zobrazeno"), platbaStart: unikV("platba_start"), podilPremium: users.length ? Math.round(((plati + rucne + zkousi) / users.length) * 100) : 0 },
+    byznys: { plati, rucne, zkousi, konciDo7: konci.length, premiumZobrazeno: unikV("premium_viewed"), platbaStart: unikV("checkout_started"), podilPremium: users.length ? Math.round(((plati + rucne + zkousi) / users.length) * 100) : 0 },
     uceni: { odhad9: prumer("9"), odhad5: prumer("5"), prikladuTyden, temata: [...temata].map(([k, x]) => ({ k, ...x })).filter((x) => x.n >= 10).sort((a, b) => a.ok / a.n - b.ok / b.n) },
   };
   return NextResponse.json(panel);

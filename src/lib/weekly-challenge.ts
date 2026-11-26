@@ -1,6 +1,5 @@
 export interface LeaderboardEntry {
   rank: number;
-  user_id: string;
   nickname: string;
   avatar_emoji: string;
   score: number;

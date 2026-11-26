@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { zapisAudit } from "@/lib/admin-audit";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -39,5 +40,6 @@ export async function POST(req: NextRequest) {
   }
 
   console.log(`[admin] reset-diagnostics for ${userId} by ${user.email}, onboarding reset: ${!onboardingResult.error}`);
+  await zapisAudit({ adminId: user.id, akce: "diagnostika_resetovana", cilUserId: userId });
   return NextResponse.json({ ok: true });
 }

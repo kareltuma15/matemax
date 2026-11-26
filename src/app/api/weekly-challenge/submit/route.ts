@@ -3,7 +3,13 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { getWeekKey } from "@/lib/weekly-challenge";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+import { prezdivkaUctu } from "@/lib/prezdivka";
 
+/**
+ * Výsledek týdenní výzvy do žebříčku. Do žebříčku jde jen přezdívka (nikdy jméno ani e-mail, SY-13),
+ * zapisuje server (service role), protože prohlížeč už do tabulky přímo psát nesmí.
+ */
 export async function POST(req: NextRequest) {
   if (!rateLimit(`weekly-submit:${clientIp(req)}`, 20, 60_000)) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
@@ -44,35 +50,27 @@ export async function POST(req: NextRequest) {
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  if (!supabaseAdmin) return NextResponse.json({ error: "Server není nastavený" }, { status: 503 });
 
-  // Prefer auth metadata (set via supabase.auth.updateUser in profil page)
-  const meta = user.user_metadata as Record<string, string> | undefined;
-  const metaName = (
-    meta?.full_name?.trim() ||
-    meta?.name?.trim() ||
-    `${meta?.first_name ?? ""} ${meta?.last_name ?? ""}`.trim()
-  ).slice(0, 30);
-  const metaEmoji = meta?.avatar_emoji ?? "";
-
-  const nickname = metaName || `Žák ${user.id.slice(-4).toUpperCase()}`;
-  const avatarEmoji = metaEmoji || "🧑‍💻";
+  const meta = user.user_metadata as Record<string, unknown> | undefined;
+  const nickname = prezdivkaUctu(user.id, meta);
+  const avatarEmoji = (typeof meta?.avatar_emoji === "string" && meta.avatar_emoji) || "🧑‍💻";
 
   const weekKey = getWeekKey();
 
-  // Check existing entry
-  const { data: existing } = await supabase
+  const { data: existing } = await supabaseAdmin
     .from("weekly_leaderboard")
     .select("score, time_seconds")
     .eq("user_id", user.id)
     .eq("week_key", weekKey)
-    .single();
+    .maybeSingle();
 
   const isBetter = !existing ||
     score > existing.score ||
     (score === existing.score && time_seconds < existing.time_seconds);
 
   if (isBetter) {
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("weekly_leaderboard")
       .upsert(
         {

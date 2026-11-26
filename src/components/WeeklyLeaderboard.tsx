@@ -71,7 +71,7 @@ export default function WeeklyLeaderboard({ refreshTrigger = 0, compact = false 
       )}
 
       {entries.map((e) => (
-        <EntryRow key={e.user_id} entry={e} />
+        <EntryRow key={e.rank} entry={e} />
       ))}
 
       {/* User's own entry if outside top 10 */}

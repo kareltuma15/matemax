@@ -16,6 +16,7 @@ import WeeklyLeaderboard from "@/components/WeeklyLeaderboard";
 import ShareButton from "@/components/ShareButton";
 import { localDateStr } from "@/lib/date";
 import { jenPro9 } from "@/components/JenPro9";
+import { nastavRezim, ukonciRezim, zacniUlohu, oznacOdeslani, dokonciUlohu } from "@/lib/odpovedi-log";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -227,6 +228,8 @@ function VyzvaPage() {
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [phase, timeLeft, endChallenge]);
 
+  useEffect(() => () => ukonciRezim(), []);
+
   // ─── START ────────────────────────────────────────────────────────────────
 
   const handleStart = useCallback(() => {
@@ -243,6 +246,8 @@ function VyzvaPage() {
     setExitConfirm(false);
     setTimeLeft(challenge.time_limit_seconds ?? null);
     startTimeRef.current = Date.now();
+    nastavRezim("vyzva");
+    if (exList[0]) zacniUlohu(exList[0].id);
     setPhase("running");
   }, [challenge]);
 
@@ -254,6 +259,8 @@ function VyzvaPage() {
     if (!ex) return;
 
     const ok = checkAnswer(answer, ex.odpoved);
+    oznacOdeslani(ok, answer);
+    dokonciUlohu(ex, { spravne: ok, odpoved: answer });
     if (ok) {
       correctRef.current += 1;
       setFeedback("correct");
@@ -275,6 +282,7 @@ function VyzvaPage() {
         endChallenge(correctRef.current);
       } else {
         setCurrentIdx(next);
+        zacniUlohu(examplesRef.current[next].id);
       }
     }, 1500);
   }, [answer, currentIdx, endChallenge]);

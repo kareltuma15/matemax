@@ -144,13 +144,13 @@ test("úvodní stránka: měření pošle odchod s časem, scrollem a poslední 
   await page.waitForTimeout(400);
   await page.locator('a[href^="/registrace"]:visible').first().click();
   await page.waitForURL(/registrace/);
-  await expect.poll(() => udalosti.find((u) => u.e === "odchod")).toBeTruthy();
-  const odchod = udalosti.find((u) => u.e === "odchod")!;
+  await expect.poll(() => udalosti.find((u) => u.e === "page_left")).toBeTruthy();
+  const odchod = udalosti.find((u) => u.e === "page_left")!;
   expect(odchod.p_).toBe("/");
   expect(Number(odchod.h)).toBeGreaterThan(0);
   expect(Number(odchod.k)).toBeGreaterThanOrEqual(1);
   expect(typeof odchod.sk).toBe("string");
-  expect(udalosti.some((u) => u.e === "klik")).toBe(true);
+  expect(udalosti.some((u) => u.e === "element_clicked")).toBe(true);
 });
 
 // Reklama na Facebooku (22. 11. 2026): klik z Facebooku (fbclid) nebo utm se drží celou návštěvu,
@@ -165,16 +165,16 @@ test("kampaň: zdroj z první stránky (fbclid / utm) se posílá i z dalších 
   await expect(page.locator('[data-sekce="uvod"]')).toBeVisible();
   await page.locator('a[href^="/registrace"]:visible').first().click();
   await page.waitForURL(/registrace/);
-  await expect.poll(() => udalosti.find((u) => u.e === "navsteva" && u.p === "/registrace")).toBeTruthy();
-  const reg = udalosti.find((u) => u.e === "navsteva" && u.p === "/registrace")!;
+  await expect.poll(() => udalosti.find((u) => u.e === "page_viewed" && u.p === "/registrace")).toBeTruthy();
+  const reg = udalosti.find((u) => u.e === "page_viewed" && u.p === "/registrace")!;
   expect(reg.us).toBe("facebook");
   expect(reg.um).toBe("fbclid");
 
   await page.goto("/?utm_source=facebook&utm_medium=reklama&utm_campaign=herni-system&fbclid=x");
   await expect(page.locator('[data-sekce="uvod"]')).toBeVisible();
   await page.goto("/registrace");
-  await expect.poll(() => udalosti.filter((u) => u.e === "navsteva" && u.p === "/registrace").length).toBeGreaterThan(1);
-  const reg2 = udalosti.filter((u) => u.e === "navsteva" && u.p === "/registrace").pop()!;
+  await expect.poll(() => udalosti.filter((u) => u.e === "page_viewed" && u.p === "/registrace").length).toBeGreaterThan(1);
+  const reg2 = udalosti.filter((u) => u.e === "page_viewed" && u.p === "/registrace").pop()!;
   expect(reg2.uc).toBe("herni-system");
 });
 

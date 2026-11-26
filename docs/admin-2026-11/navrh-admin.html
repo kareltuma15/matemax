@@ -1,0 +1,743 @@
+<title>MateMax Admin 2.1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Rozvržení: úzký čtecí sloupec s kotvami nahoře; drátěné modely v rámu, který se přepíná mobil/desktop přes container queries */
+:root {
+  --bg: #F5F6FA; --plocha: #FFFFFF; --text: #0D1B3E; --tlum: #5A6480; --linka: #E2E5EE;
+  --akcent: #5B55D6; --akcent-slaby: #EEEDFC; --modra: #2E6DA4;
+  --ok: #1F8A4C; --ok-slaby: #E5F5EC; --pozor: #B45309; --pozor-slaby: #FFF3E0; --spatne: #B4232F; --spatne-slaby: #FDECEC;
+  --t5: #0E8A7E; --t9: #5B55D6;
+  --wf-bg: #F7F8FB; --wf-karta: #FFFFFF; --wf-linka: #D9DDE8;
+  --pismo: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1226; --plocha: #131C36; --text: #E8EBF5; --tlum: #A2AAC2; --linka: #263154;
+  --akcent: #9C97FF; --akcent-slaby: #23224A; --modra: #7DB3E6;
+  --ok: #57C987; --ok-slaby: #12301F; --pozor: #F0A64A; --pozor-slaby: #33240F; --spatne: #F07A84; --spatne-slaby: #3A1519;
+  --t5: #4FD1C1; --t9: #9C97FF; --wf-bg: #0F1730; --wf-karta: #18223F; --wf-linka: #2C3860; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0B1226; --plocha: #131C36; --text: #E8EBF5; --tlum: #A2AAC2; --linka: #263154;
+  --akcent: #9C97FF; --akcent-slaby: #23224A; --modra: #7DB3E6;
+  --ok: #57C987; --ok-slaby: #12301F; --pozor: #F0A64A; --pozor-slaby: #33240F; --spatne: #F07A84; --spatne-slaby: #3A1519;
+  --t5: #4FD1C1; --t9: #9C97FF; --wf-bg: #0F1730; --wf-karta: #18223F; --wf-linka: #2C3860; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--text); font-family: var(--pismo); font-size: 15px; line-height: 1.55; margin: 0 }
+.obal { max-width: 920px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 80px; display: flex; flex-direction: column; gap: 44px }
+h1, h2, h3 { text-wrap: balance; line-height: 1.2; margin: 0 }
+h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -0.02em }
+h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.01em }
+h3 { font-size: 17px; font-weight: 700 }
+p { margin: 0 } ul, ol { margin: 0; padding-left: 20px } li + li { margin-top: 4px }
+a { color: var(--modra) }
+.oko { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--akcent) }
+.tlum { color: var(--tlum) }
+.sekce { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 70px }
+.text { max-width: 68ch; display: flex; flex-direction: column; gap: 10px }
+.cislo { font-variant-numeric: tabular-nums }
+code, .kod { font-family: var(--mono); font-size: .86em; background: var(--akcent-slaby); padding: 1px 5px; border-radius: 4px }
+
+/* kotvy */
+.kotvy { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); margin-inline: -4px; padding: 8px 4px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--linka) }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+.kotvy a { flex: none; text-decoration: none; color: var(--text); font-size: 13px; font-weight: 600; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--linka); background: var(--plocha) }
+.kotvy a:hover, .kotvy a:focus-visible { border-color: var(--akcent); outline: none }
+
+/* bloky */
+.blok { background: var(--plocha); border: 1px solid var(--linka); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0 }
+.mrizka { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) }
+.stitek { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap }
+.st-ok { background: var(--ok-slaby); color: var(--ok) } .st-pozor { background: var(--pozor-slaby); color: var(--pozor) } .st-spatne { background: var(--spatne-slaby); color: var(--spatne) } .st-info { background: var(--akcent-slaby); color: var(--akcent) }
+.priciny { display: flex; flex-direction: column; gap: 10px }
+.pricina { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 14px 16px; border-radius: 12px; background: var(--plocha); border: 1px solid var(--linka); border-left: 4px solid var(--pozor) }
+.pricina b.co { font-size: 15.5px }
+.pricina .proc { color: var(--tlum) }
+.pricina .oprava { font-size: 14px }
+.pricina .oprava::before { content: "Oprava: "; font-weight: 700; color: var(--ok) }
+
+/* tabulky → karty na mobilu */
+.tab { width: 100%; border-collapse: collapse; font-size: 14px }
+.tab th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--tlum); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--linka) }
+.tab td { padding: 9px 10px; border-bottom: 1px solid var(--linka); vertical-align: top }
+.tab td.cislo, .tab th.cislo { text-align: right }
+@media (max-width: 640px) {
+  .tab thead { display: none }
+  .tab, .tab tbody, .tab tr, .tab td { display: block; width: 100% }
+  .tab tr { border: 1px solid var(--linka); border-radius: 12px; padding: 8px 12px; margin-bottom: 8px; background: var(--plocha) }
+  .tab td { border: 0; padding: 3px 0; display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 8px; text-align: left !important }
+  .tab td::before { content: attr(data-l); font-size: 12px; color: var(--tlum); font-weight: 700 }
+  .tab td:first-child { font-weight: 700; grid-template-columns: 1fr } .tab td:first-child::before { display: none }
+}
+
+/* strom metrik */
+.strom { display: flex; flex-direction: column; gap: 8px }
+.uzel { display: flex; gap: 10px; align-items: baseline; padding: 10px 12px; border: 1px solid var(--linka); border-radius: 10px; background: var(--plocha) }
+.uzel.hlavni { border: 2px solid var(--akcent); background: var(--akcent-slaby) }
+.uzel .n { font-weight: 800; min-width: 0 }
+.uzel .d { color: var(--tlum); font-size: 13.5px }
+.vetev { margin-left: 18px; padding-left: 14px; border-left: 2px dashed var(--linka); display: flex; flex-direction: column; gap: 8px }
+
+/* fáze */
+.faze { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) }
+.faze .blok h3 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline }
+
+/* úpravy studentské appky */
+.uprava { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--linka) }
+.uprava:last-child { border-bottom: 0 }
+.uprava .c { width: 28px; height: 28px; border-radius: 8px; background: var(--akcent-slaby); color: var(--akcent); font-weight: 800; display: grid; place-items: center; font-size: 13px }
+.uprava .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px }
+
+/* ═════ Drátěné modely ═════ */
+.wf-ovladani { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.wf-tlac { font: inherit; font-size: 13.5px; font-weight: 700; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--linka); background: var(--plocha); color: var(--text); cursor: pointer; min-height: 40px }
+.wf-tlac[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text) }
+.wf-tlac:focus-visible { outline: 2px solid var(--akcent); outline-offset: 2px }
+.wf-oddel { width: 1px; height: 26px; background: var(--linka) }
+.wf-scena { overflow-x: auto; padding: 4px 0 12px }
+.ram { container-type: inline-size; margin: 0 auto; background: var(--wf-bg); border: 1px solid var(--wf-linka); border-radius: 22px; overflow: hidden; box-shadow: 0 10px 30px -18px rgba(13, 27, 62, .45); font-size: 13px; line-height: 1.4; display: flex; flex-direction: column }
+.ram.m { width: 390px; max-width: 100%; min-height: 720px }
+.ram.d { width: 900px; min-height: 560px; border-radius: 12px }
+.ukazka { font-size: 11px; text-align: center; color: var(--tlum); padding: 4px; border-bottom: 1px dashed var(--wf-linka) }
+.app { flex: 1; display: grid; grid-template-columns: 1fr; min-height: 0 }
+@container (min-width: 700px) { .app { grid-template-columns: 188px minmax(0, 1fr) } }
+.bok { display: none; border-right: 1px solid var(--wf-linka); background: var(--wf-karta); padding: 12px 8px; flex-direction: column; gap: 2px }
+@container (min-width: 700px) { .bok { display: flex } }
+.bok .logo { font-weight: 800; padding: 4px 8px 12px }
+.bok a { display: flex; justify-content: space-between; padding: 7px 8px; border-radius: 8px; text-decoration: none; color: var(--text); font-weight: 600 }
+.bok a.akt { background: var(--akcent-slaby); color: var(--akcent) }
+.odz { font-size: 11px; font-weight: 800; background: var(--spatne); color: #fff; border-radius: 999px; padding: 0 6px; min-width: 18px; text-align: center }
+.hlavni-wf { display: flex; flex-direction: column; min-width: 0 }
+.lista { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--wf-linka); background: var(--wf-karta) }
+.lista .nadpis { font-weight: 800; font-size: 15px; flex: 1; min-width: 0 }
+.lista .hledat { border: 1px solid var(--wf-linka); border-radius: 8px; padding: 5px 10px; color: var(--tlum); font-size: 12px; white-space: nowrap }
+.lista .obdobi { display: none; border: 1px solid var(--wf-linka); border-radius: 8px; padding: 5px 10px; font-size: 12px; font-weight: 700 }
+@container (min-width: 700px) { .lista .obdobi { display: block } .lista .hledat::after { content: "  Ctrl+K" ; font-family: var(--mono); font-size: 10px } }
+.sdil { font-size: 11px; font-weight: 700; color: var(--ok); background: var(--ok-slaby); border-radius: 999px; padding: 2px 8px; white-space: nowrap }
+.obsah-wf { padding: 12px 14px 16px; display: flex; flex-direction: column; gap: 14px; flex: 1 }
+.dvasl { display: flex; flex-direction: column; gap: 14px }
+@container (min-width: 700px) { .dvasl { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start } }
+.wsek { display: flex; flex-direction: column; gap: 8px; min-width: 0 }
+.wsek > .h { font-size: 11px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--tlum); display: flex; justify-content: space-between; gap: 8px }
+.wk { background: var(--wf-karta); border: 1px solid var(--wf-linka); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0 }
+.wk.akce { border-left: 4px solid var(--pozor) }
+.wk.akce.vys { border-left-color: var(--spatne) }
+.wk .t { font-weight: 800 }
+.wk .s { color: var(--tlum); font-size: 12px }
+.radek { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+.radek.mezi { justify-content: space-between }
+.btn { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 9px; font-weight: 800; font-size: 12.5px; background: var(--text); color: var(--bg); white-space: nowrap }
+.btn.sek { background: transparent; color: var(--text); border: 1px solid var(--wf-linka) }
+.btn.tecky { background: transparent; color: var(--tlum); border: 1px solid var(--wf-linka); padding: 0 10px }
+.cip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--wf-linka); background: var(--wf-karta); font-size: 12px; font-weight: 700; white-space: nowrap }
+.cip.akt { background: var(--text); color: var(--bg); border-color: var(--text) }
+.cipy { display: flex; gap: 6px; flex-wrap: wrap }
+.dlazdice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px }
+@container (min-width: 700px) { .dlazdice { grid-template-columns: repeat(5, minmax(0, 1fr)) } }
+.dl { background: var(--wf-karta); border: 1px solid var(--wf-linka); border-radius: 12px; padding: 9px 10px; display: flex; flex-direction: column; gap: 2px; min-width: 0 }
+.dl .l { font-size: 11px; color: var(--tlum); font-weight: 700; display: flex; justify-content: space-between; gap: 4px }
+.dl .l i { font-style: normal; border: 1px solid var(--wf-linka); border-radius: 999px; width: 15px; height: 15px; display: grid; place-items: center; font-size: 10px; flex: none }
+.dl .v { font-size: 20px; font-weight: 800 }
+.dl .p { font-size: 11px; color: var(--tlum) }
+.dl svg { width: 100%; height: 18px; display: block }
+.maly { font-size: 10px; font-weight: 800; color: var(--pozor); background: var(--pozor-slaby); border-radius: 4px; padding: 0 4px; align-self: flex-start }
+.pruh { height: 8px; border-radius: 999px; background: var(--wf-linka); overflow: hidden; position: relative }
+.pruh > span { position: absolute; inset: 0 auto 0 0; background: var(--akcent); border-radius: 999px }
+.pruh > em { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--text); opacity: .5 }
+.tecky { display: inline-flex; gap: 3px } .tecky b { width: 8px; height: 8px; border-radius: 50%; background: var(--wf-linka); display: block } .tecky b.a { background: var(--ok) }
+.spodni { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--wf-linka); background: var(--wf-karta); padding: 6px 0 8px; margin-top: auto }
+@container (min-width: 700px) { .spodni { display: none } }
+.spodni span { text-align: center; font-size: 11px; font-weight: 700; color: var(--tlum); position: relative }
+.spodni span::before { content: ""; display: block; width: 20px; height: 20px; margin: 0 auto 2px; border-radius: 6px; border: 2px solid currentColor; opacity: .7 }
+.spodni span.akt { color: var(--akcent) }
+.spodni span .odz { position: absolute; top: -4px; left: 55%; }
+.zak { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center }
+.av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; font-size: 12px }
+.av.t9 { background: var(--t9) } .av.t5 { background: var(--t5) }
+.tr { font-size: 10.5px; font-weight: 800; border-radius: 4px; padding: 0 5px; color: #fff } .tr.t9 { background: var(--t9) } .tr.t5 { background: var(--t5) }
+.osa { display: flex; flex-direction: column; gap: 0 }
+.osa .n { font-size: 11px; font-weight: 800; color: var(--tlum); padding: 8px 0 4px; display: flex; justify-content: space-between }
+.osa .p { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 8px; padding: 4px 0; border-left: 2px solid var(--wf-linka); margin-left: 4px; padding-left: 8px }
+.osa .p time { font-family: var(--mono); font-size: 11px; color: var(--tlum) }
+.zalozky { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--wf-linka); padding-bottom: 6px }
+.zalozky span { font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; color: var(--tlum) }
+.zalozky span.akt { background: var(--akcent-slaby); color: var(--akcent) }
+.bar { display: grid; grid-template-columns: 92px minmax(0, 1fr) 64px; gap: 8px; align-items: center; font-size: 12px }
+.bar .b { height: 14px; background: var(--wf-linka); border-radius: 4px; position: relative; overflow: hidden }
+.bar .b span { position: absolute; inset: 0 auto 0 0; background: var(--akcent); border-radius: 4px }
+.bar .b span.slabe { background: var(--pozor) }
+.zaver { font-size: 12.5px; padding: 8px 10px; border-radius: 8px; background: var(--akcent-slaby) }
+.swipe { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: var(--tlum) }
+.krok-pruh { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px } .krok-pruh b { height: 5px; border-radius: 3px; background: var(--wf-linka); display: block } .krok-pruh b.a { background: var(--akcent) }
+.check { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: start }
+.check i { width: 16px; height: 16px; border: 2px solid var(--wf-linka); border-radius: 4px; display: block; margin-top: 1px } .check i.a { background: var(--ok); border-color: var(--ok) }
+.sloupce { display: flex; gap: 8px; overflow-x: auto }
+.sloupce .sl { flex: 1 0 140px; background: var(--wf-karta); border: 1px solid var(--wf-linka); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 6px }
+.sloupce .sl > b { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--tlum) }
+.mini { background: var(--wf-bg); border: 1px solid var(--wf-linka); border-radius: 8px; padding: 6px 8px; font-size: 12px }
+.jen-d { display: none } @container (min-width: 700px) { .jen-d { display: flex } }
+.popis-wf { font-size: 14px; color: var(--tlum); max-width: 68ch }
+.popis-wf b { color: var(--text) }
+@media (prefers-reduced-motion: no-preference) { .ram { transition: width .25s ease } }
+</style>
+
+<div class="obal">
+
+<header class="sekce" style="gap:12px">
+  <span class="oko">Návrh ke schválení · 26. 11. 2026</span>
+  <h1>MateMax Admin 2.1</h1>
+  <div class="text">
+    <p>Prošel jsem celý současný admin, databázi a měření. Nic jsem zatím neměnil. Stránka má tři části: <b>co jsem zjistil</b> (hlavně proč se čísla neshodují), <b>jak navrhuju nový admin</b> včetně drátěných modelů a <b>plán fází</b> s tím, co musíš udělat ty.</p>
+    <p>Jedna věc je důležitá hned: <b>většina „otevřených registrací“ z reklamy jsou omylem kliknutí v cizích mobilních aplikacích</b> (síť Audience Network od Mety). Tohle stojí peníze a nepotřebuje žádný nový admin, jen jedno nastavení v reklamě. Podrobnosti jsou níž v části Proč čísla nesedí.</p>
+  </div>
+  <div class="blok" style="border-color:var(--akcent)">
+    <h3>Co od tebe potřebuju</h3>
+    <ol>
+      <li>Schválit strukturu a drátěné modely (nebo napsat, co změnit).</li>
+      <li>U úprav studentské appky ke každé napsat ano / ne (je jich 11).</li>
+      <li>Potvrdit posunuté termíny fází a 4 rozhodnutí na konci stránky.</li>
+    </ol>
+  </div>
+</header>
+
+<nav class="kotvy" aria-label="Části návrhu">
+  <a href="#zjisteni">Zjištění</a><a href="#cisla">Proč čísla nesedí</a><a href="#data">Data a mezery</a><a href="#tarify">Tarify</a><a href="#struktura">Struktura</a><a href="#modely">Drátěné modely</a><a href="#metriky">Severka a metriky</a><a href="#databaze">Databáze</a><a href="#doporuceni">Doporučení</a><a href="#appka">Úpravy appky</a><a href="#faze">Fáze</a><a href="#ty">Co uděláš ty</a><a href="#rozhodnuti">Rozhodnutí</a>
+</nav>
+
+<!-- ═════════ 1. ZJIŠTĚNÍ ═════════ -->
+<section class="sekce" id="zjisteni">
+  <span class="oko">1 · Průzkum</span>
+  <h2>Jak je admin postavený dnes</h2>
+  <div class="mrizka">
+    <div class="blok">
+      <h3>Stránky a výpočty</h3>
+      <p>6 stránek (Řídicí panel, Analytika, Statistiky, Testy, Obsah, E-maily) a 21 serverových rozhraní. Každá stránka si čísla <b>počítá sama v JavaScriptu</b> nad syrovými řádky, takže stejnou věc počítají tři různé kusy kódu různě. Žádný výpočet není v databázi.</p>
+    </div>
+    <div class="blok">
+      <h3>Ochrana</h3>
+      <p>Data chrání server (kontrola admin e-mailu u každého rozhraní), to je v pořádku. Stránky samotné ale nejsou chráněné na serveru, nemají zákaz indexace, admin nemá roli v databázi ani druhý faktor a <b>žádná akce se nezapisuje do auditu</b>. Admin běží ve studentském rozvržení, proto má spodní lištu žáka.</p>
+    </div>
+    <div class="blok">
+      <h3>Kolik toho je</h3>
+      <p class="cislo">16 účtů, z toho 6 testovacích, tedy <b>10 skutečných žáků</b>. V databázi je 1 731 událostí měření (od 15. 11.), 21 tréninků, 17 souhrnů procvičování, 143 karet opakování, 66 diagnostik, 7 záznamů Premium, 2 propojení s Vyhodnocením a 0 push odběrů.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:6px">Co se měří a od kdy</h3>
+  <table class="tab">
+    <thead><tr><th>Událost</th><th class="cislo">Počet</th><th>Od</th><th>Co to je</th></tr></thead>
+    <tbody>
+      <tr><td>navsteva</td><td class="cislo" data-l="Počet">570</td><td data-l="Od">15. 11.</td><td data-l="Co to je">otevření stránky, anonymně, otisk platí 1 den</td></tr>
+      <tr><td>zive</td><td class="cislo" data-l="Počet">554</td><td data-l="Od">19. 11.</td><td data-l="Co to je">minuta přihlášeného žáka v appce (technická, plní časovou osu)</td></tr>
+      <tr><td>odchod</td><td class="cislo" data-l="Počet">280</td><td data-l="Od">16. 11.</td><td data-l="Co to je">čas, scroll a poslední sekce na veřejných stránkách</td></tr>
+      <tr><td>klik</td><td class="cislo" data-l="Počet">221</td><td data-l="Od">16. 11.</td><td data-l="Co to je">kliky; bez názvu se uloží text tlačítka nebo „tlačítko“</td></tr>
+      <tr><td>session_completed</td><td class="cislo" data-l="Počet">28</td><td data-l="Od">26. 5.</td><td data-l="Co to je">dokončený trénink: úlohy a správně/špatně</td></tr>
+      <tr><td>diagnostika_dokoncena</td><td class="cislo" data-l="Počet">10</td><td data-l="Od">25. 5.</td><td data-l="Co to je">dokončená diagnostika</td></tr>
+      <tr><td>registrace_odeslana</td><td class="cislo" data-l="Počet">6</td><td data-l="Od">16. 11.</td><td data-l="Co to je">odeslaný formulář registrace</td></tr>
+      <tr><td>email_odeslan / email_dorucitelnost</td><td class="cislo" data-l="Počet">6 / 8</td><td data-l="Od">24. 11.</td><td data-l="Co to je">e-maily z Resendu a jejich doručení (jen typ, bez adresy)</td></tr>
+      <tr><td>ostatní (11 druhů)</td><td class="cislo" data-l="Počet">53</td><td data-l="Od">různě</td><td data-l="Co to je">formuláře, Premium, platba, herní funkce, report, odhlášení</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mrizka">
+    <div class="blok">
+      <h3>E-maily a push</h3>
+      <ul>
+        <li>Všechny e-maily žákům i rodičům jdou od 24. 11. z appky přes <b>Resend</b>. Loops stojí a čeká na zrušení.</li>
+        <li>Historie e-mailů žáka je v jeho účtu (posledních pár záznamů), rodičovské e-maily se nikam neukládají.</li>
+        <li>Webhook z Resendu ukládá jen doručeno, vráceno, spam a otevřeno. <b>Neukládá, komu e-mail patřil</b>, takže nejde zobrazit u žáka. Nehlídá duplicity, kliknutí se nesledují.</li>
+        <li>Push: kód je hotový, ale <b>0 odběrů</b>. Nikdo push nepovolil.</li>
+      </ul>
+    </div>
+    <div class="blok">
+      <h3>Peníze a propojení</h3>
+      <ul>
+        <li>Stripe webhook zpracuje zaplacení, změnu a zrušení předplatného a selhanou platbu. Faktury ani vrácení peněz neukládá.</li>
+        <li>Ruční Premium (plány z webu) se uděluje v detailu žáka s datem konce.</li>
+        <li>Propojení s Vyhodnocením je tabulka propojení (2 aktivní). Body z testů po tématech dnes admin nevidí.</li>
+      </ul>
+    </div>
+    <div class="blok">
+      <h3>Souhlasy</h3>
+      <p>Appka <b>neeviduje žádný souhlas</b>: registrace nemá zaškrtnutí podmínek ani zpracování údajů, nemá souhlas s marketingem a nezjišťuje věk. Jediný „souhlas“ je to, že dítě potvrzuje propojení s rodičem. Návrh je v úpravách appky. Právní stránku musíš ověřit ty, nic si nevymýšlím.</p>
+    </div>
+  </div>
+
+  <div class="blok" style="border-left:4px solid var(--spatne)">
+    <h3>Soukromí: dvě věci k opravě</h3>
+    <ul>
+      <li><b>Žebříček týdenní výzvy ukazuje celé jméno</b> (jméno i příjmení z účtu) a posílá do prohlížeče ID účtů ostatních žáků. Zatím tam nikdo není, výzvu nikdo nedokončil, takže se nic neprozradilo. Opravit ve fázi A.</li>
+      <li><b>Správné odpovědi všech úloh jsou v kódu stránky</b> trénink, diagnostika i výzva. Šikovný žák si je najde v prohlížeči. U tréninku to nevadí, u žebříčku ano. Návrh: výzvu vyhodnocovat na serveru (fáze C).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════ 2. PROČ ČÍSLA NESEDÍ ═════════ -->
+<section class="sekce" id="cisla">
+  <span class="oko">2 · Příčiny ze screenshotů 25. 11.</span>
+  <h2>Proč čísla nesedí</h2>
+  <p class="text tlum">Každou příčinu jsem ověřil v kódu a v datech. Čísla v závorkách jsou skutečná data z databáze (bez jmen).</p>
+  <div class="priciny">
+    <div class="pricina" style="border-left-color:var(--spatne)">
+      <b class="co">Statistiky ukazují 56 návštěvníků za 30 dní, protože vidí jen část dat</b>
+      <p class="proc">Supabase vrátí na jeden dotaz nejvýš 1 000 řádků. Statistiky žádají „50 000“, dostanou 1 000 nejstarších a novější události už nevidí. V databázi jich je 1 731. Stejně je useknutý Řídicí panel (aktivita a online) a seznam účtů.</p>
+      <p class="oprava">všechny výpočty přesunout do databáze (SQL funkce), seznamy stránkovat. Test hlídá, že žádný dotaz neusekne data.</p>
+    </div>
+    <div class="pricina">
+      <b class="co">Analytika ukazuje 141 návštěvníků za 7 dní, ale nejsou to lidé</b>
+      <p class="proc">Měření bez cookies dává návštěvníkovi otisk, který platí jen jeden den a změní se i se změnou IP adresy (mobilní data, prohlížeč uvnitř Facebooku). Stejný člověk ve třech dnech jsou tři „návštěvníci“. Za posledních 7 dní je 155 otisků, ale denně jen 3 až 59. Navíc se jako „přímá návštěva“ počítá i každá stránka, kterou přihlášený žák v appce otevře.</p>
+      <p class="oprava">anonymní návštěvy pojmenovat poctivě „návštěvy za den“ a sčítat jen po dnech. Lidi počítat jen u účtů. Stránky přihlášených žáků oddělit od návštěv webu. Trvalý identifikátor bez souhlasu s cookies dát nejde, viz rozhodnutí 4.</p>
+    </div>
+    <div class="pricina">
+      <b class="co">„Trénovalo dnes 0“ proti „trénovalo 1“: dvě různé definice</b>
+      <p class="proc">Řídicí panel počítá žáky s dokončeným tréninkem (tabulka souhrnů). Statistiky počítají každého, kdo byl na stránce Trénink, i když nic nedokončil, a počítají i tebe: tvůj účet není označený jako testovací (36 minut v appce za týden).</p>
+      <p class="oprava">jedna definice „trénoval = dokončil aspoň 1 trénink“, jedna funkce v databázi, admin vyloučený na jednom místě.</p>
+    </div>
+    <div class="pricina">
+      <b class="co">Trychtýř roste: kroky nejsou na sobě závislé</b>
+      <p class="proc">Každý krok se počítá samostatně. Ze 108 lidí, kteří otevřeli registraci, jich <b>96 přišlo rovnou z reklamy</b> na stránku registrace. Úvodní stránku ani tlačítko Začít nikdy neviděli, proto je „Klikli na Začít“ (12) menší než „Otevřeli registraci“ (93). Kliky na tlačítka bez odkazu se navíc ukládají jako „tlačítko“.</p>
+      <p class="oprava">trychtýř po lidech: v kroku je jen ten, kdo prošel předchozím, zvlášť pro vstup přes úvod a rovnou na registraci.</p>
+    </div>
+    <div class="pricina" style="border-left-color:var(--spatne)">
+      <b class="co">93 otevřelo registraci, 5 odeslalo: hlavně omylem kliknutí z reklamy</b>
+      <p class="proc">Ze 127 otevření registrace bylo 123 na mobilu. 40 otevření přišlo z <b>Audience Network</b> (Meta ukazuje reklamu v cizích aplikacích, jedna návštěva přišla přímo z mobilní hry). Polovina lidí odešla z registrace do 5 sekund (53 ze 118). Roboti náhledů (facebookexternalhit) se už teď vyřazují. Kdo formulář opravdu vyplňoval, 3× narazil na chybu „Vyber, jestli jsi v 5. nebo 9. třídě“.</p>
+      <p class="oprava">v reklamě vypnout umístění Audience Network (tvoje rozhodnutí, viz Co uděláš ty). V adminu ukazovat „odešel do 5 s“ zvlášť. Výběr třídy v registraci zviditelnit (úprava appky 6).</p>
+    </div>
+    <div class="pricina">
+      <b class="co">„Odeslali registraci 3“ proti „Nové účty 6“: useknutá data</b>
+      <p class="proc">Od 16. 11. je 6 odeslaných registrací a 6 nových účtů, sedí to přesně. Trojka vznikla jen tím, že Statistiky nevidí novější řádky (první příčina).</p>
+      <p class="oprava">stejná jako u první příčiny.</p>
+    </div>
+    <div class="pricina">
+      <b class="co">Zdroje: čísla kampaní, rozdělené domény, Stripe jako zdroj</b>
+      <p class="proc">Reklama posílá do adresy jen ID kampaně (120250…), proto „fb · 1202…“. Facebook je ve 4 variantách domény. Návrat z platby (checkout.stripe.com, 32 návštěv) se počítá jako nový zdroj. Zdroj se k účtu ukládá až od 22. 11. (3 z 10 účtů).</p>
+      <p class="oprava">tabulka názvů kampaní v adminu, sloučení domén, Stripe a vlastní web nejsou zdroj, generátor odkazů s utm.</p>
+    </div>
+    <div class="pricina">
+      <b class="co">Malá čísla vypadají dramaticky a závěry stojí na jednom žákovi</b>
+      <p class="proc">+513 % je změna ze 23 na 141. „Pomáhají odměny?“ porovnává týdny, ve kterých trénoval jeden žák. Procento ze 4 žáků se mění o 25 bodů jedním člověkem.</p>
+      <p class="oprava">pravidla malých čísel (DA-06) v jedné komponentě, kterou používá každé číslo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 3. DATA A MEZERY ═════════ -->
+<section class="sekce" id="data">
+  <span class="oko">3 · Co máme a co chybí</span>
+  <h2>Data pro jednotlivé části</h2>
+  <table class="tab">
+    <thead><tr><th>Část</th><th>Už máme</th><th>Chybí</th></tr></thead>
+    <tbody>
+      <tr><td>Dnes</td><td data-l="Už máme">registrace, tréninky, Premium, online, zpětná vazba</td><td data-l="Chybí">stav vyřízení akcí, „od poslední návštěvy“, cíle, plán týdne</td></tr>
+      <tr><td>Žáci a karta</td><td data-l="Už máme">účet, třída, diagnostika, tréninky, Premium, minuty v appce, zdroj od 22. 11.</td><td data-l="Chybí">cesta před registrací, štítky, poznámky, audit, stránka s vlastní adresou, souhlasy</td></tr>
+      <tr><td>Zprávy</td><td data-l="Už máme">odeslání z Resendu, doručení bez příjemce</td><td data-l="Chybí">log zpráv u žáka i rodiče, kliknutí, odpovědi, schránka</td></tr>
+      <tr><td>Učení</td><td data-l="Už máme">správně/špatně u každé úlohy od 26. 5., karty opakování (SM-2), odhad bodů</td><td data-l="Chybí">čas na úlohu, zvolená odpověď, nápověda, přeskočení, číslo pokusu. Bez nich nejde nic z UC-03 a UC-05.</td></tr>
+      <tr><td>Obsah</td><td data-l="Už máme">katalog úloh, příznaky „málo“, kokpit čerstvosti, kronika</td><td data-l="Chybí">výkon úloh (z nového logu odpovědí), nahlášené chyby, editor, verze</td></tr>
+      <tr><td>Hlas</td><td data-l="Už máme">2 zpětné vazby, kontakty z /rodice</td><td data-l="Chybí">ankety, „odkud ses dozvěděl“, štítky témat, nápady</td></tr>
+      <tr><td>Chování</td><td data-l="Už máme">stránky, kliky, scroll, sekce, start formuláře, chyby formuláře</td><td data-l="Chybí">lidské názvy prvků, pole, u kterého lidé odcházejí, Web Vitals</td></tr>
+      <tr><td>Růst</td><td data-l="Už máme">návštěvy se zdrojem, útrata za reklamu, Stripe, kohorty</td><td data-l="Chybí">názvy kampaní, trychtýř po lidech, data z Wixu, vazba test nanečisto → účet</td></tr>
+      <tr><td>Systém</td><td data-l="Už máme">hlášení chyb e-mailem, ruční záloha skriptem</td><td data-l="Chybí">log chyb a cronů, fronta webhooků, audit, MFA, nastavení, limity</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════ 4. TARIFY ═════════ -->
+<section class="sekce" id="tarify">
+  <span class="oko">4 · Ověřeno v dokumentaci 26. 11.</span>
+  <h2>Co je v tarifech zdarma</h2>
+  <table class="tab">
+    <thead><tr><th>Funkce</th><th>Stav</th><th>Poznámka</th></tr></thead>
+    <tbody>
+      <tr><td>Resend: sledování kliknutí a otevření</td><td data-l="Stav"><span class="stitek st-ok">zdarma</span></td><td data-l="Poznámka">zapíná se u domény (Domains → Configuration), potřebuje jeden záznam CNAME. Otevření doporučuju nezapínat, Apple Mail je nadsazuje.</td></tr>
+      <tr><td>Resend: příjem e-mailů</td><td data-l="Stav"><span class="stitek st-ok">zdarma</span></td><td data-l="Poznámka">i na tarifu Free. Webhook nese jen hlavičky, tělo se stáhne přes API. Přijaté e-maily se počítají do kvóty.</td></tr>
+      <tr><td>Resend Free: limity</td><td data-l="Stav"><span class="stitek st-pozor">pozor</span></td><td data-l="Poznámka">100 e-mailů denně, 3 000 měsíčně, 1 webhook, data 30 dní. Dnes posíláme jednotky denně, ale hromadné odeslání musí hlídat strop. Potvrď mi, jaký tarif máš.</td></tr>
+      <tr><td>Loops: webhooky</td><td data-l="Stav"><span class="stitek st-info">zbytečné</span></td><td data-l="Poznámka">dokumentace je neomezuje tarifem, 1 adresa na účet, u transakčních e-mailů nehlásí otevření ani klik. Loops stojí a ruší se, proto navrhuju ZP-03 nedělat.</td></tr>
+      <tr><td>Supabase: druhý faktor (TOTP)</td><td data-l="Stav"><span class="stitek st-ok">zdarma</span></td><td data-l="Poznámka">zapnutý na všech projektech. Placená je jen SMS varianta, tu nepotřebujeme.</td></tr>
+      <tr><td>Supabase Free: zálohy</td><td data-l="Stav"><span class="stitek st-pozor">ověřit</span></td><td data-l="Poznámka">dnes zálohuje ruční skript. Navrhuju automatickou noční zálohu přes GitHub Actions (u veřejného repa zdarma), soubor ale nesmí skončit veřejně. Viz rizika.</td></tr>
+      <tr><td>Vercel: crony</td><td data-l="Stav"><span class="stitek st-pozor">Hobby</span></td><td data-l="Poznámka">na Hobby nejvýš 1× denně na úlohu, s přesností ±59 min, 100 úloh na projekt. Denní souhrn v nastavený čas půjde jen po hodinách. Potvrď tarif.</td></tr>
+      <tr><td>Wix: nákup plánu</td><td data-l="Stav"><span class="stitek st-pozor">ověřit</span></td><td data-l="Poznámka">událost onOrderPurchased v backendu Velo na tvém webu (Velo je zdarma na webu s prémiovým tarifem). Pošle zprávu do MateMaxu s tajným tokenem. Webhook přes REST potřebuje aplikaci, je složitější.</td></tr>
+      <tr><td>Wix API jen pro čtení</td><td data-l="Stav"><span class="stitek st-pozor">ověřit</span></td><td data-l="Poznámka">API klíč se zakládá zdarma v nastavení účtu. Které údaje (rezervace, objednávky) dá bez placení, ověřím ve fázi D na tvém webu.</td></tr>
+      <tr><td>web-vitals</td><td data-l="Stav"><span class="stitek st-ok">zdarma</span></td><td data-l="Poznámka">knihovna Googlu, licence Apache 2.0, malá. Data jdou do naší databáze.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════ 5. STRUKTURA ═════════ -->
+<section class="sekce" id="struktura">
+  <span class="oko">5 · Návrh</span>
+  <h2>Struktura a navigace</h2>
+  <div class="text">
+    <p>Tvoje rozdělení na 11 sekcí beru. Měním jen tři věci:</p>
+    <ol>
+      <li><b>Sekce se ukazují, až mají obsah.</b> Hlas přijde ve fázi C. Do té doby jde zpětná vazba a nahlášené chyby do Schránky ve Zprávách. Chování a Růst jsou ve fázi A jen základ (návštěvy, zdroje), plné až v B.</li>
+      <li><b>Testy</b> zůstávají, jak jsou, jen dostanou novou navigaci a odkazy na karty žáků.</li>
+      <li><b>Nový admin vznikne vedle starého</b> na adrese <code>/admin/novy</code> s vlastním rozvržením. Starý admin zůstane, dokud nový neschválíš. Pak se adresy prohodí.</li>
+    </ol>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Sekce</th><th>Otázka</th><th>Fáze</th></tr></thead>
+    <tbody>
+      <tr><td>Dnes</td><td data-l="Otázka">Co mám udělat?</td><td data-l="Fáze">A, kolečko B</td></tr>
+      <tr><td>Žáci</td><td data-l="Otázka">Kdo to je a co dělá?</td><td data-l="Fáze">A, rodiny B</td></tr>
+      <tr><td>Zprávy</td><td data-l="Otázka">Co komu odešlo a kdo odpověděl?</td><td data-l="Fáze">dnešní E-maily v A, nové B</td></tr>
+      <tr><td>Plán</td><td data-l="Otázka">Co dál?</td><td data-l="Fáze">plán týdne a kronika A, zbytek B a C</td></tr>
+      <tr><td>Učení</td><td data-l="Otázka">Jak se žákům daří?</td><td data-l="Fáze">B (data se sbírají od A)</td></tr>
+      <tr><td>Obsah</td><td data-l="Otázka">Jsou úlohy dobré a je jich dost?</td><td data-l="Fáze">dnešní v A, výkon B, editor C</td></tr>
+      <tr><td>Hlas</td><td data-l="Otázka">Co chtějí?</td><td data-l="Fáze">C</td></tr>
+      <tr><td>Chování</td><td data-l="Otázka">Na co klikají?</td><td data-l="Fáze">B</td></tr>
+      <tr><td>Růst</td><td data-l="Otázka">Roste to?</td><td data-l="Fáze">zdroje A, zbytek B, C, D</td></tr>
+      <tr><td>Testy</td><td data-l="Otázka">stávající sekce</td><td data-l="Fáze">A (napojení)</td></tr>
+      <tr><td>Systém</td><td data-l="Otázka">Běží to?</td><td data-l="Fáze">audit, nastavení, ochrana A, zdraví B</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════ 6. DRÁTĚNÉ MODELY ═════════ -->
+<section class="sekce" id="modely">
+  <span class="oko">6 · Drátěné modely</span>
+  <h2>Šest obrazovek, mobil i desktop</h2>
+  <p class="text tlum">Přepni obrazovku a šířku. Všude je zapnutý režim sdílení (Žák A, Žák B…). Čísla jsou ukázková, ne skutečná data.</p>
+  <div class="wf-ovladani" role="group" aria-label="Obrazovka">
+    <button class="wf-tlac" data-o="dnes" aria-pressed="true">Dnes</button>
+    <button class="wf-tlac" data-o="kolecko" aria-pressed="false">Večerní kolečko</button>
+    <button class="wf-tlac" data-o="zaci" aria-pressed="false">Žáci</button>
+    <button class="wf-tlac" data-o="karta" aria-pressed="false">Karta žáka</button>
+    <button class="wf-tlac" data-o="uceni" aria-pressed="false">Učení</button>
+    <button class="wf-tlac" data-o="plan" aria-pressed="false">Plán</button>
+    <span class="wf-oddel" aria-hidden="true"></span>
+    <button class="wf-tlac" data-s="m" aria-pressed="true">Mobil 390</button>
+    <button class="wf-tlac" data-s="d" aria-pressed="false">Desktop</button>
+  </div>
+  <p class="popis-wf" id="wf-popis"></p>
+  <div class="wf-scena"><div class="ram m" id="ram"></div></div>
+</section>
+
+<!-- ═════════ 7. METRIKY ═════════ -->
+<section class="sekce" id="metriky">
+  <span class="oko">7 · Severka a strom metrik</span>
+  <h2>Jedna hlavní metrika a co ji žene</h2>
+  <div class="text">
+    <p>Souhlasím s tvým návrhem: <b>žáci, kteří za posledních 7 dní trénovali aspoň 3 různé dny</b>. Počítám posledních 7 dní (ne kalendářní týden), aby se dala sledovat každý večer. Pondělní report ukáže kalendářní týden. „Trénoval“ znamená dokončil aspoň jeden trénink, test nebo diagnostiku.</p>
+  </div>
+  <div class="strom">
+    <div class="uzel hlavni"><span class="n">Pravidelní žáci</span><span class="d">3+ dny tréninku za 7 dní · severka</span></div>
+    <div class="vetev">
+      <div class="uzel"><span class="n">Noví žáci</span><span class="d">nové účty bez testovacích, podle zdroje a třídy</span></div>
+      <div class="vetev">
+        <div class="uzel"><span class="n">Aktivovaní</span><span class="d">diagnostika a první trénink do 24 h od registrace</span></div>
+        <div class="vetev">
+          <div class="uzel"><span class="n">Vrátili se</span><span class="d">trénink druhý den, nebo do 7 dní</span></div>
+          <div class="vetev"><div class="uzel"><span class="n">Pravidelnost</span><span class="d">dny tréninku za týden (1, 2, 3+)</span></div></div>
+        </div>
+      </div>
+      <div class="uzel"><span class="n">Z testů nanečisto</span><span class="d">účet do 7 dní od výsledků (cíl 40 %)</span></div>
+      <div class="uzel"><span class="n">Premium</span><span class="d">platící, ručně udělené, měsíční příjem</span></div>
+      <div class="uzel"><span class="n">Pokrok</span><span class="d">změna odhadu bodů od diagnostiky (orientační, dokud není kalibrace)</span></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:8px">Slovník metrik (výběr, celý bude v docs/metriky.md a v adminu)</h3>
+  <table class="tab">
+    <thead><tr><th>Metrika</th><th>Co počítá</th><th>Vylučuje</th><th>Měří se od</th></tr></thead>
+    <tbody>
+      <tr><td>Žák</td><td data-l="Co počítá">účet s třídou, který není rodič</td><td data-l="Vylučuje">testovací, admin, smazané</td><td data-l="Měří se od">vždy</td></tr>
+      <tr><td>Nový žák</td><td data-l="Co počítá">žák s registrací v období (Praha)</td><td data-l="Vylučuje">dtto</td><td data-l="Měří se od">vždy</td></tr>
+      <tr><td>Trénoval</td><td data-l="Co počítá">dokončil aspoň 1 trénink, test nebo diagnostiku</td><td data-l="Vylučuje">jen otevřená stránka</td><td data-l="Měří se od">26. 5. 2026</td></tr>
+      <tr><td>Pravidelní (severka)</td><td data-l="Co počítá">3+ různé dny s tréninkem za 7 dní</td><td data-l="Vylučuje">dtto</td><td data-l="Měří se od">26. 5. 2026</td></tr>
+      <tr><td>Aktivovaný</td><td data-l="Co počítá">diagnostika i 1. trénink do 24 h od registrace</td><td data-l="Vylučuje">dtto</td><td data-l="Měří se od">25. 5. 2026</td></tr>
+      <tr><td>Návštěvy webu za den</td><td data-l="Co počítá">anonymní denní otisky na veřejných stránkách</td><td data-l="Vylučuje">roboti, „Nepočítat“, přihlášení žáci, admin</td><td data-l="Měří se od">15. 11. 2026</td></tr>
+      <tr><td>Úspěšnost na 1. pokus</td><td data-l="Co počítá">správně / všichni, kdo úlohu začali</td><td data-l="Vylučuje">opakování SM-2 zvlášť</td><td data-l="Měří se od">den nasazení logu odpovědí</td></tr>
+      <tr><td>Platící</td><td data-l="Co počítá">aktivní předplatné ve Stripe</td><td data-l="Vylučuje">testovací klíč, ruční Premium zvlášť</td><td data-l="Měří se od">vždy</td></tr>
+    </tbody>
+  </table>
+  <div class="blok">
+    <h3>Pravidla malých čísel (jedna komponenta pro celý admin)</h3>
+    <ul>
+      <li>Vždy počet. Procento jen s počtem: „2 ze 4“.</li>
+      <li>Procentní změna až od základu 20, jinak „141 proti 23“.</li>
+      <li>Pod 30 pozorování štítek <span class="maly">malý vzorek</span>, v „i“ Wilsonův interval („2 ze 4 = 50 %, nejspíš 15–85 %“).</li>
+      <li>Výkyvy: Poissonův test, upozornění jen když je změna nepravděpodobná náhodou (p &lt; 0,05).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════ 8. DATABÁZE ═════════ -->
+<section class="sekce" id="databaze">
+  <span class="oko">8 · Změny databáze</span>
+  <h2>Nové tabulky a funkce</h2>
+  <p class="text tlum">Všechno migracemi, před každou zálohou. Žádná stávající data se nemažou.</p>
+  <table class="tab">
+    <thead><tr><th>Co</th><th>K čemu</th><th>Fáze</th></tr></thead>
+    <tbody>
+      <tr><td>odpovedi</td><td data-l="K čemu">každá odpověď: úloha, režim, pořadí v sadě, pokus, správně, zvolená odpověď (jen číslo nebo volba, nejvýš 40 znaků), čas v ms, nápověda, přeskočení</td><td data-l="Fáze">A, hned</td></tr>
+      <tr><td>souhlasy</td><td data-l="K čemu">druh, verze textu, kdy, kdo udělil (žák nebo rodič), odvolání</td><td data-l="Fáze">A</td></tr>
+      <tr><td>admin_audit</td><td data-l="K čemu">kdy, co, u koho, výsledek. Jen přidávání, nejde měnit.</td><td data-l="Fáze">A</td></tr>
+      <tr><td>admin_role</td><td data-l="K čemu">admin, pomocník, editor (model teď, ostatní role až v D)</td><td data-l="Fáze">A</td></tr>
+      <tr><td>admin_nastaveni, kampane</td><td data-l="K čemu">cíle, prahy, testovací zařízení, lidské názvy kampaní a letáků</td><td data-l="Fáze">A</td></tr>
+      <tr><td>doporuceni_stav, ukoly, poznamky, stitky, segmenty</td><td data-l="K čemu">vyřízení, odložení, skrytí s důvodem, palec, úkoly a poznámky u žáka</td><td data-l="Fáze">A</td></tr>
+      <tr><td>navstevy_ucet</td><td data-l="K čemu">spojení dnešních anonymních otisků s novým účtem při registraci</td><td data-l="Fáze">A</td></tr>
+      <tr><td>metriky_den + SQL funkce metrik</td><td data-l="K čemu">denní souhrn plněný cronem, jedna funkce na metriku pro všechny stránky, report i export</td><td data-l="Fáze">A</td></tr>
+      <tr><td>zpravy, zpravy_stav, webhooky</td><td data-l="K čemu">log zpráv, historie stavů, příchozí webhooky s ID proti duplicitám a frontou opakování</td><td data-l="Fáze">B</td></tr>
+      <tr><td>schranka</td><td data-l="K čemu">odpovědi, zpětná vazba, nahlášené chyby, stav nové / vyřízené</td><td data-l="Fáze">B</td></tr>
+      <tr><td>rodiny</td><td data-l="K čemu">žák, rodič, sourozenci, propojení s Vyhodnocením a kontaktem z Wixu</td><td data-l="Fáze">B</td></tr>
+      <tr><td>chyby, behy_cronu</td><td data-l="K čemu">chyby z klienta a serveru, běh cronů</td><td data-l="Fáze">B</td></tr>
+      <tr><td>ankety, napady, roadmapa, verze_uloh</td><td data-l="K čemu">hlas uživatelů, nápady s lidmi, historie úprav úloh</td><td data-l="Fáze">C</td></tr>
+    </tbody>
+  </table>
+  <div class="blok">
+    <h3>Uchovávání dat (návrh, ověř právně)</h3>
+    <p>Syrové události měření 13 měsíců, pak se smažou a zůstanou jen denní souhrny. Log odpovědí do konce následující sezóny. Audit 2 roky. Log zpráv 2 roky. Smazání účtu smaže i jeho odpovědi, zprávy a návštěvy, v auditu zůstane jen záznam „účet smazán“.</p>
+  </div>
+</section>
+
+<!-- ═════════ 9. DOPORUČENÍ ═════════ -->
+<section class="sekce" id="doporuceni">
+  <span class="oko">9 · Pravidla doporučení</span>
+  <h2>Z čeho vzniká fronta v Dnes</h2>
+  <div class="text">
+    <p>Beru tvých 27 pravidel s tvými prahy. Každé má minimální vzorek a ukáže se, jen když je co říct. Doplňuju tři věci:</p>
+    <ul>
+      <li><b>Priorita</b> = počet dotčených lidí × váha oblasti (peníze 3, aktivace a zprávy 2, ostatní 1) × naléhavost (jak dlouho to čeká). Nahoře je nejvýš 7 karet.</li>
+      <li><b>Pravidla bez dat se nezapnou</b>, dokud data nejsou. Pravidla pro učení čekají na log odpovědí (zhruba 2 týdny dat), Web Vitals na fázi C, nákupy z Wixu na napojení.</li>
+      <li><b>Moje pravidlo navíc</b>: „otevřel registraci a odešel do 5 s“ sbírat po zdrojích. Když jich je u kampaně přes 40 %, doporučit úpravu umístění reklamy.</li>
+    </ul>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Pravidlo</th><th>Práh a vzorek</th><th>Kdy se zapne</th></tr></thead>
+    <tbody>
+      <tr><td>Nový žák bez diagnostiky</td><td data-l="Práh a vzorek">24 h, každý žák</td><td data-l="Kdy se zapne">A</td></tr>
+      <tr><td>Diagnostika bez tréninku</td><td data-l="Práh a vzorek">48 h</td><td data-l="Kdy se zapne">A</td></tr>
+      <tr><td>Aktivní žák přestal</td><td data-l="Práh a vzorek">3 dny push, 7 dní osobní e-mail</td><td data-l="Kdy se zapne">A (push až někdo povolí)</td></tr>
+      <tr><td>Premium bez platby</td><td data-l="Práh a vzorek">otevřel, 48 h nic</td><td data-l="Kdy se zapne">A</td></tr>
+      <tr><td>Ruční Premium končí</td><td data-l="Práh a vzorek">do 7 dní</td><td data-l="Kdy se zapne">A</td></tr>
+      <tr><td>Registrace: otevřelo / odeslalo</td><td data-l="Práh a vzorek">20+ otevřelo, pod 20 % odeslalo</td><td data-l="Kdy se zapne">A</td></tr>
+      <tr><td>Oblast po limitu čerstvosti</td><td data-l="Práh a vzorek">kokpit obsahu (dnes výzvy a videolekce)</td><td data-l="Kdy se zapne">A</td></tr>
+      <tr><td>Podezřelá úloha</td><td data-l="Práh a vzorek">špatná odpověď ≥ správná, 8+ pokusů</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Moc lehké / těžké téma u žáka</td><td data-l="Práh a vzorek">posledních 20 odpovědí</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Zapomíná stejné úlohy</td><td data-l="Práh a vzorek">4 neúspěchy v opakování</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Pozadu s přípravou</td><td data-l="Práh a vzorek">slabá témata × potřebné tréninky &gt; zbývající týdny × jeho tempo</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Odpověď bez reakce</td><td data-l="Práh a vzorek">24 h</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Test nanečisto bez účtu</td><td data-l="Práh a vzorek">3 dny po odeslání výsledků</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Kampaň bez aktivovaných</td><td data-l="Práh a vzorek">útrata a 0 aktivovaných za 7 dní</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Chyba, cron, webhook, limit služby</td><td data-l="Práh a vzorek">3+ za 24 h, 80 % limitu</td><td data-l="Kdy se zapne">B</td></tr>
+      <tr><td>Nákup na webu bez Premium, pomalá stránka</td><td data-l="Práh a vzorek">podle napojení</td><td data-l="Kdy se zapne">C</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════ 10. ÚPRAVY APPKY ═════════ -->
+<section class="sekce" id="appka">
+  <span class="oko">10 · Úpravy studentské appky</span>
+  <h2>Každá zvlášť ke schválení</h2>
+  <p class="text tlum">Napiš ke každému číslu ano, nebo ne. Neviditelné úpravy žák nepozná, mění jen to, co se měří. Hlídá je test, že appka funguje beze změny.</p>
+  <div class="blok" style="gap:0">
+    <div class="uprava"><span class="c">1</span><div><b>Úklid měření podle plánu měření</b><p class="tlum">Události s lidskými názvy (training_started, answer_submitted…), důležitá tlačítka s atributem data-track, z adres jen šablona trasy a povolené parametry (téma, dovednost), tokeny se nikdy neuloží. Ukázkový příklad na úvodu jako jedna událost s odpovědí.</p><div class="meta"><span class="stitek st-ok">neviditelné</span><span class="stitek st-info">fáze A</span></div></div></div>
+    <div class="uprava"><span class="c">2</span><div><b>Log každé odpovědi</b><p class="tlum">Čas na úlohu, zvolená odpověď, nápověda, přeskočení, číslo pokusu. Psaný text se neukládá, jen výsledek (číslo nebo volba).</p><div class="meta"><span class="stitek st-ok">neviditelné</span><span class="stitek st-info">fáze A, co nejdřív</span></div></div></div>
+    <div class="uprava"><span class="c">3</span><div><b>Spojení návštěv před registrací s účtem</b><p class="tlum">Při registraci se dnešní anonymní otisk zařízení spojí s novým účtem. Karta žáka pak ukáže, odkud přišel a co dělal předtím. Pseudonymní data se tím stanou osobními, mělo by to být v zásadách ochrany údajů.</p><div class="meta"><span class="stitek st-ok">neviditelné</span><span class="stitek st-pozor">ověř právně</span><span class="stitek st-info">fáze A</span></div></div></div>
+    <div class="uprava"><span class="c">4</span><div><b>Souhlasy při registraci</b><p class="tlum">Povinné zaškrtnutí „Souhlasím s podmínkami a zásadami ochrany údajů“ s odkazy a nepovinné „Chci tipy a novinky e-mailem“. Ukládá se verze a datum. Zda u žáků pod 15 let potřebujeme souhlas rodiče a zda jsou připomínky marketing, musíš ověřit ty.</p><div class="meta"><span class="stitek st-pozor">viditelné</span><span class="stitek st-pozor">ověř právně</span><span class="stitek st-info">fáze A</span></div></div></div>
+    <div class="uprava"><span class="c">5</span><div><b>„Odkud ses o nás dozvěděl?“ při registraci</b><p class="tlum">Nepovinný výběr: Facebook, kamarád, škola, leták, test nanečisto, web, jinde. Navrhuju přesunout z fáze C do A, protože doplní zdroje, které měření nevidí, a historie začne dřív.</p><div class="meta"><span class="stitek st-pozor">viditelné</span><span class="stitek st-info">fáze A</span></div></div></div>
+    <div class="uprava"><span class="c">6</span><div><b>Výběr třídy v registraci výrazněji</b><p class="tlum">3 z 5 chyb formuláře jsou „Vyber, jestli jsi v 5. nebo 9. třídě“. Výběr třídy jako první krok formuláře, ne až pod tlačítkem.</p><div class="meta"><span class="stitek st-pozor">viditelné</span><span class="stitek st-info">fáze A</span></div></div></div>
+    <div class="uprava"><span class="c">7</span><div><b>Žebříček s přezdívkou místo jména</b><p class="tlum">Místo jména a příjmení přezdívka (výchozí ze zvířátka avataru a dvou znaků, žák si ji může změnit). Do prohlížeče už nepůjdou ID účtů ostatních. V adminu jde přezdívku skrýt a žáka vyřadit.</p><div class="meta"><span class="stitek st-pozor">viditelné</span><span class="stitek st-info">fáze A</span></div></div></div>
+    <div class="uprava"><span class="c">8</span><div><b>Tlačítko „Nahlásit chybu“ u úlohy</b><p class="tlum">Malý odkaz pod vyhodnocením úlohy, výběr (špatný výsledek, nejasné zadání, jiné) a nepovinná poznámka. Přijde do Schránky s odkazem na úlohu.</p><div class="meta"><span class="stitek st-pozor">viditelné</span><span class="stitek st-info">fáze B</span></div></div></div>
+    <div class="uprava"><span class="c">9</span><div><b>Push hlásí zobrazení a kliknutí</b><p class="tlum">Service worker pošle „zobrazeno“ a „kliknuto“. A Reply-To na odpovedi.matematika-snadno.cz v e-mailech z appky (žák ani rodič změnu nevidí, odpověď jen dorazí do adminu a kopie k tobě).</p><div class="meta"><span class="stitek st-ok">neviditelné</span><span class="stitek st-info">fáze B</span></div></div></div>
+    <div class="uprava"><span class="c">10</span><div><b>Mikroankety a oznámení v appce</b><p class="tlum">Jedna otázka ve správnou chvíli (nejvýš jednou za 14 dní) a banner pro skupinu žáků s plánovaným začátkem a koncem. Otázka na důvod při zrušení Premium.</p><div class="meta"><span class="stitek st-pozor">viditelné</span><span class="stitek st-info">fáze C</span></div></div></div>
+    <div class="uprava"><span class="c">11</span><div><b>Vzkaz od Karla, Web Vitals, značka u sdíleného odkazu</b><p class="tlum">Krátký vzkaz přes Hexíka, měření rychlosti stránek a zdroj u sdíleného obrázku výsledku.</p><div class="meta"><span class="stitek st-pozor">vzkaz viditelný</span><span class="stitek st-info">fáze C</span></div></div></div>
+  </div>
+</section>
+
+<!-- ═════════ 11. FÁZE ═════════ -->
+<section class="sekce" id="faze">
+  <span class="oko">11 · Plán, odhad a rizika</span>
+  <h2>Fáze s upravenými termíny</h2>
+  <div class="text">
+    <p>Celé zadání odhaduju zhruba na <b>200 hodin mé práce</b>. Do 12. 12. mám rozdělaný online test (testová místnost a převod zadání), novou truhlu a 3D Hexíka k 1. 12. Proto navrhuju fázi A rozdělit: <b>sběr dat hned</b>, protože historie začíná dnem nasazení, a nový admin po online testu.</p>
+  </div>
+  <div class="faze">
+    <div class="blok"><h3>A1 <span class="stitek st-info">do 4. 12.</span></h3><p class="tlum">~16 h</p><p>Opravy počítání, log odpovědí, úklid měření, spojení návštěv s účtem, souhlasy a „odkud ses dozvěděl“ (po schválení), žebříček s přezdívkou, vyloučení admina, audit, zákaz indexace adminu.</p></div>
+    <div class="blok"><h3>A2 <span class="stitek st-info">do 18. 12.</span></h3><p class="tlum">~34 h</p><p>Rozvržení adminu, navigace, hledání, filtry v adrese, režim sdílení, vrstva metrik v databázi, Dnes, Žáci, karta žáka, nastavení, druhý faktor, testy čísel, demo data.</p></div>
+    <div class="blok"><h3>B <span class="stitek st-info">do 22. 1.</span></h3><p class="tlum">~60 h</p><p>Zprávy a schránka, příjem odpovědí, Učení, Plán a doporučení, večerní kolečko, rodiny a rodiče, Chování, trychtýř po lidech, Růst, zdraví systému, PWA, upozornění.</p></div>
+    <div class="blok"><h3>C <span class="stitek st-info">do 22. 2.</span></h3><p class="tlum">~55 h</p><p>Automatizace ke schválení, hlas uživatelů, roadmapa, editor úloh, kalibrace odhadu, výsledky přijímaček. Týden rezerva před stopkou 1. 3.</p></div>
+    <div class="blok"><h3>D <span class="stitek st-info">po 15. 5.</span></h3><p class="tlum">~35 h</p><p>Celý byznys z Wixu, role, archiv sezón, analýzy pro větší počty žáků.</p></div>
+  </div>
+  <div class="blok">
+    <h3>Rizika</h3>
+    <ul>
+      <li><b>Malá čísla.</b> Při 10 žácích bude mnoho částí ukazovat seznam lidí místo grafu. To je správně, ale admin bude zpočátku vypadat skromně.</li>
+      <li><b>Fáze C je nejtěsnější.</b> Kdyby nestíhala, navrhuju verze úloh a hromadný import posunout do D, protože po 1. 3. obsah stejně nepřibude.</li>
+      <li><b>Strop Resendu 100 e-mailů denně</b> na Free. Hromadné odeslání se rozloží do dní, jinak by potřebovalo placený tarif.</li>
+      <li><b>Záloha přes GitHub Actions</b>: repo je veřejné, záloha proto musí jít šifrovaná mimo repo (třeba na tvůj Disk), ne jako soubor v Actions.</li>
+      <li><b>Právní věci</b> (souhlasy, věk 15 let, uchovávání) neumím rozhodnout. Postavím evidenci, texty musíš potvrdit ty.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════ 12. CO UDĚLÁŠ TY ═════════ -->
+<section class="sekce" id="ty">
+  <span class="oko">12 · Na tobě</span>
+  <h2>Co musíš udělat ty</h2>
+  <div class="mrizka">
+    <div class="blok"><h3>Hned (5 min)</h3><ul><li>Meta Ads: u reklamy na herní systém zvážit vypnutí umístění <b>Audience Network</b> (Umístění → Ruční).</li><li>Napsat mi tarif Resendu a Vercelu.</li></ul></div>
+    <div class="blok"><h3>Fáze A</h3><ul><li>V adminu si naskenovat QR kód druhého faktoru do aplikace v telefonu (postavím průvodce).</li><li>Ověřit texty souhlasů a zásad ochrany údajů.</li></ul></div>
+    <div class="blok"><h3>Fáze B</h3><ul><li>DNS: záznam MX jen pro <code>odpovedi.matematika-snadno.cz</code> a CNAME pro sledování kliknutí. Hlavní doménu nic nemění.</li><li>Resend: k webhooku přidat události sent, delivery_delayed, failed, clicked, suppressed, received.</li><li>Stripe: k webhooku přidat invoice.paid a charge.refunded.</li></ul></div>
+    <div class="blok"><h3>Fáze C a D</h3><ul><li>Wix: povolit Velo a vložit krátký kód pro nákup plánu (připravím).</li><li>Wix: API klíč jen pro čtení.</li><li>Loops: nic, jen zrušit, až skončí.</li></ul></div>
+  </div>
+</section>
+
+<!-- ═════════ 13. ROZHODNUTÍ ═════════ -->
+<section class="sekce" id="rozhodnuti">
+  <span class="oko">13 · Rozhodni</span>
+  <h2>Čtyři rozhodnutí</h2>
+  <div class="blok" style="gap:14px">
+    <div><b>1. Posunuté termíny fází</b><p class="tlum">A1 do 4. 12., A2 do 18. 12., B do 22. 1., C do 22. 2. Doporučuju.</p></div>
+    <div><b>2. Loops do adminu nenapojovat</b><p class="tlum">Loops se ruší a jeho historii pokryje to, co už je v účtech. Ušetří to asi 5 h. Doporučuju.</p></div>
+    <div><b>3. „Odkud ses o nás dozvěděl?“ už ve fázi A</b><p class="tlum">Doplní zdroje dřív, než přijde vlna po testu 12. 12. Doporučuju.</p></div>
+    <div><b>4. Návštěvníci webu bez cookies</b><p class="tlum">A) Nechat denní otisk bez cookies a anonymní čísla poctivě pojmenovat „návštěvy za den“ (doporučuju). B) Zavést lištu se souhlasem a trvalé ID. Dá přesnější lidi, ale část návštěvníků odmítne a dětem přibude další lišta.</p></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(() => {
+  const SPARK = (body) => `<svg viewBox="0 0 80 18" aria-hidden="true"><polyline fill="none" stroke="var(--akcent)" stroke-width="2" points="${body}"/></svg>`;
+  const BOK = (akt) => `<nav class="bok"><span class="logo">MateMax Admin</span>${[["Dnes","dnes",3],["Žáci","zaci",2],["Zprávy","",1],["Plán","plan",0],["Učení","uceni",0],["Obsah","",2],["Hlas","",0],["Chování","",0],["Růst","",0],["Testy","",0],["Systém","",0]].map(([n,k,o]) => `<a class="${k===akt?"akt":""}">${n}${o?`<span class="odz">${o}</span>`:""}</a>`).join("")}</nav>`;
+  const LISTA = (nadpis) => `<div class="lista"><span class="nadpis">${nadpis}</span><span class="sdil">sdílení ✓</span><span class="obdobi">7 dní ▾ · obě třídy</span><span class="hledat">Hledat</span></div>`;
+  const SPODNI = (akt) => `<div class="spodni">${[["Dnes","dnes",3],["Žáci","zaci",2],["Zprávy","",1],["Plán","plan",0],["Více","vice",0]].map(([n,k,o]) => `<span class="${k===akt?"akt":""}">${n}${o?`<span class="odz">${o}</span>`:""}</span>`).join("")}</div>`;
+  const RAM = (akt, nadpis, obsah, spodni = akt) => `<div class="ukazka">Ukázková data · režim sdílení</div><div class="app">${BOK(akt)}<div class="hlavni-wf">${LISTA(nadpis)}<div class="obsah-wf">${obsah}</div>${SPODNI(spodni)}</div></div>`;
+
+  const O = {
+    dnes: { popis: "<b>Dnes:</b> nahoře fronta akcí (nejvýš 7), každá s hlavním tlačítkem a menu Odložit / Hotovo / Skrýt. Pod ní od tvé poslední návštěvy, čísla s proklikem na lidi, cíle sezóny a plán týdne. Na desktopu dva sloupce.", html: RAM("dnes", "Dnes · čtvrtek 26. 11.", `
+      <div class="dvasl">
+        <div class="wsek"><div class="h"><span>Na co se podívat (3)</span><span>vše →</span></div>
+          <div class="wk akce vys"><span class="t">2 noví žáci 24 h bez diagnostiky</span><span class="s">Žák A (9.), Žák B (5.) · bez diagnostiky appka neví, co jim dát</span><div class="radek mezi"><span class="btn">Poslat připomínku</span><span class="btn tecky">⋯</span></div></div>
+          <div class="wk akce"><span class="t">Registrace: 108 otevřelo, 5 odeslalo</span><span class="s">96 přišlo rovnou z reklamy, 53 odešlo do 5 s · 7 dní</span><div class="radek mezi"><span class="btn">Kde lidé končí</span><span class="btn tecky">⋯</span></div></div>
+          <div class="wk akce"><span class="t">Denní výzva je 18 dní bez novinky</span><span class="s">limit 14 dní · kokpit obsahu</span><div class="radek mezi"><span class="btn">Naplánovat novinku</span><span class="btn tecky">⋯</span></div></div>
+          <span class="btn" style="justify-content:center;background:var(--akcent)">Spustit večerní kolečko · 6 kroků · ~12 min</span>
+          <div class="wsek"><div class="h"><span>Od tvé poslední návštěvy · včera 21:40</span></div><div class="cipy"><span class="cip">1 nový žák</span><span class="cip">3 tréninky</span><span class="cip">1 odpověď</span><span class="cip">0 plateb</span><span class="cip">0 chyb</span></div></div>
+        </div>
+        <div class="wsek"><div class="h"><span>Čísla · 7 dní</span><span>proti předchozím 7</span></div>
+          <div class="dlazdice">
+            <div class="dl"><span class="l">Pravidelní <i>i</i></span><span class="v cislo">2</span><span class="p">minule 1</span><span class="maly">malý vzorek</span>${SPARK("0,16 10,16 20,14 30,16 40,12 50,14 60,10 70,12 80,9")}</div>
+            <div class="dl"><span class="l">Noví žáci <i>i</i></span><span class="v cislo">5</span><span class="p">minule 1</span>${SPARK("0,16 10,15 20,16 30,14 40,15 50,12 60,13 70,8 80,4")}</div>
+            <div class="dl"><span class="l">Aktivace <i>i</i></span><span class="v cislo">2 z 5</span><span class="p">minule 0 z 1</span><span class="maly">malý vzorek</span>${SPARK("0,16 10,16 20,12 30,16 40,14 50,16 60,12 70,14 80,10")}</div>
+            <div class="dl"><span class="l">Platí <i>i</i></span><span class="v cislo">1</span><span class="p">99 Kč měsíčně</span>${SPARK("0,16 20,16 40,16 60,16 70,10 80,10")}</div>
+            <div class="dl"><span class="l">Z testů s účtem <i>i</i></span><span class="v cislo">2 z 13</span><span class="p">cíl 40 %</span><span class="maly">malý vzorek</span>${SPARK("0,16 30,16 50,16 60,12 80,12")}</div>
+          </div>
+          <div class="wsek"><div class="h"><span>Cíle sezóny</span><span>nastavení</span></div>
+            <div class="wk"><div class="radek mezi"><b>Registrace do 31. 12.</b><span class="cislo">10 / 15–25</span></div><div class="pruh"><span style="width:40%"></span><em style="left:60%"></em></div><span class="s">tempem dojdeš na 14, chybí 1 do spodní hranice</span></div>
+            <div class="wk"><div class="radek mezi"><b>Kompletní příprava do 28. 2.</b><span class="cislo">0 / 3</span></div><div class="pruh"><span style="width:2%"></span></div></div>
+          </div>
+          <div class="wsek"><div class="h"><span>Plán týdne</span><span>2 z 4</span></div>
+            <div class="wk"><span class="check"><i class="a"></i><span>Vypnout Audience Network v reklamě</span></span><span class="check"><i class="a"></i><span>Odpovědět rodiči Žáka A</span></span><span class="check"><i></i><span>Doplnit úlohy: Zlomky, úroveň 3</span></span><span class="check"><i></i><span>Zkontrolovat úlohu s podezřelým klíčem</span></span></div>
+          </div>
+          <div class="wk" style="flex-direction:row;gap:8px;align-items:center"><span class="stitek st-ok">● teď</span><span class="s">Žák C trénuje Zlomky · 2 návštěvníci bez účtu</span></div>
+        </div>
+      </div>`) },
+
+    kolecko: { popis: "<b>Večerní kolečko:</b> průvodce po jedné kartě, pořadí zprávy → fronta akcí → cíle → plán na zítra. Na mobilu přejetím doprava udělat, doleva odložit. Na konci shrnutí, co jsi dnes vyřídil.", html: RAM("dnes", "Večerní kolečko · 2 / 6", `
+      <div class="krok-pruh"><b class="a"></b><b class="a"></b><b></b><b></b><b></b><b></b></div>
+      <div class="wsek"><div class="h"><span>Zprávy (1 ze 2)</span><span>~2 min</span></div>
+        <div class="wk" style="padding:16px;gap:10px"><span class="stitek st-info" style="align-self:flex-start">odpověď na týdenní report</span><span class="t" style="font-size:15px">Rodič Žáka A odpověděl</span><span>„Dobrý den, syn říká, že zlomky mu pořád nejdou. Dá se nastavit, aby trénoval hlavně je?“</span><span class="s">přišlo dnes 18:12 · Žák A trénuje zlomky 55 % (20 odpovědí)</span>
+          <div class="radek"><span class="btn">Odpovědět</span><span class="btn sek">Otevřít žáka</span><span class="btn sek">Na úkol</span></div></div>
+        <div class="swipe"><span>← odložit na zítra</span><span>hotovo →</span></div>
+      </div>
+      <div class="wsek"><div class="h"><span>Co tě čeká</span></div>
+        <div class="wk"><span class="check"><i class="a"></i><span>Zprávy: 1 vyřízeno</span></span><span class="check"><i></i><span>Zprávy: 1 zbývá</span></span><span class="check"><i></i><span>Fronta akcí: 3 karty</span></span><span class="check"><i></i><span>Cíle sezóny: 1 pohled</span></span><span class="check"><i></i><span>Plán na zítra: vybrat 3 úkoly</span></span></div>
+      </div>`) },
+
+    zaci: { popis: "<b>Žáci:</b> hledání, uložené segmenty jako čipy s počty, karty žáků s tečkami aktivace (e-mail, diagnostika, 1. trénink, návrat 2. den) a značkou nepřečtené zprávy. Hromadné akce po označení. Na desktopu stejný seznam širší, filtry nahoře.", html: RAM("zaci", "Žáci · 10", `
+      <div class="cipy"><span class="cip akt">Všichni 10</span><span class="cip">Noví 5</span><span class="cip">Bez diagnostiky 2</span><span class="cip">Netrénují 3+ dny 3</span><span class="cip">Aktivní 4</span><span class="cip">Premium bez platby 1</span><span class="cip">Z testů 2</span><span class="cip">5. třída 3</span><span class="cip">9. třída 7</span><span class="cip">Čeká na odpověď 1</span><span class="cip">+ filtr</span></div>
+      <div class="radek mezi"><span class="s tlum">Řazení: poslední aktivita ▾</span><span class="btn sek">Vybrat</span></div>
+      ${[["A","t9","Žák A","9.","nový · přišel 22. 11. z FB „Herní systém“","před 3 h · 2 tréninky · 78 %",[1,1,1,0],true],["B","t5","Žák B","5.","nový · přišel 25. 11. z letáku Gymnázium Týn","včera · bez diagnostiky",[1,0,0,0],false],["C","t9","Žák C","9.","aktivní · přišel 19. 11. přímo","teď · 9 tréninků · 71 %",[1,1,1,1],false],["D","t9","Žák D","9.","usíná · 9 dní bez tréninku","4 tréninky · 64 %",[1,1,1,1],false]].map(([i,t,n,tr,s1,s2,d,z]) => `
+      <div class="wk"><div class="zak"><span class="av ${t}">${i}</span><div style="min-width:0"><div class="radek"><b>${n}</b><span class="tr ${t}">${tr}</span>${z?'<span class="stitek st-spatne">1 zpráva</span>':""}</div><span class="s">${s1}</span><br><span class="s">${s2}</span></div><span class="tecky" title="aktivace">${d.map((x) => `<b class="${x?"a":""}"></b>`).join("")}</span></div></div>`).join("")}
+      <div class="wk jen-d" style="flex-direction:row;justify-content:space-between;align-items:center"><span class="s">Označeno 0 · hromadně: poslat šablonu (testovací režim), štítek, export CSV</span><span class="btn sek">Export CSV</span></div>`) },
+
+    karta: { popis: "<b>Karta žáka</b> má vlastní adresu (odkaz z hledání, doporučení i e-mailu). Hlavička, shrnutí jednou větou z dat, rychlé akce, aktivace s časy a záložky. Časová osa je seskupená do návštěv, lidsky a s časem, včetně cesty před registrací. Technická událost „zive“ se nezobrazuje.", html: RAM("zaci", "Žáci › Žák A", `
+      <div class="dvasl">
+        <div class="wsek">
+          <div class="wk" style="gap:8px"><div class="radek"><span class="av t9">A</span><b style="font-size:16px">Žák A</b><span class="tr t9">9.</span><span class="stitek st-info">nový</span><span class="stitek st-ok">Zdarma</span></div>
+            <span class="s">Přišel 22. 11. 18:44 z FB reklamy „Herní systém“ · mobil · e-mail ověřen ✓ · push ✗ · PWA ✗</span>
+            <span class="s">Souhlasy: podmínky v1 (22. 11.) · marketing ne · rodič pro report: nemá</span>
+            <span class="zaver">Registrace před 4 dny z FB reklamy, diagnostika hotová, 2 tréninky, nejslabší téma zlomky (55 %, 20 odpovědí).</span>
+            <div class="radek"><span class="btn">E-mail</span><span class="btn sek">Push</span><span class="btn sek">Premium</span><span class="btn sek">Poznámka</span><span class="btn tecky">⋯</span></div>
+          </div>
+          <div class="wsek"><div class="h"><span>Aktivace</span></div>
+            <div class="wk"><span class="check"><i class="a"></i><span>Registrace · 22. 11. 18:44</span></span><span class="check"><i class="a"></i><span>Potvrzení e-mailu · za 2 min</span></span><span class="check"><i class="a"></i><span>Diagnostika · za 9 min</span></span><span class="check"><i class="a"></i><span>1. trénink · za 31 min</span></span><span class="check"><i></i><span>Návrat 2. den · nevrátil se, další trénink 24. 11.</span></span><span class="check"><i></i><span>3 dny v týdnu · zatím 2</span></span><span class="check"><i class="a"></i><span>Stránka Premium · 24. 11. 16:15</span></span><span class="check"><i></i><span>Platba</span></span></div>
+          </div>
+        </div>
+        <div class="wsek">
+          <div class="zalozky"><span>Přehled</span><span>Učení</span><span>Testy</span><span>Zprávy</span><span>Platby</span><span>Rodina</span><span class="akt">Časová osa</span></div>
+          <div class="cipy"><span class="cip akt">Vše</span><span class="cip">Trénink</span><span class="cip">Zprávy</span><span class="cip">Platby</span><span class="cip">Web</span></div>
+          <div class="osa">
+            <div class="n"><span>Út 24. 11. · mobil · 14 min</span></div>
+            <div class="p"><time>16:02</time><span>Trénink Zlomky: 12 příkladů, 10 správně, 8 min</span></div>
+            <div class="p"><time>16:11</time><span>Otevřel truhlu, získal 20 krystalů</span></div>
+            <div class="p"><time>16:15</time><span>Otevřel stránku Premium, odešel bez platby</span></div>
+            <div class="n"><span>Po 23. 11. · e-mail</span></div>
+            <div class="p"><time>16:00</time><span>Připomínka „plán“ · doručeno · klikl 16:40</span></div>
+            <div class="n"><span>Ne 22. 11. · mobil · 38 min</span></div>
+            <div class="p"><time>18:51</time><span>Diagnostika hotová: odhad 21 bodů z 50</span></div>
+            <div class="p"><time>18:44</time><span>Registrace (9. třída)</span></div>
+            <div class="n"><span>Před registrací · stejné zařízení · FB reklama</span></div>
+            <div class="p"><time>18:40</time><span>Úvodní stránka → Zkusit příklad (správně) → Začít zdarma</span></div>
+          </div>
+        </div>
+      </div>`) },
+
+    uceni: { popis: "<b>Učení:</b> nejvýš 3 grafy na stránce, nadpis je otázka, pod ním věta se závěrem z dat a odkaz Co s tím. Úlohy s příznaky vždy s počtem pokusů. Opakování (SM-2) jako počty s odkazem na žáky. Data se začnou sbírat ve fázi A, stránka přijde v B.", html: RAM("uceni", "Učení", `
+      <div class="cipy"><span class="cip akt">Témata</span><span class="cip">Žáci × témata</span><span class="cip">Úlohy 3</span><span class="cip">Opakování</span><span class="cip">Připravenost</span></div>
+      <div class="dvasl">
+        <div class="wsek"><div class="h"><span>Která témata jdou žákům nejhůř?</span><span>9. třída · 30 dní</span></div>
+          <div class="wk">
+            ${[["Zlomky",55,"3 žáci · 40",true],["Procenta",62,"4 · 52",true],["Rovnice",71,"4 · 61",false],["Geometrie",78,"2 · 18",false],["Čísla",86,"5 · 70",false]].map(([n,p,s,sl]) => `<div class="bar"><span>${n}</span><span class="b"><span class="${sl?"slabe":""}" style="width:${p}%"></span></span><span class="cislo" style="text-align:right">${p} % <span class="tlum" style="font-size:10px">${s}</span></span></div>`).join("")}
+            <span class="zaver">Zlomky mají nejnižší úspěšnost na 1. pokus (22 ze 40), trénují je 3 žáci. <a>Co s tím →</a></span>
+            <span class="maly">malý vzorek · interval 40–70 %</span>
+          </div>
+        </div>
+        <div class="wsek"><div class="h"><span>Úlohy s příznakem</span><span>3</span></div>
+          <div class="wk akce vys"><span class="t">Podezřelá: Procenta, úroveň 2</span><span class="s">„24“ 6×, správně „25“ jen 4× · 10 pokusů · nejspíš chyba v klíči</span><div class="radek"><span class="btn">Zkontrolovat úlohu</span></div></div>
+          <div class="wk akce"><span class="t">Moc těžká: Rovnice, úroveň 3</span><span class="s">2 z 11 na 1. pokus · medián 3:40 min</span></div>
+          <div class="wk akce"><span class="t">Přeskakovaná: Geometrie, úroveň 2</span><span class="s">5 z 12 přeskočilo</span></div>
+          <div class="wsek"><div class="h"><span>Opakování dnes</span></div>
+            <div class="wk"><div class="radek mezi"><span>Na řadě dnes</span><b class="cislo">34</b></div><div class="radek mezi"><span>Po termínu (3 žáci)</span><b class="cislo" style="color:var(--pozor)">12</b></div><div class="radek mezi"><span>Zapamatováno v opakování</span><b class="cislo">41 z 52</b></div></div>
+          </div>
+        </div>
+      </div>`) },
+
+    plan: { popis: "<b>Plán:</b> doporučení s prioritou, dopadem a palcem nahoru/dolů, úkoly (tento týden, později, hotovo), kronika změn s datem vyhodnocení a kalendář. Týden v kostce v pondělí a tlačítko Kopírovat pro Clauda (bez jmen).", html: RAM("plan", "Plán", `
+      <div class="cipy"><span class="cip akt">Doporučení 4</span><span class="cip">Úkoly 6</span><span class="cip">Roadmapa</span><span class="cip">Kronika</span><span class="cip">Kalendář</span></div>
+      <div class="dvasl">
+        <div class="wsek">
+          <div class="wk" style="background:var(--akcent-slaby)"><div class="radek mezi"><b>Týden v kostce · po 23. 11.</b><span class="btn sek">Kopírovat pro Clauda</span></div><span class="s">Noví 5 (minule 1), z toho 4 z FB reklamy. Pravidelní 2. Registrace: 96 ze 108 rovnou z reklamy.</span><span class="s">Návrh úkolů: vypnout Audience Network · připomínka 2 žákům · doplnit Zlomky L3</span><span class="btn" style="align-self:flex-start">Přidat 3 úkoly</span></div>
+          <div class="wsek"><div class="h"><span>Doporučení</span><span>priorita</span></div>
+            <div class="wk akce vys"><span class="t">Reklama: 53 ze 118 odešlo z registrace do 5 s</span><span class="s">40 otevření registrace z umístění Audience Network · blízko penězům</span><div class="radek mezi"><span class="btn">Na úkol</span><span class="s">👍 👎 · ⋯</span></div></div>
+            <div class="wk akce"><span class="t">Zlomky L3: příznak „málo“ a 3 žáci v nich chybují</span><span class="s">8 úloh, trénují 3 žáci, úspěšnost 55 %</span><div class="radek mezi"><span class="btn">Na úkol</span><span class="s">👍 👎 · ⋯</span></div></div>
+          </div>
+        </div>
+        <div class="wsek">
+          <div class="wsek"><div class="h"><span>Kronika · čeká na vyhodnocení</span></div>
+            <div class="wk"><b>Odměny na Hexíka · 22. 11.</b><span class="s">Proč: návrat po 1. tréninku. Sledovat: návrat 2. den u stejných žáků před a po. Vyhodnotit 6. 12.</span><span class="maly">malý vzorek · 4 žáci</span></div>
+          </div>
+          <div class="wsek"><div class="h"><span>Kalendář</span></div>
+            <div class="wk">
+              ${[["1. 12.","Vánoce v appce, adventní kalendář"],["12. 12.","Test nanečisto (Týn i online)"],["9. 1.","Test nanečisto"],["1. 2.","Přihlášky na SŠ"],["12.–15. 4.","Přijímačky (4leté 12.–13., víceleté 14.–15.)"],["15. 5.","Výsledky přijímaček"]].map(([d,t]) => `<div class="radek" style="flex-wrap:nowrap"><b class="cislo" style="min-width:68px">${d}</b><span>${t}</span></div>`).join("")}
+            </div>
+          </div>
+        </div>
+      </div>`, "plan") },
+  };
+
+  const ram = document.getElementById("ram"), popis = document.getElementById("wf-popis");
+  let obr = "dnes", sir = "m";
+  const kresli = () => {
+    ram.className = "ram " + sir; ram.innerHTML = O[obr].html; popis.innerHTML = O[obr].popis;
+    document.querySelectorAll("[data-o]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.o === obr)));
+    document.querySelectorAll("[data-s]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.s === sir)));
+  };
+  document.querySelectorAll("[data-o]").forEach((b) => b.addEventListener("click", () => { obr = b.dataset.o; kresli(); }));
+  document.querySelectorAll("[data-s]").forEach((b) => b.addEventListener("click", () => { sir = b.dataset.s; kresli(); }));
+  kresli();
+})();
+</script>

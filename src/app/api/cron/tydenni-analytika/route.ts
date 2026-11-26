@@ -13,7 +13,7 @@ async function handler() {
   if (!supabaseAdmin) return NextResponse.json({ error: "Chybí service role" }, { status: 500 });
   const a = await spocitejAnalytiku({ dni: 7, trida: null, zdroj: null, zarizeni: null });
   const text = shrnutiTydne(a);
-  const { error } = await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "tydenni_report", properties: { text } });
+  const { error } = await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "weekly_report_created", properties: { text } });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   let email = false;
   const komu = process.env.ANALYTIKA_EMAIL;
