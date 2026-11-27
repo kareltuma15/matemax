@@ -174,4 +174,4 @@
 .a2-bunka { display: inline-flex; flex-direction: column; align-items: center; min-width: 52px; min-height: 40px; justify-content: center; padding: 2px 4px; border-radius: 8px; font-weight: 800; font-size: 13px; line-height: 1.15; background: var(--a-bg); }
 .a2-bunka small { font-weight: 600; font-size: 11px; color: var(--a-tlum); }
 .a2-bunka.ok { background: var(--a-ok-slaby); } .a2-bunka.pozor { background: var(--a-pozor-slaby); } .a2-bunka.spatne { background: var(--a-spatne-slaby); } .a2-bunka.seda { color: var(--a-slaby); }
-.a2-sloupec { display: grid; grid-template-columns: minmax(60px, auto) minmax(0, 1fr) 40px; gap: 8px; align-items: center; font-size: 13px; }
+.a2-sloupec { display: grid; grid-template-columns: minmax(0, 9.5em) minmax(0, 1fr) 44px; gap: 8px; align-items: center; font-size: 13px; }
