@@ -4,6 +4,8 @@ import { demoData } from "../src/lib/admin2/demo";
 import { mapaDnu } from "../src/lib/admin2/metriky";
 import { demoUdalosti, navstevy, stranky, formular } from "../src/lib/admin2/navstevy";
 import { trychtyr, trychtyrUctu, kohorty } from "../src/lib/admin2/rust";
+import { jeTicho } from "../src/lib/admin-push";
+import { stavHry } from "../src/lib/admin2/hra";
 
 /** Admin 2.1, fáze B4: Plán (týden v kostce, kronika s vyhodnocením, kalendář) a Systém (limity, zálohy, souhlasy). Demo data. */
 
@@ -59,6 +61,32 @@ test.describe("růst a chování (bez prohlížeče)", () => {
   });
 });
 
+test.describe("upozornění a hra (bez prohlížeče)", () => {
+  test("tiché hodiny přes půlnoc i přes den; herní prvky jen z aktivních", () => {
+    expect(jeTicho({ ticheOd: 22, ticheDo: 7 }, 23)).toBe(true);
+    expect(jeTicho({ ticheOd: 22, ticheDo: 7 }, 3)).toBe(true);
+    expect(jeTicho({ ticheOd: 22, ticheDo: 7 }, 7)).toBe(false);
+    expect(jeTicho({ ticheOd: 13, ticheDo: 15 }, 14)).toBe(true);
+    expect(jeTicho({ ticheOd: 13, ticheDo: 15 }, 16)).toBe(false);
+    expect(jeTicho({ ticheOd: 8, ticheDo: 8 }, 8)).toBe(false);
+    const zaci = demoData().zaci.filter((z) => !z._testovaci && !z._admin);
+    const sb = new Map(zaci.map((z, i) => [z.id, { otevreno: i % 2, ziskano: 100, utraceno: 40 }]));
+    const h = stavHry(zaci, sb, new Date().toISOString().slice(0, 10));
+    for (const p of h.prvky) for (const id of p.lide) expect(h.aktivni).toContain(id);
+    expect(h.ziskano - h.utraceno).toBe(zaci.length * 60);
+  });
+});
+
+test("manifest aplikace MateMax Admin a souhrn bez tajemství nic nespustí", async ({ request }) => {
+  const m = await request.get("/admin-manifest.webmanifest");
+  expect(m.ok()).toBe(true);
+  const j = await m.json();
+  expect(j.name).toBe("MateMax Admin");
+  expect(j.start_url).toBe("/admin/novy");
+  const c = await request.post("/api/cron/admin-souhrn");
+  expect(c.status()).toBe(401);
+});
+
 test.describe("nový admin, fáze B4 (demo data)", () => {
   test.beforeEach(async ({ context }) => { await context.addCookies([{ name: "admin2_e2e", value: "1", domain: "localhost", path: "/" }]); });
 
@@ -69,6 +97,17 @@ test.describe("nový admin, fáze B4 (demo data)", () => {
     await expect(page.getByTestId("a2-kopirovat-claude")).toBeVisible();
     await expect(page.getByTestId("a2-kronika")).toContainText("Před:");
     await expect(page.getByTestId("a2-kalendar")).toContainText("Přijímačky");
+  });
+
+  test("Dnes: úprava čísel, Učení: hra a krystaly, Systém: upozornění na telefon", async ({ page }) => {
+    await page.goto("/admin/novy");
+    await page.getByTestId("a2-upravit-dlazdice").click();
+    await expect(page.getByTestId("a2-dlazdice-editor")).toContainText("Pravidelní");
+    await page.goto("/admin/novy/uceni?tab=hra");
+    await expect(page.getByTestId("a2-hra")).toContainText("Využití herních prvků");
+    await page.goto("/admin/novy/nastaveni");
+    await expect(page.getByTestId("a2-upozorneni-nastaveni")).toContainText("Denní souhrn");
+    await expect(page.locator('link[rel="manifest"]')).toHaveAttribute("href", /admin-manifest/);
   });
 
   test("Systém: limity tarifů, záloha, souhlasy", async ({ page }) => {
@@ -106,7 +145,7 @@ test.describe("nový admin, fáze B4 (demo data)", () => {
   for (const sirka of [320, 375]) {
     test(`mobil ${sirka} px: Plán a Systém bez přetečení`, async ({ page }) => {
       await page.setViewportSize({ width: sirka, height: 800 });
-      for (const url of ["/admin/novy/plan?demo=1", "/admin/novy/nastaveni", "/admin/novy/rust", "/admin/novy/rust?tab=zdroje", "/admin/novy/rust?tab=retence", "/admin/novy/chovani", "/admin/novy/chovani?tab=navstevy", "/admin/novy/chovani?tab=formulare"]) {
+      for (const url of ["/admin/novy/plan?demo=1", "/admin/novy/nastaveni", "/admin/novy/rust", "/admin/novy/rust?tab=zdroje", "/admin/novy/rust?tab=retence", "/admin/novy/chovani", "/admin/novy/chovani?tab=navstevy", "/admin/novy/chovani?tab=formulare", "/admin/novy/uceni?tab=hra"]) {
         await page.goto(url);
         await expect(page.getByTestId("admin2")).toBeVisible({ timeout: 30_000 });
         await bezPreteceni(page);

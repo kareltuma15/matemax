@@ -3,6 +3,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { pragueDateStr } from "@/lib/date";
 import { denniOtisk } from "@/lib/mereni-server";
 import { ODKUD_MOZNOSTI, VERZE_PODMINEK } from "@/lib/souhlasy";
+import { upozorniAdmina } from "@/lib/admin-push";
 
 /**
  * Dokončení registrace (admin 2.1 fáze A1): hned po založení účtu (e-mail i Google).
@@ -52,5 +53,6 @@ export async function POST(req: NextRequest) {
   );
   vysledek.navstevy = chybaNavstev ? chybaNavstev.message : "ok";
 
+  await upozorniAdmina("novy_zak", "Nový žák v MateMaxu", "Někdo se právě zaregistroval.", "/admin/novy/zaci?segment=novi");
   return NextResponse.json({ ok: true, ...vysledek });
 }

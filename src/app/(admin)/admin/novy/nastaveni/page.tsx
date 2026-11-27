@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Stranka from "@/components/admin2/Stranka";
 import NastaveniForm from "@/components/admin2/NastaveniForm";
+import UpozorneniNastaveni from "@/components/admin2/UpozorneniNastaveni";
+import { NAZVY_UPOZORNENI, nactiUpozorneniNastaveni } from "@/lib/admin-push";
 import { nactiKontext } from "@/lib/admin2/stranka";
 import { nactiNastaveni } from "@/lib/admin2/nastaveni";
 import { stavAdmina } from "@/lib/admin2/auth";
@@ -28,6 +30,7 @@ const NAZVY_AKCI: Record<string, string> = {
 export default async function Nastaveni() {
   const [k, n, s] = await Promise.all([nactiKontext(), nactiNastaveni(), stavAdmina(true)]);
   const zdravi = await nactiZdravi(k.demo);
+  const up = await nactiUpozorneniNastaveni();
   const zaklad = await bezMigrace(() => nactiZaklad(false));
   const zaci = zaklad?.zaci ?? [];
   const limity = await nactiLimity(k.demo, zaci);
@@ -58,6 +61,7 @@ export default async function Nastaveni() {
             <Link className="a2-btn a2-male" style={{ alignSelf: "flex-start" }} href="/admin/novy/zabezpeceni">{s.ok && s.maFaktor ? "Spravovat" : "Zapnout druhý faktor"}</Link>
             <span className="a2-s">Admin se neindexuje a necachuje. Každá akce se zapisuje do auditu (níže).</span>
           </div>
+          <div id="upozorneni"><UpozorneniNastaveni typy={up.typy} nazvy={NAZVY_UPOZORNENI} ticheOd={up.ticheOd} ticheDo={up.ticheDo} souhrnHodina={up.souhrnHodina} zarizeni={up.odbery.map((o) => ({ endpoint: o.endpoint, zarizeni: o.zarizeni, od: o.od }))} demo={k.demo} /></div>
           <NastaveniForm vychozi={n} demo={k.demo} />
         </div>
         <div className="a2-sekce">

@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "./supabase-admin";
 import { sablonaCesty } from "./mereni-plan";
+import { upozorniAdmina } from "./admin-push";
 
 /**
  * Zdraví systému (admin 2.1, SY-04): chyby z prohlížeče a ze serveru a běhy cronů.
@@ -19,8 +20,11 @@ export async function zapisChybu(c: { zdroj: "klient" | "server" | "cron" | "web
   try {
     const cesta = c.cesta ? sablonaCesty(c.cesta.split("?")[0]).slice(0, 200) : null;
     const zprava = c.zprava.slice(0, 500);
-    const { error } = await supabaseAdmin.from("chyby").insert({ zdroj: c.zdroj, otisk: otiskChyby(c.zdroj, zprava, cesta), zprava, cesta, user_id: c.userId ?? null, detail: c.detail ?? null });
+    const otisk = otiskChyby(c.zdroj, zprava, cesta);
+    const { error } = await supabaseAdmin.from("chyby").insert({ zdroj: c.zdroj, otisk, zprava, cesta, user_id: c.userId ?? null, detail: c.detail ?? null });
     tise(error);
+    // Nárůst: stejná chyba potřetí za 24 h → upozornění (jen jednou, při třetím výskytu)
+    if (!error) { const { count } = await supabaseAdmin.from("chyby").select("id", { count: "exact", head: true }).eq("otisk", otisk).gte("cas", new Date(Date.now() - 86400000).toISOString()); if (count === 3) await upozorniAdmina("chyby", "Opakovaná chyba v appce", `${zprava.slice(0, 80)} (3× za den)`, "/admin/novy/nastaveni#zdravi"); }
   } catch { /* nikdy neshodit */ }
 }
 
@@ -48,12 +52,13 @@ export async function behCronu(uloha: string, handler: () => Promise<Response>):
     const ok = res.ok && !(vysledek && typeof vysledek === "object" && "error" in (vysledek as object));
     if (vysledek && JSON.stringify(vysledek).length > 2000) vysledek = { zkraceno: true };
     await dokonci(ok, vysledek, ok ? undefined : `HTTP ${res.status}`);
-    if (!ok) await zapisChybu({ zdroj: "cron", zprava: `Cron ${uloha} skončil chybou (HTTP ${res.status})`, cesta: `/api/cron/${uloha}` });
+    if (!ok) { await zapisChybu({ zdroj: "cron", zprava: `Cron ${uloha} skončil chybou (HTTP ${res.status})`, cesta: `/api/cron/${uloha}` }); await upozorniAdmina("cron", "Automatická úloha selhala", uloha, "/admin/novy/nastaveni#zdravi"); }
     return res;
   } catch (e) {
     const zprava = e instanceof Error ? e.message : String(e);
     await dokonci(false, null, zprava);
     await zapisChybu({ zdroj: "cron", zprava: `Cron ${uloha}: ${zprava}`, cesta: `/api/cron/${uloha}` });
+    await upozorniAdmina("cron", "Automatická úloha selhala", uloha, "/admin/novy/nastaveni#zdravi");
     throw e;
   }
 }

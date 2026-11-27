@@ -3,6 +3,7 @@ import Stranka, { ChybaMigrace } from "@/components/admin2/Stranka";
 import KartaAkce from "@/components/admin2/KartaAkce";
 import ListaFiltru from "@/components/admin2/ListaFiltru";
 import { DlazdiceMetriky, Info, Prazdne, zaku } from "@/components/admin2/Prvky";
+import UpravitDlazdice from "@/components/admin2/UpravitDlazdice";
 import { UkolRadek, NovyUkol } from "@/components/admin2/Ukoly";
 import { nactiDoporuceni, nactiZaklad } from "@/lib/admin2/stranka";
 import { bezMigrace, filtryDoAdresy, nactiFiltry } from "@/lib/admin2/data";
@@ -67,6 +68,9 @@ export default async function Dnes({ searchParams }: { searchParams: SP }) {
     const jm = (id: string) => { const x = podleId.get(id); return x ? zobraz(x, z.k.sdileni, z.ps).jmeno : "?"; };
     const dl = dlazdice(z.zaci, z.dny, f);
     const cile = cileSezony(z.zaci, z.nastaveni);
+    // Přizpůsobení dlaždic (DN-06): pořadí a skryté z nastavení adminu
+    const nastDl = z.k.demo || !supabaseAdmin ? { poradi: [] as string[], skryte: [] as string[] } : (((await supabaseAdmin.from("admin_nastaveni").select("hodnota").eq("klic", "dlazdice").maybeSingle()).data?.hodnota ?? { poradi: [], skryte: [] }) as { poradi: string[]; skryte: string[] });
+    const dlSerazene = [...dl].filter((d) => !nastDl.skryte.includes(d.id)).sort((a, b) => { const ia = nastDl.poradi.indexOf(a.id), ib = nastDl.poradi.indexOf(b.id); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
     const [od, onl, ukoly] = await Promise.all([
       odPosledniNavstevy(z.k.demo),
       online(z.k.demo, new Set(z.zaci.map((x) => x.id))),
@@ -117,8 +121,9 @@ export default async function Dnes({ searchParams }: { searchParams: SP }) {
             <h2 className="a2-h2" id="h-cisla"><span>Čísla</span><Link href={`/admin/novy/metriky${q}`}>slovník a strom metrik</Link></h2>
             <ListaFiltru zdroje={zdroje} popis={popisObdobi} />
             <div className="a2-dlazdice">
-              {dl.map((d) => <DlazdiceMetriky key={d.id} d={d} href={`/admin/novy/zaci${filtryDoAdresy(f, { metrika: d.id })}`} />)}
+              {dlSerazene.map((d) => <DlazdiceMetriky key={d.id} d={d} href={`/admin/novy/zaci${filtryDoAdresy(f, { metrika: d.id })}`} />)}
             </div>
+            <UpravitDlazdice vsechny={dl.map((d) => ({ id: d.id, nazev: d.nazev }))} poradi={nastDl.poradi} skryte={nastDl.skryte} demo={z.k.demo} />
           </section>
 
           <div className="a2-sekce">

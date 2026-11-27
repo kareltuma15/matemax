@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { upozorniAdmina } from "@/lib/admin-push";
 
 // SQL migration (run once in Supabase):
 // CREATE TABLE user_feedback (
@@ -70,5 +71,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // Upozornění pro Karla na telefon (admin, žák nic nepozná)
+  await upozorniAdmina("odpoved", "Nová zpětná vazba", `Hodnocení ${rating} z 5`, "/admin/novy/zpravy?druh=zpetna_vazba");
   return NextResponse.json({ ok: true });
 }

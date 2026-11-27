@@ -11,7 +11,7 @@ export interface Zdravi { chyby: ChybaSkupina[]; behy: BehUlohy[]; webhooky: { z
 /** Lidské názvy automatických úloh (cronů). */
 export const NAZVY_ULOH: Record<string, string> = {
   "emaily-zakum": "Připomínky žákům (16:00)", "emaily-zakum-nanecisto": "Připomínky nanečisto (kontrola z adminu)", "daily-push": "Push připomínky a připomínky testů",
-  "weekly-parent-report": "Týdenní přehled rodičům (po 7:00)", "tydenni-analytika": "Týdenní report analytiky (po 7:00)", "test-reminders": "Připomínky testů (ručně)",
+  "weekly-parent-report": "Týdenní přehled rodičům (po 7:00)", "tydenni-analytika": "Týdenní report analytiky (po 7:00)", "test-reminders": "Připomínky testů (ručně)", "admin-souhrn": "Denní souhrn pro Karla (každou hodinu, posílá v nastavenou)",
 };
 
 // ── Limity tarifů (SY-05) a zálohy (SY-06) ──

@@ -11,6 +11,10 @@ import "./admin2.css";
 export const metadata: Metadata = {
   title: "MateMax Admin",
   robots: { index: false, follow: false, nocache: true },
+  // Samostatná aplikace na ploše (KO-11): vlastní manifest, ikona a název
+  manifest: "/admin-manifest.webmanifest",
+  appleWebApp: { capable: true, title: "MateMax Admin", statusBarStyle: "default" },
+  icons: { apple: "/api/icon?size=180&admin=1" },
 };
 
 export default async function AdminNovyLayout({ children }: { children: React.ReactNode }) {

@@ -7,6 +7,9 @@ import { zobraz } from "@/lib/admin2/sdileni";
 import { isoPred } from "@/lib/admin2/metriky";
 import { malyVzorek, wilson } from "@/lib/admin2/mala-cisla";
 import { kontrolyUloh, potlaceneUlohy } from "@/lib/admin2/kontroly";
+import { nactiSbirky, stavHry } from "@/lib/admin2/hra";
+import { podil } from "@/lib/admin2/mala-cisla";
+import { pragueDateStr } from "@/lib/date";
 import { ChybiMigraceUceni, MERI_SE_OD, NAZVY_PRIZNAKU, POPISY_PRIZNAKU, mrizka, nactiKarty, nactiOdpovedi, opakovani, statTemat, statUloh, type Odpoved, type Karta, type Priznak } from "@/lib/admin2/uceni";
 
 /**
@@ -15,7 +18,7 @@ import { ChybiMigraceUceni, MERI_SE_OD, NAZVY_PRIZNAKU, POPISY_PRIZNAKU, mrizka,
  */
 export const metadata = { title: "Učení · MateMax Admin" };
 type SP = Promise<Record<string, string | string[] | undefined>>;
-const TABY = [["temata", "Témata"], ["ulohy", "Úlohy"], ["mrizka", "Žáci × témata"], ["opakovani", "Opakování"]] as const;
+const TABY = [["temata", "Témata"], ["ulohy", "Úlohy"], ["mrizka", "Žáci × témata"], ["opakovani", "Opakování"], ["hra", "Hra a krystaly"]] as const;
 const OBDOBI = [["30", "30 dní"], ["90", "90 dní"], ["vse", "Od začátku"]] as const;
 const sek = (ms: number | null) => (ms === null ? "–" : ms < 60000 ? `${Math.round(ms / 1000)} s` : `${Math.floor(ms / 60000)} min ${Math.round((ms % 60000) / 1000)} s`);
 const ton = (u: number | null) => (u === null ? "seda" : u >= 75 ? "ok" : u >= 50 ? "pozor" : "spatne");
@@ -111,6 +114,35 @@ export default async function Uceni({ searchParams }: { searchParams: SP }) {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+    );
+  } else if (tab === "hra") {
+    const h = stavHry(z.zaci, await nactiSbirky(z.k, z.zaci), pragueDateStr());
+    const pocet = h.aktivni.length;
+    telo = (
+      <section className="a2-dva" data-testid="a2-hra">
+        <div className="a2-sekce">
+          <h2 className="a2-h2"><span>Využití herních prvků</span><Info>Z aktivních žáků (trénovali v posledních 30 dnech). Data z Hexíkovy Sbírky, ukládá se od listopadu 2026.</Info></h2>
+          {!pocet ? <Prazdne titulek="Zatím žádní aktivní žáci." /> : (
+            <div className="a2-karta">
+              {h.prvky.map((p) => <span key={p.klic} className="a2-radek a2-mezi"><span>{p.nazev}</span><span>{p.lide.length ? <Link href={`/admin/novy/zaci?ids=${p.lide.join(",")}`} style={{ color: "var(--a-modra)", fontWeight: 800 }}>{podil(p.lide.length, pocet)}</Link> : <b>0 z {pocet}</b>}</span></span>)}
+            </div>
+          )}
+          <h2 className="a2-h2"><span>Vracejí se po odměně?</span><Info>Kolik z aktivních žáků trénovalo v posledních 7 dnech: ti, kdo už otevřeli truhlu, proti těm, kdo ne. Jen orientačně, malý vzorek a nejde o příčinu.</Info></h2>
+          <div className="a2-karta">
+            <span className="a2-s">Otevřeli truhlu: <b>{podil(h.navrat.sOdmenou[0], h.navrat.sOdmenou[1])}</b> trénovali tento týden</span>
+            <span className="a2-s">Bez truhly: <b>{podil(h.navrat.bez[0], h.navrat.bez[1])}</b> trénovali tento týden</span>
+          </div>
+        </div>
+        <div className="a2-sekce">
+          <h2 className="a2-h2"><span>Krystaly</span></h2>
+          <div className="a2-karta">
+            <span className="a2-s">Získané celkem <b>{h.ziskano.toLocaleString("cs-CZ")}</b> · utracené <b>{h.utraceno.toLocaleString("cs-CZ")}</b> · nevyužité <b>{(h.ziskano - h.utraceno).toLocaleString("cs-CZ")}</b></span>
+            {h.zustatky.slice(0, 5).filter((x) => x.zustatek > 0).map((x) => <span key={x.id} className="a2-radek a2-mezi"><Link href={`/admin/novy/zaci/${x.id}`} style={{ color: "var(--a-modra)" }}>{jm(x.id)}</Link><span className="a2-s">{x.zustatek.toLocaleString("cs-CZ")} krystalů nevyužito</span></span>)}
+          </div>
+          <h2 className="a2-h2"><span>Nejoblíbenější odměny</span></h2>
+          {!h.oblibene.length ? <Prazdne titulek="Zatím nikdo nic nemá." /> : <div className="a2-karta">{h.oblibene.map((o) => <span key={o.nazev} className="a2-radek a2-mezi"><span>{o.nazev}</span><b>{o.lide}</b></span>)}</div>}
         </div>
       </section>
     );

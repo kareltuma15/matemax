@@ -5,6 +5,7 @@ import { nastavOdhlaseni } from "@/lib/emaily/odeslat";
 import { dokonciWebhook, prijmiWebhook, zapisStav } from "@/lib/zpravy-log";
 import { zapisChybu } from "@/lib/system-log";
 import { vlozDoSchranky } from "@/lib/schranka";
+import { upozorniAdmina } from "@/lib/admin-push";
 
 /**
  * Webhook Resendu (admin 2.1, ZP-02, ZP-06). Resend podepisuje přes Svix: hlavičky svix-id, svix-timestamp,
@@ -81,6 +82,7 @@ async function prijataOdpoved(d: Data): Promise<void> {
     zprava_id: zprava?.id ?? null, zdroj_id: d.email_id, detail: { prilohy: (e?.attachments ?? []).length },
   }]);
   if (vl.chyba) throw new Error(vl.chyba);
+  if (vl.vlozeno) await upozorniAdmina("odpoved", "Nová odpověď na e-mail", "Někdo odpověděl na e-mail z MateMaxu.", "/admin/novy/zpravy");
   if (zprava) await zapisStav({ zpravaId: zprava.id }, "odpovezeno", new Date().toISOString());
   // Kopie Karlovi, ať se nic neztratí (přeposlání přes Resend, beze změny obsahu)
   await resend.emails.receiving.forward({ emailId: d.email_id, to: KOPIE_ODPOVEDI, from: "MateMax odpovědi <noreply@matematika-snadno.cz>" }).catch(() => {});

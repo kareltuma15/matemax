@@ -6,6 +6,7 @@ import type Stripe from "stripe";
 import { posliEmail, premiumAktivni, platbaSeNepovedla } from "@/lib/emaily/rodice";
 import { dokonciWebhook, prijmiWebhook } from "@/lib/zpravy-log";
 import { zapisChybu } from "@/lib/system-log";
+import { upozorniAdmina } from "@/lib/admin-push";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -155,6 +156,7 @@ export async function POST(req: Request) {
           // Potvrzení „Vítejte v Premium“ plátci (rodiči), vedlejší efekt, nesmí shodit webhook
           const komu = session.customer_details?.email ?? session.customer_email;
           if (komu) await posliEmail(komu, premiumAktivni(), "premium", {}, { userId: session.metadata?.supabase_user_id ?? null }).catch(() => false);
+          await upozorniAdmina("platba", "Nová platba Premium", "Někdo si koupil MateMax Premium.", "/admin/novy/rust?tab=penize");
         }
         // Jednorázová platba za online test nanečisto
         if (session.mode === "payment" && session.metadata?.type === "online_test") {
@@ -199,6 +201,7 @@ export async function POST(req: Request) {
         // O stavu rozhodují události customer.subscription.updated/deleted.
         const invoice = event.data.object as Stripe.Invoice;
         console.warn("webhook: selhala platba faktury", invoice.id, "zákazník", invoice.customer);
+        if (invoice.attempt_count === 1) await upozorniAdmina("platba", "Platba se nepovedla", "Platba za Premium neprošla, Stripe ji zkusí znovu.", "/admin/novy/rust?tab=penize");
         // Náš e-mail jen při prvním selhání (Stripe pak zkouší znovu a případně posílá vlastní upozornění)
         if (invoice.attempt_count === 1 && invoice.customer_email) {
           const castka = typeof invoice.amount_due === "number"

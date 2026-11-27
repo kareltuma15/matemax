@@ -8,12 +8,14 @@ export async function GET(request: NextRequest) {
   const size = parseInt(searchParams.get("size") ?? "192");
   const radius = Math.round(size * 0.18);
   const fontSize = Math.round(size * 0.44);
+  // ?admin=1: fialová ikona aplikace MateMax Admin, ať se na ploše neplete s appkou pro žáky
+  const admin = searchParams.get("admin") === "1";
 
   return new ImageResponse(
     (
       <div
         style={{
-          background: "#0D1B3E",
+          background: admin ? "#5B55D6" : "#0D1B3E",
           width: size,
           height: size,
           display: "flex",

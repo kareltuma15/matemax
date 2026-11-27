@@ -129,6 +129,21 @@ Nový admin běží na `/admin/novy`, vedle starého. Starý admin (`/admin`) z�
   - Poslední záloha: zapisuje ji `scripts/zaloha-supabase.mjs` do `admin_nastaveni.posledni_zaloha`, upozornění po 7 dnech.
   - Souhlasy a návrh uchovávání dat. Zatím se nic nemaže, čeká na schválení.
 
+## Aplikace, upozornění, hra (B4 část 3)
+
+- **MateMax Admin na ploše** (KO-11): manifest `/admin-manifest.webmanifest` (fialová ikona `/api/icon?admin=1`, start `/admin/novy`), odkaz v `layout.tsx` adminu.
+- **Upozornění na telefon** (SY-07, `src/lib/admin-push.ts`):
+  - Odběry zařízení admina jsou v `admin_nastaveni.upozorneni`, ne v `push_subscriptions` žáků.
+  - Typy: platba a selhaná platba, odpověď / zpětná vazba / nahlášená chyba, chyba 3× za den, selhaná automatická úloha, nový žák (výchozí vypnuto), denní souhrn.
+  - Tiché hodiny podle Prahy. Posílá jen produkce. Text bez jmen a e-mailů.
+  - Nastavení: Systém → Upozornění na telefon. Na iPhonu jen z aplikace přidané na plochu.
+- **Denní souhrn** (DN-10): cron `/api/cron/admin-souhrn` každou hodinu, push odejde v nastavenou hodinu a otevře večerní kolečko.
+- **Pondělní e-mail** (PL-06): `tydenni-analytika` posílá týden v kostce ze stejných čísel jako admin (`plan.ts`) s odkazem do Plánu.
+- **Hra a krystaly** (UC-11, `src/lib/admin2/hra.ts`): Učení → Hra a krystaly.
+  - Využití prvků z aktivních žáků (30 dní), krystaly získané, utracené a nevyužité, nejoblíbenější odměny.
+  - „Vracejí se po odměně“ je jen orientačně.
+- **Přizpůsobení čísel na Dnes** (DN-06): pořadí a skryté dlaždice v `admin_nastaveni.dlazdice`.
+
 ## Tabulky adminu
 
 `admin_nastaveni`, `admin_ukoly`, `admin_doporuceni_stav`, `admin_poznamky`, `admin_stitky`, `admin_pouziti` (které sekce Karel otevírá), `admin_audit`, `admin_role`. Čte a píše jen server (service role).

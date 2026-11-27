@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { cistaOdpoved } from "@/lib/mereni-plan";
 import { vlozDoSchranky } from "@/lib/schranka";
+import { upozorniAdmina } from "@/lib/admin-push";
 
 /**
  * Nahlášená chyba v úloze (úprava appky 8): uloží se do Schránky adminu (schranka, druh chyba_ulohy).
@@ -36,5 +37,6 @@ export async function POST(req: NextRequest) {
     detail: { duvod, ...(odpoved ? { odpoved } : {}) }, zdroj_id: userId ? `${userId}:${uloha}:${den}`.slice(0, 120) : null,
   }]);
   if (chyba) return NextResponse.json({ error: "Nepodařilo se uložit" }, { status: 500 });
+  await upozorniAdmina("odpoved", "Nahlášená chyba v úloze", `Úloha ${uloha}`, "/admin/novy/zpravy?druh=chyba_ulohy");
   return NextResponse.json({ ok: true });
 }
