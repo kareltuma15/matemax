@@ -112,6 +112,25 @@ test.describe("nový admin, fáze B3 (demo data)", () => {
   }
 });
 
+test("appka žáka: mezerník a Enter v poznámce k nahlášené chybě píšou text, neposunou na další příklad", async ({ page }) => {
+  const ex = allExamples.find((e) => !e.moznosti && !e.image && !e.podulohy && !e.prirazeni && !e.latex && /^\d{1,4}$/.test(e.odpoved) && !e.trida)!;
+  await page.goto(`/nahled?ids=${ex.id}`);
+  const pole = page.locator("input[type=text], input[inputmode]").first();
+  await pole.fill(ex.odpoved);
+  await pole.press("Enter");
+  await expect(page.getByText("Správně!")).toBeVisible();
+  await page.getByTestId("nahlasit-chybu").click();
+  const poznamka = page.getByTestId("nahlasit-formular").locator("textarea");
+  await poznamka.click();
+  await page.keyboard.type("vysledek je jiny");
+  await page.keyboard.press("Enter");
+  await page.keyboard.type("radek");
+  await expect(poznamka).toHaveValue("vysledek je jiny\nradek");
+  // Karta zůstala na vyhodnocení (formulář hlášení je pořád otevřený)
+  await expect(page.getByTestId("nahlasit-formular")).toBeVisible();
+  await expect(page.getByText("Správně!")).toBeVisible();
+});
+
 test("appka žáka: Nahlásit chybu pod vyhodnocením úlohy (odeslání se v testu zachytí)", async ({ page }) => {
   const ex = allExamples.find((e) => e.moznosti && e.moznosti.length >= 2 && !e.image && !e.podulohy && !e.prirazeni)!;
   let poslano: Record<string, unknown> | null = null;

@@ -42,7 +42,7 @@ export default function NahlasitChybu({ ulohaId, odpoved }: { ulohaId: string; o
   };
 
   return (
-    <div className="mt-2 rounded-2xl p-3 flex flex-col gap-2" style={{ background: "#F5F6FA", border: "1px solid #E4E6EF" }} data-testid="nahlasit-formular">
+    <div className="mt-2 rounded-2xl p-3 flex flex-col gap-2" style={{ background: "#F5F6FA", border: "1px solid #E4E6EF" }} data-testid="nahlasit-formular" data-bez-zkratek>
       <p className="text-sm font-bold" style={{ color: "#0D1B3E" }}>Co je na úloze špatně?</p>
       <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Důvod">
         {DUVODY.map(([k, n]) => (

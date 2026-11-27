@@ -17,6 +17,7 @@ import VideoLessonHint from "./VideoLessonHint";
 import { klavesnice } from "@/lib/klavesnice";
 import { useZaznamOdpovedi, oznacOdeslani, oznacNapovedu, oznacPostup } from "@/lib/odpovedi-log";
 import NahlasitChybu from "./NahlasitChybu";
+import { pisePrave } from "@/lib/klavesy";
 
 /** Renderuje text nebo LaTeX podle typu příkladu */
 function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
@@ -105,6 +106,8 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (status === "idle") return;
+      // Píše poznámku k nahlášené chybě: mezerník a Enter patří do textu, ne k posunu na další příklad
+      if (pisePrave(e.target)) return;
       if (status === "correct" && (e.key === "Enter" || e.key === " ")) {
         e.preventDefault();
         onResult(true, input);
