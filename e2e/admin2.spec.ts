@@ -66,7 +66,7 @@ test.describe("nový admin (demo data)", () => {
     await expect(page.getByTestId("a2-dl-pravidelni")).toBeVisible();
     await expect(page.getByTestId("a2-dl-novi")).toBeVisible();
     await expect(page.getByTestId("a2-cil").first()).toBeVisible();
-    await expect(page.getByTestId("a2-nav-zaci").first()).toBeVisible();
+    await expect(page.getByTestId("a2-nav-zaci").locator("visible=true").first()).toBeVisible();
     await expect(page.getByText("Testovací", { exact: true })).toHaveCount(0);
     await bezPreteceni(page);
   });
@@ -136,7 +136,7 @@ test.describe("nový admin (demo data)", () => {
     await page.goto("/admin/novy");
     await page.getByTestId("a2-filtry").getByRole("button", { name: "30 dní" }).click();
     await expect(page).toHaveURL(/obdobi=30/);
-    await page.getByTestId("a2-nav-zaci").first().click();
+    await page.getByTestId("a2-nav-zaci").locator("visible=true").first().click();
     await expect(page).toHaveURL(/\/admin\/novy\/zaci\?obdobi=30/);
   });
 

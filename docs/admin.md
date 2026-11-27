@@ -63,6 +63,28 @@ Nový admin běží na `/admin/novy`, vedle starého. Starý admin (`/admin`) z�
 - „Od poslední návštěvy“: `admin_nastaveni.navsteva`. Nová návštěva začíná po 30 minutách nečinnosti.
 - Cíle sezóny a prahy jsou v `admin_nastaveni.nastaveni` (Systém → Nastavení).
 
+## Zprávy (fáze B1 + B2)
+
+- **Log zpráv** (`src/lib/zpravy-log.ts`): každý e-mail jde přes `posliResend` (Resend + zápis do `zpravy`), push přes `zapisPush`.
+  - Štítek `z` v Resendu = ID zprávy v logu, webhook podle něj zprávu najde.
+  - Stavy (`zpravy_stav`) z webhooku Resendu a ze service workeru (`/api/push/stav`). Stav zprávy nikdy nespadne na horší, vrácení a spam přepíšou dobrý (`lepsiStav`).
+  - Webhooky proti duplicitám: `webhooky` (svix-id / Stripe event.id).
+- **Schránka** (`/admin/novy/zpravy`): odpovědi na e-maily (webhook `email.received`, tělo přes API, kopie Karlovi), zpětná vazba (přenese se z `user_feedback` při otevření), nahlášené chyby v úlohách.
+  - Odpověď z adminu: testovací režim jde na adresu admina s TEST, ostrý chce potvrzení.
+  - Příjem odpovědí začne po nastavení poddomény `odpovedi.matematika-snadno.cz` v Resendu a proměnné `ODPOVEDI_ADRESA` ve Vercelu. Do té doby Reply-To = karel.tuma@matematika-snadno.cz.
+- **Odeslané**: tečky odesláno · doručeno · kliknuto · odpověděl, filtr problémů, doručitelnost za 30 dní.
+- **Šablony a dopad**: kolik různých žáků po zprávě trénovalo (den zprávy nebo dva další, aktivita je po dnech).
+- **Hromadné odeslání** (`/admin/novy/zpravy/hromadne`): segment → šablona → náhled konkrétních zpráv a kdo se přeskočí → test → potvrzení.
+  - Na serveru se přeskočí odhlášení, vrácené adresy a kdo stejnou šablonu dostal za 7 dní.
+  - Najednou max 50, nikdy přes 100 e-mailů za 24 h (Resend Free), 5 rezerva.
+- **Karta žáka → Zprávy**: zprávy žákovi i rodičům s historií stavů a co žák poslal do Schránky. Platby ze Stripe (`invoice_paid`, `charge_refunded` v `analytics_events`).
+
+## Večerní kolečko a upozornění (B2)
+
+- `/admin/novy/kolecko`: nová Schránka → fronta akcí (max 7) → cíle sezóny → plán týdne. Přejetí doprava = hotovo, doleva = odložit. Konec se zapíše do auditu (`kolecko_dokonceno`).
+- Zvonek (`src/lib/admin2/upozorneni.ts`): skládá se z dat za 7 dní (Schránka, platby, chyba 3+ za 24 h, selhaný cron nebo webhook, noví žáci). Přečteno = `admin_nastaveni.upozorneni_precteno`.
+- Systém → Zdraví systému (základ): chyby za 24 h podle otisku, poslední běh každé automatické úlohy (`behy_cronu`, obal `behCronu`), webhooky za 7 dní, e-maily za 24 h. Limity tarifů a zálohy v B4.
+
 ## Tabulky adminu
 
 `admin_nastaveni`, `admin_ukoly`, `admin_doporuceni_stav`, `admin_poznamky`, `admin_stitky`, `admin_pouziti` (které sekce Karel otevírá), `admin_audit`, `admin_role`. Čte a píše jen server (service role).

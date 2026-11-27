@@ -2,8 +2,10 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import Shell from "./Shell";
 import { stavAdmina } from "@/lib/admin2/auth";
-import { nactiDoporuceni, nactiKontext } from "@/lib/admin2/stranka";
+import { nactiDoporuceni, nactiKontext, nactiZaklad } from "@/lib/admin2/stranka";
+import { nactiUpozorneni, type Upozorneni } from "@/lib/admin2/upozorneni";
 import { ChybiMigrace } from "@/lib/admin2/data";
+import { pocetNovychVeSchrance } from "@/lib/admin2/zpravy";
 
 /**
  * Obal každé stránky nového adminu: ověří druhý faktor, spočítá odznaky (počet doporučení na Dnes)
@@ -17,9 +19,12 @@ export default async function Stranka({ sekce, titulek, drobky, demo = false, be
   const k = await nactiKontext();
   const odznaky: Record<string, number> = {};
   try { const d = await nactiDoporuceni(demo); odznaky.dnes = d.aktivni.length; } catch (e) { if (!(e instanceof ChybiMigrace)) console.error("[admin2] odznaky", e); }
+  try { odznaky.zpravy = await pocetNovychVeSchrance(k.demo || demo); } catch { /* bez odznaku */ }
+  let upozorneni: Upozorneni[] = [];
+  try { const z = await nactiZaklad(demo); upozorneni = await nactiUpozorneni(z.k, z.zaci); } catch (e) { if (!(e instanceof ChybiMigrace)) console.error("[admin2] upozornění", e); }
   return (
     <Suspense>
-      <Shell sekce={sekce} titulek={titulek} drobky={drobky} odznaky={odznaky} sdileni={k.sdileni} demo={k.demo || demo}>
+      <Shell sekce={sekce} titulek={titulek} drobky={drobky} odznaky={odznaky} sdileni={k.sdileni} demo={k.demo || demo} upozorneni={upozorneni}>
         {!s.maFaktor && !bezFaktoru && (
           <div className="a2-banner mfa" data-testid="a2-mfa-banner"><span><b>Zapni druhý faktor.</b> Admin vidí údaje dětí, heslo samo nestačí.</span><a className="a2-btn a2-male" href="/admin/novy/zabezpeceni">Nastavit</a></div>
         )}

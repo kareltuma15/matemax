@@ -16,6 +16,8 @@ import { zapisAudit } from "@/lib/admin-audit";
 import { stavAdmina } from "@/lib/admin2/auth";
 import { pragueDateStr } from "@/lib/date";
 import type { Zak } from "@/lib/admin2/typy";
+import { DRUHY_SCHRANKY, kroky as krokyZpravy, nazevSablony, nazevStavu, platbyZaka, zpravyZaka } from "@/lib/admin2/zpravy";
+import { kdy } from "@/lib/admin2/cas";
 
 /**
  * Karta žáka (ZA-04 až ZA-09) jako stránka s vlastní adresou: hlavička, shrnutí jednou větou,
@@ -26,7 +28,7 @@ export const metadata = { title: "Žák · MateMax Admin" };
 type P = Promise<{ id: string }>;
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
-const ZALOZKY: [string, string, string | null][] = [["prehled", "Přehled", null], ["osa", "Časová osa", null], ["platby", "Platby", null], ["uceni", "Učení", "B"], ["testy", "Testy", "B"], ["zpravy", "Zprávy", "B"], ["rodina", "Rodina", "B"]];
+const ZALOZKY: [string, string, string | null][] = [["prehled", "Přehled", null], ["osa", "Časová osa", null], ["platby", "Platby", null], ["uceni", "Učení", "B"], ["testy", "Testy", "B"], ["zpravy", "Zprávy", null], ["rodina", "Rodina", "B"]];
 const TYPY: [TypUdalosti | "", string][] = [["", "Vše"], ["trenink", "Trénink"], ["zpravy", "Zprávy"], ["platby", "Platby"], ["ucet", "Účet"], ["admin", "Admin"]];
 const cas = (iso: string | null) => (iso ? new Date(iso).toLocaleString("cs-CZ", { timeZone: "Europe/Prague", day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" }) : "");
 const za = (od: string, doo: string | null) => { if (!doo) return ""; const m = Math.round((Date.parse(doo) - Date.parse(od)) / 60000); return m < 60 ? `za ${Math.max(0, m)} min` : m < 1440 ? `za ${Math.round(m / 60)} h` : `za ${Math.round(m / 1440)} d`; };
@@ -90,6 +92,8 @@ export default async function KartaZaka({ params, searchParams }: { params: P; s
     ]);
     const zebricekSkryty = !!appMeta.zebricek_skryty;
     const prezdivka = prezdivkaUctu(id, meta);
+    const zpr = zalozka === "zpravy" ? await zpravyZaka(z.k, id) : null;
+    const platby = zalozka === "platby" ? await platbyZaka(z.k, id) : [];
     const odkazTab = (t: string) => `/admin/novy/zaci/${id}${t === "prehled" ? "" : `?tab=${t}`}`;
 
     const osaVypis = (omezit?: number) => {
@@ -184,13 +188,41 @@ export default async function KartaZaka({ params, searchParams }: { params: P; s
               <b>{vyber.premium === "stripe" ? "Platí Premium přes Stripe" : vyber.premium === "rucne" ? "Ručně udělené Premium" : vyber.premium === "zkusebni" ? "Zkušební období" : "Bez Premium"}</b>
               {vyber.premium_do && <span className="a2-s">Do {new Date(vyber.premium_do).toLocaleDateString("cs-CZ")}</span>}
               {osa.navstevy.flatMap((n) => n.polozky).filter((p) => p.typ === "platby").map((p, i) => <span key={i} className="a2-s">{cas(p.cas)} · {p.text}</span>)}
-              <span className="a2-s">Faktury, selhané platby a zrušení ze Stripe se začnou ukládat ve fázi B (webhooky předplatného). Do té doby je najdeš ve Stripe.</span>
+              {platby.map((p, i) => <span key={`s${i}`} className="a2-s">{cas(p.cas)} · {p.druh === "zaplaceno" ? "Zaplaceno" : "Vráceno"} {p.castka.toLocaleString("cs-CZ")} {p.mena === "CZK" ? "Kč" : p.mena}</span>)}
+              <span className="a2-s">Zaplacené faktury a vrácené platby ze Stripe se ukládají od 27. 11. 2026 (po přidání událostí ve Stripe). Starší jsou ve Stripe.</span>
             </div>
           </section>
         )}
-        {["uceni", "testy", "zpravy", "rodina"].includes(zalozka) && (
+        {zalozka === "zpravy" && zpr && (
+          <section className="a2-sekce" data-testid="a2-zpravy-zaka">
+            {zpr.chybi ? <Prazdne titulek="Chybí migrace pro Zprávy.">Spusť supabase/migrations/20261128_admin_b1.sql.</Prazdne> : (
+              <>
+                {zpr.schranka.length > 0 && (
+                  <>
+                    <h2 className="a2-h2"><span>Od žáka</span><Link href="/admin/novy/zpravy">Schránka</Link></h2>
+                    {zpr.schranka.map((p) => <div key={p.id} className={`a2-karta${p.stav === "nove" ? " a2-nova" : ""}`}><div className="a2-radek a2-mezi"><b>{DRUHY_SCHRANKY[p.druh]}</b><span className="a2-s">{kdy(p.created_at)}{p.stav === "vyrizeno" ? " · vyřízeno" : ""}</span></div>{p.text && <div className="a2-bublina">{p.text}</div>}</div>)}
+                  </>
+                )}
+                <h2 className="a2-h2"><span>Odeslané zprávy · {zpr.zpravy.length}</span></h2>
+                {zpr.zpravy.length === 0 ? <Prazdne titulek="Zatím nic.">Log zpráv běží od 27. 11. 2026. Starší e-maily jsou na časové ose.</Prazdne> : (
+                  <div className="a2-karta">
+                    {zpr.zpravy.map((m) => { const kr = krokyZpravy(m, zpr.stavy.get(m.id) ?? []); const hist = zpr.stavy.get(m.id) ?? []; return (
+                      <div key={m.id} className="a2-zprava">
+                        <span className="a2-t">{m.predmet ?? nazevSablony(m.sablona)}{m.prijemce_typ === "rodic" ? " (rodiči)" : ""}</span>
+                        <span className="a2-tecky" title={nazevStavu(m.stav)}><b className={kr.odeslano ? "ok" : "sp"} /><b className={kr.problem ? "sp" : kr.doruceno ? "ok" : ""} /><b className={kr.kliknuto ? "ok" : ""} /><b className={kr.odpoved ? "ok" : ""} /></span>
+                        <span className="a2-s" style={{ gridColumn: "1 / -1" }}>{m.kanal === "push" ? "push" : "e-mail"} · {cas(m.odeslano_at)} · {hist.filter((s) => s.stav !== "odeslano").map((s) => `${nazevStavu(s.stav).toLowerCase()} ${za(m.odeslano_at, s.cas)}`).join(" · ") || nazevStavu(m.stav).toLowerCase()}{m.testovaci ? " · test" : ""}</span>
+                      </div>
+                    ); })}
+                  </div>
+                )}
+                <p className="a2-s">Tečky: odesláno · doručeno (u push zobrazeno) · kliknuto · odpověděl.</p>
+              </>
+            )}
+          </section>
+        )}
+        {["uceni", "testy", "rodina"].includes(zalozka) && (
           <Prazdne titulek="Přijde ve fázi B (do 22. 1.).">
-            {zalozka === "uceni" ? "Témata, posledních 50 odpovědí s časem, opakování a odhad bodů. Data se sbírají od 27. 11. 2026." : zalozka === "testy" ? `Body z testů nanečisto vedle tréninku. ${vyber.propojeno_vysledky ? `Účet je propojený s Vyhodnocením od ${new Date(vyber.propojeno_vysledky).toLocaleDateString("cs-CZ")}.` : "Účet zatím není propojený s Vyhodnocením."}` : zalozka === "zpravy" ? "Všechny e-maily a push se stavem doručení a kliknutím. Zatím jsou odeslané e-maily na časové ose." : `Rodič, sourozenci a odběr reportu. E-mail rodiče: ${skryjEmail(vyber.rodic_email, z.k.sdileni) ?? "nemá"}.`}
+            {zalozka === "uceni" ? "Témata, posledních 50 odpovědí s časem, opakování a odhad bodů. Data se sbírají od 27. 11. 2026." : zalozka === "testy" ? `Body z testů nanečisto vedle tréninku. ${vyber.propojeno_vysledky ? `Účet je propojený s Vyhodnocením od ${new Date(vyber.propojeno_vysledky).toLocaleDateString("cs-CZ")}.` : "Účet zatím není propojený s Vyhodnocením."}`  : `Rodič, sourozenci a odběr reportu. E-mail rodiče: ${skryjEmail(vyber.rodic_email, z.k.sdileni) ?? "nemá"}.`}
           </Prazdne>
         )}
       </>

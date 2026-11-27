@@ -7,10 +7,11 @@ import { stavAdmina } from "@/lib/admin2/auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { vsechnyUcty } from "@/lib/admin-data";
 import { isoPred } from "@/lib/admin2/metriky";
+import { NAZVY_ULOH, nactiZdravi } from "@/lib/admin2/zdravi";
 
 /**
  * Systém (fáze A): zabezpečení (druhý faktor), nastavení (SY-03), audit (SY-02), testovací účty
- * a které sekce adminu používáš (admin se učí). Zdraví, limity a zálohy přijdou ve fázi B.
+ * a které sekce adminu používáš (admin se učí). Základ zdraví systému (B2), limity a zálohy přijdou v B4.
  */
 export const metadata = { title: "Systém · MateMax Admin" };
 
@@ -19,10 +20,12 @@ const NAZVY_AKCI: Record<string, string> = {
   testovaci_zmeneno: "změnil testovací účet", utrata_zapsana: "zapsal útratu za reklamu", poznamka_zapsana: "zapsal poznámku do grafu", email_odeslan_rucne: "poslal e-mail",
   export_ucty: "exportoval data", doporuceni_zmeneno: "vyřídil doporučení", ukol_zmenen: "upravil úkol", poznamka_zaka: "zapsal poznámku k žákovi", stitek_zmenen: "změnil štítky",
   nastaveni_zmeneno: "změnil nastavení", trida_zmenena: "změnil třídu", zebricek_zmenen: "upravil žebříček", reset_hesla_odeslan: "poslal odkaz na heslo", ucet_deaktivovan: "deaktivoval účet", ucet_smazan: "smazal účet", hodnoceni_ulozeno: "uložil hodnocení testu",
+  schranka_zmenena: "vyřídil položku Schránky", hromadne_odeslano: "hromadně odeslal e-mail", kolecko_dokonceno: "prošel večerní kolečko",
 };
 
 export default async function Nastaveni() {
   const [k, n, s] = await Promise.all([nactiKontext(), nactiNastaveni(), stavAdmina(true)]);
+  const zdravi = await nactiZdravi(k.demo);
   let audit: { akce: string; created_at: string; vysledek: string; detail: Record<string, unknown> }[] = [];
   let pouziti: { sekce: string; pocet: number }[] = [];
   let testovaci = 0;
@@ -68,8 +71,28 @@ export default async function Nastaveni() {
             <span>{testovaci} testovacích účtů, admin účet a zařízení „Nepočítat“. Roboti a náhledy odkazů se neměří vůbec.</span>
             <span className="a2-s">Účet označíš jako testovací na kartě žáka (⋯ → Označit jako testovací).</span>
           </div>
-          <h2 className="a2-h2">Zdraví, limity a zálohy</h2>
-          <div className="a2-prazdne"><b>Přijde ve fázi B.</b><span>Chyby, běh cronů, webhooky, využití tarifů (Supabase, Vercel Pro, Resend Free) a datum poslední zálohy.</span></div>
+          <h2 className="a2-h2" id="zdravi">Zdraví systému</h2>
+          {zdravi.chybi ? <div className="a2-prazdne"><b>Chybí migrace.</b><span>Spusť supabase/migrations/20261128_admin_b1.sql.</span></div> : (
+            <div className="a2-sekce" data-testid="a2-zdravi">
+              <div className="a2-karta">
+                <b>Chyby za 24 h: {zdravi.chyby.reduce((s, c) => s + c.pocet, 0)}</b>
+                {!zdravi.chyby.length && <span className="a2-s">Žádné. Chyby se zapisují od 27. 11. 2026.</span>}
+                {zdravi.chyby.slice(0, 8).map((c) => <span key={c.otisk} className="a2-s"><b style={{ color: c.pocet >= 3 ? "var(--a-spatne)" : "var(--a-text)" }}>{c.pocet}×</b> {c.zdroj === "klient" ? "appka" : c.zdroj === "server" ? "server" : c.zdroj} · {c.cesta ?? "?"} · {c.zprava.slice(0, 90)}{c.zaku ? ` · ${c.zaku} ${c.zaku === 1 ? "žák" : "žáci"}` : ""} · naposledy {new Date(c.posledni).toLocaleTimeString("cs-CZ", { timeZone: "Europe/Prague", hour: "2-digit", minute: "2-digit" })}</span>)}
+              </div>
+              <div className="a2-karta">
+                <b>Automatické úlohy (poslední běh)</b>
+                {!zdravi.behy.length && <span className="a2-s">Zatím žádný běh. Zapisují se od 27. 11. 2026, první v 16:00.</span>}
+                {zdravi.behy.map((b) => <span key={b.uloha} className="a2-radek a2-mezi" style={{ flexWrap: "nowrap" }}><span>{NAZVY_ULOH[b.uloha] ?? b.uloha}{b.ok === false ? <b style={{ color: "var(--a-spatne)" }}> selhala{b.chyba ? `: ${b.chyba}` : ""}</b> : b.ok === null ? " · běží nebo spadla" : ""}</span><span className="a2-s" style={{ whiteSpace: "nowrap" }}>{new Date(b.zacatek).toLocaleString("cs-CZ", { timeZone: "Europe/Prague", day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" })}{b.konec ? ` · ${Math.max(0, Math.round((Date.parse(b.konec) - Date.parse(b.zacatek)) / 1000))} s` : ""}</span></span>)}
+              </div>
+              <div className="a2-karta">
+                <b>Webhooky za 7 dní</b>
+                {!zdravi.webhooky.length && <span className="a2-s">Zatím žádné. Resend a Stripe se zapisují od 27. 11. 2026.</span>}
+                {zdravi.webhooky.map((w) => <span key={w.zdroj + w.stav} className="a2-s">{w.zdroj === "stripe" ? "Stripe" : "Resend"} · {w.stav === "zpracovano" ? "zpracováno" : w.stav === "ignorovano" ? "bez zprávy v logu" : w.stav === "chyba" ? "chyba" : "přijato"}: {w.pocet}</span>)}
+                <span className="a2-s">E-maily za 24 h: {zdravi.emaily24h} ze 100 (Resend Free).</span>
+              </div>
+              <span className="a2-s">Limity tarifů a zálohy přijdou v další části fáze B.</span>
+            </div>
+          )}
         </div>
       </div>
     </Stranka>

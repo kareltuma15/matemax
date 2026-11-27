@@ -86,6 +86,7 @@ export default async function Dnes({ searchParams }: { searchParams: SP }) {
             <KartaAkce key={d.klic} klic={d.klic} pravidlo={d.pravidlo} oblast={d.oblast} titulek={d.titulek} proc={d.proc}
               lide={d.lide.map((id) => ({ id, jmeno: jm(id), trida: podleId.get(id)?.trida ?? 9 }))} akce={d.akce} palec={stavy.get(d.klic)?.palec ?? null} naostro={z.nastaveni.emailyNaostro} />
           ))}
+          <Link className="a2-btn a2-akc" href={`/admin/novy/kolecko${z.k.demo && demo ? "?demo=1" : ""}`} style={{ alignSelf: "flex-start" }} data-testid="a2-spustit-kolecko">Spustit večerní kolečko</Link>
         </section>
 
         <section className="a2-sekce" aria-labelledby="h-od">

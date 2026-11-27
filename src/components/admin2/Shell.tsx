@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import Hledani from "./Hledani";
+import Zvonek from "./Zvonek";
+import type { Upozorneni } from "@/lib/admin2/upozorneni";
 import { ToastProvider } from "./Toast";
 import { prepniRezim, zapisPouziti } from "@/app/(admin)/admin/novy/akce";
 
@@ -17,7 +19,7 @@ export interface Sekce { klic: string; nazev: string; href: string; odznak?: num
 export const SEKCE: Sekce[] = [
   { klic: "dnes", nazev: "Dnes", href: "/admin/novy", mobil: true },
   { klic: "zaci", nazev: "Žáci", href: "/admin/novy/zaci", mobil: true },
-  { klic: "zpravy", nazev: "Zprávy", href: "/admin/emaily", mobil: true, pozn: "starý vzhled" },
+  { klic: "zpravy", nazev: "Zprávy", href: "/admin/novy/zpravy", mobil: true },
   { klic: "plan", nazev: "Plán", href: "/admin/novy/plan", mobil: true },
   { klic: "uceni", nazev: "Učení", href: "/admin/novy/uceni", pozn: "fáze B" },
   { klic: "obsah", nazev: "Obsah", href: "/admin/obsah", pozn: "starý vzhled" },
@@ -38,8 +40,8 @@ const IKONY: Record<string, React.ReactNode> = {
 
 const FILTRY = ["obdobi", "od", "do", "trida", "zdroj"];
 
-export default function Shell({ sekce, titulek, drobky, odznaky, sdileni, demo, children }: {
-  sekce: string; titulek: string; drobky?: { nazev: string; href: string }[]; odznaky: Record<string, number>; sdileni: boolean; demo: boolean; children: React.ReactNode;
+export default function Shell({ sekce, titulek, drobky, odznaky, sdileni, demo, upozorneni = [], children }: {
+  sekce: string; titulek: string; drobky?: { nazev: string; href: string }[]; odznaky: Record<string, number>; sdileni: boolean; demo: boolean; upozorneni?: Upozorneni[]; children: React.ReactNode;
 }) {
   const pathname = usePathname() ?? "";
   const sp = useSearchParams();
@@ -99,6 +101,7 @@ export default function Shell({ sekce, titulek, drobky, odznaky, sdileni, demo, 
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
                 <span className="hidden lg:inline">Hledat</span><kbd>Ctrl K</kbd>
               </button>
+              <Zvonek seznam={upozorneni} demo={demo} />
               <button type="button" className="a2-ikbtn" aria-pressed={sdileni} disabled={pending} onClick={() => start(() => prepniRezim("sdileni", !sdileni))} title="Režim sdílení: skryje jména, e-maily a ID" data-testid="a2-sdileni">
                 {sdileni ? "Sdílení ✓" : "Sdílení"}
               </button>
