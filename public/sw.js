@@ -79,14 +79,21 @@ self.addEventListener("push", (e) => {
       icon: "/api/icon?size=192",
       badge: "/api/icon?size=96",
       tag: "matemax-reminder",
-      data: { url: data.url },
-    })
+      data: { url: data.url, z: data.z },
+    }).then(() => nahlasStav(data.z, "zobrazeno"))
   );
 });
+
+// Zobrazení a klepnutí na push (admin → Zprávy). Posílá se jen náhodné ID zprávy, nic o žákovi.
+function nahlasStav(z, stav) {
+  if (typeof z !== "string") return Promise.resolve();
+  return fetch("/api/push/stav", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ z, stav }) }).catch(() => {});
+}
 
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
   const url = e.notification.data?.url ?? "/trenink";
+  nahlasStav(e.notification.data?.z, "kliknuto");
   e.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
       for (const client of clients) {

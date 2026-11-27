@@ -4,6 +4,8 @@ import webpush from "web-push";
 import { supabase } from "@/lib/supabase";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { runTestReminders } from "@/lib/test-reminders";
+import { zapisPush } from "@/lib/zpravy-log";
+import { behCronu } from "@/lib/system-log";
 
 if (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
@@ -73,7 +75,7 @@ function genericMessage(
 
 // ─── Handler ───────────────────────────────────────────────────────────────
 
-export async function POST(req: NextRequest) {
+async function odesli(req: NextRequest) {
   const auth = req.headers.get("authorization");
   const expected = process.env.CRON_SECRET ? `Bearer ${process.env.CRON_SECRET}` : null;
   if (!expected || auth !== expected) {
@@ -173,6 +175,8 @@ export async function POST(req: NextRequest) {
     return true;
   });
 
+  // ID zprávy jde do payloadu: service worker podle něj nahlásí zobrazení a kliknutí (log zpráv, admin → Zprávy)
+  const odeslane: { id: string; uid: string | null; title: string; serie: boolean }[] = [];
   const results = await Promise.allSettled(
     filteredRows.map((row: { endpoint: string; subscription: string; user_id: string | null }) => {
       const uid = row.user_id;
@@ -184,10 +188,16 @@ export async function POST(req: NextRequest) {
         ? streakMessage(name, streak)
         : genericMessage(uid, name, level, dayOfWeek);
 
-      const payload = JSON.stringify({ title, body, url: "/trenink" });
+      const id = crypto.randomUUID();
+      odeslane.push({ id, uid, title, serie: streak >= 3 });
+      const payload = JSON.stringify({ title, body, url: "/trenink", z: id });
       return webpush.sendNotification(JSON.parse(row.subscription), payload);
     })
   );
+  await Promise.all(results.map((r, i) => zapisPush({
+    sablona: odeslane[i].serie ? "push_serie" : "push_pripominka", prijemceTyp: "zak", userId: odeslane[i].uid,
+    predmet: odeslane[i].title, ok: r.status === "fulfilled", chyba: r.status === "rejected" ? String((r.reason as { statusCode?: number })?.statusCode ?? r.reason) : undefined,
+  }, odeslane[i].id)));
 
   const sent   = results.filter((r) => r.status === "fulfilled").length;
   const failed = results.filter((r) => r.status === "rejected").length;
@@ -208,11 +218,17 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, sent, failed, skipped, removed: gone.length, reminders });
 }
 
+export async function POST(req: NextRequest) {
+  // Bez tajemství se běh nezapisuje (cizí volání nesmí plnit log cronů)
+  if (!process.env.CRON_SECRET || req.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  return behCronu("daily-push", () => odesli(req));
+}
+
 export async function GET(req: NextRequest) {
   const auth = req.headers.get("authorization");
   const expected = process.env.CRON_SECRET ? `Bearer ${process.env.CRON_SECRET}` : null;
   if (!expected || auth !== expected) {
     return NextResponse.json({ endpoint: "daily-push cron", requiresSecret: true });
   }
-  return POST(req);
+  return behCronu("daily-push", () => odesli(req));
 }

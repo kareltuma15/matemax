@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { runTestReminders } from "@/lib/test-reminders";
+import { behCronu } from "@/lib/system-log";
 
 // Připomínky před testem nanečisto.
 //
@@ -20,7 +21,7 @@ export async function GET(req: NextRequest) {
   if (!expected || auth !== expected) {
     return NextResponse.json({ endpoint: "test-reminders cron", requiresSecret: true });
   }
-  return handler();
+  return behCronu("test-reminders", handler);
 }
 
 export async function POST(req: NextRequest) {
@@ -29,5 +30,5 @@ export async function POST(req: NextRequest) {
   if (!expected || auth !== expected) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  return handler();
+  return behCronu("test-reminders", handler);
 }

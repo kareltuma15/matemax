@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { denniBeh } from "@/lib/emaily/denni-beh";
+import { behCronu } from "@/lib/system-log";
 
 /** Denní připomínky žákům (každý den 15:00 UTC = 16:00 v Praze v zimě, po škole). Viz src/lib/emaily. */
 export const maxDuration = 120;
@@ -19,9 +20,9 @@ async function handler(nanecisto: boolean) {
 
 export async function GET(req: NextRequest) {
   if (!povoleno(req)) return NextResponse.json({ endpoint: "emaily-zakum cron", requiresSecret: true });
-  return handler(req.nextUrl.searchParams.get("nanecisto") === "1");
+  { const n = req.nextUrl.searchParams.get("nanecisto") === "1"; return behCronu(n ? "emaily-zakum-nanecisto" : "emaily-zakum", () => handler(n)); }
 }
 export async function POST(req: NextRequest) {
   if (!povoleno(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  return handler(req.nextUrl.searchParams.get("nanecisto") === "1");
+  { const n = req.nextUrl.searchParams.get("nanecisto") === "1"; return behCronu(n ? "emaily-zakum-nanecisto" : "emaily-zakum", () => handler(n)); }
 }

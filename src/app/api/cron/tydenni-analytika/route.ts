@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { spocitejAnalytiku, shrnutiTydne } from "@/lib/analytika-server";
+import { behCronu } from "@/lib/system-log";
 
 /**
  * Týdenní report analytiky (každé pondělí 6:00 UTC = 7:00 v Praze): shrnutí posledních 7 dní proti předchozím 7
@@ -33,9 +34,9 @@ async function handler() {
 const povoleno = (req: NextRequest) => !!process.env.CRON_SECRET && req.headers.get("authorization") === `Bearer ${process.env.CRON_SECRET}`;
 export async function GET(req: NextRequest) {
   if (!povoleno(req)) return NextResponse.json({ endpoint: "tydenni-analytika cron", requiresSecret: true });
-  return handler();
+  return behCronu("tydenni-analytika", handler);
 }
 export async function POST(req: NextRequest) {
   if (!povoleno(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  return handler();
+  return behCronu("tydenni-analytika", handler);
 }

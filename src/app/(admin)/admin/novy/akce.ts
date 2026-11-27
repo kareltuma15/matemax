@@ -14,6 +14,7 @@ import { nactiNastaveni, ulozNastaveni, type Nastaveni } from "@/lib/admin2/nast
 import { obsahEmailu, type EmailZaka } from "@/lib/emaily/katalog";
 import { sestavHtml, sestavText, esc, type ObsahEmailu } from "@/lib/emaily/sablona";
 import { posliEmailZakovi } from "@/lib/emaily/odeslat";
+import { posliResend } from "@/lib/zpravy-log";
 import { pragueDateStr } from "@/lib/date";
 import { chybaPrezdivky } from "@/lib/prezdivka";
 
@@ -158,11 +159,10 @@ export async function ulozSegment(nazev: string, dotaz: string): Promise<void> {
 const TEST_OD = "MateMax Admin (TEST) <noreply@matematika-snadno.cz>";
 
 async function posliTest(komu: string, obsah: ObsahEmailu, proKoho: string): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) return false;
-  const { Resend } = await import("resend");
   const o = { ...obsah, predmet: `TEST: ${obsah.predmet} (pro ${proKoho})` };
-  const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({ from: TEST_OD, to: komu, subject: o.predmet, html: sestavHtml(o), text: sestavText(o), tags: [{ name: "email", value: "admin_test" }] });
-  return !error;
+  // Log zpráv: testovací, na adresu admina (ve Zprávách se dá odfiltrovat)
+  const r = await posliResend({ from: TEST_OD, to: komu, subject: o.predmet, html: sestavHtml(o), text: sestavText(o), tags: [{ name: "email", value: "admin_test" }] }, { sablona: "admin_test", prijemceTyp: "admin", testovaci: true });
+  return r.ok;
 }
 
 export interface VysledekOdeslani { rezim: "test" | "ostry"; odeslano: number; preskoceno: number; chyby: number; zprava: string }

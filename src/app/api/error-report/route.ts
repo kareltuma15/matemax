@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { zapisChybu } from "@/lib/system-log";
 
 const ALERT_COOLDOWN_MS = 5 * 60 * 1000;
 const lastAlerted = new Map<string, number>();
@@ -58,6 +59,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         properties: { type, message: cleanMessage, stack: cleanStack, source, lineno, colno, url, digest },
       });
   }
+
+  // Zdraví systému v adminu (počet, poslední výskyt). Z adresy jen šablona trasy, žádné parametry.
+  let cesta: string | null = null;
+  try { cesta = url ? new URL(url).pathname : null; } catch { cesta = null; }
+  // Jen produkce: vývojový server míří na stejnou databázi a jeho chyby do Zdraví nepatří
+  if (process.env.NODE_ENV === "production") await zapisChybu({ zdroj: "klient", zprava: cleanMessage, cesta, detail: { typ: type, ...(digest ? { digest } : {}), ...(source ? { soubor: String(source).split("?")[0].slice(-120), radek: lineno ?? null } : {}) } });
 
   // Send Resend alert (rate limited per error fingerprint)
   if (process.env.NODE_ENV !== "production") {

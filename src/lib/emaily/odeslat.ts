@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { APP_URL, sestavHtml, sestavText } from "./sablona";
 import { obsahEmailu, PRIPOMINKY, type DataZaka, type EmailZaka } from "./katalog";
 import type { EmailovyStav } from "./rozhodnuti";
+import { adresaOdpovedi, posliResend } from "@/lib/zpravy-log";
 
 /**
  * Odeslání e-mailu žákovi přes Resend + záznam do app_metadata.emaily (kdy co odešlo, strop) a do analytics_events
@@ -11,7 +12,6 @@ import type { EmailovyStav } from "./rozhodnuti";
  */
 
 const OD = "Hexík z MateMaxu <noreply@matematika-snadno.cz>";
-const ODPOVEDI = "karel.tuma@matematika-snadno.cz";
 
 function tajemstvi(): string {
   return process.env.EMAILY_SECRET || process.env.CRON_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
@@ -49,26 +49,22 @@ export async function posliEmailZakovi(user: User, id: EmailZaka, data: DataZaka
 
   const obsah = obsahEmailu(id, data);
   const odkazy = odkazyUctu(user.id);
-  try {
-    const { Resend } = await import("resend");
-    const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({
-      from: OD,
-      to: user.email,
-      replyTo: ODPOVEDI,
-      subject: obsah.predmet,
-      html: sestavHtml(obsah, odkazy),
-      text: sestavText(obsah, odkazy),
-      headers: {
-        // Odhlášení jedním klikem přímo v Gmailu / Seznamu (RFC 8058)
-        "List-Unsubscribe": `<${odkazy.api}>`,
-        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
-      },
-      tags: [{ name: "email", value: id }],
-    });
-    if (error) return { ok: false, chyba: error.message };
-  } catch (e) {
-    return { ok: false, chyba: e instanceof Error ? e.message : String(e) };
-  }
+  // Odeslání + log zpráv (admin → Zprávy, karta žáka)
+  const r = await posliResend({
+    from: OD,
+    to: user.email,
+    replyTo: adresaOdpovedi(),
+    subject: obsah.predmet,
+    html: sestavHtml(obsah, odkazy),
+    text: sestavText(obsah, odkazy),
+    headers: {
+      // Odhlášení jedním klikem přímo v Gmailu / Seznamu (RFC 8058)
+      "List-Unsubscribe": `<${odkazy.api}>`,
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+    },
+    tags: [{ name: "email", value: id }],
+  }, { sablona: id, prijemceTyp: "zak", userId: user.id });
+  if (!r.ok) return { ok: false, chyba: r.chyba };
 
   // Zápis: kdy co odešlo (a strop připomínek). Uvítání se do stropu nepočítá.
   // Čerstvá metadata (volající mohl mezitím zapsat jiný klíč, např. welcome_sent_at), ať se nic nepřepíše.

@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { supabaseAdmin } from "../supabase-admin";
 import { esc, odkaz, sestavHtml, sestavText, APP_URL, type ObsahEmailu } from "./sablona";
+import { adresaOdpovedi, posliResend } from "../zpravy-log";
 
 /**
  * E-maily rodičům a plátcům (krok 2, mockup e-mailů schválený Karlem 24. 11. 2026). Vykání, podpis Matematika Snadno.
@@ -8,7 +9,6 @@ import { esc, odkaz, sestavHtml, sestavText, APP_URL, type ObsahEmailu } from ".
  */
 
 const OD = "MateMax <noreply@matematika-snadno.cz>";
-const ODPOVEDI = "karel.tuma@matematika-snadno.cz";
 
 export function pozvankaRodice(jmenoDitete: string, odkazPotvrzeni: string): ObsahEmailu {
   const j = esc(jmenoDitete);
@@ -68,14 +68,14 @@ export function platbaSeNepovedla(castka: string | null, odkazPlatby: string | n
 export async function posliEmail(komu: string, obsah: ObsahEmailu, stitek: string, odkazy: { nastaveni?: string; odhlasit?: string; api?: string } = {}, zaznam: { userId?: string | null; vlastnosti?: Record<string, string> } = {}): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) { console.warn(`[emaily] RESEND_API_KEY chybí, ${stitek} neodeslán`); return false; }
   try {
-    const { Resend } = await import("resend");
-    const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({
-      from: OD, to: komu, replyTo: ODPOVEDI, subject: obsah.predmet,
+    // Odeslání + log zpráv (admin → Zprávy; u rodiče je user_id dítě nebo plátce, ke kterému e-mail patří)
+    const r = await posliResend({
+      from: OD, to: komu, replyTo: adresaOdpovedi(), subject: obsah.predmet,
       html: sestavHtml(obsah, odkazy), text: sestavText(obsah, odkazy),
       headers: odkazy.api ? { "List-Unsubscribe": `<${odkazy.api}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : undefined,
       tags: [{ name: "email", value: stitek }],
-    });
-    if (error) { console.error(`[emaily] ${stitek}: Resend odmítl`, error); return false; }
+    }, { sablona: stitek, prijemceTyp: "rodic", userId: zaznam.userId ?? null });
+    if (!r.ok) { console.error(`[emaily] ${stitek}: Resend odmítl`, r.chyba); return false; }
     // Záznam pro analytiku e-mailů (Admin → E-maily)
     await supabaseAdmin?.from("analytics_events").insert({ user_id: zaznam.userId ?? null, event_name: "email_sent", properties: { e: stitek, ...(zaznam.vlastnosti ?? {}) } });
     return true;

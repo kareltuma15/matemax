@@ -4,6 +4,8 @@ import { stripe } from "@/lib/stripe";
 import { sendEnrollmentConfirmation } from "@/lib/online-test-emails";
 import type Stripe from "stripe";
 import { posliEmail, premiumAktivni, platbaSeNepovedla } from "@/lib/emaily/rodice";
+import { dokonciWebhook, prijmiWebhook } from "@/lib/zpravy-log";
+import { zapisChybu } from "@/lib/system-log";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -120,8 +122,28 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  // Proti duplicitám (Stripe stejnou událost někdy doručí víckrát) a pro Zdraví systému v adminu
+  const objekt = event.data.object as { id?: string };
+  if ((await prijmiWebhook("stripe", event.id, event.type, { objekt: objekt.id ?? null })) === "duplicita") {
+    return NextResponse.json({ received: true, duplicita: true });
+  }
+
   try {
     switch (event.type) {
+      // Peníze v adminu (RU-05, karta žáka → Platby): zaplacená faktura a vrácená platba, jen částka a ID
+      case "invoice.paid": {
+        const inv = event.data.object as Stripe.Invoice;
+        const uid = inv.customer ? await findUserId(inv.customer as string).catch(() => null) : null;
+        await supabaseAdmin.from("analytics_events").insert({ user_id: uid, event_name: "invoice_paid", properties: { castka: inv.amount_paid, mena: inv.currency, faktura: inv.id, duvod: inv.billing_reason ?? null } });
+        break;
+      }
+      case "charge.refunded": {
+        const ch = event.data.object as Stripe.Charge;
+        const uid = ch.customer ? await findUserId(ch.customer as string).catch(() => null) : null;
+        await supabaseAdmin.from("analytics_events").insert({ user_id: uid, event_name: "charge_refunded", properties: { castka: ch.amount_refunded, mena: ch.currency, platba: ch.id } });
+        break;
+      }
+
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
         if (session.mode === "subscription" && session.customer) {
@@ -189,8 +211,12 @@ export async function POST(req: Request) {
     }
   } catch (err) {
     console.error("Webhook handler error:", err);
+    const zprava = err instanceof Error ? err.message : String(err);
+    await dokonciWebhook("stripe", event.id, "chyba", zprava);
+    await zapisChybu({ zdroj: "webhook", zprava: `Stripe ${event.type}: ${zprava}`, cesta: "/api/stripe/webhook" });
     return NextResponse.json({ error: "Handler error" }, { status: 500 });
   }
 
+  await dokonciWebhook("stripe", event.id, "zpracovano");
   return NextResponse.json({ received: true });
 }

@@ -3,6 +3,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { TEST_TOPICS, TEST_TOPIC_LABELS, TEST_MAX_POINTS } from "@/lib/online-test-topics";
 import { ADRESA_FIRMY } from "@/lib/emaily/sablona";
+import { adresaOdpovedi, posliResend } from "@/lib/zpravy-log";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://matemax.matematika-snadno.cz";
 // Ověřená doména — stejná, ze které chodí ostatní maily z aplikace
@@ -191,24 +192,17 @@ export async function POST(
 </body>
 </html>`;
 
-  const { Resend } = await import("resend");
-  const resend = new Resend(process.env.RESEND_API_KEY);
-
-  try {
-    // Resend SDK nevyhazuje výjimku při API chybě — vrací { data, error }.
-    // Bez kontroly by se odmítnutý email tvářil jako úspěšně odeslaný.
-    const { error: sendErr } = await resend.emails.send({
-      from: FROM,
-      to: email,
-      subject: `Výsledek testu nanečisto — ${total} z ${TEST_MAX_POINTS} bodů`,
-      html,
-    });
-    if (sendErr) {
-      console.error("send-email: Resend odmítl odeslání", sendErr);
-      return NextResponse.json({ error: "Odeslání emailu selhalo" }, { status: 500 });
-    }
-  } catch (err) {
-    console.error("send-email: Resend error", err);
+  // Odeslání + log zpráv (admin → Zprávy). Odmítnutý e-mail vrátí ok: false, netváří se jako odeslaný.
+  const r = await posliResend({
+    from: FROM,
+    to: email,
+    replyTo: adresaOdpovedi(),
+    subject: `Výsledek testu nanečisto — ${total} z ${TEST_MAX_POINTS} bodů`,
+    html,
+    tags: [{ name: "email", value: "vysledek_testu" }],
+  }, { sablona: "vysledek_testu", prijemceTyp: "jiny" });
+  if (!r.ok) {
+    console.error("send-email: Resend odmítl odeslání", r.chyba);
     return NextResponse.json({ error: "Odeslání emailu selhalo" }, { status: 500 });
   }
 

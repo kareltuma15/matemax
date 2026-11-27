@@ -31,6 +31,12 @@ export const onRequestError: Instrumentation.onRequestError = async (
     return;
   }
 
+  // Zdraví systému v adminu: každý výskyt (upozornění e-mailem dál nejvýš jednou za 5 minut)
+  try {
+    const { zapisChybu } = await import("@/lib/system-log");
+    await zapisChybu({ zdroj: "server", zprava: error.message ?? "Neznámá chyba", cesta: context.routePath, detail: { typ: `${context.routeType}`, metoda: request.method, ...(error.digest ? { digest: error.digest } : {}) } });
+  } catch { /* nikdy neshodit */ }
+
   const fingerprint = `server:${context.routePath}:${error.message?.slice(0, 60) ?? "unknown"}`;
   if (!shouldAlert(fingerprint)) return;
 

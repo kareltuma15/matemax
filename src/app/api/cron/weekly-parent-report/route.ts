@@ -6,6 +6,8 @@ import { odhadDitete, ulozTydenniOdhad } from "@/lib/odhad-server";
 import { buildReportHtml } from "@/lib/report-rodice";
 import { tydenSbirky, type SbirkaStav } from "@/lib/sbirka";
 import { odkazyReportu } from "@/lib/emaily/rodice";
+import { adresaOdpovedi, posliResend } from "@/lib/zpravy-log";
+import { behCronu } from "@/lib/system-log";
 
 // Každé pondělí 06:00 UTC (≈ 08:00 SEČ) přes Vercel Cron.
 // Týdenní e-mail rodičům s ověřeným propojením: odhad bodů u přijímaček, vývoj po týdnech, témata, tip.
@@ -36,8 +38,6 @@ async function handler() {
     return NextResponse.json({ error: "No RESEND_API_KEY" }, { status: 503 });
   }
 
-  const { Resend } = await import("resend");
-  const resend = new Resend(process.env.RESEND_API_KEY);
 
   // All verified parent-child links
   const { data: links, error: linksError } = await supabaseAdmin
@@ -126,15 +126,17 @@ async function handler() {
       const subject = odhad.bezDat
         ? `Týdenní přehled: ${childName} a příprava na přijímačky`
         : `Týdenní přehled: ${childName} má odhad ${odhad.celkem} z ${odhad.max} bodů`;
-      // Resend SDK nevyhazuje výjimku při API chybě, vrací { data, error }.
-      const { error: sendErr } = await resend.emails.send({
+      // Odeslání + log zpráv (admin → Zprávy, u dítěte i rodiče)
+      const r = await posliResend({
         from: "MateMax <noreply@matematika-snadno.cz>",
         to: parentEmail,
+        replyTo: adresaOdpovedi(),
         subject,
         html,
         headers: { "List-Unsubscribe": `<${odkazyReportu(link.id).api}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" },
-      });
-      if (sendErr) throw sendErr;
+        tags: [{ name: "email", value: "report" }],
+      }, { sablona: "report", prijemceTyp: "rodic", userId: child.id });
+      if (!r.ok) throw new Error(r.chyba);
       sent++;
       // Záznam pro analytiku e-mailů (dítě kvůli návratu k tréninku)
       await supabaseAdmin.from("analytics_events").insert({ user_id: null, event_name: "email_sent", properties: { e: "report", dite: child.id } });
@@ -154,7 +156,7 @@ export async function GET(req: NextRequest) {
   if (!expected || auth !== expected) {
     return NextResponse.json({ endpoint: "weekly-parent-report cron", requiresSecret: true });
   }
-  return handler();
+  return behCronu("weekly-parent-report", handler);
 }
 
 export async function POST(req: NextRequest) {
@@ -163,5 +165,5 @@ export async function POST(req: NextRequest) {
   if (!expected || auth !== expected) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  return handler();
+  return behCronu("weekly-parent-report", handler);
 }

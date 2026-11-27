@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import webpush from "web-push";
 import { supabase } from "@/lib/supabase";
+import { zapisPush } from "@/lib/zpravy-log";
 
 webpush.setVapidDetails(
   "mailto:noreply@matemax.cz",
@@ -27,20 +28,25 @@ export async function POST(req: NextRequest) {
 
   const { data: rows, error } = await supabase
     .from("push_subscriptions")
-    .select("endpoint, subscription");
+    .select("endpoint, subscription, user_id");
 
   if (error) {
     console.error("push_subscriptions select error:", error);
     return NextResponse.json({ error: "DB error" }, { status: 500 });
   }
 
-  const payload = JSON.stringify({ title, body, url });
-
+  // Každý push má vlastní ID v payloadu, service worker podle něj nahlásí zobrazení a kliknutí (log zpráv)
+  const radky = (rows ?? []) as { endpoint: string; subscription: string; user_id?: string | null }[];
+  const ids = radky.map(() => crypto.randomUUID());
   const results = await Promise.allSettled(
-    (rows ?? []).map((row: { endpoint: string; subscription: string }) =>
-      webpush.sendNotification(JSON.parse(row.subscription), payload)
+    radky.map((row, i) =>
+      webpush.sendNotification(JSON.parse(row.subscription), JSON.stringify({ title, body, url, z: ids[i] }))
     )
   );
+  await Promise.all(results.map((r, i) => zapisPush({
+    sablona: "push_rucni", prijemceTyp: "zak", userId: radky[i].user_id ?? null, predmet: title,
+    ok: r.status === "fulfilled", chyba: r.status === "rejected" ? String((r.reason as { statusCode?: number })?.statusCode ?? r.reason) : undefined,
+  }, ids[i])));
 
   const sent   = results.filter((r) => r.status === "fulfilled").length;
   const failed = results.filter((r) => r.status === "rejected").length;

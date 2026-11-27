@@ -3,6 +3,7 @@
 // Odesílání nikdy nevyhazuje — email je vedlejší efekt, nesmí shodit platbu
 // ani odevzdání archu. Volající dostane true/false.
 import { ADRESA_FIRMY } from "./emaily/sablona";
+import { adresaOdpovedi, posliResend } from "./zpravy-log";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://matemax.matematika-snadno.cz";
 
@@ -64,28 +65,15 @@ function shell(opts: {
 </html>`;
 }
 
-async function send(to: string, subject: string, html: string): Promise<boolean> {
+async function send(to: string, subject: string, html: string, sablona: string): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) {
     console.warn("[online-test-emails] RESEND_API_KEY není nastaven — přeskakuji", subject);
     return false;
   }
-  try {
-    const { Resend } = await import("resend");
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    // Resend SDK NEVYHAZUJE výjimku při API chybě (validace, odmítnutý
-    // odesílatel…) — vrací { data, error }. Bez kontroly error by se odmítnutý
-    // email tvářil jako úspěšně odeslaný (zjištěno 13.9. při E2E testu —
-    // confirm_sent_at se nastavilo, i když email nikam nedorazil).
-    const { data, error } = await resend.emails.send({ from: FROM, to, subject, html });
-    if (error) {
-      console.error("[online-test-emails] Resend odmítl odeslání:", subject, error);
-      return false;
-    }
-    return !!data;
-  } catch (err) {
-    console.error("[online-test-emails] odeslání selhalo:", subject, err);
-    return false;
-  }
+  // Odeslání + log zpráv (admin → Zprávy). Resend SDK nevyhazuje výjimku při API chybě, posliResend ji vrátí jako ok: false.
+  const r = await posliResend({ from: FROM, to, subject, html, replyTo: adresaOdpovedi(), tags: [{ name: "email", value: sablona }] }, { sablona, prijemceTyp: "jiny" });
+  if (!r.ok) console.error("[online-test-emails] Resend odmítl odeslání:", subject, r.chyba);
+  return r.ok;
 }
 
 const p = (text: string) =>
@@ -184,26 +172,26 @@ export function sendEnrollmentConfirmation(
   o: { to: string; jmeno: string; title: string; scheduledAt: string; sessionId: string }
 ): Promise<boolean> {
   const { subject, html } = buildEnrollmentConfirmation(o);
-  return send(o.to, subject, html);
+  return send(o.to, subject, html, "online_test_prihlaska");
 }
 
 export function sendReminder24h(
   o: { to: string; jmeno: string; title: string; scheduledAt: string; sessionId: string; archUrl: string | null }
 ): Promise<boolean> {
   const { subject, html } = buildReminder24h(o);
-  return send(o.to, subject, html);
+  return send(o.to, subject, html, "online_test_24h");
 }
 
 export function sendReminder1h(
   o: { to: string; jmeno: string; title: string; scheduledAt: string; sessionId: string }
 ): Promise<boolean> {
   const { subject, html } = buildReminder1h(o);
-  return send(o.to, subject, html);
+  return send(o.to, subject, html, "online_test_1h");
 }
 
 export function sendSubmissionReceived(
   o: { to: string; jmeno: string; title: string; sessionId: string; photoCount: number }
 ): Promise<boolean> {
   const { subject, html } = buildSubmissionReceived(o);
-  return send(o.to, subject, html);
+  return send(o.to, subject, html, "online_test_arch");
 }
