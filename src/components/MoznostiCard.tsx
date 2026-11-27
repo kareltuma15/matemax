@@ -11,6 +11,7 @@ import VideoLessonHint from "@/components/VideoLessonHint";
 import KrokyReseni from "@/components/KrokyReseni";
 import { temaStyl } from "@/lib/barvy-temat";
 import { useZaznamOdpovedi, oznacOdeslani } from "@/lib/odpovedi-log";
+import NahlasitChybu from "./NahlasitChybu";
 
 /**
  * Výběr z možností (A–E) — formát těžších CERMAT úloh. Žák klikne na jednu
@@ -174,6 +175,7 @@ export default function MoznostiCard({ example, cardNumber, total, onResult: onR
           >
             Pokračovat →
           </button>
+          <NahlasitChybu key={`nahlasit-${example.id}`} ulohaId={example.id} odpoved={picked === null ? null : String.fromCharCode(65 + picked)} />
         </div>
       )}
 

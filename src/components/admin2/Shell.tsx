@@ -21,7 +21,7 @@ export const SEKCE: Sekce[] = [
   { klic: "zaci", nazev: "Žáci", href: "/admin/novy/zaci", mobil: true },
   { klic: "zpravy", nazev: "Zprávy", href: "/admin/novy/zpravy", mobil: true },
   { klic: "plan", nazev: "Plán", href: "/admin/novy/plan", mobil: true },
-  { klic: "uceni", nazev: "Učení", href: "/admin/novy/uceni", pozn: "fáze B" },
+  { klic: "uceni", nazev: "Učení", href: "/admin/novy/uceni" },
   { klic: "obsah", nazev: "Obsah", href: "/admin/obsah", pozn: "starý vzhled" },
   { klic: "hlas", nazev: "Hlas", href: "/admin/novy/hlas", pozn: "fáze C" },
   { klic: "chovani", nazev: "Chování", href: "/admin/navstevnost", pozn: "starý vzhled" },

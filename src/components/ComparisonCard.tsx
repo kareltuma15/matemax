@@ -8,6 +8,7 @@ import { playCorrect, playWrong } from "@/lib/sound";
 import KrokyReseni from "@/components/KrokyReseni";
 import { temaStyl } from "@/lib/barvy-temat";
 import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
+import NahlasitChybu from "./NahlasitChybu";
 
 /**
  * Porovnávání zlomků/čísel klikem na znaménko.
@@ -174,6 +175,7 @@ export default function ComparisonCard({ example, cardNumber, total, onResult: o
           >
             Pokračovat →
           </button>
+          <NahlasitChybu key={`nahlasit-${example.id}`} ulohaId={example.id} odpoved={picked === null ? null : String(picked)} />
         </div>
       )}
 

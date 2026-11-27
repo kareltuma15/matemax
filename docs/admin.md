@@ -85,6 +85,34 @@ Nový admin běží na `/admin/novy`, vedle starého. Starý admin (`/admin`) z�
 - Zvonek (`src/lib/admin2/upozorneni.ts`): skládá se z dat za 7 dní (Schránka, platby, chyba 3+ za 24 h, selhaný cron nebo webhook, noví žáci). Přečteno = `admin_nastaveni.upozorneni_precteno`.
 - Systém → Zdraví systému (základ): chyby za 24 h podle otisku, poslední běh každé automatické úlohy (`behy_cronu`, obal `behCronu`), webhooky za 7 dní, e-maily za 24 h. Limity tarifů a zálohy v B4.
 
+## Učení a rodiny (B3)
+
+- Jediný výpočet: `src/lib/admin2/uceni.ts` (log `odpovedi` od 26. 11. 2026 a karty `sm2_cards`). Používá ho sekce Učení, karta žáka i doporučení.
+  - Úspěšnost = první pokus u všech, kdo úlohu začali, mimo opakování (`prvniPokusy`). Přeskočení = neúspěch.
+  - Příznaky úloh (`PRAHY_UCENI`):
+    - podezřelá: nejčastější špatná odpověď ≥ správná, 8+ pokusů,
+    - moc těžká: pod 30 %, 10+ pokusů,
+    - moc lehká: nad 95 % a pod polovinou mediánu času tématu,
+    - zdlouhavá: přes dvojnásobek mediánu tématu,
+    - přeskakovaná: přes 30 %.
+  - Obtížnost pro žáka: posledních 20 odpovědí v tématu (od 8). Moc lehké = přes 90 % a rychleji než ostatní. Moc těžké = pod 50 % nebo přes 30 % přeskočeno.
+  - Zapomíná: 4+ neúspěchy u stejné úlohy v opakování.
+  - Připravenost: odhad bodů (`src/lib/odhad-server.ts`, stejný jako report rodičům).
+    - Pozadu = slabá témata (pod 60 %) × 3 dny > zbývající týdny × tempo (dny tréninku za týden, 14 dní).
+    - Přijímačky 12. 4. (9. tř.) a 14. 4. 2027 (5. tř.).
+- `/admin/novy/uceni`: Témata · Úlohy (filtr příznaků) · Žáci × témata · Opakování.
+- `/admin/novy/uceni/uloha/[id]`: detail úlohy. „Zkontrolováno“ (`admin_nastaveni.ulohy_zkontrolovano`) potlačí příznak do 10 nových pokusů (`src/lib/admin2/kontroly.ts`).
+- Karta žáka:
+  - Učení: odhad, připravenost, témata s obtížností, opakování, posledních 50 odpovědí, Kopírovat pro Clauda, vždy s pseudonymem.
+  - Testy: body z Vyhodnocení a jestli trénuje slabá témata.
+  - Rodina: rodič, odběr, sourozenci, zprávy rodině.
+- `/admin/novy/zaci/rodice`: rodiče z `parent_child_link` + `parent_settings`, poslední report z logu zpráv.
+- Doporučení z učení na Dnes: podezřelá, moc těžká nebo přeskakovaná úloha, žák s moc těžkým tématem, zapomínání.
+- **Nahlásit chybu** (appka žáka, `src/components/NahlasitChybu.tsx`): pod vyhodnocením ve všech 6 typech karet.
+  - Posílá na `/api/nahlasit-chybu` → Schránka (`chyba_ulohy`). Ukládá úlohu, důvod, poznámku do 300 znaků a odpověď (jen číslo nebo volba).
+  - IP adresa se neukládá, duplicity se hlídají jen u přihlášených.
+- Schránka: vkládá se přes `src/lib/schranka.ts` (`vlozDoSchranky`). Unikátní index je částečný, upsert s `onConflict` na něm v Postgresu nefunguje.
+
 ## Tabulky adminu
 
 `admin_nastaveni`, `admin_ukoly`, `admin_doporuceni_stav`, `admin_poznamky`, `admin_stitky`, `admin_pouziti` (které sekce Karel otevírá), `admin_audit`, `admin_role`. Čte a píše jen server (service role).

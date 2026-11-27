@@ -165,3 +165,13 @@
 .a2-upozorneni a:hover { background: var(--a-bg); }
 .a2-upozorneni a > i { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: transparent; }
 .a2-upozorneni a.nove > i { background: var(--a-akcent); }
+
+/* Fáze B3: Učení */
+.a2-mrizka { border-collapse: collapse; font-size: 13px; min-width: 100%; }
+.a2-mrizka th { text-align: left; font-weight: 700; color: var(--a-tlum); padding: 6px; font-size: 12px; white-space: nowrap; }
+.a2-mrizka td { padding: 4px; border-top: 1px solid var(--a-linka); text-align: center; }
+.a2-mrizka tbody th { border-top: 1px solid var(--a-linka); color: var(--a-text); }
+.a2-bunka { display: inline-flex; flex-direction: column; align-items: center; min-width: 52px; min-height: 40px; justify-content: center; padding: 2px 4px; border-radius: 8px; font-weight: 800; font-size: 13px; line-height: 1.15; background: var(--a-bg); }
+.a2-bunka small { font-weight: 600; font-size: 11px; color: var(--a-tlum); }
+.a2-bunka.ok { background: var(--a-ok-slaby); } .a2-bunka.pozor { background: var(--a-pozor-slaby); } .a2-bunka.spatne { background: var(--a-spatne-slaby); } .a2-bunka.seda { color: var(--a-slaby); }
+.a2-sloupec { display: grid; grid-template-columns: minmax(60px, auto) minmax(0, 1fr) 40px; gap: 8px; align-items: center; font-size: 13px; }

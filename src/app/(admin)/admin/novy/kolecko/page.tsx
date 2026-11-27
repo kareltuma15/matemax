@@ -48,7 +48,7 @@ export default async function KoleckoStranka({ searchParams }: { searchParams: S
   for (const d of aktivni.slice(0, 7)) {
     const lide = d.lide.slice(0, 5).map(jm).filter(Boolean).join(", ");
     karty.push({
-      klic: d.klic, druh: "akce", stitek: d.oblast === "penize" ? "Peníze" : d.oblast === "aktivace" ? "Aktivace" : d.oblast === "navrat" ? "Návrat" : d.oblast === "obsah" ? "Obsah" : d.oblast === "zpravy" ? "Zprávy" : "Růst",
+      klic: d.klic, druh: "akce", stitek: d.oblast === "penize" ? "Peníze" : d.oblast === "aktivace" ? "Aktivace" : d.oblast === "navrat" ? "Návrat" : d.oblast === "obsah" ? "Obsah" : d.oblast === "zpravy" ? "Zprávy" : d.oblast === "uceni" ? "Učení" : "Růst",
       titulek: d.titulek, text: d.proc, radky: lide ? [`${lide}${d.lide.length > 5 ? ` a ${d.lide.length - 5} další` : ""}`] : [],
       odkaz: d.akce.typ === "odkaz" ? { text: d.akce.text, href: d.akce.href } : d.lide.length ? { text: d.akce.typ === "email" ? "Otevřít žáky (e-mail z karty)" : "Otevřít žáky", href: `/admin/novy/zaci?ids=${d.lide.join(",")}` } : undefined,
       doporuceni: { klic: d.klic, pravidlo: d.pravidlo, ukol: d.akce.typ === "ukol" ? d.akce.ukol : undefined },

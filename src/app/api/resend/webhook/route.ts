@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { nastavOdhlaseni } from "@/lib/emaily/odeslat";
 import { dokonciWebhook, prijmiWebhook, zapisStav } from "@/lib/zpravy-log";
 import { zapisChybu } from "@/lib/system-log";
+import { vlozDoSchranky } from "@/lib/schranka";
 
 /**
  * Webhook Resendu (admin 2.1, ZP-02, ZP-06). Resend podepisuje přes Svix: hlavičky svix-id, svix-timestamp,
@@ -75,10 +76,11 @@ async function prijataOdpoved(d: Data): Promise<void> {
     zprava = (data?.[0] as Z | undefined) ?? null;
   }
   const text = (e?.text ?? (e?.html ?? "").replace(/<style[\s\S]*?<\/style>/gi, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")).slice(0, 20000);
-  await supabaseAdmin.from("schranka").upsert({
+  const vl = await vlozDoSchranky([{
     druh: "odpoved", user_id: zprava?.user_id ?? null, od: od.slice(0, 320), predmet: (e?.subject ?? d.subject ?? "").slice(0, 300), text,
     zprava_id: zprava?.id ?? null, zdroj_id: d.email_id, detail: { prilohy: (e?.attachments ?? []).length },
-  }, { onConflict: "druh,zdroj_id", ignoreDuplicates: true });
+  }]);
+  if (vl.chyba) throw new Error(vl.chyba);
   if (zprava) await zapisStav({ zpravaId: zprava.id }, "odpovezeno", new Date().toISOString());
   // Kopie Karlovi, ať se nic neztratí (přeposlání přes Resend, beze změny obsahu)
   await resend.emails.receiving.forward({ emailId: d.email_id, to: KOPIE_ODPOVEDI, from: "MateMax odpovědi <noreply@matematika-snadno.cz>" }).catch(() => {});

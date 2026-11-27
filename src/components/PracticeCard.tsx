@@ -16,6 +16,7 @@ import { playCorrect, playWrong } from "@/lib/sound";
 import VideoLessonHint from "./VideoLessonHint";
 import { klavesnice } from "@/lib/klavesnice";
 import { useZaznamOdpovedi, oznacOdeslani, oznacNapovedu, oznacPostup } from "@/lib/odpovedi-log";
+import NahlasitChybu from "./NahlasitChybu";
 
 /** Renderuje text nebo LaTeX podle typu příkladu */
 function ExMath({ ex, text, large, display }: { ex: DBExample; text: string; large?: boolean; display?: boolean }) {
@@ -554,6 +555,7 @@ export default function PracticeCard({ example, cardNumber, total, consecutiveCo
             Další příklad →
           </button>
         )}
+        {status !== "idle" && !canRetry && <NahlasitChybu key={`nahlasit-${example.id}`} ulohaId={example.id} odpoved={status === "correct" ? input : lastWrongInput} />}
 
         {/* Přeskočit: nenápadně dole, ne vedle hlavního tlačítka */}
         {canRetry && (

@@ -18,17 +18,18 @@ import { pragueDateStr } from "@/lib/date";
 import type { Zak } from "@/lib/admin2/typy";
 import { DRUHY_SCHRANKY, kroky as krokyZpravy, nazevSablony, nazevStavu, platbyZaka, zpravyZaka } from "@/lib/admin2/zpravy";
 import { kdy } from "@/lib/admin2/cas";
+import { ZalozkaRodina, ZalozkaTesty, ZalozkaUceni } from "@/components/admin2/KartaUceni";
 
 /**
  * Karta žáka (ZA-04 až ZA-09) jako stránka s vlastní adresou: hlavička, shrnutí jednou větou,
- * rychlé akce, aktivace s časy a záložky Přehled, Časová osa, Platby (Učení, Testy, Zprávy, Rodina ve fázi B).
+ * rychlé akce, aktivace s časy a záložky Přehled, Časová osa, Platby, Učení, Testy, Zprávy a Rodina.
  * Otevření karty se zapisuje do auditu.
  */
 export const metadata = { title: "Žák · MateMax Admin" };
 type P = Promise<{ id: string }>;
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
-const ZALOZKY: [string, string, string | null][] = [["prehled", "Přehled", null], ["osa", "Časová osa", null], ["platby", "Platby", null], ["uceni", "Učení", "B"], ["testy", "Testy", "B"], ["zpravy", "Zprávy", null], ["rodina", "Rodina", "B"]];
+const ZALOZKY: [string, string, string | null][] = [["prehled", "Přehled", null], ["osa", "Časová osa", null], ["platby", "Platby", null], ["uceni", "Učení", null], ["testy", "Testy", null], ["zpravy", "Zprávy", null], ["rodina", "Rodina", null]];
 const TYPY: [TypUdalosti | "", string][] = [["", "Vše"], ["trenink", "Trénink"], ["zpravy", "Zprávy"], ["platby", "Platby"], ["ucet", "Účet"], ["admin", "Admin"]];
 const cas = (iso: string | null) => (iso ? new Date(iso).toLocaleString("cs-CZ", { timeZone: "Europe/Prague", day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" }) : "");
 const za = (od: string, doo: string | null) => { if (!doo) return ""; const m = Math.round((Date.parse(doo) - Date.parse(od)) / 60000); return m < 60 ? `za ${Math.max(0, m)} min` : m < 1440 ? `za ${Math.round(m / 60)} h` : `za ${Math.round(m / 1440)} d`; };
@@ -220,11 +221,9 @@ export default async function KartaZaka({ params, searchParams }: { params: P; s
             )}
           </section>
         )}
-        {["uceni", "testy", "rodina"].includes(zalozka) && (
-          <Prazdne titulek="Přijde ve fázi B (do 22. 1.).">
-            {zalozka === "uceni" ? "Témata, posledních 50 odpovědí s časem, opakování a odhad bodů. Data se sbírají od 27. 11. 2026." : zalozka === "testy" ? `Body z testů nanečisto vedle tréninku. ${vyber.propojeno_vysledky ? `Účet je propojený s Vyhodnocením od ${new Date(vyber.propojeno_vysledky).toLocaleDateString("cs-CZ")}.` : "Účet zatím není propojený s Vyhodnocením."}`  : `Rodič, sourozenci a odběr reportu. E-mail rodiče: ${skryjEmail(vyber.rodic_email, z.k.sdileni) ?? "nemá"}.`}
-          </Prazdne>
-        )}
+        {zalozka === "uceni" && <ZalozkaUceni k={z.k} zak={vyber} dny={z.dny} pseudonym={z.ps.get(id) ?? "Žák"} />}
+        {zalozka === "testy" && <ZalozkaTesty k={z.k} zak={vyber} />}
+        {zalozka === "rodina" && <ZalozkaRodina k={z.k} zak={vyber} zaci={z.zaci} ps={z.ps} />}
       </>
     );
   }

@@ -7,6 +7,7 @@ import { cache } from "react";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { NAZVY as NAZVY_EMAILU } from "@/lib/emaily/katalog";
 import { STAVY } from "@/lib/zpravy-log";
+import { vlozDoSchranky } from "@/lib/schranka";
 import { pragueDateStr } from "@/lib/date";
 import type { Kontext } from "./data";
 import type { Zak } from "./typy";
@@ -90,7 +91,7 @@ async function prenesZpetnouVazbu(): Promise<void> {
     druh: "zpetna_vazba", user_id: f.user_id ?? null, text: (f.suggestion as string | null)?.slice(0, 20000) ?? null, zdroj_id: String(f.id),
     detail: { hodnoceni: f.rating, libi: f.liked ?? [] }, created_at: f.created_at,
   }));
-  if (radky.length) await supabaseAdmin.from("schranka").upsert(radky, { onConflict: "druh,zdroj_id", ignoreDuplicates: true });
+  if (radky.length) await vlozDoSchranky(radky);
 }
 
 export async function nactiSchranku(k: Kontext, o: { stav?: "nove" | "vyrizeno" | "vse"; userId?: string } = {}): Promise<Polozka[]> {

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { DBExample, TEMA_LABELS, podtemaLabel } from "@/types";
 import { playCorrect, playWrong } from "@/lib/sound";
 import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
+import NahlasitChybu from "./NahlasitChybu";
 
 interface Props {
   example: DBExample;
@@ -118,6 +119,7 @@ export default function ConstructionCard({ example, cardNumber, total, onResult:
         >
           Pokračovat →
         </button>
+        <NahlasitChybu key={`nahlasit-${example.id}`} ulohaId={example.id} />
       </div>
     );
   }

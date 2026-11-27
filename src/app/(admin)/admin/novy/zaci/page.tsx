@@ -90,6 +90,7 @@ export default async function Zaci({ searchParams }: { searchParams: SP }) {
           <Link className="a2-cip" aria-current={!seg && !metrika && !ids ? "true" : undefined} href={odkaz({})}>Všichni <b>{zakladni.length}</b></Link>
           {segs.map((s) => <Link key={s.klic} className="a2-cip" aria-current={seg?.klic === s.klic ? "true" : undefined} href={odkaz({ segment: s.klic })} title={s.popis}>{s.nazev} <b>{zakladni.filter(s.test).length}</b></Link>)}
           {z.nastaveni.segmenty.map((s) => <Link key={s.nazev} className="a2-cip" href={`/admin/novy/zaci?${s.dotaz}`}>★ {s.nazev}</Link>)}
+          <Link className="a2-cip" href="/admin/novy/zaci/rodice" data-testid="a2-odkaz-rodice">Rodiče →</Link>
         </div>
         {(popis || ids) && (
           <div className="a2-banner" style={{ background: "var(--a-akcent-slaby)" }}>

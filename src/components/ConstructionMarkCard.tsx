@@ -8,6 +8,7 @@ import {
 import { playCorrect, playWrong } from "@/lib/sound";
 import MathText from "@/components/MathText";
 import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
+import NahlasitChybu from "./NahlasitChybu";
 
 /**
  * Rýsování (CERMAT „Sestrojte…"): žák má v obrázku pravítko a kružítko, klepnutí se přichytává
@@ -628,6 +629,7 @@ export default function ConstructionMarkCard({ example, cardNumber, total, onRes
           >
             Pokračovat →
           </button>
+          <NahlasitChybu key={`nahlasit-${example.id}`} ulohaId={example.id} />
         </div>
       )}
     </div>

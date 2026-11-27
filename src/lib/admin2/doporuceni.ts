@@ -11,6 +11,8 @@ import type { Zak } from "./typy";
 import type { Nastaveni } from "./nastaveni";
 import type { Kontext } from "./data";
 import { denZ, dnyMezi, type DnyAktivity } from "./metriky";
+import { ChybiMigraceUceni, NAZVY_PRIZNAKU, POPISY_PRIZNAKU, PRAHY_UCENI, nactiKarty, nactiOdpovedi, opakovani, statUloh, tematZaka } from "./uceni";
+import { kontrolyUloh, potlaceneUlohy } from "./kontroly";
 
 export type AkceDoporuceni =
   | { typ: "email"; text: string; sablona: string }
@@ -20,7 +22,7 @@ export type AkceDoporuceni =
 export interface Doporuceni {
   klic: string;
   pravidlo: string;
-  oblast: "aktivace" | "navrat" | "penize" | "obsah" | "rust" | "zpravy";
+  oblast: "aktivace" | "navrat" | "penize" | "obsah" | "rust" | "zpravy" | "uceni";
   titulek: string;
   proc: string;
   lide: string[];
@@ -28,7 +30,7 @@ export interface Doporuceni {
   priorita: number;
 }
 
-const VAHA: Record<Doporuceni["oblast"], number> = { penize: 3, aktivace: 2, zpravy: 2, navrat: 1.5, obsah: 1, rust: 1 };
+const VAHA: Record<Doporuceni["oblast"], number> = { penize: 3, aktivace: 2, zpravy: 2, navrat: 1.5, uceni: 1.5, obsah: 1, rust: 1 };
 const H = 3600_000;
 
 export async function spocitejDoporuceni(zaci: Zak[], dny: DnyAktivity, n: Nastaveni, k: Kontext): Promise<Doporuceni[]> {
@@ -37,7 +39,7 @@ export async function spocitejDoporuceni(zaci: Zak[], dny: DnyAktivity, n: Nasta
   const p = n.pravidla;
   const out: Doporuceni[] = [];
   const pridej = (d: Omit<Doporuceni, "klic" | "priorita">, nalehavost = 1) => {
-    if (!d.lide.length && d.oblast !== "obsah" && d.oblast !== "rust") return;
+    if (!d.lide.length && d.oblast !== "obsah" && d.oblast !== "rust" && d.oblast !== "uceni") return;
     out.push({ ...d, klic: `${d.pravidlo}:${[...d.lide].sort().join(",").slice(0, 150)}`, priorita: Math.max(1, d.lide.length) * VAHA[d.oblast] * nalehavost });
   };
 
@@ -81,6 +83,26 @@ export async function spocitejDoporuceni(zaci: Zak[], dny: DnyAktivity, n: Nasta
       pridej({ pravidlo: "registrace_konverze", oblast: "rust", titulek: `Registrace: ${o} otevřelo, ${s} odeslalo (7 dní)`, proc: "Většina přišla rovnou z reklamy a odešla do pár sekund. Zkontroluj umístění reklamy (Audience Network) a pole, u kterého lidé končí.", lide: [], akce: { typ: "odkaz", text: "Kde lidé končí", href: "/admin/navstevnost" } }, 1.5);
     }
   }
+
+  // Učení (fáze B3): podezřelé / moc těžké / přeskakované úlohy, moc těžké téma u žáka, zapomínání stejných úloh
+  try {
+    const [odp, karty, kontroly] = await Promise.all([nactiOdpovedi(k, { od: new Date(ted - 30 * 24 * H).toISOString() }), nactiKarty(k), kontrolyUloh(k.demo)]);
+    const pocitane = new Set(zaci.map((z) => z.id));
+    const o = odp.filter((r) => pocitane.has(r.user_id));
+    const potlacene = potlaceneUlohy(kontroly, o);
+    for (const u of statUloh(o).filter((x) => !potlacene.has(x.uloha_id) && x.priznaky.some((p) => p === "podezrela" || p === "tezka" || p === "preskakovana")).slice(0, 3)) {
+      const p = u.priznaky.includes("podezrela") ? "podezrela" : u.priznaky.includes("tezka") ? "tezka" : "preskakovana";
+      pridej({ pravidlo: `uloha_${u.uloha_id}`, oblast: "obsah", titulek: `Úloha ${u.uloha_id}: ${NAZVY_PRIZNAKU[p]}`, proc: p === "podezrela" && u.spatna ? `„${u.spatna.odpoved}“ ${u.spatna.pocet}×, správně jen ${u.spravnaPocet}× (${u.pokusy} pokusů). Nejspíš chybí přijímaný tvar nebo je zadání nejasné.` : `${POPISY_PRIZNAKU[p]} Teď ${u.spravne} z ${u.pokusy} na první pokus, přeskočeno ${u.preskoceno}.`, lide: [], akce: { typ: "odkaz", text: "Zkontrolovat úlohu", href: `/admin/novy/uceni/uloha/${encodeURIComponent(u.uloha_id)}` } }, p === "podezrela" ? 1.6 : 1.1);
+    }
+    const tezke: string[] = [];
+    const podleZaka = new Map<string, typeof o>();
+    for (const r of o) podleZaka.set(r.user_id, [...(podleZaka.get(r.user_id) ?? []), r]);
+    for (const [uid, rr] of podleZaka) if (tematZaka(rr, o).some((t) => t.obtiznost === "tezke")) tezke.push(uid);
+    pridej({ pravidlo: "uceni_tezke", oblast: "uceni", titulek: `${tezke.length} ${tezke.length === 1 ? "žák má" : "žáci mají"} téma moc těžké`, proc: "V posledních 20 odpovědích v tématu pod 50 % správně nebo přes 30 % přeskočeno. Pomůže vysvětlení, videolekce nebo lehčí úlohy.", lide: tezke, akce: tezke.length === 1 ? { typ: "odkaz", text: "Otevřít učení žáka", href: `/admin/novy/zaci/${tezke[0]}?tab=uceni` } : { typ: "odkaz", text: "Otevřít žáky", href: `/admin/novy/zaci?ids=${tezke.join(",")}` } });
+    const zap = opakovani(karty.filter((c) => pocitane.has(c.user_id)), o).zapomina;
+    const zapLide = [...new Set(zap.map((x) => x.user_id))];
+    pridej({ pravidlo: "zapomina", oblast: "uceni", titulek: `${zapLide.length} ${zapLide.length === 1 ? "žák zapomíná" : "žáci zapomínají"} stejné úlohy`, proc: `Aspoň ${PRAHY_UCENI.zapominaNeuspechu}× neúspěch u stejné úlohy v opakování (${zap.slice(0, 3).map((x) => x.uloha_id).join(", ")}). Pomůže vysvětlení nebo videolekce.`, lide: zapLide, akce: { typ: "odkaz", text: "Otevřít Opakování", href: "/admin/novy/uceni?tab=opakovani" } });
+  } catch (e) { if (!(e instanceof ChybiMigraceUceni)) console.error("[doporuceni] učení", e); }
 
   // Zprávy: zpětná vazba za 7 dní
   if (!k.demo && supabaseAdmin) {

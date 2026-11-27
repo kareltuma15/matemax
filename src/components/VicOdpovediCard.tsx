@@ -11,6 +11,7 @@ import VideoLessonHint from "@/components/VideoLessonHint";
 import KrokyReseni from "@/components/KrokyReseni";
 import { temaStyl } from "@/lib/barvy-temat";
 import { useZaznamOdpovedi } from "@/lib/odpovedi-log";
+import NahlasitChybu from "./NahlasitChybu";
 
 /**
  * Úloha s více odpověďmi — dva tvary z CERMAT testů pro 5. třídu:
@@ -290,6 +291,7 @@ export default function VicOdpovediCard({ example, cardNumber, total, onResult: 
           >
             Pokračovat →
           </button>
+          <NahlasitChybu key={`nahlasit-${example.id}`} ulohaId={example.id} />
         </div>
       )}
     </div>
