@@ -113,6 +113,22 @@ Nový admin běží na `/admin/novy`, vedle starého. Starý admin (`/admin`) z�
   - IP adresa se neukládá, duplicity se hlídají jen u přihlášených.
 - Schránka: vkládá se přes `src/lib/schranka.ts` (`vlozDoSchranky`). Unikátní index je částečný, upsert s `onConflict` na něm v Postgresu nefunguje.
 
+## Plán, Růst, Chování, Systém (B4)
+
+- **Plán** (`src/lib/admin2/plan.ts`):
+  - Týden v kostce: poslední celý týden pondělí až neděle, stejné definice jako dlaždice. 3 navržené úkoly z fronty jdou přidat jedním klepnutím. Kopírovat týden pro Clauda (pseudonymy Žák 1, 2…).
+  - Kronika změn: k zápisu z kroniky novinek jde přidat proč, co sledovat a kdy vyhodnotit (`admin_nastaveni.kronika_experimenty`). Vyhodnocení před a po (14 dní): dny tréninku u stejných žáků, aktivace, návrat 2. den.
+  - Kalendář: sezóna v appce, testy nanečisto z `online_test_sessions`, přihlášky 1. 2., přijímačky 12.–15. 4., výsledky 15. 5. 2027.
+- **Růst** (`src/lib/admin2/rust.ts`):
+  - Trychtýř po lidech podle vstupu: rovnou na registraci, přes úvod, z e-mailu, z výsledků. Do registrace anonymně (denní otisk, kroky v rámci dne), od registrace účty s odkazem na odpadlé.
+  - Zdroje: návštěva = první stránka člověka za den. Facebook je sloučený, Stripe není zdroj. K tomu útrata (`admin_utrata`) a cena za aktivovaného.
+  - Generátor odkazů s utm (název kampaně do `nastaveni.kampane`), retence po týdnech registrace, peníze (Stripe webhooky od 27. 11.).
+- **Chování** (`src/lib/admin2/navstevy.ts`): obrazovky podle lidí, scroll a poslední sekce úvodu, kliky na pojmenované prvky (starší kliky bez názvu se jen sečtou), rychlé kliky, návštěvy po lidech, formuláře (kde lidé odcházejí, chyby, do 5 s).
+- **Systém**:
+  - Limity: Resend z logu zpráv, Supabase databáze přes `admin_velikost_db()` (migrace `20261128_admin_b4.sql`), aktivní uživatelé. Limity Free ověřené v cenících 27. 11. 2026.
+  - Poslední záloha: zapisuje ji `scripts/zaloha-supabase.mjs` do `admin_nastaveni.posledni_zaloha`, upozornění po 7 dnech.
+  - Souhlasy a návrh uchovávání dat. Zatím se nic nemaže, čeká na schválení.
+
 ## Tabulky adminu
 
 `admin_nastaveni`, `admin_ukoly`, `admin_doporuceni_stav`, `admin_poznamky`, `admin_stitky`, `admin_pouziti` (které sekce Karel otevírá), `admin_audit`, `admin_role`. Čte a píše jen server (service role).

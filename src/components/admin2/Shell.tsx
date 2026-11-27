@@ -24,8 +24,8 @@ export const SEKCE: Sekce[] = [
   { klic: "uceni", nazev: "Učení", href: "/admin/novy/uceni" },
   { klic: "obsah", nazev: "Obsah", href: "/admin/obsah", pozn: "starý vzhled" },
   { klic: "hlas", nazev: "Hlas", href: "/admin/novy/hlas", pozn: "fáze C" },
-  { klic: "chovani", nazev: "Chování", href: "/admin/navstevnost", pozn: "starý vzhled" },
-  { klic: "rust", nazev: "Růst", href: "/admin/analytika", pozn: "starý vzhled" },
+  { klic: "chovani", nazev: "Chování", href: "/admin/novy/chovani" },
+  { klic: "rust", nazev: "Růst", href: "/admin/novy/rust" },
   { klic: "testy", nazev: "Testy", href: "/admin/testy", pozn: "starý vzhled" },
   { klic: "system", nazev: "Systém", href: "/admin/novy/nastaveni" },
 ];
