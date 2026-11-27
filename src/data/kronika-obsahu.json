@@ -2,7 +2,7 @@
   "_info": "Kronika novinek MateMaxu (viz src/lib/obsah.ts). Při každé změně obsahu přidej zápis a přepiš stav. datum = den nasazení naostro, null = hotové a čeká na nasazení. Test e2e/obsah.spec.ts hlídá, že stav sedí s kódem.",
   "stav": {
     "priklady9": 1211,
-    "priklady5": 397,
+    "priklady5": 447,
     "odmeny5": 89,
     "odmeny9": 90,
     "truhly": 9,
@@ -15,6 +15,11 @@
     "vyzvy": 30
   },
   "zapisy": [
+    {
+      "datum": null,
+      "oblast": "priklady5",
+      "popis": "+50 úloh: pořadí počítání se závorkami pro 5. třídu (8 lehkých, 27 středních, 15 těžkých s hranatými závorkami a nulou); sada od Gemini, výsledky přepočítané"
+    },
     {
       "datum": "2026-11-20",
       "oblast": "odmeny",

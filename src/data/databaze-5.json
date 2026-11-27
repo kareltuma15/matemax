@@ -2,8 +2,8 @@
   "metadata": {
     "source": "Vlastní úlohy MateMaxu pro 5. třídu ve stylu přijímaček CERMAT (okruhy: docs/CERMAT-5-ROZBOR.md)",
     "description": "Úlohy pro 5. třídu mají vlastní témata s předponou p5_ a nikdy se nemíchají s úlohami pro 9. třídu.",
-    "total": 397,
-    "updated": "2026-10-25"
+    "total": 447,
+    "updated": "2026-11-27"
   },
   "examples": [
     {
@@ -11159,6 +11159,809 @@
         "Neplatí: 100 − 64 = 36."
       ],
       "cas_sekund": 120,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_01",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $84 : (21 - 9) + 15$",
+      "odpoved": "22",
+      "reseni_kroky": [
+        "Nejdřív závorka: $21 - 9 = 12$.",
+        "Potom dělení: $84 : 12 = 7$.",
+        "Nakonec sčítání: $7 + 15 = 22$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_02",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $120 - 15 \\cdot 6 + 18$",
+      "odpoved": "48",
+      "reseni_kroky": [
+        "Nejdřív násobení: $15 \\cdot 6 = 90$.",
+        "Nakonec sčítání a odčítání zleva doprava: $120 - 90 = 30$, $30 + 18 = 48$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_03",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $(45 + 39) : 7 - 4$",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "Nejdřív závorka: $45 + 39 = 84$.",
+        "Potom dělení: $84 : 7 = 12$.",
+        "Nakonec odčítání: $12 - 4 = 8$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_04",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $9 \\cdot (32 - 19) - 27$",
+      "odpoved": "90",
+      "reseni_kroky": [
+        "Nejdřív závorka: $32 - 19 = 13$.",
+        "Potom násobení: $9 \\cdot 13 = 117$.",
+        "Nakonec odčítání: $117 - 27 = 90$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_05",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $150 : (42 - 17) \\cdot 8$",
+      "odpoved": "48",
+      "reseni_kroky": [
+        "Nejdřív závorka: $42 - 17 = 25$.",
+        "Nakonec násobení a dělení zleva doprava: $150 : 25 = 6$, $6 \\cdot 8 = 48$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_06",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $72 + 108 : 9 \\cdot 3$",
+      "odpoved": "108",
+      "reseni_kroky": [
+        "Nejdřív násobení a dělení zleva doprava: $108 : 9 = 12$, $12 \\cdot 3 = 36$.",
+        "Nakonec sčítání: $72 + 36 = 108$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_07",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $200 - (64 + 48) : 4$",
+      "odpoved": "172",
+      "reseni_kroky": [
+        "Nejdřív závorka: $64 + 48 = 112$.",
+        "Potom dělení: $112 : 4 = 28$.",
+        "Nakonec odčítání: $200 - 28 = 172$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_08",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $(135 - 79) : 8 + 23$",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "Nejdřív závorka: $135 - 79 = 56$.",
+        "Potom dělení: $56 : 8 = 7$.",
+        "Nakonec sčítání: $7 + 23 = 30$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_09",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $14 \\cdot 6 - 96 : 12$",
+      "odpoved": "76",
+      "reseni_kroky": [
+        "Nejdřív násobení a dělení zleva doprava: $14 \\cdot 6 = 84$, $96 : 12 = 8$.",
+        "Nakonec odčítání: $84 - 8 = 76$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_10",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $180 : 15 + 12 \\cdot 7$",
+      "odpoved": "96",
+      "reseni_kroky": [
+        "Nejdřív násobení a dělení zleva doprava: $180 : 15 = 12$, $12 \\cdot 7 = 84$.",
+        "Nakonec sčítání: $12 + 84 = 96$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_11",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $25 \\cdot (84 : 14) - 45$",
+      "odpoved": "105",
+      "reseni_kroky": [
+        "Nejdřív závorka: $84 : 14 = 6$.",
+        "Potom násobení: $25 \\cdot 6 = 150$.",
+        "Nakonec odčítání: $150 - 45 = 105$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_12",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $310 - 18 \\cdot (25 - 16)$",
+      "odpoved": "148",
+      "reseni_kroky": [
+        "Nejdřív závorka: $25 - 16 = 9$.",
+        "Potom násobení: $18 \\cdot 9 = 162$.",
+        "Nakonec odčítání: $310 - 162 = 148$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_13",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(128 - 44) : 12 \\cdot 9$",
+      "odpoved": "63",
+      "reseni_kroky": [
+        "Nejdřív závorka: $128 - 44 = 84$.",
+        "Nakonec násobení a dělení zleva doprava: $84 : 12 = 7$, $7 \\cdot 9 = 63$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_14",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 1,
+      "latex": true,
+      "zadani": "Vypočítej: $16 \\cdot 8 - (37 + 59)$",
+      "odpoved": "32",
+      "reseni_kroky": [
+        "Nejdřív závorka: $37 + 59 = 96$.",
+        "Potom násobení: $16 \\cdot 8 = 128$.",
+        "Nakonec odčítání: $128 - 96 = 32$."
+      ],
+      "cas_sekund": 75,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_15",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $144 : (36 : 3) + 38$",
+      "odpoved": "50",
+      "reseni_kroky": [
+        "Nejdřív závorka: $36 : 3 = 12$.",
+        "Potom dělení: $144 : 12 = 12$.",
+        "Nakonec sčítání: $12 + 38 = 50$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_16",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(18 + 6 \\cdot 7) : 15 + 19$",
+      "odpoved": "23",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $6 \\cdot 7 = 42$, $18 + 42 = 60$.",
+        "Potom dělení: $60 : 15 = 4$.",
+        "Nakonec sčítání: $4 + 19 = 23$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_17",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $240 : (12 + 4 \\cdot 3) - 6$",
+      "odpoved": "4",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $4 \\cdot 3 = 12$, $12 + 12 = 24$.",
+        "Potom dělení: $240 : 24 = 10$.",
+        "Nakonec odčítání: $10 - 6 = 4$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_18",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(95 - 5 \\cdot 13) \\cdot (48 : 12)$",
+      "odpoved": "120",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $5 \\cdot 13 = 65$, $95 - 65 = 30$.",
+        "Pak závorka: $48 : 12 = 4$.",
+        "Nakonec násobení: $30 \\cdot 4 = 120$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_19",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $150 - (14 \\cdot 6 - 36) : 8$",
+      "odpoved": "144",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $14 \\cdot 6 = 84$, $84 - 36 = 48$.",
+        "Potom dělení: $48 : 8 = 6$.",
+        "Nakonec odčítání: $150 - 6 = 144$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_20",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(108 : 9 + 18) \\cdot 5 - 75$",
+      "odpoved": "75",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $108 : 9 = 12$, $12 + 18 = 30$.",
+        "Potom násobení: $30 \\cdot 5 = 150$.",
+        "Nakonec odčítání: $150 - 75 = 75$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_21",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $320 - (24 + 16) \\cdot (15 - 8)$",
+      "odpoved": "40",
+      "reseni_kroky": [
+        "Nejdřív závorka: $24 + 16 = 40$.",
+        "Pak závorka: $15 - 8 = 7$.",
+        "Potom násobení: $40 \\cdot 7 = 280$.",
+        "Nakonec odčítání: $320 - 280 = 40$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_22",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(72 : 4 + 27) : 9 + 14 \\cdot 3$",
+      "odpoved": "47",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $72 : 4 = 18$, $18 + 27 = 45$.",
+        "Potom násobení a dělení zleva doprava: $45 : 9 = 5$, $14 \\cdot 3 = 42$.",
+        "Nakonec sčítání: $5 + 42 = 47$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_23",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $450 : (100 - 11 \\cdot 5) + 28$",
+      "odpoved": "38",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $11 \\cdot 5 = 55$, $100 - 55 = 45$.",
+        "Potom dělení: $450 : 45 = 10$.",
+        "Nakonec sčítání: $10 + 28 = 38$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_24",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(16 \\cdot 5 - 32) : (24 - 18)$",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $16 \\cdot 5 = 80$, $80 - 32 = 48$.",
+        "Pak závorka: $24 - 18 = 6$.",
+        "Nakonec dělení: $48 : 6 = 8$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_25",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $12 \\cdot (84 : 7 - 5) + 16$",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $84 : 7 = 12$, $12 - 5 = 7$.",
+        "Potom násobení: $12 \\cdot 7 = 84$.",
+        "Nakonec sčítání: $84 + 16 = 100$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_26",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $500 - 125 : (100 - 15 \\cdot 5)$",
+      "odpoved": "495",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $15 \\cdot 5 = 75$, $100 - 75 = 25$.",
+        "Potom dělení: $125 : 25 = 5$.",
+        "Nakonec odčítání: $500 - 5 = 495$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_27",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(63 + 27 \\cdot 3) : 12 - 9$",
+      "odpoved": "3",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $27 \\cdot 3 = 81$, $63 + 81 = 144$.",
+        "Potom dělení: $144 : 12 = 12$.",
+        "Nakonec odčítání: $12 - 9 = 3$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_28",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $18 \\cdot (42 - 96 : 4) - 24$",
+      "odpoved": "300",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $96 : 4 = 24$, $42 - 24 = 18$.",
+        "Potom násobení: $18 \\cdot 18 = 324$.",
+        "Nakonec odčítání: $324 - 24 = 300$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_29",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(140 - 80 : 4) : 15 + 42$",
+      "odpoved": "50",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $80 : 4 = 20$, $140 - 20 = 120$.",
+        "Potom dělení: $120 : 15 = 8$.",
+        "Nakonec sčítání: $8 + 42 = 50$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_30",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $96 : (32 - 4 \\cdot 5) \\cdot 11$",
+      "odpoved": "88",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $4 \\cdot 5 = 20$, $32 - 20 = 12$.",
+        "Nakonec násobení a dělení zleva doprava: $96 : 12 = 8$, $8 \\cdot 11 = 88$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_31",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(25 \\cdot 4 - 16) : 7 + 8 \\cdot 9$",
+      "odpoved": "84",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $25 \\cdot 4 = 100$, $100 - 16 = 84$.",
+        "Potom násobení a dělení zleva doprava: $84 : 7 = 12$, $8 \\cdot 9 = 72$.",
+        "Nakonec sčítání: $12 + 72 = 84$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_32",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $216 : (54 : 3) + 17 \\cdot 4$",
+      "odpoved": "80",
+      "reseni_kroky": [
+        "Nejdřív závorka: $54 : 3 = 18$.",
+        "Potom násobení a dělení zleva doprava: $216 : 18 = 12$, $17 \\cdot 4 = 68$.",
+        "Nakonec sčítání: $12 + 68 = 80$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_33",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(132 : 11 + 24) \\cdot (30 - 25)$",
+      "odpoved": "180",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $132 : 11 = 12$, $12 + 24 = 36$.",
+        "Pak závorka: $30 - 25 = 5$.",
+        "Nakonec násobení: $36 \\cdot 5 = 180$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_34",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $400 - (19 \\cdot 6 + 36) : 5$",
+      "odpoved": "370",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $19 \\cdot 6 = 114$, $114 + 36 = 150$.",
+        "Potom dělení: $150 : 5 = 30$.",
+        "Nakonec odčítání: $400 - 30 = 370$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_35",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 2,
+      "latex": true,
+      "zadani": "Vypočítej: $(85 - 5 \\cdot 9) : 8 + 13 \\cdot 6$",
+      "odpoved": "83",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $5 \\cdot 9 = 45$, $85 - 45 = 40$.",
+        "Potom násobení a dělení zleva doprava: $40 : 8 = 5$, $13 \\cdot 6 = 78$.",
+        "Nakonec sčítání: $5 + 78 = 83$."
+      ],
+      "cas_sekund": 110,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_36",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $180 - [24 + 6 \\cdot (15 - 8)]$",
+      "odpoved": "114",
+      "reseni_kroky": [
+        "Nejdřív závorka: $15 - 8 = 7$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $6 \\cdot 7 = 42$, $24 + 42 = 66$.",
+        "Nakonec odčítání: $180 - 66 = 114$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_37",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $[120 - (14 + 26) \\cdot 2] : 8 + 15$",
+      "odpoved": "20",
+      "reseni_kroky": [
+        "Nejdřív závorka: $14 + 26 = 40$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $40 \\cdot 2 = 80$, $120 - 80 = 40$.",
+        "Potom dělení: $40 : 8 = 5$.",
+        "Nakonec sčítání: $5 + 15 = 20$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_38",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $360 : [45 - 3 \\cdot (28 - 17)]$",
+      "odpoved": "30",
+      "reseni_kroky": [
+        "Nejdřív závorka: $28 - 17 = 11$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $3 \\cdot 11 = 33$, $45 - 33 = 12$.",
+        "Nakonec dělení: $360 : 12 = 30$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_39",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $5 \\cdot [72 : (18 - 9) + 12] - 40$",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "Nejdřív závorka: $18 - 9 = 9$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $72 : 9 = 8$, $8 + 12 = 20$.",
+        "Potom násobení: $5 \\cdot 20 = 100$.",
+        "Nakonec odčítání: $100 - 40 = 60$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_40",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $[84 + (96 : 8 - 4) \\cdot 7] : 10$",
+      "odpoved": "14",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $96 : 8 = 12$, $12 - 4 = 8$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $8 \\cdot 7 = 56$, $84 + 56 = 140$.",
+        "Nakonec dělení: $140 : 10 = 14$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_41",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $420 - 15 \\cdot [60 : (12 + 3) + 16]$",
+      "odpoved": "120",
+      "reseni_kroky": [
+        "Nejdřív závorka: $12 + 3 = 15$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $60 : 15 = 4$, $4 + 16 = 20$.",
+        "Potom násobení: $15 \\cdot 20 = 300$.",
+        "Nakonec odčítání: $420 - 300 = 120$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_42",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $[(150 - 30 \\cdot 4) \\cdot 6 + 20] : 25$",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $30 \\cdot 4 = 120$, $150 - 120 = 30$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $30 \\cdot 6 = 180$, $180 + 20 = 200$.",
+        "Nakonec dělení: $200 : 25 = 8$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_43",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $250 - [18 \\cdot (25 - 19) + 42] : 15$",
+      "odpoved": "240",
+      "reseni_kroky": [
+        "Nejdřív závorka: $25 - 19 = 6$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $18 \\cdot 6 = 108$, $108 + 42 = 150$.",
+        "Potom dělení: $150 : 15 = 10$.",
+        "Nakonec odčítání: $250 - 10 = 240$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_44",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $144 : [36 : (15 - 9) \\cdot 2] + 38$",
+      "odpoved": "50",
+      "reseni_kroky": [
+        "Nejdřív závorka: $15 - 9 = 6$.",
+        "V hranaté závorce zleva doprava: $36 : 6 = 6$, $6 \\cdot 2 = 12$.",
+        "Potom dělení: $144 : 12 = 12$.",
+        "Nakonec sčítání: $12 + 38 = 50$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_45",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $[200 - 4 \\cdot (18 + 72 : 6)] : 10$",
+      "odpoved": "8",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $72 : 6 = 12$, $18 + 12 = 30$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $4 \\cdot 30 = 120$, $200 - 120 = 80$.",
+        "Nakonec dělení: $80 : 10 = 8$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_46",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $7 \\cdot [100 - (14 \\cdot 5 + 12)] - 26$",
+      "odpoved": "100",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $14 \\cdot 5 = 70$, $70 + 12 = 82$.",
+        "Pak hranatá závorka: $100 - 82 = 18$.",
+        "Potom násobení: $7 \\cdot 18 = 126$.",
+        "Nakonec odčítání: $126 - 26 = 100$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_47",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $540 : [90 - 6 \\cdot (42 : 7 + 4)]$",
+      "odpoved": "18",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $42 : 7 = 6$, $6 + 4 = 10$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $6 \\cdot 10 = 60$, $90 - 60 = 30$.",
+        "Nakonec dělení: $540 : 30 = 18$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_48",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $[16 \\cdot (35 - 28) - 52] \\cdot (100 - 93)$",
+      "odpoved": "420",
+      "reseni_kroky": [
+        "Nejdřív závorka: $35 - 28 = 7$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $16 \\cdot 7 = 112$, $112 - 52 = 60$.",
+        "Pak závorka: $100 - 93 = 7$.",
+        "Nakonec násobení: $60 \\cdot 7 = 420$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_49",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $300 - [120 : (24 - 4 \\cdot 4) + 15] \\cdot 8$",
+      "odpoved": "60",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $4 \\cdot 4 = 16$, $24 - 16 = 8$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $120 : 8 = 15$, $15 + 15 = 30$.",
+        "Potom násobení: $30 \\cdot 8 = 240$.",
+        "Nakonec odčítání: $300 - 240 = 60$."
+      ],
+      "cas_sekund": 150,
+      "sm2_interval": 1
+    },
+    {
+      "id": "P5_POR_50",
+      "tema": "p5_pocitani",
+      "podtema": "poradi_operaci",
+      "obtiznost": 3,
+      "latex": true,
+      "zadani": "Vypočítej: $[(108 : 9 + 18) : 5 + 14] \\cdot (72 : 12 - 6)$",
+      "odpoved": "0",
+      "reseni_kroky": [
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $108 : 9 = 12$, $12 + 18 = 30$.",
+        "V hranaté závorce nejdřív násobení a dělení, pak sčítání a odčítání: $30 : 5 = 6$, $6 + 14 = 20$.",
+        "V závorce nejdřív násobení a dělení, pak sčítání a odčítání: $72 : 12 = 6$, $6 - 6 = 0$.",
+        "Nakonec násobení: $20 \\cdot 0 = 0$."
+      ],
+      "cas_sekund": 150,
       "sm2_interval": 1
     },
     {
