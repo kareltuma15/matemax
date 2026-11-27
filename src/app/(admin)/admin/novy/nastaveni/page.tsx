@@ -7,7 +7,9 @@ import { stavAdmina } from "@/lib/admin2/auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { vsechnyUcty } from "@/lib/admin-data";
 import { isoPred } from "@/lib/admin2/metriky";
-import { NAZVY_ULOH, nactiZdravi } from "@/lib/admin2/zdravi";
+import { NAZVY_ULOH, nactiLimity, nactiZdravi } from "@/lib/admin2/zdravi";
+import { bezMigrace } from "@/lib/admin2/data";
+import { nactiZaklad } from "@/lib/admin2/stranka";
 
 /**
  * Systém (fáze A): zabezpečení (druhý faktor), nastavení (SY-03), audit (SY-02), testovací účty
@@ -26,6 +28,10 @@ const NAZVY_AKCI: Record<string, string> = {
 export default async function Nastaveni() {
   const [k, n, s] = await Promise.all([nactiKontext(), nactiNastaveni(), stavAdmina(true)]);
   const zdravi = await nactiZdravi(k.demo);
+  const zaklad = await bezMigrace(() => nactiZaklad(false));
+  const zaci = zaklad?.zaci ?? [];
+  const limity = await nactiLimity(k.demo, zaci);
+  const souhlasy = { celkem: zaci.length, podminky: zaci.filter((x) => x.souhlas_podminky).length, novinky: zaci.filter((x) => x.souhlas_novinky).length, odhlaseni: zaci.filter((x) => x.odhlasen_emaily).length };
   let audit: { akce: string; created_at: string; vysledek: string; detail: Record<string, unknown> }[] = [];
   let pouziti: { sekce: string; pocet: number }[] = [];
   let testovaci = 0;
@@ -90,10 +96,31 @@ export default async function Nastaveni() {
                 {zdravi.webhooky.map((w) => <span key={w.zdroj + w.stav} className="a2-s">{w.zdroj === "stripe" ? "Stripe" : "Resend"} · {w.stav === "zpracovano" ? "zpracováno" : w.stav === "ignorovano" ? "bez zprávy v logu" : w.stav === "chyba" ? "chyba" : "přijato"}: {w.pocet}</span>)}
                 <span className="a2-s">E-maily za 24 h: {zdravi.emaily24h} ze 100 (Resend Free).</span>
               </div>
-              <span className="a2-s">Limity tarifů a zálohy přijdou v další části fáze B.</span>
             </div>
           )}
-        </div>
+          <h2 className="a2-h2" id="limity">Limity tarifů a zálohy</h2>
+          <div className="a2-sekce" data-testid="a2-limity">
+            <div className="a2-karta">
+              {limity.limity.map((l) => { const p = l.hodnota === null ? null : Math.round((l.hodnota / l.limit) * 100); return (
+                <span key={l.nazev} className="a2-sekce" style={{ gap: 3 }}>
+                  <span className="a2-radek a2-mezi"><span>{l.nazev}</span><b style={{ color: p !== null && p >= 80 ? "var(--a-spatne)" : "var(--a-text)" }}>{l.hodnota === null ? "–" : l.hodnota.toLocaleString("cs-CZ")} z {l.limit.toLocaleString("cs-CZ")}{l.jednotka ? ` ${l.jednotka}` : ""}</b></span>
+                  <span className="a2-pruh"><span style={{ width: `${Math.min(100, p ?? 0)}%`, background: p !== null && p >= 80 ? "var(--a-spatne)" : "var(--a-ok)" }} /></span>
+                  {l.poznamka && <span className="a2-s" style={{ fontSize: 12 }}>{l.poznamka}</span>}
+                </span>
+              ); })}
+              <span className="a2-s">Tarify: Supabase Free, Resend Free, Vercel Pro (limity daleko nad provozem). Ověřeno v cenících 27. 11. 2026. Upozornění při 80 %.</span>
+            </div>
+            <div className={`a2-karta${limity.dniOdZalohy === null || limity.dniOdZalohy > 7 ? " a2-akce" : ""}`}>
+              <span className="a2-radek a2-mezi"><b>Poslední záloha</b><span className={`a2-stitek ${limity.dniOdZalohy !== null && limity.dniOdZalohy <= 7 ? "ok" : "pozor"}`}>{limity.zaloha ? `před ${limity.dniOdZalohy} ${limity.dniOdZalohy === 1 ? "dnem" : "dny"}` : "neevidováno"}</span></span>
+              <span className="a2-s">{limity.zaloha ? `${new Date(limity.zaloha.cas).toLocaleString("cs-CZ", { timeZone: "Europe/Prague" })} · ${limity.zaloha.tabulek} tabulek, ${limity.zaloha.radku.toLocaleString("cs-CZ")} řádků.` : "Datum se zapisuje od další zálohy."} Supabase Free automatické zálohy nemá, zálohuje skript <code>{"node scripts/zaloha-supabase.mjs \"C:/Users/Karel/zalohy-matemax\""}</code> (mimo repozitář, obsahuje osobní údaje). Jednou za sezónu zkusit obnovu.</span>
+            </div>
+          </div>
+          <h2 className="a2-h2" id="souhlasy">Souhlasy a uchovávání dat</h2>
+          <div className="a2-karta" data-testid="a2-souhlasy">
+            <span className="a2-s">Souhlas s podmínkami: <b>{souhlasy.podminky}</b> z {souhlasy.celkem} žáků (eviduje se od 27. 11. 2026, starší registrace bez záznamu) · novinky e-mailem: <b>{souhlasy.novinky}</b> · odhlášené e-maily: {souhlasy.odhlaseni}</span>
+            <span className="a2-s">Marketingové zprávy (novinky, akce) jdou jen těm, kdo souhlasili s novinkami. Jestli jsou připomínky tréninku marketing a jestli u žáků pod 15 let potřebujeme souhlas rodiče, je potřeba ověřit právně.</span>
+            <span className="a2-s"><b>Návrh uchovávání (zatím nic nemažu, čeká na tvé schválení a právní ověření):</b> syrové události měření 13 měsíců, pak jen denní souhrny · log odpovědí do konce následující sezóny · log zpráv a audit 2 roky · chyby a běhy úloh 90 dní · smazání účtu smaže i jeho odpovědi, zprávy a návštěvy.</span>
+          </div>        </div>
       </div>
     </Stranka>
   );

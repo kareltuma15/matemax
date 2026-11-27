@@ -49,6 +49,13 @@ fs.writeFileSync(path.join(dir, "_auth_users.json"), JSON.stringify(users.map((u
 summary._auth_users = users.length;
 fs.writeFileSync(path.join(dir, "_souhrn.json"), JSON.stringify({ vytvoreno: new Date().toISOString(), tabulky: summary }, null, 2));
 
+// Datum poslední zálohy pro admin (Systém → Zdraví hlídá, když je starší než 7 dní). Jen čas a počty, žádná cesta ani data.
+const radku = Object.values(summary).reduce((s, n) => s + n, 0);
+await fetch(`${URL_}/rest/v1/admin_nastaveni?on_conflict=klic`, {
+  method: "POST", headers: { ...H, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates,return=minimal" },
+  body: JSON.stringify({ klic: "posledni_zaloha", hodnota: { cas: new Date().toISOString(), tabulek: Object.keys(summary).length, radku }, upraveno_at: new Date().toISOString() }),
+}).catch(() => console.warn("Datum zálohy se nepodařilo zapsat do adminu (záloha sama je v pořádku)."));
+
 console.log(`Záloha uložena do ${dir}`);
 for (const [t, n] of Object.entries(summary)) console.log(`  ${String(n).padStart(6)}  ${t}`);
 console.log("Soubory obsahují osobní údaje — nikam je nenahrávej a nedávej do gitu.");

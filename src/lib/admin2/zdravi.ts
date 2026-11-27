@@ -14,6 +14,36 @@ export const NAZVY_ULOH: Record<string, string> = {
   "weekly-parent-report": "Týdenní přehled rodičům (po 7:00)", "tydenni-analytika": "Týdenní report analytiky (po 7:00)", "test-reminders": "Připomínky testů (ručně)",
 };
 
+// ── Limity tarifů (SY-05) a zálohy (SY-06) ──
+
+/** Limity ověřené v aktuálních cenících 27. 11. 2026 (supabase.com/pricing, resend.com/pricing). Vercel Pro má limity daleko nad provozem appky. */
+export const LIMITY = { resendDen: 100, resendMesic: 3000, supabaseDbMb: 500, supabaseMau: 50000 } as const;
+
+export interface Limit { nazev: string; hodnota: number | null; limit: number; jednotka: string; poznamka?: string }
+export interface StavLimitu { limity: Limit[]; zaloha: { cas: string; tabulek: number; radku: number } | null; dniOdZalohy: number | null }
+
+export async function nactiLimity(demo: boolean, zaci: { posledni_prihlaseni: string | null }[]): Promise<StavLimitu> {
+  const ted = Date.now();
+  const mau = zaci.filter((z) => z.posledni_prihlaseni && ted - Date.parse(z.posledni_prihlaseni) < 30 * 86400000).length;
+  if (demo || !supabaseAdmin) return { limity: [{ nazev: "Resend: e-maily za 24 h", hodnota: 6, limit: LIMITY.resendDen, jednotka: "" }, { nazev: "Resend: e-maily za 30 dní", hodnota: 212, limit: LIMITY.resendMesic, jednotka: "" }, { nazev: "Supabase: databáze", hodnota: 41, limit: LIMITY.supabaseDbMb, jednotka: "MB" }, { nazev: "Supabase: aktivní uživatelé za 30 dní", hodnota: mau, limit: LIMITY.supabaseMau, jednotka: "" }], zaloha: { cas: new Date(ted - 9 * 86400000).toISOString(), tabulek: 40, radku: 3000 }, dniOdZalohy: 9 };
+  const [den, mesic, db, zal] = await Promise.all([
+    supabaseAdmin.from("zpravy").select("id", { count: "exact", head: true }).eq("kanal", "email").gte("odeslano_at", new Date(ted - 86400000).toISOString()),
+    supabaseAdmin.from("zpravy").select("id", { count: "exact", head: true }).eq("kanal", "email").gte("odeslano_at", new Date(ted - 30 * 86400000).toISOString()),
+    supabaseAdmin.rpc("admin_velikost_db"),
+    supabaseAdmin.from("admin_nastaveni").select("hodnota").eq("klic", "posledni_zaloha").maybeSingle(),
+  ]);
+  const zaloha = (zal.data?.hodnota ?? null) as StavLimitu["zaloha"];
+  return {
+    limity: [
+      { nazev: "Resend: e-maily za 24 h", hodnota: den.count ?? null, limit: LIMITY.resendDen, jednotka: "", poznamka: "z logu zpráv od 27. 11. (registrace a reset hesla posílá Supabase zvlášť)" },
+      { nazev: "Resend: e-maily za 30 dní", hodnota: mesic.count ?? null, limit: LIMITY.resendMesic, jednotka: "", poznamka: "log zpráv běží od 27. 11." },
+      { nazev: "Supabase: databáze", hodnota: db.error ? null : Math.round(Number(db.data) / 1024 / 1024), limit: LIMITY.supabaseDbMb, jednotka: "MB", poznamka: db.error ? "chybí migrace 20261128_admin_b4" : undefined },
+      { nazev: "Supabase: aktivní uživatelé za 30 dní", hodnota: mau, limit: LIMITY.supabaseMau, jednotka: "", poznamka: "přihlášení žáci, bez testovacích" },
+    ],
+    zaloha, dniOdZalohy: zaloha ? Math.floor((ted - Date.parse(zaloha.cas)) / 86400000) : null,
+  };
+}
+
 export async function nactiZdravi(demo: boolean): Promise<Zdravi> {
   const prazdne: Zdravi = { chyby: [], behy: [], webhooky: [], emaily24h: 0, chybi: false };
   if (demo || !supabaseAdmin) return prazdne;
