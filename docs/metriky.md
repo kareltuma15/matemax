@@ -1,6 +1,6 @@
 # Slovník metrik MateMaxu
 
-Admin 2.1, DA-01. Každá metrika má jednu definici a od fáze A2 jednu SQL funkci, kterou používají všechny stránky adminu, pondělní report i export. Čas je všude Europe/Prague. V adminu ji ukazuje ikonka „i“ u čísla.
+Admin 2.1, DA-01. Každá metrika má jednu definici. V databázi jsou fakta o žácích (SQL `admin_zaci()`) a dny aktivity (`admin_aktivita(od)`), čísla z nich počítá jediný modul `src/lib/admin2/metriky.ts`, který používají dlaždice, seznam žáků, export i testy. Starý admin a pondělní report se na něj převedou ve fázi B. Čas je všude Europe/Prague. V adminu ji ukazuje ikonka „i“ u čísla.
 
 **Kdo se nepočítá nikde:**
 - testovací účty (`app_metadata.testovaci`),

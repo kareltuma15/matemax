@@ -38,6 +38,8 @@ export default function BottomNav() {
   }
 
   if (!loggedIn) return null;
+  // Admin má vlastní navigaci (admin 2.1, KO-01): studentská lišta tam nepatří
+  if (pathname.startsWith("/admin")) return null;
 
   if (isParentSection) {
     return (

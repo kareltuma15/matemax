@@ -33,6 +33,13 @@ export async function requireAdmin(req: Request): Promise<AdminAuthResult> {
     return { ok: false, status: 403, error: "Forbidden" };
   }
 
+  // Druhý faktor (SY-01): kdo ho má zapnutý, musí mít relaci ověřenou kódem (aal2 v tokenu)
+  if ((user.factors ?? []).some((f) => f.status === "verified")) {
+    let aal: unknown = null;
+    try { aal = JSON.parse(Buffer.from(authHeader.slice(7).split(".")[1] ?? "", "base64url").toString("utf8")).aal; } catch { aal = null; }
+    if (aal !== "aal2") return { ok: false, status: 403, error: "Ověř druhý faktor (MateMax Admin → Ověření)." };
+  }
+
   void zapisRoliAdmina(user.id);
   return { ok: true, userId: user.id, email: user.email ?? "" };
 }

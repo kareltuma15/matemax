@@ -8,7 +8,8 @@ import { supabaseAdmin } from "./supabase-admin";
 export type AuditAkce =
   | "premium_udeleno" | "premium_odebrano" | "diagnostika_resetovana" | "testovaci_zmeneno"
   | "karta_otevrena" | "utrata_zapsana" | "poznamka_zapsana" | "email_odeslan_rucne" | "hodnoceni_ulozeno"
-  | "export_ucty";
+  | "export_ucty" | "doporuceni_zmeneno" | "ukol_zmenen" | "poznamka_zaka" | "stitek_zmenen" | "nastaveni_zmeneno"
+  | "trida_zmenena" | "zebricek_zmenen" | "reset_hesla_odeslan" | "ucet_deaktivovan" | "ucet_smazan";
 
 export async function zapisAudit(z: { adminId: string | null; akce: AuditAkce; cilUserId?: string | null; detail?: Record<string, unknown>; vysledek?: "ok" | "chyba" }): Promise<void> {
   if (!supabaseAdmin) return;

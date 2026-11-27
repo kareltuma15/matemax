@@ -27,6 +27,8 @@ export default defineConfig({
         command: "npm run dev",
         url: baseURL,
         reuseExistingServer: true,
+        // Testovací přístup k novému adminu (jen s cookie admin2_e2e a demo daty, viz src/lib/admin2/auth.ts)
+        env: { ADMIN2_E2E: "1" },
         timeout: 120_000,
       },
 });
