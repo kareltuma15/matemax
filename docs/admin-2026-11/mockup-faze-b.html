@@ -1,0 +1,644 @@
+<title>Admin fáze B</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap">
+<style>
+/* Rozvržení: nahoře co rozhodnout, pak přepínač obrazovek a šířky, rámeček s obrazovkou v barvách nového adminu. */
+:root {
+  --bg: #EEF0F6; --plocha: #FFFFFF; --text: #0D1B3E; --tlum: #5A6480; --slaby: #8A93AA; --linka: #E2E5EE;
+  --akcent: #5B55D6; --akcent-slaby: #EEEDFC; --modra: #2E6DA4;
+  --ok: #1F8A4C; --ok-slaby: #E5F5EC; --pozor: #B45309; --pozor-slaby: #FFF3E0; --spatne: #B4232F; --spatne-slaby: #FDECEC;
+  --t5: #0E8A7E; --t9: #5B55D6; --ram: #0D1B3E; --a-bg: #F5F6FA;
+  --pismo: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --plocha: #151B2E; --text: #E8EBF5; --tlum: #A4ACC4; --slaby: #7C86A2; --linka: #2A3350;
+  --akcent: #9C97F2; --akcent-slaby: #25234A; --modra: #7FB2E5;
+  --ok: #5CCB8A; --ok-slaby: #12301F; --pozor: #F0A85A; --pozor-slaby: #33240F; --spatne: #F07A84; --spatne-slaby: #3A1519;
+  --t5: #4FD1C0; --t9: #9C97F2; --ram: #2A3350; --a-bg: #10162A; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --plocha: #151B2E; --text: #E8EBF5; --tlum: #A4ACC4; --slaby: #7C86A2; --linka: #2A3350;
+  --akcent: #9C97F2; --akcent-slaby: #25234A; --modra: #7FB2E5;
+  --ok: #5CCB8A; --ok-slaby: #12301F; --pozor: #F0A85A; --pozor-slaby: #33240F; --spatne: #F07A84; --spatne-slaby: #3A1519;
+  --t5: #4FD1C0; --t9: #9C97F2; --ram: #2A3350; --a-bg: #10162A; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--pismo); font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.stranka { max-width: 1240px; margin: 0 auto; padding-block: 24px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 28px; }
+h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.15; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 20px; margin: 0; text-wrap: balance; }
+h3 { font-size: 15px; margin: 0; }
+p { margin: 0; }
+.tlum { color: var(--tlum); }
+.uvod { display: flex; flex-direction: column; gap: 10px; max-width: 70ch; }
+.stitek { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 9px; background: var(--akcent-slaby); color: var(--akcent); white-space: nowrap; }
+.st-ok { background: var(--ok-slaby); color: var(--ok); } .st-pozor { background: var(--pozor-slaby); color: var(--pozor); } .st-spatne { background: var(--spatne-slaby); color: var(--spatne); } .st-sedy { background: var(--a-bg); color: var(--tlum); }
+.blok { background: var(--plocha); border: 1px solid var(--linka); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.mrizka2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+.seznam { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.seznam li::marker { color: var(--slaby); }
+.rozh { display: flex; flex-direction: column; gap: 10px; }
+.rozh > div { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; }
+.rozh .c { width: 28px; height: 28px; border-radius: 8px; background: var(--akcent); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+.faze { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 10px; }
+.faze > div { border: 1px solid var(--linka); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; background: var(--a-bg); }
+.faze b { font-size: 14px; }
+.faze small { color: var(--tlum); font-size: 13px; }
+
+/* Přepínače */
+.ovladani { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; flex-direction: column; gap: 10px; background: var(--bg); padding-block: 10px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.taby { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.taby button, .sirka button { font: inherit; font-size: 13px; font-weight: 700; border: 1px solid var(--linka); background: var(--plocha); color: var(--text); border-radius: 999px; padding: 0 14px; min-height: 40px; white-space: nowrap; cursor: pointer; }
+.taby button[aria-pressed="true"], .sirka button[aria-pressed="true"] { background: var(--text); color: var(--plocha); border-color: var(--text); }
+.taby button:focus-visible, .sirka button:focus-visible, .m button:focus-visible { outline: 2px solid var(--akcent); outline-offset: 2px; }
+.sirka { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.sirka span { font-size: 13px; color: var(--tlum); margin-left: 6px; }
+
+/* Rámeček obrazovky */
+.scena { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (min-width: 1100px) { .scena.mobil { grid-template-columns: 410px minmax(0, 1fr); } }
+.ram { background: var(--ram); border-radius: 30px; padding: 10px; width: 100%; max-width: 410px; margin: 0 auto; }
+.scena.desktop .ram { max-width: 100%; border-radius: 16px; padding: 8px; }
+.okno { background: var(--a-bg); border-radius: 22px; overflow: hidden; container-type: inline-size; height: 720px; overflow-y: auto; position: relative; }
+.scena.desktop .okno { border-radius: 10px; height: 680px; }
+.popis { display: flex; flex-direction: column; gap: 12px; }
+.popis .blok { gap: 8px; }
+
+/* ── Obrazovka v barvách adminu (.m = mockup) ── */
+.m { color: var(--text); font-size: 14px; display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100%; }
+@container (min-width: 760px) { .m { grid-template-columns: 200px minmax(0, 1fr); } .m .bok { display: flex; } .m .spodni { display: none; } }
+.m .bok { display: none; flex-direction: column; gap: 2px; background: var(--plocha); border-right: 1px solid var(--linka); padding: 12px 8px; }
+.m .bok .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; padding: 2px 8px 10px; }
+.m .logo i { font-style: normal; width: 26px; height: 26px; border-radius: 8px; background: var(--text); color: var(--plocha); display: grid; place-items: center; font-size: 12px; }
+.m .bok span { display: flex; justify-content: space-between; align-items: center; min-height: 36px; padding: 0 10px; border-radius: 10px; font-weight: 600; font-size: 13px; }
+.m .bok span.akt { background: var(--akcent-slaby); color: var(--akcent); }
+.m .odz { font-size: 11px; font-weight: 800; background: var(--spatne); color: #fff; border-radius: 999px; padding: 0 6px; line-height: 18px; min-width: 18px; text-align: center; }
+.m .hl { display: flex; flex-direction: column; min-width: 0; }
+.m .lista { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--plocha); border-bottom: 1px solid var(--linka); }
+.m .lista b { flex: 1; font-size: 16px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.m .ik { min-width: 40px; min-height: 40px; border: 1px solid var(--linka); border-radius: 12px; display: inline-grid; place-items: center; font-size: 13px; font-weight: 700; background: var(--plocha); padding: 0 8px; position: relative; }
+.m .ik.zap { background: var(--ok-slaby); color: var(--ok); }
+.m .ik .odz { position: absolute; top: -5px; right: -5px; }
+.m .obsah { padding: 12px 14px 90px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+@container (min-width: 760px) { .m .obsah { padding: 16px 22px 30px; } .m .dva { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; align-items: start; } .m .tri { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
+.m .dva, .m .tri { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.m .sek { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.m .h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 11.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--tlum); }
+.m .h2 a { text-transform: none; letter-spacing: 0; font-weight: 700; color: var(--modra); font-size: 13px; }
+.m .k { background: var(--plocha); border: 1px solid var(--linka); border-radius: 14px; padding: 11px 13px; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.m .k.akce { border-left: 4px solid var(--pozor); }
+.m .k.akce.cervena { border-left-color: var(--spatne); }
+.m .k.akce.modra { border-left-color: var(--modra); }
+.m .k.nova { box-shadow: inset 3px 0 0 var(--akcent); }
+.m .t { font-weight: 700; font-size: 14.5px; }
+.m .s { color: var(--tlum); font-size: 13px; }
+.m .xs { color: var(--slaby); font-size: 12px; }
+.m .r { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
+.m .mezi { justify-content: space-between; }
+.m .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 14px; border-radius: 12px; background: var(--akcent); color: #fff; font-weight: 700; font-size: 13.5px; border: 0; font-family: inherit; }
+.m .btn.sek2 { background: var(--plocha); color: var(--text); border: 1px solid var(--linka); }
+.m .btn.male { min-height: 34px; font-size: 12.5px; padding: 0 10px; }
+.m .cip { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; padding: 0 10px; border: 1px solid var(--linka); border-radius: 999px; font-size: 12.5px; font-weight: 600; background: var(--plocha); white-space: nowrap; }
+.m .cip.akt { background: var(--text); color: var(--plocha); border-color: var(--text); }
+.m .cip b { font-weight: 800; }
+.m .t5 { color: var(--t5); font-weight: 800; } .m .t9 { color: var(--t9); font-weight: 800; }
+.m .tecky { display: inline-flex; gap: 3px; align-items: center; }
+.m .tecky i { width: 9px; height: 9px; border-radius: 50%; background: var(--linka); display: inline-block; }
+.m .tecky i.ok { background: var(--ok); } .m .tecky i.pz { background: var(--pozor); } .m .tecky i.sp { background: var(--spatne); }
+.m .radek { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--linka); }
+.m .radek:first-of-type { border-top: 0; }
+.m .cislo { font-size: 22px; font-weight: 800; line-height: 1.1; }
+.m .pruh { height: 8px; border-radius: 99px; background: var(--a-bg); overflow: hidden; border: 1px solid var(--linka); }
+.m .pruh i { display: block; height: 100%; background: var(--akcent); }
+.m .pruh i.ok { background: var(--ok); } .m .pruh i.pz { background: var(--pozor); } .m .pruh i.sp { background: var(--spatne); }
+.m .spodni { position: sticky; bottom: 0; margin-top: auto; display: grid; grid-template-columns: repeat(5, 1fr); background: var(--plocha); border-top: 1px solid var(--linka); z-index: 2; }
+.m .spodni span { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 52px; font-size: 11px; font-weight: 700; color: var(--tlum); gap: 2px; position: relative; }
+.m .spodni span.akt { color: var(--akcent); }
+.m .spodni span::before { content: ""; width: 18px; height: 18px; border-radius: 6px; border: 2px solid currentColor; }
+.m .spodni .odz { position: absolute; top: 4px; left: calc(50% + 4px); }
+.m .zal { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--linka); }
+.m .zal span { padding: 8px 10px; font-weight: 700; font-size: 13px; color: var(--tlum); white-space: nowrap; border-bottom: 2px solid transparent; }
+.m .zal span.akt { color: var(--akcent); border-bottom-color: var(--akcent); }
+.m .bublina { background: var(--a-bg); border: 1px solid var(--linka); border-radius: 12px; padding: 9px 11px; font-size: 13.5px; }
+.m .pole { border: 1px solid var(--linka); border-radius: 12px; padding: 9px 11px; min-height: 64px; color: var(--slaby); font-size: 13px; background: var(--plocha); }
+.m .krok { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; align-items: start; }
+.m .krok .c { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; background: var(--a-bg); border: 1px solid var(--linka); color: var(--tlum); }
+.m .krok .c.ok { background: var(--ok); color: #fff; border-color: var(--ok); }
+.m .krok .c.akt { background: var(--akcent); color: #fff; border-color: var(--akcent); }
+.m .tab { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.m .tab th { text-align: left; font-weight: 700; color: var(--tlum); padding: 6px 6px; font-size: 11.5px; }
+.m .tab td { padding: 6px; border-top: 1px solid var(--linka); text-align: center; }
+.m .tab td:first-child, .m .tab th:first-child { text-align: left; white-space: nowrap; }
+.m .bunka { display: inline-flex; flex-direction: column; align-items: center; min-width: 46px; padding: 3px 4px; border-radius: 8px; font-weight: 800; font-size: 12.5px; line-height: 1.15; }
+.m .bunka small { font-weight: 600; font-size: 10.5px; color: var(--tlum); }
+.m .b-ok { background: var(--ok-slaby); } .m .b-pz { background: var(--pozor-slaby); } .m .b-sp { background: var(--spatne-slaby); } .m .b-0 { background: var(--a-bg); color: var(--slaby); }
+.m .skrol { overflow-x: auto; }
+.m .sloupce { display: flex; align-items: flex-end; gap: 6px; height: 90px; padding-top: 6px; border-bottom: 1px solid var(--linka); }
+.m .sloupce div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 2px; font-size: 11px; font-weight: 700; height: 100%; }
+.m .sloupce div i { width: 100%; max-width: 34px; background: var(--akcent); border-radius: 5px 5px 0 0; display: block; }
+.m .sloupce div i.dalsi { background: var(--ok); }
+.m .osa { display: flex; gap: 6px; font-size: 11px; color: var(--slaby); }
+.m .osa span { flex: 1; text-align: center; }
+.m .trych { display: flex; flex-direction: column; gap: 6px; }
+.m .trych .krok-t { display: grid; grid-template-columns: minmax(0, 1fr) 46px; gap: 8px; align-items: center; }
+.m .trych .pr { height: 28px; border-radius: 8px; background: var(--akcent-slaby); position: relative; overflow: hidden; }
+.m .trych .pr i { position: absolute; inset: 0 auto 0 0; background: var(--akcent); border-radius: 8px; }
+.m .trych .pr span { position: relative; z-index: 1; display: flex; align-items: center; height: 100%; padding: 0 9px; font-size: 12.5px; font-weight: 700; color: #fff; text-shadow: 0 0 3px rgba(13,27,62,.4); white-space: nowrap; }
+.m .trych .del { height: 0; border-top: 2px dashed var(--linka); margin: 4px 0; position: relative; }
+.m .trych .del span { position: absolute; top: -10px; left: 0; background: var(--a-bg); padding-right: 8px; font-size: 11px; font-weight: 700; color: var(--tlum); }
+.m .swipe { position: relative; display: grid; }
+.m .swipe .k { grid-area: 1 / 1; }
+.m .swipe .k.pod { transform: translateY(10px) scale(.96); opacity: .6; }
+.m .swipe .k.pod2 { transform: translateY(20px) scale(.92); opacity: .35; }
+.m .ukazka { font-size: 11px; font-weight: 700; color: var(--pozor); background: var(--pozor-slaby); border-radius: 8px; padding: 6px 10px; }
+.m .zarovka { display: flex; gap: 10px; align-items: flex-start; }
+.m .zarovka .ikona { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-weight: 800; flex: none; }
+.m .zak-app { background: linear-gradient(180deg, #F1F0FF, var(--a-bg)); }
+.m .odkaz { color: var(--modra); font-weight: 700; font-size: 13px; }
+.m .ok-t { color: var(--ok); font-weight: 700; } .m .pz-t { color: var(--pozor); font-weight: 700; } .m .sp-t { color: var(--spatne); font-weight: 700; }
+@media (prefers-reduced-motion: no-preference) { .okno { scroll-behavior: smooth; } }
+</style>
+
+<div class="stranka">
+  <header class="uvod">
+    <span class="stitek">Mockup ke schválení · 27. 11. 2026</span>
+    <h1>Nový admin, fáze B</h1>
+    <p class="tlum">Dvanáct obrazovek fáze B v šířce telefonu (390 px) i na počítači. Je zapnutý režim sdílení (Žák A, Žák B…), čísla jsou ukázková. Sběr dat pro Zprávy a Zdraví systému už je postavený, jen čeká na migraci. Obrazovky začnu stavět, až je schválíš.</p>
+  </header>
+
+  <section class="mrizka2" aria-label="Co potřebuju a plán">
+    <div class="blok">
+      <h2>Co od tebe potřebuju</h2>
+      <div class="rozh">
+        <div><span class="c">1</span><div><b>Schválit obrazovky</b><p class="tlum">Projdi 12 obrazovek níž a napiš, co změnit, nebo „schvaluji“. Připomínku stačí napsat číslem obrazovky.</p></div></div>
+        <div><span class="c">2</span><div><b>Tlačítko „Nahlásit chybu“ v appce žáka</b><p class="tlum">Obrazovka 12. Žák ho uvidí pod vyhodnocením každé úlohy. Úpravu 8 jsi schválil v návrhu, tady je, jak vypadá.</p></div></div>
+        <div><span class="c">3</span><div><b>Pořadí stavby</b><p class="tlum">Navrhuju začít Zprávami a Schránkou. Jsou nejblíž penězům a odpovědím lidí a data se do nich začnou sbírat hned po nasazení. Plán vpravo.</p></div></div>
+        <div><span class="c">4</span><div><b>Nastavení u služeb (asi 15 min, až budeš chtít)</b><p class="tlum">Bez nich poběží všechno kromě příjmu odpovědí a kliknutí v e-mailech. Postup je dole na stránce.</p></div></div>
+      </div>
+    </div>
+    <div class="blok">
+      <h2>Plán fáze B (do 22. 1.)</h2>
+      <div class="faze">
+        <div><span class="stitek st-ok">postaveno</span><b>B1 · sběr dat</b><small>Log zpráv a jejich stavů, odpovědi do Schránky, chyby, běhy automatických úloh, platby ze Stripe. Čeká na migraci a „nasaď“.</small></div>
+        <div><span class="stitek">do 12. 12.</span><b>B2 · Zprávy a Schránka</b><small>Obrazovky 1–3, večerní kolečko (4), záložka Zprávy na kartě žáka, upozornění na tvůj telefon.</small></div>
+        <div><span class="stitek">do 9. 1.</span><b>B3 · Učení a rodiny</b><small>Obrazovky 5–7: témata, úlohy s příznaky, opakování, připravenost, rodiče. Nahlásit chybu (12).</small></div>
+        <div><span class="stitek">do 22. 1.</span><b>B4 · Růst, Chování, Plán, Systém</b><small>Obrazovky 8–11: trychtýř po lidech, zdroje, generátor odkazů, kronika s vyhodnocením, zdraví a limity, PWA adminu.</small></div>
+      </div>
+      <p class="tlum" style="font-size:13px">Do 12. 12. mám rozdělaný online test. Pokud bude potřeba, posunu B2 o týden, termín celé fáze 22. 1. platí.</p>
+    </div>
+  </section>
+
+  <div class="ovladani">
+    <div class="taby" role="group" aria-label="Obrazovka" id="taby"></div>
+    <div class="sirka" role="group" aria-label="Šířka">
+      <button type="button" id="w-mob" aria-pressed="true">Mobil 390</button>
+      <button type="button" id="w-desk" aria-pressed="false">Desktop</button>
+      <span id="w-pozn">Na mobilu je vpravo popis obrazovky.</span>
+    </div>
+  </div>
+
+  <section class="scena mobil" id="scena" aria-live="polite">
+    <div class="ram"><div class="okno" id="okno"></div></div>
+    <div class="popis" id="popis"></div>
+  </section>
+
+  <section class="mrizka2" aria-label="Nastavení u služeb">
+    <div class="blok">
+      <h2>Nastavení u služeb</h2>
+      <p class="tlum">Udělej, až se ti to hodí. Do té doby admin ukáže „čeká na nastavení“ a nic se neztratí.</p>
+      <ol class="seznam">
+        <li><b>Resend → Domains → Add domain:</b> <code>odpovedi.matematika-snadno.cz</code>, zapnout <i>Receiving</i>. Resend ukáže jeden záznam MX pro tuhle poddoménu. Ten vlož u správce DNS. Hlavní doména a tvoje pošta zůstanou beze změny.</li>
+        <li><b>Resend → u domény matematika-snadno.cz zapnout Click tracking</b> (sledování kliknutí). Přidá jeden záznam CNAME. Sledování otevření doporučuju nechat vypnuté, Apple Mail ho nadsazuje.</li>
+        <li><b>Resend → Webhooks:</b> u stávajícího webhooku zaškrtnout všechny události e-mailů (sent, delivered, delivery_delayed, bounced, failed, complained, opened, clicked, suppressed, received).</li>
+        <li><b>Stripe → Developers → Webhooks:</b> přidat události <code>invoice.paid</code> a <code>charge.refunded</code>.</li>
+        <li>Napsat mi, až bude bod 1 hotový. Nastavím ve Vercelu adresu pro odpovědi a pošlu ti zkušební e-mail na tvou adresu, na který odpovíš.</li>
+      </ol>
+    </div>
+    <div class="blok">
+      <h2>Co se změní pro žáky a rodiče</h2>
+      <ul class="seznam">
+        <li><b>Viditelné:</b> jen tlačítko „Nahlásit chybu“ pod vyhodnocením úlohy (obrazovka 12).</li>
+        <li><b>Neviditelné:</b> odpověď na e-mail z appky přijde do adminu a kopie tobě. Push nahlásí, že se zobrazil a že na něj žák klepl. Nic jiného se nesbírá.</li>
+        <li>Žádný e-mail ani push žákům se kvůli fázi B neposílá. Nové e-mailové funkce začínají v testovacím režimu.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<template id="obr">
+<!-- 1 Schránka -->
+<section data-id="schranka" data-nazev="1 Schránka" data-sekce="Zprávy" data-titul="Zprávy · Schránka" data-popis="Jedno místo pro odpovědi na e-maily, zpětnou vazbu a nahlášené chyby v úlohách. Odpovíš přímo odsud, odpověď odejde přes Resend a zapíše se do logu. Každou položku jde vyřídit, převést na úkol nebo otevřít žáka." data-body="Odpověď se spáruje se žákem podle odesílatele a hlaviček e-mailu.|Kopie každé odpovědi dál chodí na tvou adresu.|Odpověď z adminu: testovací režim pošle text nejdřív tobě s TEST v předmětu.|„Bez reakce 24 h“ jde do fronty na Dnes.">
+  <div class="r"><span class="cip akt">Nové <b>3</b></span><span class="cip">Odpovědi <b>1</b></span><span class="cip">Zpětná vazba <b>1</b></span><span class="cip">Chyby v úlohách <b>1</b></span><span class="cip">Vyřízené</span></div>
+  <div class="dva">
+    <div class="sek">
+      <div class="k nova">
+        <div class="r mezi"><span class="t">Žák C <span class="t9">9.</span> odpověděl na e-mail</span><span class="xs">před 2 h</span></div>
+        <span class="s">Na: „Diagnostika tě čeká“ · přišel 22. 11. z FB reklamy</span>
+        <div class="bublina">Dobrý den, diagnostiku jsem začal, ale nevím, jestli se mi uložila. Mám ji dělat znovu?</div>
+        <div class="r"><span class="btn male">Odpovědět</span><span class="btn sek2 male">Otevřít žáka</span><span class="btn sek2 male">Na úkol</span><span class="btn sek2 male">Vyřízeno</span></div>
+      </div>
+      <div class="k nova">
+        <div class="r mezi"><span class="t">Chyba v úloze ZLO2_14</span><span class="stitek st-pozor">nahlášeno 2×</span></div>
+        <span class="s">Žák A <span class="t9">9.</span>: „Výsledek 3/4 je stejný jako 0,75, appka ho nevzala.“ · Žák F <span class="t9">9.</span>: špatný výsledek</span>
+        <span class="xs">Úloha: 44 pokusů, 61 % na první pokus, nejčastější špatná odpověď „0,75“ (9×)</span>
+        <div class="r"><span class="btn male">Zkontrolovat úlohu</span><span class="btn sek2 male">Vyřízeno</span></div>
+      </div>
+      <div class="k nova">
+        <div class="r mezi"><span class="t">Zpětná vazba od Žáka B <span class="t5">5.</span></span><span class="xs">včera</span></div>
+        <span class="s">4 z 5 · líbí se: Hexík, truhly</span>
+        <div class="bublina">Chtěla bych víc úloh na slovní úlohy.</div>
+        <div class="r"><span class="btn male">Odpovědět</span><span class="btn sek2 male">Na nápad</span><span class="btn sek2 male">Vyřízeno</span></div>
+      </div>
+    </div>
+    <div class="sek">
+      <div class="h2">Odpověď Žákovi C</div>
+      <div class="k">
+        <span class="xs">Komu: žák (tyká se) · Předmět: Re: Diagnostika tě čeká</span>
+        <div class="pole">Ahoj, diagnostika se ukládá průběžně. Když ji otevřeš znovu, pokračuješ tam, kde jsi skončil…</div>
+        <span class="xs">Testovací režim: odpověď přijde nejdřív na tvou adresu s TEST v předmětu.</span>
+        <div class="r"><span class="btn">Odeslat</span><span class="btn sek2">Zrušit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 Log zpráv a šablony -->
+<section data-id="zpravy" data-nazev="2 Zprávy a šablony" data-sekce="Zprávy" data-titul="Zprávy · Odeslané" data-popis="Co komu odešlo a co se s tím stalo. U každé zprávy jsou tečky stavu: odesláno, doručeno, kliknuto, odpověděl. Šablony ukazují hlavně dopad: kolik žáků do 48 h po zprávě trénovalo." data-body="Otevření ukazuju šedě a jen orientačně (Apple Mail je nadsazuje).|Kliknutí začnou chodit po zapnutí sledování kliknutí v Resendu.|Testovací zprávy z adminu jdou odfiltrovat.|Doručitelnost: podíl vrácených a spamu, potlačené adresy.">
+  <div class="r"><span class="cip akt">Vše</span><span class="cip">Žákům</span><span class="cip">Rodičům</span><span class="cip">Push</span><span class="cip">Problémy <b>1</b></span><span class="cip">Bez testovacích</span></div>
+  <div class="dva">
+    <div class="sek">
+      <div class="h2">Dnes a včera <a>Export</a></div>
+      <div class="k">
+        <div class="radek"><div><div class="t">Žák D <span class="t9">9.</span> · Netrénoval jsi 3 dny</div><span class="xs">e-mail · připomínka · 16:00</span></div><span class="tecky" title="odesláno, doručeno, kliknuto"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i></i></span></div>
+        <div class="radek"><div><div class="t">Rodič Žáka A · Týdenní přehled</div><span class="xs">e-mail · report · po 7:00</span></div><span class="tecky"><i class="ok"></i><i class="ok"></i><i></i><i></i></span></div>
+        <div class="radek"><div><div class="t">Žák G <span class="t5">5.</span> · Hexík čeká na trénink</div><span class="xs">push · připomínka · 16:00 · zobrazeno</span></div><span class="tecky"><i class="ok"></i><i class="ok"></i><i></i><i></i></span></div>
+        <div class="radek"><div><div class="t">Žák H <span class="t9">9.</span> · Diagnostika tě čeká</div><span class="xs sp-t">e-mail · vráceno: adresa neexistuje</span></div><span class="tecky"><i class="ok"></i><i class="sp"></i></span></div>
+        <div class="radek"><div><div class="t">Žák C <span class="t9">9.</span> · Diagnostika tě čeká</div><span class="xs">e-mail · odpověděl za 3 h</span></div><span class="tecky"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i></span></div>
+      </div>
+      <span class="xs">Tečky: odesláno · doručeno · kliknuto · odpověděl</span>
+    </div>
+    <div class="sek">
+      <div class="h2">Šablony · 30 dní</div>
+      <div class="k">
+        <div class="r mezi"><span class="t">Diagnostika tě čeká</span><span class="stitek st-sedy">malý vzorek</span></div>
+        <span class="s">odesláno 6 · doručeno 6 · kliknuto 2 · odpověď 1</span>
+        <span class="s"><b>Trénovali do 48 h: 2 z 6</b></span>
+        <div class="r"><span class="odkaz">Lidi</span><span class="odkaz">Náhled</span><span class="odkaz">Poslat test</span></div>
+      </div>
+      <div class="k">
+        <div class="r mezi"><span class="t">Netrénoval jsi 3 dny</span><span class="stitek st-sedy">malý vzorek</span></div>
+        <span class="s">odesláno 9 · doručeno 9 · kliknuto 3</span>
+        <span class="s"><b>Trénovali do 48 h: 4 z 9</b></span>
+      </div>
+      <div class="k">
+        <div class="r mezi"><span class="t">Doručitelnost</span><span class="stitek st-ok">v pořádku</span></div>
+        <span class="s">vráceno 1 z 41 · spam 0 · potlačené adresy 1</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Hromadné odeslání -->
+<section data-id="hromadne" data-nazev="3 Hromadné odeslání" data-sekce="Zprávy" data-titul="Zprávy · Hromadné odeslání" data-popis="Postup po krocích: segment, šablona, náhled konkrétních zpráv, test na tvou adresu, tvoje potvrzení, odeslání. Ochrana proti dvojímu odeslání a strop Resendu (100 e-mailů denně)." data-body="Marketingové zprávy jen těm, kdo souhlasili s novinkami, s odkazem na odhlášení.|Kdo stejnou šablonu dostal v posledních 7 dnech, se přeskočí.|Přes 50 lidí se odeslání rozloží do více dní.|Rodičům vykat, žákům tykat: šablona to hlídá podle příjemce.">
+  <div class="sek">
+    <div class="krok"><span class="c ok">✓</span><div><b>Komu:</b> segment „Netrénují 3+ dny“ · 9. třída <span class="s">· 7 žáků</span></div></div>
+    <div class="krok"><span class="c ok">✓</span><div><b>Šablona:</b> Stýská se mi (tykání, 1 tlačítko)</div></div>
+    <div class="krok"><span class="c akt">3</span><div><b>Náhled konkrétních zpráv</b>
+      <div class="k" style="margin-top:6px"><span class="xs">1 ze 7 · Žák D</span><span class="t">Ahoj, Hexíkovi se stýská</span><span class="s">Naposledy jsi trénoval před 4 dny zlomky. Dnes stačí 5 minut…</span><div class="r"><span class="odkaz">← Předchozí</span><span class="odkaz">Další →</span></div></div>
+      <div class="k" style="margin-top:6px"><span class="t">Kdo se přeskočí (2)</span><span class="s">Žák H: vrácený e-mail · Žák K: odhlásil se z e-mailů</span></div>
+    </div></div>
+    <div class="krok"><span class="c">4</span><div><b>Test na tvou adresu</b> <span class="s">· TEST v předmětu</span></div></div>
+    <div class="krok"><span class="c">5</span><div><b>Potvrdit a odeslat 5 žákům</b> <span class="s">· dnes zbývá 94 ze 100 e-mailů Resendu</span></div></div>
+    <div class="r"><span class="btn">Poslat test</span><span class="btn sek2">Zpět</span></div>
+  </div>
+</section>
+
+<!-- 4 Večerní kolečko -->
+<section data-id="kolecko" data-nazev="4 Večerní kolečko" data-sekce="Dnes" data-titul="Večerní kolečko · 2 z 9" data-popis="Průvodce na 15 minut. Jedna karta po druhé: nejdřív zprávy, pak fronta akcí, pak cíle a nakonec plán na zítra. Na mobilu přejetím doprava uděláš, doleva odložíš. Na konci shrnutí, co jsi vyřídil." data-body="Pořadí: Schránka → fronta akcí → cíle sezóny → plán na zítra.|Tlačítka dole dělají totéž co přejetí (pro desktop a pro jistotu).|Kolečko jde přerušit, příště pokračuje tam, kde jsi skončil.|Denní souhrn push (např. 19:30) otevře rovnou kolečko.">
+  <div class="sek">
+    <div class="r mezi"><span class="xs">ZPRÁVY · 2 z 9</span><span class="xs">asi 11 min zbývá</span></div>
+    <div class="pruh"><i style="width:22%"></i></div>
+    <div class="swipe">
+      <div class="k pod2"><span class="t">.</span></div>
+      <div class="k pod"><span class="t">.</span></div>
+      <div class="k">
+        <span class="stitek st-pozor" style="align-self:flex-start">Odpověď čeká 2 h</span>
+        <span class="t">Žák C <span class="t9">9.</span> odpověděl na e-mail</span>
+        <div class="bublina">Dobrý den, diagnostiku jsem začal, ale nevím, jestli se mi uložila. Mám ji dělat znovu?</div>
+        <span class="s">Diagnostika: rozdělaná, 9 z 24 úloh · přišel 22. 11. z FB reklamy</span>
+        <span class="btn">Odpovědět</span>
+      </div>
+    </div>
+    <div class="r mezi"><span class="btn sek2">← Odložit</span><span class="btn sek2">Přeskočit</span><span class="btn">Hotovo →</span></div>
+    <span class="xs" style="text-align:center">Přejeď doprava = hotovo · doleva = odložit na zítra</span>
+    <div class="k">
+      <span class="h2">Shrnutí na konci (ukázka)</span>
+      <span class="s">Vyřízeno 6 · odloženo 2 · nové úkoly 1 · 14 min</span>
+      <span class="s">Zítra: odpovědět Žákovi E, zkontrolovat úlohu ZLO2_14</span>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Učení -->
+<section data-id="uceni" data-nazev="5 Učení" data-sekce="Učení" data-titul="Učení · Témata a úlohy" data-popis="Jak se žákům daří. Témata od nejslabšího, úlohy s příznaky a mřížka žáci × témata. Úspěšnost se počítá z prvního pokusu u všech, kdo úlohu začali. Číslo je vždy vidět, barva jen doplňuje." data-body="Příznaky úloh: podezřelá, moc těžká, moc lehká, zdlouhavá, přeskakovaná. Vždy s počtem pokusů.|Pod 30 odpovědí štítek „malý vzorek“.|Opakování (SM-2): dnes na řadě, po termínu, jak moc žáci zapomínají.|Data se sbírají od nasazení logu odpovědí (26. 11.).">
+  <div class="r"><span class="cip akt">Obě třídy</span><span class="cip">5. třída</span><span class="cip">9. třída</span><span class="cip">30 dní</span></div>
+  <div class="dva">
+    <div class="sek">
+      <div class="h2">Témata · od nejslabšího</div>
+      <div class="k">
+        <div class="radek"><div><div class="t">Zlomky</div><span class="xs">6 žáků · 118 odpovědí · medián 48 s</span><div class="pruh" style="margin-top:4px"><i class="pz" style="width:55%"></i></div></div><span class="pz-t">55 %</span></div>
+        <div class="radek"><div><div class="t">Slovní úlohy</div><span class="xs">5 žáků · 64 odpovědí · medián 1 min 20 s</span><div class="pruh" style="margin-top:4px"><i class="pz" style="width:61%"></i></div></div><span class="pz-t">61 %</span></div>
+        <div class="radek"><div><div class="t">Úhly</div><span class="xs">4 žáci · 22 odpovědí · <span class="stitek st-sedy">malý vzorek</span></span><div class="pruh" style="margin-top:4px"><i style="width:73%"></i></div></div><span>73 %</span></div>
+        <div class="radek"><div><div class="t">Výrazy</div><span class="xs">7 žáků · 140 odpovědí · medián 35 s</span><div class="pruh" style="margin-top:4px"><i class="ok" style="width:84%"></i></div></div><span class="ok-t">84 %</span></div>
+      </div>
+      <div class="h2">Úlohy s příznakem</div>
+      <div class="k akce cervena"><div class="r mezi"><span class="t">ZLO2_14 · podezřelá</span><span class="xs">44 pokusů</span></div><span class="s">„0,75“ 9× proti správné „3/4“ 11×. Nejspíš chybí přijímaný tvar.</span><span class="btn male" style="align-self:flex-start">Zkontrolovat</span></div>
+      <div class="k akce"><div class="r mezi"><span class="t">SLO3_06 · přeskakovaná</span><span class="xs">12 pokusů</span></div><span class="s">5 z 12 přeskočilo (42 %), medián času 3 min.</span></div>
+    </div>
+    <div class="sek">
+      <div class="h2">Žáci × témata</div>
+      <div class="k skrol">
+        <table class="tab"><thead><tr><th>Žák</th><th>Zlomky</th><th>Slovní</th><th>Úhly</th><th>Výrazy</th></tr></thead>
+        <tbody>
+          <tr><td>Žák A <span class="t9">9.</span></td><td><span class="bunka b-sp">38 %<small>21</small></span></td><td><span class="bunka b-pz">60 %<small>15</small></span></td><td><span class="bunka b-0">–<small>0</small></span></td><td><span class="bunka b-ok">88 %<small>32</small></span></td></tr>
+          <tr><td>Žák C <span class="t9">9.</span></td><td><span class="bunka b-pz">57 %<small>14</small></span></td><td><span class="bunka b-0">–<small>0</small></span></td><td><span class="bunka b-ok">80 %<small>10</small></span></td><td><span class="bunka b-ok">91 %<small>22</small></span></td></tr>
+          <tr><td>Žák D <span class="t9">9.</span></td><td><span class="bunka b-ok">82 %<small>33</small></span></td><td><span class="bunka b-pz">55 %<small>20</small></span></td><td><span class="bunka b-pz">58 %<small>12</small></span></td><td><span class="bunka b-ok">79 %<small>28</small></span></td></tr>
+        </tbody></table>
+        <span class="xs">V buňce úspěšnost a počet odpovědí. Klepnutí otevře odpovědi žáka v tématu.</span>
+      </div>
+      <div class="h2">Opakování (SM-2)</div>
+      <div class="k"><span class="s">Dnes na řadě <b>23</b> · po termínu <b>41</b> · úspěšnost v opakování <b>68 %</b></span><span class="s">Zapomíná stejné úlohy (4+ neúspěchy): <b>Žák A</b> (3 úlohy, zlomky)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 Karta žáka: nové záložky -->
+<section data-id="karta" data-nazev="6 Karta žáka" data-sekce="Žáci" data-titul="Žáci › Žák A" data-popis="Karta žáka dostane záložky Učení, Testy, Zprávy a Rodina. Učení: témata s trendem, odhad bodů a připravenost, opakování, posledních 50 odpovědí a příznak moc lehké / moc těžké. Testy: body z testu nanečisto vedle tréninku." data-body="Moc lehké: přes 90 % správně a rychleji než ostatní. Moc těžké: pod 50 % nebo přes 30 % přeskočeno (posledních 20 odpovědí).|„Pozadu“: slabá témata × potřebné tréninky &gt; zbývající týdny × jeho tempo.|Odhad bodů je orientační, dokud ho nezkalibruju s testy (fáze C).|Kopírovat pro Clauda: shrnutí žáka bez jména, e-mailu a ID.">
+  <div class="k">
+    <div class="r mezi"><span class="t">Žák A · <span class="t9">9.</span> třída · Zdarma</span><span class="stitek st-ok">aktivní</span></div>
+    <span class="s">Registrace před 12 dny z FB reklamy, 9 dní tréninku, nejslabší téma zlomky (38 %).</span>
+  </div>
+  <div class="zal"><span>Přehled</span><span class="akt">Učení</span><span>Testy</span><span>Zprávy</span><span>Rodina</span><span>Platby</span><span>Časová osa</span></div>
+  <div class="dva">
+    <div class="sek">
+      <div class="k">
+        <div class="r mezi"><span class="t">Odhad bodů</span><span class="stitek st-sedy">orientační</span></div>
+        <div class="r"><span class="cislo">27</span><span class="s">z 50 · při diagnostice 21 · tempo +3 za týden</span></div>
+        <span class="s">Do přijímaček (14. 4.) zbývá 20 týdnů · slabá témata, která ještě netrénoval: <b>úhly</b></span>
+        <span class="stitek st-ok" style="align-self:flex-start">stíhá</span>
+      </div>
+      <div class="k">
+        <div class="radek"><div><div class="t">Zlomky <span class="stitek st-spatne">moc těžké</span></div><span class="xs">poslední 20: 7 správně, 4 přeskočeno</span></div><span class="sp-t">38 %</span></div>
+        <div class="radek"><div><div class="t">Výrazy <span class="stitek st-ok">moc lehké</span></div><span class="xs">poslední 20: 19 správně, medián 18 s (ostatní 35 s)</span></div><span class="ok-t">88 %</span></div>
+        <div class="radek"><div><div class="t">Slovní úlohy</div><span class="xs">15 odpovědí</span></div><span class="pz-t">60 %</span></div>
+      </div>
+    </div>
+    <div class="sek">
+      <div class="h2">Posledních 50 odpovědí</div>
+      <div class="k">
+        <div class="radek"><div><div class="t">ZLO2_14 · zlomky</div><span class="xs">odpověď „0,75“ · 1 min 4 s · nápověda</span></div><span class="sp-t">✗</span></div>
+        <div class="radek"><div><div class="t">ZLO2_09 · zlomky</div><span class="xs">přeskočeno po 22 s</span></div><span class="xs">–</span></div>
+        <div class="radek"><div><div class="t">VYR1_31 · výrazy</div><span class="xs">odpověď „4x+2“ · 14 s</span></div><span class="ok-t">✓</span></div>
+      </div>
+      <div class="r"><span class="btn sek2 male">Kopírovat pro Clauda</span><span class="btn sek2 male">Poslat tip</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 Rodiny -->
+<section data-id="rodiny" data-nazev="7 Rodiče" data-sekce="Žáci" data-titul="Žáci · Rodiče" data-popis="Zákazník je rodina. Seznam rodičů s dětmi, odběrem týdenního reportu a stavem posledního reportu. U rodiny je celá cesta: test nanečisto → výsledky → MateMax → Premium nebo Kompletní příprava." data-body="Rodič = e-mail pro reporty (propojení v appce), plátce ze Stripe, kontakt z formuláře /rodice.|Sourozenci se spojí podle e-mailu rodiče.|Kontakt z Wixu se doplní ve fázi D.|Náhled reportu ukáže přesně to, co rodič dostane v pondělí.">
+  <div class="r"><span class="cip akt">Všichni <b>4</b></span><span class="cip">Odebírají report <b>3</b></span><span class="cip">Platí <b>1</b></span><span class="cip">Z testů <b>1</b></span></div>
+  <div class="dva">
+    <div class="sek">
+      <div class="k">
+        <div class="r mezi"><span class="t">Rodina Žáka A</span><span class="stitek st-ok">Premium</span></div>
+        <span class="s">Děti: Žák A <span class="t9">9.</span> · Žák L <span class="t5">5.</span></span>
+        <span class="s">Report: týdně · poslední po 24. 11. doručen, klik na „Otevřít MateMax“</span>
+        <span class="xs">Cesta: test nanečisto 8. 11. (31 b.) → účet do 2 dní → Premium 20. 11.</span>
+        <div class="r"><span class="odkaz">Náhled reportu</span><span class="odkaz">Zprávy rodině</span></div>
+      </div>
+      <div class="k">
+        <div class="r mezi"><span class="t">Rodina Žáka D</span><span class="stitek st-pozor">nepotvrdil odběr</span></div>
+        <span class="s">Dítě: Žák D <span class="t9">9.</span> · pozvánka odeslána 19. 11., doručena</span>
+        <span class="btn sek2 male" style="align-self:flex-start">Poslat pozvánku znovu</span>
+      </div>
+    </div>
+    <div class="sek">
+      <div class="h2">Kontakty z /rodice bez účtu</div>
+      <div class="k"><span class="s">2 kontakty z ankety (zájem o Kompletní přípravu)</span><span class="odkaz">Zobrazit</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 Chování -->
+<section data-id="chovani" data-nazev="8 Chování" data-sekce="Chování" data-titul="Chování · Obrazovky a formuláře" data-popis="Na co lidé klikají a kde odcházejí. Všude jeden základ: lidé, ne zobrazení. Prvky mají lidské názvy z plánu měření. Návštěvy jsou seskupené po lidech místo syrových událostí." data-body="Scroll úvodní stránky jako počet lidí, kteří došli do 25, 50, 75 a 100 %.|Opakované rychlé kliky na stejné místo = něco nefunguje.|Formulář registrace: chyby po polích, čas vyplnění, pole, u kterého lidé odešli.|Přihlášený žák je jménem s odkazem na kartu, anonymní jako „Návštěvník“.">
+  <div class="dva">
+    <div class="sek">
+      <div class="h2">Registrace · 7 dní</div>
+      <div class="k">
+        <span class="s">Otevřelo 41 lidí · začalo vyplňovat 12 · odeslalo 5</span>
+        <div class="radek"><div><div class="t">Odešli bez vyplnění</div><span class="xs">z toho do 5 s: 22 (většina z reklamy v aplikacích)</span></div><b>29</b></div>
+        <div class="radek"><div><div class="t">Odešli u pole Třída</div><span class="xs">chyba „Vyber třídu“ 3×</span></div><b>4</b></div>
+        <div class="radek"><div><div class="t">Odešli u pole Heslo</div></div><b>2</b></div>
+        <span class="xs">Medián vyplnění u těch, kdo odeslali: 1 min 10 s</span>
+      </div>
+      <div class="h2">Návštěvy po lidech</div>
+      <div class="k">
+        <div class="t">Návštěvník · mobil · FB reklama · 3 min</div>
+        <span class="s">úvod → klik „Začít“ → registrace → odešel u pole Třída</span>
+      </div>
+      <div class="k">
+        <div class="t">Žák C <span class="t9">9.</span> · mobil · 12 min</div>
+        <span class="s">Domov → Trénink: zlomky (12 úloh, 8 správně) → Hexík → truhla</span>
+      </div>
+    </div>
+    <div class="sek">
+      <div class="h2">Nejklikanější · úvodní stránka</div>
+      <div class="k">
+        <div class="radek"><div><div class="t">Začít zdarma (nahoře)</div><span class="xs">19 kliků</span></div><b>14 lidí</b></div>
+        <div class="radek"><div><div class="t">Ukázkový příklad · odpověď</div><span class="xs">11 odpovědí, 7 správně</span></div><b>9 lidí</b></div>
+        <div class="radek"><div><div class="t">Ceník</div></div><b>3 lidé</b></div>
+        <span class="xs">Nikdo neklikl: „Pro rodiče“ v patičce, video Hexíka</span>
+      </div>
+      <div class="h2">Scroll úvodní stránky</div>
+      <div class="k">
+        <div class="sloupce"><div>62<i style="height:100%"></i></div><div>38<i style="height:61%"></i></div><div>21<i style="height:34%"></i></div><div>9<i style="height:15%"></i></div></div>
+        <div class="osa"><span>25 %</span><span>50 %</span><span>75 %</span><span>100 %</span></div>
+        <span class="s">Polovina lidí nedojde k ukázkám úloh (sekce „Zkus příklad“).</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 Růst -->
+<section data-id="rust" data-nazev="9 Růst" data-sekce="Růst" data-titul="Růst · Trychtýř a zdroje" data-popis="Roste to? Trychtýř po lidech: v kroku je jen ten, kdo prošel předchozími (okno 7 dní). Vstupy zvlášť. Do registrace jsou to anonymní návštěvy, od registrace účty, to je oddělené čarou. Zdroje s lidskými názvy a cenou za aktivovaného žáka." data-body="Klepnutí na krok ukáže, kdo prošel a kdo odpadl.|Generátor odkazů: lidský název kampaně + UTM, hned vidíš výsledky. Cíl: „přímo / neznámo“ pod 30 %.|Retence: kohorty podle týdne registrace s počty a seznamem žáků.|Peníze ze Stripe: měsíční příjem, nová a zrušená předplatná, selhané a vrácené platby.">
+  <div class="r"><span class="cip akt">Rovnou na registraci</span><span class="cip">Přes úvod</span><span class="cip">Z e-mailu</span><span class="cip">Z výsledků testu</span></div>
+  <div class="dva">
+    <div class="sek">
+      <div class="h2">Trychtýř · 30 dní</div>
+      <div class="k trych">
+        <div class="krok-t"><div class="pr"><i style="width:100%"></i><span>Otevřeli registraci</span></div><b>93</b></div>
+        <div class="krok-t"><div class="pr"><i style="width:14%"></i><span>Začali vyplňovat</span></div><b>13</b></div>
+        <div class="krok-t"><div class="pr"><i style="width:7%"></i><span>Odeslali</span></div><b>6</b></div>
+        <div class="del"><span>od tady účty</span></div>
+        <div class="krok-t"><div class="pr"><i style="width:6%"></i><span>Diagnostika</span></div><b>4 z 6</b></div>
+        <div class="krok-t"><div class="pr"><i style="width:4%"></i><span>1. trénink do 24 h</span></div><b>2 z 6</b></div>
+        <div class="krok-t"><div class="pr"><i style="width:3%"></i><span>Vrátili se 2. den</span></div><b>1 z 6</b></div>
+        <span class="xs">Medián: registrace → diagnostika 8 min · diagnostika → trénink 1 den</span>
+      </div>
+      <div class="h2">Peníze</div>
+      <div class="k"><div class="r"><span class="cislo">99 Kč</span><span class="s">měsíčně · 1 platí · nová 1 · zrušená 0 · selhalo 0</span></div><span class="s">Ruční Premium: 2 (konec 6. 12. a 31. 1.)</span></div>
+    </div>
+    <div class="sek">
+      <div class="h2">Zdroje · 30 dní</div>
+      <div class="k">
+        <div class="radek"><div><div class="t">FB reklama „Herní systém“</div><span class="xs">návštěvy 212 · registrace 4 · aktivovaní 1 · 840 Kč</span></div><b>840 Kč / akt.</b></div>
+        <div class="radek"><div><div class="t">Výsledky testu nanečisto</div><span class="xs">návštěvy 9 · registrace 2 · aktivovaní 1</span></div><b>0 Kč</b></div>
+        <div class="radek"><div><div class="t">Přímo / neznámo</div><span class="xs">39 z 62 návštěv webu</span></div><span class="sp-t">63 %</span></div>
+      </div>
+      <div class="h2">Nový odkaz</div>
+      <div class="k">
+        <span class="s">Typ: leták · Název: „Leták ZŠ Týn prosinec“</span>
+        <div class="bublina" style="font-family:ui-monospace,monospace;font-size:12px;word-break:break-all">matemax.matematika-snadno.cz/?utm_source=letak&amp;utm_campaign=zs-tyn-12</div>
+        <div class="r"><span class="btn male">Kopírovat</span><span class="btn sek2 male">QR kód</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 Plán -->
+<section data-id="plan" data-nazev="10 Plán" data-sekce="Plán" data-titul="Plán · Týden v kostce" data-popis="Pondělní týden v kostce (stejná data jako pondělní report), kronika změn s vyhodnocením a kalendář. Kronika navazuje na Kroniku novinek: proč změna vznikla, co sledovat a kdy ji vyhodnotit. V den vyhodnocení admin ukáže čísla před a po." data-body="Týden v kostce: co se nejvíc změnilo (s počty), co přinesly minulé změny, 3 navržené úkoly jedním klepnutím.|Kopírovat pro Clauda: markdown se shrnutím týdne, žáci jen jako Žák 1, Žák 2.|Kalendář: sezóny v appce, termíny testů z dat, přihlášky 1. 2., přijímačky 12.–15. 4., výsledky 15. 5.|„Pomáhají odměny?“ porovná stejné žáky před a po změně.">
+  <div class="dva">
+    <div class="sek">
+      <div class="h2">Týden 17.–23. 11.</div>
+      <div class="k">
+        <span class="s">Pravidelní <b>2</b> (minule 1) · noví <b>4</b> (minule 1) · aktivace <b>1 z 4</b></span>
+        <span class="s">Nejvíc se změnilo: registrace z FB reklamy +3 (všechny 22. 11.)</span>
+        <div class="h2" style="margin-top:6px">Navržené úkoly</div>
+        <div class="r mezi"><span class="s">Vypnout Audience Network v reklamě</span><span class="btn male">Přidat</span></div>
+        <div class="r mezi"><span class="s">Zkontrolovat úlohu ZLO2_14</span><span class="btn male">Přidat</span></div>
+        <div class="r mezi"><span class="s">Odpovědět na 2 zpětné vazby</span><span class="btn male">Přidat</span></div>
+        <span class="btn sek2" style="margin-top:6px">Kopírovat pro Clauda</span>
+      </div>
+    </div>
+    <div class="sek">
+      <div class="h2">Kronika · k vyhodnocení</div>
+      <div class="k akce modra">
+        <div class="r mezi"><span class="t">Odměny na Hexíka</span><span class="stitek">vyhodnotit 3. 12.</span></div>
+        <span class="s">Proč: žáci se po 1. tréninku nevracejí. Sledovat: návrat 2. den.</span>
+        <span class="s">Stejní žáci před a po: 1 z 3 → 2 z 3 <span class="stitek st-sedy">malý vzorek</span></span>
+      </div>
+      <div class="h2">Kalendář</div>
+      <div class="k">
+        <div class="radek"><div><div class="t">Vánoční sezóna v appce</div></div><span class="xs">od 1. 12.</span></div>
+        <div class="radek"><div><div class="t">Online test nanečisto</div></div><span class="xs">So 12. 12.</span></div>
+        <div class="radek"><div><div class="t">Přihlášky na SŠ</div></div><span class="xs">od 1. 2.</span></div>
+        <div class="radek"><div><div class="t">Přijímačky (4leté / víceleté)</div></div><span class="xs">12.–15. 4.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 Systém · Zdraví -->
+<section data-id="system" data-nazev="11 Zdraví systému" data-sekce="Systém" data-titul="Systém · Zdraví" data-popis="Běží to? Chyby z appky a ze serveru s počtem a dotčenými žáky, běhy automatických úloh, webhooky s tlačítkem „Znovu zpracovat“, využití limitů tarifů a poslední záloha. Upozornění jdou do zvonku a na tvůj telefon." data-body="Limity: Resend Free 100 e-mailů denně a 3 000 měsíčně, Supabase a Vercel podle tvých tarifů, upozornění při 80 %.|Upozornění na telefon přes push (platba, odpověď, nárůst chyb, selhaný cron), s tichými hodinami.|Admin jako aplikace na ploše „MateMax Admin“, start rovnou na Dnes.|Uchovávání dat: syrové události 13 měsíců, pak jen denní souhrny (návrh, ověř právně).">
+  <div class="dva">
+    <div class="sek">
+      <div class="h2">Chyby · 24 h</div>
+      <div class="k akce cervena"><div class="r mezi"><span class="t">Trénink: Cannot read „spravne“</span><span class="stitek st-spatne">4× · 2 žáci</span></div><span class="xs">prohlížeč · /trenink · naposledy 18:42</span></div>
+      <div class="k"><div class="r mezi"><span class="t">Server: časový limit Supabase</span><span class="stitek st-sedy">1×</span></div><span class="xs">/api/zive · 14:05</span></div>
+      <div class="h2">Automatické úlohy</div>
+      <div class="k">
+        <div class="radek"><div><div class="t">Připomínky žákům 16:00</div><span class="xs">dnes 16:00 · 3 s · odesláno 2</span></div><span class="ok-t">✓</span></div>
+        <div class="radek"><div><div class="t">Týdenní report rodičům</div><span class="xs">po 7:00 · 6 s · odesláno 2</span></div><span class="ok-t">✓</span></div>
+        <div class="radek"><div><div class="t">Push připomínky</div><span class="xs">dnes 16:00 · 0 odběrů</span></div><span class="xs">–</span></div>
+      </div>
+    </div>
+    <div class="sek">
+      <div class="h2">Webhooky · 7 dní</div>
+      <div class="k"><span class="s">Resend 48 · Stripe 3 · duplicity zahozeny 2 · chyba 0</span></div>
+      <div class="h2">Limity tarifů</div>
+      <div class="k">
+        <span class="s">Resend dnes 6 ze 100 e-mailů</span><div class="pruh"><i class="ok" style="width:6%"></i></div>
+        <span class="s">Resend měsíc 212 z 3 000</span><div class="pruh"><i class="ok" style="width:7%"></i></div>
+        <span class="s">Supabase databáze 41 z 500 MB</span><div class="pruh"><i class="ok" style="width:8%"></i></div>
+      </div>
+      <div class="k"><div class="r mezi"><span class="t">Poslední záloha</span><span class="stitek st-pozor">před 9 dny</span></div><span class="s">Zálohuje ruční skript. Upozorním, když bude starší než 7 dní.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 Appka žáka: Nahlásit chybu -->
+<section data-id="nahlasit" data-nazev="12 Nahlásit chybu (appka žáka)" data-sekce="appka" data-titul="Trénink · Zlomky" data-popis="Jediná viditelná změna pro žáky ve fázi B. Malý odkaz pod vyhodnocením úlohy otevře výběr důvodu a nepovinnou poznámku. Hlášení přijde do Schránky s odkazem na úlohu a jeho počty se sečtou." data-body="Odkaz je malý a šedý, aby nerušil po správné odpovědi.|Důvody: špatný výsledek, nejasné zadání, chyba v obrázku, jiné.|Poznámka nejvýš 300 znaků, nepovinná. Neodesílá se nic jiného než úloha, zvolená odpověď a důvod.|Po odeslání: „Díky, Karel se na to podívá.“ Jedna úloha jde nahlásit jednou za den.">
+  <div class="sek">
+    <div class="k" style="gap:8px">
+      <span class="xs">Úloha 4 z 10 · zlomky</span>
+      <span class="t">Kolik je 3/8 + 3/8? Výsledek zapiš co nejjednodušeji.</span>
+      <div class="bublina">Tvoje odpověď: <b>0,75</b></div>
+      <div class="k" style="background:var(--spatne-slaby);border-color:transparent"><span class="sp-t">Tentokrát ne</span><span class="s">Správně: 3/4</span></div>
+      <span class="btn">Další úloha</span>
+      <span class="xs" style="text-align:center;text-decoration:underline">Nahlásit chybu v úloze</span>
+    </div>
+    <div class="k" style="gap:8px">
+      <span class="t">Co je na úloze špatně?</span>
+      <div class="r"><span class="cip akt">Špatný výsledek</span><span class="cip">Nejasné zadání</span><span class="cip">Chyba v obrázku</span><span class="cip">Jiné</span></div>
+      <div class="pole">Např. 0,75 je přece stejně jako 3/4 (nepovinné)</div>
+      <div class="r"><span class="btn">Odeslat</span><span class="btn sek2">Zrušit</span></div>
+      <span class="xs">Pošle se jen úloha, tvoje odpověď a důvod.</span>
+    </div>
+  </div>
+</section>
+</template>
+
+<script>
+(function () {
+  const tpl = document.getElementById("obr").content;
+  const obrazovky = [...tpl.querySelectorAll("section")];
+  const taby = document.getElementById("taby");
+  const okno = document.getElementById("okno");
+  const popis = document.getElementById("popis");
+  const scena = document.getElementById("scena");
+  const SEKCE = ["Dnes", "Žáci", "Zprávy", "Plán", "Učení", "Obsah", "Chování", "Růst", "Testy", "Systém"];
+  const SPODNI = ["Dnes", "Žáci", "Zprávy", "Plán", "Více"];
+  const ODZ = { "Zprávy": 3, "Dnes": 5, "Systém": 1 };
+  let akt = obrazovky[0].dataset.id;
+  try { const h = location.hash.slice(1); if (obrazovky.some((o) => o.dataset.id === h)) akt = h; } catch (e) {}
+
+  for (const o of obrazovky) {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = o.dataset.nazev; b.dataset.id = o.dataset.id;
+    b.addEventListener("click", () => { akt = o.dataset.id; try { history.replaceState(null, "", "#" + akt); } catch (e) {} vykresli(); });
+    taby.appendChild(b);
+  }
+
+  function esc(s) { return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+
+  function vykresli() {
+    const o = obrazovky.find((x) => x.dataset.id === akt);
+    for (const b of taby.children) b.setAttribute("aria-pressed", String(b.dataset.id === akt));
+    const zak = o.dataset.sekce === "appka";
+    const bok = zak ? "" : '<nav class="bok" aria-label="Sekce"><div class="logo"><i>M²</i>MateMax Admin</div>' + SEKCE.map((s) => '<span class="' + (s === o.dataset.sekce ? "akt" : "") + '">' + s + (ODZ[s] ? '<em class="odz">' + ODZ[s] + "</em>" : "") + "</span>").join("") + "</nav>";
+    const lista = zak
+      ? '<div class="lista"><b>' + esc(o.dataset.titul) + '</b><span class="ik">4/10</span></div>'
+      : '<div class="lista"><b>' + esc(o.dataset.titul) + '</b><span class="ik">Hledat</span><span class="ik">🔔<em class="odz">2</em></span><span class="ik zap">Sdílení</span></div>';
+    const spodni = zak ? "" : '<div class="spodni">' + SPODNI.map((s) => '<span class="' + (s === o.dataset.sekce || (s === "Více" && !SPODNI.includes(o.dataset.sekce)) ? "akt" : "") + '">' + s + (ODZ[s] ? '<em class="odz">' + ODZ[s] + "</em>" : "") + "</span>").join("") + "</div>";
+    okno.innerHTML = '<div class="m' + (zak ? " zak-app" : "") + '">' + bok + '<div class="hl">' + lista + '<div class="obsah"><span class="ukazka">Ukázková data v režimu sdílení</span>' + o.innerHTML + "</div>" + spodni + "</div></div>";
+    okno.scrollTop = 0;
+    const body = (o.dataset.body || "").split("|").filter(Boolean).map((t) => "<li>" + t + "</li>").join("");
+    popis.innerHTML = '<div class="blok"><h2>' + esc(o.dataset.nazev) + '</h2><p>' + o.dataset.popis + '</p></div><div class="blok"><h3>Jak to funguje</h3><ul class="seznam">' + body + "</ul></div>";
+  }
+
+  const mob = document.getElementById("w-mob"), desk = document.getElementById("w-desk"), pozn = document.getElementById("w-pozn");
+  function sirka(d) {
+    scena.classList.toggle("desktop", d); scena.classList.toggle("mobil", !d);
+    mob.setAttribute("aria-pressed", String(!d)); desk.setAttribute("aria-pressed", String(d));
+    pozn.textContent = d ? "Popis obrazovky je pod náhledem." : "Na širokém displeji je vpravo popis obrazovky.";
+    try { localStorage.setItem("mockupB-sirka", d ? "d" : "m"); } catch (e) {}
+  }
+  mob.addEventListener("click", () => sirka(false));
+  desk.addEventListener("click", () => sirka(true));
+  window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (obrazovky.some((o) => o.dataset.id === h)) { akt = h; vykresli(); } });
+  let ulozena = "m"; try { ulozena = localStorage.getItem("mockupB-sirka") || "m"; } catch (e) {}
+  sirka(ulozena === "d");
+  vykresli();
+})();
+</script>
